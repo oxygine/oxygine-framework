@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<resources>
+	<set path = "images\" />
+	<atlas>
+		<image file="bg.png"/>	
+		
+	<set path = "images\jewels" />	
+		<image file="jewel1.png"/>
+		<image file="jewel2.png"/>
+		<image file="jewel3.png"/>
+		<image file="jewel4.png"/>
+		<image file="jewel5.png"/>
+		<image file="jewel6.png"/>
+	</atlas>
+	
+	<set path = "fonts" />
+	<font file="main.fnt" />	
+</resources>

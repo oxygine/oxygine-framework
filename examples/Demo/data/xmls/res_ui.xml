@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<resources>
+	<set path = "images" />
+	<atlas>
+		<image file="loading.png"/>		
+		<image file="button.png" cols = "3" />	
+	</atlas>	
+</resources>

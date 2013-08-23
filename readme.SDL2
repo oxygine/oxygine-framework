@@ -1,0 +1,40 @@
+You need SDL2.0
+(hg clone http://hg.libsdl.org/SDL)
+
+folders structure:
+root\
+     oxygine-framework
+     SDL
+
+
+How to build and run Oxygine on Windows with CMake and Visual Studio (tested with VS2010). Steps:
+=================================================================================================
+- build SDL2
+- copy SDL2.lib and sdl2main.lib to oxygine-framework/libs
+
+- goto examples/Demo
+- create folder "build"
+- generate solution with cmake (from oxygine-framework/examples/demo/build folder):
+  cmake .. -G"Visual Studio 10"
+- open solution. select project Demo and set it "as startup project"
+- set working directory for Demo project to: 
+   oxygine-framework\examples\Demo\data\
+- copy all required dlls to this folder
+   oxygine-framework\examples\Demo\data\
+   it is SDL2.dll and dlls from  oxygine-framework\oxygine\third_party\win32\libraries\
+- ready! run!
+=================================================================================================
+
+
+Also there is prebuilt solution for VS2010 with Test example:
+=================================================================================================
+open it from oxygine-framework\examples\Demo\win32\
+if you don't have directx sdk installed then find open SDL_config_windows.h and comment it:
+//#define SDL_AUDIO_DRIVER_XAUDIO2    1
+ don't forget copy dlls and set correct working dir (see instruction above)
+=================================================================================================
+
+
+
+
+

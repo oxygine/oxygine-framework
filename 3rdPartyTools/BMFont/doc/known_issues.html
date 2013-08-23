@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>Bitmap Font Generator - Documentation</title>
+</head>
+<body>
+
+<h1>Bitmap Font Generator - Documentation</h1>
+
+<p><a href="../documentation.html">Back to main page</a></p>
+
+<h2>Known issues</h2>
+
+<h3>Rotated characters</h3>
+
+<p>Some font files have some but not all subsets with characters rotated by 90 degrees. For example @Arial Unicode MS, 
+with subset Enclosed Alphanumerics. This is not an error, but a feature of that font file. With the font rotated 
+like this it permits writing texts in normal text editors as if they were in vertical lines.</p>
+
+<p>As of version 1.13 the rotated fonts are no longer displayed in the font selection list.</p>
+
+<h3>Large bitmap fonts switch to Arial</h3>
+
+<p>Some bitmap fonts, e.g. FixedSys, may switch to Arial when generating very large fonts. This is a side effect of
+BMFont using GDI for rasterizing the fonts. As GDI doesn't support rendering these bitmap fonts at very large sizes it 
+automatically switches to the default TrueType font, Arial, instead.</p>
+
+<h3>When executing BMFont from the command line the application returns before completing</h3>
+
+<p>This happens because BMFont is a GUI application and Windows automatically returns the control to the console 
+after initiating the application. A console application, bmfont.com, has been created to allow the execution of the
+tool from the command line without immediate return to the console.</p>
+
+<h3>The bitmap font is generated with incorrect kerning pairs</h3>
+
+<p>For some TrueType fonts the kerning pairs that are saved into the bitmap font is obviously wrong, e.g. with 
+duplicate entries, or offsets that are really large. This is usually a problem with the TrueType font itself, and not 
+a bug in BMFont, as BMFont simply saves the kerning pairs it extracts from the TrueType font.</p>
+
+<p>BMFont provides an option to skip the kerning pairs when saving the bitmap font, which can be used when they are defunct and unusable.</p>
+
+<h3>Cropped character glyphs</h3>
+
+<p>When rendering the bitmap font using the Windows native font renderer, some TrueType fonts present cropped glyphs. This happens
+when the TrueType font has glyphs that go above or below the fonts cell height.</p>
+
+<p>To work around this, render the font from the TrueType outline instead.</p>
+
+</body>
+</html>

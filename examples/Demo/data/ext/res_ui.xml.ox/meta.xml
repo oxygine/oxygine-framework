@@ -1,0 +1,1 @@
+<resources><atlas><image file="1_0.png" format="r8g8b8a8" h="64" w="1024"/><frames fs="1,1,128,128,1.000000">0,499,1,11,21,108,58;</frames><frames fs="3,1,166,44,1.000000">0,167,1,1,1,164,42;0,0,1,1,1,165,42;0,333,1,2,2,164,42;</frames></atlas><bmfc_font sf="1.0" size="16"/></resources>

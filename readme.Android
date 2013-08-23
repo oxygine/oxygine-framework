@@ -1,0 +1,18 @@
+You need SDL2.0
+(hg clone http://hg.libsdl.org/SDL)
+
+folders structure:
+root\
+     oxygine-framework
+     SDL
+     
+
+how to build. Steps:
+- building liboxygine:
+  goto oxygine-framework\oxygine\SDL\android\ and run build.cmd
+- unpack oxygine-framework\oxygine\SDL\android\SDLTests.zip to the same level with oxygine-framework and SDL
+  (to the "root" folder, see example above)
+- goto SDLTests\android-project and run makelink.bat. It would create folder link to SDL (see sdl/readme.android)
+- run build.cmd.
+- run ant_debug.bat
+- apk is ready here: SDLTests\android-project\bin !

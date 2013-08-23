@@ -1,0 +1,19 @@
+[S3E]
+MemSize = 64777216
+DispFixRot=2
+SysGlesVersion=2
+SysStackSize=131072
+
+[Trace]
+ALL=0
+EXT=0
+NONE=0
+DEVICE=0
+FIBRE=0
+THREAD=0
+LOADER=0
+SOUND=0
+FILE=0
+SURFACE=0
+MEMORY=0
+ERROR=0

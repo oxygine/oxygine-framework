@@ -1,0 +1,28 @@
+#!/usr/bin/env mkb
+
+options
+{
+	module_path="../../oxygine/marmalade/"
+	enable-exceptions=1
+}
+
+includepath src
+
+files
+{
+	[src]
+	(src)
+	"*.h"
+	"*.cpp"
+}
+
+subprojects
+{
+	oxygine-framework
+	iwgl 
+}
+
+assets
+{
+	(data)
+}

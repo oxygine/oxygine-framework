@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<resources>
+	<set path = "fonts" />
+	<bmfc_font file="main.bmfc" chars="eng.txt"/>	
+	<bmfc_font file="big.bmfc" chars="eng.txt"/>
+</resources>
