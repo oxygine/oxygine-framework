@@ -34,9 +34,15 @@ namespace oxygine
 	{
 		if (!ad.texture)
 			return;
-
-		ImageData image_data = ad.mt.lock();	
 		
+
+		MemoryTexture mt;
+		const Rect &bounds = ad.atlas.getBounds();
+		int w = nextPOT(bounds.getWidth());
+		int h = nextPOT(bounds.getHeight());
+		mt.init(ad.mt.lock().getRect(Rect(0, 0, w, h)));
+		
+		ImageData image_data = mt.lock();	
 		ad.texture->init(image_data, false);
 		ad.mt.unlock();
 
@@ -130,6 +136,10 @@ namespace oxygine
 		pugi::xml_node meta_frames = context.meta.child("frames");
 
 		float scaleFactor = context.scale_factor;
+
+
+		vector<ResAnim*> anims;
+
 
 		child_node = context.node.first_child();
 		while (!child_node.empty())
@@ -312,6 +322,8 @@ namespace oxygine
 					}
 					else
 					{
+						anims.push_back(ra);
+
 						for (int y = 0; y < rows; ++y)
 						{
 							for (int x = 0; x < columns; ++x)
@@ -339,8 +351,13 @@ namespace oxygine
 									OX_ASSERT(s);
 								}
 
+								/*
 								float iw = 1.0f / ad.mt.getWidth();
 								float ih = 1.0f / ad.mt.getHeight();
+								*/
+
+								float iw = 1.0f;
+								float ih = 1.0f;
 								
 								RectF srcRect(dest.pos.x * iw, dest.pos.y * ih, dest.size.x * iw, dest.size.y * ih);
 
@@ -360,7 +377,7 @@ namespace oxygine
 					
 					init_resAnim(ra, file, child_node);
 					
-					ra->init(frames, columns, scaleFactor);
+					ra->init(frames, columns, scaleFactor);					
 					context.resources->add(ra);
 				}
 
@@ -377,6 +394,27 @@ namespace oxygine
 		}
 
 		apply_atlas(ad);
+
+		for (vector<ResAnim*>::iterator i = anims.begin(); i != anims.end(); ++i)
+		{
+			ResAnim *rs = *i;
+			int num = rs->getTotalFrames();
+
+			for (int n = 0; n < num; ++n)
+			{
+				AnimationFrame &frame = const_cast<AnimationFrame&>(rs->getFrame(n));
+				
+				float iw = 1.0f / frame.getDiffuse().base->getWidth();
+				float ih = 1.0f / frame.getDiffuse().base->getHeight();
+
+				RectF rect = frame.getSrcRect();
+				rect.pos.x *= iw;
+				rect.pos.y *= ih;
+				rect.size.x *= iw;
+				rect.size.y *= ih;
+				frame.setSrcRect(rect);
+			}
+		}
 	}
 
 	Resource *ResAtlas::create(CreateResourceContext &context)

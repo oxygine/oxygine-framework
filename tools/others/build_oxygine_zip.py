@@ -23,10 +23,13 @@ def recursive_zip(zipf, directory, folder = ""):
 
 
 with zipfile.ZipFile("doc.zip", "w", compression = zipfile.ZIP_DEFLATED) as zp:
-	recursive_zip(zp, "doc")
-	shutil.rmtree("doc")
+    recursive_zip(zp, "doc")
+    shutil.rmtree("doc")
 
-with zipfile.ZipFile("../../oxygine-framework.zip", "w", compression = zipfile.ZIP_DEFLATED) as zp:
-	recursive_zip(zp, "../")
+destzip = "../../oxygine-framework.zip"
+with zipfile.ZipFile(destzip, "w", compression = zipfile.ZIP_DEFLATED) as zp:
+    recursive_zip(zp, "../")
+    
+shutil.copyfile(destzip, "../../../gdrive/oxygine/oxygine-framework.zip")
 
 print "done."

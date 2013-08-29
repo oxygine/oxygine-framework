@@ -36,13 +36,14 @@ namespace oxygine
 
 		void init(int w, int h);
 		bool add(Texture *dest, const ImageData &src, Rect &srcRect);
-		spTexture getTexture();
+
+		spTexture	getTexture();
+		const Rect&	getBounds() const {return _bounds;}
 
 		void clean();
 
 	private:
-		frames _frames;
-
+		Rect _bounds;
 		AtlasNode *_tree;
 	};
 }

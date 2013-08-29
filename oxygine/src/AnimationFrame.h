@@ -34,6 +34,8 @@ namespace oxygine
 		const RectF&	getSrcRect() const {return _srcRect;}
 		const RectF&	getDestRect() const {return _destRect;}
 		const Diffuse&	getDiffuse() const {return _diffuse;}
+
+		void			setSrcRect(const RectF &r){_srcRect = r;}
 		
 
 	private:

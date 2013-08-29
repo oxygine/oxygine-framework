@@ -21,7 +21,6 @@
 #include "Input.h"
 #include "MemoryTexture.h"
 #include "Multithreading.h"
-#include "Options.h"
 #include "PointerState.h"
 #include "ProgressBar.h"
 #include "RenderState.h"

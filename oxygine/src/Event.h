@@ -46,6 +46,18 @@ namespace oxygine
 	public:
 		enum 
 		{
+			/*
+			CLICK = makefourcc('_', 'C', 'L', 'C'),
+			OVER = makefourcc('_', 'O', 'V', 'R'),
+			OUT = makefourcc('_', 'O', 'U', 'T'),
+			MOVE = makefourcc('_', 'M', 'V', 'E'),
+			TOUCH_DOWN = makefourcc('_', 'T', 'D', 'W'),
+			TOUCH_UP = makefourcc('_', 'T', 'U', 'P'),
+
+			WHEEL_UP = makefourcc('_', 'W', 'U', 'P'),
+			WHEEL_DOWN = makefourcc('_', 'W', 'D', 'W'),
+			*/
+
 			CLICK = _et_TouchClick,
 			OVER = _et_TouchOver,
 			OUT = _et_TouchOut,

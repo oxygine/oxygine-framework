@@ -72,7 +72,7 @@ namespace oxygine
 	}
 
 
-	Atlas::Atlas():_tree(0)
+	Atlas::Atlas():_tree(0), _bounds(0,0,0,0)
 	{
 		
 	}
@@ -84,7 +84,6 @@ namespace oxygine
 
 	void Atlas::clean()
 	{
-		_frames.resize(0);
 		delete _tree;
 		_tree = 0;
 	}
@@ -115,6 +114,8 @@ namespace oxygine
 
 			srcRect.size = srcRect.size - offset;			
 			dest->updateRegion(srcRect.pos.x, srcRect.pos.y, src);
+
+			_bounds.unite(srcRect);
 
 			return true;
 		}

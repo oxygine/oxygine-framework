@@ -77,5 +77,6 @@ examples/GameTemplate/build_gametemplate_src_vc11
 examples/Match3/build_match3_src_vc11/
 
 oxygine-framework.zip
+examples/TutorialResources/build_tutorialresources_vc11/
 syntax: regexp
 ^build/

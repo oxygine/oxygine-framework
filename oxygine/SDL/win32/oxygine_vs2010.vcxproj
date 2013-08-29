@@ -124,7 +124,6 @@
     <ClCompile Include="..\..\src\Input.cpp" />
     <ClCompile Include="..\..\src\MemoryTexture.cpp" />
     <ClCompile Include="..\..\src\Multithreading.cpp" />
-    <ClCompile Include="..\..\src\Options.cpp" />
     <ClCompile Include="..\..\src\PointerState.cpp" />
     <ClCompile Include="..\..\src\ProgressBar.cpp" />
     <ClCompile Include="..\..\src\res\ResAnim.cpp" />
@@ -198,7 +197,6 @@
     <ClInclude Include="..\..\src\Input.h" />
     <ClInclude Include="..\..\src\MemoryTexture.h" />
     <ClInclude Include="..\..\src\Multithreading.h" />
-    <ClInclude Include="..\..\src\Options.h" />
     <ClInclude Include="..\..\src\PointerState.h" />
     <ClInclude Include="..\..\src\ProgressBar.h" />
     <ClInclude Include="..\..\src\res\CreateResourceContext.h" />

@@ -68,22 +68,32 @@ namespace oxygine
 		Actor();
 		virtual ~Actor();
 
+		/**returns first child*/
 		spActor				getFirstChild() const {return _children._first;}
+		/**returns last child*/
 		spActor				getLastChild() const {return _children._last;}
+		/**returns next sibling*/
 		spActor				getNextSibling() {return intr_list::getNextSibling();}
+		/**returns previous sibling*/
 		spActor				getPrevSibling() {return intr_list::getPrevSibling();}
 
 		
-		//searched actor recursively, could return self
+		/**search child by name recursively, could return self*/
 		Actor*				getDescendant(const string &name, error_policy ep = ep_show_error);
+		/**search child by name recursively and cast it to other class*/
 		template<class T>
 		T*					getDescendantT(const string &name, error_policy ep = ep_show_error) {return safeCast<T*> (getDescendant(name, ep));}
+		/**search child by name*/
 		spActor				getChild(const string &name, error_policy ep = ep_show_error) const;
+		/**search child by name and cast it to other class*/
 		template<class T>
 		T*					getChildT(const string &name, error_policy ep = ep_show_error) const {return safeCast<T*> (getChild(name, ep).get());}
 
+		/**search tween by name*/
 		spTween				getTween(const string &name, error_policy ep = ep_show_error);
+		/**returns first tween in actor*/
 		spTween				getFirstTween() const {return _tweens._first;}
+		/**returns last tween in actor*/
 		spTween				getLastTween() const {return _tweens._last;}
 
 		const Vector2&		getAnchor() const {return _anchor;}
@@ -135,7 +145,7 @@ namespace oxygine
 		/**This option is connected with Anchor. By default value is True*/
 		void setChildrenRelative(bool r){_flags &= ~flag_childrenRelative; if (r) _flags |= flag_childrenRelative;}
 		
-		/**Sets Size of Actor. Size doesn't scale contents of Actor. Size only affects event handling and rendering if you change Anchor. Max size is 32000*/
+		/**Sets Size of Actor. Size doesn't scale contents of Actor. Size only affects event handling and rendering if you change Anchor*/
 		void setSize(const Vector2 &);
 		void setSize(float w, float h);
 		void setWidth(float w);
@@ -151,8 +161,9 @@ namespace oxygine
 		void setCull(bool enable) {_flags &= ~flag_cull; if (enable) _flags |= flag_cull;}
 		/**Sets transparency. if alpha is 0 actor and children are completely invisible, don't rendering and don't receive events.*/
 		void setAlpha(unsigned char alpha){_alpha = alpha;}
-		/**Enables/Disables input events(touch, mouse, keyboard) for Actor and it's children.*/
+		/**Enables/Disables input events(touch, mouse) for Actor.*/
 		void setInputEnabled(bool enabled) {_flags &= ~flag_inputEnabled; if (enabled) _flags |= flag_inputEnabled;}
+		/**Enables/Disables input events(touch, mouse) for children of Actor.*/
 		void setInputChildrenEnabled(bool enabled) {_flags &= ~flag_inputChildrenEnabled; if (enabled) _flags |= flag_inputChildrenEnabled;}
 
 		/**Sets callback which would be called each Actor::update cycle before doUpdate. Use it if you don't want inherit from Actor and overload Actor::doUpdate.*/
@@ -160,9 +171,9 @@ namespace oxygine
 		/**Sets callback which would be called each Actor::render cycle before doRender. Use it if you don't want inherit from Actor and overload Actor::doRender.*/
 		void setCallbackDoRender(RenderCallback cb){_cbDoRender = cb;}
 
-		//virtual bool isOn(const EventState &es);
 		virtual bool isOn(const Vector2 &localPosition);
-		bool isDescendant(spActor);
+		/**Returns true if actor is child or located deeper in current subtree*/
+		bool isDescendant(spActor actor);
 		
 		
 		void insertChildBefore(spActor actor, spActor insertBefore);
@@ -178,7 +189,7 @@ namespace oxygine
 		/**detaches actor from parent and returns parent. return NULL If actor doesn't have parent*/
 		Actor* detach();
 
-		//////
+		/**Dispatches an event into the event flow. The event target is the EventDispatcher object upon which the dispatchEvent() method is called.*/
 		void dispatchEvent(Event *event);
 
 
@@ -199,12 +210,15 @@ namespace oxygine
 		void removeTween(spTween);
 		/**remove all tweens and call completes them if callComplete == true*/
 		void removeTweens(bool callComplete = false);
-
+		
+		/**Updates this actor, children and all tweens.*/
 		virtual void update(const UpdateState &us);
+		/**Renders this actor and children.*/
 		virtual void render(const RenderState &rs);
-		virtual void handleEvent(Event *event);
+		virtual void handleEvent(Event *event);		
 		virtual void doRender(const RenderState &rs){}
 
+		/**Returns detailed actor information. Used for debug purposes. */
 		virtual std::string dump(const dumpOptions &opt) const;
 
 
@@ -228,6 +242,7 @@ namespace oxygine
 		Actor*	_getDescendant(const string &name);
 		spTween _addTween(spTween tween, bool rel);
 
+		
 		virtual void doUpdate(const UpdateState &us);
 		UpdateCallback _cbDoUpdate;
 		RenderCallback _cbDoRender;

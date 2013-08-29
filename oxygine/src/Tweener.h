@@ -93,7 +93,7 @@ namespace oxygine
 
 	DECLARE_SMART(Tween, spTween);
 
-	class Tween: public Object, public intrusive_list_item<spTween>//todo rename, it is not only tween
+	class Tween: public Object, public intrusive_list_item<spTween>
 	{
 		typedef intrusive_list_item<spTween> intr_list;
 	public:
@@ -121,12 +121,17 @@ namespace oxygine
 		void init(timeMS duration, int loops = 1, bool twoSides = false, timeMS delay = 0, EASE ease = Tween::ease_linear);//todo twoSide find better name
 		void reset();
 
-		int		getLoops() const {return _loops;}
-		timeMS	getDuration() const {return _duration;}
-		EASE	getEase() const {return _ease;}
-		timeMS	getDelay() const {return _delay;}
-		Actor*	getClient() const {return _client;}
-		float	getPercent() const {return _percent;}
+		int			getLoops() const {return _loops;}
+		timeMS		getDuration() const {return _duration;}
+		EASE		getEase() const {return _ease;}
+		timeMS		getDelay() const {return _delay;}
+		Actor*		getClient() const {return _client;}
+		float		getPercent() const {return _percent;}
+		spTween&	getNextSibling() {return intr_list::getNextSibling();}
+		spTween&	getPrevSibling() {return intr_list::getPrevSibling();}
+
+		bool		isStarted() const {return _started;}
+		bool		isDone() const {return _done;}
 
 		void setDoneCallback(EventCallback cb){_cbDone = cb;}		
 		void setEase(EASE ease){_ease = ease;}
@@ -142,15 +147,9 @@ namespace oxygine
 		/**immediately completes tween, calls doneCallback and mark tween as completed and removes self from Actor. If tween has infinity loops (=-1) then do nothing*/
 		void complete(timeMS deltaTime = INT_MAX);
 
-		bool isStarted() const {return _started;}
-		bool isDone() const {return _done;}
-
+		
 		virtual bool start(Actor &actor);
-		virtual bool update(Actor &actor, const UpdateState &us);
-
-
-		spTween &getNextSibling() {return intr_list::getNextSibling();}
-		spTween &getPrevSibling() {return intr_list::getPrevSibling();}
+		virtual bool update(Actor &actor, const UpdateState &us);	
 
 		static float calcEase(EASE ease, float v);
 
