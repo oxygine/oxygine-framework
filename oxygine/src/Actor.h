@@ -229,8 +229,8 @@ namespace oxygine
 
 				
 		typedef GetSet2Args<float, Vector2, const Vector2 &, Actor, &Actor::getPosition, &Actor::setPosition>	TweenPosition;
-		typedef GetSet<float, float, Actor, &Actor::getX, &Actor::setX>	TweenX;
-		typedef GetSet<float, float, Actor, &Actor::getY, &Actor::setY>	TweenY;
+		typedef GetSet<float, float, Actor, &Actor::getX, &Actor::setX>											TweenX;
+		typedef GetSet<float, float, Actor, &Actor::getY, &Actor::setY>											TweenY;
 		typedef GetSet<float, float, Actor, &Actor::getWidth, &Actor::setWidth>									TweenWidth;
 		typedef GetSet<float, float, Actor, &Actor::getHeight, &Actor::setHeight>								TweenHeight;
 		typedef GetSet<float, float, Actor, &Actor::getRotation, &Actor::setRotation>							TweenRotation;

@@ -34,9 +34,7 @@ class XmlProcessor:
         self._meta_doc = None
         self._meta_element = None
 
-        all_sizes = [64, 128, 256, 512, 1024, 2048, 4096]
-        self.sizes = [s for s in all_sizes if s <= self.args.max_size]
-        
+       
         self.register_processor(process_font.bmfc_font_Processor())
         self.register_processor(process_font.font_Processor())
         self.register_processor(process_atlas.atlas_Processor())
@@ -44,6 +42,7 @@ class XmlProcessor:
         
         self._current_processor = None
         
+
     def register_processor(self, processor):
         self.processors[processor.node_id] = processor
         

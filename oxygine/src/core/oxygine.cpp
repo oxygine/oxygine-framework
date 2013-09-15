@@ -25,6 +25,7 @@
 
 #include "gl/oxgl.h"
 #include "winnie_alloc/winnie_alloc.h"
+
 #ifdef __S3E__
 #include "s3e.h"
 #include "IwGL.h"
@@ -181,6 +182,20 @@ namespace oxygine
 
 		return 0;
 	}
+
+	int32 applicationPause(void* systemData, void* userData)
+	{
+		Event ev(RootActor::DEACTIVATE);
+		getRoot()->handleEvent(&ev);
+		return 0;
+	}
+
+	int32 applicationUnPause(void* systemData, void* userData)
+	{
+		Event ev(RootActor::ACTIVATE);
+		getRoot()->handleEvent(&ev);
+		return 0;
+	}
 #endif
 
 #ifdef OXYGINE_SDL
@@ -225,6 +240,9 @@ namespace oxygine
 				s3ePointerRegister(S3E_POINTER_BUTTON_EVENT, &pointerEvent, 0);
 				s3ePointerRegister(S3E_POINTER_MOTION_EVENT, &pointerMotionEvent, 0);
 			}	
+
+			s3eDeviceRegister(S3E_DEVICE_UNPAUSE, applicationUnPause, 0);
+			s3eDeviceRegister(S3E_DEVICE_PAUSE, applicationPause, 0);
 	#endif
 	
 	#if __FLASHPLAYER__
@@ -450,16 +468,34 @@ namespace oxygine
 					done = true;
 					break;
 				case SDL_WINDOWEVENT:
-					if (event.window.event == SDL_WINDOWEVENT_MINIMIZED)
-						active = false;
-					if (event.window.event == SDL_WINDOWEVENT_RESTORED)
-						active = true;
-					if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST)
-						focus = false;
-					if (event.window.event == SDL_WINDOWEVENT_FOCUS_GAINED)
-						focus = true;
-					log::messageln("SDL_SYSWMEVENT %d", (int)event.window.event);
-					break;
+					{					
+						/*
+						if (event.window.event == SDL_WINDOWEVENT_ENTER)
+							active = false;
+						if (event.window.event == SDL_WINDOWEVENT_LEAVE)
+							active = true;
+							*/
+
+						if (event.window.event == SDL_WINDOWEVENT_MINIMIZED)
+							active = false;
+						if (event.window.event == SDL_WINDOWEVENT_RESTORED)
+							active = true;
+
+						bool newFocus = focus;
+						if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST)
+							newFocus = false;
+						if (event.window.event == SDL_WINDOWEVENT_FOCUS_GAINED)
+							newFocus = true;
+						if (focus != newFocus)
+						{
+							focus = newFocus;
+							Event ev(focus ? RootActor::ACTIVATE : RootActor::DEACTIVATE);
+							getRoot()->dispatchEvent(&ev);
+							log::messageln("focus: %d", (int)focus);
+						}
+						//log::messageln("SDL_SYSWMEVENT %d", (int)event.window.event);
+						break;
+					}
 				case SDL_MOUSEWHEEL:
 					input->sendPointerWheelEvent(event.wheel.y, &input->_pointerMouse);
 					break;
@@ -609,7 +645,7 @@ namespace oxygine
 		{
 		case ep_show_error:
 			log::error_va(format, args);
-			OX_ASSERT(!"Some object is missing. Check log for more details.");
+			OX_ASSERT(!"handleErrorPolicy error.");
 			break;
 		case ep_show_warning:
 			log::warning_va(format, args);

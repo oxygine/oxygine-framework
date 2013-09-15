@@ -7,7 +7,7 @@ class TestMask: public Test
 public:
 	timeMS _lastSnow;
 
-	spMaskedActor _masked;
+	spMaskedSprite _masked;
 	spSprite _mask;
 
 	TestMask():_lastSnow(0)
@@ -25,7 +25,7 @@ public:
 		_mask->addTween(Actor::TweenX(content->getWidth() - 100), 10000, -1, true);
 		_mask->addTween(Actor::TweenY(content->getHeight() - 50), 12000, -1, true);
 
-		_masked = initActor(new MaskedActor,
+		_masked = initActor(new MaskedSprite,
 			arg_attachTo = content);
 
 		_masked->setMask(_mask);

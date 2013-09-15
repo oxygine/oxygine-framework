@@ -97,7 +97,7 @@ namespace oxygine
 	bool Atlas::add(Texture *dest, const ImageData &src, Rect &srcRect)
 	{
 		AnimationFrame af;
-		Point offset(1, 1);
+		Point offset(2, 2);
 		if (src.w == dest->getWidth())
 			offset.x = 0;
 		if (src.h == dest->getHeight())

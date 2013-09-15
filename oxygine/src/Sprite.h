@@ -55,20 +55,7 @@ namespace oxygine
 		bool _manageResAnim;
 	};
 
-	DECLARE_SMART(MaskedActor, spMaskedActor);
-	class MaskedActor: public Actor
-	{
-	public:
-		spSprite getMask() const;
-		void setMask(spSprite);	
 
-
-	protected:
-		void render(const RenderState &parentRS);
-
-	private:
-		spSprite _mask;
-	};
 
 	/** A TweenAnim class
 	*   use for playing per frame animation

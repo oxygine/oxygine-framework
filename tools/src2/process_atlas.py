@@ -47,12 +47,13 @@ def premultipliedAlpha(image):
     return image    
 
 class frame:
-    def __init__(self, image, bbox, image_element):
+    def __init__(self, image, bbox, image_element, rs):
         self.image = image
         self.image_element = image_element
 
         self.node = None
         self.atlas = None
+        self.resanim = rs
 
         if not bbox:
             bbox = (0,0,1,1)
@@ -117,6 +118,10 @@ class atlas_Processor(process.Process):
         anims = []
     
         frames = []
+        
+        all_sizes = [64, 128, 256, 512, 1024, 2048, 4096]
+        sizes = [s for s in all_sizes if s <= context.args.max_size]        
+                
         for image_el in el.childNodes:
             if image_el.nodeName == "set":
                 context._process_set(image_el)
@@ -223,8 +228,19 @@ class atlas_Processor(process.Process):
                 for col in xrange(columns):
                     rect = (col * frame_width, row * frame_height, (col + 1) * frame_width, (row + 1)* frame_height, )
                     
-                    frame_image = image.crop(rect)                    
-                     
+                    frame_image = image.crop(rect)      
+                    
+                    
+                    def resize():
+                        ax = applyScale2(frame_width, finalScale);
+                        ay = applyScale2(frame_height, finalScale);
+                        bx = int(ax / finalScale)
+                        by = int(ay / finalScale)
+                        im = Image.new("RGBA", (bx, by))
+                        im.paste(frame_image, (0, 0, frame_image.size[0], frame_image.size[1]))
+                        frame_image = im.resize((ax, ay), Image.ANTIALIAS)
+                        frame_image = frame_image.crop((0, 0, resAnim.frame_size[0], resAnim.frame_size[1]))                        
+                    
                     if context.args.resize:
                         if as_bool(image_el.getAttribute("trueds")):
                             frame_image = frame_image.resize((resAnim.frame_size[0], resAnim.frame_size[1]), Image.ANTIALIAS)
@@ -237,7 +253,7 @@ class atlas_Processor(process.Process):
                             im.paste(frame_image, (0, 0, frame_image.size[0], frame_image.size[1]))
                             frame_image = im.resize((ax, ay), Image.ANTIALIAS)
                             frame_image = frame_image.crop((0,0,resAnim.frame_size[0], resAnim.frame_size[1]))
-            
+                                       
                     trim = True
                     if image_el.getAttribute("trim") == "0":
                         trim = False
@@ -246,11 +262,32 @@ class atlas_Processor(process.Process):
                         frame_bbox = a.getbbox()
                     else:
                         frame_bbox = frame_image.getbbox()
+                        
+                    w = frame_bbox[2] - frame_bbox[0]
+                    h = frame_bbox[3] - frame_bbox[1]                    
+                    
     
                     frame_image = frame_image.crop(frame_bbox)
     
-                    fr = frame(frame_image, frame_bbox, image_el)
-    
+                    fr = frame(frame_image, frame_bbox, image_el, resAnim)
+                    fr.sizes = sizes
+
+		    def nextPOT(v):
+			v = v - 1;
+			v = v | (v >> 1);
+			v = v | (v >> 2);
+			v = v | (v >> 4);
+			v = v | (v >> 8);
+			v = v | (v >>16);
+			return v + 1
+		    
+                    if w > sizes[-1] or h > sizes[-1]:
+                        context.warning("image '%s' is too big. Can't fit it into atlas. Atlas size increased" % (image_name, ))
+                        fr.sizes = sizes[0:len(sizes)]
+                        mx = max(w, h)
+			mx = nextPOT(mx + 5)
+                        fr.sizes = [s for s in all_sizes if s <= mx]                        
+                                            
                     frames.append(fr)
                     resAnim.frames.append(fr)
     
@@ -264,8 +301,8 @@ class atlas_Processor(process.Process):
     
         while frames:
             try:
-                for sh in context.sizes:
-                    for sw in context.sizes:
+                for sh in fr.sizes:
+                    for sw in fr.sizes:
                         
                         if compression.startswith("pvrtc"):
                             if sh != sw:
@@ -300,15 +337,19 @@ class atlas_Processor(process.Process):
                                     ns = (align_pixel(ns[0]), align_pixel(ns[1]))
                                 
                                 fr.node = atl.add(ns[0], ns[1])
+                                
                                 if not fr.node:
+                                    #if atl.get_root().is_free():
+                                        #image is too big
                                     raise MyExc()
-                                fr.atlas = atl                                
+                                                                                                
+                                fr.atlas = atl
                                 frames_copy.remove(fr)
     
                             frames = frames_copy
     
                         except MyExc:
-                            if sw == context.sizes[-1] and sh == context.sizes[-1]:
+                            if sw == fr.sizes[-1] and sh == fr.sizes[-1]:
                                 frames = frames_copy
                                 raise MyExc()
     

@@ -10,6 +10,12 @@ namespace oxygine
 	class RootActor : public Actor
 	{
 	public:
+		enum
+		{
+			ACTIVATE = makefourcc('_', 'R', 'A', 'c'),
+			DEACTIVATE = makefourcc('_', 'R', 'D', 'c'),
+		};
+
 		static spRootActor instance;
 		static Rect	calcCenteredViewport(const Point &displaySize, const Point &gameSize);
 
@@ -26,8 +32,6 @@ namespace oxygine
 		/**Renders each children*/
 		void render(Renderer &r);
 
-		/**Returns original display size*/
-		const Point &getDisplaySize() const {return _realDisplaySize;}
 		//const Rect	&getArea();
 
 		/**Updates each children*/
@@ -50,7 +54,6 @@ namespace oxygine
 
 		void safeRemove(spActor actor);
 
-		Point _realDisplaySize;
 		actors _removedActors;
 
 		timeMS _statUpdate;

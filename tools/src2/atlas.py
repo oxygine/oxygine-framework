@@ -15,6 +15,9 @@ class Node:
         self._child1 = None
         self._free = True
         
+    def is_free(self):
+        return self._free
+        
     def insert(self, w, h):
         new_node = None
         if self._child0 or self._child1:
@@ -69,6 +72,9 @@ class Atlas:
         self.w = w        
         self.h = h
         self._tree = Node(rect(0, 0, w, h))
+        
+    def get_root(self):
+        return self._tree        
         
     def add(self, w, h):
         r = self._tree.insert(w, h)

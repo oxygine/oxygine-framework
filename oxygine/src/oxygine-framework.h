@@ -27,6 +27,7 @@
 #include "RootActor.h"
 #include "SlidingActor.h"
 #include "Sprite.h"
+#include "MaskedSprite.h"
 #include "TextActor.h"
 #include "TextStyle.h"
 #include "Tweener.h"

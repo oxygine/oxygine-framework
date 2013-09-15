@@ -47,6 +47,12 @@ namespace oxygine
 		ad.mt.unlock();
 
 		ad.texture->apply();
+
+		/*
+		char str[255];
+		sprintf(str, "%d.png", ad.texture.get());
+		saveImage(image_data, str, "png");
+		*/
 	}
 
 	void next_atlas(int w, int h, TextureFormat tf, atlas_data &ad, const char *name = 0)

@@ -8,10 +8,11 @@ namespace oxygine
 {
 	spRootActor RootActor::instance;
 
-	RootActor::RootActor():_realDisplaySize(0,0), _statUpdate(0), _statRender(0), _clipOuter(false), _viewport(0,0,0,0)
+	RootActor::RootActor():_statUpdate(0), _statRender(0), _clipOuter(false), _viewport(0,0,0,0)
 	{
 		spClock clock = new Clock();
 		setClock(clock);
+		setName("RootActor");
 
 		//addEventHandler(new EventHandler());
 	}
@@ -26,7 +27,7 @@ namespace oxygine
 		stringstream st;
 
 		st << "{RootActor}\n";
-		st << " displaySize=(" << _realDisplaySize.x << "," << _realDisplaySize.y << ")";
+		//st << " displaySize=(" << _realDisplaySize.x << "," << _realDisplaySize.y << ")";
 		st << Actor::dump(opt);
 
 		return st.str();
@@ -50,7 +51,7 @@ namespace oxygine
 
 	void RootActor::init(const Point &displaySize, const Point &gameSize)
 	{
-		_realDisplaySize = displaySize;
+		//_realDisplaySize = displaySize;
 		setSize(gameSize);
 
 		_viewport = calcCenteredViewport(displaySize, gameSize);

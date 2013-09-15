@@ -181,33 +181,4 @@ namespace oxygine
 
 		actor.setAnimFrame(_resAnim->getFrame(col, _row));
 	}
-
-
-	spSprite MaskedActor::getMask() const
-	{
-		return _mask;
-	}
-	
-	void MaskedActor::setMask(spSprite mask)
-	{
-		_mask = mask;
-	}
-
-	void MaskedActor::render(const RenderState &parentRS)
-	{
-		if(_mask)
-		{
-			Renderer::transform t = getGlobalTransform(_mask);
-			RectF maskDest = _mask->getDestRect();
-			RectF maskSrc = _mask->getSrcRect();
-			//maskDest
-
-			const Diffuse &df = _mask->getAnimFrame().getDiffuse();
-			parentRS.renderer->setMask(df.alpha ? df.alpha : df.base, maskSrc, maskDest, t);
-		}
-		
-		Actor::render(parentRS);
-
-		parentRS.renderer->removeMask();
-	}
 }
