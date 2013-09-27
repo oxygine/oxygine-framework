@@ -78,5 +78,6 @@ examples/Match3/build_match3_src_vc11/
 
 oxygine-framework.zip
 examples/TutorialResources/build_tutorialresources_vc11/
+oxygine/system_data/system.zip
 syntax: regexp
 ^build/

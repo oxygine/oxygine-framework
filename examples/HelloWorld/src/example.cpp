@@ -115,12 +115,21 @@ void example_init()
 	//load xml file with resources definition
 	gameResources.loadXML("res.xml");
 
+	file::handle h = file::open("test", "wb");
+	file::close(h);
+
+
 	//lets create our client code simple actor
 	//prefix 'sp' here means it is intrusive Smart Pointer
 	//it would be deleted automatically when you lost ref to it	
 	spMainActor actor = new MainActor;
 	//and add it to RootActor as child
 	RootActor::instance->addChild(actor);
+}
+
+void example_update()
+{
+	
 }
 
 void example_destroy()

@@ -43,6 +43,7 @@ public:
 		addButton("text", "Text");
 		addButton("progress_bar", "Progress Bar");
 		addButton("drag", "Drag and Drop");
+		addButton("drag2", "Drag and Drop2");
 		addButton("perf", "Performance");
 		addButton("manage_res", "Manage Resources");
 		addButton("texture_format", "Textures Format");
@@ -70,6 +71,10 @@ public:
 		if (id == "drag")
 		{
 			RootActor::instance->addChild(new DragTest);
+		}
+		if (id == "drag2")
+		{
+			RootActor::instance->addChild(new Drag2Test);
 		}
 		if (id == "manage_res")
 		{
@@ -132,11 +137,11 @@ void example_init()
 
 	//load xml file with resources definition
 	resources.loadXML("xmls/res.xml");
-	resourcesUI.loadXML("xmls/res_ui.xml");
-	resourcesUI.loadXML("xmls/fonts.xml");
+	resourcesUI.loadXML("demo/res_ui.xml");
+	resourcesUI.loadXML("demo/fonts.xml");
 
 	spSprite sp = initActor(new Sprite, 
-		arg_resAnim = resources.getResAnim("logo2"),
+		arg_resAnim = resourcesUI.getResAnim("logo2"),
 		arg_attachTo = getRoot(),
 		arg_priority = 10,
 		arg_alpha = 128
@@ -147,6 +152,11 @@ void example_init()
 
 	_tests = new TestActor;
 	RootActor::instance->addChild(_tests);
+}
+
+void example_update()
+{
+
 }
 
 void example_destroy()

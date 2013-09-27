@@ -39,8 +39,8 @@ void Jewel::SetSelected()
 	setPosition(Vector2(getPosition().x+JEWEL_SIZE/2, getPosition().y+JEWEL_SIZE/2));
 	setAnchor(Vector2(0.5f,0.5f));
 
-	tween->add(createTween(Sprite::TweenRotation(M_PI * 0.1f), 100))
-		->add(createTween(Sprite::TweenRotation(M_PI * (-0.1f)), 400,-1,true));
+	tween->add(createTween(Sprite::TweenRotation(MATH_PI * 0.1f), 100))
+		->add(createTween(Sprite::TweenRotation(MATH_PI  * (-0.1f)), 400,-1,true));
 
 
 	addTween(tween);

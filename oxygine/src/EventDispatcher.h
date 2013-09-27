@@ -14,6 +14,8 @@ namespace oxygine
 	class Event//: public Object
 	{
 	public:
+		enum {COMPLETE = makefourcc('_', 'E', 'C', 'M')};
+
 		enum Phase
 		{
 			phase_capturing = 1,

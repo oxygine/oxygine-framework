@@ -14,6 +14,7 @@ Rect viewport;
 
 int mainloop()
 {
+	example_update();
 	//update our rootActor
 	//Actor::update would be called also for children
 	RootActor::instance->update();

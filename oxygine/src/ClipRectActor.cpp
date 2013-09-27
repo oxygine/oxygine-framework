@@ -1,6 +1,6 @@
 #include "ClipRectActor.h"
 #include "RootActor.h"
-#include "core/logging.h"
+#include "core/log.h"
 #include "RenderState.h"
 
 namespace oxygine

@@ -9,7 +9,11 @@ LOCAL_SRC_FILES := \
 				$(subst $(LOCAL_PATH)/,, \
 				$(wildcard $(LOCAL_PATH)/closure/*.cpp) \
 				$(wildcard $(LOCAL_PATH)/core/*.cpp) \
-				$(wildcard $(LOCAL_PATH)/core/gl/*.cpp) \
+				$(LOCAL_PATH)/core/gl/NativeTextureGLES.cpp \
+				$(LOCAL_PATH)/core/gl/oxgl.cpp \
+				$(LOCAL_PATH)/core/gl/VertexDeclarationGL.cpp \
+				$(LOCAL_PATH)/core/gl/VideoDriverGL.cpp \
+				$(LOCAL_PATH)/core/gl/VideoDriverGLES20.cpp \
 				$(wildcard $(LOCAL_PATH)/math/*.cpp) \
 				$(wildcard $(LOCAL_PATH)/pugixml/*.cpp) \
 				$(wildcard $(LOCAL_PATH)/res/*.cpp) \
@@ -17,6 +21,7 @@ LOCAL_SRC_FILES := \
 				$(wildcard $(LOCAL_PATH)/dev_tools/*.cpp) \
 				$(wildcard $(LOCAL_PATH)/utils/*.cpp) \
 				$(wildcard $(LOCAL_PATH)/winnie_alloc/*.cpp) \
+				$(wildcard $(LOCAL_PATH)/minizip/*.c) \
 				$(wildcard $(LOCAL_PATH)/*.cpp) \
 				$(wildcard $(LOCAL_PATH)/../greenlets/src*.c) \
 				)
@@ -31,12 +36,6 @@ OXYGINE_ROOT := $(OXYGINE)/../
 THIRD_PARTY := $(OXYGINE_ROOT)/third_party/android/
 
 LOCAL_C_INCLUDES := $(OXYGINE)/ \
-					$(OXYGINE)/closure/ \
-					$(OXYGINE)/core/ \
-					$(OXYGINE)/math/ \
-					$(OXYGINE)/pugixml/ \
-					$(OXYGINE)/res/ \
-					$(OXYGINE)/utils/ \
 					$(OXYGINE)/../greenlets/src/ \
 					$(SDL_PATH) \
 					$(THIRD_PARTY)/libjpeg/ \

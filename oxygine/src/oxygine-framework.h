@@ -40,11 +40,11 @@
 
 //core/
 #include "core/coroutines.h"
-#include "core/files_io.h"
+#include "core/file.h"
 #include "core/ImageData.h"
 #include "core/ImageDataOperations.h"
 #include "core/intrusive_ptr.h"
-#include "core/logging.h"
+#include "core/log.h"
 #include "core/Mem2Native.h"
 #include "core/memory_pool.h"
 #include "core/Mutex.h"

@@ -2,7 +2,7 @@
 #include "oxygine.h"
 #include <typeinfo>
 #include <stdio.h>
-#include "logging.h"
+#include "log.h"
 #include "Mutex.h"
 #include "utils/stringUtils.h"
 

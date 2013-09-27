@@ -1,10 +1,10 @@
 #include "Resources.h"
 #include "Resource.h"
 #include "pugixml/pugixml.hpp"
-#include "core/files_io.h"
+#include "core/file.h"
 #include <algorithm>
 
-#include "core/logging.h"
+#include "core/log.h"
 
 #include <stdio.h>
 #include "CreateResourceContext.h"
@@ -13,7 +13,7 @@
 #include "ResFont.h"
 #include "utils/stringUtils.h"
 
-#include "core/logging.h"
+#include "core/log.h"
 #include <stdarg.h>
 
 //#define FS_LOG(...) log::warning(__VA_ARGS__)
@@ -160,8 +160,7 @@ namespace oxygine
 		string ox = prebuilt_folder + "meta.xml";
 		const char *ox_file = ox.c_str();
 
-			
-
+		
 		FS_LOG("step2");
 
 		if (file::exists(ox_file))
@@ -176,6 +175,7 @@ namespace oxygine
 			OX_ASSERT(fb.data.size()  && "can't find xml file");
 			return;
 		}
+
 		pugi::xml_document *doc = new pugi::xml_document();
 		_docs.push_back(doc);
 

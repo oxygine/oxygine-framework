@@ -6,7 +6,7 @@
 #include "math/vector3.h"
 #include "math/vector4.h"
 #include "math/matrix.h"
-#include "logging.h"
+#include "log.h"
 #include "ox_debug.h"
 
 #ifndef __S3E__
@@ -29,7 +29,7 @@ namespace oxygine
 	void *fastAlloc(size_t size);
 	void fastFree(void *data);
 
-	typedef unsigned int timeMS;
+	typedef int timeMS;
 
 
 

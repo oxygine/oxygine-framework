@@ -37,6 +37,11 @@ files
 	(../src/pugixml)
 	"*.hpp"
 	"*.cpp"	
+
+	[src/minizip]
+	(../src/minizip)
+	"*.h"
+	"*.c"	
 	
 	[src/text_utils]
 	(../src/text_utils)

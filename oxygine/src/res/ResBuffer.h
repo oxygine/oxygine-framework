@@ -1,6 +1,6 @@
 #pragma once
 #include "Resource.h"
-#include "core/files_io.h"
+#include "core/file.h"
 #include <vector>
 
 namespace oxygine

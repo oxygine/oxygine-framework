@@ -1,0 +1,14 @@
+Updates between v1.02 and v 1.03
+=================
+- reworked CMake build
+- added filesystem
+- added zip support
+- removed system folder
+
+
+
+Updates between v1.01 and v 1.02
+=================
+- Headers "files_ui.h" and "logging.h" were deprecated. Replace all includes with "file.h" and "log.h"
+- Optimized shaders loading
+

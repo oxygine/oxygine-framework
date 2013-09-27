@@ -54,6 +54,7 @@ namespace oxygine
 
 		void normalize() { normalize( *this, *this ); };
 		void normalizeTo( T len ) { normalize(); *this *= len; };
+		VectorT2 normalized() const {VectorT2 t = *this; t.normalize(); return t;}
 
 		float distance( const VectorT2 & v ) const { return VectorT2( x - v.x, y - v.y ).length();	};
 		T dot(const VectorT2 &vr) const	{return dot(*this, vr);}

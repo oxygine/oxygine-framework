@@ -26,9 +26,16 @@ namespace oxygine
 
 		bool isEmpty()const
 		{
-			if (size.x > 0 && size.y > 0)
-				return false;
-			return true;
+			if (size.x <= 0 || size.y <= 0)
+				return true;
+			return false;
+		}
+
+		bool isIntersecting(const RectT &r) const
+		{
+			RectT l = *this;
+			l.clip(r);
+			return !l.isEmpty();
 		}
 
 		bool pointIn(const point2 &p) const

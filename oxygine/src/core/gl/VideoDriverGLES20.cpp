@@ -4,9 +4,10 @@
 #include "math/Color.h"
 #include "utils/stringUtils.h"
 #include "../vertex.h"
-#include "../files_io.h"
-#include "../logging.h"
-
+#include "../file.h"
+#include "../log.h"
+#include "../ZipFileSystem.h"
+#include "../system_data.h"
 
 
 #ifdef __ANDROID__
@@ -36,14 +37,24 @@ namespace oxygine
 		}
 	}
 
-	
 
-	UberShaderProgram::UberShaderProgram(const char *fileName, const char *prepend, const char *append)		
+
+	UberShaderProgram::UberShaderProgram(const file::buffer &baseShader, const char *prepend, const char *append)		
 	{
-		file::read(fileName, _data);
+		_data.data = baseShader.data;
+
 		_data.data.insert(_data.data.begin(), prepend, prepend + strlen(prepend));
 		_data.data.insert(_data.data.end(), append, append + strlen(append));
 		_data.data.push_back(0);
+	}
+
+	UberShaderProgram::~UberShaderProgram()
+	{
+		for (int i = 0; i < SIZE; ++i)
+		{
+			shader &s = _shaders[i];
+			delete s.program;
+		}
 	}
 
 
@@ -151,110 +162,19 @@ namespace oxygine
 		return p;
 	}
 
-	/*
-	unsigned int VideoDriverGLES20::createShader(unsigned int type, const char* data, const char *prepend, const char *append)
-	{
-		GLuint shader = glCreateShader(type);
-
-		const char *sources[3];
-		const char **ptr = &sources[0];
-		if (prepend)
-		{
-			*ptr = prepend;
-			ptr++;
-		}
-
-		*ptr = data;
-		ptr++;
-
-		if (append)
-		{
-			*ptr = append;
-			ptr++;
-		}
-
-		int num = ptr - sources;
-		glShaderSource(shader, num, sources, 0);
-		glCompileShader(shader);
-		printShaderInfoLog(shader);
-
-		return shader;
-	}
-
-
-	unsigned int VideoDriverGLES20::createProgram(int vs, int fs)
-	{
-		int p = glCreateProgram();
-		glAttachShader(p, vs);
-		glAttachShader(p, fs);
-		
-		const VertexDeclarationGL *decl = VertexDeclarationGL::getDeclaration(VERTEX_PCT2);
-		for (int i = 0; i < decl->numElements; ++i)		
-			glBindAttribLocation(p, decl->elements[i].index, decl->elements[i].name);
-
-		glLinkProgram(p);
-
-		return p;
-	}
-	*/
-
 	VideoDriverGLES20::VideoDriverGLES20():_blend(blend_default), 
-		_currentProgram(0), _us("system/shader.glsl")
+		_currentProgram(0)
 	{
-		file::buffer bf;
-		file::read("system/shader.glsl", bf);
-		bf.data.push_back(0);
-		const char* data = (const char*)bf.getData();
-
-		//ShaderProgram *s = us.getShaderProgram(UberShader::ALPHA_PREMULTIPLY);
-
-		/*
-		_vshader = createShader(GL_VERTEX_SHADER, data,
-			"#define program_main_vs main\n"
-			"#define VS\n", 0
-			);
-
-		_fshaderSplit = createShader(GL_FRAGMENT_SHADER, data, 
-			"#define program_main_ps main\n"
-			"#define SEPARATE_ALPHA\n"
-			"#define ALPHA_PREMULTIPLY\n"
-			"#define PS\n", 0);
-
-		_fshaderMain = createShader(GL_FRAGMENT_SHADER, data, 
-			"#define program_main_ps main\n"
-			"#define PS\n", 0);
-
-		_fshaderPremultiply = createShader(GL_FRAGMENT_SHADER, data, 
-			"#define program_main_ps main\n"
-			"#define ALPHA_PREMULTIPLY\n"
-			"#define PS\n", 0);
-
-			*/
-		/*
-
-		_splitShaderProgram = us.getShaderProgram(UberShader::SEPARATE_ALPHA | UberShader::ALPHA_PREMULTIPLY);
-		_mainShaderProgram = us.getShaderProgram(0);		
-		_premultiplyShaderProgram = us.getShaderProgram(UberShader::ALPHA_PREMULTIPLY);
-
-		_currentShaderProgram = _mainShaderProgram;
-		_currentShaderProgram->program->bind();
-		*/
+		_matrixVP.identity();
+		file::Zips zp;
+		zp.add(system_data, system_size);
+		zp.read("system/shader.glsl", _shaderBody);
+		_us = UberShaderProgram(_shaderBody);
 	}
 
 	VideoDriverGLES20::~VideoDriverGLES20()
 	{
 		glUseProgram(0);
-		/*
-
-		glDeleteProgram(_mainShaderProgram);
-		glDeleteProgram(_splitShaderProgram);
-		glDeleteProgram(_premultiplyShaderProgram);
-
-		glDeleteShader(_vshader);
-		glDeleteShader(_fshaderMain);
-		glDeleteShader(_fshaderSplit);		
-		glDeleteShader(_fshaderPremultiply);		
-		*/
 	}
 
 	spNativeTexture VideoDriverGLES20::createTexture()
@@ -297,7 +217,8 @@ namespace oxygine
 		OX_ASSERT(alpha_location != -1);
 		if (alpha_location != -1)
 			glUniform1i(alpha_location, SAMPLER - GL_TEXTURE0);
-	}	
+	}
+
 	void VideoDriverGLES20::drawBatch(const batch &b)
 	{		
 		const VertexDeclarationGL *decl = static_cast<const VertexDeclarationGL*>(b.vdecl);
@@ -340,7 +261,8 @@ namespace oxygine
 				glEnable(GL_BLEND);
 			else
 				glDisable(GL_BLEND);
-		}		
+		}
+
 		UberShaderProgram *program = b.program;
 		if (program)		
 		{

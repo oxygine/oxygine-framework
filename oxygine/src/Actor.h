@@ -314,8 +314,8 @@ namespace oxygine
 		RectF calcDestRectF(const RectF &destRect, const Vector2 &size) const;
 	};
 
-	Vector2 convert_global2local(spActor child, spActor parent, Vector2 pos);//deprecated, use convert_root2local
-	Vector2 convert_local2global(spActor child, spActor parent, Vector2 pos);//deprecated, use convert_local2root
+	Vector2 convert_global2local(spActor child, spActor parent, const Vector2 &pos);//deprecated, use convert_root2local
+	Vector2 convert_local2global(spActor child, spActor parent, const Vector2 &pos);//deprecated, use convert_local2root
 
 	Vector2 convert_local2root(spActor child, const Vector2 &pos, spActor root = 0);
 	Vector2 convert_root2local(spActor child, const Vector2 &pos, spActor root = 0);

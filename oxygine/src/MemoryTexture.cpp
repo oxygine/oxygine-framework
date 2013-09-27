@@ -1,8 +1,8 @@
 #include "MemoryTexture.h"
 #include "math/Rect.h"
 #include "core/ImageDataOperations.h"
-#include "core/files_io.h"
-#include "core/logging.h"
+#include "core/file.h"
+#include "core/log.h"
 
 extern "C"
 {

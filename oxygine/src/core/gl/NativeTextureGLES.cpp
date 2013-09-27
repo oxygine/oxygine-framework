@@ -5,8 +5,8 @@
 #include "../oxygine.h"
 #include "../NativeTexture.h"
 #include "../ImageDataOperations.h"
-#include "../files_io.h"
-#include "../logging.h"
+#include "../file.h"
+#include "../log.h"
 
 
 namespace oxygine

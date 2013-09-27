@@ -3,8 +3,8 @@
 #include "NativeTexture.h"
 #include "MemoryTexture.h"
 #include "ImageDataOperations.h"
-#include "files_io.h"
-#include "logging.h"
+#include "file.h"
+#include "log.h"
 
 /*
 #define DEC_FUNC(proc, name) proc name = 0;

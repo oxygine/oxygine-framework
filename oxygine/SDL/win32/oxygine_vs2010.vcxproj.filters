@@ -40,80 +40,11 @@
     <Filter Include="src\gl">
       <UniqueIdentifier>{b8f36a93-6b35-4120-adb9-ac1ae693b774}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\minizip">
+      <UniqueIdentifier>{164d853c-2678-421b-982f-073d6b5ebb1d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\Actor.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\Button.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\Clock.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\ColorRectSprite.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\DebugActor.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\Font.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\Input.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\MemoryTexture.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\PointerState.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\ProgressBar.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\RootActor.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\Sprite.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\TextActor.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\Tweener.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\VisualStyle.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\core\coroutines.cpp">
-      <Filter>src\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\core\files_io.cpp">
-      <Filter>src\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\core\ImageData.cpp">
-      <Filter>src\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\core\ImageDataOperations.cpp">
-      <Filter>src\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\core\memory_pool.cpp">
-      <Filter>src\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\core\Object.cpp">
-      <Filter>src\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\core\oxygine.cpp">
-      <Filter>src\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\core\Renderer.cpp">
-      <Filter>src\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\core\Texture.cpp">
-      <Filter>src\core</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\math\AffineTransform.cpp">
       <Filter>src\math</Filter>
     </ClCompile>
@@ -158,45 +89,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\utils\stringUtils.cpp">
       <Filter>src\utils</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\Blocking.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\ClipRectActor.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\core\logging.cpp">
-      <Filter>src\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\core\NativeTexture.cpp">
-      <Filter>src\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\core\Mem2Native.cpp">
-      <Filter>src\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\core\Mutex.cpp">
-      <Filter>src\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\core\VideoDriver.cpp">
-      <Filter>src\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\Multithreading.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\Draggable.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\SlidingActor.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\AnimationFrame.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\Box9Sprite.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\EventDispatcher.cpp">
-      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\res\ResStarlingAtlas.cpp">
       <Filter>src\res</Filter>
@@ -246,109 +138,148 @@
     <ClCompile Include="..\..\src\core\gl\VideoDriverGL.cpp">
       <Filter>src\gl</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\core\coroutines.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\file.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\FileSystem.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\ImageData.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\ImageDataOperations.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\log.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\Mem2Native.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\memory_pool.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\Mutex.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\NativeTexture.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\Object.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\oxygine.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\Renderer.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\STDFileSystem.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\system_data.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\Texture.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\VideoDriver.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\ZipFileSystem.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\minizip\ioapi.c">
+      <Filter>src\minizip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\minizip\ioapi_mem.c">
+      <Filter>src\minizip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\minizip\unzip.c">
+      <Filter>src\minizip</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Actor.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\AnimationFrame.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Blocking.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Box9Sprite.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Button.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ClipRectActor.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Clock.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ColorRectSprite.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\DebugActor.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Draggable.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\EventDispatcher.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Font.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Input.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\MaskedSprite.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\MemoryTexture.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Multithreading.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\PointerState.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ProgressBar.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\RootActor.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\SlidingActor.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Sprite.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\TextActor.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Tweener.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\VisualStyle.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\Actor.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\AnimationFrame.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Button.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Clock.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\ColorRectSprite.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\DebugActor.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\EventState.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Font.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Input.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\MemoryTexture.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\PointerState.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\ProgressBar.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\RootActor.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Sprite.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\stringUtils.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\TextActor.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\TextStyle.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Tweener.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\UpdateState.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\VisualStyle.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\closure\closure.h">
       <Filter>src\closure</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\closure\closure_impl.h">
       <Filter>src\closure</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\core\coroutines.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\core\files_io.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\core\ImageData.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\core\ImageDataOperations.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\core\intrusive_ptr.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\core\memory_pool.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\core\Object.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\core\oxygine.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\core\pixel.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\core\ref_counter.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\core\Renderer.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\core\Texture.h">
-      <Filter>src\core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\math\AffineTransform.h">
       <Filter>src\math</Filter>
@@ -431,48 +362,6 @@
     <ClInclude Include="..\..\src\utils\stringUtils.h">
       <Filter>src\utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Blocking.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\ClipRectActor.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\core\logging.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\core\NativeTexture.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\core\Mem2Native.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\core\Mutex.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\core\VideoDriver.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Multithreading.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Draggable.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\SlidingActor.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Box9Sprite.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Event.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\EventDispatcher.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\InitActor.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\res\ResStarlingAtlas.h">
       <Filter>src\res</Filter>
     </ClInclude>
@@ -521,11 +410,188 @@
     <ClInclude Include="..\..\src\core\gl\VideoDriverGL.h">
       <Filter>src\gl</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\core\coroutines.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\file.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\files_io.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\FileSystem.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\ImageData.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\ImageDataOperations.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\intrusive_ptr.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\log.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\logging.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\Mem2Native.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\memory_pool.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\Mutex.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\NativeTexture.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\Object.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\ox_debug.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\oxygine.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\pixel.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\ref_counter.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\Renderer.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\ShaderProgram.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\STDFileSystem.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\system_data.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\Texture.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\vertex.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\VertexDeclaration.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\VideoDriver.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\ZipFileSystem.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\minizip\ioapi.h">
+      <Filter>src\minizip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\minizip\ioapi_mem.h">
+      <Filter>src\minizip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\minizip\unzip.h">
+      <Filter>src\minizip</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Actor.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\AnimationFrame.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Blocking.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Box9Sprite.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Button.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\ClipRectActor.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Clock.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\ColorRectSprite.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\DebugActor.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Draggable.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Event.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\EventDispatcher.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Font.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\InitActor.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Input.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\MaskedSprite.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\MemoryTexture.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Multithreading.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\oxygine-framework.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\PointerState.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\ProgressBar.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\RenderState.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\RootActor.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\SlidingActor.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Sprite.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\TextActor.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\TextStyle.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Tweener.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\UpdateState.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\VisualStyle.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\src\license.txt">
-      <Filter>src</Filter>
-    </None>
     <None Include="ReadMe.txt" />
   </ItemGroup>
 </Project>

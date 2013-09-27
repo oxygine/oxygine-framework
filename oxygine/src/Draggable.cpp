@@ -58,7 +58,8 @@ namespace oxygine
 		_dragPos(0,0), 
 		_clientIsParent(false), 
 		_dragEnabled(true),
-		_pressed(false)
+		_pressed(false), 
+		_singleDrag(false)
 	{
 
 	}
@@ -70,7 +71,7 @@ namespace oxygine
 
 	void Draggable::destroy()
 	{
-		if (_actor)
+		if (_actor && !_singleDrag)
 		{
 			if (RootActor::instance)
 				RootActor::instance->removeEventListeners(this);
@@ -81,11 +82,67 @@ namespace oxygine
 
 	void Draggable::init(Actor *actor)
 	{
+		_singleDrag = false;
 		_actor = actor;
 		_dragClient = actor;
 
 		actor->addEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &Draggable::onEvent));
 		actor->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Draggable::onEvent));
+	}
+
+	void Draggable::start(const PointerState *pointer, Actor *actor, const Vector2 &localPosition)
+	{
+		_singleDrag = true;
+		_actor = actor;
+		_dragClient = actor;
+
+		getRoot()->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Draggable::onEvent));
+		
+		Vector2 src = pointer->getPosition().cast<Vector2>();
+		Vector2 pos = convert_root2local(actor->getParent(), src);
+		actor->setPosition(pos - localPosition);
+
+		startDrag(localPosition);
+	}
+
+	void Draggable::startDrag(const Vector2 &localCenter)
+	{
+		_pressed = true;
+		_dragPos = localCenter;
+		_clientPos = _dragClient->getPosition();
+
+		//why I did add it?
+		//event->stopPropagation();
+
+		getRoot()->addEventListener(TouchEvent::MOVE, CLOSURE(this, &Draggable::onEvent));
+	}
+
+	void Draggable::onMove(const Vector2 &position)
+	{
+		if (_pressed && _dragEnabled)
+		{
+			Actor *client = _dragClient;
+
+
+			Vector2 localPos = convert_root2local(client, position);
+
+			Vector2 dragOffset = localPos - _dragPos;
+
+			Vector2 converted = convertPosUp(client, client->getParent(), dragOffset, true);
+			//printVec("dragOffset", dragOffset);
+			//printVec("converted", converted);
+			Vector2 np;
+			bool _clientIsParent = true;
+			if (!_clientIsParent)
+				np = _clientPos + dragOffset;
+			else 
+				np = client->getPosition() + converted;
+
+			client->setPosition(np);
+
+
+			snapClient2Bounds();
+		}
 	}
 
 	void Draggable::onEvent(Event *event)
@@ -98,14 +155,7 @@ namespace oxygine
 		{
 		case TouchEvent::TOUCH_DOWN:
 			{
-				_pressed = true;
-				_dragPos = te->localPosition;
-				_clientPos = _dragClient->getPosition();
-
-				//why I did add it?
-				//event->stopPropagation();
-
-				RootActor::instance->addEventListener(TouchEvent::MOVE, CLOSURE(this, &Draggable::onEvent));
+				startDrag(te->localPosition);
 			}
 			break;
 		case TouchEvent::TOUCH_UP:
@@ -117,29 +167,7 @@ namespace oxygine
 
 		case TouchEvent::MOVE:
 			{
-				if (_pressed && _dragEnabled)
-				{
-					Actor *client = _dragClient;
-
-					Vector2 localPos = convert_global2local(client, safeSpCast<Actor>(te->currentTarget), te->localPosition);
-
-					Vector2 dragOffset = localPos - _dragPos;
-
-					Vector2 converted = convertPosUp(client, client->getParent(), dragOffset, true);
-					//printVec("dragOffset", dragOffset);
-					//printVec("converted", converted);
-					Vector2 np;
-					bool _clientIsParent = true;
-					if (!_clientIsParent)
-						np = _clientPos + dragOffset;
-					else 
-						np = client->getPosition() + converted;
-
-					client->setPosition(np);
-
-
-					snapClient2Bounds();
-				}
+				onMove(te->localPosition);
 			}
 			break;
 		}

@@ -1,6 +1,6 @@
 #include "Input.h"
 #include "RootActor.h"
-#include "core/logging.h"
+#include "core/log.h"
 
 namespace oxygine
 {
@@ -70,7 +70,6 @@ namespace oxygine
 		_pointerMouse.init(MAX_TOUCHES + 1);
 		for (int i = 0; i < MAX_TOUCHES; ++i)
 			_pointers[i].init(i + 1);
-
 		memset(_ids, 0, sizeof(_ids));
 	}
 

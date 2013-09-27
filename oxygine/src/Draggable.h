@@ -13,8 +13,9 @@ namespace oxygine
 		Draggable();
 		~Draggable();
 
-
 		void init(Actor *actor);
+		void start(const PointerState *pointer, Actor *actor, const Vector2 &localCenter);
+
 		void destroy();
 
 		Actor*			getDragClient() const {return _dragClient;}
@@ -28,14 +29,19 @@ namespace oxygine
 		/**sets destination drag client. Default value is Actor attached to DragHandler*/
 		void setDragClient(Actor *actor);
 		void snapClient2Bounds();
+
 	protected:
 		Actor *getClient();
 		void onEvent(Event *event);
+		void startDrag(const Vector2 &localPos);
 
 		void onDrag(TouchEvent *es);
+		void onMove(const Vector2 &position);
 
 		Actor *_dragClient;
 		Actor *_actor;
+
+		bool _singleDrag;
 
 		RectF _bounds;
 		Vector2 _dragPos;

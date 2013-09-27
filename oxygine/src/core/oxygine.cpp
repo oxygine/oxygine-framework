@@ -1,7 +1,7 @@
 #include "oxygine.h"
 #include <stdio.h>
 #include "Renderer.h"
-#include "logging.h"
+#include "log.h"
 #include "winnie_alloc/winnie_alloc.h"
 #include "VideoDriver.h"
 

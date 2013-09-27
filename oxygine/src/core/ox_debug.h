@@ -1,6 +1,6 @@
 #pragma once
 #include <assert.h>
-#include "logging.h"
+#include "log.h"
 
 #ifdef __S3E__
 #ifdef IW_DEBUG

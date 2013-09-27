@@ -21,27 +21,28 @@
 		#define GL_ETC1_RGB8_OES                                        0x8D64
 
 	#elif __ANDROID__
-		#include "GLES/gl.h"
+		#include "GLES2/gl2.h"
 		#define GL_GLEXT_PROTOTYPES 
-		#include "GLES/glext.h"
+		#include "GLES2/gl2ext.h"
 
-		#define glGenFramebuffers			glGenFramebuffersOES
-		#define glBindFramebuffer			glBindFramebufferOES
-		#define glFramebufferTexture2D		glFramebufferTexture2DOES
-		#define glDeleteFramebuffers		glDeleteFramebuffersOES
-		#define glCheckFramebufferStatus	glCheckFramebufferStatusOES
+		#define glGenFramebuffers			glGenFramebuffers
+		#define glBindFramebuffer			glBindFramebuffer
+		#define glFramebufferTexture2D		glFramebufferTexture2D
+		#define glDeleteFramebuffers		glDeleteFramebuffers
+		#define glCheckFramebufferStatus	glCheckFramebufferStatus
 
-		#define GL_FRAMEBUFFER				GL_FRAMEBUFFER_OES
-		#define GL_FRAMEBUFFER_BINDING		GL_FRAMEBUFFER_BINDING_OES
-		#define GL_COLOR_ATTACHMENT0		GL_COLOR_ATTACHMENT0_OES
-		#define GL_FRAMEBUFFER_COMPLETE		GL_FRAMEBUFFER_COMPLETE_OES 
-
+		/*
+		#define GL_FRAMEBUFFER				GL_FRAMEBUFFER
+		#define GL_FRAMEBUFFER_BINDING		GL_FRAMEBUFFER_BINDING
+		#define GL_COLOR_ATTACHMENT0		GL_COLOR_ATTACHMENT0
+		#define GL_FRAMEBUFFER_COMPLETE		GL_FRAMEBUFFER_COMPLETE
+		*/
 #elif __APPLE__
     #define GL_ETC1_RGB8_OES                                        0x8D64
     #include <OpenGLES/ES2/gl.h>
     #include <OpenGLES/ES2/glext.h>
-#include <OpenGLES/ES1/gl.h>
-#include <OpenGLES/ES1/glext.h>
+	#include <OpenGLES/ES1/gl.h>
+	#include <OpenGLES/ES1/glext.h>
 #endif
 
 	void initGLExtensions();

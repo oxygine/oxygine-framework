@@ -53,14 +53,16 @@ namespace oxygine
 	void Clock::update(timeMS globalTime)
 	{
 		timeMS time = globalTime;
-		const timeMS neg = -1; 
+		const double neg = -1; 
 		if (time == neg)
 			time = getTimeMS();
 
 		if (_lastUpdateTime == neg)
 			_lastUpdateTime = time;
 		
-		int dt =  int(time - _lastUpdateTime);
+		double dt = (time - _lastUpdateTime) * _multiplier;
+		if (dt < 1 && dt > 0)
+			dt = 1;
 
 		if (dt > 100)
 			dt = 100;
@@ -68,7 +70,8 @@ namespace oxygine
 		if (_counter > 0)
 			dt = 0;//todo destTime == srcTime ??
 
-		_destTime += dt * _multiplier;
+		//log::messageln("dt: %x %d", this, dt);
+		_destTime += dt;
 
 		_lastUpdateTime = time;
 

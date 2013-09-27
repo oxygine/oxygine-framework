@@ -147,7 +147,7 @@ bool Field::FindSolutions()
 	for(int i=0; i<FIELD_SIZE-1; i++)
 		for(int j=0; j<FIELD_SIZE; j++)
 		{
-			int16 points;
+			int points;
 			ForceSwap(jewels[i][j],jewels[i+1][j]);
 			points = CheckJewel(Point(i,j),true);
 			if (points>0) 
@@ -165,7 +165,7 @@ bool Field::FindSolutions()
 		for(int i=0; i<FIELD_SIZE; i++)
 			for(int j=0; j<FIELD_SIZE-1; j++)
 			{
-				int16 points;
+				int points;
 				ForceSwap(jewels[i][j],jewels[i][j+1]);
 				points = CheckJewel(Point(i,j),true);
 				if (points>0) 
@@ -195,7 +195,7 @@ bool Field::FindSolutions()
 }
 
 
-int32 compareVariants(const TFieldVariants* left, const TFieldVariants* right)
+int compareVariants(const TFieldVariants* left, const TFieldVariants* right)
 {
 	return left->points > right->points;
 }
@@ -245,7 +245,7 @@ bool Field::CheckField()
 	for (int i=0; i<FIELD_SIZE; i++)
 		for (int j=0; j<FIELD_SIZE; j++)
 		{
-			int16 points = CheckJewel(Point(i,j),true);
+			int points = CheckJewel(Point(i,j),true);
 			if (points>0)
 			{
 				variants.push_back(new TFieldVariants(Point(i,j),points));

@@ -1,7 +1,7 @@
 #pragma once
 #include "VideoDriverGL.h"
 #include "../ShaderProgram.h"
-#include "../files_io.h"
+#include "../file.h"
 
 namespace oxygine
 {
@@ -67,7 +67,9 @@ namespace oxygine
 		};
 		typedef Closure<void (ShaderProgramGL *)> ShaderUniformsCallback;
 
-		UberShaderProgram(const char *fileName, const char *prepend="", const char *append = "");
+		UberShaderProgram(){}
+		UberShaderProgram(const file::buffer &baseShader, const char *prepend="", const char *append = "");
+		~UberShaderProgram();
 
 		void setShaderUniformsCallback(ShaderUniformsCallback cb){_cb = cb;}
 
@@ -91,6 +93,7 @@ namespace oxygine
 		~VideoDriverGLES20();
 
 		spNativeTexture createTexture();
+		const file::buffer& getShaderBody() const {return _shaderBody;}
 
 		void begin(const Matrix &proj, const Matrix &view, const Rect &viewport, const Color *clearColor);
 
@@ -101,6 +104,7 @@ namespace oxygine
 		void updateConstants();
 		void setProgram(ShaderProgramGL *p);
 		void bindTexture(int sampler, const char *id, void* handle);
+		file::buffer _shaderBody;
 		UberShaderProgram _us;
 
 		ShaderProgramGL *_currentProgram;

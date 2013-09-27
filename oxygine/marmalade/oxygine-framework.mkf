@@ -32,6 +32,11 @@ files
 	(../src/text_utils)
 	"*.h"
 	"*.cpp"	
+
+	[src/minizip]
+	(../src/minizip)
+	"*.h"
+	"*.c"	
 		
 	[src/utils]
 	(../src/utils)

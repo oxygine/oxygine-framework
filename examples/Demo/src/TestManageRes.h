@@ -24,7 +24,7 @@ public:
 			spSprite sprite = new Sprite;
 			sprite->setAnimFrame(ra);
 			sprite->addTween(createTween(TweenAnim(ra), 500, -1));
-			sprite->setPosition((int)scalar::randFloat(50.0f, getWidth() - 100.0f), (int)scalar::randFloat(50.0f, getHeight() - 100.0f));
+			sprite->setPosition(scalar::randFloat(50.0f, getWidth() - 100.0f), scalar::randFloat(50.0f, getHeight() - 100.0f));
 			sprite->attachTo(content);	
 
 			if (ra->isName("bg"))

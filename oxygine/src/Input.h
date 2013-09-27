@@ -23,7 +23,7 @@ namespace oxygine
 
 		void cleanup();
 
-		/**id should be in range (1, MAX_TOUCHES)*/
+		/**id should be in range [1, MAX_TOUCHES]*/
 		PointerState *getTouchByIndex(int index);
 
 #ifndef __S3E__
@@ -35,7 +35,10 @@ namespace oxygine
 		//internal:
 		PointerState _pointers[MAX_TOUCHES];
 		PointerState _pointerMouse;
+
 		int _ids[MAX_TOUCHES];
+
+
 		void sendPointerButtonEvent(MouseButton button, int x, int y, int type, PointerState *);
 		void sendPointerMotionEvent(int x, int y, PointerState *);
 		void sendPointerWheelEvent(int scroll, PointerState *);

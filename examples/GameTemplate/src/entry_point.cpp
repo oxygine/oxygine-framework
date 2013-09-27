@@ -129,3 +129,14 @@ int main(int argc, char* argv[])
 	return 0;
 }
 #endif
+
+#ifdef OXYGINE_SDL
+extern "C"
+{
+	int SDL_main(int argc, char* argv[])
+	{
+		run();
+		return 0;
+	}
+};
+#endif

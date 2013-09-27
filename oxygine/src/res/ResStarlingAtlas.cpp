@@ -1,6 +1,6 @@
 #include "ResStarlingAtlas.h"
 #include "CreateResourceContext.h"
-#include "core/files_io.h"
+#include "core/file.h"
 #include "ResAnim.h"
 #include "Resources.h"
 #include "core/VideoDriver.h"

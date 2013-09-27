@@ -2,7 +2,7 @@
 #include <string.h>
 #include <algorithm>
 #include "core/oxygine.h"
-#include "core/logging.h"
+#include "core/log.h"
 
 #ifdef __S3E__
 #include "IwUTF8.h"

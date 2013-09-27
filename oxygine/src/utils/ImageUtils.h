@@ -1,5 +1,5 @@
 #pragma once
-#include "core/files_io.h"
+#include "core/file.h"
 namespace oxygine
 {
 	class ImageData;

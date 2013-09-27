@@ -5,7 +5,7 @@
 #include "MemoryTexture.h"
 #include "core/NativeTexture.h"
 #include "core/VideoDriver.h"
-#include "core/files_io.h"
+#include "core/file.h"
 #include "CreateResourceContext.h"
 #include "utils/stringUtils.h"
 #include "core/Mem2Native.h"

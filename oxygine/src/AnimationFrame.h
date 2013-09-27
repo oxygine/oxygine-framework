@@ -28,8 +28,13 @@ namespace oxygine
 		AnimationFrame clip(const RectF &rect) const;
 		AnimationFrame flip(bool vertical, bool horizontal) const;
 
-		/**Returns size of frame in pixels*/
+		/**Returns size of frame in pixels*/		
+		const Vector2&	getSize() const {return _frameSize;}
+		float			getWidth() const {return _frameSize.x;}
+		float			getHeight() const {return _frameSize.x;}
+		//deprecated, use getSize
 		const Vector2&	getFrameSize() const {return _frameSize;}
+
 		ResAnim*		getResAnim() const {return _resAnim;} 
 		const RectF&	getSrcRect() const {return _srcRect;}
 		const RectF&	getDestRect() const {return _destRect;}

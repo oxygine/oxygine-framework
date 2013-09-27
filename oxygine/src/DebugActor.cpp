@@ -1,27 +1,29 @@
 #include <sstream>
 
-#include "initActor.h"
-
-#include "DebugActor.h"
-#include "core/Renderer.h"
-#include "RootActor.h"
-
-#include "TextActor.h"
-#include "ColorRectSprite.h"
-
-
 #include "res/ResAnim.h"
-#include "Button.h"
 #include "res/Resources.h"
-#include "Event.h"
 
 #include "utils/stringUtils.h"
-#include "core/NativeTexture.h"
 
-#include "RenderState.h"
+#include "core/NativeTexture.h"
+#include "core/ZipFileSystem.h"
+#include "core/system_data.h"
+#include "core/Renderer.h"
+
 #include "dev_tools/DeveloperMenu.h"
 #include "dev_tools/TreeInspector.h"
 #include "dev_tools/TexturesInspector.h"
+
+#include "DebugActor.h"
+#include "RootActor.h"
+#include "TextActor.h"
+#include "ColorRectSprite.h"
+#include "Button.h"
+#include "Event.h"
+#include "RenderState.h"
+#include "initActor.h"
+
+
 
 #ifdef __S3E__
 #include "s3eMemory.h"
@@ -41,13 +43,14 @@ namespace oxygine
 		if (resSystem)
 			return;
 
+		file::ZipFileSystem zp;
+		zp.setPrefix("system/");
+		zp.add(system_data, system_size);
 
+		file::mount(&zp);
 		resSystem = new Resources;
 		resSystem->loadXML("system/res.xml", 0, true, false, "system");
-		if (resSystem->getResFont("system")->getAttribute("version").as_int() != 7)
-		{
-			OX_ASSERT(!"PLEASE UPDATE 'data/system' folder. Copy it from 'oxygine-framework/oxygine/system_data/data/' to 'YOUR_APP/data/'");
-		}
+		file::unmount(&zp);
 
 		//log::messageln("initialized DebugActor");
 	}
@@ -314,7 +317,7 @@ namespace oxygine
 	void DebugActor::onDAEvent(Event *ev)
 	{
 		TouchEvent *t = safeCast<TouchEvent*>(ev);
-		Vector2 loc = convert_global2local(this, RootActor::instance, t->localPosition);
+		Vector2 loc = convert_global2local(this, getRoot(), t->localPosition);
 		setAlpha(isOn(loc) ? 64 : 255);
 	}
 

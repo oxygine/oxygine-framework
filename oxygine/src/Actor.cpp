@@ -271,7 +271,7 @@ namespace oxygine
 					{
 						setPressed(0);			
 						//it is event from ROOT, convert to local space
-						Vector2 lp = convert_global2local(this, RootActor::instance, me->localPosition);
+						Vector2 lp = convert_global2local(this, getRoot(), me->localPosition);
 						if (isDescendant(act))
 						{
 							TouchEvent e(TouchEvent::CLICK, true, lp);
@@ -1051,15 +1051,25 @@ namespace oxygine
 		}
 	}
 
-	Vector2 convert_global2local(spActor child, spActor parent, Vector2 pos)
+	Vector2 convert_global2local_(Actor *child, Actor *parent, Vector2 pos)
 	{
 		if (child->getParent() && child->getParent() != parent)
 			pos = convert_global2local(child->getParent(), parent, pos);
+		/*
+		Actor *p = child->getParent();
+		if (p && child != parent)
+			pos = convert_global2local(p, parent, pos);
+			*/
 		pos = child->global2local(pos);
 		return pos;
 	}
 
-	Vector2 convert_local2global(spActor child, spActor parent, Vector2 pos)
+	Vector2 convert_global2local(spActor child, spActor parent, const Vector2 &pos)
+	{
+		return convert_global2local_(child.get(), parent.get(), pos);
+	}
+
+	Vector2 convert_local2global_(Actor* child, Actor* parent, Vector2 pos)
 	{
 		while(child && child != parent)
 		{
@@ -1068,6 +1078,11 @@ namespace oxygine
 		}
 
 		return pos;
+	}
+
+	Vector2 convert_local2global(spActor child, spActor parent, const Vector2 &pos)
+	{
+		return convert_local2global_(child.get(), parent.get(), pos);
 	}
 
 	Vector2 convert_local2root(spActor actor, const Vector2 &pos, spActor root)
@@ -1081,7 +1096,7 @@ namespace oxygine
 	{
 		if (!root)
 			root = getRoot();
-		return convert_global2local(actor, getRoot(), pos);
+		return convert_global2local(actor, root, pos);
 	}
 
 	Renderer::transform getGlobalTransform(spActor child)

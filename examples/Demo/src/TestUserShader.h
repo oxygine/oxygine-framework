@@ -52,9 +52,26 @@ private:
 class TestUserShader: public Test
 {
 public:
-	TestUserShader()
+	UberShaderProgram *_shader;
+	TestUserShader():_shader(0)
 	{
 		addButton("test", "test");			
+
+		VideoDriverGLES20 *driver = (VideoDriverGLES20*)IVideoDriver::instance;
+
+		_shader = new UberShaderProgram(driver->getShaderBody(), 
+			"#define MODIFY_BASE\n"
+			"uniform lowp float interp;"
+			"lowp vec4 modify_base(lowp vec4 base)\n"
+			"{\n"
+			"lowp float c = (base.r + base.g + base.b)/3.0;\n"
+			"return mix(vec4(c, c, c, base.a), base, interp);\n"
+			"}\n");
+	}
+
+	~TestUserShader()
+	{
+		delete _shader;
 	}
 
 	void clicked(string id)
@@ -70,11 +87,11 @@ public:
 
 
 		//Point size = content->getSize().cast<Point>();
-		Matrix view = makeViewMatrix(size.x, size.y, true);
+		Matrix view = makeViewMatrix((int)size.x, (int)size.y, true);
 		rs.renderer->setViewTransform(view);
 
 		Matrix proj;
-		Matrix::orthoLH(proj, (float)size.x, (float)size.y, 0.0f, 1.0f);
+		Matrix::orthoLH(proj, size.x, size.y, 0.0f, 1.0f);
 		rs.renderer->setProjTransform(proj);
 
 		Rect vp(Point(0, 0), size.cast<Point>());
@@ -97,29 +114,8 @@ public:
 		sprite->setAnimFrame(frame);		
 
 
-		
-		//sprite->setAnimFrame(resources.getResAnim("t2p"));
 		sprite->attachTo(content);
-
-
-		VideoDriverGLES20 *driver = (VideoDriverGLES20*)IVideoDriver::instance;
-
-		UberShaderProgram *sh = new UberShaderProgram("system/shader.glsl", 
-			"#define MODIFY_BASE\n"
-			"uniform lowp float interp;"
-			"lowp vec4 modify_base(lowp vec4 base)\n"
-			"{\n"
-			"lowp float c = (base.r + base.g + base.b)/3.0;\n"
-			"return mix(vec4(c, c, c, base.a), base, interp);\n"
-			"}\n");
-
-		//sprite->addTween(TweenAnim(resources.getResAnim("bg")), 400, -1);
-
-		
-		//shaderProgram p = VideoDriverGLES20::createProgram(driver->getVertexShader(), fs);
-		sprite->setShaderProgram(sh);
-		
-
+		sprite->setShaderProgram(_shader);
 		sprite->addTween(ShaderSprite::TweenVal(1), 5000, -1, true);
 	}
 };
