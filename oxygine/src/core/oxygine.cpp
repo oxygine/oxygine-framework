@@ -148,7 +148,7 @@ namespace oxygine
 		case S3E_POINTER_BUTTON_MIDDLEMOUSE: b = MouseButton_Middle; break;
 		}
 
-		Input::instance.sendPointerButtonEvent(b, ev->m_x, ev->m_y, type, &Input::instance._pointerMouse);
+		Input::instance.sendPointerButtonEvent(b, (float)ev->m_x, (float)ev->m_y, 1.0f, type, &Input::instance._pointerMouse);
 
 		return 0;
 	}
@@ -157,7 +157,7 @@ namespace oxygine
 	{
 		s3ePointerMotionEvent *ev = (s3ePointerMotionEvent*)sysData;
 
-		Input::instance.sendPointerMotionEvent(ev->m_x, ev->m_y, &Input::instance._pointerMouse);
+		Input::instance.sendPointerMotionEvent((float)ev->m_x, (float)ev->m_y, 1.0f, &Input::instance._pointerMouse);
 		return 0;
 	}
 
@@ -167,7 +167,7 @@ namespace oxygine
 		s3ePointerTouchEvent *ev = (s3ePointerTouchEvent*)sysData;
 		int id = ev->m_TouchID + 1;
 
-		Input::instance.sendPointerButtonEvent(MouseButton_Touch, ev->m_x, ev->m_y, ev->m_Pressed ? TouchEvent::TOUCH_DOWN : TouchEvent::TOUCH_UP, Input::instance.getTouchByIndex(id));
+		Input::instance.sendPointerButtonEvent(MouseButton_Touch, (float)ev->m_x, (float)ev->m_y, 1.0f, ev->m_Pressed ? TouchEvent::TOUCH_DOWN : TouchEvent::TOUCH_UP, Input::instance.getTouchByIndex(id));
 
 		return 0;
 	}
@@ -178,7 +178,7 @@ namespace oxygine
 		s3ePointerTouchMotionEvent *ev = (s3ePointerTouchMotionEvent*)sysData;
 		int id = ev->m_TouchID + 1;
 
-		Input::instance.sendPointerMotionEvent(ev->m_x, ev->m_y, Input::instance.getTouchByIndex(id));
+		Input::instance.sendPointerMotionEvent((float)ev->m_x, (float)ev->m_y, 1.0f, Input::instance.getTouchByIndex(id));
 
 		return 0;
 	}
@@ -393,10 +393,11 @@ namespace oxygine
 		}
 
 #ifdef OXYGINE_SDL
-		Point convertTouch(SDL_Event& ev)
+		Vector2 convertTouch(SDL_Event& ev)
 		{
-			//Point size = getDisplaySize();
-			return Point((int)ev.tfinger.x, (int)ev.tfinger.y);
+			//log::messageln("convert %.2f %.2f %.2f", ev.tfinger.x, ev.tfinger.y, ev.tfinger.pressure);
+			Point size = getDisplaySize();
+			return Vector2(ev.tfinger.x * size.x, ev.tfinger.y * size.y);
 			//SDL_Touch* inTouch = SDL_GetTouch(ev.tfinger.touchId);
 			//return Point(
 			//	(int(ev.tfinger.x) * size.x) / inTouch->xres, 
@@ -500,11 +501,12 @@ namespace oxygine
 					input->sendPointerWheelEvent(event.wheel.y, &input->_pointerMouse);
 					break;
 				case SDL_MOUSEMOTION:
-					input->sendPointerMotionEvent(event.motion.x, event.motion.y, &input->_pointerMouse);
+					input->sendPointerMotionEvent((float)event.motion.x, (float)event.motion.y, 1.0f, &input->_pointerMouse);
 					break;
 				case SDL_MOUSEBUTTONDOWN:
 				case SDL_MOUSEBUTTONUP:
 					{
+#ifndef ANDROID
 						MouseButton b = MouseButton_Left;
 						switch(event.button.button)
 						{
@@ -513,16 +515,18 @@ namespace oxygine
 							case 3: b = MouseButton_Right; break;
 						}
 
-						input->sendPointerButtonEvent(b, event.button.x, event.button.y,
+						input->sendPointerButtonEvent(b, (float)event.button.x, (float)event.button.y, 1.0f, 
 							event.type == SDL_MOUSEBUTTONDOWN ? TouchEvent::TOUCH_DOWN : TouchEvent::TOUCH_UP, &input->_pointerMouse);
+#endif
 					}					
 					break;
 
 				case SDL_FINGERMOTION:
 					{
-						Point pos = convertTouch(event);
+						//log::messageln("SDL_FINGERMOTION");
+						Vector2 pos = convertTouch(event);
 						input->sendPointerMotionEvent(
-							pos.x, pos.y,
+							pos.x, pos.y, event.tfinger.pressure,
 							input->getTouchByID((int)event.tfinger.fingerId));
 					}
 				
@@ -530,10 +534,11 @@ namespace oxygine
 				case SDL_FINGERDOWN:
 				case SDL_FINGERUP:
 					{				
-						Point pos = convertTouch(event);
+						//log::messageln("SDL_FINGER");
+						Vector2 pos = convertTouch(event);
 						input->sendPointerButtonEvent(
 							MouseButton_Touch,
-							pos.x, pos.y,
+							pos.x, pos.y, event.tfinger.pressure,
 							event.type == SDL_FINGERDOWN ? TouchEvent::TOUCH_DOWN : TouchEvent::TOUCH_UP,
 							input->getTouchByID((int)event.tfinger.fingerId));
 					}				

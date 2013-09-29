@@ -10,7 +10,7 @@
 #if defined(ANDROID)
 #include <android/log.h>
 #define  LOG_TAG    "SDL"
-#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
+#define  LOGD(...)  __android_log_write(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
 
 #else
 #ifdef WIN32
@@ -55,11 +55,8 @@ namespace oxygine
 
 		void out_line(char *str, int i)
 		{
-			//if (i != -1)
-			//	strcpy(str + i, "\n");
 			out(str);
 			out("\n");
-			//LOGD(str);
 		}
 
 		void out_line_prefix(const char *pref, const char* format, va_list args)

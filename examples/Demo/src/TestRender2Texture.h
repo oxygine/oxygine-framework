@@ -68,8 +68,11 @@ public:
 		const Diffuse &df = frame.getDiffuse();
 		r.setDiffuse(df);
 		r.setPrimaryColor(color);
+		float pressure =  te->pressure;
+		//log::messageln("pressure %.2f", pressure);
+		//pressure = pressure * pressure;
 		r.draw(frame.getSrcRect(), 
-			RectF(te->localPosition - Vector2(16, 16), Vector2(32, 32)));
+			RectF(te->localPosition - Vector2(16, 16) * pressure, Vector2(32, 32)  * pressure));
 		r.end();
 	}
 };

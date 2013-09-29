@@ -1,4 +1,5 @@
 #pragma once
+#include "oxygine_include.h"
 #include <vector>
 #include "Object.h"
 #include "oxygine.h"

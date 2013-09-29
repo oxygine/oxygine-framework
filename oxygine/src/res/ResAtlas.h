@@ -1,4 +1,5 @@
 #pragma once
+#include "oxygine_include.h"
 #include "core/file.h"
 #include <map>
 #include "Resource.h"

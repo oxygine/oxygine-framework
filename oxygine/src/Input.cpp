@@ -11,28 +11,14 @@ namespace oxygine
 		return Input::instance.getTouchByIndex(index);
 	}
 
-	void Input::sendPointerButtonEvent(MouseButton button, int x, int y, int type, PointerState *ps)
+	void Input::sendPointerButtonEvent(MouseButton button, float x, float y, float pressure, int type, PointerState *ps)
 	{
-		//log::message("sendPointerButtonEvent %d %d", x, y);
-		/*
-		const Rect &vp = RootActor::instance->getViewport();
-		x -= vp.pos.x;
-		y -= vp.pos.y;
-
 		Vector2 p(x, y);
-		Point ds = core::getDisplaySize();
-		p.x /= vp.size.x;
-		p.y /= vp.size.y;
-
-		p.x *= RootActor::instance->getWidth();
-		p.y *= RootActor::instance->getHeight();
-		*/
-
-		Vector2 p((float)x, (float)y);
 
 		TouchEvent me(type, true, p);
 		me.index = ps->getIndex();
 		me.mouseButton = button;
+		me.pressure = pressure;
 		
 		if (type == TouchEvent::TOUCH_DOWN)
 			ps->_isPressed[button] = true;
@@ -40,16 +26,17 @@ namespace oxygine
 		if (type == TouchEvent::TOUCH_UP)
 			ps->_isPressed[button] = false;
 
-		ps->_position = Point(x, y);
+		ps->_position = p;
 
 		RootActor::instance->handleEvent(&me);
 	}
 
-	void Input::sendPointerMotionEvent(int x, int y, PointerState *ps)
+	void Input::sendPointerMotionEvent(float x, float y, float pressure, PointerState *ps)
 	{
-		TouchEvent me(TouchEvent::MOVE, true, Vector2((float)x, (float)y));
+		TouchEvent me(TouchEvent::MOVE, true, Vector2(x, y));
 		me.index = ps->getIndex();
-		ps->_position = Point(x, y);
+		me.pressure = pressure;
+		ps->_position = Vector2(x, y);
 
 		RootActor::instance->handleEvent(&me);
 	}
@@ -59,7 +46,7 @@ namespace oxygine
 		TouchEvent me(scroll > 0 ? TouchEvent::WHEEL_UP : TouchEvent::WHEEL_DOWN, true);
 		me.index = ps->getIndex();
 
-		ps->_position = Point(0, 0);
+		ps->_position = Vector2(0, 0);
 
 		RootActor::instance->handleEvent(&me);
 	}

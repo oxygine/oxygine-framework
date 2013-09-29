@@ -1,4 +1,5 @@
 #pragma once
+#include "oxygine_include.h"
 #include "VideoDriverGL.h"
 #include "../ShaderProgram.h"
 #include "../file.h"

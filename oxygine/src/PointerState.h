@@ -1,4 +1,5 @@
 #pragma once
+#include "oxygine_include.h"
 #include "core/oxygine.h"
 #include <list>
 
@@ -26,13 +27,13 @@ namespace oxygine
 
 		bool			isPressed(MouseButton mb = MouseButton_Touch) const {return _isPressed[mb];}
 		int				getIndex() const {return _index;}		
-		const Point&	getPosition() const {return _position;}		
+		const Vector2&	getPosition() const {return _position;}		
 		
 	private:
 		friend class Input;
 
 		int _index;
 		bool _isPressed[MouseButton_Count];
-		Point _position;
+		Vector2 _position;
 	};
 }

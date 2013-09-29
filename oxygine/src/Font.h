@@ -1,4 +1,5 @@
 #pragma once
+#include "oxygine_include.h"
 #include "core/Object.h"
 #include "math/Rect.h"
 

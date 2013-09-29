@@ -1,4 +1,5 @@
 #pragma once
+#include "oxygine_include.h"
 #include "ScalarMath.h"
 //#include "math/vector3.h"
 

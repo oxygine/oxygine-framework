@@ -1,4 +1,5 @@
 #pragma once
+#include "oxygine_include.h"
 #include "intrusive_ptr.h"
 #include "closure/closure.h"
 

@@ -1,4 +1,5 @@
 #pragma once
+#include "oxygine_include.h"
 #include <vector>
 #include "FileSystem.h"
 #include "minizip/unzip.h"

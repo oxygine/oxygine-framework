@@ -1,4 +1,5 @@
 #pragma once
+#include "oxygine_include.h"
 #include <list>
 #include "core/Object.h"
 #include "closure/closure.h"

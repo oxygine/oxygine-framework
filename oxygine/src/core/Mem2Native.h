@@ -1,4 +1,5 @@
 #pragma once
+#include "oxygine_include.h"
 #include "ref_counter.h"
 #include <vector>
 #include <list>

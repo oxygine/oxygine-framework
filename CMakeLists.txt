@@ -6,7 +6,6 @@ set(SDL2_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../sdl/include)
 set(SDL2_LIBRARIES sdl2)
 
 set(OXYGINE_DEFINITIONS	
-	-DOXYGINE_SDL
 	-D_CRT_SECURE_NO_WARNINGS)
 
 set(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/oxygine/greenlets/src/*.c)
@@ -44,7 +43,7 @@ include_directories(
 		)
 
 add_definitions(${OXYGINE_DEFINITIONS})
-add_library(oxygine STATIC ${SOURCES})
+add_library(oxygine-framework STATIC ${SOURCES})
 
 
 set(OXYGINE_LIBRARY_DIRS
@@ -71,7 +70,7 @@ endforeach(lib)
 set(OXYGINE_CORE_LIBS 
 	${OXYGINE_CORE_LIBS}
 	${OPENGL_LIBRARIES}
-	oxygine
+	oxygine-framework
 	glew32
 )
 

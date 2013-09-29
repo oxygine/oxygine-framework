@@ -1,4 +1,5 @@
 #pragma once
+#include "oxygine_include.h"
 #include "core/Texture.h"
 #include "core/oxygine.h"
 #include "math/Rect.h"

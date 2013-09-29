@@ -1,4 +1,5 @@
 #pragma once
+#include "oxygine_include.h"
 #include "NativeTexture.h"
 #include "AS3/AS3.h"
 #include <Flash++.h>

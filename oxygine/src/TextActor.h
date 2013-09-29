@@ -1,4 +1,5 @@
 #pragma once
+#include "oxygine_include.h"
 #include "Actor.h"
 #include "core/Renderer.h"
 #include "TextStyle.h"

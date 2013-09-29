@@ -1,4 +1,5 @@
 #pragma once
+#include "oxygine_include.h"
 #include "math/vector3.h"
 #include "math/vector2.h"
 #include "closure/closure.h"
@@ -39,8 +40,8 @@ namespace oxygine
 		int _ids[MAX_TOUCHES];
 
 
-		void sendPointerButtonEvent(MouseButton button, int x, int y, int type, PointerState *);
-		void sendPointerMotionEvent(int x, int y, PointerState *);
+		void sendPointerButtonEvent(MouseButton button, float x, float y, float pressure, int type, PointerState *);
+		void sendPointerMotionEvent(float x, float y, float pressure, PointerState *);
 		void sendPointerWheelEvent(int scroll, PointerState *);
 	};
 }

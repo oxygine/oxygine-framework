@@ -1,4 +1,5 @@
 #pragma once
+#include "oxygine_include.h"
 namespace oxygine
 {
 	class UpdateState

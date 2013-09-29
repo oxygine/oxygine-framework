@@ -1,4 +1,5 @@
 #pragma once
+#include "oxygine_include.h"
 #include <list>
 #include "core/Object.h"
 #include "closure/closure.h"
@@ -70,9 +71,10 @@ namespace oxygine
 		};
 
 
-		TouchEvent(eventType type, bool Bubbles = true, const Vector2 &locPosition = Vector2(0, 0)):Event(type, Bubbles), localPosition(locPosition), position(locPosition), mouseButton(MouseButton_Touch){}
+		TouchEvent(eventType type, bool Bubbles = true, const Vector2 &locPosition = Vector2(0, 0)):Event(type, Bubbles), localPosition(locPosition), position(locPosition), mouseButton(MouseButton_Touch), pressure(1.0f){}
 		Vector2 localPosition;
 		Vector2 position;
+		float pressure;
 
 		const PointerState *getPointer() const;
 

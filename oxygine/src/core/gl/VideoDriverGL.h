@@ -1,4 +1,5 @@
 #pragma once
+#include "oxygine_include.h"
 #include "../VideoDriver.h"
 #include "VertexDeclarationGL.h"
 #include "oxgl.h"

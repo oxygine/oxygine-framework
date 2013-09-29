@@ -1,4 +1,5 @@
 #pragma once
+#include "oxygine_include.h"
 #include "ox_debug.h"
 #include "Texture.h"
 

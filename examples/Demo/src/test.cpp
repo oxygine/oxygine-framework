@@ -85,6 +85,12 @@ void Test::addButton(string id, string txt)
 	button->setPosition(Vector2((float)_x, (float)_y));
 	//button->setPosition(Vector2(150, _y));
 	_y += button->getHeight() + 2.0f;
+
+	if (_y >= getHeight())
+	{
+		_y = 0;
+		_x += button->getWidth() + 10;
+	}
 }
 
 void Test::updateText(string id, string txt)
