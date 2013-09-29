@@ -9,7 +9,7 @@
 #endif
 
 #else
-#ifdef _DEBUG
+#if _DEBUG || DEBUG
 #define OX_DEBUG 1
 #endif
 

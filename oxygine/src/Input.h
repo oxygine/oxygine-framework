@@ -12,7 +12,7 @@ namespace oxygine
 	class PointerState;
 	class EventState;
 	
-	const int MAX_TOUCHES = 15;
+	const int MAX_TOUCHES = 8;
 
 	class Input
 	{

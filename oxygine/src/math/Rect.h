@@ -71,11 +71,11 @@ namespace oxygine
 			point2 rbA = pos + size;
 			point2 rbB = rect.pos + rect.size;
 
-			pos.x = min(rect.pos.x, pos.x);
-			pos.y = min(rect.pos.y, pos.y);			
+			pos.x = std::min(rect.pos.x, pos.x);
+			pos.y = std::min(rect.pos.y, pos.y);
 
-			size.x = max(rbA.x, rbB.x) - pos.x;
-			size.y = max(rbA.y, rbB.y) - pos.y;
+			size.x = std::max(rbA.x, rbB.x) - pos.x;
+			size.y = std::max(rbA.y, rbB.y) - pos.y;
 		}
 
 		point2 getCenter() const {return pos + size/2;}

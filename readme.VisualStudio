@@ -1,0 +1,19 @@
+1. read readme.SDL2
+
+
+2. There is prebuilt solution for VS2010 with Demo example:
+=================================================================================================
+- open solution from oxygine-framework\examples\Demo\win32\
+- select project Demo and set it "as startup project"
+- set working directory for Demo project to: 
+   oxygine-framework\examples\Demo\data\
+- copy all required dlls to this folder
+   oxygine-framework\examples\Demo\data\
+   it is SDL2.dll and dlls from  oxygine-framework\oxygine\third_party\win32\libraries\
+- if you don't have directx sdk installed then find open SDL_config_windows.h and comment it:
+//#define SDL_AUDIO_DRIVER_XAUDIO2    1
+- ready! run!
+=================================================================================================
+
+
+
