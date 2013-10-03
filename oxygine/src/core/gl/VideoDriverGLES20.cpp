@@ -166,9 +166,13 @@ namespace oxygine
 		_currentProgram(0)
 	{
 		_matrixVP.identity();
-		file::Zips zp;
-		zp.add(system_data, system_size);
-		zp.read("system/shader.glsl", _shaderBody);
+        file::read("shader.glsl", _shaderBody, ep_ignore_error);
+        if (!_shaderBody.getSize())
+        {
+            file::Zips zp;
+            zp.add(system_data, system_size);
+            zp.read("system/shader.glsl", _shaderBody);
+        }
 		_us = UberShaderProgram(_shaderBody);
 	}
 

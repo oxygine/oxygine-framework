@@ -1,5 +1,4 @@
 
-#include "oxygine_include.h"
 #pragma once
 #ifndef SYSTEM_DATA
 #define SYSTEM_DATA

@@ -17,7 +17,7 @@ namespace oxygine
 	
 	Mutex mutexDebugList;
 
-#if POOL_ALLOCATOR
+#if OBJECT_POOL_ALLOCATOR
 	void* PoolObject::operator new(size_t size)
 	{
 		return fastAlloc(size);			 

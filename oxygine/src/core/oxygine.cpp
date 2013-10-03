@@ -67,14 +67,7 @@ extern "C"
 
 namespace oxygine
 {
-
 	Mutex mutexAlloc;
-#ifdef OX_DEBUG
-#define USE_MEMORY_POOL
-#else
-#define USE_MEMORY_POOL
-#endif
-
 
 	void *fastAlloc(size_t size)
 	{		
@@ -580,6 +573,13 @@ namespace oxygine
 			delete IVideoDriver::instance;
 			IVideoDriver::instance = 0;
 
+#ifdef OXYGINE_SDL
+			SDL_GL_DeleteContext(_context);
+			SDL_DestroyWindow(_window);
+			SDL_Quit();
+#endif
+
+			spActor temp = RootActor::instance;
 			RootActor::instance->cleanup();
 			RootActor::instance = 0;	
 

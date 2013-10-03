@@ -54,7 +54,7 @@ lowp vec4 get_color()
 
 
 #ifdef MASK
-	lowp vec2 uv2 = clamp(result_uv2, clip_mask.xy, clip_mask.zw);
+	mediump vec2 uv2 = clamp(result_uv2, clip_mask.xy, clip_mask.zw);
 	lowp vec4 mask = texture2D(mask_texture, uv2);
 
 #ifdef SEPARATE_ALPHA

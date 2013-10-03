@@ -12,6 +12,8 @@ namespace oxygine
 	class VideoDriverGL: public IVideoDriver
 	{
 	public:
+		VideoDriverGL();
+
 		void	getViewport(Rect &r) const;
 		int		getMaxVertices() const;
 		bool	getScissorRect(Rect &) const;
@@ -22,6 +24,7 @@ namespace oxygine
 
 	protected:
 		void _begin(const Rect &viewport, const Color *clearColor);
+		GLint _prevFBO;
 
 		mutable VertexDeclarations<VertexDeclarationGL> _vdeclarations;
 	};

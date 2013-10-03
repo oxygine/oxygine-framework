@@ -262,6 +262,9 @@ class atlas_Processor(process.Process):
                         frame_bbox = a.getbbox()
                     else:
                         frame_bbox = frame_image.getbbox()
+			
+		    if not frame_bbox:
+			frame_bbox = (0,0,0,0)
                         
                     w = frame_bbox[2] - frame_bbox[0]
                     h = frame_bbox[3] - frame_bbox[1]                    

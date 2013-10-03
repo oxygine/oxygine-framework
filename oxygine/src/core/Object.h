@@ -8,12 +8,12 @@ namespace oxygine
 {
 	using namespace std;
 
-#define POOL_ALLOCATOR 1
+#define OBJECT_POOL_ALLOCATOR 0
 
 	class PoolObject
 	{
 	public:
-#if POOL_ALLOCATOR
+#if OBJECT_POOL_ALLOCATOR
 		void* operator new(size_t size);
 		void operator delete(void *data, size_t size);
 #endif

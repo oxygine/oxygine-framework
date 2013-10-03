@@ -6,6 +6,11 @@
 
 namespace oxygine
 {
+	VideoDriverGL::VideoDriverGL():_prevFBO(0)
+	{
+
+	}
+
 	int VideoDriverGL::getMaxVertices() const
 	{
 		int m = _indices16.size()/3 * 2;
@@ -51,9 +56,11 @@ namespace oxygine
 	{
 		if (!rt)
 		{
-			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+			glBindFramebuffer(GL_FRAMEBUFFER, _prevFBO);
 			return;
 		}
+
+		glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_prevFBO);
 
 		NativeTextureGLES *gl = safeCast<NativeTextureGLES*>(rt.get());		
 		glBindFramebuffer(GL_FRAMEBUFFER, gl->getFboID());

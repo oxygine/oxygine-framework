@@ -249,8 +249,7 @@ namespace oxygine
 		s << _debugText;
 		_debugText = "";
 
-		const string &st = s.str();
-		_text->setText(st);
+		_text->setText(s.str());
 
 		
 		setHeight(_text->getTextRect().size.y + 2.0f);
