@@ -11,6 +11,7 @@ namespace oxygine
 		~VideoDriverGLES11();
 
 		spNativeTexture createTexture();
+		void restore(){}
 
 		void begin(const Matrix &proj, const Matrix &view, const Rect &viewport, const Color *clearColor);
 		

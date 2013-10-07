@@ -199,13 +199,15 @@ namespace oxygine
 	{
 		void lostContext()
 		{
+#if OXYGINE_SDL
 			return;
+			
 			log::messageln("lost context");
-#if 1
+
 			SDL_GL_DeleteContext(_context);
 			_context = SDL_GL_CreateContext(_window);
 			initGLExtensions();
-#endif			
+
 
 			IVideoDriver::instance->restore();
 			Renderer::initialize();			
@@ -214,6 +216,7 @@ namespace oxygine
 			getRoot()->dispatchEvent(&ev);
 
 			Restorable::restoreAll(); 
+#endif			
 		}
 
 		void init(init_desc *desc_ptr)
