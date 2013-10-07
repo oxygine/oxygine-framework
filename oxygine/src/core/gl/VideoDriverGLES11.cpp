@@ -92,6 +92,8 @@ namespace oxygine
 
 	void VideoDriverGLES11::setDefaultSettings()
 	{
+		_blend = blend_disabled;
+
 		glDisable(GL_ALPHA_TEST);
 
 		glDisable(GL_DEPTH_TEST);

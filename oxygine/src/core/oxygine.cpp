@@ -4,13 +4,13 @@
 #include "log.h"
 #include "winnie_alloc/winnie_alloc.h"
 #include "VideoDriver.h"
-
+#include "res/CreateResourceContext.h"
 #include "res/Resources.h"
 
 #include "res/ResBuffer.h"
 #include "res/ResFontBM.h"
 #include "res/ResAtlas.h"
-
+#include "MemoryTexture.h"
 #include "PointerState.h"
 #include "Input.h"
 
@@ -197,6 +197,25 @@ namespace oxygine
 #endif
 	namespace core
 	{
+		void lostContext()
+		{
+			return;
+			log::messageln("lost context");
+#if 1
+			SDL_GL_DeleteContext(_context);
+			_context = SDL_GL_CreateContext(_window);
+			initGLExtensions();
+#endif			
+
+			IVideoDriver::instance->restore();
+			Renderer::initialize();			
+
+			Event ev(RootActor::LOST_CONTEXT);
+			getRoot()->dispatchEvent(&ev);
+
+			Restorable::restoreAll(); 
+		}
+
 		void init(init_desc *desc_ptr)
 		{
 			log::messageln("initialize oxygine");
@@ -275,8 +294,7 @@ namespace oxygine
 
 
 	#ifndef USE_EGL
-			SDL_GLContext context = SDL_GL_CreateContext(_window);
-			_context = context;
+			_context = SDL_GL_CreateContext(_window);
 
 			initGLExtensions();
 	#else
@@ -412,15 +430,8 @@ namespace oxygine
 		}
 #endif
 
-		bool update()
+		void checkGLError()
 		{
-			Renderer::statsPrev = Renderer::statsCurrent;
-			Renderer::statsCurrent = Renderer::Stats();
-
-	#ifdef __S3E__
-			IwGLSwapBuffers();
-
-			/* Check for error conditions. */
 			int gl_error = glGetError();
 			if (gl_error != GL_NO_ERROR)
 			{
@@ -430,7 +441,19 @@ namespace oxygine
 					exit(0);
 				}
 			}
+		}
 
+		bool update()
+		{
+			Renderer::statsPrev = Renderer::statsCurrent;
+			Renderer::statsCurrent = Renderer::Stats();
+
+			
+
+	#ifdef __S3E__
+			IwGLSwapBuffers();
+
+			checkGLError();
 
 			s3eDeviceYield(0);
 			s3eKeyboardUpdate();
@@ -483,9 +506,14 @@ namespace oxygine
 						if (focus != newFocus)
 						{
 							focus = newFocus;
-							Event ev(focus ? RootActor::ACTIVATE : RootActor::DEACTIVATE);
-							getRoot()->dispatchEvent(&ev);
 							log::messageln("focus: %d", (int)focus);
+							Event ev(focus ? RootActor::ACTIVATE : RootActor::DEACTIVATE);
+							if (getRoot())
+								getRoot()->dispatchEvent(&ev);
+							if (focus)
+							{
+								lostContext();
+							}							
 						}
 						//log::messageln("SDL_SYSWMEVENT %d", (int)event.window.event);
 						break;
@@ -545,8 +573,14 @@ namespace oxygine
 #else
 			//if (isActive())
 			{
-				SDL_GL_MakeCurrent(_window, _context);
+				int status = SDL_GL_MakeCurrent(_window, _context);
+				if (status)
+				{
+					log::error("SDL_GL_MakeCurrent(): %s", SDL_GetError());
+				}
 				SDL_GL_SwapWindow(_window);
+
+				checkGLError();
 			}
 
 #endif

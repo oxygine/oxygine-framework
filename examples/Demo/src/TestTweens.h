@@ -108,8 +108,11 @@ public:
 		string str = "unknown";
 		switch(_ease)
 		{
+        case Tween::ease_unknown:
+            str = "ease: unknown";
+            break;
 		case Tween::ease_linear:
-			str = "ease: Linear";
+			str = "ease: linear";
 			break;
 		case Tween::ease_inExpo:
 			str = "ease: inExpo";
@@ -194,9 +197,9 @@ public:
 		if (id == "TweenQueue")
 		{
 			spTweenQueue queue = new TweenQueue();			
-			queue->add(createTween(TweenAnim(resources.getResAnim("anim")), 500, 1))
-				->add(createTween(Actor::TweenRotation(_sprite->getRotation() + (float)MATH_PI * 2.0f), 500, 1, false, 1000))
-				->add(createTween(Actor::TweenScale(2), 500, 1, true));
+			queue->add(createTween(TweenAnim(resources.getResAnim("anim")), 500, 1));
+			queue->add(createTween(Actor::TweenRotation(_sprite->getRotation() + (float)MATH_PI * 2.0f), 500, 1, false, 1000));
+			queue->add(createTween(Actor::TweenScale(2), 500, 1, true));
 			_addTween(queue);
 		}
 

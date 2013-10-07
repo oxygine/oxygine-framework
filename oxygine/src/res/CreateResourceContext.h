@@ -2,10 +2,12 @@
 #include "oxygine_include.h"
 #include <string>
 #include "pugixml/pugixml.hpp"
-
+#include "core/Object.h"
 
 namespace oxygine
 {
+	using namespace std;
+
 	class Resources;
 	/**internal class*/
 	class CreateResourceContext//todo rename
@@ -34,6 +36,24 @@ namespace oxygine
 	{
 	public:
 		virtual ~LoadResourcesContext(){}
+
 		virtual void createTexture(spMemoryTexture src, spNativeTexture dest) = 0;
+		virtual bool isNeedProceed(spNativeTexture t) = 0;
+	};	
+
+	class SingleThreadResourcesContext: public LoadResourcesContext
+	{
+	public:
+		static SingleThreadResourcesContext instance;
+		void createTexture(spMemoryTexture src, spNativeTexture dest);
+		bool isNeedProceed(spNativeTexture t);
+	};
+
+	class RestoreResourcesContext: public LoadResourcesContext
+	{
+	public:
+		static RestoreResourcesContext instance;
+		void createTexture(spMemoryTexture src, spNativeTexture dest);
+		bool isNeedProceed(spNativeTexture t);
 	};
 }

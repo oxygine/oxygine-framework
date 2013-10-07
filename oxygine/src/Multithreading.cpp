@@ -55,6 +55,11 @@ namespace oxygine
 			_m2n->push(src, dest);
 		}
 
+		bool isNeedProceed(spNativeTexture t)
+		{
+			return t->getHandle() == 0;
+		}
+
 	private:
 		Mem2Native *_m2n;
 	};

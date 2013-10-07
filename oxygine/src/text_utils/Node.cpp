@@ -146,10 +146,10 @@ namespace oxygine
 		{
 			if (!_data.empty())
 			{
-				size_t i = 0;
+				int i = 0;
 				Font *font = rd.getStyle().font;
 
-				while (i != _data.size())
+				while (i != (int)_data.size())
 				{
 					Symbol &s = _data[i];
 					//wchar_t c = s.c;

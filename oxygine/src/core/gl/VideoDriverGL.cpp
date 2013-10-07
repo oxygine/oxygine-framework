@@ -68,6 +68,7 @@ namespace oxygine
 
 	void VideoDriverGL::_begin(const Rect &viewport, const Color *clearColor)
 	{
+	//	log::messageln("begin %d %d %d %d", viewport.pos.x, viewport.pos.y, viewport.size.x, viewport.size.y);
 		glViewport(viewport.getX(), viewport.getY(), viewport.getWidth(), viewport.getHeight());
 		glDisable(GL_SCISSOR_TEST);
 		if (clearColor)

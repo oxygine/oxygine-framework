@@ -32,6 +32,7 @@
 		0472E38017F8A2EC0016A832 /* MaskedSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 0472E37C17F8A2EC0016A832 /* MaskedSprite.h */; };
 		0472E38117F8A2EC0016A832 /* oxygine_include.h in Headers */ = {isa = PBXBuildFile; fileRef = 0472E37D17F8A2EC0016A832 /* oxygine_include.h */; };
 		0472E38217F8A2EC0016A832 /* oxygine-framework.h in Headers */ = {isa = PBXBuildFile; fileRef = 0472E37E17F8A2EC0016A832 /* oxygine-framework.h */; };
+		049B64AB1803054300EC333E /* CreateResourceContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B64AA1803054300EC333E /* CreateResourceContext.cpp */; };
 		C38704A217C0C6AC00015CA8 /* VideoDriverGLES11.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C38704A017C0C6AC00015CA8 /* VideoDriverGLES11.cpp */; };
 		C38704A317C0C6AC00015CA8 /* VideoDriverGLES11.h in Headers */ = {isa = PBXBuildFile; fileRef = C38704A117C0C6AC00015CA8 /* VideoDriverGLES11.h */; };
 		C38704A617C0C71700015CA8 /* VideoDriverGLES20.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C38704A417C0C71700015CA8 /* VideoDriverGLES20.cpp */; };
@@ -215,6 +216,8 @@
 		0472E37C17F8A2EC0016A832 /* MaskedSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MaskedSprite.h; path = ../../../src/MaskedSprite.h; sourceTree = "<group>"; };
 		0472E37D17F8A2EC0016A832 /* oxygine_include.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = oxygine_include.h; path = ../../../src/oxygine_include.h; sourceTree = "<group>"; };
 		0472E37E17F8A2EC0016A832 /* oxygine-framework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "oxygine-framework.h"; path = "../../../src/oxygine-framework.h"; sourceTree = "<group>"; };
+		048B7AAB17FDE25E00AE2D0B /* shader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; name = shader.glsl; path = ../../../system_data/original/system/shader.glsl; sourceTree = "<group>"; };
+		049B64AA1803054300EC333E /* CreateResourceContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CreateResourceContext.cpp; sourceTree = "<group>"; };
 		C38704A017C0C6AC00015CA8 /* VideoDriverGLES11.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VideoDriverGLES11.cpp; path = gl/VideoDriverGLES11.cpp; sourceTree = "<group>"; };
 		C38704A117C0C6AC00015CA8 /* VideoDriverGLES11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VideoDriverGLES11.h; path = gl/VideoDriverGLES11.h; sourceTree = "<group>"; };
 		C38704A417C0C71700015CA8 /* VideoDriverGLES20.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VideoDriverGLES20.cpp; path = gl/VideoDriverGLES20.cpp; sourceTree = "<group>"; };
@@ -431,6 +434,7 @@
 		C3E86F4116EBC8A500052915 = {
 			isa = PBXGroup;
 			children = (
+				048B7AAB17FDE25E00AE2D0B /* shader.glsl */,
 				C38EC22B1709600E00568283 /* OpenGLES.framework */,
 				C3E86F5316EBC8C200052915 /* src */,
 				C3E86F4D16EBC8A500052915 /* Products */,
@@ -616,6 +620,7 @@
 		C3E86FBB16EBC8EB00052915 /* res */ = {
 			isa = PBXGroup;
 			children = (
+				049B64AA1803054300EC333E /* CreateResourceContext.cpp */,
 				C3E86FBC16EBC8EB00052915 /* .oxbuild */,
 				C3E86FBD16EBC8EB00052915 /* CreateResourceContext.h */,
 				C3E86FBE16EBC8EB00052915 /* ResAnim.cpp */,
@@ -942,6 +947,7 @@
 				C38704A217C0C6AC00015CA8 /* VideoDriverGLES11.cpp in Sources */,
 				0472E35B17F8A1A80016A832 /* log.cpp in Sources */,
 				C38704A617C0C71700015CA8 /* VideoDriverGLES20.cpp in Sources */,
+				049B64AB1803054300EC333E /* CreateResourceContext.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1025,6 +1031,7 @@
 					OXYGINE_SDL,
 					OX_DEBUG,
 				);
+				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = (
 					../../../greenlets/src,
 					"$(SDL)/include/",
@@ -1040,6 +1047,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
+				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = (
 					../../../greenlets/src,
 					"$(SDL)/include/",

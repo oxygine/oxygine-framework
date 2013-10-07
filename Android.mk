@@ -27,11 +27,6 @@ LOCAL_SRC_FILES := \
 				$(subst $(LOCAL_PATH)/,, \
 				$(wildcard $(OXYGINE_SRC)/closure/*.cpp) \
 				$(wildcard $(OXYGINE_SRC)/core/*.cpp) \
-				$(OXYGINE_SRC)/core/gl/NativeTextureGLES.cpp \
-				$(OXYGINE_SRC)/core/gl/oxgl.cpp \
-				$(OXYGINE_SRC)/core/gl/VertexDeclarationGL.cpp \
-				$(OXYGINE_SRC)/core/gl/VideoDriverGL.cpp \
-				$(OXYGINE_SRC)/core/gl/VideoDriverGLES20.cpp \
 				$(wildcard $(OXYGINE_SRC)/math/*.cpp) \
 				$(wildcard $(OXYGINE_SRC)/pugixml/*.cpp) \
 				$(wildcard $(OXYGINE_SRC)/res/*.cpp) \
@@ -44,6 +39,13 @@ LOCAL_SRC_FILES := \
 				$(wildcard $(OXYGINE_SRC)/../greenlets/src/*.c) \
 				)
 
+LOCAL_SRC_FILES += \
+				$(OXYGINE_SRC)/core/gl/NativeTextureGLES.cpp \
+				$(OXYGINE_SRC)/core/gl/oxgl.cpp \
+				$(OXYGINE_SRC)/core/gl/VertexDeclarationGL.cpp \
+				$(OXYGINE_SRC)/core/gl/VideoDriverGL.cpp \
+				$(OXYGINE_SRC)/core/gl/VideoDriverGLES20.cpp \
+
 SDL_PATH := $(LOCAL_PATH)/../SDL/include/
 THIRD_PARTY := $(LOCAL_PATH)/oxygine/third_party/android/
 
@@ -53,9 +55,10 @@ LOCAL_C_INCLUDES := $(OXYGINE_SRC)/ \
 					$(THIRD_PARTY)/libjpeg/ \
 					$(THIRD_PARTY)/libpng/
 
+LOCAL_C_FLAGS := -DUSE_FILE32API
+LOCAL_EXPORT_C_FLAGS := $(LOCAL_C_FLAGS)
 LOCAL_EXPORT_LDLIBS += -lGLESv2 -llog -lz
 LOCAL_EXPORT_C_INCLUDES += $(LOCAL_C_INCLUDES)
-LOCAL_EXPORT_CFLAGS += $(LOCAL_CFLAGS)
 LOCAL_WHOLE_STATIC_LIBRARIES := ox_libpng_static ox_libjpeg_static
 					
 include $(BUILD_STATIC_LIBRARY)

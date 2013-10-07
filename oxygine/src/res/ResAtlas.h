@@ -39,6 +39,8 @@ namespace oxygine
 		const atlas& getAtlas(int i) const {return _atlasses[i];}
 
 	protected:
+		void _restore(Restorable *r, void *user);
+
 		void _load(LoadResourcesContext *);
 		void _unload();
 

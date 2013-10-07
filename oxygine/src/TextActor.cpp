@@ -189,6 +189,7 @@ namespace oxygine
 	{
 		switch (v)
 		{
+                
 		case TextStyle::VALIGN_BASELINE:
 			return "baseline";
 		case TextStyle::VALIGN_TOP:
@@ -205,6 +206,8 @@ namespace oxygine
 	{
 		switch (v)
 		{
+        case TextStyle::HALIGN_DEFAULT:
+            return "default";
 		case TextStyle::HALIGN_LEFT:
 			return "left";
 		case TextStyle::HALIGN_RIGHT:

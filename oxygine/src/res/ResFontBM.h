@@ -8,6 +8,7 @@ namespace oxygine
 {
 	class Resources;
 	class CreateResourceContext;
+	class Restorable;
 
 	DECLARE_SMART(NativeTexture, spNativeTexture);
 
@@ -28,16 +29,20 @@ namespace oxygine
 
 		Font *getFont(const char *name = 0, int size = 0) const;
 
-	private:		
-		void _load(LoadResourcesContext *);
-		void _unload();
-		void _createFont(CreateResourceContext *context, bool sd, bool bmc);
-
+	private:
 		struct page
 		{
 			string file;
 			spNativeTexture texture;
 		};
+
+		void _loadPage(const page &p, LoadResourcesContext *);
+		void _load(LoadResourcesContext *);
+		void _unload();
+		void _restore(Restorable *, void*);
+		void _createFont(CreateResourceContext *context, bool sd, bool bmc);
+
+		
 
 		typedef vector<page> pages;
 		pages _pages;

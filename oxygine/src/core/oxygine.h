@@ -39,7 +39,7 @@ namespace oxygine
 	{
 		if (!ptr)
 			return 0;
-#ifdef OX_DEBUG
+#ifdef OXYGINE_DEBUG_SAFECAST
 		dest cast = dynamic_cast<dest>(ptr);
 		OX_ASSERT(cast && "can't cast pointer");
 		return cast;
@@ -52,7 +52,7 @@ namespace oxygine
 	{
 		if (!p)
 			return 0;
-#ifdef OX_DEBUG
+#ifdef OXYGINE_DEBUG_SAFECAST
 		intrusive_ptr<T> t = dynamic_cast<T *>(p.get());
 		OX_ASSERT(t && "can't cast pointer");
 #endif

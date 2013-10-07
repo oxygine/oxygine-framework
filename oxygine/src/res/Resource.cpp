@@ -1,6 +1,7 @@
 #include "Resource.h"
 #include <stdio.h>
 #include "utils/stringUtils.h"
+#include "CreateResourceContext.h"
 
 namespace oxygine
 {
@@ -16,6 +17,9 @@ namespace oxygine
 
 	void Resource::load(LoadResourcesContext *context /* = 0 */)
 	{
+		if (!context)
+			context = &SingleThreadResourcesContext::instance;
+
 		if (_loadCounter == 0)
 			_load(context);
 

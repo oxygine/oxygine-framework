@@ -230,7 +230,7 @@ namespace oxygine
 	
 	bool _showTexel2PixelErrors = false;
 
-#ifdef _DEBUG
+#ifdef OXYGINE_DEBUG_T2P
 	void Renderer::showTexel2PixelErrors(bool show)
 	{
 		_showTexel2PixelErrors = show;
@@ -309,7 +309,7 @@ namespace oxygine
 			vertexPCT2 v[4];
 			fillQuadT(v, srcRect, destRect, _transform, color);		
 
-#ifdef _DEBUG
+#ifdef OXYGINE_DEBUG_T2P
 			if (b.base != white && _showTexel2PixelErrors)
 			{
 				Matrix vp = _view * _proj;

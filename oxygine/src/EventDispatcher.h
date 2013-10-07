@@ -8,11 +8,8 @@ namespace oxygine
 {
 	typedef int eventType;
 	DECLARE_SMART(EventDispatcher, spEventDispatcher);	
-
-
-
-	//DECLARE_SMART(Event, spNewEvent);
-	class Event//: public Object
+	
+	class Event
 	{
 	public:
 		enum {COMPLETE = makefourcc('_', 'E', 'C', 'M')};
@@ -30,10 +27,13 @@ namespace oxygine
 		bool stopsImmediatePropagation;
 		bool stopsPropagation;
 
+		void *userData;
+		spObject userDataObject;
+
 		spEventDispatcher target;
 		spEventDispatcher currentTarget;// = object with our listener
 
-		Event(eventType Type, bool Bubbles = false):type(Type), phase(phase_target), bubbles(Bubbles), stopsImmediatePropagation(false), stopsPropagation(false){}
+		Event(eventType Type, bool Bubbles = false):userData(0), type(Type), phase(phase_target), bubbles(Bubbles), stopsImmediatePropagation(false), stopsPropagation(false){}
 
 		virtual ~Event(){}
 

@@ -136,8 +136,6 @@ namespace oxygine
 
 	void Tween::callDone(Actor &actor, const UpdateState *us)
 	{
-		OX_ASSERT(_client);
-
 		if (_remove)
 		{
 			actor.detach();
@@ -225,14 +223,14 @@ namespace oxygine
 	}
 
 	
-	TweenQueue *TweenQueue::add(spTween t)
+	spTween TweenQueue::add(spTween t)
 	{
 		OX_ASSERT(t);
 		if (!t)
 			return 0;
 
 		_tweens.append(t);		
-		return this;
+		return t;
 	}
 
 	bool TweenQueue::start(Actor &actor)
@@ -261,6 +259,7 @@ namespace oxygine
 			bool done = _current->update(actor, us);
 			if (done)
 			{
+				_current->callDone(actor, &us);
 				_current = next;
 			}
 			else

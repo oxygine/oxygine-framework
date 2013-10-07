@@ -8,7 +8,7 @@ namespace oxygine
 {
 	using namespace std;
 
-#define OBJECT_POOL_ALLOCATOR 0
+//#define OBJECT_POOL_ALLOCATOR 0
 
 	class PoolObject
 	{

@@ -9,8 +9,8 @@ namespace oxygine
 	class ShaderProgramGL: public ShaderProgram
 	{
 	public:
-		ShaderProgramGL():_program(0){}
-		~ShaderProgramGL(){}
+		ShaderProgramGL();
+		~ShaderProgramGL();
 
 		void init(GLuint p)
 		{
@@ -25,6 +25,11 @@ namespace oxygine
 		void bind()
 		{
 			glUseProgram(_program);
+		}
+
+		void invalidate()
+		{
+			_program = 0;
 		}
 
 		void setUniform(const char *id, const Vector4 *v, int num)
@@ -72,6 +77,8 @@ namespace oxygine
 		UberShaderProgram(const file::buffer &baseShader, const char *prepend="", const char *append = "");
 		~UberShaderProgram();
 
+		void restore();
+
 		void setShaderUniformsCallback(ShaderUniformsCallback cb){_cb = cb;}
 
 		ShaderUniformsCallback	getShaderUniformsCallback() const {return _cb;}
@@ -81,6 +88,8 @@ namespace oxygine
 		shader _shaders[SIZE];
 		file::buffer _data;
 		ShaderUniformsCallback _cb;		
+
+		void releaseShaders();
 
 		unsigned int createShader(unsigned int type, const char* data, const char *prepend, const char *append);
 		unsigned int createProgram(int vs, int fs, const VertexDeclarationGL *decl);
@@ -92,6 +101,8 @@ namespace oxygine
 	public:
 		VideoDriverGLES20();
 		~VideoDriverGLES20();
+
+		void restore();
 
 		spNativeTexture createTexture();
 		const file::buffer& getShaderBody() const {return _shaderBody;}

@@ -16,6 +16,17 @@
 
 namespace oxygine
 {	
+	ShaderProgramGL::ShaderProgramGL():_program(0)
+	{
+
+	}
+
+	ShaderProgramGL::~ShaderProgramGL()
+	{
+		if (_program)
+			glDeleteProgram(_program);
+	}
+
 	void printShaderInfoLog(GLuint shader)
 	{
 		GLint length = 0;
@@ -24,7 +35,8 @@ namespace oxygine
 		{
 			char* buffer = (char*)malloc( sizeof(char) * length ) ;
 			glGetShaderInfoLog(shader, length, NULL, buffer);
-			log::error("%s", buffer);
+			if (buffer[0])
+				log::error("%s", buffer);
 			free(buffer);
 
 			GLint success;
@@ -48,16 +60,34 @@ namespace oxygine
 		_data.data.push_back(0);
 	}
 
-	UberShaderProgram::~UberShaderProgram()
+	void UberShaderProgram::releaseShaders()
 	{
 		for (int i = 0; i < SIZE; ++i)
 		{
 			shader &s = _shaders[i];
 			delete s.program;
+			s.program = 0;
 		}
 	}
 
+	UberShaderProgram::~UberShaderProgram()
+	{
+		releaseShaders();
+	}
 
+	void UberShaderProgram::restore()
+	{
+		for (int i = 0; i < SIZE; ++i)
+		{
+			shader &s = _shaders[i];
+			if (s.program)
+			{
+				s.program->invalidate();
+				delete s.program;
+				s.program = 0;
+			}			
+		}
+	}
 
 	UberShaderProgram::shader *UberShaderProgram::getShaderProgram(int flags)
 	{
@@ -179,6 +209,12 @@ namespace oxygine
 	VideoDriverGLES20::~VideoDriverGLES20()
 	{
 		glUseProgram(0);
+	}
+
+	void VideoDriverGLES20::restore()
+	{
+		_us.restore();
+		setDefaultSettings();		
 	}
 
 	spNativeTexture VideoDriverGLES20::createTexture()
@@ -328,6 +364,8 @@ namespace oxygine
 
 	void VideoDriverGLES20::setDefaultSettings()
 	{
+		_currentProgram = 0;
+		_blend = blend_default;
 		glDisable(GL_DEPTH_TEST);
 		glDepthMask(GL_FALSE);
 		glCullFace(GL_FRONT_AND_BACK);

@@ -458,14 +458,30 @@ namespace oxygine
 		LOGD("atlas size: %d %d", im.w, im.h);
 
 		//Object::dumpCreatedObjects();
-		if (load_context)			
+		load_context->createTexture(mt, nt);
+	}
+
+	void ResAtlas::_restore(Restorable *r, void *)
+	{
+		NativeTexture *texture = (NativeTexture *)r->_getRestorableObject();
+
+		for (atlasses::iterator i = _atlasses.begin(); i != _atlasses.end(); ++i)
 		{
-			load_context->createTexture(mt, nt);
-		}
-		else
-		{
-			nt->init(mt->lock(), false);
-		}
+			atlas &atl = *i;
+			if(atl.base.get() == texture)
+			{
+				load_texture(atl.base_path, atl.base, &RestoreResourcesContext::instance);
+				atl.base->reg(CLOSURE(this, &ResAtlas::_restore), 0);
+				break;
+			}
+
+			if(atl.alpha.get() == texture)
+			{
+				load_texture(atl.alpha_path, atl.alpha, &RestoreResourcesContext::instance);
+				atl.alpha->reg(CLOSURE(this, &ResAtlas::_restore), 0);
+				break;
+			}
+		}		
 	}
 
 	void ResAtlas::_load(LoadResourcesContext *load_context)
@@ -473,12 +489,17 @@ namespace oxygine
 		for (atlasses::iterator i = _atlasses.begin(); i != _atlasses.end(); ++i)
 		{
 			atlas &atl = *i;
-			if (atl.base->getHandle())
+			if (!load_context->isNeedProceed(atl.base))
 				continue;
 			
 			load_texture(atl.base_path, atl.base, load_context);
+			atl.base->reg(CLOSURE(this, &ResAtlas::_restore), 0);
+
 			if (atl.alpha)
+			{
 				load_texture(atl.alpha_path, atl.alpha, load_context);
+				atl.alpha->reg(CLOSURE(this, &ResAtlas::_restore), 0);
+			}
 		}
 	}
 
@@ -487,11 +508,11 @@ namespace oxygine
 		for (atlasses::iterator i = _atlasses.begin(); i != _atlasses.end(); ++i)
 		{
 			atlas &atl = *i;
-			if (atl.base)
+			if (atl.base)					
 				atl.base->release();
+			
 			if (atl.alpha)
 				atl.alpha->release();
 		}
 	}
-	
 }

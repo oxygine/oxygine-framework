@@ -1,5 +1,6 @@
 #pragma once
 #include "oxygine_include.h"
+#include "closure/closure.h"
 #include "ox_debug.h"
 #include "Texture.h"
 
@@ -12,8 +13,31 @@ namespace oxygine
 
 	typedef void* nativeTextureHandle;
 
+	class Restorable
+	{
+	public:
+		Restorable();
+		virtual ~Restorable();
+
+		static void restoreAll();
+				
+		virtual void *_getRestorableObject() = 0;
+
+		void restore();
+		typedef Closure<void (Restorable *, void *userData)> RestoreCallback;
+
+		void reg(RestoreCallback cb, void *user);
+		void unreg();
+
+	protected:		
+
+	private:		
+		RestoreCallback _cb;
+		void *_userData;		
+		bool _registered;
+	};
 	
-	class NativeTexture: public Texture
+	class NativeTexture: public Texture, public Restorable
 	{
 	public:
 		NativeTexture():_vram(0){}
@@ -21,6 +45,7 @@ namespace oxygine
 		virtual void init(int w, int h, TextureFormat tf, bool renderTarget = false) = 0;
 		virtual void init(const ImageData &src, bool sysMemCopy) = 0;
 		virtual void release() = 0;
+		virtual void invalidate() = 0;
 
 		virtual ImageData lock(lock_flags, const Rect *src) = 0;
 		virtual void unlock() = 0;
@@ -51,6 +76,7 @@ namespace oxygine
 		void init(int w, int h, TextureFormat tf, bool renderTarget = false);
 		void init(const ImageData &src, bool sysMemCopy);
 		void release();
+		void invalidate();
 
 		ImageData lock(lock_flags, const Rect *src);
 		void unlock();

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		048B7AAD17FDEC3D00AE2D0B /* shader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 048B7AAC17FDEC3D00AE2D0B /* shader.glsl */; };
 		04998CFA17F8A933003441C3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 04998CF817F8A933003441C3 /* InfoPlist.strings */; };
 		04998D2B17F8A94F003441C3 /* demo in Resources */ = {isa = PBXBuildFile; fileRef = 04998D2717F8A94F003441C3 /* demo */; };
 		04998D2C17F8A94F003441C3 /* ext in Resources */ = {isa = PBXBuildFile; fileRef = 04998D2817F8A94F003441C3 /* ext */; };
@@ -68,6 +69,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		048B7AAC17FDEC3D00AE2D0B /* shader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = shader.glsl; path = "/Users/Mac/dev/oxygine-framework/oxygine/SDL/oxygine_xcode/oxygine/../../../system_data/original/system/shader.glsl"; sourceTree = "<absolute>"; };
 		04998CEC17F8A933003441C3 /* OxygineDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OxygineDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04998CF717F8A933003441C3 /* OxygineDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OxygineDemo-Info.plist"; sourceTree = "<group>"; };
 		04998CF917F8A933003441C3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 		04998CF617F8A933003441C3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				048B7AAC17FDEC3D00AE2D0B /* shader.glsl */,
 				04998D2717F8A94F003441C3 /* demo */,
 				04998D2817F8A94F003441C3 /* ext */,
 				04998D2917F8A94F003441C3 /* images */,
@@ -358,6 +361,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				048B7AAD17FDEC3D00AE2D0B /* shader.glsl in Resources */,
 				04998D2E17F8A94F003441C3 /* xmls in Resources */,
 				04998D2C17F8A94F003441C3 /* ext in Resources */,
 				04998D2B17F8A94F003441C3 /* demo in Resources */,
@@ -510,6 +514,8 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OxygineDemo/OxygineDemo-Prefix.pch";
+				GCC_WARN_UNUSED_VALUE = YES;
+				GCC_WARN_UNUSED_VARIABLE = NO;
 				INFOPLIST_FILE = "OxygineDemo/OxygineDemo-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -531,6 +537,8 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OxygineDemo/OxygineDemo-Prefix.pch";
+				GCC_WARN_UNUSED_VALUE = YES;
+				GCC_WARN_UNUSED_VARIABLE = NO;
 				INFOPLIST_FILE = "OxygineDemo/OxygineDemo-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

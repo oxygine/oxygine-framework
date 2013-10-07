@@ -70,7 +70,7 @@ namespace oxygine
 
 	ObjectBase::ObjectBase(const ObjectBase &src):__id(0), __name(0)
 	{
-#ifdef OX_DEBUG
+#ifdef OXYGINE_DEBUG_OBJECTS
 		{
 			MutexAutoLock m(mutexDebugList);
 			__objects.push_back(this);
@@ -93,7 +93,7 @@ namespace oxygine
 
 	ObjectBase::ObjectBase(bool assignID):__userData(0), __name(0), __id(0)
 	{
-#ifdef OX_DEBUG
+#ifdef OXYGINE_DEBUG_OBJECTS
 		{
 			MutexAutoLock m(mutexDebugList);
 			__objects.push_back(this);
@@ -128,7 +128,7 @@ namespace oxygine
 
 	void ObjectBase::__removeFromDebugList(ObjectBase *base)
 	{
-#ifdef OX_DEBUG
+#ifdef OXYGINE_DEBUG_OBJECTS
 		{
 			MutexAutoLock m(mutexDebugList);
 			createdObjects::iterator i = std::find(__objects.begin(), __objects.end(), base);
@@ -157,7 +157,7 @@ namespace oxygine
 
 	void ObjectBase::dumpCreatedObjects()
 	{
-#ifdef OX_DEBUG
+#ifdef OXYGINE_DEBUG_OBJECTS
 		MutexAutoLock m(mutexDebugList);
 
 		log::messageln("\n\n\nallocated objects:");

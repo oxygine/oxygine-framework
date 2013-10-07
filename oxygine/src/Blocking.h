@@ -25,6 +25,6 @@ namespace oxygine
 		void waitTween(spTween);
 		void waitTime(spClock clock, timeMS time);
 		void waitTime(timeMS time);
-		void waitClick(spActor);
+		void waitClick(spActor, timeMS timeOut = 0);
 	}
 }

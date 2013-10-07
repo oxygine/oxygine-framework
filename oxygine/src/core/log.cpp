@@ -9,15 +9,15 @@
 
 #if defined(ANDROID)
 #include <android/log.h>
-#define  LOG_TAG    "SDL"
-#define  LOGD(...)  __android_log_write(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
+#define  LOG_TAG    "oxygine"
+#define  LOGD(str)  __android_log_write(ANDROID_LOG_DEBUG, LOG_TAG, str)
 
 #else
 #ifdef WIN32
 #include <Windows.h>
-#define LOGD(...) OutputDebugStringA(__VA_ARGS__)
+#define LOGD(str) OutputDebugStringA(str)
 #else
-#define LOGD(...) printf(__VA_ARGS__)
+#define LOGD(str) fputs(str, stdout)
 #endif
 #endif
 

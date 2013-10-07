@@ -28,6 +28,7 @@ Actor *_tests = 0;
 Resources resources;
 Resources resourcesUI;
 
+
 class TestActor: public Test
 {
 public:		

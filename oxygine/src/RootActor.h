@@ -15,6 +15,7 @@ namespace oxygine
 		{
 			ACTIVATE = makefourcc('_', 'R', 'A', 'c'),
 			DEACTIVATE = makefourcc('_', 'R', 'D', 'c'),
+			LOST_CONTEXT = makefourcc('_', 'R', 'L', 'C'),
 		};
 
 		static spRootActor instance;

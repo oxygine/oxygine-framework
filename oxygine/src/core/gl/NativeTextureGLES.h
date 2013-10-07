@@ -13,6 +13,7 @@ namespace oxygine
 		void init(int w, int h, TextureFormat tf, bool renderTarget);
 		void init(const ImageData &src, bool sysMemCopy);
 		void release();
+		void invalidate();
 		void swap(NativeTexture *) ;
 
 		nativeTextureHandle	getHandle() const;
@@ -30,6 +31,7 @@ namespace oxygine
 		void apply(const Rect *rect = 0);
 
 	protected:
+		void* _getRestorableObject(){return this;}
 		friend class VideoDriverGLES11;
 		friend class VideoDriverGLES20;
 		NativeTextureGLES();

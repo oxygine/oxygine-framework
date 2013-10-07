@@ -59,27 +59,31 @@ namespace oxygine
 		{
 		public:
 			bool _clicked;
+			timeMS _timeOut;
 
 			void click(Event *ev)
 			{
 				_clicked = true;
 			}
 
-			clickWait(spActor button):_clicked(false)
+			clickWait(spActor button, timeMS timeOut):_clicked(false), _timeOut(timeOut)
 			{
+				timeMS start = getTimeMS();
 				button->addEventListener(TouchEvent::CLICK, CLOSURE(this, &clickWait::click));
 				do
 				{
 					yield();
+					if (timeOut > 0 && (getTimeMS() - start > timeOut))					
+						break;
 				} while (!_clicked);
 
 				button->removeEventListeners(this);
 			}
 		};
 
-		void waitClick(spActor button)
+		void waitClick(spActor button, timeMS timeOut)
 		{
-			clickWait w(button);			
+			clickWait w(button, timeOut);			
 		}
 	}
 }

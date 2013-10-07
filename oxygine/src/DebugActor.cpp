@@ -31,10 +31,8 @@
 
 namespace oxygine
 {
-	wstring div(const string &val, const Color &color);
-
-
 	Resources* DebugActor::resSystem = 0;
+	file::ZipFileSystem zp;
 
 	spDebugActor DebugActor::instance;
 
@@ -43,14 +41,13 @@ namespace oxygine
 		if (resSystem)
 			return;
 
-		file::ZipFileSystem zp;
 		zp.setPrefix("system/");
 		zp.add(system_data, system_size);
 
 		file::mount(&zp);
 		resSystem = new Resources;
 		resSystem->loadXML("system/res.xml", 0, true, false, "system");
-		file::unmount(&zp);
+		//
 
 		//log::messageln("initialized DebugActor");
 	}
@@ -60,6 +57,7 @@ namespace oxygine
 		instance = 0;
 		delete resSystem;
 		resSystem = 0;
+		file::unmount(&zp);
 	}
 	
 	void DebugActor::setCornerPosition(int corner)
@@ -117,8 +115,12 @@ namespace oxygine
 		float x = getWidth();
 		addButton(x, "tree", "tree");
 		addButton(x, "finger", "finger");		
-#ifdef _DEBUG
+#ifdef OXYGINE_DEBUG_T2P
 		addButton(x, "t2p", "t2p");
+#endif
+
+#ifdef OXYGINE_DEBUG_OBJECTS
+		
 		addButton(x, "images", "images");		
 #endif
 		
@@ -131,7 +133,7 @@ namespace oxygine
 		_text->setWidth(getWidth());
 		_text->setText("debug text");
 
-		RootActor::instance->addEventListener(TouchEvent::MOVE, CLOSURE(this, &DebugActor::onDAEvent));
+		getRoot()->addEventListener(TouchEvent::MOVE, CLOSURE(this, &DebugActor::onDAEvent));
 
 		instance = this;
 	}
@@ -203,7 +205,8 @@ namespace oxygine
 
 	DebugActor::~DebugActor()
 	{
-
+		if (getRoot())
+			getRoot()->removeEventListeners(this);
 	}
 
 	void DebugActor::doUpdate(const UpdateState &us)
@@ -236,7 +239,7 @@ namespace oxygine
 		s << "fps=" << fps << " mem=" << mem_used << endl;
 		s << "mfree=" << mem_free << endl;
 
-#ifdef OX_DEBUG
+#ifdef OXYGINE_DEBUG_OBJECTS
 		s << "objects=" << (int)__objects.size() << endl;
 #endif
 		s << "batches="<< batches << " triangles=" << triangles << endl;
@@ -291,7 +294,7 @@ namespace oxygine
 	void DebugActor::showTexel2PixelErrors(bool show)
 	{
 		_showTexel2PixelErrors = show;
-#ifdef _DEBUG
+#ifdef OXYGINE_DEBUG_T2P
 		Renderer::showTexel2PixelErrors(_showTexel2PixelErrors);
 		spActor btn = getChild("t2p");
 		btn->removeTweens(true);

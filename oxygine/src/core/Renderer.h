@@ -183,7 +183,7 @@ namespace oxygine
 
 
 		//debug utils
-#ifdef _DEBUG
+#ifdef OXYGINE_DEBUG_T2P
 		static void showTexel2PixelErrors(bool show);
 #endif
 

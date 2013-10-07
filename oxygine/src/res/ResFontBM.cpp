@@ -75,6 +75,34 @@ namespace oxygine
 		_pages.clear();
 	}
 
+	void ResFontBM::_restore(Restorable *r, void*)
+	{
+		void *object = r->_getRestorableObject();
+		for (pages::iterator i = _pages.begin(); i != _pages.end(); ++i)
+		{
+			const page &p = *i;
+			if (p.texture.get() == object)
+			{
+				_loadPage(p, &RestoreResourcesContext::instance);
+			}
+		}
+	}
+
+	void ResFontBM::_loadPage(const page &p, LoadResourcesContext *load_context)
+	{
+		if (!load_context->isNeedProceed(p.texture))
+			return;
+
+		spMemoryTexture mt = new MemoryTexture;
+
+		file::buffer bf;
+		file::read(p.file.c_str(), bf);
+
+		mt->init(bf, !_premultipliedAlpha, _format);		
+		load_context->createTexture(mt, p.texture);
+		p.texture->reg(CLOSURE(this, &ResFontBM::_restore), 0);
+	}
+
 	void ResFontBM::_load(LoadResourcesContext *load_context)
 	{
 		OX_ASSERT(!_pages.empty());
@@ -84,19 +112,8 @@ namespace oxygine
 		for (pages::iterator i = _pages.begin(); i != _pages.end(); ++i)
 		{
 			const page &p = *i;
-			if (p.texture->getHandle())
-				continue;
-
-			spMemoryTexture mt = new MemoryTexture;
-
-			file::buffer bf;
-			file::read(p.file.c_str(), bf);
-
-			mt->init(bf, !_premultipliedAlpha, _format);
-			if (load_context)
-				load_context->createTexture(mt, p.texture);
-			else
-				p.texture->init(mt->lock(), false);
+			_loadPage(p, load_context);			
+			
 		}		
 	}
 

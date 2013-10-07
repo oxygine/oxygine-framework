@@ -34,6 +34,7 @@ namespace oxygine
 		{
 
 		}
+
 		int getMaxVertices() const
 		{
 			return IVideoDriver::instance->getMaxVertices();

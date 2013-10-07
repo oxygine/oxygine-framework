@@ -10,6 +10,7 @@ namespace oxygine
 	class Mem2Native;
 
 	class LoadResourcesContext;
+	class LoadResourcesContext;
 
 	class Resource: public ObjectBase
 	{

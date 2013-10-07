@@ -21,15 +21,22 @@
 
 
 #ifndef OX_DEBUG
-	#define USE_MEMORY_POOL
-	#define OBJECT_POOL_ALLOCATOR
-#else	
+	#define USE_MEMORY_POOL 1
+	#define OBJECT_POOL_ALLOCATOR 1
 #endif
 
+#if OX_DEBUG
+	#define OXYGINE_DEBUG_OBJECTS 1
+	#define OXYGINE_DEBUG_T2P 1
+	#define OXYGINE_DEBUG_SAFECAST 1
+#endif
 
+#define OXYGINE_ASSERT2LOG 1
 
+#if OXYGINE_ASSERT2LOG
 #define OX_ASSERT(x) if (!(x)) oxygine::log::error("Assert! %d %s", __LINE__, __FILE__); (assert(x))
-#define OX_LOG(format, args) {}
-
+#else
+#define OX_ASSERT(x) (assert(x))
+#endif
 
 #endif

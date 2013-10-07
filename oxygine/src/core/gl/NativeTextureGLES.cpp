@@ -114,7 +114,6 @@ namespace oxygine
 
 		glPixel p = SurfaceFormat2GL(tf);
 		glTexImage2D(GL_TEXTURE_2D, 0, p.format, w, h, 0, p.format, p.type, 0);
-
 		
 		if (rt)
 		{
@@ -208,6 +207,14 @@ namespace oxygine
 			glDeleteFramebuffers(1, &_fbo);		
 			_fbo = 0;
 		}
+
+		unreg();
+	}
+
+	void NativeTextureGLES::invalidate()
+	{
+		_id = 0;
+		_fbo = 0;
 	}
 
 	void NativeTextureGLES::swap(NativeTexture *)

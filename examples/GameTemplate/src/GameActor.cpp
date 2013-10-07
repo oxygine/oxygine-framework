@@ -72,11 +72,9 @@ void GameActor::postShowing()
 	go->setScale(Vector2(2.0f, 2.0f));	
 	go->setPosition(virtualSize/2);
 	spTweenQueue queue = new TweenQueue();
-	queue->add(createTween(Actor::TweenScale(Vector2(1.0f, 1.0f)), 200))
-		->add(createTween(Actor::TweenAlpha(0), 400, 3, true))
-		->add(createTween(Actor::TweenAlpha(255), 400))
-		//->add(createTween(Actor::TweenPosition(Vector2((float)(virtualSize.x + go->getWidth()), virtualSize.y/2.0f)), 400))
-		;
+	queue->add(Actor::TweenScale(Vector2(1.0f, 1.0f)), 200);
+	queue->add(Actor::TweenAlpha(0), 400, 3, true);
+	queue->add(Actor::TweenAlpha(255), 400);
 	go->addTween(queue);
 	//queue->setDetachActor(true);
 

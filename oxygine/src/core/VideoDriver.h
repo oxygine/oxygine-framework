@@ -77,6 +77,8 @@ namespace oxygine
 		static IVideoDriver *instance;
 		virtual ~IVideoDriver(){}
 
+		virtual void restore() = 0;
+
 		virtual spNativeTexture createTexture() = 0;
 
 		virtual void begin(const Matrix &proj, const Matrix &view, const Rect &viewport, const Color *color) = 0;				
@@ -117,6 +119,8 @@ namespace oxygine
 		void setScissorRect(const Rect *);
 		void setDefaultSettings();
 		void setRenderTarget(spNativeTexture);
+
+		void restore(){}
 	};
 
 }

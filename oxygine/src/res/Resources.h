@@ -21,8 +21,7 @@ namespace oxygine
 	class ResAnim;
 
 	class CreateResourceContext;
-	class LoadResourcesContext;
-
+	class LoadResourcesContext; 
 
 
 	class Resources

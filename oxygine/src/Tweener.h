@@ -155,6 +155,7 @@ namespace oxygine
 		static float calcEase(EASE ease, float v);
 
 	protected:
+		friend class TweenQueue;
 		timeMS _elapsed;		
 		timeMS _duration;
 		timeMS _delay;
@@ -222,10 +223,10 @@ namespace oxygine
 	class TweenQueue: public Tween
 	{
 	public:
-		TweenQueue *add(spTween t);
+		spTween add(spTween t);
 
 		template<class GS>
-		TweenQueue* add(const GS &gs, timeMS duration, int loops = 1, bool twoSides = false, timeMS delay = 0, Tween::EASE ease = Tween::ease_linear)
+		spTween add(const GS &gs, timeMS duration, int loops = 1, bool twoSides = false, timeMS delay = 0, Tween::EASE ease = Tween::ease_linear)
 		{return add(createTween(gs, duration, loops, twoSides, delay, ease));}
 
 		bool start(Actor &actor);
