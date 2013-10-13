@@ -199,6 +199,7 @@ namespace oxygine
 			}
 
 			dm->setScale(1.0f / scale);
+			dm->setPosition(-getRoot()->getPosition());
 			getRoot()->addChild(dm);
 		}
 	}

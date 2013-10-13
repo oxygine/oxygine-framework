@@ -387,7 +387,7 @@ namespace oxygine
 		_driver = driver;
 	}
 
-	void Renderer::begin(spNativeTexture rt, const Rect &viewport, const Color *clearColor)
+	bool Renderer::begin(spNativeTexture rt, const Rect &viewport, const Color *clearColor)
 	{
 		_rt = rt;
 
@@ -399,6 +399,8 @@ namespace oxygine
 		_viewport = viewport;
 
 		getDriver()->begin(_proj, _view, viewport, clearColor);
+
+		return true;
 	}
 
 	void Renderer::end()

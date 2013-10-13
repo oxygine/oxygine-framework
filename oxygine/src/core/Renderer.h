@@ -145,7 +145,7 @@ namespace oxygine
 		virtual ~Renderer();
 
 		/**Begins rendering into RenderTexture or into primary framebuffer if rt is null*/
-		void begin(spNativeTexture rt, const Rect &viewport, const Color *clearColor);
+		bool begin(spNativeTexture rt, const Rect &viewport, const Color *clearColor);
 		/**Completes started rendering and restores previous Framebuffer.*/
 		void end();
 		/**Sets View matrix*/

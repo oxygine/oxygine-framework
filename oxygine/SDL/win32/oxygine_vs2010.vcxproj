@@ -143,6 +143,7 @@
     <ClCompile Include="..\..\src\Multithreading.cpp" />
     <ClCompile Include="..\..\src\PointerState.cpp" />
     <ClCompile Include="..\..\src\ProgressBar.cpp" />
+    <ClCompile Include="..\..\src\res\CreateResourceContext.cpp" />
     <ClCompile Include="..\..\src\res\ResAnim.cpp" />
     <ClCompile Include="..\..\src\res\ResAtlas.cpp" />
     <ClCompile Include="..\..\src\res\ResBuffer.cpp" />
