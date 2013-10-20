@@ -67,9 +67,12 @@ namespace oxygine
 		return true;
 	}
 		
-	void RootActor::safeRemove(spActor actor)
+
+	RectF RootActor::getDestRect() const
 	{
-		_removedActors.push_back(actor);
+		Vector2 s = getSize() + getPosition();
+		RectF r = calcDestRectF(RectF(-getPosition(), s), s);
+		return r;
 	}
 
 	/*
@@ -102,8 +105,6 @@ namespace oxygine
 
 	void RootActor::cleanup()
 	{
-		//_children.resize(0);
-		_removedActors.resize(0);
 	}
 
 	void RootActor::update()
@@ -111,11 +112,6 @@ namespace oxygine
 		timeMS t = getTimeMS();
 		UpdateState us;		
 		Actor::update(us);
-
-		if (!_removedActors.empty())
-		{
-			_removedActors.resize(0);
-		}
 
 		_statUpdate = getTimeMS() - t;		
 	}

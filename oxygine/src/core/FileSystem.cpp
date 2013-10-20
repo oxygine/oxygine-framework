@@ -1,4 +1,6 @@
 #include "FileSystem.h"
+#include <string.h>
+
 namespace oxygine
 {
 	namespace file
@@ -27,6 +29,11 @@ namespace oxygine
 					return true;
 			}
 
+			return _isExists(file);
+		}
+
+		bool FileSystem::isExistsHere(const char *file)
+		{
 			return _isExists(file);
 		}
 

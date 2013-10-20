@@ -7,7 +7,7 @@ namespace oxygine
 {
 	IVideoDriver* IVideoDriver::instance = 0;
 
-	batch::batch():blend(blend_premultiplied_alpha), program(0), basePremultiplied(false), vdecl(0){}
+	batch::batch():blend(blend_premultiplied_alpha), program(0), basePremultiplied(false), vdecl(0), maskChannelR(false){}
 	batch::~batch()
 	{
 	}

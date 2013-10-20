@@ -179,14 +179,14 @@ namespace oxygine
 	int32 applicationPause(void* systemData, void* userData)
 	{
 		Event ev(RootActor::DEACTIVATE);
-		getRoot()->handleEvent(&ev);
+		getRoot()->dispatchEvent(&ev);
 		return 0;
 	}
 
 	int32 applicationUnPause(void* systemData, void* userData)
 	{
 		Event ev(RootActor::ACTIVATE);
-		getRoot()->handleEvent(&ev);
+		getRoot()->dispatchEvent(&ev);
 		return 0;
 	}
 #endif
@@ -197,17 +197,30 @@ namespace oxygine
 #endif
 	namespace core
 	{
-		void lostContext()
+		void focusLost()
 		{
+			/*
 #if OXYGINE_SDL
-			return;
-			
-			log::messageln("lost context");
+			log::messageln("focus lost");
+			Restorable::releaseAll();
 
 			SDL_GL_DeleteContext(_context);
-			_context = SDL_GL_CreateContext(_window);
-			initGLExtensions();
+			_context = 0;
+#endif
+			*/
+		}
 
+		void lostContext()
+		{
+			/*
+#if OXYGINE_SDL			
+			log::messageln("lost context");
+			
+			if(!_context)
+			{
+				_context = SDL_GL_CreateContext(_window);
+				initGLExtensions();
+			}
 
 			IVideoDriver::instance->restore();
 			Renderer::initialize();			
@@ -217,6 +230,7 @@ namespace oxygine
 
 			Restorable::restoreAll(); 
 #endif			
+			*/
 		}
 
 		void init(init_desc *desc_ptr)
@@ -433,6 +447,20 @@ namespace oxygine
 		}
 #endif
 
+		void reset()
+		{
+			Restorable::releaseAll();
+			Renderer::release();
+			IVideoDriver::instance->reset();
+		}
+
+		void restore()
+		{
+			IVideoDriver::instance->restore();
+			Renderer::initialize();
+			Restorable::restoreAll();
+		}
+
 		void checkGLError()
 		{
 			int gl_error = glGetError();
@@ -446,17 +474,36 @@ namespace oxygine
 			}
 		}
 
+		void swapDisplayBuffers()
+		{
+#if __S3E__
+			IwGLSwapBuffers();
+#elif USE_EGL
+			eglSwapBuffers(eglDisplay, eglSurface);
+#elif OXYGINE_SDL
+			//if (isActive())
+			if (_context)
+			{
+				int status = SDL_GL_MakeCurrent(_window, _context);
+				if (status)
+				{
+					log::error("SDL_GL_MakeCurrent(): %s", SDL_GetError());
+				}
+				SDL_GL_SwapWindow(_window);
+			}
+#endif
+
+			checkGLError();
+		}
+
 		bool update()
 		{
 			Renderer::statsPrev = Renderer::statsCurrent;
 			Renderer::statsCurrent = Renderer::Stats();
 
-			
 
-	#ifdef __S3E__
-			IwGLSwapBuffers();
 
-			checkGLError();
+#ifdef __S3E__
 
 			s3eDeviceYield(0);
 			s3eKeyboardUpdate();
@@ -471,7 +518,7 @@ namespace oxygine
 				done = true;
 
 			return done;
-	#endif
+#endif
 
 
 	#ifdef OXYGINE_SDL
@@ -516,7 +563,11 @@ namespace oxygine
 							if (focus)
 							{
 								lostContext();
-							}							
+							}				
+							else
+							{
+								focusLost();
+							}
 						}
 						//log::messageln("SDL_SYSWMEVENT %d", (int)event.window.event);
 						break;
@@ -569,24 +620,6 @@ namespace oxygine
 					break;
 				}
 			}
-
-
-#ifdef USE_EGL
-			eglSwapBuffers(eglDisplay, eglSurface);
-#else
-			//if (isActive())
-			{
-				int status = SDL_GL_MakeCurrent(_window, _context);
-				if (status)
-				{
-					log::error("SDL_GL_MakeCurrent(): %s", SDL_GetError());
-				}
-				SDL_GL_SwapWindow(_window);
-
-				checkGLError();
-			}
-
-#endif
 
 
 			return done;
@@ -655,11 +688,15 @@ namespace oxygine
 			int height = IwGLGetInt(IW_GL_HEIGHT);
 
 			int orient = s3eSurfaceGetInt(S3E_SURFACE_DEVICE_ORIENTATION_LOCK);
-			if ((orient == S3E_SURFACE_LANDSCAPE || orient == S3E_SURFACE_LANDSCAPE_FIXED) && 
-				height > width)
+			if (height > width)
 			{
-				//bug workaround?
-				swap(width, height);
+				if (orient == S3E_SURFACE_LANDSCAPE || orient == S3E_SURFACE_LANDSCAPE_FIXED)
+					swap(width, height);
+			}
+			else
+			{
+				if (orient == S3E_SURFACE_PORTRAIT || orient == S3E_SURFACE_PORTRAIT_FIXED)
+					swap(width, height);
 			}
 
 			return Point(width, height);

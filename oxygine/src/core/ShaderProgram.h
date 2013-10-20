@@ -10,7 +10,6 @@ namespace oxygine
 	{
 	public:
 		virtual void bind() = 0;
-		virtual void invalidate() = 0;
 
 		virtual unsigned int getID() const = 0;
 

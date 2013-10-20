@@ -1,6 +1,7 @@
 #pragma once
 #include "oxygine_include.h"
 #include "VideoDriverGL.h"
+#include "core/Restorable.h"
 #include "../ShaderProgram.h"
 #include "../file.h"
 
@@ -27,10 +28,6 @@ namespace oxygine
 			glUseProgram(_program);
 		}
 
-		void invalidate()
-		{
-			_program = 0;
-		}
 
 		void setUniform(const char *id, const Vector4 *v, int num)
 		{
@@ -54,7 +51,7 @@ namespace oxygine
 		GLuint _program;
 	};
 
-	class UberShaderProgram
+	class UberShaderProgram: public Restorable
 	{
 	public:
 		struct shader
@@ -68,23 +65,27 @@ namespace oxygine
 		{
 			ALPHA_PREMULTIPLY = 1,
 			SEPARATE_ALPHA = 1 << 1,
-			MASK = 1 << 2,
-			SIZE = 1 << 3
-		};
-		typedef Closure<void (ShaderProgramGL *)> ShaderUniformsCallback;
+			MASK_R_CHANNEL = 1 << 2,
+			MASK = 1 << 3,
+			SIZE = 1 << 4
+		};		
 
-		UberShaderProgram(){}
-		UberShaderProgram(const file::buffer &baseShader, const char *prepend="", const char *append = "");
+		UberShaderProgram();
 		~UberShaderProgram();
+		void init(const file::buffer &baseShader, const char *prepend="", const char *append = "");
 
-		void restore();
+		void release();
 
+		typedef Closure<void (ShaderProgramGL *)> ShaderUniformsCallback;
 		void setShaderUniformsCallback(ShaderUniformsCallback cb){_cb = cb;}
 
 		ShaderUniformsCallback	getShaderUniformsCallback() const {return _cb;}
 		shader*					getShaderProgram(int flags);
 
 	protected:
+		void *_getRestorableObject() {return this;}
+		void _restore(Restorable *, void*);
+
 		shader _shaders[SIZE];
 		file::buffer _data;
 		ShaderUniformsCallback _cb;		
@@ -102,17 +103,19 @@ namespace oxygine
 		VideoDriverGLES20();
 		~VideoDriverGLES20();
 
+		void reset();
 		void restore();
 
 		spNativeTexture createTexture();
 		const file::buffer& getShaderBody() const {return _shaderBody;}
+		bool isReady() const;
 
 		void begin(const Matrix &proj, const Matrix &view, const Rect &viewport, const Color *clearColor);
 
 		void drawBatch(const batch &b);
 		void setDefaultSettings();		
 
-	protected:
+	protected:		
 		void updateConstants();
 		void setProgram(ShaderProgramGL *p);
 		void bindTexture(int sampler, const char *id, void* handle);

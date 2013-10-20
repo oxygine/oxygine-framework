@@ -16,3 +16,7 @@ void example_destroy()
 {
 	res.free();
 }
+void example_update()
+{
+	
+}

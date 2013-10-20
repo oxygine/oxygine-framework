@@ -4,7 +4,7 @@
 #include "PointerState.h"
 #include "UpdateState.h"
 #include "Draggable.h"
-#include "InitActor.h"
+#include "initActor.h"
 
 namespace oxygine
 {

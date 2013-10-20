@@ -20,12 +20,16 @@ The program and any possible upgrades can be found at www.AngelCode.com. The aut
 
 Changes
 -------------------------------
-1.14 beta - 2013/06/15
+1.14 beta - 2013/10/08
 - Fixed crash with large fonts when Windows API incorrectly reported negative width for glyphs.
 - Improved handling of out-of-memory conditions.
 - Fixed crash that could occur when exporting unicode characters above 0x10000 with kerning pairs.
 - Fixed crash when command line argument -c was a relative path and the configuration included font file or image files.
 - Fixed crash when saving configuration file with added font file from the same directory.
+- Corrected the cell height when using fixed height and supersampling.
+- Added support for Unicode 6.2.
+- Fixed compatibility with Windows XP.
+- Fixed scaling issues and cropping when using height scale with render from outline.
 
 1.13 - 2012/08/12
 - Added option to export fonts using fixed cell heights for easier post processing.

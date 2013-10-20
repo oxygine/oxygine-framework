@@ -1,6 +1,10 @@
 #pragma once
 #ifndef OXYGINE_INCLUDE
 #define OXYGINE_INCLUDE
+#include <assert.h>
+#include <string.h>
+#include <stdio.h>
+#include <stdarg.h>
 
 #if __S3E__
 	#define OXYGINE_MARMALADE 1
@@ -34,9 +38,12 @@
 #define OXYGINE_ASSERT2LOG 1
 
 #if OXYGINE_ASSERT2LOG
+namespace oxygine{namespace log{void error(const char *format, ...);}}
 #define OX_ASSERT(x) if (!(x)) oxygine::log::error("Assert! %d %s", __LINE__, __FILE__); (assert(x))
 #else
 #define OX_ASSERT(x) (assert(x))
 #endif
+
+#define OXYGINE_HAS_RESTORE
 
 #endif

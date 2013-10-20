@@ -32,6 +32,8 @@
 		0472E38017F8A2EC0016A832 /* MaskedSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 0472E37C17F8A2EC0016A832 /* MaskedSprite.h */; };
 		0472E38117F8A2EC0016A832 /* oxygine_include.h in Headers */ = {isa = PBXBuildFile; fileRef = 0472E37D17F8A2EC0016A832 /* oxygine_include.h */; };
 		0472E38217F8A2EC0016A832 /* oxygine-framework.h in Headers */ = {isa = PBXBuildFile; fileRef = 0472E37E17F8A2EC0016A832 /* oxygine-framework.h */; };
+		04967C4D180B3D7400D66EFA /* Restorable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04967C4B180B3D7400D66EFA /* Restorable.cpp */; };
+		04967C4E180B3D7400D66EFA /* Restorable.h in Headers */ = {isa = PBXBuildFile; fileRef = 04967C4C180B3D7400D66EFA /* Restorable.h */; };
 		049B64AB1803054300EC333E /* CreateResourceContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B64AA1803054300EC333E /* CreateResourceContext.cpp */; };
 		C38704A217C0C6AC00015CA8 /* VideoDriverGLES11.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C38704A017C0C6AC00015CA8 /* VideoDriverGLES11.cpp */; };
 		C38704A317C0C6AC00015CA8 /* VideoDriverGLES11.h in Headers */ = {isa = PBXBuildFile; fileRef = C38704A117C0C6AC00015CA8 /* VideoDriverGLES11.h */; };
@@ -217,6 +219,8 @@
 		0472E37D17F8A2EC0016A832 /* oxygine_include.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = oxygine_include.h; path = ../../../src/oxygine_include.h; sourceTree = "<group>"; };
 		0472E37E17F8A2EC0016A832 /* oxygine-framework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "oxygine-framework.h"; path = "../../../src/oxygine-framework.h"; sourceTree = "<group>"; };
 		048B7AAB17FDE25E00AE2D0B /* shader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; name = shader.glsl; path = ../../../system_data/original/system/shader.glsl; sourceTree = "<group>"; };
+		04967C4B180B3D7400D66EFA /* Restorable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Restorable.cpp; sourceTree = "<group>"; };
+		04967C4C180B3D7400D66EFA /* Restorable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Restorable.h; sourceTree = "<group>"; };
 		049B64AA1803054300EC333E /* CreateResourceContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CreateResourceContext.cpp; sourceTree = "<group>"; };
 		C38704A017C0C6AC00015CA8 /* VideoDriverGLES11.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VideoDriverGLES11.cpp; path = gl/VideoDriverGLES11.cpp; sourceTree = "<group>"; };
 		C38704A117C0C6AC00015CA8 /* VideoDriverGLES11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VideoDriverGLES11.h; path = gl/VideoDriverGLES11.h; sourceTree = "<group>"; };
@@ -534,6 +538,8 @@
 		C3E86F6816EBC8EB00052915 /* core */ = {
 			isa = PBXGroup;
 			children = (
+				04967C4B180B3D7400D66EFA /* Restorable.cpp */,
+				04967C4C180B3D7400D66EFA /* Restorable.h */,
 				0472E34817F8A1A80016A832 /* file.cpp */,
 				0472E34917F8A1A80016A832 /* file.h */,
 				0472E34A17F8A1A80016A832 /* FileSystem.cpp */,
@@ -804,6 +810,7 @@
 				C3E8709016EBC8EB00052915 /* system_alloc.h in Headers */,
 				C3E8709216EBC8EB00052915 /* winnie_alloc.h in Headers */,
 				C3E8709316EBC8EB00052915 /* winnie_alloc_config.h in Headers */,
+				04967C4E180B3D7400D66EFA /* Restorable.h in Headers */,
 				C38EC2701709649300568283 /* DeveloperMenu.h in Headers */,
 				C38EC2721709649300568283 /* TexturesInspector.h in Headers */,
 				C38EC2741709649300568283 /* TreeInspector.h in Headers */,
@@ -891,6 +898,7 @@
 				C3E8702116EBC8EB00052915 /* NativeTexture.cpp in Sources */,
 				C3E8702316EBC8EB00052915 /* Object.cpp in Sources */,
 				C3E8702816EBC8EB00052915 /* oxygine.cpp in Sources */,
+				04967C4D180B3D7400D66EFA /* Restorable.cpp in Sources */,
 				C3E8702C16EBC8EB00052915 /* Renderer.cpp in Sources */,
 				C3E8702E16EBC8EB00052915 /* Texture.cpp in Sources */,
 				C3E8703016EBC8EB00052915 /* VideoDriver.cpp in Sources */,

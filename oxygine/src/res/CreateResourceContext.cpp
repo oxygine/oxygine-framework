@@ -8,13 +8,12 @@ namespace oxygine
 	RestoreResourcesContext RestoreResourcesContext::instance;
 	void RestoreResourcesContext::createTexture(spMemoryTexture src, spNativeTexture dest)
 	{
-		dest->invalidate();
 		dest->init(src->lock(), false);
 	}
 
 	bool RestoreResourcesContext::isNeedProceed(spNativeTexture t)
 	{
-		return t->getHandle() != 0;
+		return true;
 	}
 
 	SingleThreadResourcesContext SingleThreadResourcesContext::instance;

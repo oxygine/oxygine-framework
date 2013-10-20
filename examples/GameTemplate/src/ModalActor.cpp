@@ -1,5 +1,5 @@
 #include "ModalActor.h"
-#include "Blocking.h"
+#include "blocking.h"
 #include "Actor.h"
 
 ModalActor::ModalActor():_timefadeIn(250), _timeFadeOut(250)

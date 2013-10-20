@@ -22,7 +22,8 @@
 #include "Event.h"
 #include "RenderState.h"
 #include "initActor.h"
-
+#include <stdio.h>
+#include <stdarg.h>
 
 
 #ifdef __S3E__

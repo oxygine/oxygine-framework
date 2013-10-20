@@ -273,6 +273,9 @@
     <ClCompile Include="..\..\src\VisualStyle.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\core\Restorable.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\res\CreateResourceContext.cpp">
       <Filter>src\res</Filter>
     </ClCompile>
@@ -592,6 +595,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\VisualStyle.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\Restorable.h">
+      <Filter>src\core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

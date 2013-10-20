@@ -1,6 +1,5 @@
 from PIL import Image
 import os
-import oxygine
 from xml.dom import minidom
 import tempfile
 import md5
@@ -98,7 +97,8 @@ def build_bmfont(need_md5, fnt, bm_config, ext_folder, scale, font_chars):
     rewrite_config(bm_config, bm_config_temp, 1024)
 
     lang = font_chars
-    cmd = "%(bmfont)s -t %(lang)s -c %(bmfc)s -o %(fnt)s" % {"bmfont":oxygine.path_bmfont, "bmfc":bm_config_temp, "fnt":fnt, "lang":lang}
+    bmfont = os.path.split(__file__)[0] + "/../../3rdPartyTools/BMFont/bmfont.com"
+    cmd = "%(bmfont)s -t %(lang)s -c %(bmfc)s -o %(fnt)s" % {"bmfont":bmfont, "bmfc":bm_config_temp, "fnt":fnt, "lang":lang}
     cmd = cmd.replace("/", "\\")
     os.system(cmd)
 

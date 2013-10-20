@@ -5,6 +5,7 @@
 #include "log.h"
 #include "Mutex.h"
 #include "utils/stringUtils.h"
+#include <string.h>
 
 namespace oxygine
 {

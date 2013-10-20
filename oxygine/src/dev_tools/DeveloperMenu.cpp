@@ -4,7 +4,7 @@
 #include "TextActor.h"
 #include "DebugActor.h"
 #include "res/Resources.h"
-#include "InitActor.h"
+#include "initActor.h"
 
 namespace oxygine
 {

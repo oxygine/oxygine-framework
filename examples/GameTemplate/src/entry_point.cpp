@@ -24,15 +24,40 @@ public:
 Renderer mainRenderer;
 Rect viewport;
 
+class ExampleRootActor: public RootActor
+{
+public:
+	ExampleRootActor()
+	{
+		//each mobile application should handle focus lost
+		//and free/restore GPU resources
+		addEventListener(RootActor::DEACTIVATE, CLOSURE(this, &ExampleRootActor::onDeactivate));
+		addEventListener(RootActor::ACTIVATE, CLOSURE(this, &ExampleRootActor::onActivate));
+	}
+
+	void onDeactivate(Event *)
+	{
+		core::reset();
+	}
+
+	void onActivate(Event *)
+	{
+		core::restore();
+	}
+};
 
 int updateLoop()
 {
 	RootActor::instance->update();
 
 	Color c(30, 30, 30, 255);
-	mainRenderer.begin(0, viewport, &c);
-	RootActor::instance->render(mainRenderer);
-	mainRenderer.end();
+	if (mainRenderer.begin(0, viewport, &c))
+	{
+		RootActor::instance->render(mainRenderer);
+		mainRenderer.end();
+		core::swapDisplayBuffers();
+	}
+	
 
 	bool done = core::update();
 	if (done)
@@ -56,7 +81,7 @@ void run()
 	int height = size.y;
 
 	
-	RootActor::instance = new RootActor();
+	RootActor::instance = new ExampleRootActor();
 	RootActor::instance->init(size, Point(480, 320));	
 
 	bool high_quality = true;
@@ -131,9 +156,10 @@ int main(int argc, char* argv[])
 #endif
 
 #ifdef OXYGINE_SDL
+#include "SDL_main.h"
 extern "C"
 {
-	int SDL_main(int argc, char* argv[])
+	int main(int argc, char* argv[])
 	{
 		run();
 		return 0;

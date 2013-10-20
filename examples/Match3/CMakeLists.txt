@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 2.6)
 project (MATCH3)
 
-add_executable(match3 
+add_executable(Match3 
 	src/entry_point.cpp
 	src/example.h	
 	src/example.cpp
@@ -12,4 +12,4 @@ add_executable(match3
 	src/shared.h
 	src/shared.cpp)
 
-target_link_libraries(match3 ${OXYGINE_CORE_LIBS})
+target_link_libraries(Match3 ${OXYGINE_CORE_LIBS})

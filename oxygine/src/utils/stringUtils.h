@@ -3,6 +3,7 @@
 #include <string>
 #include "math/Color.h"
 #include <stdarg.h>
+
 namespace oxygine
 {
 	using namespace std;

@@ -1,5 +1,5 @@
 #include "TreeInspector.h"
-#include "InitActor.h"
+#include "initActor.h"
 #include "ColorRectSprite.h"
 #include "RenderState.h"
 #include "Clock.h"

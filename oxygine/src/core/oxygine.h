@@ -88,8 +88,15 @@ namespace oxygine
 		void release();
 		void requestQuit();
 
+		/**destroy and reset any GPU allocated memory and handles. Call it to free memory if app was minimized (lost focus)*/
+		void reset();
+		/**restores GPU memory state after reset*/
+		void restore();
+
 		/** Update engine*/
 		bool update();
+		/** Swap Video buffers*/
+		void swapDisplayBuffers();
 		void execute(const char *);
 
 		/** Returns display size in pixels*/

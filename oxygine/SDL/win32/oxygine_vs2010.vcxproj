@@ -119,6 +119,7 @@
     <ClCompile Include="..\..\src\core\Object.cpp" />
     <ClCompile Include="..\..\src\core\oxygine.cpp" />
     <ClCompile Include="..\..\src\core\Renderer.cpp" />
+    <ClCompile Include="..\..\src\core\Restorable.cpp" />
     <ClCompile Include="..\..\src\core\STDFileSystem.cpp" />
     <ClCompile Include="..\..\src\core\system_data.cpp" />
     <ClCompile Include="..\..\src\core\Texture.cpp" />
@@ -204,6 +205,7 @@
     <ClInclude Include="..\..\src\core\pixel.h" />
     <ClInclude Include="..\..\src\core\ref_counter.h" />
     <ClInclude Include="..\..\src\core\Renderer.h" />
+    <ClInclude Include="..\..\src\core\Restorable.h" />
     <ClInclude Include="..\..\src\core\ShaderProgram.h" />
     <ClInclude Include="..\..\src\core\STDFileSystem.h" />
     <ClInclude Include="..\..\src\core\system_data.h" />

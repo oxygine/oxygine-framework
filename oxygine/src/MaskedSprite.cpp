@@ -22,7 +22,11 @@ namespace oxygine
 			//maskDest
 
 			const Diffuse &df = _mask->getAnimFrame().getDiffuse();
-			parentRS.renderer->setMask(df.alpha ? df.alpha : df.base, maskSrc, maskDest, t);
+			if (df.alpha)
+				parentRS.renderer->setMask(df.alpha, maskSrc, maskDest, t, true);
+			else
+				parentRS.renderer->setMask(df.base, maskSrc, maskDest, t, false);
+
 		}
 
 		Sprite::render(parentRS);

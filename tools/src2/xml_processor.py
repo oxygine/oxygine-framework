@@ -4,6 +4,7 @@ import shutil
 import process_atlas
 import process_font
 import process_starling_atlas
+import oxygine_helper
 
 class XmlProcessor:
     def __init__(self, args):
@@ -33,6 +34,8 @@ class XmlProcessor:
 
         self._meta_doc = None
         self._meta_element = None
+        
+        self.helper = oxygine_helper.helper(os.path.split(__file__)[0] + "/../../")
 
        
         self.register_processor(process_font.bmfc_font_Processor())
@@ -70,7 +73,7 @@ class XmlProcessor:
             if path.startswith(".\\") or path.startswith("./"):
                 path = self.path_current + path
     
-            path = os.path.normpath(path) + "\\"
+            path = os.path.normpath(path) + "/"
             self.path_current = path
             
         scale_factor = el.getAttribute("scale_factor")
@@ -107,7 +110,9 @@ class XmlProcessor:
         
     def warning(self, st):
         if self.args.warnings:        
-            print st
+            print "warning: " + st
+    def error(self, st):
+        print "error: " + st
                 
     def process(self):
         #print self.path_data
@@ -134,7 +139,7 @@ class XmlProcessor:
             
         try:
             os.makedirs(folder)
-        except WindowsError:
+        except OSError:
             pass
         
 
@@ -147,7 +152,7 @@ class XmlProcessor:
                 try:
                     if proc.create_folder:
                         os.makedirs(self.get_inner_dest(""))
-                except WindowsError:
+                except OSError:
                     pass
                 proc.process(self, el)
                 

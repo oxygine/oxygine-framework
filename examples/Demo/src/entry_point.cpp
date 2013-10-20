@@ -12,6 +12,29 @@ using namespace oxygine;
 Renderer renderer;
 Rect viewport;
 
+
+class ExampleRootActor: public RootActor
+{
+public:
+	ExampleRootActor()
+	{
+		//each mobile application should handle focus lost
+		//and free/restore GPU resources
+		addEventListener(RootActor::DEACTIVATE, CLOSURE(this, &ExampleRootActor::onDeactivate));
+		addEventListener(RootActor::ACTIVATE, CLOSURE(this, &ExampleRootActor::onActivate));
+	}
+
+	void onDeactivate(Event *)
+	{
+		core::reset();
+	}
+
+	void onActivate(Event *)
+	{
+		core::restore();
+	}
+};
+
 int mainloop()
 {
 	example_update();
@@ -21,11 +44,16 @@ int mainloop()
 
 	Color clear(33, 33, 33, 255);
 	//start rendering and clear viewport
-	renderer.begin(0, viewport, &clear);
-	//begin rendering from RootActor. 
-	RootActor::instance->render(renderer);
-	//rendering done
-	renderer.end();
+	if (renderer.begin(0, viewport, &clear))
+	{
+		//begin rendering from RootActor. 
+		RootActor::instance->render(renderer);
+		//rendering done
+		renderer.end();
+
+		core::swapDisplayBuffers();
+	}
+	
 
 	//update internal components
 	//all input events would be passed to RootActor::instance.handleEvent
@@ -43,7 +71,7 @@ void run()
 	
 	
 	//create RootActor. RootActor is a root node
-	RootActor::instance = new RootActor();
+	RootActor::instance = new ExampleRootActor();
 
 	
 	Point size = core::getDisplaySize();
@@ -134,9 +162,10 @@ int main(int argc, char* argv[])
 
 
 #ifdef OXYGINE_SDL
+#include "SDL_main.h"
 extern "C"
 {
-	int SDL_main(int argc, char* argv[])
+	int main(int argc, char* argv[])
 	{
 		run();
 		return 0;

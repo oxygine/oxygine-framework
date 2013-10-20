@@ -7,7 +7,6 @@ namespace oxygine
 	DECLARE_SMART(RootActor, spRootActor);
 
 	class DebugActor;
-
 	class RootActor : public Actor
 	{
 	public:
@@ -39,13 +38,9 @@ namespace oxygine
 		/**Updates each children*/
 		void update();
 
-		/**Passes event to each children*/
-		//bool handleEvent(const EventState &es);
-
-		/**thread safe way to pass event*/
-		//void postEvent(const EventState &es);
-
 		void cleanup();
+
+		RectF getDestRect() const;
 
 		std::string dump(const dumpOptions &opt) const;
 
@@ -53,10 +48,6 @@ namespace oxygine
 		bool isOn(const Vector2 &localPosition);
 
 	private:
-
-		void safeRemove(spActor actor);
-
-		actors _removedActors;
 
 		timeMS _statUpdate;
 		timeMS _statRender;

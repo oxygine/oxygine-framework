@@ -3,7 +3,7 @@
 #include "Options.h"
 #include "shared.h"
 #include "RootActor.h"
-#include "Blocking.h"
+#include "blocking.h"
 
 spOptionsMenu OptionsMenu::instance;
 

@@ -9,6 +9,10 @@
 #include "../ZipFileSystem.h"
 #include "../system_data.h"
 
+#if OXYGINE_SDL
+#include "SDL_config.h"
+#endif
+
 
 #ifdef __ANDROID__
 #include "GLES2/gl2.h"
@@ -18,7 +22,7 @@ namespace oxygine
 {	
 	ShaderProgramGL::ShaderProgramGL():_program(0)
 	{
-
+ 
 	}
 
 	ShaderProgramGL::~ShaderProgramGL()
@@ -50,14 +54,20 @@ namespace oxygine
 	}
 
 
+	UberShaderProgram::UberShaderProgram()
+	{
 
-	UberShaderProgram::UberShaderProgram(const file::buffer &baseShader, const char *prepend, const char *append)		
+	}
+
+	void UberShaderProgram::init(const file::buffer &baseShader, const char *prepend, const char *append)		
 	{
 		_data.data = baseShader.data;
 
 		_data.data.insert(_data.data.begin(), prepend, prepend + strlen(prepend));
 		_data.data.insert(_data.data.end(), append, append + strlen(append));
 		_data.data.push_back(0);
+
+		reg(CLOSURE(this, &UberShaderProgram::_restore), 0);
 	}
 
 	void UberShaderProgram::releaseShaders()
@@ -75,14 +85,18 @@ namespace oxygine
 		releaseShaders();
 	}
 
-	void UberShaderProgram::restore()
+	void UberShaderProgram::_restore(Restorable *, void*)
+	{
+
+	}
+
+	void UberShaderProgram::release()
 	{
 		for (int i = 0; i < SIZE; ++i)
 		{
 			shader &s = _shaders[i];
 			if (s.program)
 			{
-				s.program->invalidate();
 				delete s.program;
 				s.program = 0;
 			}			
@@ -110,6 +124,9 @@ namespace oxygine
 
 			if (flags & SEPARATE_ALPHA)
 				strcat(prepend, "#define SEPARATE_ALPHA\n");
+
+			if (flags & MASK_R_CHANNEL)
+				strcat(prepend, "#define MASK_R_CHANNEL\n");
 
 			if (flags & MASK)
 			{
@@ -149,7 +166,7 @@ namespace oxygine
 			"#define lowp\n"
 			"#define mediump\n";
 
-#ifdef WIN32
+#if SDL_VIDEO_OPENGL
 		*ptr = nonGLES;
 		ptr++;
 #endif
@@ -203,7 +220,8 @@ namespace oxygine
             zp.add(system_data, system_size);
             zp.read("system/shader.glsl", _shaderBody);
         }
-		_us = UberShaderProgram(_shaderBody);
+
+		_us.init(_shaderBody);
 	}
 
 	VideoDriverGLES20::~VideoDriverGLES20()
@@ -215,6 +233,11 @@ namespace oxygine
 	{
 		_us.restore();
 		setDefaultSettings();		
+	}
+
+	bool VideoDriverGLES20::isReady() const
+	{
+		return _currentProgram != 0;
 	}
 
 	spNativeTexture VideoDriverGLES20::createTexture()
@@ -231,6 +254,11 @@ namespace oxygine
 		_currentProgram->bind();
 
 		updateConstants();
+	}
+
+	void VideoDriverGLES20::reset()
+	{
+		_currentProgram = 0;
 	}
 
 	void VideoDriverGLES20::updateConstants()
@@ -321,7 +349,11 @@ namespace oxygine
 		if (b.alpha)
 			flags |= UberShaderProgram::SEPARATE_ALPHA;
 		if (b.mask)
+		{
 			flags |= UberShaderProgram::MASK;
+			if (b.maskChannelR)
+				flags |= UberShaderProgram::MASK_R_CHANNEL;
+		}
 
 		ShaderProgramGL *glProg = program->getShaderProgram(flags)->program;
 
@@ -334,7 +366,7 @@ namespace oxygine
 		{
 			bindTexture(GL_TEXTURE1, "alpha_texture", b.alpha->getHandle());
 		}
-		if (b.mask)
+		if (b.mask) 
 		{
 			bindTexture(GL_TEXTURE2, "mask_texture", b.mask->getHandle());
 			glUniform4f(
@@ -350,16 +382,26 @@ namespace oxygine
 		
 		const VertexDeclarationGL::Element *el = decl->elements;
 		for (int i = 0; i < decl->numElements; ++i)		
-		{
+		{	
 			glEnableVertexAttribArray(el->index);
-			glVertexAttribPointer(el->index, el->size, el->elemType, el->normalized, decl->size, verticesData + el->offset);
+			glVertexAttribPointer(el->index, el->size, el->elemType, el->normalized, decl->size, verticesData + el->offset);			
 			el++;
 		}
 
+		//log::messageln("indices %d", indices);
+
+		
 		if (indices <= (int)_indices8.size())
 			glDrawElements(GL_TRIANGLES, indices, GL_UNSIGNED_BYTE, &_indices8[0]);
 		else
 			glDrawElements(GL_TRIANGLES, indices, GL_UNSIGNED_SHORT, &_indices16[0]);
+
+		el = decl->elements;
+		for (int i = 0; i < decl->numElements; ++i)		
+		{			
+			glDisableVertexAttribArray(el->index);
+			el++;
+		}
 	}
 
 	void VideoDriverGLES20::setDefaultSettings()

@@ -2,7 +2,7 @@
 #include "core/NativeTexture.h"
 #include "AnimationFrame.h"
 #include "Sprite.h"
-#include "InitActor.h"
+#include "initActor.h"
 #include "SlidingActor.h"
 #include "DebugActor.h"
 #include "res/Resources.h"

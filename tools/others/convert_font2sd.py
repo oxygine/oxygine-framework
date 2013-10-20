@@ -203,17 +203,7 @@ if __name__ == "__main__":
     
     parser.add_argument("bmfont", help="src font")
     parser.add_argument("-s", "--scale", help = "scale factor", type=int, default = 1)
-    """
-    parser.add_argument("-d", "--data", help = "folder contains all resources ('data' for Marmalade)", default = ".")
-    parser.add_argument("-x", "--xml", help = "xml file to process", default = ".", required = True)
-    parser.add_argument("-e", "--ext", help = "extended folder", default = ".")
-    parser.add_argument("-a", "--atlasses", help = "dest atlasses folder", default = "atlasses")
-    parser.add_argument("-del", "--delete", help = "delete original images", type=bool, default = False)
-    parser.add_argument("-m", "--max_size", help = "max atlas size", type=int, default = 2048)
-    parser.add_argument("-s", "--scale", help = "scale factor", type=float, default = 1.0)
-    parser.add_argument("-ds", "--downscale", help = "downscale HD", type=bool, default = False)
-    parser.add_argument("-debug", "--debug", help = "debug mode", type=bool, default = True)
-    """
+    
     
     import xml_processor
 

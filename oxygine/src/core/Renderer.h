@@ -157,7 +157,7 @@ namespace oxygine
 		/**Sets texture. If texture is null White texture would be used.*/
 		void setTexture_(spNativeTexture base, spNativeTexture alpha, bool basePremultiplied = true);
 		void setDiffuse(const Diffuse &df);
-		void setMask(spNativeTexture mask, const RectF &srcRect, const RectF &destRect, const transform &t);
+		void setMask(spNativeTexture mask, const RectF &srcRect, const RectF &destRect, const transform &t, bool channelR);
 		void removeMask();
 		/**Sets World transformation matrix.*/
 		void setTransform(const transform &m);		

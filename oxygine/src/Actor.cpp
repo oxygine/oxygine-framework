@@ -12,6 +12,8 @@
 #include <math.h>
 #include "utils/stringUtils.h"
 #include "RenderState.h"
+#include <stdio.h>
+
 //#include ""
 
 namespace oxygine

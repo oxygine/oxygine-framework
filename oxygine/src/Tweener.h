@@ -8,6 +8,8 @@
 
 #include "EventDispatcher.h"
 #include "Event.h"
+#include <stdint.h>
+#include <limits>
 
 namespace oxygine
 {	
@@ -146,7 +148,7 @@ namespace oxygine
 		void setDetachActor(bool detach){_remove = detach;}
 
 		/**immediately completes tween, calls doneCallback and mark tween as completed and removes self from Actor. If tween has infinity loops (=-1) then do nothing*/
-		void complete(timeMS deltaTime = INT_MAX);
+		void complete(timeMS deltaTime = std::numeric_limits<int>::max());
 
 		
 		virtual bool start(Actor &actor);

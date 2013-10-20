@@ -13,7 +13,6 @@ namespace oxygine
 		void init(int w, int h, TextureFormat tf, bool renderTarget);
 		void init(const ImageData &src, bool sysMemCopy);
 		void release();
-		void invalidate();
 		void swap(NativeTexture *) ;
 
 		nativeTextureHandle	getHandle() const;

@@ -59,7 +59,8 @@ public:
 
 		VideoDriverGLES20 *driver = (VideoDriverGLES20*)IVideoDriver::instance;
 
-		_shader = new UberShaderProgram(driver->getShaderBody(), 
+		_shader = new UberShaderProgram();
+		_shader->init(driver->getShaderBody(), 
 			"#define MODIFY_BASE\n"
 			"uniform lowp float interp;"
 			"lowp vec4 modify_base(lowp vec4 base)\n"

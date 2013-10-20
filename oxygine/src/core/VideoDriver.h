@@ -64,6 +64,8 @@ namespace oxygine
 		spNativeTexture base;
 		spNativeTexture alpha;
 		spNativeTexture mask;
+		bool maskChannelR;
+
 		RectF clipMask;
 		bool basePremultiplied;
 
@@ -77,7 +79,9 @@ namespace oxygine
 		static IVideoDriver *instance;
 		virtual ~IVideoDriver(){}
 
+		virtual void reset() = 0;
 		virtual void restore() = 0;
+		virtual bool isReady() const = 0;
 
 		virtual spNativeTexture createTexture() = 0;
 
@@ -108,7 +112,7 @@ namespace oxygine
 		spNativeTexture createTexture();
 
 		void begin(const Matrix &proj, const Matrix &view, const Rect &viewport, const Color *clearColor);
-
+		bool isReady() const {return true;}
 		void	getViewport(Rect &r) const;
 		int		getMaxVertices() const;
 		bool	getScissorRect(Rect &) const;
@@ -120,6 +124,7 @@ namespace oxygine
 		void setDefaultSettings();
 		void setRenderTarget(spNativeTexture);
 
+		void reset(){}
 		void restore(){}
 	};
 

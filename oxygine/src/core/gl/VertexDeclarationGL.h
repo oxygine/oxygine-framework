@@ -2,6 +2,7 @@
 #include "oxygine_include.h"
 #include "../VertexDeclaration.h"
 #include "oxgl.h"
+
 namespace oxygine
 {
 	class VertexDeclarationGL: public VertexDeclaration

@@ -31,6 +31,7 @@ namespace oxygine
 			void setPrefix(const char *str);
 
 			bool isExists(const char *file);
+			bool isExistsHere(const char *file);
 
 			status open(const char *file, const char *mode, error_policy ep, fileHandle *&fh);
 

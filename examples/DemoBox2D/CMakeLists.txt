@@ -7,7 +7,7 @@ file(GLOB_RECURSE BOX2DSRC
 
 include_directories(box2d)
 
-add_executable(demobox2d 
+add_executable(DemoBox2D 
 	${BOX2DSRC}
 	src/entry_point.cpp
 	src/example.h 
@@ -15,4 +15,4 @@ add_executable(demobox2d
 
 source_group(box2d FILES ${BOX2DSRC})
 
-target_link_libraries(demobox2d ${OXYGINE_CORE_LIBS})
+target_link_libraries(DemoBox2D ${OXYGINE_CORE_LIBS})

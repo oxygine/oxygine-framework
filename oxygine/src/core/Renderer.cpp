@@ -74,6 +74,8 @@ namespace oxygine
 
 	void Renderer::release()
 	{
+		if (white)
+			white->release();
 		white = 0;
 	}	
 
@@ -237,7 +239,7 @@ namespace oxygine
 	}
 #endif	
 
-	void Renderer::setMask(spNativeTexture mask, const RectF &srcRect, const RectF &destRect, const transform &t)
+	void Renderer::setMask(spNativeTexture mask, const RectF &srcRect, const RectF &destRect, const transform &t, bool channelR)
 	{
 		batch &b = _batch;
 		if (b.mask != mask)
@@ -254,6 +256,7 @@ namespace oxygine
 			srcRect.getLeftBottom());
 
 		b.mask = mask;
+		b.maskChannelR = channelR;
 		if (b.vdecl->bformat != VERTEX_PCT2T2)
 			b.vdecl = _driver->getVertexDeclaration(VERTEX_PCT2T2);		
 		b.clipMask = srcRect;
@@ -389,6 +392,8 @@ namespace oxygine
 
 	bool Renderer::begin(spNativeTexture rt, const Rect &viewport, const Color *clearColor)
 	{
+		if (!getDriver()->isReady())
+			return false;
 		_rt = rt;
 
 		if (_rt)

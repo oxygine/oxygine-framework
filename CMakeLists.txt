@@ -1,18 +1,31 @@
 cmake_minimum_required (VERSION 2.6)
 project (OXYGINE)
 
-#SDL2
-set(SDL2_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../sdl/include)
-set(SDL2_LIBRARIES sdl2)
 
-set(OXYGINE_DEFINITIONS	
-	-D_CRT_SECURE_NO_WARNINGS)
+message(STATUS ${SDL2_INCLUDE_DIRS})
+#set(SDL2_INCLUDE_DIRS SDL2)
 
-set(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/oxygine/greenlets/src/*.c)
+if (MSVC)
+	set(OXYGINE_DEFINITIONS	
+		-D_CRT_SECURE_NO_WARNINGS)
+	set(SDL2_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../SDL/include)
+else(MSVC)
+	#set(OXYGINE_DEFINITIONS	
+	#	-D_REENTRANT) #linux pthreads
+	find_path(SDL2_INCLUDE_DIRS NAMES SDL2/SDL.h)
+	set(SDL2_INCLUDE_DIRS ${SDL2_INCLUDE_DIRS}/SDL2)
+endif(MSVC)
+
+set(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/oxygine/greenlets/src/greenlet.c)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/oxygine/greenlets/src/)
 
 
-set(THIRD_PARTY ${CMAKE_CURRENT_SOURCE_DIR}/oxygine/third_party/win32)
+if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+	set(THIRD_PARTY ${CMAKE_CURRENT_SOURCE_DIR}/oxygine/third_party/linux)
+else()
+	set(THIRD_PARTY ${CMAKE_CURRENT_SOURCE_DIR}/oxygine/third_party/win32)
+endif()
+
 
 set(OXYGINE_ROOT_SRC ${CMAKE_CURRENT_SOURCE_DIR}/oxygine/src)
 set(FOLDERS . closure minizip core core/gl dev_tools minizip math pugixml res text_utils utils winnie_alloc)
@@ -36,7 +49,7 @@ set(OXYGINE_INCLUDE_DIRS
 include_directories(${OXYGINE_INCLUDE_DIRS})
 
 
-find_package(OPENGL)
+find_package(OpenGL)
 include_directories(
 		${THIRD_PARTY}/libjpeg
 		${THIRD_PARTY}/libpng
@@ -51,28 +64,36 @@ set(OXYGINE_LIBRARY_DIRS
 	${OXYGINE_SOURCE_DIR}/libs
 	${THIRD_PARTY}/libraries)
 
-set(STATIC_LIB_NAMES 
-	libpng
-	libjpeg
-	libzlib
-	${CMAKE_STATIC_LIBRARY_PREFIX}sdl2
-	${CMAKE_STATIC_LIBRARY_PREFIX}sdl2main
-	)
-
-
-foreach(lib ${STATIC_LIB_NAMES})
-	set(OXYGINE_CORE_LIBS 
-		${OXYGINE_CORE_LIBS}
-		${lib}${CMAKE_STATIC_LIBRARY_SUFFIX})
-endforeach(lib)
-
-
 set(OXYGINE_CORE_LIBS 
 	${OXYGINE_CORE_LIBS}
-	${OPENGL_LIBRARIES}
 	oxygine-framework
-	glew32
+	SDL2
+	SDL2main	
+	${OPENGL_LIBRARIES}		
 )
+
+
+if (MSVC)
+	set(OXYGINE_CORE_LIBS
+		${OXYGINE_CORE_LIBS}
+		glew32
+		libpng
+		libjpeg
+		libzlib)
+else(MSVC)
+	set(OXYGINE_CORE_LIBS
+		${OXYGINE_CORE_LIBS}
+		z
+		png
+		jpeg		
+	)
+endif(MSVC)
+
+#foreach(lib ${STATIC_LIB_NAMES})
+#	set(OXYGINE_CORE_LIBS 
+#		${OXYGINE_CORE_LIBS}
+#		${lib}${CMAKE_STATIC_LIBRARY_SUFFIX})
+#endforeach(lib)
 
 
 set(OXYGINE_LIBRARY_DIRS

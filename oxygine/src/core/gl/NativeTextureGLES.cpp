@@ -211,11 +211,6 @@ namespace oxygine
 		unreg();
 	}
 
-	void NativeTextureGLES::invalidate()
-	{
-		_id = 0;
-		_fbo = 0;
-	}
 
 	void NativeTextureGLES::swap(NativeTexture *)
 	{

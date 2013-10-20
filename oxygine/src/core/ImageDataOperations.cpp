@@ -1,4 +1,6 @@
 #include "ImageDataOperations.h"
+#include <string.h>
+
 namespace oxygine
 {
 	namespace operations

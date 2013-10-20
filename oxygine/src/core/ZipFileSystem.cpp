@@ -164,7 +164,8 @@ namespace file
 
 		void release()
 		{
-			unzCloseCurrentFile(_entry->zp);
+			int r = unzCloseCurrentFile(_entry->zp);
+			OX_ASSERT(r == UNZ_OK);
 			delete this;
 		}
 

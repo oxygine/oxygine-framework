@@ -160,3 +160,8 @@ void example_destroy()
 {
 	gameResources.free();
 }
+
+void example_update()
+{
+
+}

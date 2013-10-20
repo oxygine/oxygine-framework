@@ -1,6 +1,6 @@
 #pragma once
 #include "test.h"
-#include "InitActor.h"
+#include "initActor.h"
 
 class TestMask: public Test
 {

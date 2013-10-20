@@ -32,72 +32,6 @@ namespace oxygine
 	*/};
 
 
-	typedef vector<Restorable*> restorable;
-	restorable _restorable;
-	bool _restoring = false;
-
-	restorable::iterator  findRestorable(Restorable *r)
-	{
-		restorable::iterator i = find(_restorable.begin(), _restorable.end(), r);
-		return i;
-	}
-
-	void Restorable::restoreAll()
-	{
-		restorable rs;
-		swap(rs, _restorable);
-		for (restorable::iterator i = rs.begin(); i != rs.end(); ++i)
-		{
-			Restorable *r = *i;
-			r->restore();
-		}
-		//_restoring = false;
-	}
-	
-	Restorable::Restorable(): _registered(false)
-	{
-
-	}
-
-	Restorable::~Restorable()
-	{
-		unreg();
-	}
-
-	void Restorable::reg(RestoreCallback cb, void *user)
-	{
-		if (_registered)
-			return;
-
-		OX_ASSERT(_restoring == false);
-		_cb = cb;
-		_userData = user;
-
-		_registered = true;
-		restorable::iterator i = findRestorable(this);
-		OX_ASSERT(i == _restorable.end());
-		_restorable.push_back(this);
-	}
-
-	void Restorable::unreg()
-	{
-		if (!_registered)
-			return;
-		OX_ASSERT(_restoring == false);
-		restorable::iterator i = find(_restorable.begin(), _restorable.end(), this);
-		OX_ASSERT(i != _restorable.end());
-		_restorable.erase(i);
-		_registered = false;
-	}
-
-	void Restorable::restore()
-	{
-		if (!_cb)
-			return;
-
-		_cb(this, _userData);
-	}
-
 	volatile int NativeTexture::created = 0;
 
 	void NativeTexture::dumpCreatedTextures()
@@ -119,6 +53,7 @@ namespace oxygine
 
 	std::vector<spNativeTexture> NativeTexture::getCreatedTextures()
 	{
+	
 		std::vector<spNativeTexture> t;
 
 		const ObjectBase::createdObjects &obj = ObjectBase::getCreatedObjects();
@@ -156,12 +91,7 @@ namespace oxygine
 	{
 
 	}
-
-	void NativeTextureNull::invalidate()
-	{
-
-	}
-
+	
 	ImageData NativeTextureNull::lock(lock_flags, const Rect *src)
 	{
 		return ImageData();

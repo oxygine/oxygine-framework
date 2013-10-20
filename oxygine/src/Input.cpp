@@ -1,6 +1,7 @@
 #include "Input.h"
 #include "RootActor.h"
 #include "core/log.h"
+#include <string.h>
 
 namespace oxygine
 {

@@ -3,6 +3,7 @@
 #include <vector>
 #include "Object.h"
 #include "oxygine.h"
+#include "FileSystem.h"
 
 namespace oxygine
 {
@@ -68,6 +69,8 @@ namespace oxygine
 
 		/**setExtendedFolder sets additional "hook" folder where files would be searched initially.*/
 		void setExtendedFolder(const char *folder);
+
+		file::FileSystem &fs();
 
 		class autoClose
 		{

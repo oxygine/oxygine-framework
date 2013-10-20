@@ -6,7 +6,7 @@
 #include "utils/stringUtils.h"
 #include "Object.h"
 
-#if defined(__APPLE__) || defined(ANDROID)
+#if defined(__APPLE__) || defined(ANDROID) || defined(__unix__)
 #include <unistd.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -167,6 +167,11 @@ namespace oxygine
 		void setExtendedFolder(const char *folder)
 		{
 			_nfs.setExtendedFolder(folder);			
+		}
+
+		file::FileSystem &fs()
+		{
+			return _nfs;
 		}
 	}
 }

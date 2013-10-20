@@ -8,7 +8,7 @@ include_directories(${OXYGINE_INCLUDE_DIRS})
 link_directories(${OXYGINE_LIBRARY_DIRS})
 
 
-add_subdirectory(demo)
+add_subdirectory(Demo)
 add_subdirectory(HelloWorld)
 add_subdirectory(Match3)
 add_subdirectory(GameTemplate)

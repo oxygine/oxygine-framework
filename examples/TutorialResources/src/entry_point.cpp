@@ -14,6 +14,7 @@ Rect viewport;
 
 int mainloop()
 {
+	example_update();
 	//update our rootActor
 	//Actor::update would be called also for children
 	RootActor::instance->update();
@@ -133,9 +134,10 @@ int main(int argc, char* argv[])
 
 
 #ifdef OXYGINE_SDL
+#include "SDL_main.h"
 extern "C"
 {
-	int SDL_main(int argc, char* argv[])
+	int main(int argc, char* argv[])
 	{
 		run();
 		return 0;

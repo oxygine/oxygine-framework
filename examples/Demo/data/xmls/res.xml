@@ -3,7 +3,7 @@
 	<set path = "images" />
 	<atlas id = "primary" format="8888">
 		<image file="gray.png"/>
-		<image file="logo2.png"/>
+		<image file="logo2.png" /> <!-- border=2 adds 2 pixel border from each side of image in atlas to avoid problem with mask -->
 		<image file="brush.png"/>
 		<image file="palette.png"/>		
 		<image file="snow.png"/>
