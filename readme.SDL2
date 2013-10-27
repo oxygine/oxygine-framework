@@ -1,0 +1,6 @@
+1. Download SDL2 (http://www.libsdl.org/)
+2. Put it on the same level with oxygine-framework
+root\
+     oxygine-framework
+     SDL
+3. read other "readme.*" for your platform (readme.iOS, readme.Android, etc)

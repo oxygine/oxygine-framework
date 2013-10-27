@@ -1,0 +1,4 @@
+option lib
+option enable-exceptions=1
+
+subproject oxygine

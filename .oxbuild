@@ -1,0 +1,4 @@
+.hgignore
+.hg_archival.txt
+doc.bat
+doxyfile

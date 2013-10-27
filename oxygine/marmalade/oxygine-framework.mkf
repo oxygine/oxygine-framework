@@ -1,0 +1,79 @@
+includepath ../src/
+
+options
+{
+	module_path="../third_party/marmalade/"
+}
+
+subproject iwutil
+subproject iwgl
+
+debug_define MARMALADE
+define MARMALADE
+
+files
+{
+	[src]
+	(../src)
+	"*.h"
+	"*.cpp"
+	
+	[src]
+	(../src)
+	"*.h"
+	"*.cpp"	
+		
+	[src/pugixml]
+	(../src/pugixml)
+	"*.hpp"
+	"*.cpp"	
+	
+	[src/text_utils]
+	(../src/text_utils)
+	"*.h"
+	"*.cpp"	
+
+	[src/minizip]
+	(../src/minizip)
+	"*.h"
+	"*.c"	
+		
+	[src/utils]
+	(../src/utils)
+	"*.h"
+	"*.cpp"	
+	
+	[src/math]
+	(../src/math)
+	"*.h"
+	"*.cpp"	
+	
+	[src/core]
+	(../src/core)
+	"*.h"
+	"*.cpp"	
+
+	[src/core/gl]
+	(../src/core/gl)
+	"*.h"
+	"*.cpp"	
+	
+	[src/closure]
+	(../src/closure)
+	"*.h"
+	
+	[src/winnie_alloc]
+	(../src/winnie_alloc)
+	"*.h"
+	"*.cpp"	
+	
+	[src/res]
+	(../src/res)
+	"*.h"
+	"*.cpp"	
+	
+	[src/dev_tools]
+	(../src/dev_tools)
+	"*.h"
+	"*.cpp"
+}

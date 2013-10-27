@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<resources>
+	<set path = "images" />
+	<atlas>
+		<image file="circle.png"/>
+		<image id="anim" file="anim1.png" cols = "7" /> <!-- 'id' is optional -->
+		<image file="button.png" cols = "3" />				
+	</atlas>
+	
+	<set path = "fonts" />
+	<font file="main.fnt" />
+</resources>

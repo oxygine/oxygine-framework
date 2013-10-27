@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<resources>
+	<set path = "images" />
+	<atlas id = "primary" format="8888">
+		<image file="gray.png"/>
+		<image file="logo2.png" /> <!-- border=2 adds 2 pixel border from each side of image in atlas to avoid problem with mask -->
+		<image file="brush.png"/>
+		<image file="palette.png"/>		
+		<image file="snow.png"/>
+		
+		<image id="anim" file="anim1.png" cols = "7" /> <!-- 'id' is optional -->
+		<image file="batterfly.png"/>
+		<image file="batterfly2.png"/>
+		<image file="bg.jpg" data-custom = "custom user data per xml resource defined in xml"/>
+		<image file="grad.png"/>
+		<image file="t2p.png"/>
+		<image file="slide.png"/>
+		<image file="box9.png"/>
+	</atlas>
+	
+	<set load = "false" /> <!--do not load next atlasses by default-->
+	<atlas format="4444">
+		<image id="bg_4444" file="bg.jpg"/>
+		<image id="logo2_4444" file="logo2.png"/>
+	</atlas>
+	
+	<atlas format="5551">
+		<image id="bg_5551" file="bg.jpg"/>
+		<image id="logo2_5551" file="logo2.png"/>
+	</atlas>
+	
+	<atlas format="565">
+		<image id="bg_565" file="bg.jpg"/>
+		<image id="logo2_565" file="logo2.png"/>
+	</atlas>	
+	
+</resources>

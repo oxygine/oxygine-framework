@@ -1,0 +1,2 @@
+thanks to Denis "qVadro" Sachkov for Match3 example source code
+email: niki-1@yandex.ru

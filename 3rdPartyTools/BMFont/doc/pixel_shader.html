@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>Bitmap Font Generator - Documentation</title>
+</head>
+<body>
+
+<h1>Bitmap Font Generator - Documentation</h1>
+
+<p><a href="../documentation.html">Back to main page</a></p>
+
+<h2>Pixel shader example</h2>
+
+<p>This pixel shader shows how to decode the color from a font texture with characters packed 
+into all 4 channels, and each channel using special encoding to store the character with the 
+outline. The texture is also allowed to store full 32bit images for some characters.</p>
+
+<pre>
+// DirectX 9 pixel shader
+float4 PixScene( float4 color : COLOR0,
+                 int4   chnl  : TEXCOORD1,
+                 float2 tex0  : TEXCOORD0 ) : COLOR0
+{
+  float4 pixel = tex2D(g_samScene, tex0);
+    
+  if( dot(vector(1,1,1,1), chnl) )
+  {
+    float val = dot(pixel, chnl);
+		
+    pixel.rgb = val > 0.5 ? 2*val-1 : 0;
+    pixel.a   = val > 0.5 ? 1 : 2*val;
+  }
+    
+  return pixel * color;
+}
+</pre>
+
+<p>The chnl texture coordinate is a 4D vector that shows which channel the character should be read 
+from. If this is (0,0,0,0) the character is interpreted as a 32 bit image. The texture coordinate 
+can be stored in a UBYTE4 type, so it doesn't require much bandwidth when being sent to the video card.</p>
+
+
+
+</body>
+</html>

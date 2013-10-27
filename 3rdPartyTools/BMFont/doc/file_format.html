@@ -1,0 +1,206 @@
+<html>
+<head>
+<title>Bitmap Font Generator - Documentation</title>
+</head>
+<body>
+
+<h1>Bitmap Font Generator - Documentation</h1>
+
+<p><a href="../documentation.html">Back to main page</a></p>
+
+<h2>File format</h2>
+
+<li><a href="#tags">File tags</a>
+<li><a href="#bin">Binary file layout</a>
+
+<a name="#tags"></a>
+<h2>File tags</h2>
+
+<h3>info</h3>
+
+<p>This tag holds information on how the font was generated.</p>
+
+<table>
+<tr><td width=100>face</td><td>This is the name of the true type font.</td></tr>
+<tr><td>size</td><td>The size of the true type font.</td></tr>
+<tr><td>bold</td><td>The font is bold.</td></tr>
+<tr><td>italic</td><td>The font is italic.</td></tr>
+<tr><td>charset</td><td>The name of the OEM charset used (when not unicode).</td></tr>
+<tr><td>unicode</td><td>Set to 1 if it is the unicode charset.</td></tr>
+<tr><td>stretchH</td><td>The font height stretch in percentage. 100% means no stretch.</td></tr>
+<tr><td>smooth</td><td>Set to 1 if smoothing was turned on.</td></tr>
+<tr><td>aa</td><td>The supersampling level used. 1 means no supersampling was used.</td></tr>
+<tr><td>padding</td><td>The padding for each character (up, right, down, left).</td></tr>
+<tr><td>spacing</td><td>The spacing for each character (horizontal, vertical).</td></tr>
+<tr><td>outline</td><td>The outline thickness for the characters.</td></tr>
+</table>
+
+<h3>common</h3>
+
+<p>This tag holds information common to all characters.</p>
+
+<table>
+<tr><td width=100>lineHeight</td><td>This is the distance in pixels between each line of text.</td></tr>
+<tr><td>base</td><td>The number of pixels from the absolute top of the line to the base of the characters.</td></tr>
+<tr><td>scaleW</td><td>The width of the texture, normally used to scale the x pos of the character image.</td></tr>
+<tr><td>scaleH</td><td>The height of the texture, normally used to scale the y pos of the character image.</td></tr>
+<tr><td>pages</td><td>The number of texture pages included in the font.</td></tr>
+<tr><td>packed</td><td>Set to 1 if the monochrome characters have been packed into each of the texture channels. In this case alphaChnl describes what is stored in each channel.</td></tr>
+<tr><td>alphaChnl</td><td>Set to 0 if the channel holds the glyph data, 1 if it holds the outline, 2 if it holds the glyph and the outline, 3 if its set to zero, and 4 if its set to one.</td></tr>
+<tr><td>redChnl</td><td>Set to 0 if the channel holds the glyph data, 1 if it holds the outline, 2 if it holds the glyph and the outline, 3 if its set to zero, and 4 if its set to one.</td></tr>
+<tr><td>greenChnl</td><td>Set to 0 if the channel holds the glyph data, 1 if it holds the outline, 2 if it holds the glyph and the outline, 3 if its set to zero, and 4 if its set to one.</td></tr>
+<tr><td>blueChnl</td><td>Set to 0 if the channel holds the glyph data, 1 if it holds the outline, 2 if it holds the glyph and the outline, 3 if its set to zero, and 4 if its set to one.</td></tr>
+</table>
+
+<h3>page</h3>
+
+<p>This tag gives the name of a texture file. There is one for each page in the font.</p>
+
+<table>
+<tr><td width=100>id</td><td>The page id.</td></tr>
+<tr><td>file</td><td>The texture file name.</td></tr>
+</table>
+
+<h3>char</h3>
+
+<p>This tag describes on character in the font. There is one for each included character in the font.</p>
+
+<table>
+<tr><td width=100>id</td><td>The character id.</td></tr>
+<tr><td>x</td><td>The left position of the character image in the texture.</td></tr>
+<tr><td>y</td><td>The top position of the character image in the texture.</td></tr>
+<tr><td>width</td><td>The width of the character image in the texture.</td></tr>
+<tr><td>height</td><td>The height of the character image in the texture.</td></tr>
+<tr><td>xoffset</td><td>How much the current position should be offset when copying the image from the texture to 
+the screen.</td></tr>
+<tr><td>yoffset</td><td>How much the current position should be offset when copying the image from the texture to 
+the screen.</td></tr>
+<tr><td>xadvance</td><td>How much the current position should be advanced after drawing the character.</td></tr>
+<tr><td>page</td><td>The texture page where the character image is found.</td></tr>
+<tr><td>chnl</td><td>The texture channel where the character image is found 
+(1 = blue, 2 = green, 4 = red, 8 = alpha, 15 = all channels).</td></tr>
+</table>
+
+<h3>kerning</h3>
+
+<p>The kerning information is used to adjust the distance between certain characters, e.g. some characters should 
+be placed closer to each other than others.</p>
+
+<table>
+<tr><td width=100>first</td><td>The first character id.</td></tr>
+<tr><td>second</td><td>The second character id.</td></tr>
+<tr><td>amount</td><td>How much the x position should be adjusted when drawing the second character immediately 
+following the first.</td></tr>
+</table>
+
+
+<a name="#bin"></A>
+<h2>Binary file layout</h2>
+
+<p>This section describes the layout of the tags in the binary file format. To understand what each tag means refer 
+to the <a href="#tags">file tags</A> section.</p>
+
+<p>The first three bytes are the file identifier and must always be 66, 77, 70, or "BMF". The fourth byte gives 
+the format version, currently it must be 3.</p>
+
+<ul>
+<li>Version 1 (introduced with application version 1.8).
+<li>Version 2 (introduced with application version 1.9) added the outline field in the infoBlock and the encoded 
+    field in the commonBlock.
+<li>Version 3 (introduced with application version 1.10) removed the encoded field in the commonBlock, and 
+    added the alphaChnl, redChnl, greenChnl, blueChnl instead. The size of each block is now stored without 
+    accounting for the size field itself. The character id in the charsBlock and the kerningPairsBlock was increased 
+    to 4 bytes to support the full unicode range. 
+</ul>
+
+<p>Following the first four bytes is a series of blocks with information. Each block starts with a one byte block 
+type identifier, followed by a 4 byte integer that gives the size of the block, not including the block type identifier 
+and the size value.</p>
+
+<h3>Block type 1: info</h3>
+
+<table>
+<tr><td width=100><b>field</b></td><td width=30><b>size</b></td><td width=40><b>type</b></td><td width=30><b>pos</b></td><td><b>comment</b></td></tr>
+<tr><td>fontSize</td>    <td>2</td>         <td>int</td>     <td>0</td> <td></td></tr>
+<tr><td>bitField</td>    <td>1</td>         <td>bits</td>    <td>2</td> <td>bit 0: smooth, bit 1: unicode, bit 2: italic, bit 3: bold, bit 4: fixedHeigth, bits 5-7: reserved</td></tr>
+<tr><td>charSet</td>     <td>1</td>         <td>uint</td>    <td>3</td> <td></td></tr>
+<tr><td>stretchH</td>    <td>2</td>         <td>uint</td>    <td>4</td> <td></td></tr>
+<tr><td>aa</td>          <td>1</td>         <td>uint</td>    <td>6</td> <td></td></tr>
+<tr><td>paddingUp</td>   <td>1</td>         <td>uint</td>    <td>7</td> <td></td></tr>
+<tr><td>paddingRight</td><td>1</td>         <td>uint</td>    <td>8</td> <td></td></tr>
+<tr><td>paddingDown</td> <td>1</td>         <td>uint</td>    <td>9</td> <td></td></tr>
+<tr><td>paddingLeft</td> <td>1</td>         <td>uint</td>    <td>10</td><td></td></tr>
+<tr><td>spacingHoriz</td><td>1</td>         <td>uint</td>    <td>11</td><td></td></tr>
+<tr><td>spacingVert</td> <td>1</td>         <td>uint</td>    <td>12</td><td></td></tr>
+<tr><td>outline</td>     <td>1</td>         <td>uint</td>    <td>13</td><td>added with version 2</td></tr>
+<tr><td>fontName</td>    <td><i>n</i>+1</td><td>string</td>  <td>14</td><td>null terminated string with length <i>n</i></td></tr>
+</table>
+
+<p>This structure gives the layout of the fields. Remember that there should be no 
+padding between members. Allocate the size of the block using the blockSize, as 
+following the block comes the font name, including the terminating null char. 
+Most of the time this block can simply be ignored.</p>
+
+<h3>Block type 2: common</h3>
+
+<table>
+<tr><td width=100><b>field</b></td><td width=30><b>size</b></td><td width=40><b>type</b></td><td width=30><b>pos</b></td><td><b>comment</b></td></tr>
+<tr><td>lineHeight</td>    <td>2</td>     <td>uint</td>    <td>0</td>  <td></td></tr>
+<tr><td>base</td>          <td>2</td>     <td>uint</td>    <td>2</td>  <td></td></tr>
+<tr><td>scaleW</td>        <td>2</td>     <td>uint</td>    <td>4</td>  <td></td></tr>
+<tr><td>scaleH</td>        <td>2</td>     <td>uint</td>    <td>6</td>  <td></td></tr>
+<tr><td>pages</td>         <td>2</td>     <td>uint</td>    <td>8</td>  <td></td></tr>
+<tr><td>bitField</td>      <td>1</td>     <td>bits</td>    <td>10</td> <td>bits 0-6: reserved, bit 7: packed</td></tr>
+<tr><td>alphaChnl</td>     <td>1</td>     <td>uint</td>    <td>11</td> <td></td></tr>
+<tr><td>redChnl</td>       <td>1</td>     <td>uint</td>    <td>12</td> <td></td></tr>
+<tr><td>greenChnl</td>     <td>1</td>     <td>uint</td>    <td>13</td> <td></td></tr>
+<tr><td>blueChnl</td>      <td>1</td>     <td>uint</td>    <td>14</td> <td></td></tr>
+</table>
+
+<h3>Block type 3: pages</h3>
+
+<table>
+<tr><td width=100><b>field</b></td><td width=70><b>size</b></td><td width=40><b>type</b></td><td width=30><b>pos</b></td><td><b>comment</b></td></tr>
+<tr><td>pageNames</td>    <td><i>p</i>*(<i>n</i>+1)</td>     <td>strings</td>    <td>0</td>  <td><i>p</i> null terminated strings, each with length <i>n</i></td></tr>
+</table>
+
+<p>This block gives the name of each texture file with the image data for the characters. 
+The string pageNames holds the names separated and terminated by null chars. Each filename 
+has the same length, so once you know the size of the first name, you can easily determine 
+the position of each of the names. The id of each page is the zero-based index of the string name.</p>
+
+<h3>Block type 4: chars</h3>
+
+<table>
+<tr><td width=100><b>field</b></td><td width=30><b>size</b></td><td width=40><b>type</b></td><td width=70><b>pos</b></td><td><b>comment</b></td></tr>
+<tr><td>id</td>       <td>4</td>     <td>uint</td>    <td>0+<i>c</i>*20</td>   <td>These fields are repeated until all characters have been described</td></tr>
+<tr><td>x</td>        <td>2</td>     <td>uint</td>    <td>4+<i>c</i>*20</td>   <td></td></tr>
+<tr><td>y</td>        <td>2</td>     <td>uint</td>    <td>6+<i>c</i>*20</td>   <td></td></tr>
+<tr><td>width</td>    <td>2</td>     <td>uint</td>    <td>8+<i>c</i>*20</td>   <td></td></tr>
+<tr><td>height</td>   <td>2</td>     <td>uint</td>    <td>10+<i>c</i>*20</td>   <td></td></tr>
+<tr><td>xoffset</td>  <td>2</td>     <td>int</td>     <td>12+<i>c</i>*20</td>  <td></td></tr>
+<tr><td>yoffset</td>  <td>2</td>     <td>int</td>     <td>14+<i>c</i>*20</td>  <td></td></tr>
+<tr><td>xadvance</td> <td>2</td>     <td>int</td>     <td>16+<i>c</i>*20</td>  <td></td></tr>
+<tr><td>page</td>     <td>1</td>     <td>uint</td>    <td>18+<i>c</i>*20</td>  <td></td></tr>
+<tr><td>chnl</td>     <td>1</td>     <td>uint</td>    <td>19+<i>c</i>*20</td>  <td></td></tr>
+</table>
+
+<p>The number of characters in the file can be computed by taking the size of the block 
+and dividing with the size of the charInfo structure, i.e.: numChars = charsBlock.blockSize/20.</p>
+
+<h3>Block type 5: kerning pairs</h3>
+
+<table>
+<tr><td width=100><b>field</b></td><td width=30><b>size</b></td><td width=40><b>type</b></td><td width=60><b>pos</b></td><td><b>comment</b></td></tr>
+<tr><td>first</td>     <td>4</td>    <td>uint</td>     <td>0+<i>c</i>*10</td>  <td>These fields are repeated until all kerning pairs have been described</td></tr>
+<tr><td>second</td>    <td>4</td>    <td>uint</td>     <td>4+<i>c</i>*10</td>  <td></td></tr>
+<tr><td>amount</td>    <td>2</td>    <td>int</td>      <td>8+<i>c</i>*6</td>  <td></td></tr>
+</table>
+
+
+<p>This block is only in the file if there are any kerning pairs with amount differing from 0.</p>
+
+
+
+</body>
+</html>

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{ba37ed3a-ddc3-4912-9e54-c0256ece665c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gr">
+      <UniqueIdentifier>{d70474bc-91ab-439f-8936-d4cfe0878730}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="greenlets\greenlet.c">
+      <Filter>gr</Filter>
+    </ClCompile>
+    <ClCompile Include="greenlets\test\test.cpp">
+      <Filter>gr</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="greenlets\greenlet.h">
+      <Filter>gr</Filter>
+    </ClInclude>
+    <ClInclude Include="greenlets\slp_platformselect.h">
+      <Filter>gr</Filter>
+    </ClInclude>
+    <ClInclude Include="greenlets\test\test.h">
+      <Filter>gr</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
