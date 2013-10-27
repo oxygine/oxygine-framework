@@ -8,7 +8,7 @@ spGameMenu GameMenu::instance;
 
 GameMenu::GameMenu()
 {
-	_actor->setSize(RootActor::instance->getSize());
+	_actor->setSize(getRoot()->getSize());
 
 	Vector2 size(_actor->getSize());
 

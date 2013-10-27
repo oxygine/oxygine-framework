@@ -10,7 +10,7 @@ public:
 		sprite->setPosition(pos);
 		sprite->setAnimFrame(resources.getResAnim("t2p"));
 		sprite->attachTo(content);
-		float scale = 1.0f/RootActor::instance->getScaleX();
+		float scale = 1.0f/getRoot()->getScaleX();
 		sprite->setScale(scale);
 		Vector2 displaySpriteSize = sprite->getSize() * scale;
 		sprite->setPosition((content->getSize() - displaySpriteSize)/2.0f);

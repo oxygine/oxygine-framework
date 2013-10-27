@@ -17,7 +17,7 @@ void GameResult::init()
 {
 	ColorRectSprite *p = new ColorRectSprite;
 	_bg = p;
-	_bg->setSize(RootActor::instance->getSize());
+	_bg->setSize(getRoot()->getSize());
 	_bg->setColor(Color(30, 30, 30, (int)(255 * 0.9f)));
 	_actor->addChild(_bg);
 

@@ -11,7 +11,9 @@ add_executable(DemoBox2D
 	${BOX2DSRC}
 	src/entry_point.cpp
 	src/example.h 
-	src/example.cpp)
+	src/example.cpp
+	src/Box2DDebugDraw.h
+	src/Box2DDebugDraw.cpp)
 
 source_group(box2d FILES ${BOX2DSRC})
 

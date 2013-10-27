@@ -1,5 +1,6 @@
 #include "oxygine-framework.h"
 #include "Box2D/Box2D.h"
+#include "Box2DDebugDraw.h"
 
 using namespace oxygine;
 
@@ -9,6 +10,7 @@ Resources gameResources;
 
 //DECLARE_SMART is helper, it does forward declaration and declares intrusive_ptr typedef for your class
 DECLARE_SMART(MainActor, spMainActor);
+
 
 const float SCALE = 100.0f;
 b2Vec2 convert(const Vector2 &pos)
@@ -23,39 +25,41 @@ Vector2 convert(const b2Vec2 &pos)
 
 class MainActor: public Actor
 {
-public:
-	
+public:	
 	b2World *_world;
+	spBox2DDraw _debugDraw;
 
 	MainActor():_world(0)
 	{	
-		setSize(RootActor::instance->getSize());
+		setSize(getRoot()->getSize());
 
+		spButton btn = new Button;
+		btn->setResAnim(gameResources.getResAnim("button"));
+		btn->setX(getWidth() - btn->getWidth());
+		btn->attachTo(this);
+		btn->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MainActor::showHideDebug));
 
-		spClock clock = new Clock();
-		clock->setFixedStep(1000.0f / 60.0f);
-		setClock(clock);
-
-		addEventListener(TouchEvent::CLICK, CLOSURE(this, &MainActor::clicked));
+		addEventListener(TouchEvent::CLICK, CLOSURE(this, &MainActor::displayClicked));
 
 
 		_world = new b2World(b2Vec2(0, 10), false);
 
-
+		
 		b2BodyDef groundBodyDef;
-		groundBodyDef.position = convert(Vector2(0.0f, getHeight() + 0.1f * SCALE));
+		groundBodyDef.position = convert(Vector2(getWidth()/2, getHeight() - 10));
 		b2Body* groundBody = _world->CreateBody(&groundBodyDef);
 
 		b2PolygonShape groundBox;
-		groundBox.SetAsBox(getWidth()/SCALE, 0.1f);		
+		groundBox.SetAsBox((getWidth() - 100)/2/SCALE, 10/SCALE);		
 		groundBody->CreateFixture(&groundBox, 0.0f);
 	}
-
 	
 	void doUpdate(const UpdateState &us)
 	{
+		//in real project you should make steps with fixed dt, check box2d documentation
 		_world->Step(us.dt / 1000.0f, 6, 2);
 
+		//update each body position on display
 		b2Body *body = _world->GetBodyList();
 		while(body)
 		{
@@ -67,54 +71,73 @@ public:
 				actor->setPosition(convert(pos));
 				actor->setRotation(body->GetAngle());
 
-				if (actor->getX() < -50 || actor->getX() > getWidth() + 50)
+				//remove fallen bodies
+				if (actor->getY() > getHeight() + 50)
 				{
 					body->SetUserData(0);
 					_world->DestroyBody(body);
 
 					actor->detach();					
 				}
-			}
-			
+			}			
 
 			body = next;
 		}
 	}
 
+	void showHideDebug(Event *event)
+	{
+		TouchEvent *te = safeCast<TouchEvent*>(event);
+		te->stopsImmediatePropagation = true;
+		if (_debugDraw)
+		{
+			_debugDraw->detach();
+			_debugDraw = 0;
+			return;
+		}
+
+		_debugDraw = new Box2DDraw;		
+		_debugDraw->SetFlags(b2Draw::e_shapeBit | b2Draw::e_jointBit | b2Draw::e_pairBit | b2Draw::e_centerOfMassBit);
+		_debugDraw->attachTo(this);
+		_debugDraw->setWorld(SCALE, _world);
+		_debugDraw->setPriority(1);
+	}
+
 	void circleClicked(Event *event)
 	{
 		TouchEvent *te = safeCast<TouchEvent*>(event);
+		te->stopImmediatePropagation();
+
 		spActor actor = safeSpCast<Actor>(event->currentTarget);
 		b2Body *body = (b2Body *)actor->getUserData();
 		
 		Vector2 dir = actor->getPosition() - actor->local2global(te->localPosition);
-		dir.normalize();
-		dir *= body->GetMass() * 200;
+		dir = dir / dir.length() * body->GetMass() * 200;
 
 		body->ApplyForceToCenter(b2Vec2(dir.x, dir.y));
-
 
 		//show click pos
 		spSprite sprite = new Sprite();		
 		sprite->setAnimFrame(gameResources.getResAnim("circle"));
-		addChild(sprite);
-		sprite->setScale(0.1f);
+		sprite->setColor(Color(0xff00ffff));
+		sprite->setScale(0.2f);
 		sprite->setPosition(te->localPosition);
 		sprite->setAnchor(Vector2(0.5f, 0.5f));
-		actor->addChild(sprite);
+		sprite->attachTo(actor);
 	}
 
-	void clicked(Event *event)
+	void displayClicked(Event *event)
 	{
 		TouchEvent *te = safeCast<TouchEvent*>(event);
 
 		spSprite sprite = new Sprite();		
-		sprite->setAnimFrame(gameResources.getResAnim("circle"));
-		addChild(sprite);
+		sprite->setResAnim(gameResources.getResAnim("circle"));
+		sprite->attachTo(this);
 		sprite->setAnchor(Vector2(0.5f, 0.5f));
 		sprite->setPosition(te->localPosition);
+		sprite->setInputChildrenEnabled(false);
 
-		sprite->addEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &MainActor::circleClicked));
+		sprite->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MainActor::circleClicked));
 		
 		b2BodyDef bodyDef;
 		bodyDef.type = b2_dynamicBody;
@@ -129,8 +152,6 @@ public:
 
 		b2CircleShape shape;
 		shape.m_radius = sprite->getWidth() / SCALE / 2 * scale;
-
-		
 
 		b2FixtureDef fixtureDef;
 		fixtureDef.shape = &shape;
@@ -153,7 +174,7 @@ void example_init()
 	//it would be deleted automatically when you lost ref to it	
 	spMainActor actor = new MainActor;
 	//and add it to RootActor as child
-	RootActor::instance->addChild(actor);
+	getRoot()->addChild(actor);
 }
 
 void example_destroy()

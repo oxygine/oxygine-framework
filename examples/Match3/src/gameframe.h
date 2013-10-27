@@ -47,22 +47,21 @@ class Field : public Actor
 public:
 	TFieldState getState() {return state;}
 
-	spTJewel jewels[FIELD_SIZE][FIELD_SIZE];
+	spJewel jewels[FIELD_SIZE][FIELD_SIZE];
 
-	Field(Vector2 pos, Vector2 jewelsIndent);
-	spTJewel At(Point index);
+	Field();
+	spJewel At(Point index);
 
 	Vector2	getCellPosition(int i, int j);
 	Point getCellIndex(Vector2 position);
 
 	void JewelClick(Event *event);
-	bool Swap(spTJewel First, spTJewel Second, bool skip_animation = false);
+	bool Swap(spJewel First, spJewel Second, bool skip_animation = false);
 	bool BackSwap();
 
 private:
 	TFieldState state;
 	Vector2 size;
-	Vector2 jewels_indent;
 
 	Point jewel_drag_ind;
 	Point jewel_new_ind;
@@ -81,8 +80,8 @@ private:
 
 	bool back_swap;
 	bool DropField();
-	void DropJewel(spTJewel Target, spTJewel Jewel);
-	void ForceSwap(spTJewel First, spTJewel Second);
+	void DropJewel(spJewel Target, spJewel Jewel);
+	void ForceSwap(spJewel First, spJewel Second);
 	int FindFreeCell(int column, int limit = 0);
 	int StartAnimation(Point ind);
 	int GenerateNewJewels(int column);
@@ -91,7 +90,6 @@ private:
 	void FillField(bool first_time = false);
 	bool FindSolutions();
 	void RefreshField();
-	void MakeTurn(bool changePlayer = true);
 };
 
 

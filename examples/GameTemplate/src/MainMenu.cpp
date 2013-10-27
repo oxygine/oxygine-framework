@@ -50,7 +50,7 @@ MainMenu::MainMenu()
 	clock->setFixedStep(1000/50.0f);
 	_actor->setClock(clock);
 			
-	_actor->setSize(RootActor::instance->getSize());
+	_actor->setSize(getRoot()->getSize());
 
 
 	spSprite bg = new Sprite();
@@ -100,7 +100,7 @@ void MainMenu::doLoop()
 			spActor parent = _actor->detach();
 
 			spGameActor game = new GameActor();
-			RootActor::instance->addChild(game->_actor);
+			getRoot()->addChild(game->_actor);
 								
 			game->loop();
 
@@ -121,7 +121,7 @@ void MainMenu::doLoop()
 			_menu->setInputEnabled(true);				
 
 			spOptionsMenu opt = OptionsMenu::instance;
-			RootActor::instance->addChild(opt->_actor);
+			getRoot()->addChild(opt->_actor);
 
 			opt->loop();
 			opt->_actor->detach();

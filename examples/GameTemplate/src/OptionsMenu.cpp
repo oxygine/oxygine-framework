@@ -56,9 +56,9 @@ OptionsMenu::OptionsMenu()
 
 	OptionsApply();
 
-	_actor->setSize(RootActor::instance->getSize());
+	_actor->setSize(getRoot()->getSize());
 	_actor->setAnchor(Vector2(0.5f, 0.5f));
-	_actor->setPosition(RootActor::instance->getSize()/2);
+	_actor->setPosition(getRoot()->getSize()/2);
 }
 
 OptionsMenu::~OptionsMenu()

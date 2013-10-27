@@ -8,7 +8,6 @@ spTextActor createText(string txt)
 	TextStyle style;
 	style.font = resourcesUI.getResFont("main")->getFont();
 	style.color = Color(72, 61, 139, 255);
-	//style.color = Color(255, 255, 255, 255);
 	style.vAlign = TextStyle::VALIGN_MIDDLE;
 	style.hAlign = TextStyle::HALIGN_CENTER;
 	style.multiline = true;
@@ -17,8 +16,8 @@ spTextActor createText(string txt)
 	text->setText(txt.c_str());
 
 	return text;
-
 }
+
 spButton createButtonHelper(string txt, EventCallback cb)
 {
 	spButton button = new Button();
@@ -27,14 +26,10 @@ spButton createButtonHelper(string txt, EventCallback cb)
 	button->setResAnim(resourcesUI.getResAnim("button"));
 	button->addEventListener(TouchEvent::CLICK, cb);
 
-
 	//create Actor with Text and it to button as child
 	spTextActor text = createText(txt);
-	//text->setPosition(button->getSize()/2);
 	text->setSize(button->getSize());
 	text->attachTo(button);
-	//text->setScale(0.8f);
-
 
 	return button;
 }
@@ -42,16 +37,14 @@ spButton createButtonHelper(string txt, EventCallback cb)
 
 Test::Test()
 {
-	setSize(RootActor::instance->getSize());
+	setSize(getRoot()->getSize());
 
 	_x = getWidth() - 100;
 	_y = 2;
 	
-
 	ui = new Actor;
 	content = new Content;
 	content->setSize(getSize());
-
 
 	addChild(content);
 	addChild(ui);
@@ -59,7 +52,7 @@ Test::Test()
 	if (_tests)
 	{
 		spButton button = createButtonHelper("back", CLOSURE(this, &Test::back));
-		button->setY((float)getHeight() - button->getHeight());
+		button->setY(getHeight() - button->getHeight());
 		ui->addChild(button);
 	}	
 }
@@ -67,7 +60,6 @@ Test::Test()
 
 Test::~Test()
 {
-	int q=0;
 }
 
 
@@ -82,14 +74,13 @@ void Test::addButton(string id, string txt)
 	button->setAnchor(Vector2(0.5f, 0.0f));
 
 	//center button at screen		
-	button->setPosition(Vector2((float)_x, (float)_y));
-	//button->setPosition(Vector2(150, _y));
+	button->setPosition(_x, _y);
 	_y += button->getHeight() + 2.0f;
 
-	if (_y >= getHeight())
+	if (_y  + button->getHeight() >= getHeight())
 	{
 		_y = 0;
-		_x += button->getWidth() + 10;
+		_x += button->getWidth() + 70;
 	}
 }
 
@@ -99,7 +90,7 @@ void Test::updateText(string id, string txt)
 	if (!child)
 		return;
 
-	TextActor *t = safeCast<TextActor*>(child->getFirstChild().get());
+	spTextActor t = safeSpCast<TextActor>(child->getFirstChild());
 	if (!t)
 		return;
 	t->setText(txt);
@@ -139,7 +130,6 @@ void Test::showPopup(string txt, int time)
 	sprite->addTween(tq);
 	sprite->attachTo(ui);
 	sprite->setPosition(0.0f, getHeight() - 150.0f);
-	
 
 	spTextActor text = createText(txt);
 	text->attachTo(sprite);

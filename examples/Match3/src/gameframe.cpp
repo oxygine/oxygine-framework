@@ -2,12 +2,6 @@
 #include "shared.h"
 
 
-void Field::MakeTurn(bool changePlayer)
-{
-
-
-}
-
 int Field::StartAnimation(Point ind)
 {
 	spTween tween = At(ind)->PlayAnimation();
@@ -67,7 +61,6 @@ int Field::goRight(Point ind, bool scoreit)
 
 int Field::goLeft(Point ind, bool scoreit)
 {
-	//if (At(ind)->getState()!=jsNormal) return 0;
 	Point next_ind = ind;
 	next_ind.x-=1;
 	int sum=1;
@@ -82,10 +75,6 @@ int Field::goLeft(Point ind, bool scoreit)
 
 int Field::CheckJewel(Point ind, bool donotscore)
 {
-	//if (!At(ind)->IsID(jsNormal)) return 0;
-
-
-	//определяем количество рядом стоящих одинаковых камней
 	int s1=goLeft(ind);
 	s1+=goRight(ind)-1;
 
@@ -95,10 +84,11 @@ int Field::CheckJewel(Point ind, bool donotscore)
 	int bs=0;
 
 
-	if (s2>2 && s1>2) {//собирание камней по вертикали и горизонтали
+	if (s2>2 && s1>2)
+	{
 		bs=s1+s2-1;
-		if (donotscore) return bs;
-		//Attack(stones[i][j].type,bs);
+		if (donotscore)
+			return bs;
 
 		At(ind)->LockUnlock();
 		goLeft(ind,true); 
@@ -109,10 +99,11 @@ int Field::CheckJewel(Point ind, bool donotscore)
 		return bs;
 	}
 
-	if (s1>s2 && s1>2) {//собирание камней по горизонтали
+	if (s1>s2 && s1>2)
+	{
 		bs=s1-2;
-		if (donotscore) return s1;
-		//	Attack(stones[i][j].type,s1);
+		if (donotscore) 
+			return s1;
 
 		At(ind)->LockUnlock();
 		goLeft(ind,true); 
@@ -121,10 +112,11 @@ int Field::CheckJewel(Point ind, bool donotscore)
 		return bs;
 	}
 
-	if (s2>s1 && s2>2) {//собирание камней по вертикали
+	if (s2>s1 && s2>2)
+	{
 		bs=s2-2;
-		if (donotscore) return s2;
-		//	Attack(stones[i][j].type,s2);
+		if (donotscore) 
+			return s2;
 		At(ind)->LockUnlock();
 		goUp(ind,true); 
 		At(ind)->LockUnlock();
@@ -134,17 +126,13 @@ int Field::CheckJewel(Point ind, bool donotscore)
 	return bs;
 }
 
-bool compareSolutions(const TFieldSolutions* left, const TFieldSolutions* right)
-{
-	return left->jewel_count > right->jewel_count;
-};
-
 
 bool Field::FindSolutions()
 {
-	std::vector<TFieldSolutions*> solutions;
+	std::vector<TFieldSolutions> solutions;
 
 	for(int i=0; i<FIELD_SIZE-1; i++)
+	{
 		for(int j=0; j<FIELD_SIZE; j++)
 		{
 			int points;
@@ -152,17 +140,19 @@ bool Field::FindSolutions()
 			points = CheckJewel(Point(i,j),true);
 			if (points>0) 
 			{	
-				solutions.push_back(new TFieldSolutions(Point(i,j),Point(i+1,j),points));
+				solutions.push_back(TFieldSolutions(Point(i,j),Point(i+1,j),points));
 			}
 			points += CheckJewel(Point(i+1,j),true);
 			if (points>0) 
 			{	
-				solutions.push_back(new TFieldSolutions(Point(i+1,j),Point(i,j),points));
+				solutions.push_back(TFieldSolutions(Point(i+1,j),Point(i,j),points));
 			}
 			ForceSwap(jewels[i][j],jewels[i+1][j]);
 		}
+	}
 
-		for(int i=0; i<FIELD_SIZE; i++)
+	for(int i=0; i<FIELD_SIZE; i++)
+	{
 			for(int j=0; j<FIELD_SIZE-1; j++)
 			{
 				int points;
@@ -170,35 +160,23 @@ bool Field::FindSolutions()
 				points = CheckJewel(Point(i,j),true);
 				if (points>0) 
 				{	
-					solutions.push_back(new TFieldSolutions(Point(i,j),Point(i,j+1),points));
+					solutions.push_back(TFieldSolutions(Point(i,j),Point(i,j+1),points));
 				}
 				points += CheckJewel(Point(i,j+1),true);
 				if (points>0) 
 				{	
-					solutions.push_back(new TFieldSolutions(Point(i,j+1),Point(i,j),points));
+					solutions.push_back(TFieldSolutions(Point(i,j+1),Point(i,j),points));
 				}
 				ForceSwap(jewels[i][j],jewels[i][j+1]);
 			}
+	}
 
-			if (solutions.size()==0)
-			{
-				return false;
-			}
-			else
-			{
-				std::sort(solutions.begin(),solutions.end(), &compareSolutions);
-				solutions.clear();
-				return true;
-			}
-
-
+	if (solutions.empty())	
+		return false;
+	
+	return true;
 }
 
-
-int compareVariants(const TFieldVariants* left, const TFieldVariants* right)
-{
-	return left->points > right->points;
-}
 
 void Field::FillField(bool first_time)
 {
@@ -235,39 +213,30 @@ void Field::CleanField()
 				}	
 			}
 	}while(!ex);
-
 }
 
 bool Field::CheckField()
 {
-
-	std::vector<TFieldVariants *> variants;
+	std::vector<TFieldVariants> variants;
 	for (int i=0; i<FIELD_SIZE; i++)
 		for (int j=0; j<FIELD_SIZE; j++)
 		{
 			int points = CheckJewel(Point(i,j),true);
 			if (points>0)
 			{
-				variants.push_back(new TFieldVariants(Point(i,j),points));
+				variants.push_back(TFieldVariants(Point(i,j),points));
 			}
 		}
 
-		if (variants.size()==0) 
+		if (variants.empty()) 
 		{
-			variants.clear();
 			return false;
-
 		}
 		else
 		{
-			//сортировка массива по убыванию
-			std::sort(variants.begin(),variants.end(), &compareVariants);
-
-			//собираем в поле самые лучшие варианты
 			for (size_t i=0; i<variants.size(); i++)
 			{
-				CheckJewel(variants.at(i)->index);
-				delete variants.at(i);
+				CheckJewel(variants.at(i).index);
 			}
 			variants.clear();
 			return true;
@@ -277,7 +246,8 @@ bool Field::CheckField()
 
 bool Field::BackSwap()
 {
-	if (back_swap) return false;
+	if (back_swap) 
+		return false;
 	back_swap = true;
 	Swap( At(jewel_drag_ind), At(jewel_new_ind));
 	return true;
@@ -296,19 +266,22 @@ void Field::DropEndCallback(Event *ev)
 		{
 			if (FindSolutions())
 				state = fsWaiting;
-			else RefreshField();
+			else 
+				RefreshField();
 		}
 	}
 }
 
 
-bool Field::Swap(spTJewel First, spTJewel Second, bool skip_animation)
+bool Field::Swap(spJewel First, spJewel Second, bool skip_animation)
 {
-	Point diff = getCellIndex( First->getPosition()) -  getCellIndex( Second->getPosition());
-	if (abs(diff.x)>1 || (abs(diff.y)>1) || abs(diff.x)==abs(diff.y) || Second==First || !( Second->getState()==jsNormal && First->getState()==jsNormal)) return false;
+	Point diff = getCellIndex(First->getPosition()) - getCellIndex(Second->getPosition());
+	if (abs(diff.x)>1 || (abs(diff.y)>1) || 
+		abs(diff.x)==abs(diff.y) || Second==First || 
+		!(Second->getState()==jsNormal && First->getState()==jsNormal)) 
+		return false;
 
 	ForceSwap(First, Second);
-
 
 	if (!skip_animation)
 	{
@@ -322,6 +295,7 @@ bool Field::Swap(spTJewel First, spTJewel Second, bool skip_animation)
 		tween->setDoneCallback(CLOSURE(this, &Field::EndSwapCallback));
 		Second->addTween(tween);
 	}
+
 	return true;
 }
 
@@ -369,7 +343,7 @@ int Field::FindFreeCell(int column, int limit)
 		return free;
 }
 
-void Field::ForceSwap(spTJewel First, spTJewel Second)
+void Field::ForceSwap(spJewel First, spJewel Second)
 {
 	Point first_index = First->index;
 	Point second_index = Second->index;
@@ -381,35 +355,39 @@ void Field::ForceSwap(spTJewel First, spTJewel Second)
 	jewels[second_index.x][second_index.y]->index = second_index;
 }
 
-void  Field::DropJewel(spTJewel Target, spTJewel Jewel)
+void  Field::DropJewel(spJewel Target, spJewel Jewel)
 {
-	if (Jewel->getState()!=jsNormal) return;
-	if (Target->getState()!=jsScored) return;
+	if (Jewel->getState()!=jsNormal)
+		return;
 
+	if (Target->getState()!=jsScored) 
+		return;
 
 	spTween tween = Jewel->DropTo(Target->getPosition());
 	tween->setDoneCallback(CLOSURE(this, &Field::DropEndCallback));		
-	Target->setPosition( getCellPosition(Jewel->index.x, Jewel->index.y));
+	Target->setPosition(getCellPosition(Jewel->index.x, Jewel->index.y));
 	ForceSwap(Target,Jewel);
 	droped_count++;
 }
 
 void Field::RefreshField()
-{	for (int i=0; i<FIELD_SIZE; i++)
-{
-	for (int j=FIELD_SIZE-1; j>=0; j--) 
+{	
+	for (int i=0; i<FIELD_SIZE; i++)
 	{
-		jewels[i][j]->setState(jsScored);
+		for (int j=FIELD_SIZE-1; j>=0; j--) 
+		{
+			jewels[i][j]->setState(jsScored);
+		}
+		GenerateNewJewels(i);
 	}
-	GenerateNewJewels(i);
-}
-CleanField();
+	CleanField();
 }
 
 int Field::GenerateNewJewels(int column)
 {
 	int count = 0;
 	for (int j=FIELD_SIZE-1; j>=0; j--) 
+	{
 		if (jewels[column][j]->getState()==jsScored)
 		{
 			Vector2 pos = jewels[column][j]->getPosition();
@@ -422,7 +400,9 @@ int Field::GenerateNewJewels(int column)
 			count++;
 
 		}
-		return 0;
+	}
+
+	return 0;
 }
 
 bool Field::DropField()
@@ -439,14 +419,12 @@ bool Field::DropField()
 					DropJewel(jewels[i][free],jewels[i][j]);
 				}
 			}
-
-
-
 		}
 		GenerateNewJewels(i);
 	}
 
-	if (droped_count>0) state = fsAnimation;
+	if (droped_count>0)
+		state = fsAnimation;
 	return true;
 }
 
@@ -455,7 +433,8 @@ void Field::EndAnimationCallback(Event *ev)
 	safeSpCast<Jewel>(ev->currentTarget)->AnimationEnd();
 	animated_count--;
 
-	if (animated_count==0) DropField();
+	if (animated_count==0) 
+		DropField();
 }
 
 void Field::EndSwapCallback(Event *ev)
@@ -470,7 +449,7 @@ void Field::EndSwapCallback(Event *ev)
 	}
 }
 
-Field::Field(Vector2 pos, Vector2 jewelsIndent)
+Field::Field()
 {
 	animated_count=0;
 	droped_count=0;
@@ -480,15 +459,13 @@ Field::Field(Vector2 pos, Vector2 jewelsIndent)
 	addEventListener(TouchEvent::TOUCH_DOWN, cb);
 	state = fsWaiting;
 
-	jewels_indent = jewelsIndent;
-	setPosition(pos);
-	setSize(Vector2(jewelsIndent.x*JEWEL_SIZE*FIELD_SIZE,jewelsIndent.y*JEWEL_SIZE*FIELD_SIZE));
+	setSize(JEWEL_SIZE * FIELD_SIZE, JEWEL_SIZE * FIELD_SIZE);
 
 	FillField(true);
 	RefreshField();
 }
 
-spTJewel Field::At(Point index)
+spJewel Field::At(Point index)
 {
 	if (index.x>-1 && index.y>-1 && index.x<FIELD_SIZE && index.y<FIELD_SIZE)
 		return jewels[index.x][index.y];
@@ -499,21 +476,24 @@ spTJewel Field::At(Point index)
 
 Point Field::getCellIndex(Vector2 position)
 {
-	return Point((position.x)/(JEWEL_SIZE+jewels_indent.x),(position.y)/(JEWEL_SIZE+jewels_indent.y));
+	return Point(position.x/JEWEL_SIZE, position.y/JEWEL_SIZE);
 }
 
 Vector2	Field::getCellPosition(int i, int j)
 {
-	return Vector2(((i*(JEWEL_SIZE+jewels_indent.x))),(j*(JEWEL_SIZE+jewels_indent.y)));
+	return Vector2(i * JEWEL_SIZE + JEWEL_SIZE/2, j * JEWEL_SIZE + JEWEL_SIZE/2);
 }
-
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
 GameFrame::GameFrame()
 {		
-	setAnimFrame(res.getResAnim("bg"));
+	setResAnim(res.getResAnim("bg"));
 
-	spTField field = new Field(Vector2(107,42),Vector2(3,2));
+	spTField field = new Field();
+	float scale = getRoot()->getHeight() * 0.9f / field->getHeight();
+	field->setScale(scale);
+
+	field->setPosition(getRoot()->getSize()/2 - field->getSize() * scale/2);
 	addChild(field);
 }

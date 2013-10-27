@@ -2,11 +2,11 @@
 
 #include "oxygine-framework.h"
 
-#define JEWEL_SIZE 42
+#define JEWEL_SIZE 50
 
 using namespace oxygine;
 
-DECLARE_SMART(Jewel, spTJewel);
+DECLARE_SMART(Jewel, spJewel);
 
 typedef enum {jsNormal, jsAnimation, jsSelected, jsScored, jsDropped} TJewelState;
 
@@ -32,7 +32,7 @@ public:
 	void SetSelected();
 	void UnSelect();
 	spTween DropTo(Vector2 pos);
-	bool IsID(spTJewel spJewel) {return spJewel->GetId()==_id;}
+	bool IsID(spJewel spJewel) {return spJewel->GetId()==_id;}
 	void Set(int id);
 
 	spTween PlayAnimation();

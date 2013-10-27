@@ -73,10 +73,11 @@ public:
 
 		Vector2 size(420, 300);
 
+
 		tests.push_back(text_test( "It is html style tagged text. <div c='ffff00'>It could be colored.  It <div c='0000ff'>supports</div> <div c='00ff00AA'>nested tags</div> and  <br/> broken lines.</div><br/>It supports CDATA and xml escape sequences:\n<![CDATA[<div c='00ffff'>it is CDATA</div>]]>", 
 			TextStyle::HALIGN_CENTER, TextStyle::VALIGN_MIDDLE, size, true));
 
-		for (int h = 0; h < 3; ++h)
+		for (int h = TextStyle::HALIGN_LEFT; h <= TextStyle::HALIGN_RIGHT; ++h)
 		{
 			tests.push_back(text_test( "<div c='00ff00'>Scaled Font test<br/></div> The quick brown fox jumps over the lazy dog. 1234567890. The quick brown fox jumps over the lazy dog. 1234567890. The quick brown fox jumps over the lazy dog. 1234567890. The quick brown fox jumps over the lazy dog. 1234567890. ", TextStyle::HALIGN_CENTER, TextStyle::VALIGN_MIDDLE, size, true, 10 * h  + 20));
 		}
@@ -84,37 +85,39 @@ public:
 
 		tests.push_back(text_test( "<div c='00ff00'>Using '\\n' new line test</div>\nnew line\nnew line\nnew line", TextStyle::HALIGN_CENTER, TextStyle::VALIGN_TOP, size));
 		
-		for (int h = 0; h < 3; ++h)
+		for (int h = TextStyle::HALIGN_LEFT; h <= TextStyle::HALIGN_RIGHT; ++h)
 		{
 			tests.push_back(text_test( "<div c='00ff00'>Singleline Test</div> The quick brown fox.", TextStyle::HorizontalAlign(h), TextStyle::VALIGN_TOP, size, false));
 		}
 
-		for (int h = 0; h < 3; ++h)
+		for (int h = TextStyle::HALIGN_LEFT; h <= TextStyle::HALIGN_RIGHT; ++h)
 		{
 			tests.push_back(text_test( "<div c='00ff00'>Multiline Test with spaces inside</div> The   quick    brown    fox   jumps    over   the    lazy dog.", TextStyle::HorizontalAlign(h), TextStyle::VALIGN_TOP, size));
 		}
 
 		
 
-		for (int v = 0; v < 4; ++v)
+		for (int v = TextStyle::VALIGN_BASELINE; v <= TextStyle::VALIGN_BOTTOM; ++v)
 		{
-			for (int h = 0; h < 3; ++h)
+			for (int h = TextStyle::HALIGN_LEFT; h <= TextStyle::HALIGN_RIGHT; ++h)
 			{
-				tests.push_back(text_test( "<div c='00ff00'>Aligment Test</div> The quick brown fox jumps over the lazy dog. 1234567890. The quick brown fox jumps over the lazy dog. 1234567890. ", TextStyle::HorizontalAlign(h), TextStyle::VerticalAlign(v), size));
+				tests.push_back(text_test( "It is html style tagged text. <div c='ffff00'>It could be colored.  It <div c='0000ff'>supports</div> <div c='00ff00AA'>nested tags</div> and  <br/> broken lines.</div><br/>It supports CDATA and xml escape sequences:\n<![CDATA[<div c='00ffff'>it is CDATA</div>]]>", 
+					TextStyle::HorizontalAlign(h), TextStyle::VerticalAlign(v), size, true));
+				//tests.push_back(text_test( "<div c='00ff00'>Aligment Test</div> The quick brown fox jumps over the lazy dog. 1234567890. The quick brown fox jumps over the lazy dog. 1234567890. ", TextStyle::HorizontalAlign(h), TextStyle::VerticalAlign(v), size));
 			}
 		}
 
 		size = Vector2(200, 100);
-		for (int v = 0; v < 4; ++v)
+		for (int v = TextStyle::VALIGN_BASELINE; v <= TextStyle::VALIGN_BOTTOM; ++v)
 		{
-			for (int h = 0; h < 3; ++h)
+			for (int h = TextStyle::HALIGN_LEFT; h <= TextStyle::HALIGN_RIGHT; ++h)
 			{
 				tests.push_back(text_test( "<div c='00ff00'>Aligment Test with limited size</div> The quick brown fox jumps over the lazy dog. 1234567890.", TextStyle::HorizontalAlign(h), TextStyle::VerticalAlign(v), size));
 			}
 		}
 
 		size = Vector2(380, 300);
-		for (int h = 0; h < 3; ++h)
+		for (int h = TextStyle::HALIGN_LEFT; h <= TextStyle::HALIGN_RIGHT; ++h)
 		{
 			tests.push_back(text_test( "<div c='00ff00'>Long string and aligment test</div> The_quick_brownfox_jumps_over_the lazy dog. 1234567890.", TextStyle::HorizontalAlign(h), TextStyle::VALIGN_TOP, size));
 		}	

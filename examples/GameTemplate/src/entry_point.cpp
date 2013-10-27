@@ -1,28 +1,17 @@
-#include "oxygine-framework.h"
-
-#include "GameActor.h"
-#include "shared.h"
-
-#include "MainMenu.h"
-#include "GameMenu.h"
-#include "Options.h"
-#include "GameResult.h"
-
-#include "Options.h"
-#include "OptionsMenu.h"
-
 #include <stdio.h>
 
+#include "core/Renderer.h"
+#include "RootActor.h"
+#include "DebugActor.h"
 
-class Exit
-{
-public:
-
-};
+#include "example.h"
 
 
-Renderer mainRenderer;
+using namespace oxygine;
+
+Renderer renderer;
 Rect viewport;
+
 
 class ExampleRootActor: public RootActor
 {
@@ -46,114 +35,125 @@ public:
 	}
 };
 
-int updateLoop()
+int mainloop() 
 {
-	RootActor::instance->update();
+	example_update();
+	//update our rootActor
+	//Actor::update would be called also for children
+	getRoot()->update();
 
-	Color c(30, 30, 30, 255);
-	if (mainRenderer.begin(0, viewport, &c))
+	Color clear(33, 33, 33, 255);
+	//start rendering and clear viewport
+	if (renderer.begin(0, viewport, &clear))
 	{
-		RootActor::instance->render(mainRenderer);
-		mainRenderer.end();
+		//begin rendering from RootActor. 
+		getRoot()->render(renderer);
+		//rendering done
+		renderer.end();
+
 		core::swapDisplayBuffers();
 	}
 	
 
+	//update internal components
+	//all input events would be passed to RootActor::instance.handleEvent
+	//if done is true then User requests quit from app.
 	bool done = core::update();
-	if (done)
-		throw Exit();	
 
-	return 0;
+	return done ? 1 : 0;
 }
 
+//it is application entry point
 void run()
-{
-	//initialize oxygine
-	core::init();
+{	
+	//initialize oxygine's internal stuff
+	core::init_desc desc;
 
-	//mainRenderer is static object 
-	//VideoDriver wasn't available in mainRenderer ctor's
-	mainRenderer.setDriver(IVideoDriver::instance);
+#if OXYGINE_SDL
+	//we could setup initial window size on SDL builds
+	//desc.w = 960;
+	//desc.h = 660;
+	//marmalade settings could be changed from emulator's menu
+#endif
 
+	core::init(&desc);	
+	
+	//create RootActor. RootActor is a root node
+	RootActor::instance = new ExampleRootActor();	
 	Point size = core::getDisplaySize();
+	getRoot()->init(size, size);
 	
-	int width = size.x;
-	int height = size.y;
+	//DebugActor is a helper node it shows FPS and memory usage and other useful stuff
+	DebugActor::initialize();
 
-	
-	RootActor::instance = new ExampleRootActor();
-	RootActor::instance->init(size, Point(480, 320));	
+	//create and add new DebugActor to root actor as child
+	getRoot()->addChild(new DebugActor());
 
-	bool high_quality = true;
-	
-	//init default options
-	Options::instance.init("1");
-	Options::instance.addValue("high_quality").set_value(high_quality);
-	Options::instance.addValue("sounds").set_value(100);
-	Options::instance.addValue("music").set_value(100);
 
-	initResources();	
+	//initialization view and projection matrix 	
+	//makeViewMatrix returns View matrix where Left Top corner is (0,0), and right bottom is (w,h)
+	Matrix view = makeViewMatrix(size.x, size.y); 
 
-	GameActor::initialize();
-
-	GameMenu::instance = new GameMenu();
-	MainMenu::instance = new MainMenu();
-	OptionsMenu::instance = new OptionsMenu();
-
-	RootActor::instance->addChild(new DebugActor);
-	
-	bool done = false;
-
-	Matrix view = makeViewMatrix(width, height);
-	viewport = Rect(0, 0, width, height);
+	viewport = Rect(0, 0, size.x, size.y);
 
 	Matrix proj;
-	Matrix::orthoLH(proj, (float)width, (float)height, 0, 1);
+	//initialize projection matrix
+	Matrix::orthoLH(proj, (float)size.x, (float)size.y, 0, 1);
+	
+	//initialize Renderer
+	//Renderer is class helper for rendering primitives and batching them
+	//Renderer is lightweight class you could create it many of times
+	//for example if you need to render something into RenderTarget (FBO)
+	renderer.setDriver(IVideoDriver::instance);
+	renderer.setViewTransform(view);
+	renderer.setProjTransform(proj);
 
+	//initialize this example stuff. see example.cpp
+	example_init();
 
-	mainRenderer.setViewTransform(view);
-	mainRenderer.setProjTransform(proj);
+	bool done = false;	
+
+	//here is main game loop
+    while (1)
+    {
+		int done = mainloop();
+		if (done)
+			break;
+    }
+	//so user want to leave application...
+	
+	//lets dump all created objects into log
+	//all created and not freed resources would be displayed
+	ObjectBase::dumpCreatedObjects();
+
+	//lets cleanup everything right now and call ObjectBase::dumpObjects() again
+	//we need to free all allocated resources and delete all created actors
+	//all actors/sprites are smart pointer objects and actually you don't need it remove them by hands
+	//but now we want delete it by hands
+
+	//check example.cpp
+	example_destroy();	
 	
 
-	blocking::setYieldCallback(updateLoop);
+	renderer.cleanup();
 
-	try
-	{
-		spMainMenu mm = MainMenu::instance;
-		RootActor::instance->addChild(mm->_actor);
-
-		mm->loop();
-	}
-	catch(const Exit &)
-	{
-		printf("exit\n");
-	}
-
-
-	mainRenderer.cleanup();
-	
-	GameActor::clean();
-
-	MainMenu::instance = 0;
-	GameMenu::instance = 0;
-	GameActor::instance = 0;
-	OptionsMenu::instance = 0;
-	
-	freeResources();
-
+	/**releases all internal components and RootActor*/
 	core::release();
 
+	//dump list should be empty now
+	//we deleted everything and could be sure that there aren't any memory leaks
 	ObjectBase::dumpCreatedObjects();
+	//end
 }
 
-
-#ifdef MARMALADE
+#ifdef __S3E__
 int main(int argc, char* argv[])
 {
-	run();
-	return 0;
+    run();
+    return 0;
 }
 #endif
+
 
 #ifdef OXYGINE_SDL
 #include "SDL_main.h"
@@ -165,4 +165,13 @@ extern "C"
 		return 0;
 	}
 };
+#endif
+
+#ifdef __FLASHPLAYER__
+int main(int argc, char* argv[])
+{
+	printf("test\n");
+	run();
+	return 0;
+}
 #endif

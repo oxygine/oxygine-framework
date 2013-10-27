@@ -83,5 +83,6 @@ examples/Demo/data/ext/res_ui.xml.ox/
 examples/Demo/data/ext/res.xml.ox/
 oxygine/system_data/data/
 examples/Demo/win32/My Inspector XE Results *
+examples/DemoBox2D/build_box2d_vc11/
 syntax: regexp
 ^build/

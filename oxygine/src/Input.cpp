@@ -29,7 +29,7 @@ namespace oxygine
 
 		ps->_position = p;
 
-		RootActor::instance->handleEvent(&me);
+		getRoot()->handleEvent(&me);
 	}
 
 	void Input::sendPointerMotionEvent(float x, float y, float pressure, PointerState *ps)
@@ -39,7 +39,7 @@ namespace oxygine
 		me.pressure = pressure;
 		ps->_position = Vector2(x, y);
 
-		RootActor::instance->handleEvent(&me);
+		getRoot()->handleEvent(&me);
 	}
 
 	void Input::sendPointerWheelEvent(int scroll, PointerState *ps)
@@ -49,7 +49,7 @@ namespace oxygine
 
 		ps->_position = Vector2(0, 0);
 
-		RootActor::instance->handleEvent(&me);
+		getRoot()->handleEvent(&me);
 	}
 
 

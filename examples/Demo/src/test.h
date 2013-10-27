@@ -50,6 +50,6 @@ protected:
 	Content *content;
 };
 
-extern Actor *_tests;
+extern spActor _tests;
 extern Resources resources;
 extern Resources resourcesUI;

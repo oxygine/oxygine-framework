@@ -31,6 +31,8 @@ namespace oxygine
 			glDeleteProgram(_program);
 	}
 
+
+
 	void printShaderInfoLog(GLuint shader)
 	{
 		GLint length = 0;
@@ -53,6 +55,61 @@ namespace oxygine
 		}
 	}
 
+
+	unsigned int ShaderProgramGL::createShader(unsigned int type, const char* data, const char *prepend, const char *append)
+	{
+		GLuint shader = glCreateShader(type);
+
+		const char *sources[16];
+		const char **ptr = &sources[0];
+
+		char nonGLES[] = 
+			"#define lowp\n"
+			"#define mediump\n"
+			"#define highp\n";
+
+#if SDL_VIDEO_OPENGL
+		*ptr = nonGLES;
+		ptr++;
+#endif
+
+		if (prepend)
+		{
+			*ptr = prepend;
+			ptr++;
+		}
+
+		*ptr = data;
+		ptr++;
+
+		if (append)
+		{
+			*ptr = append;
+			ptr++;
+		}
+
+		int num = ptr - sources;
+		glShaderSource(shader, num, sources, 0);
+		glCompileShader(shader);
+		printShaderInfoLog(shader);
+
+		return shader;
+	}
+
+
+	unsigned int ShaderProgramGL::createProgram(int vs, int fs, const VertexDeclarationGL *decl)
+	{
+		int p = glCreateProgram();
+		glAttachShader(p, vs);
+		glAttachShader(p, fs);
+
+		for (int i = 0; i < decl->numElements; ++i)		
+			glBindAttribLocation(p, decl->elements[i].index, decl->elements[i].name);
+
+		glLinkProgram(p);
+
+		return p;
+	}
 
 	UberShaderProgram::UberShaderProgram()
 	{
@@ -138,76 +195,24 @@ namespace oxygine
 			strcat(prepend, "#define program_main_ps main\n");
 			strcat(prepend, "#define PS\n");
 
-			int fs = createShader(GL_FRAGMENT_SHADER, data, prepend, append);
+			int fs = ShaderProgramGL::createShader(GL_FRAGMENT_SHADER, data, prepend, append);
 
 			*end = 0;
 			strcat(prepend, "#define program_main_vs main\n");
 			strcat(prepend, "#define VS\n");
 
-			int vs = createShader(GL_VERTEX_SHADER, data, prepend, append);
+			int vs = ShaderProgramGL::createShader(GL_VERTEX_SHADER, data, prepend, append);
 					
 			const VertexDeclarationGL *decl = ((VideoDriverGLES20*)IVideoDriver::instance)->getVertexDeclaration(bformat);
 			ShaderProgramGL *pgl = new ShaderProgramGL;
-			pgl->init(createProgram(vs, fs, decl));
+			pgl->init(ShaderProgramGL::createProgram(vs, fs, decl));
 			s.program = pgl;
 		}
 
 		return &s;
 	}
 
-	unsigned int UberShaderProgram::createShader(unsigned int type, const char* data, const char *prepend, const char *append)
-	{
-		GLuint shader = glCreateShader(type);
-
-		const char *sources[16];
-		const char **ptr = &sources[0];
-
-		char nonGLES[] = 
-			"#define lowp\n"
-			"#define mediump\n";
-
-#if SDL_VIDEO_OPENGL
-		*ptr = nonGLES;
-		ptr++;
-#endif
-
-		if (prepend)
-		{
-			*ptr = prepend;
-			ptr++;
-		}
-
-		*ptr = data;
-		ptr++;
-
-		if (append)
-		{
-			*ptr = append;
-			ptr++;
-		}
-
-		int num = ptr - sources;
-		glShaderSource(shader, num, sources, 0);
-		glCompileShader(shader);
-		printShaderInfoLog(shader);
-
-		return shader;
-	}
-
-
-	unsigned int UberShaderProgram::createProgram(int vs, int fs, const VertexDeclarationGL *decl)
-	{
-		int p = glCreateProgram();
-		glAttachShader(p, vs);
-		glAttachShader(p, fs);
-
-		for (int i = 0; i < decl->numElements; ++i)		
-			glBindAttribLocation(p, decl->elements[i].index, decl->elements[i].name);
-
-		glLinkProgram(p);
-
-		return p;
-	}
+	
 
 	VideoDriverGLES20::VideoDriverGLES20():_blend(blend_default), 
 		_currentProgram(0)

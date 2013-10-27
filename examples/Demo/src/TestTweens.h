@@ -3,12 +3,6 @@
 #include "ColorRectSprite.h"
 #include <typeinfo>
 
-template <class T>
-class dummy
-{
-
-};
-
 class TweensTest: public Test
 {
 public:
@@ -46,11 +40,11 @@ public:
 	spActor createEaseTest(Tween::EASE ease)
 	{
 		spColorRectSprite bg = new ColorRectSprite();
-		bg->setSize(Vector2(230, 230));
+		bg->setSize(230, 230);
 		bg->setColor(Color(128, 128, 128, 255));
 
 		spColorRectSprite parent = new ColorRectSprite();
-		parent->setSize(Vector2(200, 200));
+		parent->setSize(200, 200);
 		parent->setColor(Color(230, 230, 230, 255));
 
 		float f = 0;
@@ -69,7 +63,7 @@ public:
 			f += 0.005f;
 		}
 
-		parent->setPosition(15, 15);
+		parent->setPosition(10, 15);
 		bg->addChild(parent);
 
 		return bg;
@@ -82,7 +76,7 @@ public:
 
 		_easeGraph = createEaseTest(_ease);
 		_easeGraph->setPriority(-1);
-		_easeGraph->setY(150);
+		_easeGraph->setY(getHeight()/2 - _easeGraph->getHeight()/2);
 		content->addChild(_easeGraph);
 
 		updateText("ease", enum2string(_ease));

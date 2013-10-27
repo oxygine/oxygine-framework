@@ -176,7 +176,9 @@ namespace oxygine
 		/**Cleans existing accumulated batch.*/
 		void cleanup();
 
-		int getMaxVertices() const {return _maxVertices;}		
+		int				getMaxVertices() const {return _maxVertices;}		
+		const Matrix&	getView() const {return _view;}
+		const Matrix&	getProjection() const {return _proj;}
 
 		IVideoDriver *getDriver();
 		void setDriver(IVideoDriver *);

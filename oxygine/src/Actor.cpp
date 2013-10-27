@@ -90,8 +90,8 @@ namespace oxygine
 		removeTweens();
 		//removeEventHandlers();
 		removeChildren();
-		if (RootActor::instance)
-			RootActor::instance->removeEventListeners(this);
+		if (getRoot())
+			getRoot()->removeEventListeners(this);
 	}	
 
 	std::string Actor::dump(const dumpOptions &opt) const
@@ -207,11 +207,11 @@ namespace oxygine
 
 		if (v)
 		{
-			RootActor::instance->addEventListener( TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onMouseEvent));
+			getRoot()->addEventListener( TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onMouseEvent));
 			//printf("added\n");
 		}
 		else
-			RootActor::instance->removeEventListener( TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onMouseEvent));
+			getRoot()->removeEventListener( TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onMouseEvent));
 
 		if (!old)
 			updateState();
@@ -231,11 +231,11 @@ namespace oxygine
 			e.index = v;
 			dispatchEvent(&e);
 
-			RootActor::instance->addEventListener( TouchEvent::MOVE, CLOSURE(this, &Actor::_onMouseEvent));
+			getRoot()->addEventListener( TouchEvent::MOVE, CLOSURE(this, &Actor::_onMouseEvent));
 		}
 		else
 		{
-			RootActor::instance->removeEventListener( TouchEvent::MOVE, CLOSURE(this, &Actor::_onMouseEvent));
+			getRoot()->removeEventListener( TouchEvent::MOVE, CLOSURE(this, &Actor::_onMouseEvent));
 			//if (!_overed)
 			{
 				TouchEvent e(TouchEvent::OUT);
@@ -259,7 +259,7 @@ namespace oxygine
 			if (isDescendant(act))
 			{
 				if (event->phase == Event::phase_target)
-					RootActor::instance->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onMouseEvent));					
+					getRoot()->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onMouseEvent));					
 				setPressed(me->index);
 				//_pressed = me->id;
 				//setPressed(true);
@@ -297,7 +297,7 @@ namespace oxygine
 						setOvered(me->index);
 
 						if (event->phase == Event::phase_target)
-							RootActor::instance->addEventListener(TouchEvent::MOVE, CLOSURE(this, &Actor::_onMouseEvent));
+							getRoot()->addEventListener(TouchEvent::MOVE, CLOSURE(this, &Actor::_onMouseEvent));
 					}
 				}
 				else

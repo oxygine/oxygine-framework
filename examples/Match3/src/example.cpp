@@ -9,7 +9,7 @@ void example_init()
 	//load xml file with resources definition
 	res.loadXML("resources.xml");
 
-	RootActor::instance->addChild(new GameFrame());
+	getRoot()->addChild(new GameFrame());
 }
 
 void example_destroy()

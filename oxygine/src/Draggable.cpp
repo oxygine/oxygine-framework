@@ -73,8 +73,8 @@ namespace oxygine
 	{
 		if (_actor && !_singleDrag)
 		{
-			if (RootActor::instance)
-				RootActor::instance->removeEventListeners(this);
+			if (getRoot())
+				getRoot()->removeEventListeners(this);
 			_actor->removeEventListeners(this);
 			_actor = 0;
 		}
@@ -161,7 +161,7 @@ namespace oxygine
 		case TouchEvent::TOUCH_UP:
 			{
 				_pressed = false;
-				RootActor::instance->removeEventListeners(this);
+				getRoot()->removeEventListeners(this);
 			}
 			break;
 

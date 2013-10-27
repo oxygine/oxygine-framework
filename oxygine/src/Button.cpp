@@ -95,7 +95,7 @@ namespace oxygine
 					{
 						_btnPressed = me->index;
 						setState(statePressed);
-						RootActor::instance->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Button::_mouseEvent));
+						getRoot()->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Button::_mouseEvent));
 					}					
 				}				
 			}
@@ -105,7 +105,7 @@ namespace oxygine
 				if (_btnPressed == me->index)
 				{				
 					setState(stateNormal);
-					RootActor::instance->removeEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Button::_mouseEvent));
+					getRoot()->removeEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Button::_mouseEvent));
 					_btnPressed = 0;
 				}
 

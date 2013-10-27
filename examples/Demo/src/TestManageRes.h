@@ -91,7 +91,7 @@ public:
 			l->add(&resources);
 			if (id == "mt_slow")
 				l->setUpdateSize(128);
-			l->start(RootActor::instance);
+			l->start(getRoot());
 		}
 	}
 };

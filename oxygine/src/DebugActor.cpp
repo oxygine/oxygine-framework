@@ -89,8 +89,8 @@ namespace oxygine
 		setPriority(1000);
 
 		float scale = 1.0f;
-		if (RootActor::instance)
-			scale = 1.0f/RootActor::instance->getScaleX();
+		if (getRoot())
+			scale = 1.0f/getRoot()->getScaleX();
 
 		setScale(scale);
 
@@ -173,17 +173,17 @@ namespace oxygine
 			return;
 		}
 
-		spActor inspector = RootActor::instance->getChild(DeveloperMenu::getDefaultName(), ep_ignore_error);
+		spActor inspector = getRoot()->getChild(DeveloperMenu::getDefaultName(), ep_ignore_error);
 		if (inspector)
 			inspector->detach();
 		else
 		{		
 			spDeveloperMenu dm = new DeveloperMenu();
-			dm->setPriority(getPriority() - 1);
-			float scale = RootActor::instance->getScaleX();
-			Vector2 size = RootActor::instance->getSize();
+			dm->setPriority(getPriority() - 1); 
+			float scale = getRoot()->getScaleX();
+			Vector2 size = core::getDisplaySize();
 
-			Vector2 s = size * scale;
+			Vector2 s = size;// * scale;
 			
 			if (name == "tree")
 			{
@@ -245,10 +245,10 @@ namespace oxygine
 		s << "objects=" << (int)__objects.size() << endl;
 #endif
 		s << "batches="<< batches << " triangles=" << triangles << endl;
-		s << "update=" << RootActor::instance->_statUpdate << "ms ";
-		s << "render=" << RootActor::instance->_statRender << "ms ";
+		s << "update=" << getRoot()->_statUpdate << "ms ";
+		s << "render=" << getRoot()->_statRender << "ms ";
 		s << "textures=" << NativeTexture::created << " ";
-		s << "\nlisteners=" << RootActor::instance->getListenersCount() << "";
+		s << "\nlisteners=" << getRoot()->getListenersCount() << "";
 
 		s << "\n";
 		s << _debugText;
@@ -307,10 +307,10 @@ namespace oxygine
 	
 	void DebugActor::showTouchedActor(bool show)
 	{
-		RootActor::instance->removeEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &DebugActor::onEvent));
+		getRoot()->removeEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &DebugActor::onEvent));
 		_showTouchedActor = show;
 		if (show)
-			RootActor::instance->addEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &DebugActor::onEvent));
+			getRoot()->addEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &DebugActor::onEvent));
 
 		spActor btn = getChild("finger");
 		btn->removeTweens(true);

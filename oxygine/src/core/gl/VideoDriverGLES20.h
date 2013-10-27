@@ -47,6 +47,9 @@ namespace oxygine
 			glUniform1f(p, val);
 		}
 
+		static unsigned int createShader(unsigned int type, const char* data, const char *prepend, const char *append);
+		static unsigned int createProgram(int vs, int fs, const VertexDeclarationGL *decl);
+
 	private:
 		GLuint _program;
 	};
@@ -82,6 +85,7 @@ namespace oxygine
 		ShaderUniformsCallback	getShaderUniformsCallback() const {return _cb;}
 		shader*					getShaderProgram(int flags);
 
+
 	protected:
 		void *_getRestorableObject() {return this;}
 		void _restore(Restorable *, void*);
@@ -91,9 +95,6 @@ namespace oxygine
 		ShaderUniformsCallback _cb;		
 
 		void releaseShaders();
-
-		unsigned int createShader(unsigned int type, const char* data, const char *prepend, const char *append);
-		unsigned int createProgram(int vs, int fs, const VertexDeclarationGL *decl);
 	};
 
 

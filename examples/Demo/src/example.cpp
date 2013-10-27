@@ -21,7 +21,8 @@
 #endif
 
 using namespace oxygine;
-Actor *_tests = 0;
+
+spActor _tests;
 
 //it is our resources
 //in real project you would have more than one Resources declarations. It is important on mobile devices with limited memory and you would load/unload them
@@ -35,9 +36,8 @@ public:
 
 	TestActor()
 	{	
-		_tests = this;
-		_x = RootActor::instance->getWidth()/2.0f;
-		_y = 0;
+		_x = 90;//getRoot()->getWidth()/2.0f;
+		_y = 80;
 
 
 		addButton("tweens", "Tweens");
@@ -63,71 +63,71 @@ public:
 
 		if (id == "perf")
 		{
-			RootActor::instance->addChild(new PerfTest);
+			getRoot()->addChild(new PerfTest);
 		}
 		if (id == "tweens")
 		{
-			RootActor::instance->addChild(new TweensTest);
+			getRoot()->addChild(new TweensTest);
 		}
 		if (id == "drag")
 		{
-			RootActor::instance->addChild(new DragTest);
+			getRoot()->addChild(new DragTest);
 		}
 		if (id == "drag2")
 		{
-			RootActor::instance->addChild(new Drag2Test);
+			getRoot()->addChild(new Drag2Test);
 		}
 		if (id == "manage_res")
 		{
-			RootActor::instance->addChild(new ManageResTest);
+			getRoot()->addChild(new ManageResTest);
 		}
 		if (id == "r2t")
 		{
-			RootActor::instance->addChild(new TestRender2Texture);
+			getRoot()->addChild(new TestRender2Texture);
 		}
 		if (id == "text")
 		{
-			RootActor::instance->addChild(new TestText);
+			getRoot()->addChild(new TestText);
 		}
 
 		if (id == "progress_bar")
 		{
-			RootActor::instance->addChild(new TestProgressBar);
+			getRoot()->addChild(new TestProgressBar);
 		}
 
 		if (id == "texture_format")
 		{
-			RootActor::instance->addChild(new TestTextureFormat);
+			getRoot()->addChild(new TestTextureFormat);
 		}
 
 		if (id == "complex_drag")
 		{
-			RootActor::instance->addChild(new TestComplexDrag);
+			getRoot()->addChild(new TestComplexDrag);
 		}
 
 		if (id == "t2p")
 		{
-			RootActor::instance->addChild(new TestTexel2Pixel);
+			getRoot()->addChild(new TestTexel2Pixel);
 		}
 
 		if (id == "box9sprite")
 		{
-			RootActor::instance->addChild(new TestBox9Sprite);
+			getRoot()->addChild(new TestBox9Sprite);
 		}
 
 		if (id == "cliprect")
 		{
-			RootActor::instance->addChild(new TestClipRect);
+			getRoot()->addChild(new TestClipRect);
 		}
 
 		if (id == "usershader")
 		{
-			RootActor::instance->addChild(new TestUserShader);
+			getRoot()->addChild(new TestUserShader);
 		}
 
 		if (id == "mask")
 		{
-			RootActor::instance->addChild(new TestMask);
+			getRoot()->addChild(new TestMask);
 		}
 	}
 };
@@ -143,6 +143,7 @@ void example_init()
 
 	spSprite sp = initActor(new Sprite, 
 		arg_resAnim = resourcesUI.getResAnim("logo2"),
+		arg_input = false,
 		arg_attachTo = getRoot(),
 		arg_priority = 10,
 		arg_alpha = 128
@@ -152,7 +153,7 @@ void example_init()
 	sp->setY(getRoot()->getHeight() - sp->getHeight());
 
 	_tests = new TestActor;
-	RootActor::instance->addChild(_tests);
+	getRoot()->addChild(_tests);
 }
 
 void example_update()

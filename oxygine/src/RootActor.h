@@ -57,5 +57,5 @@ namespace oxygine
 		friend class DebugActor;
 	};
 
-	inline spRootActor getRoot(){return RootActor::instance;}
+	inline const spRootActor& getRoot() {return RootActor::instance;}
 }

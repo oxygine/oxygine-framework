@@ -20,6 +20,14 @@ namespace oxygine
 		Vector2 &getUV() {return *((Vector2*)&u);}
 	};
 
+	struct vertexP2C
+	{
+		float x, y;		
+		unsigned int color;
+
+		Vector2 &getPos() {return *((Vector2*)&x);}
+	};
+
 	struct vertexPCT2
 	{
 		float x, y, z;

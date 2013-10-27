@@ -7,11 +7,12 @@ Jewel::Jewel(int jewel_id)
 	state = jsNormal;
 	Set(jewel_id);
 	setInputEnabled(false);
+	setAnchor(0.5f, 0.5f);
 }
 
 void Jewel::Set(int id)
 {
-	setAnimFrame(res.getResAnim(jewels_ids[id]));
+	setResAnim(res.getResAnim(jewels_ids[id]));
 	_id = id;
 	setAlpha(255);
 }
@@ -23,7 +24,6 @@ void Jewel::UnSelect()
 		return;
 
 	state = jsNormal;
-	setAnchor(Vector2(0.0f,0.0f));
 	setRotation(0);
 	setPosition(old_position);
 	removeTweens();
@@ -31,13 +31,13 @@ void Jewel::UnSelect()
 
 void Jewel::SetSelected()
 {
-	if (state!=jsNormal) return;
+	if (state != jsNormal)
+		return;
 
 	state = jsSelected;
 	spTweenQueue tween = new TweenQueue();
 	old_position = getPosition();
-	setPosition(Vector2(getPosition().x+JEWEL_SIZE/2, getPosition().y+JEWEL_SIZE/2));
-	setAnchor(Vector2(0.5f,0.5f));
+	//setPosition(getX() + JEWEL_SIZE/2, getY() + JEWEL_SIZE/2);
 
 	tween->add(Sprite::TweenRotation(MATH_PI * 0.1f), 100);
 	tween->add(Sprite::TweenRotation(MATH_PI  * (-0.1f)), 400,-1,true);
@@ -49,7 +49,7 @@ void Jewel::SetSelected()
 
 spTween Jewel::PlayAnimation()
 {
-	if (! (state==jsNormal && locked) )
+	if (!(state==jsNormal && locked) )
 		return 0;
 
 	state = jsAnimation;

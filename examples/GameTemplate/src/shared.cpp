@@ -17,7 +17,7 @@ pugi::xml_document doc;
 
 void initResources()
 {	
-	float scale = RootActor::instance->getScaleX();
+	float scale = getRoot()->getScaleX();
 	/*
 	bool hd = scale > 1.5f;
 
@@ -38,7 +38,7 @@ void initResources()
 	//if (hd)	
 	//	basicStyle.font->setScaleFactor(2.0f);
 
-	const char *locale_ = "unknown";
+	const char *locale_ = "en_GB";
 
 #ifdef MARMALADE
 	locale_ = s3eDeviceGetString(S3E_DEVICE_LOCALE);

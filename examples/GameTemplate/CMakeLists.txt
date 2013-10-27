@@ -4,6 +4,8 @@ project (GAMETEMPLATE)
 
 file(GLOB SRC
 	src/entry_point.cpp
+	src/example.cpp
+	src/example.h
 	src/GameActor.cpp
 	src/GameActor.h
 	src/GameMenu.cpp
