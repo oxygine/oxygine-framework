@@ -8,7 +8,7 @@ for g in glob.glob("*.png"):
     im = Image.open(g)
     images.append(im)
     h = max(h, im.size[1])
-    w += im.size[1]
+    w += im.size[0]
     
 anim = Image.new("RGBA", (w, h))
 w = 0

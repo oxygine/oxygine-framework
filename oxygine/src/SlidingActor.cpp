@@ -8,7 +8,13 @@
 
 namespace oxygine
 {
-	SlidingActor::SlidingActor():_prevPos(0, 0), _speed(0, 0), _sliding(false), _downPos(0, 0), _rad(10), _downTime(0), _down(false), _maxSpeed(250), _snapSize(0, 0), 
+	float _defaultTouchThreshold = 15;
+	void SlidingActor::setDefaultTouchThreshold(float val)
+	{
+		_defaultTouchThreshold = val;
+	}
+
+	SlidingActor::SlidingActor():_prevPos(0, 0), _speed(0, 0), _sliding(false), _downPos(0, 0), _rad(_defaultTouchThreshold), _downTime(0), _down(false), _maxSpeed(250), _snapSize(0, 0), 
 		_movingX(false), _movingY(false), _snapSpeed(1.0f)
 	{
 		_clip = initActor(new ClipRectActor, 

@@ -119,7 +119,7 @@ namespace oxygine
 		bool				getInputEnabled() const {return (_flags & flag_inputEnabled) != 0;}
 		bool				getChildrenRelative() const {return (_flags & flag_childrenRelative) != 0;;}
 		UpdateCallback		getCallbackDoUpdate() const {return _cbDoUpdate;}
-		RenderCallback		getCallbackDoRender() const {return _cbDoRender;}
+		//RenderCallback		getCallbackDoRender() const {return _cbDoRender;}
 
 		const Renderer::transform&		getTransform() const;
 		const Renderer::transform&		getTransformInvert() const;
@@ -170,7 +170,7 @@ namespace oxygine
 		/**Sets callback which would be called each Actor::update cycle before doUpdate. Use it if you don't want inherit from Actor and overload Actor::doUpdate.*/
 		void setCallbackDoUpdate(UpdateCallback cb){_cbDoUpdate = cb;}
 		/**Sets callback which would be called each Actor::render cycle before doRender. Use it if you don't want inherit from Actor and overload Actor::doRender.*/
-		void setCallbackDoRender(RenderCallback cb){_cbDoRender = cb;}
+		//void setCallbackDoRender(RenderCallback cb){_cbDoRender = cb;}
 
 		virtual bool isOn(const Vector2 &localPosition);
 		/**Returns true if actor is child or located deeper in current subtree*/
@@ -202,7 +202,6 @@ namespace oxygine
 		virtual void updateState(){}
 		
 		spTween addTween(spTween);		
-		spTween addTweenRelative(spTween);		
 
 		template<class GS>
 		spTween addTween(const GS &gs, timeMS duration, int loops = 1, bool twoSides = false, timeMS delay = 0, Tween::EASE ease = Tween::ease_linear)
@@ -246,7 +245,7 @@ namespace oxygine
 		
 		virtual void doUpdate(const UpdateState &us);
 		UpdateCallback _cbDoUpdate;
-		RenderCallback _cbDoRender;
+		//RenderCallback _cbDoRender;
 
 		virtual void sizeChanged(const Vector2 &size);
 
@@ -265,14 +264,14 @@ namespace oxygine
 		pointer_index _pressed;
 		pointer_index _overed;
 
-
 	private:
+		short	_zOrder;
+
 		Vector2 _pos;		
 		Vector2 _anchor;		
 		Vector2 _scale;
 		Vector2 _size;
-		float	_rotation;		
-		short	_zOrder;
+		float	_rotation;
 
 		enum flags
 		{
@@ -284,9 +283,10 @@ namespace oxygine
 			flag_transformInvertDirty = 0x20,
 			flag_inputChildrenEnabled = 0x40,
 			flag_cull = 0x80,
+			flag_fastTransform = 0x100,
 		};
 
-		mutable unsigned char _flags;
+		mutable unsigned short _flags;
 		mutable Renderer::transform	_transform;
 		mutable Renderer::transform	_transformInvert;
 

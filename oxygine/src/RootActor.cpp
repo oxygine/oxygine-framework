@@ -90,12 +90,13 @@ namespace oxygine
 		rs.renderer = &r;
 		Point ds = core::getDisplaySize();
 
-		rs.clip = RectF(0.0f, 0.0f, (float)ds.x, (float)ds.y);
+		RectF clip(0.0f, 0.0f, (float)ds.x, (float)ds.y);
+		rs.clip = &clip;
 
 		if (_clipOuter)
 		{
 			r.getDriver()->setScissorRect(&_viewport);
-			rs.clip = _viewport.cast<RectF>();
+			clip = _viewport.cast<RectF>();
 		}
 		
 		Actor::render(rs);

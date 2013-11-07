@@ -104,7 +104,8 @@ namespace oxygine
 		
 		Rect vp;
 		rs.renderer->getDriver()->getViewport(vp);		
-		rs.clip = vp.cast<RectF>();		
+		RectF clip = vp.cast<RectF>();
+		rs.clip = &clip;
 
 		ClipRectActor::render(rs);
 	}

@@ -23,7 +23,7 @@ public:
 				continue;
 			spSprite sprite = new Sprite;
 			sprite->setAnimFrame(ra);
-			sprite->addTween(createTween(TweenAnim(ra), 500, -1));
+			sprite->addTween(TweenAnim(ra), 500, -1);
 			sprite->setPosition(scalar::randFloat(50.0f, getWidth() - 100.0f), scalar::randFloat(50.0f, getHeight() - 100.0f));
 			sprite->attachTo(content);	
 
@@ -58,7 +58,7 @@ public:
 	void _loaded(Event *event)
 	{
 		showPopup("Loaded!");
-		ui->getChild("loading")->addTween(createTween(Sprite::TweenAlpha(0), 400))->setDetachActor(true);
+		ui->getChild("loading")->addTween(Sprite::TweenAlpha(0), 400)->setDetachActor(true);
 	}
 
 	void clicked(string id)
@@ -84,7 +84,7 @@ public:
 			sp->setAnchor(Vector2(0.5f, 0.5f));
 			sp->setPosition(getSize() - sp->getSize()/4);
 			sp->setScale(0.5f);
-			sp->addTween(createTween(Actor::TweenRotation(-(float)MATH_PI * 2), 1500, -1));
+			sp->addTween(Actor::TweenRotation(-(float)MATH_PI * 2), 1500, -1);
 
 			spThreadLoading l = new ThreadLoading;
 			l->addEventListener(ThreadLoading::COMPLETE, CLOSURE(this, &ManageResTest::_loaded));

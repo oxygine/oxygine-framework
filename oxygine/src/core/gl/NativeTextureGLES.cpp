@@ -90,6 +90,8 @@ namespace oxygine
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
 
 		NativeTextureGLES::created++;
+        
+        CHECKGL();
 
 		return id;
 	}
@@ -153,6 +155,7 @@ namespace oxygine
 		_width = w;
 		_height = h;
 		_format = tf;
+        CHECKGL();
 	}
 
 	void NativeTextureGLES::init(nativeTextureHandle id, int w, int h, TextureFormat tf)
@@ -181,6 +184,7 @@ namespace oxygine
 		OX_ASSERT(sysMemCopy == false);
 
 		init((nativeTextureHandle)id, src.w, src.h, src.format);
+        CHECKGL();
 	}
 
 	void NativeTextureGLES::setLinearFiltration(bool enable)
@@ -190,6 +194,7 @@ namespace oxygine
 		unsigned int f = enable ? GL_LINEAR : GL_NEAREST;
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, f);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, f);
+        CHECKGL();
 	}
 
 	void NativeTextureGLES::release()
@@ -209,6 +214,7 @@ namespace oxygine
 		}
 
 		unreg();
+        CHECKGL();
 	}
 
 
@@ -306,7 +312,9 @@ namespace oxygine
 			er = glGetError();
 
 			_lockFlags = 0;	
-		}		
+		}
+        
+        CHECKGL();
 	}
 
 
@@ -322,6 +330,7 @@ namespace oxygine
 		glTexSubImage2D(GL_TEXTURE_2D, 0, 
 			x, y, data.w, data.h, 
 			glp.format, glp.type, data.data);
+        CHECKGL();
 	}
 
 	void NativeTextureGLES::apply(const Rect *)

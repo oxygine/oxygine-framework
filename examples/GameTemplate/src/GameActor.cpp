@@ -61,7 +61,7 @@ void GameActor::preShowing()
 {	
 	_points = 0;	
 	_score->setAlpha(0);
-	_score->addTween(createTween(Actor::TweenAlpha(255), 300));	
+	_score->addTween(Actor::TweenAlpha(255), 300);	
 }
 
 void GameActor::postShowing()

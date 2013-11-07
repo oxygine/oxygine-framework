@@ -43,6 +43,7 @@ LOCAL_SRC_FILES += \
 				$(OXYGINE_SRC)/core/gl/NativeTextureGLES.cpp \
 				$(OXYGINE_SRC)/core/gl/oxgl.cpp \
 				$(OXYGINE_SRC)/core/gl/VertexDeclarationGL.cpp \
+				$(OXYGINE_SRC)/core/gl/ShaderProgramGL.cpp \
 				$(OXYGINE_SRC)/core/gl/VideoDriverGL.cpp \
 				$(OXYGINE_SRC)/core/gl/VideoDriverGLES20.cpp \
 

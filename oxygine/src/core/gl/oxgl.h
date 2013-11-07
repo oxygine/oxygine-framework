@@ -9,7 +9,10 @@
 	#define GL_GLEXT_PROTOTYPES 
 	#include "GLES/glext.h"
 	#include <gles/egl.h>
-#elif WIN32
+#else
+	#include "SDL_config.h"
+
+#if WIN32
 	#include "glew.h"
 
 	#define GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG                      0x8C00
@@ -53,7 +56,10 @@
 
 	#define GL_ETC1_RGB8_OES                                        0x8D64
 
-
 #endif
+#endif
+    namespace oxygine {void checkGLError();}
+	//#define CHECKGL() checkGLError()
+	#define CHECKGL() {}
 
 	void initGLExtensions();

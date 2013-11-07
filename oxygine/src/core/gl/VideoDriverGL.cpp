@@ -11,12 +11,54 @@ namespace oxygine
 
 	}
 
-	int VideoDriverGL::getMaxVertices() const
+	unsigned int VideoDriverGL::getPT(IVideoDriver::PRIMITIVE_TYPE pt)
 	{
-		int m = _indices16.size()/3 * 2;
-		return m;
+		switch (pt)
+		{
+		case PT_POINTS:
+			return GL_POINTS;
+		case PT_LINES:
+			return GL_LINES;
+		case PT_LINE_LOOP:
+			return GL_LINE_LOOP;
+		case PT_LINE_STRIP:
+			return PT_LINE_STRIP;
+		case PT_TRIANGLES:
+			return GL_TRIANGLES;
+		case PT_TRIANGLE_STRIP:
+			return GL_TRIANGLE_STRIP;
+		case PT_TRIANGLE_FAN:
+			return GL_TRIANGLE_FAN;
+		}
+		OX_ASSERT(!"unknown primityve type");
+		return PT_POINTS;
 	}
 
+	unsigned int VideoDriverGL::getBT(IVideoDriver::BLEND_TYPE pt)
+	{
+		switch(pt)
+		{
+		case BT_ZERO:
+			return GL_ZERO;
+		case BT_ONE:
+			return GL_ONE;
+		case BT_SRC_COLOR:
+			return GL_SRC_COLOR;
+		case BT_ONE_MINUS_SRC_COLOR:
+			return GL_ONE_MINUS_SRC_COLOR;
+		case BT_SRC_ALPHA:
+			return GL_SRC_ALPHA;
+		case BT_ONE_MINUS_SRC_ALPHA:
+			return GL_ONE_MINUS_SRC_ALPHA;
+		case BT_DST_ALPHA:
+			return GL_DST_ALPHA;
+		case BT_ONE_MINUS_DST_ALPHA:
+			return GL_ONE_MINUS_DST_ALPHA;
+		}
+		OX_ASSERT(!"unknown blend");
+		return GL_ONE;
+	}
+	
 	bool VideoDriverGL::getScissorRect(Rect &r) const
 	{
 		GLboolean scrTest = glIsEnabled(GL_SCISSOR_TEST);
@@ -24,6 +66,8 @@ namespace oxygine
 		GLint box[4];
 		glGetIntegerv(GL_SCISSOR_BOX, box);
 		r = Rect(box[0], box[1], box[2], box[3]);
+        
+        CHECKGL();
 
 		return scrTest ? true : false;	
 	}
@@ -39,6 +83,7 @@ namespace oxygine
 		glGetIntegerv(GL_VIEWPORT, vp);
 
 		r = Rect(vp[0], vp[1], vp[2], vp[3]);;
+        CHECKGL();
 	}
 
 	void VideoDriverGL::setScissorRect(const Rect *rect)
@@ -50,6 +95,7 @@ namespace oxygine
 		}
 		else
 			glDisable(GL_SCISSOR_TEST);
+        CHECKGL();
 	}
 
 	void VideoDriverGL::setRenderTarget(spNativeTexture rt)
@@ -57,6 +103,7 @@ namespace oxygine
 		if (!rt)
 		{
 			glBindFramebuffer(GL_FRAMEBUFFER, _prevFBO);
+            CHECKGL();
 			return;
 		}
 
@@ -64,6 +111,7 @@ namespace oxygine
 
 		NativeTextureGLES *gl = safeCast<NativeTextureGLES*>(rt.get());		
 		glBindFramebuffer(GL_FRAMEBUFFER, gl->getFboID());
+        CHECKGL();
 	}
 
 	void VideoDriverGL::_begin(const Rect &viewport, const Color *clearColor)
@@ -80,6 +128,29 @@ namespace oxygine
 		{
 			glClear(GL_DEPTH_BUFFER_BIT);
 		}
+        CHECKGL();
+	}
+
+	void VideoDriverGL::setBlendFunc(BLEND_TYPE src, BLEND_TYPE dest)
+	{
+		glBlendFunc(getBT(src), getBT(dest));
+        CHECKGL();
+	}
+
+	void VideoDriverGL::setState(STATE state, unsigned int value)
+	{
+		switch(state)
+		{
+		case STATE_BLEND:
+			if (value)
+				glEnable(GL_BLEND);
+			else
+				glDisable(GL_BLEND);
+			break;
+		default:
+			OX_ASSERT(!"unknown state");
+		}
+        CHECKGL();
 	}
 
 	/*

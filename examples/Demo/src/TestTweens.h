@@ -17,7 +17,6 @@ public:
 		addButton("ease", "ease: Linear");
 		addButton("TweenAnim", "Add TweenAnim");
 		addButton("TweenRotation", "Add TweenRotation");
-		addButton("RelTweenRotation", "Add Relative TweenRotation");
 		addButton("TweenScale", "Add TweenScale");
 		addButton("TweenPosition", "Add TweenPosition");
 		addButton("TweenColor", "Add TweenColor");
@@ -32,7 +31,7 @@ public:
 		_sprite->attachTo(content);
 		_sprite->setAnchor(Vector2(0.5f, 0.5f));
 		_sprite->setAnimFrame(resources.getResAnim("anim"));
-		_sprite->setPosition(getWidth()/2.0f, (float)getHeight() - _sprite->getHeight());		
+		_sprite->setPosition(getWidth()/2.0f, getHeight()/2);		
 
 		updateEase();
 	}
@@ -87,14 +86,11 @@ public:
 		showPopup("TweenDone");
 	}
 
-	void _addTween(spTween tween, bool rel = false)
+	void _addTween(spTween tween)
 	{
 		tween->setEase(_ease);
-		if (rel)
-			_sprite->addTweenRelative(tween);
-		else
-			_sprite->addTween(tween);
-		tween->setDoneCallback(CLOSURE(this, &TweensTest::tweenDone));
+		_sprite->addTween(tween);
+		tween->addEventListener(TweenEvent::DONE, CLOSURE(this, &TweensTest::tweenDone));
 	}
 
 	string enum2string(Tween::EASE e)
@@ -149,18 +145,15 @@ public:
 				_ease = Tween::ease_linear;								
 			updateEase();
 		}
+
 		int dur = 2000;
 		if (id == "TweenAnim")
 		{
-			_addTween( createTween(TweenAnim(resources.getResAnim("anim")), dur/2, 1));
+			_addTween( createTween(TweenAnim(resources.getResAnim("anim")), dur/4, 10));
 		}
 		if (id == "TweenRotation")
 		{
 			_addTween( createTween(Actor::TweenRotation(_sprite->getRotation() + (float)MATH_PI * 2), dur, 1));
-		}
-		if (id == "RelTweenRotation")
-		{
-			_addTween( createTween(Actor::TweenRotation((float)MATH_PI / 2), dur/2, 1), true);
 		}
 		if (id == "TweenPosition")
 		{
@@ -191,9 +184,9 @@ public:
 		if (id == "TweenQueue")
 		{
 			spTweenQueue queue = new TweenQueue();			
-			queue->add(createTween(TweenAnim(resources.getResAnim("anim")), 500, 1));
-			queue->add(createTween(Actor::TweenRotation(_sprite->getRotation() + (float)MATH_PI * 2.0f), 500, 1, false, 1000));
-			queue->add(createTween(Actor::TweenScale(2), 500, 1, true));
+			queue->add(TweenAnim(resources.getResAnim("anim")), 500, 1);
+			queue->add(Actor::TweenRotation(_sprite->getRotation() + (float)MATH_PI * 2.0f), 500, 1, false, 1000);
+			queue->add(Actor::TweenScale(2), 500, 1, true);
 			_addTween(queue);
 		}
 

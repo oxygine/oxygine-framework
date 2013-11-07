@@ -13,7 +13,7 @@ namespace oxygine
 	class RenderState
 	{
 	public:
-		RenderState():renderer(0), alpha(255), clip(-1, -1, -1, -1)
+		RenderState():renderer(0), alpha(255), clip(0)
 		{
 			transform.identity();
 		}
@@ -21,6 +21,6 @@ namespace oxygine
 		Renderer::transform transform;
 		Renderer *renderer;
 		unsigned char alpha;
-		RectF clip;
+		const RectF* clip;
 	};
 }

@@ -20,29 +20,54 @@ namespace oxygine
 	class VideoDriverCache: public VideoDriverNull
 	{
 	public:
-		typedef vector<batch> batches;
+		struct cached_batch
+		{
+			cached_batch():program(0), vdecl(0), indicesShortType(false), numVertices(0), numIndices(0), blendSrc(IVideoDriver::BT_ONE), blendDest(IVideoDriver::BT_ONE)
+			{
+				memset(states, 0, sizeof(states));
+			}
+			ShaderProgram *program;
+
+			enum {MAX_TEXTURES = 16};
+			spNativeTexture textures[MAX_TEXTURES];
+
+			const VertexDeclaration *vdecl;
+			PRIMITIVE_TYPE pt;
+			vector<char> vertices;
+			vector<char> indices;			
+			int numVertices;
+			int numIndices;
+			unsigned int states[STATE_NUM];
+			BLEND_TYPE blendSrc, blendDest;
+			bool indicesShortType;
+		};
+
+		typedef vector<cached_batch> batches;
 		batches _batches;
 		RectF _bounds;
+		
 		AffineTransform _transform;
 		mutable VertexDeclarations<VertexDeclarationNull> _declarations;
 
-		VideoDriverCache():_bounds(0,0,0,0){}
+		VideoDriverCache():_bounds(0,0,0,0)
+		{		
+			_batches.push_back(cached_batch());
+		}
+
+		cached_batch &current() 
+		{
+			return _batches.back();
+		}
 
 		spNativeTexture createTexture(){return 0;}
 
-		void begin(const Matrix &proj, const Matrix &view, const Rect &viewport, const Color *color)
+		void begin(const Rect &viewport, const Color *color)
 		{
-
-		}
-
-		int getMaxVertices() const
-		{
-			return IVideoDriver::instance->getMaxVertices();
 		}
 
 		const VertexDeclaration *getVertexDeclaration(bvertex_format fmt) const
 		{
-			return _declarations.get(fmt);
+			return instance->getVertexDeclaration(fmt);
 		}
 
 		void setDefaultSettings()
@@ -55,57 +80,97 @@ namespace oxygine
 
 		}
 
-		
-
-		void drawBatch(const batch &b)
+		void setShaderProgram(ShaderProgram* program)
 		{
-			const vertexPCT2 *v = (const vertexPCT2*)(&b.vertices.front());
-			if (_batches.empty())
+			current().program = program;
+		}
+
+		void setTexture(int sampler, spNativeTexture texture)
+		{
+			current().textures[sampler] = texture;
+		}
+
+		void setState(STATE state, unsigned int value)
+		{
+			current().states[state] = value;
+		}
+
+		void setBlendFunc(BLEND_TYPE src, BLEND_TYPE dest)
+		{
+			current().blendSrc = src;
+			current().blendDest = dest;
+		}
+
+		void draw(PRIMITIVE_TYPE pt, const VertexDeclaration *decl, const void *verticesData,  unsigned int numVertices)
+		{
+			current().vdecl = decl;
+			current().pt = pt;
+			current().numVertices = numVertices;
+			current().vertices.assign((const char*)verticesData, (const char*)verticesData + current().vdecl->size * numVertices);
+			_batches.push_back(cached_batch());
+			
+		}
+
+		void draw(PRIMITIVE_TYPE pt, const VertexDeclaration *decl, const void *verticesData,  unsigned int numVertices, const void *indicesData, unsigned int numIndices, bool indicesShortType)
+		{
+			current().vdecl = decl;
+			current().pt = pt;
+			current().numVertices = numVertices;
+			current().numIndices = numIndices;
+			current().vertices.assign((const char*)verticesData, (const char*)verticesData + decl->size * numVertices);
+			current().indices.assign((const char*)indicesData, (const char*)indicesData + numIndices * (indicesShortType ? 2 : 1));			
+
+			const vertexPCT2 *v = (const vertexPCT2*)(&current().vertices.front());
+			if (_batches.size() == 1)
 			{
-				OX_ASSERT(b.vertices.size());				
+				OX_ASSERT(current().vertices.size());				
 				_bounds = RectF(v->x, v->y, 0, 0);				
 			}
 
-			_batches.push_back(b);
-			size_t num = b.vertices.size() / b.vdecl->size;
-			
+			size_t num = current().vertices.size() / current().vdecl->size;
+
 			for (size_t i = 0; i != num; ++i)
 			{				
-				v = (const vertexPCT2*)(&b.vertices.front() + b.vdecl->size * i);
+				v = (const vertexPCT2*)(&current().vertices.front() + current().vdecl->size * i);
 				RectF f(v->x, v->y, 0, 0);
 				_bounds.unite(f);				
 			}
+
+
+			_batches.push_back(cached_batch());
 		}
 
 		void render(const AffineTransform &transform)
 		{
-			static batch modified;
-			
-
 			for (batches::iterator i = _batches.begin(); i != _batches.end(); ++i)
 			{
-				const batch &b = *i;
-
-				modified = b;
-				
+				const cached_batch &b = *i;
+				if (!b.program)
+					break;
+								
 				size_t num = b.vertices.size() / b.vdecl->size;
 
+				vector<char> modified = b.vertices;
 				for (size_t i = 0; i != num; ++i)
 				{				
-					vertexPCT2* v = (vertexPCT2*)(&modified.vertices.front() + b.vdecl->size * i);
+					vertexPCT2* v = (vertexPCT2*)(&modified.front() + b.vdecl->size * i);
 					Vector2 np = transform.transform(Vector2(v->x, v->y));
 					v->x = np.x;
 					v->y = np.y;
 				}
 
-				modified.vdecl = IVideoDriver::instance->getVertexDeclaration(modified.vdecl->bformat);
+				for (int i = 0; i < cached_batch::MAX_TEXTURES; ++i)				
+					instance->setTexture(i, b.textures[i]);
 
-				IVideoDriver::instance->drawBatch(modified);
+				instance->setShaderProgram(b.program);
+				instance->setBlendFunc(b.blendSrc, b.blendDest);
+				for (int i = 0; i < STATE_NUM; ++i)
+					instance->setState((STATE)i, b.states[i]);
+				if (b.numIndices)
+					instance->draw(b.pt, b.vdecl, &modified.front(), b.numVertices, &b.indices.front(), b.numIndices, b.indicesShortType);
+				else
+					instance->draw(b.pt, b.vdecl, &modified.front(), b.numVertices);
 			}
-
-			modified.base = 0;
-			modified.alpha = 0;
-			modified.mask = 0;
 		}
 	};
 

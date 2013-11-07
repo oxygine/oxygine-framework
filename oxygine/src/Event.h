@@ -25,8 +25,6 @@ namespace oxygine
 
 		_et_TouchLast,
 
-		_et_TweenDone,
-
 		_et_Complete,
 		//_et_RollOver,
 		//_et_RollOut,

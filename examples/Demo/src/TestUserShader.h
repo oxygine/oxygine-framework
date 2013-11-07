@@ -1,5 +1,6 @@
 #pragma once
 #include "test.h"
+#include "core/UberShaderProgram.h"
 #include "core/gl/VideoDriverGLES20.h"
 #include "core/gl/oxgl.h"
 
@@ -13,7 +14,7 @@ public:
 
 	}
 	
-	void setShaderProgram(shaderProgram p)
+	void setShaderProgram(UberShaderProgram* p)
 	{
 		_program = p;
 	}
@@ -32,8 +33,8 @@ public:
 
 private:
 	float _val;
-	shaderProgram _program;
-	void setUniforms(ShaderProgramGL *prog)
+	UberShaderProgram* _program;
+	void setUniforms(ShaderProgram *prog)
 	{
 		prog->setUniform("interp", _val);
 	}
@@ -41,9 +42,9 @@ private:
 	void doRender(const RenderState &rs)
 	{
 		_program->setShaderUniformsCallback(CLOSURE(this, &ShaderSprite::setUniforms));
-		rs.renderer->setShaderProgram(_program);
+		rs.renderer->setUberShaderProgram(_program);
 		Sprite::doRender(rs);
-		rs.renderer->setShaderProgram(0);
+		rs.renderer->setUberShaderProgram(&Renderer::uberShader);
 
 		_program->setShaderUniformsCallback(UberShaderProgram::ShaderUniformsCallback());
 	}
@@ -55,12 +56,10 @@ public:
 	UberShaderProgram *_shader;
 	TestUserShader():_shader(0)
 	{
-		addButton("test", "test");			
-
-		VideoDriverGLES20 *driver = (VideoDriverGLES20*)IVideoDriver::instance;
+		addButton("test", "test");
 
 		_shader = new UberShaderProgram();
-		_shader->init(driver->getShaderBody(), 
+		_shader->init(Renderer::uberShaderBody, 
 			"#define MODIFY_BASE\n"
 			"uniform lowp float interp;"
 			"lowp vec4 modify_base(lowp vec4 base)\n"
@@ -89,11 +88,9 @@ public:
 
 		//Point size = content->getSize().cast<Point>();
 		Matrix view = makeViewMatrix((int)size.x, (int)size.y, true);
-		rs.renderer->setViewTransform(view);
-
 		Matrix proj;
 		Matrix::orthoLH(proj, size.x, size.y, 0.0f, 1.0f);
-		rs.renderer->setProjTransform(proj);
+		r.setViewProjTransform(view, proj);
 
 		Rect vp(Point(0, 0), size.cast<Point>());
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "oxygine_include.h"
+#include "math/vector2.h"
 
 namespace oxygine
 {
@@ -77,4 +78,35 @@ namespace oxygine
 		}
 		return offset;
 	}
+
+
+
+	struct vertexP2T2
+	{
+		float x, y;		
+		float u, v;
+
+		Vector2 &getPos() {return *((Vector2*)&x);}
+		Vector2 &getUV() {return *((Vector2*)&u);}
+	};
+
+	struct vertexP2C
+	{
+		float x, y;		
+		unsigned int color;
+
+		Vector2 &getPos() {return *((Vector2*)&x);}
+	};
+
+	struct vertexPCT2
+	{
+		float x, y, z;
+		unsigned int color;
+		float u, v;				
+	};
+
+	struct vertexPCT2T2: public vertexPCT2
+	{	
+		float u2, v2;				
+	};
 }

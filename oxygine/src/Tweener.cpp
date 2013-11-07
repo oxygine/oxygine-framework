@@ -7,9 +7,8 @@ namespace oxygine
 	Tween::Tween():_duration(0), 
 		_loops(0), 
 		_percent(0), 
-		_value(0), 
-		_done(false), _started(false), _relative(false),
-		_elapsed(0), _twoSides(false), _ease(ease_linear), _remove(false), _delay(0), _client(0)
+		_status(status_not_started),
+		_elapsed(0), _twoSides(false), _ease(ease_linear), _detach(false), _delay(0), _client(0)
 	{
 
 	}
@@ -21,13 +20,11 @@ namespace oxygine
 	void Tween::reset()
 	{
 		_elapsed = 0;
-		_done = false;
-		_started = false;
+		_status = status_not_started;
 	}
 
 	void Tween::init(timeMS duration, int loops, bool twoSides, timeMS delay, EASE ease)
 	{
-		_done = false;
 		_duration = duration;
 		_ease = ease;
 		_loops = loops;
@@ -41,11 +38,16 @@ namespace oxygine
 		}
 	}
 
+	void Tween::setDoneCallback(EventCallback cb)
+	{
+		_cbDone = cb;
+	}
+
 	float Tween::calcEase(EASE ease, float v)
 	{
 		float vi;
 		float r = 0;
-		float s = 1.70158f;// * 1.525f + 1;
+		const float s = 1.70158f;
 
 		switch(ease)
 		{
@@ -71,18 +73,22 @@ namespace oxygine
 			vi = v - 1.0f;
 			r = vi * vi * vi + 1.0f;
 			break;
-		case ease_inOutBack:			
-			v *= 2;
-			if (v < 1)
+		case ease_inOutBack:		
 			{
-				r = v * v * (( (s*=1.525f) + 1) * v - s);
+				const float s15 = s * 1.525f;
+
+				v *= 2;
+				if (v < 1)
+				{
+					r = v * v * ((s15 + 1) * v - s15);
+				}
+				else
+				{				
+					v-=2;
+					r = v * v * ((s15 + 1) * v + s15) + 2;
+				}
+				r /= 2;
 			}
-			else
-			{				
-				v-=2;
-				r = v * v * (((s *= 1.525f) + 1) * v + s) + 2;
-			}
-			r /= 2;
 			break;
 		case ease_inBack:
 			r = v * v * ((s + 1) * v - s);
@@ -118,108 +124,111 @@ namespace oxygine
 		if (_loops == -1)
 			return;
 
-		if (!_started)
-			return;//todo fix, tween with delay wasn't started yet
+		//if already done
+		if (_status >= status_done)
+			return;
 
 		OX_ASSERT(_client);
 
-		UpdateState us;
+		//OX_ASSERT(!"not implemented");
 
-		us.dt = deltaTime;
-		bool done = update(*_client, us);
-		if (!done)
+		//not started yet because if delay
+		if (_status == status_delayed)
 		{
-			callDone(*_client, &us);
+			_start(*_client);
+			_status = status_started;
 		}
-		_client->removeTween(this);
+
+
+		OX_ASSERT(_status == status_started);
+		//while (_status != status_remove)
+		{
+			UpdateState us;
+			us.dt = deltaTime;
+
+			update(*_client, us);
+		}
+
+		OX_ASSERT(_status == status_done);
+		
+		//_client->removeTween(this);		
 	}
 
-	void Tween::callDone(Actor &actor, const UpdateState *us)
+	void Tween::start(Actor &actor)
 	{
-		if (_remove)
+		_client = &actor; 
+		_status = status_delayed;
+		if (_delay == 0)
+		{
+			_status = status_started;
+			_start(actor);
+		}
+	}
+
+	void Tween::update(Actor &actor, const UpdateState &us)
+	{
+		_elapsed += us.dt;
+		switch(_status)
+		{
+		case status_delayed:
+			{
+				if (_elapsed >= _delay)
+				{
+					_status = status_started;
+					_start(*_client);					
+				}
+			}
+			break;
+		case status_started:
+			{
+				if (_duration)
+				{				
+					timeMS localElapsed = _elapsed - _delay;
+
+					int loopsDone = localElapsed / _duration;
+
+					_percent = _calcEase(((float)(localElapsed - loopsDone * _duration)) / _duration);
+
+					if (_loops > 0 && int(loopsDone) >= _loops)
+					{
+						if (_twoSides)
+							_percent = 0;
+						else
+							_percent = 1;
+
+						_status = status_done;
+					}
+				}
+				_update(*_client, us);
+			}
+			break;
+		case status_done:
+			{
+				done(*_client, us);
+			}
+			break;
+		}
+	}
+
+	void Tween::done(Actor &actor, const UpdateState &us)
+	{		
+		_done(actor, us);
+		
+		if (_detach)
 		{
 			actor.detach();
 		}
-		if (_cbDone)
-		{
-			TweenEvent ev(this, us);
-			ev.target = ev.currentTarget = &actor;
-			ev.tween = this;
 
-			_cbDone(&ev);					
-		}
-	}
+		TweenEvent ev(this, &us);
+		ev.target = ev.currentTarget = &actor;
+		ev.tween = this;
 
-	bool Tween::start(Actor &actor)
-	{
-		_client = &actor; 
-		_started = true; 
+		if (_cbDone)		
+			_cbDone(&ev);
 
-		return false;
-	}
+		dispatchEvent(&ev);
 
-	bool Tween::itDone(Actor &t, const UpdateState &us)
-	{
-		OX_ASSERT(_client);
-		//if (us.iteration == 0)//wait next cycle update/render
-		{
-			callDone(*_client, &us);
-			_client = 0;
-			return true;
-		}			
-
-		return false; 
-	}
-
-	bool Tween::update(Actor &actor, const UpdateState &us)
-	{
-		if (_done)		
-		{
-			return itDone(actor, us);
-		}
-
-		_elapsed += us.dt;
-
-		if (!_started)
-		{
-			if (_elapsed >= _delay)
-			{
-				bool done = start(actor);
-				return done;
-			}
-			else
-			{
-				return false;
-			}
-		}
-
-		OX_ASSERT(_client);
-
-		timeMS localElapsed = _elapsed - _delay;
-
-		int loopsDone = localElapsed / _duration;
-		_percent = ((float)(localElapsed - loopsDone * _duration)) / _duration;
-
-				
-		_percent = _calcEase(_percent);
-
-		bool done = false;
-
-		if (_loops > 0 && int(loopsDone) >= _loops)
-		{
-			if (_twoSides)
-				_percent = 0;
-			else
-				_percent = 1;
-
-			done = true;
-		}
-		_value = _percent;		
-		_done = done;
-
-		//printf("loopsDone, percent: %d, %.4f\n", loopsDone, _percent);
-
-		return false;
+		_status = status_remove;
 	}
 
 	
@@ -233,49 +242,38 @@ namespace oxygine
 		return t;
 	}
 
-	bool TweenQueue::start(Actor &actor)
+	void TweenQueue::complete(timeMS deltaTime)
 	{
-		OX_ASSERT(_relative == false);
-		Tween::start(actor);
-		_current = _tweens._first;
-		if(_current->getDelay() == 0)
-			return _current->start(actor);
-		return false;
+		OX_ASSERT("Tween::complete is not supported for TweenQueue");
 	}
 
-	bool TweenQueue::update(Actor &actor, const UpdateState &us)
+	void TweenQueue::_start(Actor &actor)
+	{
+		_current = _tweens._first;
+		if (!_current)
+			return;
+
+		_current->start(actor);
+	}
+
+	void TweenQueue::_update(Actor &actor, const UpdateState &us)
 	{
 		_elapsed += us.dt;
-		if (_elapsed < _delay)
-			return false;
-		if (!_started)
-		{
-			start(actor);
-		}
 
-		while (_current)
+		if (_current)
 		{
 			spTween next = _current->getNextSibling();
-			bool done = _current->update(actor, us);
-			if (done)
+			_current->update(actor, us);
+			if (_current->isDone())
 			{
-				_current->callDone(actor, &us);
 				_current = next;
-			}
-			else
-			{
-				break;
+				if (_current)				
+					_current->start(actor);				
 			}
 		}
 
-		bool done = _current == 0;
-		_done = done;
-		if (done)
-		{
-			callDone(actor, &us);
-		}
-		
-		return done;
+		if (!_current)
+			_status = status_done;
 	}
 
 	Actor* TweenEvent::getActor() const

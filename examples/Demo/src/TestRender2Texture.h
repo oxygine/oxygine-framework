@@ -53,12 +53,8 @@ public:
 
 
 		Point size = content->getSize().cast<Point>();
-		Matrix view = makeViewMatrix(size.x, size.y, true);
-		rs.renderer->setViewTransform(view);
 
-		Matrix proj;
-		Matrix::orthoLH(proj, (float)size.x, (float)size.y, 0.0f, 1.0f);
-		rs.renderer->setProjTransform(proj);
+		r.initCoordinateSystem(size.x, size.y, true);
 
 		Rect vp(Point(0, 0), size);
 

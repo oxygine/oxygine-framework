@@ -18,10 +18,6 @@ namespace oxygine
 
 		void begin(const Matrix &proj, const Matrix &view, const Rect &viewport, const Color *clearColor);
 		
-		void drawBatch(const batch &b);
 		void setDefaultSettings();
-
-	private:
-		blend_mode _blend;
 	};
 }

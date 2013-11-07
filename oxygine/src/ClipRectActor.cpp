@@ -52,6 +52,10 @@ namespace oxygine
 	{
 		RenderState rs = parentRS;
 
+		const RectF* parentClippedRect = parentRS.clip;
+		RectF clippedRect = *parentClippedRect;
+		rs.clip = &clippedRect;
+
 		Rect scissorRect(0,0,0,0);
 		bool scissorEnabled = rs.renderer->getDriver()->getScissorRect(scissorRect);
 
@@ -63,14 +67,14 @@ namespace oxygine
 			RectF ss_rect = getScreenSpaceDestRect(getTransform() * parentRS.transform);
 			parentRS.renderer->drawBatch();
 			
-			rs.clip.clip(ss_rect);
-			if (!rs.clip.isEmpty())
+			clippedRect.clip(ss_rect);
+			if (!clippedRect.isEmpty())
 			{
 				Rect gl_rect = Rect(
-					int(rs.clip.pos.x + 0.01f), 
-					int(rs.clip.pos.y + 0.01f), 
-					int(rs.clip.size.x + 0.01f), 
-					int(rs.clip.size.y + 0.01f));
+					int(clippedRect.pos.x + 0.01f), 
+					int(clippedRect.pos.y + 0.01f), 
+					int(clippedRect.size.x + 0.01f), 
+					int(clippedRect.size.y + 0.01f));
 
 				Point vp_size = core::getDisplaySize();
 				gl_rect.pos.y = vp_size.y - gl_rect.getBottom();

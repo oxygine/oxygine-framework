@@ -67,6 +67,19 @@ extern "C"
 
 namespace oxygine
 {
+    void checkGLError()
+    {
+        int gl_error = glGetError();
+        if (gl_error != GL_NO_ERROR)
+        {
+            log::error("OpenGL error: %#x\n", gl_error);
+            if (gl_error == GL_OUT_OF_MEMORY)
+            {
+                exit(0);
+            }
+        }
+    }
+    
 	Mutex mutexAlloc;
 
 	void *fastAlloc(size_t size)
@@ -198,39 +211,27 @@ namespace oxygine
 	namespace core
 	{
 		void focusLost()
-		{
-			/*
+		{			
+			return;
 #if OXYGINE_SDL
 			log::messageln("focus lost");
-			Restorable::releaseAll();
-
 			SDL_GL_DeleteContext(_context);
 			_context = 0;
 #endif
-			*/
+			
 		}
 
 		void lostContext()
 		{
-			/*
+			return;
 #if OXYGINE_SDL			
-			log::messageln("lost context");
-			
+			log::messageln("lost context");			
 			if(!_context)
 			{
 				_context = SDL_GL_CreateContext(_window);
 				initGLExtensions();
 			}
-
-			IVideoDriver::instance->restore();
-			Renderer::initialize();			
-
-			Event ev(RootActor::LOST_CONTEXT);
-			getRoot()->dispatchEvent(&ev);
-
-			Restorable::restoreAll(); 
 #endif			
-			*/
 		}
 
 		void init(init_desc *desc_ptr)
@@ -389,7 +390,10 @@ namespace oxygine
 			if (major_gl == 2)
 				IVideoDriver::instance = new VideoDriverGLES20();
 			else
-				IVideoDriver::instance = new VideoDriverGLES11();			
+			{
+				OX_ASSERT(!"gl version should be 2");
+				//IVideoDriver::instance = new VideoDriverGLES11();			
+			}
 
 	#elif __FLASHPLAYER__
 			{
@@ -404,10 +408,12 @@ namespace oxygine
 	#endif
 
 		
-
+            checkGLError();
 
 			IVideoDriver::instance->setDefaultSettings();
 
+            checkGLError();
+            
 			Renderer::initialize();
 
 			Resources::registerResourceType(ResAtlas::create, "atlas");
@@ -417,6 +423,7 @@ namespace oxygine
 			Resources::registerResourceType(ResFontBM::createSD, "sdfont");
 			Resources::registerResourceType(ResStarlingAtlas::create, "starling_atlas");
 
+            checkGLError();
 			log::messageln("oxygine initialized");
 		}
 
@@ -449,33 +456,25 @@ namespace oxygine
 
 		void reset()
 		{
+			log::messageln("core::reset()");
 			Restorable::releaseAll();
-			Renderer::release();
+			Renderer::reset();
 			IVideoDriver::instance->reset();
 		}
 
 		void restore()
 		{
+			log::messageln("core::restore()");
 			IVideoDriver::instance->restore();
-			Renderer::initialize();
+			Renderer::restore();
 			Restorable::restoreAll();
 		}
 
-		void checkGLError()
-		{
-			int gl_error = glGetError();
-			if (gl_error != GL_NO_ERROR)
-			{
-				log::error("OpenGL error: %#x\n", gl_error);
-				if (gl_error == GL_OUT_OF_MEMORY)
-				{
-					exit(0);
-				}
-			}
-		}
+		
 
 		void swapDisplayBuffers()
 		{
+            checkGLError();
 #if __S3E__
 			IwGLSwapBuffers();
 #elif USE_EGL
@@ -556,10 +555,8 @@ namespace oxygine
 						if (focus != newFocus)
 						{
 							focus = newFocus;
-							log::messageln("focus: %d", (int)focus);
-							Event ev(focus ? RootActor::ACTIVATE : RootActor::DEACTIVATE);
-							if (getRoot())
-								getRoot()->dispatchEvent(&ev);
+#if !SDL_VIDEO_OPENGL
+							
 							if (focus)
 							{
 								lostContext();
@@ -568,6 +565,13 @@ namespace oxygine
 							{
 								focusLost();
 							}
+
+							log::messageln("focus: %d", (int)focus);
+							Event ev(focus ? RootActor::ACTIVATE : RootActor::DEACTIVATE);
+							if (getRoot())
+								getRoot()->dispatchEvent(&ev);
+#endif
+							
 						}
 						//log::messageln("SDL_SYSWMEVENT %d", (int)event.window.event);
 						break;

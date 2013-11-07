@@ -115,7 +115,7 @@ void MainMenu::doLoop()
 			_menu->setInputEnabled(false);
 
 			_menu->setAlpha(255);
-			spTween t = _menu->addTween(createTween(Actor::TweenAlpha(0), 250));
+			spTween t = _menu->addTween(Actor::TweenAlpha(0), 250);
 			blocking::waitTween(t);
 
 			_menu->setInputEnabled(true);				
@@ -129,7 +129,7 @@ void MainMenu::doLoop()
 			_menu->setInputEnabled(false);
 
 			_menu->setAlpha(0);
-			t = _menu->addTween(createTween(Actor::TweenAlpha(255), 250));
+			t = _menu->addTween(Actor::TweenAlpha(255), 250);
 			blocking::waitTween(t);
 
 			_menu->setInputEnabled(true);

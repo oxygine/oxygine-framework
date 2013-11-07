@@ -105,8 +105,7 @@ void run()
 	//Renderer is lightweight class you could create it many of times
 	//for example if you need to render something into RenderTarget (FBO)
 	renderer.setDriver(IVideoDriver::instance);
-	renderer.setViewTransform(view);
-	renderer.setProjTransform(proj);
+	renderer.setViewProjTransform(view, proj);
 
 	//initialize this example stuff. see example.cpp
 	example_init();

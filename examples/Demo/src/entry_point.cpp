@@ -90,8 +90,7 @@ void run()
 	getRoot()->addChild(new DebugActor());
 
 
-	//initialization view and projection matrix 	
-	//makeViewMatrix returns View matrix where Left Top corner is (0,0), and right bottom is (w,h)
+	
 	Matrix view = makeViewMatrix(size.x, size.y); 
 
 	viewport = Rect(0, 0, size.x, size.y);
@@ -100,13 +99,13 @@ void run()
 	//initialize projection matrix
 	Matrix::orthoLH(proj, (float)size.x, (float)size.y, 0, 1);
 	
-	//initialize Renderer
 	//Renderer is class helper for rendering primitives and batching them
 	//Renderer is lightweight class you could create it many of times
-	//for example if you need to render something into RenderTarget (FBO)
 	renderer.setDriver(IVideoDriver::instance);
-	renderer.setViewTransform(view);
-	renderer.setProjTransform(proj);
+
+	//initialization view and projection matrix 	
+	//where Left Top corner is (0, 0), and right bottom is (width, height)
+	renderer.initCoordinateSystem(size.x, size.y);
 
 	//initialize this example stuff. see example.cpp
 	example_init();

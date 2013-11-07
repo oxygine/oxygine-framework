@@ -45,5 +45,6 @@ namespace oxygine{namespace log{void error(const char *format, ...);}}
 #endif
 
 #define OXYGINE_HAS_RESTORE
+#define OXYGINE_RENDER_2 1
 
 #endif

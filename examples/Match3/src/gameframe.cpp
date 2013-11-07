@@ -7,7 +7,7 @@ int Field::StartAnimation(Point ind)
 	spTween tween = At(ind)->PlayAnimation();
 	if (tween)
 	{
-		tween->setDoneCallback(CLOSURE(this, &Field::EndAnimationCallback));
+		tween->addEventListener(TweenEvent::DONE, CLOSURE(this, &Field::EndAnimationCallback));
 		animated_count++;
 	}
 	return 0;
@@ -290,10 +290,8 @@ bool Field::Swap(spJewel First, spJewel Second, bool skip_animation)
 		jewel_new_ind  = getCellIndex( First->getPosition());
 		jewel_drag_ind = getCellIndex( Second->getPosition());
 
-		First->addTween( createTween(Sprite::TweenPosition(Second->getPosition()),200));
-		spTween tween = createTween(Sprite::TweenPosition(First->getPosition()),200);
-		tween->setDoneCallback(CLOSURE(this, &Field::EndSwapCallback));
-		Second->addTween(tween);
+		First->addTween(Sprite::TweenPosition(Second->getPosition()),200);
+		Second->addTween(Sprite::TweenPosition(First->getPosition()),200)->addEventListener(TweenEvent::DONE, CLOSURE(this, &Field::EndSwapCallback));
 	}
 
 	return true;
@@ -364,7 +362,7 @@ void  Field::DropJewel(spJewel Target, spJewel Jewel)
 		return;
 
 	spTween tween = Jewel->DropTo(Target->getPosition());
-	tween->setDoneCallback(CLOSURE(this, &Field::DropEndCallback));		
+	tween->addEventListener(TweenEvent::DONE, CLOSURE(this, &Field::DropEndCallback));		
 	Target->setPosition(getCellPosition(Jewel->index.x, Jewel->index.y));
 	ForceSwap(Target,Jewel);
 	droped_count++;
@@ -396,7 +394,7 @@ int Field::GenerateNewJewels(int column)
 			jewels[column][j]->setPosition(Vector2(pos.x,-getPosition().y-count*(JEWEL_SIZE + rand() % 10 + 20)));
 			spTween tween = jewels[column][j]->DropTo(pos);
 			droped_count++;
-			tween->setDoneCallback(CLOSURE(this, &Field::DropEndCallback));		
+			tween->addEventListener(TweenEvent::DONE, CLOSURE(this, &Field::DropEndCallback));		
 			count++;
 
 		}

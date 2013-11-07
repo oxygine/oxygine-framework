@@ -55,14 +55,13 @@ spTween Jewel::PlayAnimation()
 	state = jsAnimation;
 
 	string anim = jewels_ids[_id];
-	return addTween(createTween(Sprite::TweenAlpha(0), 500, 1));
+	return addTween(Sprite::TweenAlpha(0), 500, 1);
 }
 
 spTween Jewel::DropTo(Vector2 pos)
 {
 	int time = fabs(getPosition().y - pos.y) * 2;
-	spTween tween = createTween(Sprite::TweenPosition(pos),time);
-	addTween( tween );
+	spTween tween = addTween(Sprite::TweenPosition(pos),time);
 	state = jsDropped;
 	return tween;
 }

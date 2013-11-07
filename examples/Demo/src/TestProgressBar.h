@@ -12,12 +12,14 @@ public:
 		addButton("90", "dir: 90");
 		addButton("180", "dir: 180");
 		addButton("270", "dir: 270");
+		addButton("radial_cw", "dir: radial_cw");
+		//addButton("radial_ccw", "dir: radial_ccw");
 
-		bar = new ProgressBar();
+		bar = new ProgressBar(); 
 		bar->setAnimFrame(resources.getResAnim("logo2"));
-		bar->setAnchor(Vector2(0.5f, 0.5f));
+		//bar->setAnchor(Vector2(0.5f, 0.5f));
 		bar->setPosition(getSize()/2);
-		bar->setScale(2);
+		//bar->setScale(2);
 		content->addChild(bar);
 	}
 
@@ -40,7 +42,15 @@ public:
 		{			
 			bar->setDirection(ProgressBar::dir_270);
 		}
+		if (id == "radial_ccw")
+		{			
+			bar->setDirection(ProgressBar::dir_radial_ccw);
+		}
+		if (id == "radial_cw")
+		{			
+			bar->setDirection(ProgressBar::dir_radial_cw);
+		}
 
-		bar->addTween(createTween(ProgressBar::TweenProgress(1.0f), 1000));
+		bar->addTween(ProgressBar::TweenProgress(1.0f), 1000);
 	}
 };

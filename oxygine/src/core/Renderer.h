@@ -14,6 +14,19 @@ namespace oxygine
 {
 	using namespace std;
 
+	enum blend_mode
+	{
+		blend_default,
+		blend_disabled,
+		blend_premultiplied_alpha,
+		blend_alpha,
+		blend_add,
+		//blend_xor,
+
+		//gles2
+		blend_sub
+	};
+
 	class ClipUV
 	{
 	public:
@@ -112,7 +125,7 @@ namespace oxygine
 	} 
 
 	class IVideoDriver;
-
+	class UberShaderProgram;
 	class Diffuse;
 
 	class Renderer
@@ -134,8 +147,17 @@ namespace oxygine
 		static void initialize();
 		/**Cleans internal static classes*/
 		static void release();
+		/**for lost context*/
+		static void reset();
+		/**restore after lost context*/
+		static void restore();
 		/**White 4x4 Texture*/
 		static spNativeTexture white;
+		static UberShaderProgram uberShader;
+		static std::vector<unsigned char> uberShaderBody;
+
+		static std::vector<unsigned char> indices8;
+		static std::vector<unsigned short> indices16;
 				
 		static Stats statsPrev;
 		static Stats statsCurrent;
@@ -144,14 +166,23 @@ namespace oxygine
 		Renderer(IVideoDriver *driver = 0);
 		virtual ~Renderer();
 
+
+		/**Returns triangles vertex Color.*/
+		const Color&	getPrimaryColor() const;
+		const Matrix&	getViewProjection() const {return _vp;}
+		//const Matrix&	getProjection() const {return _proj;}
+		Vector2			getMaskedUV(const Vector2 &pos);
+		IVideoDriver*	getDriver();
+
+
 		/**Begins rendering into RenderTexture or into primary framebuffer if rt is null*/
 		bool begin(spNativeTexture rt, const Rect &viewport, const Color *clearColor);
 		/**Completes started rendering and restores previous Framebuffer.*/
-		void end();
-		/**Sets View matrix*/
-		void setViewTransform(const Matrix &m);
-		/**Sets Projection matrix*/
-		void setProjTransform(const Matrix &m);
+		void end();		
+
+		/**initializes View + Projection matrices where TopLeft is (0,0) and RightBottom is (width, height). use flipU = true for render to texture*/
+		void initCoordinateSystem(int width, int height, bool flipU = false);
+		void setViewProjTransform(const Matrix &view, const Matrix &proj);
 		/**Sets blend mode. Default value is blend_premultiplied_alpha*/
 		void setBlendMode(blend_mode blend);
 		/**Sets texture. If texture is null White texture would be used.*/
@@ -160,12 +191,11 @@ namespace oxygine
 		void setMask(spNativeTexture mask, const RectF &srcRect, const RectF &destRect, const transform &t, bool channelR);
 		void removeMask();
 		/**Sets World transformation matrix.*/
-		void setTransform(const transform &m);		
+		void setTransform(const transform &m);				
+		void setUberShaderProgram(UberShaderProgram* pr);
+		void resetSettings();
+		void setDriver(IVideoDriver *);
 
-		void setShaderProgram(shaderProgram pr);
-
-		/**Returns triangles vertex Color.*/
-		const Color &getPrimaryColor() const;
 		/**Sets triangles vertex Color.*/
 		void setPrimaryColor(const Color &);
 		/**Accumulates rectangles into batch or render it.*/
@@ -176,25 +206,29 @@ namespace oxygine
 		/**Cleans existing accumulated batch.*/
 		void cleanup();
 
-		int				getMaxVertices() const {return _maxVertices;}		
-		const Matrix&	getView() const {return _view;}
-		const Matrix&	getProjection() const {return _proj;}
-
-		IVideoDriver *getDriver();
-		void setDriver(IVideoDriver *);
-
-
 		//debug utils
 #ifdef OXYGINE_DEBUG_T2P
 		static void showTexel2PixelErrors(bool show);
 #endif
 
 	protected:			
-		void updateDriver();
+		void setShader(ShaderProgram *prog);
+
+		UberShaderProgram *_uberShader;
+		unsigned int _shaderFlags;
+
+		std::vector<unsigned char> _vertices;
+		spNativeTexture _base;
+		spNativeTexture _mask;
+		spNativeTexture _alpha;
+		RectF _clipMask;
+		const VertexDeclaration *_vdecl;
 
 		IVideoDriver *_driver;
-		Matrix _view;
-		Matrix _proj;
+		ShaderProgram *_program;
+		//Matrix _view;
+		//Matrix _proj;
+		Matrix _vp;
 		Rect _viewport;
 		transform _transform;
 
@@ -204,7 +238,6 @@ namespace oxygine
 
 		spNativeTexture _rt;
 
-		batch _batch;
-		unsigned int _maxVertices;		
+		blend_mode _blend;
 	};
 }

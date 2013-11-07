@@ -1,89 +1,50 @@
 #pragma once
 #include "oxygine_include.h"
 #include "ref_counter.h"
-#include <vector>
-#include "math/matrix.h"
-#include "math/Rect.h"
 #include "vertex.h"
+#include "math/Rect.h"
+#include <vector>
 
 namespace oxygine
 {	
 	class Color;
 	DECLARE_SMART(NativeTexture, spNativeTexture);
 
-	struct vertexP2T2
-	{
-		float x, y;		
-		float u, v;
-
-		Vector2 &getPos() {return *((Vector2*)&x);}
-		Vector2 &getUV() {return *((Vector2*)&u);}
-	};
-
-	struct vertexP2C
-	{
-		float x, y;		
-		unsigned int color;
-
-		Vector2 &getPos() {return *((Vector2*)&x);}
-	};
-
-	struct vertexPCT2
-	{
-		float x, y, z;
-		unsigned int color;
-		float u, v;				
-	};
-
-	struct vertexPCT2T2: public vertexPCT2
-	{	
-		float u2, v2;				
-	};
-
-	typedef std::vector<unsigned char> Vertices;
-
-	enum blend_mode
-	{
-		blend_default,
-		blend_disabled,
-		blend_premultiplied_alpha,
-		blend_alpha,
-		blend_add,
-		//blend_xor,
-
-		//gles2
-		blend_sub
-	};
-
-	class UberShaderProgram;
-	typedef UberShaderProgram* shaderProgram;
+	class ShaderProgram;
 	class VertexDeclaration;
-	
-
-	struct batch
-	{
-		batch();
-		~batch();
-
-		//bvertex_format bformat;
-		Vertices vertices;
-		const VertexDeclaration *vdecl;
-
-		spNativeTexture base;
-		spNativeTexture alpha;
-		spNativeTexture mask;
-		bool maskChannelR;
-
-		RectF clipMask;
-		bool basePremultiplied;
-
-		blend_mode blend;
-		shaderProgram program;
-	};
 
 	class IVideoDriver
 	{
 	public:
+		enum PRIMITIVE_TYPE
+		{
+			PT_POINTS,
+			PT_LINES,
+			PT_LINE_LOOP,
+			PT_LINE_STRIP,
+			PT_TRIANGLES,
+			PT_TRIANGLE_STRIP,
+			PT_TRIANGLE_FAN,
+		};
+
+		enum BLEND_TYPE
+		{
+			BT_ZERO,
+			BT_ONE,
+			BT_SRC_COLOR,
+			BT_ONE_MINUS_SRC_COLOR,
+			BT_SRC_ALPHA,
+			BT_ONE_MINUS_SRC_ALPHA,
+			BT_DST_ALPHA,
+			BT_ONE_MINUS_DST_ALPHA,
+		};
+
+		enum STATE
+		{
+			STATE_BLEND,
+			STATE_NUM
+		};
+
 		static IVideoDriver *instance;
 		virtual ~IVideoDriver(){}
 
@@ -93,44 +54,45 @@ namespace oxygine
 
 		virtual spNativeTexture createTexture() = 0;
 
-		virtual void begin(const Matrix &proj, const Matrix &view, const Rect &viewport, const Color *color) = 0;				
-		virtual void drawBatch(const batch &b) = 0;
+		virtual void begin(const Rect &viewport, const Color *color) = 0;				
+		virtual void draw(PRIMITIVE_TYPE pt, const VertexDeclaration *decl, const void *verticesData, unsigned int numVertices) = 0;
+		virtual void draw(PRIMITIVE_TYPE pt, const VertexDeclaration *decl, const void *verticesData, unsigned int numVertices, const void *indicesData, unsigned int numIndices, bool indicesShortType) = 0;
 
 		virtual void	getViewport(Rect &r) const = 0;
-		virtual int		getMaxVertices() const = 0;
 		virtual bool	getScissorRect(Rect &) const = 0;
 		virtual const VertexDeclaration *getVertexDeclaration(bvertex_format) const = 0;
 		
 		virtual void setScissorRect(const Rect *) = 0;
 		virtual void setDefaultSettings() = 0;
 		virtual void setRenderTarget(spNativeTexture) = 0;
-	};
-
-
-	typedef std::vector<unsigned char> indices8;
-	typedef std::vector<unsigned short> indices16;
-	
-	extern indices8 _indices8;
-	extern indices16 _indices16;
-		
+		virtual void setShaderProgram(ShaderProgram*) = 0;
+		virtual void setTexture(int sampler, spNativeTexture) = 0;
+		virtual void setState(STATE, unsigned int value) = 0;
+		virtual void setBlendFunc(BLEND_TYPE src, BLEND_TYPE dest) = 0;
+	};		
 
 	class VideoDriverNull: public IVideoDriver
 	{
 	public:
 		spNativeTexture createTexture();
 
-		void begin(const Matrix &proj, const Matrix &view, const Rect &viewport, const Color *clearColor);
+		void begin(const Rect &viewport, const Color *clearColor);
 		bool isReady() const {return true;}
-		void	getViewport(Rect &r) const;
-		int		getMaxVertices() const;
-		bool	getScissorRect(Rect &) const;
+		void getViewport(Rect &r) const;
+		bool getScissorRect(Rect &) const;
 		const VertexDeclaration*	getVertexDeclaration(bvertex_format) const;
 		
-		void drawBatch(const batch &b);
+		void draw(PRIMITIVE_TYPE pt, const VertexDeclaration *decl, const void *verticesData, unsigned int verticesDataSize){}
+		void draw(PRIMITIVE_TYPE pt, const VertexDeclaration *decl, const void *verticesData, unsigned int verticesDataSize, const void *indicesData, unsigned int indicesDataSize, bool indicesShortType){}
+
 
 		void setScissorRect(const Rect *);
 		void setDefaultSettings();
 		void setRenderTarget(spNativeTexture);
+		void setShaderProgram(ShaderProgram*);
+		void setTexture(int sampler, spNativeTexture);
+		void setState(STATE, unsigned int value){}
+		void setBlendFunc(BLEND_TYPE src, BLEND_TYPE dest){}
 
 		void reset(){}
 		void restore(){}

@@ -35,6 +35,10 @@
 		04967C4D180B3D7400D66EFA /* Restorable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04967C4B180B3D7400D66EFA /* Restorable.cpp */; };
 		04967C4E180B3D7400D66EFA /* Restorable.h in Headers */ = {isa = PBXBuildFile; fileRef = 04967C4C180B3D7400D66EFA /* Restorable.h */; };
 		049B64AB1803054300EC333E /* CreateResourceContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B64AA1803054300EC333E /* CreateResourceContext.cpp */; };
+		04AEC30F182BD912006413A9 /* ShaderProgramGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04AEC30D182BD912006413A9 /* ShaderProgramGL.cpp */; };
+		04AEC310182BD912006413A9 /* ShaderProgramGL.h in Headers */ = {isa = PBXBuildFile; fileRef = 04AEC30E182BD912006413A9 /* ShaderProgramGL.h */; };
+		04AEC313182BD98D006413A9 /* UberShaderProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04AEC311182BD98D006413A9 /* UberShaderProgram.cpp */; };
+		04AEC314182BD98D006413A9 /* UberShaderProgram.h in Headers */ = {isa = PBXBuildFile; fileRef = 04AEC312182BD98D006413A9 /* UberShaderProgram.h */; };
 		C38704A217C0C6AC00015CA8 /* VideoDriverGLES11.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C38704A017C0C6AC00015CA8 /* VideoDriverGLES11.cpp */; };
 		C38704A317C0C6AC00015CA8 /* VideoDriverGLES11.h in Headers */ = {isa = PBXBuildFile; fileRef = C38704A117C0C6AC00015CA8 /* VideoDriverGLES11.h */; };
 		C38704A617C0C71700015CA8 /* VideoDriverGLES20.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C38704A417C0C71700015CA8 /* VideoDriverGLES20.cpp */; };
@@ -222,6 +226,10 @@
 		04967C4B180B3D7400D66EFA /* Restorable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Restorable.cpp; sourceTree = "<group>"; };
 		04967C4C180B3D7400D66EFA /* Restorable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Restorable.h; sourceTree = "<group>"; };
 		049B64AA1803054300EC333E /* CreateResourceContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CreateResourceContext.cpp; sourceTree = "<group>"; };
+		04AEC30D182BD912006413A9 /* ShaderProgramGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ShaderProgramGL.cpp; path = gl/ShaderProgramGL.cpp; sourceTree = "<group>"; };
+		04AEC30E182BD912006413A9 /* ShaderProgramGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShaderProgramGL.h; path = gl/ShaderProgramGL.h; sourceTree = "<group>"; };
+		04AEC311182BD98D006413A9 /* UberShaderProgram.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UberShaderProgram.cpp; sourceTree = "<group>"; };
+		04AEC312182BD98D006413A9 /* UberShaderProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UberShaderProgram.h; sourceTree = "<group>"; };
 		C38704A017C0C6AC00015CA8 /* VideoDriverGLES11.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VideoDriverGLES11.cpp; path = gl/VideoDriverGLES11.cpp; sourceTree = "<group>"; };
 		C38704A117C0C6AC00015CA8 /* VideoDriverGLES11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VideoDriverGLES11.h; path = gl/VideoDriverGLES11.h; sourceTree = "<group>"; };
 		C38704A417C0C71700015CA8 /* VideoDriverGLES20.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VideoDriverGLES20.cpp; path = gl/VideoDriverGLES20.cpp; sourceTree = "<group>"; };
@@ -538,6 +546,8 @@
 		C3E86F6816EBC8EB00052915 /* core */ = {
 			isa = PBXGroup;
 			children = (
+				04AEC311182BD98D006413A9 /* UberShaderProgram.cpp */,
+				04AEC312182BD98D006413A9 /* UberShaderProgram.h */,
 				04967C4B180B3D7400D66EFA /* Restorable.cpp */,
 				04967C4C180B3D7400D66EFA /* Restorable.h */,
 				0472E34817F8A1A80016A832 /* file.cpp */,
@@ -697,6 +707,8 @@
 		C3EE215017BECD6100715678 /* gl */ = {
 			isa = PBXGroup;
 			children = (
+				04AEC30D182BD912006413A9 /* ShaderProgramGL.cpp */,
+				04AEC30E182BD912006413A9 /* ShaderProgramGL.h */,
 				C38704A417C0C71700015CA8 /* VideoDriverGLES20.cpp */,
 				C38704A517C0C71700015CA8 /* VideoDriverGLES20.h */,
 				C38704A017C0C6AC00015CA8 /* VideoDriverGLES11.cpp */,
@@ -751,6 +763,7 @@
 				C3E8702916EBC8EB00052915 /* oxygine.h in Headers */,
 				C3E8702A16EBC8EB00052915 /* pixel.h in Headers */,
 				C3E8702B16EBC8EB00052915 /* ref_counter.h in Headers */,
+				04AEC310182BD912006413A9 /* ShaderProgramGL.h in Headers */,
 				0472E38217F8A2EC0016A832 /* oxygine-framework.h in Headers */,
 				C3E8702D16EBC8EB00052915 /* Renderer.h in Headers */,
 				C3E8702F16EBC8EB00052915 /* Texture.h in Headers */,
@@ -778,6 +791,7 @@
 				C3E8704E16EBC8EB00052915 /* Multithreading.h in Headers */,
 				C3E8705416EBC8EB00052915 /* PointerState.h in Headers */,
 				C3E8705616EBC8EB00052915 /* ProgressBar.h in Headers */,
+				04AEC314182BD98D006413A9 /* UberShaderProgram.h in Headers */,
 				C3E8705716EBC8EB00052915 /* pugiconfig.hpp in Headers */,
 				C3E8705916EBC8EB00052915 /* pugixml.hpp in Headers */,
 				C3E8705A16EBC8EB00052915 /* RenderState.h in Headers */,
@@ -912,6 +926,7 @@
 				C3E8704B16EBC8EB00052915 /* MemoryTexture.cpp in Sources */,
 				C3E8704D16EBC8EB00052915 /* Multithreading.cpp in Sources */,
 				0472E37F17F8A2EC0016A832 /* MaskedSprite.cpp in Sources */,
+				04AEC313182BD98D006413A9 /* UberShaderProgram.cpp in Sources */,
 				C3E8705316EBC8EB00052915 /* PointerState.cpp in Sources */,
 				0472E35717F8A1A80016A832 /* file.cpp in Sources */,
 				C3E8705516EBC8EB00052915 /* ProgressBar.cpp in Sources */,
@@ -933,6 +948,7 @@
 				C3E8707616EBC8EB00052915 /* TextBuilder.cpp in Sources */,
 				C3E8707816EBC8EB00052915 /* TextActor.cpp in Sources */,
 				C3E8708316EBC8EB00052915 /* Tweener.cpp in Sources */,
+				04AEC30F182BD912006413A9 /* ShaderProgramGL.cpp in Sources */,
 				C3E8708616EBC8EB00052915 /* AtlasTool.cpp in Sources */,
 				0472E35E17F8A1A80016A832 /* STDFileSystem.cpp in Sources */,
 				C3E8708816EBC8EB00052915 /* ImageUtils.cpp in Sources */,

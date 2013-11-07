@@ -13,6 +13,7 @@ namespace oxygine
 	class SlidingActor: public Actor
 	{
 	public:
+		static void setDefaultTouchThreshold(float val);
 		SlidingActor();
 		~SlidingActor();
 			

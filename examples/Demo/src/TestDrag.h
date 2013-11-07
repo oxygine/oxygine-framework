@@ -50,7 +50,7 @@ public:
 		int new_priority = actor->getParent()->getLastChild()->getPriority() + 1;
 		actor->setPriority(new_priority);
 
-		actor->addTween(createTween(Sprite::TweenColor(Color(255,0,0,255)), 300, -1, true));
+		actor->addTween(Sprite::TweenColor(Color(255,0,0,255)), 300, -1, true);
 	}
 
 	void onMouseUp(Event *event)

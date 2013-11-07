@@ -20,7 +20,7 @@ namespace oxygine
 
 		RectF srcRect = _srcRect * Vector2(w, h);
 
-		float sc = (float)srcRect.getWidth() / f._destRect.getWidth();
+		float sc = 1.0f;//(float)srcRect.getWidth() / f._destRect.getWidth();
 
 
 		f._srcRect.pos = srcRect.pos - (_destRect.pos - f._destRect.pos) * sc;

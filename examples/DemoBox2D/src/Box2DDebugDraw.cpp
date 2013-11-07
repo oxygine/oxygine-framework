@@ -2,6 +2,7 @@
 #include "core/VideoDriver.h"
 #include "RenderState.h"
 #include "core/gl/VideoDriverGLES20.h"
+#include "core/gl/ShaderProgramGL.h"
 
 Box2DDraw::Box2DDraw(): _worldScale(1.0f), _world(0)
 {
@@ -44,8 +45,9 @@ void Box2DDraw::doRender(const RenderState &rs)
 	
 	_world->SetDebugDraw(this);
 
-	_program->bind();
-	Matrix m = Matrix(rs.transform) * rs.renderer->getView() * rs.renderer->getProjection();
+	rs.renderer->getDriver()->setShaderProgram(_program);
+
+	Matrix m = Matrix(rs.transform) * rs.renderer->getViewProjection();
 	_program->setUniform("projection", &m);
 
 	glEnable(GL_BLEND);

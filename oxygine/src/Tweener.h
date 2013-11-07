@@ -81,7 +81,7 @@ namespace oxygine
 	public:
 		enum 
 		{
-			DONE = _et_TweenDone
+			DONE = _et_Complete
 		};
 
 		TweenEvent(Tween *tween_, const UpdateState *us_):Event(DONE, false), tween(tween_), us(us_){}
@@ -96,7 +96,7 @@ namespace oxygine
 
 	DECLARE_SMART(Tween, spTween);
 
-	class Tween: public Object, public intrusive_list_item<spTween>
+	class Tween: public EventDispatcher, public intrusive_list_item<spTween>
 	{
 		typedef intrusive_list_item<spTween> intr_list;
 	public:
@@ -130,57 +130,65 @@ namespace oxygine
 		timeMS		getDelay() const {return _delay;}
 		Actor*		getClient() const {return _client;}
 		float		getPercent() const {return _percent;}
+		spObject	getDataObject() const {return _data;}
 		spTween&	getNextSibling() {return intr_list::getNextSibling();}
 		spTween&	getPrevSibling() {return intr_list::getPrevSibling();}
 
-		bool		isStarted() const {return _started;}
-		bool		isDone() const {return _done;}
+		bool		isStarted() const {return _status != status_not_started;}
+		bool		isDone() const {return _status == status_remove;}
 
-		void setDoneCallback(EventCallback cb){_cbDone = cb;}		
+		void setDataObject(spObject data) {_data = data;}
+		void setDoneCallback(EventCallback cb);//deprecated. use tween->addEventListener(TweenEvent::DONE, ...)
 		void setEase(EASE ease){_ease = ease;}
-		void setRelative(bool rel){_relative = rel;}
 		void setDelay(timeMS delay){_delay = delay;}
 		/** loops = -1 means infinity repeat cycles*/
 		void setLoops(int loops){_loops = loops;}
 		void setClient(Actor *client){_client = client;}
 
 		/**delete actor from parent node when tween done*/
-		void setDetachActor(bool detach){_remove = detach;}
+		void setDetachActor(bool detach){_detach = detach;}
 
 		/**immediately completes tween, calls doneCallback and mark tween as completed and removes self from Actor. If tween has infinity loops (=-1) then do nothing*/
-		void complete(timeMS deltaTime = std::numeric_limits<int>::max());
+		virtual void complete(timeMS deltaTime = std::numeric_limits<int>::max()/2);
 
 		
-		virtual bool start(Actor &actor);
-		virtual bool update(Actor &actor, const UpdateState &us);	
+		void start(Actor &actor);
+		void update(Actor &actor, const UpdateState &us);	
 
 		static float calcEase(EASE ease, float v);
 
 	protected:
-		friend class TweenQueue;
-		timeMS _elapsed;		
-		timeMS _duration;
-		timeMS _delay;
+		void done(Actor &, const UpdateState &us);
 
-		float _percent;
-		float _value;
-		bool _remove;
-
-
-		bool itDone(Actor &t, const UpdateState &us);
-		void callDone(Actor &t, const UpdateState *us);
-
+		virtual void _start(Actor &actor){}
+		virtual void _update(Actor &actor, const UpdateState &us){}
+		virtual void _done(Actor &actor, const UpdateState &us){}
 		virtual float _calcEase(float v);
 
+		enum status
+		{
+			status_not_started,
+			status_delayed,
+			status_started,
+			status_done,
+			status_remove,
+		};
+		status _status;		
+		timeMS _elapsed;
+
+		timeMS _duration;
+		timeMS _delay;
 		int _loops;
-		EventCallback _cbDone;
-		Actor *_client;
 		EASE _ease;		
 		bool _twoSides;
-		bool _done;
-		bool _started;
-		bool _relative;
-		
+
+		float _percent;
+		bool _detach;		
+				
+		EventCallback _cbDone;
+		Actor *_client;	
+
+		spObject _data;		
 	};	
 
 	template<class GS>
@@ -191,28 +199,19 @@ namespace oxygine
 
 		TweenT(const GS &gs):_gs(gs){}
 
-		bool update(Actor &actor, const UpdateState &us)
+		void _update(Actor &actor, const UpdateState &us)
 		{
-			bool done = Tween::update(actor, us);			
-			if (!done && _elapsed >= _delay)//done was delayed for 1 frame
-			{
-				type &t = *safeCast<type*>(&actor);
-				_gs.update(t, _value, us);//todo fix cast
-			}
-			
-			return done;
+			type &t = *safeCast<type*>(&actor); 
+			_gs.update(t, _percent, us);//todo fix cast
 		}
 
-		bool start(Actor &actor)
+		void _start(Actor &actor)
 		{
 			type &t = *safeCast<type*>(&actor);
-			_gs.init(t, _relative);
-			Tween::start(actor);
-
+			_gs.init(t, false);
 			UpdateState us;
 			us.iteration = -1;
-			bool done = update(actor, us);
-			return done;
+			_gs.update(t, _calcEase(0.0f), us);
 		}
 
 		GS &getGS(){return _gs;}
@@ -230,11 +229,12 @@ namespace oxygine
 		template<class GS>
 		spTween add(const GS &gs, timeMS duration, int loops = 1, bool twoSides = false, timeMS delay = 0, Tween::EASE ease = Tween::ease_linear)
 		{return add(createTween(gs, duration, loops, twoSides, delay, ease));}
-
-		bool start(Actor &actor);
-		bool update(Actor &actor, const UpdateState &us);
-
+		
 	private:
+		void complete(timeMS deltaTime);
+		void _start(Actor &actor);
+		void _update(Actor &actor, const UpdateState &us);
+
 		typedef intrusive_list<spTween> tweens;
 		tweens _tweens;
 		spTween _current;

@@ -33,7 +33,7 @@ namespace oxygine
 			_anchor(0, 0),
 			_scale(1, 1),
 			_rotation(0),
-			_flags(flag_visible | flag_inputEnabled | flag_inputChildrenEnabled | flag_childrenRelative),
+			_flags(flag_visible | flag_inputEnabled | flag_inputChildrenEnabled | flag_childrenRelative | flag_fastTransform),
 			_parent(0),
 			_alpha(255),
 			_pressed(0),
@@ -479,6 +479,7 @@ namespace oxygine
 			return;
 		_scale = scale;
 		_flags |= flag_transformDirty | flag_transformInvertDirty;
+		_flags &= ~flag_fastTransform;
 	}
 
 	void Actor::setScale(float scaleX, float scaleY)
@@ -492,6 +493,7 @@ namespace oxygine
 			return;
 		_scale.x = sx;
 		_flags |= flag_transformDirty | flag_transformInvertDirty;
+		_flags &= ~flag_fastTransform;
 	}
 
 	void Actor::setScaleY(float sy)
@@ -500,6 +502,7 @@ namespace oxygine
 			return;
 		_scale.y = sy;
 		_flags |= flag_transformDirty | flag_transformInvertDirty;
+		_flags &= ~flag_fastTransform;
 	}
 
 	void Actor::setRotation(float rotation)
@@ -509,6 +512,7 @@ namespace oxygine
 
 		_rotation = rotation;
 		_flags |= flag_transformDirty | flag_transformInvertDirty;
+		_flags &= ~flag_fastTransform;
 	}
 
 	void Actor::sizeChanged(const Vector2 &size)
@@ -518,12 +522,7 @@ namespace oxygine
 
 	void Actor::setSize(const Vector2 &size)
 	{
-		//INT_MAX
-		//OX_ASSERT(size.x < SHORT_MAX);
-		//OX_ASSERT(size.y < SHORT_MAX);
-		//OX_ASSERT(size.x > -SHORT_MAX);
-		//OX_ASSERT(size.y > -SHORT_MAX);
-		_size = size;//.cast<PointS>();
+		_size = size;
 		_flags |= flag_transformDirty | flag_transformInvertDirty;
 		sizeChanged(size);
 	}	
@@ -576,22 +575,27 @@ namespace oxygine
 		if (!(_flags & flag_transformDirty))
 			return;
 
-		bool rot = _rotation != 0.0f;
-		bool sc = _scale.x != 1.0f || _scale.y != 1.0f;
-		
+		AffineTransform tr;
 
-		float c = 1.0f;
-		float s = 0.0f;
-		if (_rotation)			
+		if (_flags & flag_fastTransform)
 		{
-			c = cosf(_rotation);
-			s = sinf(_rotation);
+			tr = AffineTransform(1, 0, 0, 1, _pos.x, _pos.y);
 		}
+		else
+		{
+			float c = 1.0f;
+			float s = 0.0f;
+			if (_rotation)
+			{
+				c = cosf(_rotation);
+				s = sinf(_rotation);
+			}
 
-		AffineTransform tr(
-			c * _scale.x, s * _scale.x,
-			-s * _scale.y, c * _scale.y,
-			_pos.x, _pos.y);
+			tr = AffineTransform (
+				c * _scale.x, s * _scale.x,
+				-s * _scale.y, c * _scale.y,
+				_pos.x, _pos.y);
+		}		
 
 		if (_flags & flag_childrenRelative)
 		{
@@ -827,8 +831,8 @@ namespace oxygine
 
 			bool done = false;
 			if (tween->getParentList())
-				done = tween->update(*this, us);
-			if (done && tween->getParentList())
+				tween->update(*this, us);
+			if (tween->isDone() && tween->getParentList())
 				_tweens.remove(tween);
 			tween = tweenNext;
 		}
@@ -905,26 +909,29 @@ namespace oxygine
 			return false;
 
 		rs = parentRS;		
-		rs.alpha = alpha;		
+		rs.alpha = alpha;
 
-		Renderer::transform tr = getTransform() * parentRS.transform;
-		rs.transform = tr;
 
+		const Renderer::transform &tr = getTransform();
+		if (_flags & flag_fastTransform)
+		{
+			rs.transform = parentRS.transform;
+			rs.transform.translate(Vector2(tr.x, tr.y));
+		}
+		else
+			Renderer::transform::multiply(rs.transform, tr, parentRS.transform);
+
+		
 		if (_flags & flag_cull)
 		{
-			RectF ss_rect = getScreenSpaceDestRect(tr);
+			RectF ss_rect = getScreenSpaceDestRect(rs.transform);
 			RectF intersection = ss_rect;
-			intersection.clip(rs.clip);
+			intersection.clip(*rs.clip);
 			if (intersection.isEmpty())
 				return false;
-
 		}
 
-		
-		//tr.x = int(tr.x);
-		//tr.y = int(tr.y);
-		
-		rs.renderer->setTransform(tr);
+		rs.renderer->setTransform(rs.transform);
 
 		return true;
 	}
@@ -939,8 +946,8 @@ namespace oxygine
 		if (!prepareRender(rs, parentRS))
 			return false;
 
-		if (_cbDoRender)
-			_cbDoRender(rs);
+		//if (_cbDoRender)
+		//	_cbDoRender(rs);
 		doRender(rs);
 		completeRender(rs);
 		return true;
@@ -955,8 +962,9 @@ namespace oxygine
 		Actor *actor = _children._first.get();
 		while (actor)
 		{
-			if (actor->getParent())//todo remove???
-				actor->render(rs);
+			OX_ASSERT(actor->getParent());
+			//if (actor->getParent())//todo remove???
+			actor->render(rs);
 			actor = actor->_next.get();
 		}
 	}
@@ -988,15 +996,9 @@ namespace oxygine
 		OX_ASSERT(tween);
 		if (!tween)
 			return 0;
-
-		tween->setRelative(rel);
-
-		bool done = false;
-		if (tween->getDelay() == 0)
-			done = tween->start(*this);
-
-		if (!done)
-			_tweens.append(tween);
+		
+		tween->start(*this);
+		_tweens.append(tween);
 
 		return tween;
 	}
@@ -1005,11 +1007,6 @@ namespace oxygine
 	{
 		return _addTween(tween, false);
 	}	
-
-	spTween Actor::addTweenRelative(spTween tween)
-	{
-		return _addTween(tween, true);
-	}
 
 	spTween Actor::getTween(const string &name, error_policy ep)
 	{

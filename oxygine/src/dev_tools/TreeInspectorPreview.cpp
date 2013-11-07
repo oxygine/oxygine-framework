@@ -50,7 +50,13 @@ namespace oxygine
 
 		setSize(30, 30);
 
-		const RectF &itemRect = _videoCache._bounds;
+		RectF itemRect = _videoCache._bounds;
+		if (itemRect.isEmpty())
+		{
+			itemRect = item->getDestRect();
+			if (itemRect.isEmpty())
+				itemRect.setSize(Vector2(10,4));
+		}
 
 		Vector2 ns = fitSize(Vector2(50.0f, 50.0f), itemRect.size); 
 		float scale = ns.x / itemRect.size.x;
@@ -96,6 +102,7 @@ namespace oxygine
 		parentRenderState.renderer->drawBatch();
 		_videoCache.render(_cacheTransform * parentRenderState.transform);
 		parentRenderState.renderer->drawBatch();
+		parentRenderState.renderer->resetSettings();
 
 		/*
 		bool rel = _item->getChildrenRelative();

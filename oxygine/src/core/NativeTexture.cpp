@@ -150,35 +150,10 @@ namespace oxygine
 
 		offset = 0;
 
-		if (flipU)
-		{
-			//printf("s2\n");
-			Matrix::translation(tr, Vector3(-(float)w / 2.0f - offset, -(float)h / 2.0f + offset, 0.0f));
-			Matrix::scaling(scale, Vector3(1.0f, 1.0f, 1.0f));
+		Matrix::translation(tr, Vector3(-(float)w / 2.0f - offset, (flipU ? -1.0f : 1.0f) * (float)h / 2.0f + offset, 0.0f));
+		Matrix::scaling(scale, Vector3(1.0f, flipU ? 1.0f : -1.0f, 1.0f));
 
-			view = scale * tr;
-		}
-		else
-		{
-			/*
-			Matrix::translation(tr, Vector3((float)w / 2.0f - offset, (float)h / 2.0f + offset, 0.0f));			
-			Matrix::scaling(scale, Vector3(-1.0f, 1.0f, 1.0f));
-			Matrix rot;
-			Matrix::rotationZ(rot, M_PI/2);
-			view = scale * rot * tr;
-			*/
-
-
-			Matrix::translation(tr, Vector3(-(float)w / 2.0f - offset, (float)h / 2.0f + offset, 0.0f));
-			Matrix::scaling(scale, Vector3(1.0f, -1.0f, 1.0f));
-
-
-			//Matrix::translation(tr, Vector3(-(float)w / 2.0f - offset, -(float)h / 2.0f + offset, 0.0f));
-			//Matrix::scaling(scale, Vector3(1.0f, -1.0f, 1.0f));
-
-
-			view = scale * tr;
-		}
+		view = scale * tr;
 
 		return view;
 	}

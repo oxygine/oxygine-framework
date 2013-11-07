@@ -87,18 +87,23 @@ namespace oxygine
 		}
 
 
+		static affineTransform& multiply(affineTransform &out, const affineTransform &t1, const affineTransform &t2)
+		{
+			out.a = t1.a * t2.a + t1.b * t2.c;
+			out.b = t1.a * t2.b + t1.b * t2.d;
+			out.c = t1.c * t2.a + t1.d * t2.c;
+			out.d = t1.c * t2.b + t1.d * t2.d;
+			out.x = t1.x * t2.a + t1.y * t2.c + t2.x;
+			out.y = t1.x * t2.b + t1.y * t2.d + t2.y;
+
+			return out;
+		}
+
 
 		affineTransform operator * (const affineTransform &t2) const
 		{
 			affineTransform r;
-			const affineTransform &t1 = *this;
-			r.a = t1.a * t2.a + t1.b * t2.c;
-			r.b = t1.a * t2.b + t1.b * t2.d;
-			r.c = t1.c * t2.a + t1.d * t2.c;
-			r.d = t1.c * t2.b + t1.d * t2.d;
-			r.x = t1.x * t2.a + t1.y * t2.c + t2.x;
-			r.y = t1.x * t2.b + t1.y * t2.d + t2.y;
-			
+			multiply(r, *this, t2);			
 			return r;
 		}
 

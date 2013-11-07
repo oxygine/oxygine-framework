@@ -333,7 +333,7 @@ namespace oxygine
 		//cr->setAlpha(100);
 		cr->setColor(Color(rand()%255, rand()%255, rand()%255, 0));
 		cr->setSize(actor->getSize());
-		cr->addTween(createTween(ColorRectSprite::TweenColor(Color(255,255,255,200)), 700, 1, true, 0, Tween::ease_inCubic))->setDetachActor(true);
+		cr->addTween(ColorRectSprite::TweenColor(Color(255,255,255,200)), 700, 1, true, 0, Tween::ease_inCubic)->setDetachActor(true);
 		actor->addChild(cr);
 		string dmp = actor->dump(0);
 		log::messageln("touched actor:\n%s", dmp.c_str());
