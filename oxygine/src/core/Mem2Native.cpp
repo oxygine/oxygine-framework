@@ -88,8 +88,7 @@ namespace oxygine
 
 				Rect srcRect(_prev.x, _prev.y, min(SIZE, textureRect.getWidth()), min(SIZE, textureRect.getHeight()));
 				srcRect.clip(textureRect);
-
-				_buffer.resize(srcRect.getWidth() * srcRect.getHeight() * 4);
+								
 
 				ImageData src = current.src->lock(&srcRect);
 		
@@ -97,9 +96,11 @@ namespace oxygine
 				ImageData dest;
 				if (srcRect != textureRect)
 				{
+					int pitch = srcRect.getWidth() * getBytesPerPixel(current.dest->getFormat());
+					_buffer.resize(srcRect.getHeight() * pitch);
 					dest = ImageData(
 						srcRect.getWidth(), srcRect.getHeight(),
-						srcRect.getWidth() * getBytesPerPixel(current.dest->getFormat()), 
+						pitch, 
 						current.dest->getFormat(), 
 						&_buffer[0]
 					);
@@ -112,6 +113,7 @@ namespace oxygine
 				}
 
 				current.dest->updateRegion(srcRect.pos.x, srcRect.pos.y, dest);
+				_buffer.clear();
 
 				_prev.x += SIZE;
 				if (_prev.x >= textureRect.getWidth())

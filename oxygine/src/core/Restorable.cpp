@@ -1,10 +1,12 @@
 #include "Restorable.h"
+#include "Mutex.h"
 #include <algorithm>
 
 namespace oxygine
 {
 	Restorable::restorable _restorable;
 	bool _restoring = false;
+	Mutex _mutex;
 
 	Restorable::restorable::iterator  findRestorable(Restorable *r)
 	{
@@ -57,13 +59,16 @@ namespace oxygine
 		if (_registered)
 			return;
 
+		MutexAutoLock al(_mutex);
+
 		OX_ASSERT(_restoring == false);
 		_cb = cb;
 		_userData = user;
 
 		_registered = true;
+		
 		restorable::iterator i = findRestorable(this);
-		OX_ASSERT(i == _restorable.end());
+		OX_ASSERT(i == _restorable.end());		
 		_restorable.push_back(this);
 	}
 
@@ -71,6 +76,8 @@ namespace oxygine
 	{
 		if (!_registered)
 			return;
+
+		MutexAutoLock al(_mutex);
 		OX_ASSERT(_restoring == false);
 		restorable::iterator i = findRestorable(this);
 		if (i != _restorable.end())

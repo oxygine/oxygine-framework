@@ -141,6 +141,11 @@ namespace oxygine
 			drawChildren(dc);
 		}
 
+		int _defMissing = '?';
+		void TextNode::setDefaultMissingSymbol(int v)
+		{
+			_defMissing = v;
+		}
 
 		void TextNode::_resize(Aligner &rd)
 		{
@@ -162,7 +167,7 @@ namespace oxygine
 							rd.nextLine();
 						else
 						{
-							s.gl = font->getGlyph('?');
+							s.gl = font->getGlyph(_defMissing);
 							i += rd.putSymbol(s);
 						}
 					}

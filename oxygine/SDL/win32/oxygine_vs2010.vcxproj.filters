@@ -279,6 +279,12 @@
     <ClCompile Include="..\..\src\res\CreateResourceContext.cpp">
       <Filter>src\res</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\core\UberShaderProgram.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\gl\ShaderProgramGL.cpp">
+      <Filter>src\gl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\closure\closure.h">
@@ -598,6 +604,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\core\Restorable.h">
       <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\UberShaderProgram.h">
+      <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\gl\ShaderProgramGL.h">
+      <Filter>src\gl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

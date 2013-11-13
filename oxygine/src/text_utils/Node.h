@@ -59,6 +59,8 @@ namespace oxygine
 		class TextNode: public Node
 		{
 		public:
+			static void setDefaultMissingSymbol(int);
+
 			TextNode(const char *v);
 
 			text_data _data;

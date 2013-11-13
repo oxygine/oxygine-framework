@@ -23,6 +23,7 @@ namespace oxygine
 	{
 		_vstyle._apply(rs);
 		Diffuse df;
+		df.base = Renderer::white;
 		rs.renderer->setDiffuse(df);
 		RectF srcRect = getSrcRect();		
 		RectF destRect = getDestRect();
