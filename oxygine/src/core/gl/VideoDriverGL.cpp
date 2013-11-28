@@ -6,9 +6,16 @@
 
 namespace oxygine
 {
-	VideoDriverGL::VideoDriverGL():_prevFBO(0)
+	VideoDriverGL::VideoDriverGL():_prevFBO(0), _batches(0), _triangles(0),
+		_traceStats(true)
 	{
 
+	}
+
+	void	VideoDriverGL::getStats(Stats &s) const
+	{
+		s.batches = _batches;
+		s.triangles = _triangles;
 	}
 
 	unsigned int VideoDriverGL::getPT(IVideoDriver::PRIMITIVE_TYPE pt)
@@ -30,7 +37,7 @@ namespace oxygine
 		case PT_TRIANGLE_FAN:
 			return GL_TRIANGLE_FAN;
 		}
-		OX_ASSERT(!"unknown primityve type");
+		OX_ASSERT(!"unknown primitive type");
 		return PT_POINTS;
 	}
 
@@ -57,6 +64,24 @@ namespace oxygine
 		}
 		OX_ASSERT(!"unknown blend");
 		return GL_ONE;
+	}
+
+	void VideoDriverGL::_debugAddPrimitives(IVideoDriver::PRIMITIVE_TYPE pt, int num)
+	{
+		if (!_traceStats)
+			return;
+
+		switch(pt)
+		{
+		case PT_TRIANGLE_STRIP:
+			_triangles += num - 2;
+			break;
+		case PT_TRIANGLES:
+			_triangles += num / 3;
+			break;
+		}
+
+		_batches++;
 	}
 	
 	bool VideoDriverGL::getScissorRect(Rect &r) const
@@ -127,7 +152,7 @@ namespace oxygine
 		else
 		{
 			glClear(GL_DEPTH_BUFFER_BIT);
-		}
+		}		
         CHECKGL();
 	}
 

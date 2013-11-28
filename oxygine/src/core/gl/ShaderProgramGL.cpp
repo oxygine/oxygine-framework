@@ -24,11 +24,10 @@ namespace oxygine
 		glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &length);
 		if (length)
 		{
-			char* buffer = (char*)malloc( sizeof(char) * length ) ;
-			glGetShaderInfoLog(shader, length, NULL, buffer);
-			if (buffer[0])
-				log::error("%s", buffer);
-			free(buffer);
+			vector<char> bf;
+			bf.resize(length);
+			glGetShaderInfoLog(shader, bf.size(), NULL, &bf.front());
+			log::message("shader compiled: %s", &bf.front());
 
 			GLint success;
 			glGetShaderiv(shader, GL_COMPILE_STATUS, &success);

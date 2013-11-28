@@ -16,6 +16,14 @@ namespace oxygine
 	class IVideoDriver
 	{
 	public:
+		class Stats
+		{
+		public:
+			Stats():batches(0), triangles(0){}
+			int batches;
+			int triangles;
+		};
+
 		enum PRIMITIVE_TYPE
 		{
 			PT_POINTS,
@@ -58,6 +66,7 @@ namespace oxygine
 		virtual void draw(PRIMITIVE_TYPE pt, const VertexDeclaration *decl, const void *verticesData, unsigned int numVertices) = 0;
 		virtual void draw(PRIMITIVE_TYPE pt, const VertexDeclaration *decl, const void *verticesData, unsigned int numVertices, const void *indicesData, unsigned int numIndices, bool indicesShortType) = 0;
 
+		virtual void	getStats(Stats &s) const = 0;
 		virtual void	getViewport(Rect &r) const = 0;
 		virtual bool	getScissorRect(Rect &) const = 0;
 		virtual const VertexDeclaration *getVertexDeclaration(bvertex_format) const = 0;
@@ -69,6 +78,10 @@ namespace oxygine
 		virtual void setTexture(int sampler, spNativeTexture) = 0;
 		virtual void setState(STATE, unsigned int value) = 0;
 		virtual void setBlendFunc(BLEND_TYPE src, BLEND_TYPE dest) = 0;
+
+		virtual void setDebugStats(bool enable) = 0;
+
+		virtual void swapped() = 0;
 	};		
 
 	class VideoDriverNull: public IVideoDriver
@@ -76,8 +89,10 @@ namespace oxygine
 	public:
 		spNativeTexture createTexture();
 
+
 		void begin(const Rect &viewport, const Color *clearColor);
 		bool isReady() const {return true;}
+		void getStats(Stats &s) const;
 		void getViewport(Rect &r) const;
 		bool getScissorRect(Rect &) const;
 		const VertexDeclaration*	getVertexDeclaration(bvertex_format) const;
@@ -93,6 +108,8 @@ namespace oxygine
 		void setTexture(int sampler, spNativeTexture);
 		void setState(STATE, unsigned int value){}
 		void setBlendFunc(BLEND_TYPE src, BLEND_TYPE dest){}
+		void swapped(){}
+		void setDebugStats(bool enable){}
 
 		void reset(){}
 		void restore(){}

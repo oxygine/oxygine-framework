@@ -4,12 +4,10 @@
 class ManageResTest: public Test
 {
 public:
-	bool loaded;
-
 	ManageResTest()
 	{
-		loaded = true;
-		addButton("switch", "Load/Unload resources");
+		toggle sw[] = {toggle("unload resources", 1), toggle("load resources", 0)};
+		addToggle("switch", sw, 2);
 		addButton("mt", "Multithreading loading");
 		addButton("mt_slow", "MT loading (slow demo)");
 
@@ -22,7 +20,7 @@ public:
 			if (ra->getName().find("_") != string::npos)
 				continue;
 			spSprite sprite = new Sprite;
-			sprite->setAnimFrame(ra);
+			sprite->setResAnim(ra);
 			sprite->addTween(TweenAnim(ra), 500, -1);
 			sprite->setPosition(scalar::randFloat(50.0f, getWidth() - 100.0f), scalar::randFloat(50.0f, getHeight() - 100.0f));
 			sprite->attachTo(content);	
@@ -57,29 +55,30 @@ public:
 
 	void _loaded(Event *event)
 	{
-		showPopup("Loaded!");
+		notify("Loaded!");
 		ui->getChild("loading")->addTween(Sprite::TweenAlpha(0), 400)->setDetachActor(true);
+	}
+
+	void toggleClicked(string id, const toggle *data)
+	{
+		if (id == "switch")
+		{
+			if (data->value)
+				resources.unload();
+			else
+				resources.load();
+		}
 	}
 
 	void clicked(string id)
 	{
-		if (id == "switch")
-		{
-			if (loaded)
-				resources.unload();
-			else
-				resources.load();
-
-			loaded = !loaded;
-		}
-
 		if (id == "mt" || id == "mt_slow")
 		{
 			resources.unload();
 
 			spSprite sp = new Sprite;
 			sp->setName("loading");
-			sp->setAnimFrame(resourcesUI.getResAnim("loading"));
+			sp->setResAnim(resourcesUI.getResAnim("loading"));
 			sp->attachTo(ui);
 			sp->setAnchor(Vector2(0.5f, 0.5f));
 			sp->setPosition(getSize() - sp->getSize()/4);

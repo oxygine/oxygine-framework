@@ -67,6 +67,15 @@ extern "C"
 
 namespace oxygine
 {
+	namespace file
+	{
+		void init();
+	}
+
+
+
+	IVideoDriver::Stats _videoStats;
+
     void checkGLError()
     {
         int gl_error = glGetError();
@@ -425,6 +434,8 @@ namespace oxygine
 
             checkGLError();
 			log::messageln("oxygine initialized");
+
+			file::init();
 		}
 
 #ifdef OXYGINE_SDL
@@ -492,16 +503,16 @@ namespace oxygine
 			}
 #endif
 
+			IVideoDriver::instance->getStats(_videoStats);
+			IVideoDriver::instance->swapped();
+
 			checkGLError();
+
+			//sleep(1000/50);
 		}
 
 		bool update()
 		{
-			Renderer::statsPrev = Renderer::statsCurrent;
-			Renderer::statsCurrent = Renderer::Stats();
-
-
-
 #ifdef __S3E__
 
 			s3eDeviceYield(0);

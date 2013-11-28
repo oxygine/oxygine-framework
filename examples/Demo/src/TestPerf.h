@@ -21,27 +21,22 @@ public:
 		addButton("scale0.01", "scale=0.01");
 		addButton("scale0.2", "scale=0.2");
 		addButton("scale0.5", "scale=0.5");
-		addButton("driver", "driver=null");
+
+		toggle dr[]={toggle("driver=null", 0, new VideoDriverNull), toggle("driver=default", 0, 0)};
+		addToggle("driver", dr, 2);
 
 		content->setInputEnabled(false);
 		content->setInputChildrenEnabled(false);
 	}
 
-	void clicked(string id)
+	void toggleClicked(string id, const toggle *data)
 	{
 		if (id == "driver")
-		{
-			if (content->driver)
-			{
-				delete content->driver;
-				content->driver = 0;
-			}
-			else
-				content->driver = new VideoDriverNull;
+			content->driver = (IVideoDriver*)(data->data);
+	}
 
-			updateText(id, !content->driver ? "driver=null" : "driver=default");
-		}
-
+	void clicked(string id)
+	{
 		if (id == "add")
 		{
 			int a = 500;
@@ -49,7 +44,7 @@ public:
 			for (int i = 0; i < a; ++i)
 			{
 				spSprite sprite = new Sprite;
-				sprite->setAnimFrame(resources.getResAnim("anim"));
+				sprite->setResAnim(resources.getResAnim("anim"));
 				sprite->setAnchor(Vector2(0.5f, 0.5f));
 				sprite->setScale(0.05f);
 				sprite->setPosition(scalar::randFloat(0, (float)getWidth()), scalar::randFloat(0, (float)getHeight()));

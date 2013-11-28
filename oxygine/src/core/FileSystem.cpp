@@ -5,7 +5,7 @@ namespace oxygine
 {
 	namespace file
 	{
-		FileSystem::FileSystem()
+		FileSystem::FileSystem(bool readonly):_readonly(readonly)
 		{
 			_prefix[0] = 0;
 		}
@@ -20,23 +20,6 @@ namespace oxygine
 			strcpy(_prefix, str);
 		}
 
-		bool FileSystem::isExists(const char *file)
-		{
-			for (filesystems::reverse_iterator i = _filesystems.rbegin(); i != _filesystems.rend(); ++i)
-			{
-				FileSystem *fs = *i;
-				if (fs->_isExists(file))
-					return true;
-			}
-
-			return _isExists(file);
-		}
-
-		bool FileSystem::isExistsHere(const char *file)
-		{
-			return _isExists(file);
-		}
-
 		bool starts_with(const char *string, const char *prefix)
 		{
 			while(*prefix)
@@ -48,10 +31,66 @@ namespace oxygine
 			return true;
 		}
 
-		FileSystem::status FileSystem::open(const char *file, const char *mode, error_policy ep, fileHandle *&fh)
+		bool FileSystem::isExists(const char *file)
 		{
+			for (filesystems::reverse_iterator i = _filesystems.rbegin(); i != _filesystems.rend(); ++i)
+			{
+				FileSystem *fs = *i;
+				if (fs->_isExists(file))
+					return true;
+			}
+
 			if (!starts_with(file, _prefix))
 				return status_error;
+
+			return _isExists(file);
+		}
+
+		FileSystem::status FileSystem::deleteFile(const char* file)
+		{
+			for (filesystems::reverse_iterator i = _filesystems.rbegin(); i != _filesystems.rend(); ++i)
+			{
+				FileSystem *fs = *i;
+				if (fs->deleteFile(file) == status_ok)
+					return status_ok;
+			}
+			
+			if (_readonly)
+				return status_error;
+
+			if (!starts_with(file, _prefix))
+				return status_error;
+
+			return _deleteFile(file);
+		}
+
+		FileSystem::status FileSystem::renameFile(const char* src, const char *dest)
+		{
+			for (filesystems::reverse_iterator i = _filesystems.rbegin(); i != _filesystems.rend(); ++i)
+			{
+				FileSystem *fs = *i;
+				if (fs->renameFile(src, dest) == status_ok)
+					return status_ok;
+			}
+
+			if (_readonly)
+				return status_error;
+
+			if (!starts_with(src, _prefix))
+				return status_error;
+
+			return _renameFile(src, dest);
+		}
+
+		bool FileSystem::isExistsHere(const char *file)
+		{
+			return _isExists(file);
+		}
+
+	
+
+		FileSystem::status FileSystem::open(const char *file, const char *mode, error_policy ep, fileHandle *&fh)
+		{
 			//file += strlen(_prefix);
 			for (filesystems::reverse_iterator i = _filesystems.rbegin(); i != _filesystems.rend(); ++i)
 			{
@@ -60,6 +99,16 @@ namespace oxygine
 				if (st == status_ok)
 					return st;
 			}
+
+			if (_readonly)
+			{
+				bool write = mode[0] == 'W' || mode[0] == 'w';
+				if (write)
+					return status_error;
+			}
+
+			if (!starts_with(file, _prefix))
+				return status_error;			
 
 			return _open(file, mode, ep, fh);
 		}

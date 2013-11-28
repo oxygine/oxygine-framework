@@ -1,10 +1,6 @@
 cmake_minimum_required (VERSION 2.6)
 project (OXYGINE)
 
-
-message(STATUS ${SDL2_INCLUDE_DIRS})
-#set(SDL2_INCLUDE_DIRS SDL2)
-
 if (MSVC)
 	set(OXYGINE_DEFINITIONS	
 		-D_CRT_SECURE_NO_WARNINGS)
@@ -13,7 +9,15 @@ else(MSVC)
 	#set(OXYGINE_DEFINITIONS	
 	#	-D_REENTRANT) #linux pthreads
 	find_path(SDL2_INCLUDE_DIRS NAMES SDL2/SDL.h)
-	set(SDL2_INCLUDE_DIRS ${SDL2_INCLUDE_DIRS}/SDL2)
+	message(STATUS ${SDL2_INCLUDE_DIRS_FOUND})
+
+	if (SDL2_INCLUDE_DIRS)		
+		set(SDL2_INCLUDE_DIRS ${SDL2_INCLUDE_DIRS}/SDL2)
+		message(STATUS "found")		
+	else()
+		message(STATUS "SDL notfound")
+		set(SDL2_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../SDL/include)					
+	endif()
 endif(MSVC)
 
 set(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/oxygine/greenlets/src/greenlet.c)
@@ -22,6 +26,8 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/oxygine/greenlets/src/)
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	set(THIRD_PARTY ${CMAKE_CURRENT_SOURCE_DIR}/oxygine/third_party/linux)
+elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+	set(THIRD_PARTY ${CMAKE_CURRENT_SOURCE_DIR}/oxygine/third_party/ios)
 else()
 	set(THIRD_PARTY ${CMAKE_CURRENT_SOURCE_DIR}/oxygine/third_party/win32)
 endif()

@@ -39,7 +39,7 @@ namespace oxygine
 			addChild(image);
 
 			spColorRectSprite rect = initActor(new ColorRectSprite,
-				arg_color = Color(255,255,255,128),
+				arg_color = Color(Color::White, 128),
 				arg_attachTo = this);
 
 			char path[255];
@@ -52,7 +52,7 @@ namespace oxygine
 				t->getWidth(), t->getHeight(), t->getObjectID());
 
 			spTextActor text = initActor(new TextActor,
-				arg_tcolor = Color(0,0,0,255),
+				arg_color = Color::Black,
 				arg_w = (float)itemSize.x,
 				arg_vAlign = TextStyle::VALIGN_TOP,
 				arg_hAlign = TextStyle::HALIGN_LEFT,
@@ -83,7 +83,7 @@ namespace oxygine
 
 		
 		spTextActor text = initActor(new TextActor,
-			arg_tcolor = Color(255, 255, 255, 255),
+			arg_color = Color::White,
 			arg_w = itemSize.x * 3.0f,
 			arg_h = 30.0f,
 			arg_vAlign = TextStyle::VALIGN_TOP,

@@ -22,12 +22,10 @@ namespace oxygine
 
 		GetSet(valueRef dest):_dest(dest), _initialized(false){}
 
-		void init(type &t, bool relative)
+		void init(type &t)
 		{
 			_initialized = true;
 			_src = get(t);
-			if (relative)
-				_dest = _src + _dest;
 		}
 
 		void update(type &t, float p, const UpdateState &us)
@@ -208,7 +206,7 @@ namespace oxygine
 		void _start(Actor &actor)
 		{
 			type &t = *safeCast<type*>(&actor);
-			_gs.init(t, false);
+			_gs.init(t);
 			UpdateState us;
 			us.iteration = -1;
 			_gs.update(t, _calcEase(0.0f), us);

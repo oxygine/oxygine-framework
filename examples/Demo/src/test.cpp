@@ -1,6 +1,19 @@
 #include "test.h"
 #include "oxygine-framework.h"
 
+class Toggle: public Button
+{
+public:
+	Toggle(const Test::toggle *t, int num):_current(0)
+	{
+		_items.assign(t, t + num);
+	}
+
+	int _current;
+
+	vector<Test::toggle> _items;
+};
+
 spTextActor createText(string txt)
 {
 	spTextActor text = new TextActor();
@@ -18,9 +31,8 @@ spTextActor createText(string txt)
 	return text;
 }
 
-spButton createButtonHelper(string txt, EventCallback cb)
+spButton createButtonHelper(spButton button, string txt, EventCallback cb)
 {
-	spButton button = new Button();
 	button->setPriority(10);
 	//button->setName(id);
 	button->setResAnim(resourcesUI.getResAnim("button"));
@@ -51,10 +63,12 @@ Test::Test()
 
 	if (_tests)
 	{
-		spButton button = createButtonHelper("back", CLOSURE(this, &Test::back));
+		spButton button = createButtonHelper(new Button, "back", CLOSURE(this, &Test::back));
 		button->setY(getHeight() - button->getHeight());
 		ui->addChild(button);
 	}	
+
+	memset(_notifies, 0, sizeof(_notifies));
 }
 
 
@@ -63,21 +77,38 @@ Test::~Test()
 }
 
 
-void Test::addButton(string id, string txt)
+spButton Test::addButton(string id, string txt)
 {
-	EventCallback cb = CLOSURE(this, &Test::_clicked);
+	spButton button = createButtonHelper(new Button, txt, CLOSURE(this, &Test::_clicked));
+	initActor(button.get(), 
+		arg_name = id, 
+		arg_attachTo = ui,
+		arg_anchor = Vector2(0.5f, 0.0f),
+		arg_pos = Vector2(_x, _y));
 
-	spButton button = createButtonHelper(txt, cb);
-	button->setName(id);
-	//add it as child to current actor
-	ui->addChild(button);
-	button->setAnchor(Vector2(0.5f, 0.0f));
-
-	//center button at screen		
-	button->setPosition(_x, _y);
 	_y += button->getHeight() + 2.0f;
 
-	if (_y  + button->getHeight() >= getHeight())
+	if (_y + button->getHeight() >= getHeight())
+	{
+		_y = 0;
+		_x += button->getWidth() + 70;
+	}
+
+	return button;
+}
+
+void Test::addToggle(string id, const toggle *t, int num)
+{
+	spButton button = createButtonHelper(new Toggle(t, num), t[0].text, CLOSURE(this, &Test::_toggleClicked));
+	initActor(button.get(), 
+		arg_name = id, 
+		arg_attachTo = ui,
+		arg_anchor = Vector2(0.5f, 0.0f),
+		arg_pos = Vector2(_x, _y));
+
+	_y += button->getHeight() + 2.0f;
+
+	if (_y + button->getHeight() >= getHeight())
 	{
 		_y = 0;
 		_x += button->getWidth() + 70;
@@ -96,14 +127,22 @@ void Test::updateText(string id, string txt)
 	t->setText(txt);
 }
 
-void Test::clicked(string id)
-{
-
-}
 
 void Test::_clicked(Event *event)
 {
 	clicked(event->currentTarget->getName());
+}
+
+void Test::_toggleClicked(Event *event)
+{
+	Toggle *t = safeCast<Toggle*>(event->currentTarget.get());
+
+	toggleClicked(event->currentTarget->getName(), &t->_items[t->_current]);
+
+	t->_current = (t->_current + 1) % t->_items.size();
+	spTextActor ta = safeSpCast<TextActor>(t->getFirstChild());
+	const toggle *data = &t->_items[t->_current];
+	ta->setText(data->text);
 }
 
 
@@ -114,24 +153,48 @@ void Test::back(Event *event)
 }
 
 
-void Test::showPopup(string txt, int time)
+void Test::notify(string txt, int time)
 {
-	spSprite sprite = new Sprite();
+	int N = 0;
+	for (size_t i = 0; i < MAX_NOTIFIES; ++i)
+	{
+		if (_notifies[i])
+			continue;
+		N = i;
+		break;
+	}
+
+	_notifies[N] += 1;
+
+
+	spColorRectSprite sprite = new ColorRectSprite();
+	sprite->setUserData((void*)N);
 	sprite->setPriority(10);
-	sprite->setAnimFrame(resourcesUI.getResAnim("button"));
+	Color colors[] = {Color(0xD2691EFF), Color(0x7FFFD4FF), Color(0xDC143CFF), Color(0xADFF2FFF), };
+	Color c = colors[rand() % 4];
+	sprite->setColor(c);
+	sprite->setSize(100, 30);
+	//sprite->setAnimFrame(resourcesUI.getResAnim("button"));
 	sprite->setAlpha(0);
 
 	spTweenQueue tq = new TweenQueue;
-	tq->add(Actor::TweenAlpha(255), 300, 1, false, 0, Tween::ease_outExpo);
-	tq->add(Actor::TweenAlpha(200), 300, time / 300, true);
-	tq->add(Actor::TweenAlpha(0), 300);
+	tq->add(Actor::TweenAlpha(255), 300, 1, false, 0, Tween::ease_inExpo);
+	tq->add(Actor::TweenAlpha(0), 300, 1, false, 1200);
 	tq->setDetachActor(true);
+	tq->setDoneCallback(CLOSURE(this, &Test::notifyDone));
 
 	sprite->addTween(tq);
 	sprite->attachTo(ui);
-	sprite->setPosition(0.0f, getHeight() - 150.0f);
+	sprite->setPosition(2.0f, getHeight() - 100.0f - N * sprite->getHeight() * 1.1f);
 
 	spTextActor text = createText(txt);
 	text->attachTo(sprite);
+	text->setColor(Color::Black);
 	text->setPosition(sprite->getSize()/2);
+}
+
+void Test::notifyDone(Event *ev)
+{
+	int N = (int)ev->currentTarget->getUserData();
+	_notifies[N] -= 1;
 }

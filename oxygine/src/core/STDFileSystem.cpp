@@ -155,48 +155,66 @@ namespace oxygine
 			oxHandle* _handle;
 		};
 
-		STDFileSystem::STDFileSystem()
+		STDFileSystem::STDFileSystem(bool readonly):FileSystem(readonly)
 		{
 #ifdef WIN32
-			mkdir("../data-ram");
+			if (!_readonly)
+				mkdir(getFullPath("").c_str());
 #endif
 		}
 
-		void STDFileSystem::setExtendedFolder(const char *folder)
+		char* STDFileSystem::_getFullPath(const char *path, char buff[512])
 		{
-			_extended = folder;
-			_extended += "/";
+			buff[0] = 0;
+
+			if (_readonly)
+			{
+#if __S3E__
+				sprintf(buff, "rom://%s", path);
+#else
+				sprintf(buff, "%s%s", _path.c_str(), path);
+#endif
+			}
+			else
+			{
+#if __S3E__
+				sprintf(buff, "ram://%s", path);
+#else
+	#ifdef  WIN32
+				sprintf(buff, "../data-ram/%s%s", _path.c_str(), path);
+	#else
+				strcpy(buff, path);
+				log::warning("not implemented fs");
+	#endif
+#endif
+			}
+
+
+			return buff;
+		}
+
+		string STDFileSystem::getFullPath(const char *path)
+		{
+			char buff[512];
+			return _getFullPath(path, buff);
+		}
+
+		void STDFileSystem::setPath(const char *folder)
+		{
+			_path = folder;
+			_path += "/";
 			char norm[512];
-			path::normalize(_extended.c_str(), norm);
-			_extended = norm;
+			path::normalize(_path.c_str(), norm);
+			_path = norm;
 		}
 
 
 		FileSystem::status STDFileSystem::_open(const char *file, const char *mode, error_policy ep, fileHandle*& fh)
 		{
-			bool write = mode[0] == 'w' || mode[0] == 'W';
-			oxHandle* h = 0;
-			if (!_extended.empty() && !write)
-			{
-				string path = _extended + file;
-				if (oxExists(path.c_str()))
-					h = oxFileOpen(path.c_str(), mode);
-			}
+			char buff[512];
 
-			if (!h)
-			{
-#ifdef WIN32
-				char name[255];
-				safe_sprintf(name, "../data-ram/%s", file);
-				h = oxFileOpen(name, mode);
-#endif
-			}
-
-			if (!h)
-			{
-				h = oxFileOpen(file, mode);
-			}
-
+			oxHandle* h = oxFileOpen(_getFullPath(file, buff), mode);
+			
 			if (!h)
 				return status_error;
 			
@@ -204,20 +222,51 @@ namespace oxygine
 			return status_ok;
 		}
 
-		bool STDFileSystem::_isExists(const char *file)
+		FileSystem::status STDFileSystem::_deleteFile(const char* file)
 		{
+			char buff[512];
+			_getFullPath(file, buff);
+
 #if __S3E__
-			string path = _extended + file;
-			s3eBool res = s3eFileCheckExists(path.c_str());			
-			if (res == S3E_FALSE)
-				res = s3eFileCheckExists(file);
-			return res == S3E_TRUE;
+			s3eFileDelete(buff);
 #else
-			handle f = file::open(file, "r", ep_ignore_error);
-			autoClose h(f);
-			return f != 0;
+			::remove(buff);
 #endif
 
+			return status_error;
+		}
+
+		FileSystem::status STDFileSystem::_renameFile(const char* src, const char *dest)		
+		{
+			char buffSrc[512];
+			_getFullPath(src, buffSrc);
+
+			char buffDest[512];
+			_getFullPath(dest, buffDest);
+
+#if __S3E__
+			s3eFileRename(buffSrc, buffDest);
+#else
+			::rename(buffSrc, buffDest);
+#endif
+
+			return status_error;
+		}
+
+		bool STDFileSystem::_isExists(const char *file)
+		{
+			char buff[512];
+			_getFullPath(file, buff);
+#if __S3E__
+			s3eBool res = s3eFileCheckExists(buff);
+			return res == S3E_TRUE;
+#else
+			//todo optimize
+			oxHandle *h = oxFileOpen(buff, "r");
+			if (h)
+				oxFileClose(h);
+			return h != 0;
+#endif
 		}
 	}
 }

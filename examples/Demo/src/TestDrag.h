@@ -22,7 +22,7 @@ public:
 			spSprite sprite = new DraggableSprite;			
 			Vector2 pos(100.0f * (i + 1), 150.0f);
 			sprite->setPosition(pos);
-			sprite->setAnimFrame(resources.getResAnim("batterfly"));
+			sprite->setResAnim(resources.getResAnim("batterfly"));
 			sprite->attachTo(content);
 
 			sprite->setRotation(scalar::randFloat(0, (float)MATH_PI * 2));
@@ -57,7 +57,7 @@ public:
 	{
 		spSprite actor = safeSpCast<Sprite>(event->currentTarget);
 		actor->removeTweens();		
-		actor->setColor(Color(255,255,255,255));
+		actor->setColor(Color::White);
 	}
 };
 
@@ -107,7 +107,7 @@ public:
 		if (event->currentTarget.get() != content)
 			return;
 
-		dragging->setColor(Color(0xffffffff));
+		dragging->setColor(Color::White);
 		spTween t;
 		if (event->target == basket)
 			t = dragging->addTween(Actor::TweenPosition(basket->getPosition()), 500);

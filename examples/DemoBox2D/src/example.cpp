@@ -118,7 +118,7 @@ public:
 
 		//show click pos
 		spSprite sprite = new Sprite();		
-		sprite->setAnimFrame(gameResources.getResAnim("circle"));
+		sprite->setResAnim(gameResources.getResAnim("circle"));
 		sprite->setColor(Color(0xff00ffff));
 		sprite->setScale(0.2f);
 		sprite->setPosition(te->localPosition);

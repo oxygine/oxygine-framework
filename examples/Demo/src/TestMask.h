@@ -46,52 +46,56 @@ public:
 			arg_style = style);		
 
 
+		const Test::toggle sm[] = {Test::toggle("hide mask", 0), Test::toggle("show mask", 1), };
+		addToggle("show_mask", sm, 2);
 
-		addButton("show_mask", "hide mask");
-		addButton("change_mask1", "change mask");
-		addButton("disable_mask", "disable mask");
-		addButton("pause", "pause");
+		const Test::toggle cm[] = {Test::toggle("change mask1", 0), Test::toggle("change mask2", 1), };
+		addToggle("change_mask", cm, 2);
+
+		const Test::toggle dm[] = {Test::toggle("disable mask", 0), Test::toggle("enable mask", 1), };
+		addToggle("disable_mask", dm, 2);
+
+		const Test::toggle pause[] = {Test::toggle("pause", 0), Test::toggle("resume", 1), };
+		addToggle("pause", pause, 2);
 	}
 
-	void clicked(string id)
+	void toggleClicked(string id, const toggle *t)
 	{
+		if (id == "show_mask")
+			_mask->setVisible(t->value != 0);
+
+		if (id == "disable_mask") 
+		{
+			if (t->value == 0)
+				_masked->setMask(0);
+			else
+				_masked->setMask(_mask);
+		}
+
 		if (id == "pause")
 		{
 			spClock clock = getRoot()->getClock();
-			if (!clock->getPauseCounter())
+			if (t->value == 0)
 				clock->pause();
 			else
 				clock->resume();
 		}
-		if (id == "show_mask")
-		{
-			_mask->setVisible(!_mask->getVisible());
-			if (_mask->getVisible())
-				updateText("show_mask", "hide mask");
-			else
-				updateText("show_mask", "show mask");
-		}
 
-		if (id == "change_mask1") 
+		if (id == "change_mask") 
 		{			
-			_mask->addTween(TweenAnim(resources.getResAnim("anim")), 600, -1, false);
-		}
-
-
-		if (id == "disable_mask") 
-		{
-			if (_masked->getMask())
+			_mask->removeTweensByName("tweenanim");
+			switch(t->value)
 			{
-				updateText("disable_mask", "enable mask");
-				_masked->setMask(0);
-			}
-			else
-			{
-				updateText("disable_mask", "disable mask");
-				_masked->setMask(_mask);
-			}
+			case 1:
+				_mask->setResAnim(resources.getResAnim("logo2"));
+				break;
+			case 0:
+				_mask->addTween(TweenAnim(resources.getResAnim("anim")), 600, -1, false)->setName("tweenanim");
+				break;
+			}			
 		}
 	}
+
 
 	void doUpdate(const UpdateState &us)
 	{

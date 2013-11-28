@@ -17,9 +17,9 @@ namespace oxygine
 {
 	TextActor::TextActor():
 		_root(0),
-		_textRect(0,0,0,0),
-		_rebuild(true), _html(false)
+		_textRect(0,0,0,0)
 	{
+		_flags |= flag_rebuild;
 		if (DebugActor::resSystem)
 		{
 			_style.font = DebugActor::resSystem->getResFont("system")->getFont();
@@ -32,16 +32,13 @@ namespace oxygine
 		_root = 0;
 	}
 
-	TextActor::TextActor(const TextActor &src, cloneOptions opt):Actor(src, opt)
+	TextActor::TextActor(const TextActor &src, cloneOptions opt):VStyleActor(src, opt)
 	{
 		_text = src._text;
 		_style = src._style;
-		_vstyle = src._vstyle;
-		_html = src._html;
-
 		_root = 0;
 
-		_rebuild = true;//src._rebuild;
+		_flags |= flag_rebuild;
 		_textRect = src._textRect;
 	}
 
@@ -54,7 +51,7 @@ namespace oxygine
 
 	void TextActor::needRebuild()
 	{
-		_rebuild = true;
+		_flags |= flag_rebuild;
 	}
 
 	void TextActor::setVAlign(TextStyle::VerticalAlign align)
@@ -114,7 +111,7 @@ namespace oxygine
 
 	void TextActor::setText(const string &str)
 	{
-		_html = false;
+		_flags &= ~flag_html;
 		if (_text != str)
 		{
 			_text = str;
@@ -129,7 +126,7 @@ namespace oxygine
 
 	void TextActor::setHtmlText(const string &str)
 	{
-		_html = true;
+		_flags |= flag_html;
 		if (_text != str)
 		{
 			_text = str;
@@ -150,14 +147,13 @@ namespace oxygine
 
 	text::Node *TextActor::getRootNode()
 	{
-		if (_rebuild && _style.font)
-		//if (_style.font)
+		if ((_flags & flag_rebuild) && _style.font)
 		{
 			delete _root;
 
-			_rebuild = false;
+			_flags &= ~flag_rebuild;
 
-			if (_html)
+			if (_flags & flag_html)
 			{
 				text::TextBuilder b;
 				_root = b.parse(_text);
@@ -258,7 +254,7 @@ namespace oxygine
 		string st = dumpStyle(_style, true);
 		if (st.size())
 			stream << " textStyle={" << st << "}"; 
-		if (_html)
+		if (_flags & flag_html)
 		{
 			stream << " htmlMode";
 		}

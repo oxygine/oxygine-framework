@@ -15,7 +15,7 @@ public:
 		childClp->attachTo(clp);
 
 		spSprite spr = new Sprite;
-		spr->setAnimFrame(resources.getResAnim("batterfly"));
+		spr->setResAnim(resources.getResAnim("batterfly"));
 		spr->setX(200.0f);
 		spr->attachTo(clp);
 	}
@@ -28,7 +28,7 @@ public:
 
 		spSprite spr = new Sprite;
 		spr->setPosition(w/2.0f, h/2.0f);
-		spr->setAnimFrame(resources.getResAnim("batterfly"));
+		spr->setResAnim(resources.getResAnim("batterfly"));
 		spr->attachTo(clp);
 		spr->setAnchor(0.5f, 0.5f);
 		spr->setScale(sc);
@@ -44,13 +44,13 @@ public:
 		int new_priority = actor->getParent()->getLastChild()->getPriority() + 1;
 		actor->setPriority(new_priority);
 
-		actor->addTween(Sprite::TweenColor(Color(255,0,0,255)), 300, -1, true);
+		actor->addTween(Sprite::TweenColor(Color(Color::Red, 255)), 300, -1, true);
 	}
 
 	void onMouseUp(Event *event)
 	{
 		spSprite actor = safeSpCast<Sprite>(event->currentTarget);
 		actor->removeTweens();		
-		actor->setColor(Color(255,255,255,255));
+		actor->setColor(Color::White);
 	}
 };

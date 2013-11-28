@@ -16,7 +16,7 @@ public:
 		//addButton("radial_ccw", "dir: radial_ccw");
 
 		bar = new ProgressBar(); 
-		bar->setAnimFrame(resources.getResAnim("logo2"));
+		bar->setResAnim(resources.getResAnim("logo2"));
 		//bar->setAnchor(Vector2(0.5f, 0.5f));
 		bar->setPosition(getSize()/2);
 		//bar->setScale(2);
@@ -42,10 +42,12 @@ public:
 		{			
 			bar->setDirection(ProgressBar::dir_270);
 		}
+		/*
 		if (id == "radial_ccw")
 		{			
 			bar->setDirection(ProgressBar::dir_radial_ccw);
 		}
+		*/
 		if (id == "radial_cw")
 		{			
 			bar->setDirection(ProgressBar::dir_radial_cw);

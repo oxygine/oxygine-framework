@@ -98,7 +98,8 @@ namespace oxygine
 			el++;
 		}
 
-		glDrawArrays(getPT(pt), 0, size / decl->size);
+		size_t primitives = size / decl->size;
+		glDrawArrays(getPT(pt), 0, primitives);
 
 		el = decl->elements;
 		for (int i = 0; i < decl->numElements; ++i)		
@@ -106,6 +107,11 @@ namespace oxygine
 			glDisableVertexAttribArray(el->index);
 			el++;
 		}
+
+
+#if OXYGINE_TRACE_VIDEO_STATS
+		_debugAddPrimitives(pt, primitives);
+#endif
         
         CHECKGL();
 	}
@@ -132,6 +138,11 @@ namespace oxygine
 			glDisableVertexAttribArray(el->index);
 			el++;
 		}
+
+
+#if OXYGINE_TRACE_VIDEO_STATS
+		_debugAddPrimitives(pt, numIndices);
+#endif
         CHECKGL();
 	}
 

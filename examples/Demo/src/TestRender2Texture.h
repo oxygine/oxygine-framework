@@ -10,7 +10,7 @@ public:
 
 	TestRender2Texture()
 	{
-		showPopup("touch to draw", 100000);
+		notify("touch to draw", 100000);
 
 		color = Color(255,255,255,32);
 
@@ -55,7 +55,7 @@ public:
 		Point size = content->getSize().cast<Point>();
 
 		r.initCoordinateSystem(size.x, size.y, true);
-
+		
 		Rect vp(Point(0, 0), size);
 
 		r.begin(texture, vp, 0);
@@ -64,6 +64,7 @@ public:
 		const Diffuse &df = frame.getDiffuse();
 		r.setDiffuse(df);
 		r.setPrimaryColor(color);
+		r.setBlendMode(blend_premultiplied_alpha);
 		float pressure =  te->pressure;
 		//log::messageln("pressure %.2f", pressure);
 		//pressure = pressure * pressure;

@@ -54,7 +54,7 @@ void Box2DDraw::doRender(const RenderState &rs)
 	glBlendFunc  (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	_world->DrawDebugData();
 	_world->SetDebugDraw(0);
-	rs.renderer->getDriver()->setDefaultSettings();	
+	rs.renderer->resetSettings();
 }
 
 void Box2DDraw::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)

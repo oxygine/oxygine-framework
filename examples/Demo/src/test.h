@@ -7,7 +7,7 @@ using namespace oxygine;
 
 
 
-spButton createButtonHelper(string txt, EventCallback cb);
+spButton createButtonHelper(spButton, string txt, EventCallback cb);
 
 class Content: public Actor
 {
@@ -33,21 +33,37 @@ class Test: public Actor
 public:
 	Test();
 	~Test();
+
+	struct toggle
+	{
+		string text;
+		int value;
+		const void *data;
+		toggle(){}
+		toggle(const char *text_, int v_ = 0, const void *data_ = 0):text(text_), value(v_), data(data_){}
+
+	};
 	
-	void addButton(string id, string txt);
+	spButton addButton(string id, string txt);
+	void addToggle(string id, const toggle *t, int num);
 	void updateText(string id, string txt);
-	virtual void clicked(string id);
+	virtual void clicked(string id){}
+	virtual void toggleClicked(string id, const toggle *data){}
 	void _clicked(Event *event);
+	void _toggleClicked(Event *event);
 	void back(Event *event);
 
-	void showPopup(string text, int time = 400);
+	void notify(string text, int time = 400);
 
 protected:
+	void notifyDone(Event *ev);
 	
 	float _x;
 	float _y;
 	spActor ui;
 	Content *content;
+	enum {MAX_NOTIFIES = 6};
+	int _notifies[MAX_NOTIFIES];
 };
 
 extern spActor _tests;

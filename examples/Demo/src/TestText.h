@@ -66,7 +66,7 @@ public:
 
 		spriteTextRect = new ColorRectSprite();
 		spriteTextRect->attachTo(bg);
-		spriteTextRect->setColor(Color(255, 0, 0, 80));
+		spriteTextRect->setColor(Color(Color::Red, 80));
 
 		text = new TextActor;
 		text->attachTo(bg);
@@ -79,7 +79,7 @@ public:
 
 		for (int h = TextStyle::HALIGN_LEFT; h <= TextStyle::HALIGN_RIGHT; ++h)
 		{
-			tests.push_back(text_test( "<div c='00ff00'>Scaled Font test<br/></div> The quick brown fox jumps over the lazy dog. 1234567890. The quick brown fox jumps over the lazy dog. 1234567890. The quick brown fox jumps over the lazy dog. 1234567890. The quick brown fox jumps over the lazy dog. 1234567890. ", TextStyle::HALIGN_CENTER, TextStyle::VALIGN_MIDDLE, size, true, 10 * h  + 20));
+			tests.push_back(text_test( "<div c='00ff00'>Scaled Font test<br/></div> The quick brown fox jumps over the lazy dog. 1234567890. The quick brown fox jumps over the lazy dog. 1234567890. The quick brown fox jumps over the lazy dog. 1234567890. The quick brown fox jumps over the lazy dog. 1234567890. ", TextStyle::HALIGN_CENTER, TextStyle::VALIGN_MIDDLE, size, true, 5 * h  + 20));
 		}
 
 

@@ -9,7 +9,7 @@ add_executable(Demo
 	src/test.h
 	src/TestBox9Sprite.h
 	src/TestClipRect.h
-	src/TestComplexDrag.h
+	src/TestSliding.h
 	src/TestDrag.h
 	src/TestManageRes.h
 	src/TestMask.h

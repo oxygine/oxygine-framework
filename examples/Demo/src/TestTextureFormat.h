@@ -33,12 +33,12 @@ public:
 		spSprite sp = new Sprite;
 		sp->attachTo(content);
 
-		sp->setAnimFrame(res);
+		sp->setResAnim(res);
 		sp->setScale(getWidth()/(float)sp->getWidth());
 
 		sp = new Sprite;
 		sp->attachTo(content);
-		sp->setAnimFrame(resources.getResAnim("logo2" + prefix));
+		sp->setResAnim(resources.getResAnim("logo2" + prefix));
 		sp->setPosition(getSize()/2);
 	}
 

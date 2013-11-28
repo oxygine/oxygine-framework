@@ -54,7 +54,7 @@ MainMenu::MainMenu()
 
 
 	spSprite bg = new Sprite();
-	bg->setAnimFrame(gameResources.getResAnim("bg"));
+	bg->setResAnim(gameResources.getResAnim("bg"));
 	_actor->addChild(bg);
 	
 

@@ -101,13 +101,13 @@ namespace oxygine
 		st.font = resSystem->getResFont("system")->getFont();
 		st.vAlign = TextStyle::VALIGN_TOP;
 		//st.color = Color(rand()%255, rand()%255, rand()%255, 255);
-		st.color = Color(0,0,0,255);
+		st.color = Color(Color::Black, 255);
 		st.multiline = true;
 		setWidth(230);
 		setHeight(45);
 
 		_bg = new ColorRectSprite;
-		_bg->setColor(Color(255, 255, 255, 64));
+		_bg->setColor(Color(Color::White, 64));
 		_bg->setSize(getSize());
 		_bg->setInputEnabled(false);
 		addChild(_bg);
@@ -211,11 +211,10 @@ namespace oxygine
 			getRoot()->removeEventListeners(this);
 	}
 
+	extern IVideoDriver::Stats _videoStats;
+
 	void DebugActor::doUpdate(const UpdateState &us)
 	{
-		int batches = Renderer::statsPrev.batches;
-		int triangles = Renderer::statsPrev.triangles;
-
 		static int fps = 0;
 		++_frames;
 		if (_frames > 50)
@@ -244,7 +243,7 @@ namespace oxygine
 #ifdef OXYGINE_DEBUG_OBJECTS
 		s << "objects=" << (int)__objects.size() << endl;
 #endif
-		s << "batches="<< batches << " triangles=" << triangles << endl;
+		s << "batches="<< _videoStats.batches << " triangles=" << _videoStats.triangles << endl;
 		s << "update=" << getRoot()->_statUpdate << "ms ";
 		s << "render=" << getRoot()->_statRender << "ms ";
 		s << "textures=" << NativeTexture::created << " ";
@@ -287,10 +286,10 @@ namespace oxygine
 	void DebugActor::render( RenderState const& parentRenderState )
 	{
 		parentRenderState.renderer->drawBatch();
-		Renderer::Stats copy = Renderer::statsCurrent;
+		parentRenderState.renderer->getDriver()->setDebugStats(false);
 		Actor::render(parentRenderState);
 		parentRenderState.renderer->drawBatch();
-		Renderer::statsCurrent = copy;
+		parentRenderState.renderer->getDriver()->setDebugStats(true);
 	}
 
 	void DebugActor::showTexel2PixelErrors(bool show)
@@ -333,7 +332,7 @@ namespace oxygine
 		//cr->setAlpha(100);
 		cr->setColor(Color(rand()%255, rand()%255, rand()%255, 0));
 		cr->setSize(actor->getSize());
-		cr->addTween(ColorRectSprite::TweenColor(Color(255,255,255,200)), 700, 1, true, 0, Tween::ease_inCubic)->setDetachActor(true);
+		cr->addTween(ColorRectSprite::TweenColor(Color(Color::White, 200)), 700, 1, true, 0, Tween::ease_inCubic)->setDetachActor(true);
 		actor->addChild(cr);
 		string dmp = actor->dump(0);
 		log::messageln("touched actor:\n%s", dmp.c_str());

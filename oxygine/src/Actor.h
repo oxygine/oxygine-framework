@@ -208,6 +208,7 @@ namespace oxygine
 		{return addTween(createTween(gs, duration, loops, twoSides, delay, ease));}
 
 		void removeTween(spTween);
+		void removeTweensByName(const string &name);
 		/**remove all tweens and call completes them if callComplete == true*/
 		void removeTweens(bool callComplete = false);
 		
@@ -273,24 +274,27 @@ namespace oxygine
 		Vector2 _size;
 		float	_rotation;
 
-		enum flags
-		{
-			flag_anchorInPixels = 0x01,
-			flag_visible = 0x02,
-			flag_inputEnabled = 0x04,
-			flag_childrenRelative = 0x08,
-			flag_transformDirty = 0x10,
-			flag_transformInvertDirty = 0x20,
-			flag_inputChildrenEnabled = 0x40,
-			flag_cull = 0x80,
-			flag_fastTransform = 0x100,
-		};
 
+	protected:	
 		mutable unsigned short _flags;
 		mutable Renderer::transform	_transform;
 		mutable Renderer::transform	_transformInvert;
 
-	protected:		
+		enum flags
+		{
+			flag_anchorInPixels			= 1,
+			flag_visible				= 1 << 1,
+			flag_inputEnabled			= 1 << 2,
+			flag_childrenRelative		= 1 << 3,
+			flag_transformDirty			= 1 << 4,
+			flag_transformInvertDirty	= 1 << 5,
+			flag_inputChildrenEnabled	= 1 << 6,
+			flag_cull					= 1 << 7,
+			flag_fastTransform			= 1 << 8,
+			flag_last					= flag_fastTransform
+		};
+
+
 		unsigned char	_alpha;
 		char	_extendedIsOn;
 
@@ -334,7 +338,7 @@ namespace oxygine
 	public:
 		typedef Actor type;
 
-		void init(Actor &, bool rel){}
+		void init(Actor &){}
 		void update(Actor &, float p, const UpdateState &us){}
 	};
 }

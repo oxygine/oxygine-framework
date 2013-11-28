@@ -96,7 +96,7 @@ namespace oxygine
 	{
 		if (_progress == 0)
 			return;
-		if (((_direction != dir_radial_ccw) && (_direction != dir_radial_cw)) || (_progress == 1.0f))
+		if (((_direction != __dir_radial_ccw) && (_direction != dir_radial_cw)) || (_progress == 1.0f))
 		{
 			Sprite::doRender(rs);
 			return;
@@ -321,7 +321,7 @@ namespace oxygine
 		case dir_radial_cw:
 			dir = "dir_radial_cw";
 			break;
-		case dir_radial_ccw:
+		case __dir_radial_ccw:
 			dir = "dir_radial_ccw";
 			break;
 		}
@@ -340,7 +340,7 @@ namespace oxygine
 	void ProgressBar::setProgress(float f)
 	{
 		_progress = scalar::clamp(f, 0.0f, 1.0f);
-		if (_direction == dir_radial_ccw || _direction == dir_radial_cw)
+		if (_direction == __dir_radial_ccw || _direction == dir_radial_cw)
 			return;
 		_update();
 	}
@@ -348,7 +348,7 @@ namespace oxygine
 	void ProgressBar::setDirection(direction dir)
 	{
 		_direction = dir;
-		if (_direction == dir_radial_ccw || _direction == dir_radial_cw)
+		if (_direction == __dir_radial_ccw || _direction == dir_radial_cw)
 		{
 			_frame = _originalFrame;
 			return;

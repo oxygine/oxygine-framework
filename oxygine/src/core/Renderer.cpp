@@ -13,13 +13,13 @@
 
 namespace oxygine
 {
-	Renderer::Stats Renderer::statsPrev;
-	Renderer::Stats Renderer::statsCurrent;
+	//Renderer::Stats Renderer::statsPrev;
+	//Renderer::Stats Renderer::statsCurrent;
 	bool _restored = false;
 	spNativeTexture Renderer::white;
 	std::vector<unsigned char> Renderer::indices8;
 	std::vector<unsigned short> Renderer::indices16;
-	int _maxVertices = 0;
+	size_t _maxVertices = 0;
 	UberShaderProgram Renderer::uberShader;
 	std::vector<unsigned char> Renderer::uberShaderBody;
 	
@@ -325,17 +325,14 @@ namespace oxygine
 				cb(prog);
 			}			
 
-			int count = _vertices.size() / _vdecl->size;
-			int indices = (count * 3)/2;
+			size_t count = _vertices.size() / _vdecl->size;
+			size_t indices = (count * 3)/2;
 
-			if (indices <= (int)indices8.size())
+			if (indices <= indices8.size())
 				getDriver()->draw(IVideoDriver::PT_TRIANGLES, _vdecl, &_vertices.front(), count, &indices8.front(), indices, false);
 			else
 				getDriver()->draw(IVideoDriver::PT_TRIANGLES, _vdecl, &_vertices.front(), count, &indices16.front(), indices, true);
-			
-			++statsCurrent.batches;
-			statsCurrent.triangles += _vertices.size()/(_vdecl->size * 2);
-
+		
 			_vertices.resize(0);			
 			//b.shaderFlags = 0;
 		}
@@ -543,6 +540,8 @@ namespace oxygine
 	{
 		_blend = blend_disabled;
 		_driver->setState(IVideoDriver::STATE_BLEND, 0);
+		_uberShader = &uberShader;
+		_program = 0;
 	}
 
 	bool Renderer::begin(spNativeTexture rt, const Rect &viewport, const Color *clearColor)

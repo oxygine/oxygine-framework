@@ -62,15 +62,18 @@ namespace oxygine
 		/**Is file exists?*/
 		bool exists(const char *file);
 
-		void deleteFile(const char *path);
-		void rename(const char *src, const char *dest);
+		bool deleteFile(const char *path, error_policy ep = ep_show_warning);
+		bool rename(const char *src, const char *dest, error_policy ep = ep_show_warning);
 		void makeDirectory(const char *path);
 		void deleteDirectory(const char *path);
 
 		/**setExtendedFolder sets additional "hook" folder where files would be searched initially.*/
 		void setExtendedFolder(const char *folder);
 
+		//returns main fs
 		file::FileSystem &fs();
+		//returns writable fs
+		file::FileSystem &wfs();
 
 		class autoClose
 		{

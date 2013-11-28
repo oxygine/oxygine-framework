@@ -53,7 +53,7 @@ namespace file
 	class ZipFileSystem: public FileSystem
 	{
 	public:
-		ZipFileSystem(){}
+		ZipFileSystem():FileSystem(true){}
 
 		void add(const char *zip);
 		void add(const unsigned char* data, unsigned int size);
@@ -64,6 +64,9 @@ namespace file
 		Zips _zips;
 
 		status _open(const char *file, const char *mode, error_policy ep, file::fileHandle *&fh);
+		status _deleteFile(const char* file);
+		status _renameFile(const char* src, const char *dest);
+
 	};
 }
 }

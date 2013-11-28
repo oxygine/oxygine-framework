@@ -5,6 +5,12 @@
 
 namespace oxygine
 {
+	VStyleActor::VStyleActor(const VStyleActor &src, cloneOptions opt):Actor(src, opt)
+	{
+		_vstyle = src._vstyle;
+	}
+
+
 	void VisualStyle::_apply(const RenderState &rs)
 	{
 		rs.renderer->setBlendMode(_blend);

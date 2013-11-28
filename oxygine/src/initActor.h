@@ -57,8 +57,8 @@ namespace oxygine
 		typedef argT<unsigned char, unsigned char, Actor, &Actor::setAlpha> alpha;	
 		typedef argT<bool, bool, Actor, &Actor::setInputEnabled> input;
 		typedef argT<Actor*, Actor*, Actor, &Actor::attachTo> attachTo;
-		typedef argT<Color, const Color &, Sprite, &Sprite::setColor> color;
-		typedef argT<blend_mode, blend_mode, Sprite, &Sprite::setBlendMode> blend;
+		typedef argT<Color, const Color &, VStyleActor, &VStyleActor::setColor> color;
+		typedef argT<blend_mode, blend_mode, VStyleActor, &VStyleActor::setBlendMode> blend;
 		typedef argT<short, short, Actor, &Actor::setPriority> priority;
 		typedef argT<void*, void*, ObjectBase, &ObjectBase::setUserData> userData;
 		typedef argT<char, char, Actor, &Actor::setExtendedClickArea> extendedClickArea;
@@ -69,8 +69,8 @@ namespace oxygine
 		typedef argT<TextStyle::HorizontalAlign, TextStyle::HorizontalAlign, TextActor, &TextActor::setHAlign> hAlign;	
 		typedef argT<TextStyle::VerticalAlign, TextStyle::VerticalAlign, TextActor, &TextActor::setVAlign> vAlign;	
 		typedef argT<int, int, TextActor, &TextActor::setFontSize2Scale> fontSize2Scale;	
+		typedef argT<Font*, Font*, TextActor, &TextActor::setFont> font;	
 		typedef argT<bool, bool, TextActor, &TextActor::setMultiline> multiline;
-		typedef argT<Color, const Color &, TextActor, &TextActor::setColor> tcolor;
 
 
 		class animFrame
@@ -163,8 +163,9 @@ namespace oxygine
 #define arg_hAlign args::hAlign()
 #define arg_vAlign args::vAlign()
 #define arg_fontSize2Scale args::fontSize2Scale()
+#define arg_font args::font()
 #define arg_multiline args::multiline()
-#define arg_tcolor args::tcolor()//fix
+#define arg_tcolor args::color()
 //Button
 #define arg_onClick args::onClick()
 

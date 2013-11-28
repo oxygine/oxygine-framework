@@ -16,7 +16,7 @@ namespace oxygine
 			dir_180,//moveable left edge
 			dir_270,//moveable bottom edge
 			dir_radial_cw,
-			dir_radial_ccw//not implemented!!
+			__dir_radial_ccw//not implemented!!
 		};
 
 		DECLARE_COPYCLONE(ProgressBar);

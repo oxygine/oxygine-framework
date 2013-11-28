@@ -8,7 +8,7 @@ public:
 		spSprite sprite = new Sprite;			
 		Vector2 pos(0, 0);
 		sprite->setPosition(pos);
-		sprite->setAnimFrame(resources.getResAnim("t2p"));
+		sprite->setResAnim(resources.getResAnim("t2p"));
 		sprite->attachTo(content);
 		float scale = 1.0f/getRoot()->getScaleX();
 		sprite->setScale(scale);

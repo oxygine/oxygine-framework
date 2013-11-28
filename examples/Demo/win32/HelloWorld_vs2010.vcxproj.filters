@@ -38,13 +38,13 @@
     <ClInclude Include="..\src\TestClipRect.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\TestComplexDrag.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\TestDrag.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\TestManageRes.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\TestMask.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\TestPerf.h">
@@ -54,6 +54,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\TestRender2Texture.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\TestSliding.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\TestTexel2Pixel.h">
@@ -66,9 +69,6 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\TestTweens.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\TestMask.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\TestUserShader.h">

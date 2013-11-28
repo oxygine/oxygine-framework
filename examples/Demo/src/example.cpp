@@ -9,7 +9,7 @@
 #include "TestText.h"
 #include "TestTextureFormat.h"
 #include "TestTexel2Pixel.h"
-#include "TestComplexDrag.h"
+#include "TestSliding.h"
 #include "TestProgressBar.h"
 #include "TestBox9Sprite.h"
 #include "TestClipRect.h"
@@ -50,7 +50,7 @@ public:
 		addButton("texture_format", "Textures Format");
 		addButton("r2t", "Render to Texture");	
 		addButton("t2p", "Texel to Pixel");
-		addButton("complex_drag", "Complex Drag");		
+		addButton("sliding", "Sliding Actor");		
 		addButton("box9sprite", "Box9 Sprite");		
 		addButton("cliprect", "ClipRect Actor");		
 		addButton("usershader", "User Shader");		
@@ -100,9 +100,9 @@ public:
 			getRoot()->addChild(new TestTextureFormat);
 		}
 
-		if (id == "complex_drag")
+		if (id == "sliding")
 		{
-			getRoot()->addChild(new TestComplexDrag);
+			getRoot()->addChild(new TestSliding);
 		}
 
 		if (id == "t2p")

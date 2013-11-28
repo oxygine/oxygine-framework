@@ -33,7 +33,26 @@ namespace oxygine
 	namespace file
 	{
 		string _additionalFolder;
-		STDFileSystem _nfs;
+		/*
+		FileSystem &getFS()
+		{
+			static bool initialized = false;
+			if (!initialized)
+			{
+
+			}
+			return ;
+		}
+		*/
+		STDFileSystem _nfs(true);
+		STDFileSystem _nfsWrite(false);
+		STDFileSystem _nfsExtended(true);
+
+		void init()
+		{
+			_nfs.mount(&_nfsWrite);
+			_nfs.mount(&_nfsExtended);
+		}
 
 		void mount(FileSystem *fs)
 		{
@@ -74,22 +93,26 @@ namespace oxygine
 			fh->release();
 		}
 
-		void deleteFile(const char *path)
+		bool deleteFile(const char *path, error_policy ep)
 		{
-#if __S3E__
-			s3eFileDelete(path);
-#else
-			log::warning("not implemented");
-#endif
+			bool ok = _nfs.deleteFile(path) == FileSystem::status_ok;
+			if (!ok)
+			{
+				handleErrorPolicy(ep, "can't delete file: %s", path);
+			}
+
+			return ok;
 		}
 
-		void rename(const char *src, const char *dest)
+		bool rename(const char *src, const char *dest, error_policy ep)
 		{
-#if __S3E__
-			s3eFileRename(src, dest);
-#else
-			log::warning("not implemented");
-#endif			
+			bool ok = _nfs.renameFile(src, dest) == FileSystem::status_ok;
+			if (!ok)
+			{
+				handleErrorPolicy(ep, "can't rename file: %s to %s", src, dest);
+			}
+
+			return ok;
 		}
 
 		unsigned int read(handle h, void *dest, unsigned int destSize)
@@ -166,12 +189,17 @@ namespace oxygine
 
 		void setExtendedFolder(const char *folder)
 		{
-			_nfs.setExtendedFolder(folder);			
+			_nfsExtended.setPath(folder);			
 		}
 
 		file::FileSystem &fs()
 		{
 			return _nfs;
+		}
+
+		file::FileSystem &wfs()
+		{
+			return _nfsWrite;
 		}
 	}
 }

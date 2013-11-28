@@ -14,20 +14,18 @@ namespace oxygine
 	}
 	
 
-	class TextActor : public Actor
+	class TextActor : public VStyleActor
 	{
 	public:
 		DECLARE_COPYCLONE(TextActor);
 		TextActor();
 		~TextActor();
-		
+		/**Returns current text style*/
 		const TextStyle&	getStyle() const {return _style;}
+		/**Returns text bounds*/
 		const Rect&			getTextRect();
+		/**Returns current text*/
 		const string&		getText() const {return _text;}		
-		const Color&		getColor() const {return _vstyle.getColor();}
-
-		void setColor(const Color &color){_vstyle.setColor(color);}
-		void setBlendMode(blend_mode m){_vstyle.setBlendMode(m);}
 
 		/**Overwrites TextStyle Vertical align*/
 		void setVAlign(TextStyle::VerticalAlign align);
@@ -59,19 +57,18 @@ namespace oxygine
 
 		
 		std::string dump(const dumpOptions &options) const;
-		void doRender( RenderState const& parentRenderState ); 
-
-		typedef GetSet<Color, const Color &, TextActor, &TextActor::getColor, &TextActor::setColor>	TweenColor;
+		void doRender(RenderState const& parentRenderState);
 
 	protected:
+		enum
+		{
+			flag_html = flag_last << 1,
+			flag_rebuild = flag_last << 2,
+		};
 		string  _text;
-		bool	_html;
-
 		TextStyle _style;
-		VisualStyle _vstyle;
 
 		text::Node *_root;
-		bool _rebuild;
 		Rect _textRect;
 
 		text::Node *getRootNode();

@@ -32,7 +32,7 @@ namespace oxygine
 		
 		spTextActor tb = new TextActor();
 		tb->setInputEnabled(false);
-		tb->setColor(Color(0,0,0,255));
+		tb->setColor(Color::Black);
 	
 		const float minWidth = 300.0f;
 

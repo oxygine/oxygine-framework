@@ -133,14 +133,6 @@ namespace oxygine
 	public:
 		typedef AffineTransform transform;
 
-		class Stats
-		{
-		public:
-			Stats():batches(0), triangles(0){}
-			int batches;
-			int triangles;
-		};
-
 		/**Sets default rendering opengl options for 2D*/
 		static void setDefaultSettings();
 		/**Initializes internal classes. Called automatically from oxygine::init();*/
@@ -158,10 +150,6 @@ namespace oxygine
 
 		static std::vector<unsigned char> indices8;
 		static std::vector<unsigned short> indices16;
-				
-		static Stats statsPrev;
-		static Stats statsCurrent;
-
 
 		Renderer(IVideoDriver *driver = 0);
 		virtual ~Renderer();

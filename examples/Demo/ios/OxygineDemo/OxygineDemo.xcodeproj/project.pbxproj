@@ -86,7 +86,6 @@
 		04998D4917F8A9FC003441C3 /* test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = test.h; path = ../../../src/test.h; sourceTree = "<group>"; };
 		04998D4A17F8A9FC003441C3 /* TestBox9Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestBox9Sprite.h; path = ../../../src/TestBox9Sprite.h; sourceTree = "<group>"; };
 		04998D4B17F8A9FC003441C3 /* TestClipRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestClipRect.h; path = ../../../src/TestClipRect.h; sourceTree = "<group>"; };
-		04998D4C17F8A9FC003441C3 /* TestComplexDrag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestComplexDrag.h; path = ../../../src/TestComplexDrag.h; sourceTree = "<group>"; };
 		04998D4D17F8A9FC003441C3 /* TestDrag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestDrag.h; path = ../../../src/TestDrag.h; sourceTree = "<group>"; };
 		04998D4E17F8A9FC003441C3 /* TestManageRes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestManageRes.h; path = ../../../src/TestManageRes.h; sourceTree = "<group>"; };
 		04998D4F17F8A9FC003441C3 /* TestMask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestMask.h; path = ../../../src/TestMask.h; sourceTree = "<group>"; };
@@ -108,6 +107,7 @@
 		04998EED17F8ADD4003441C3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		04998EF517F8B6F3003441C3 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = ../../../../oxygine/third_party/ios/libraries/libpng.a; sourceTree = "<group>"; };
 		04998EF617F8B6F3003441C3 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = ../../../../oxygine/third_party/ios/libraries/libjpeg.a; sourceTree = "<group>"; };
+		049EA8B5184741AF0050853E /* TestSliding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestSliding.h; path = ../../../src/TestSliding.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,6 +227,7 @@
 		04998D4417F8A9ED003441C3 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				049EA8B5184741AF0050853E /* TestSliding.h */,
 				04998D4517F8A9FC003441C3 /* entry_point.cpp */,
 				04998D4617F8A9FC003441C3 /* example.cpp */,
 				04998D4717F8A9FC003441C3 /* example.h */,
@@ -234,7 +235,6 @@
 				04998D4917F8A9FC003441C3 /* test.h */,
 				04998D4A17F8A9FC003441C3 /* TestBox9Sprite.h */,
 				04998D4B17F8A9FC003441C3 /* TestClipRect.h */,
-				04998D4C17F8A9FC003441C3 /* TestComplexDrag.h */,
 				04998D4D17F8A9FC003441C3 /* TestDrag.h */,
 				04998D4E17F8A9FC003441C3 /* TestManageRes.h */,
 				04998D4F17F8A9FC003441C3 /* TestMask.h */,

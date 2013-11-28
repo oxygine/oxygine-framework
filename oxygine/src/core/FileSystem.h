@@ -25,13 +25,15 @@ namespace oxygine
 				status_ok,
 			};
 
-			FileSystem();
+			FileSystem(bool readonly);
 			~FileSystem();
 
 			void setPrefix(const char *str);
 
 			bool isExists(const char *file);
 			bool isExistsHere(const char *file);
+			status deleteFile(const char* file);
+			status renameFile(const char* src, const char *dest);
 
 			status open(const char *file, const char *mode, error_policy ep, fileHandle *&fh);
 
@@ -41,8 +43,11 @@ namespace oxygine
 		protected:
 			virtual status _open(const char *file, const char *mode, error_policy ep, fileHandle*&) = 0;
 			virtual bool _isExists(const char *file);
+			virtual status _deleteFile(const char* file) = 0;
+			virtual status _renameFile(const char* src, const char *dest) = 0;
 
 			char _prefix[32];
+			bool _readonly;
 
 			typedef vector<FileSystem*> filesystems;
 			filesystems _filesystems;

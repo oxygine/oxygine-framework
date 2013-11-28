@@ -21,7 +21,7 @@ GameActor::GameActor()
 	instance = this;
 	_actor->setInputEnabled(false);
 
-	_actor->setSize(Point(480, 320));
+	_actor->setSize(480, 320);
 
 
 	spClock clock = new Clock();
@@ -67,7 +67,7 @@ void GameActor::preShowing()
 void GameActor::postShowing()
 {	
 	spSprite go = new Sprite();
-	go->setAnimFrame(gameResources.getResAnim("go"));
+	go->setResAnim(gameResources.getResAnim("go"));
 	go->setAnchor(Vector2(0.5f, 0.5f));
 	go->setScale(Vector2(2.0f, 2.0f));	
 	go->setPosition(virtualSize/2);

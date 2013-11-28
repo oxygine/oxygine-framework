@@ -19,6 +19,12 @@ namespace oxygine
 
 	}
 
+	void VideoDriverNull::getStats(Stats &s) const
+	{
+		s.batches = 0;
+		s.triangles = 0;
+	}
+
 	void VideoDriverNull::getViewport(Rect &r) const
 	{
 		

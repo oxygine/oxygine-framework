@@ -8,7 +8,7 @@
 
 namespace oxygine
 {
-	Sprite::Sprite():_manageResAnim(false)
+	Sprite::Sprite()
 	{
 
 	}
@@ -18,12 +18,11 @@ namespace oxygine
 	
 	}
 
-	Sprite::Sprite(const Sprite &src, cloneOptions opt):Actor(src, opt)
+	Sprite::Sprite(const Sprite &src, cloneOptions opt):VStyleActor(src, opt)
 	{
 		_frame = src._frame;
 		_vstyle= src._vstyle;
-		_manageResAnim = src._manageResAnim;
-		if (_manageResAnim)
+		if (getManageResAnim())
 		{
 			ResAnim *rs = _frame.getResAnim();
 			if (rs)
@@ -33,7 +32,9 @@ namespace oxygine
 
 	void Sprite::setManageResAnim(bool manage)
 	{
-		_manageResAnim = manage;
+		_flags &= ~flag_manageResAnim; 
+		if (manage) 
+			_flags |= flag_manageResAnim;
 	}
 
 	std::string Sprite::dump(const dumpOptions &options) const
@@ -45,8 +46,8 @@ namespace oxygine
 		if (_frame.getDiffuse().base)
 			tname = _frame.getDiffuse().base->getName();
 		stream << "texture='" << tname << "' "; 
-		if (_manageResAnim)
-			stream << "manageResAnim='" << _manageResAnim << "' "; 
+		if (_flags & flag_manageResAnim)
+			stream << "manageResAnim=true"; 
 
 		stream << Actor::dump(options);
 		return stream.str();
@@ -90,7 +91,7 @@ namespace oxygine
 
 	void Sprite::changeAnimFrame(const AnimationFrame &frame)
 	{
-		if (_manageResAnim)
+		if (_flags & flag_manageResAnim)
 		{
 			ResAnim *rs = _frame.getResAnim();
 			if (rs)
@@ -141,9 +142,9 @@ namespace oxygine
 			_colEnd = _resAnim->getColumns();
 	}
 
-	void TweenAnim::init(Sprite &actor, bool rel)
+	void TweenAnim::init(Sprite &actor)
 	{
-		OX_ASSERT(rel == false);
+
 	}
 
 
@@ -154,7 +155,7 @@ namespace oxygine
 			_colEnd = _resAnim->getColumns();
 	}
 
-	/**play animation for interval [start, end)*/
+
 	void TweenAnim::setColumns(int start, int end)
 	{
 		_colStart = start; _colEnd = end;

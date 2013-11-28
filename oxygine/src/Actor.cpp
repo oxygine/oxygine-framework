@@ -102,7 +102,7 @@ namespace oxygine
 		
 		if (__name && __name->size())
 		{
-			stream << " name='" << div(*__name, Color(0xff0000ff)) << "'";			
+			stream << " name='" << div(*__name, Color::Red) << "'";			
 		}
 
 		stream << " id='" << getObjectID()<< "'";
@@ -736,11 +736,13 @@ namespace oxygine
 
 	void Actor::attachTo(spActor parent)
 	{
+		OX_ASSERT(parent != this);
 		attachTo(parent.get());
 	}
 
 	void Actor::attachTo(Actor *parent)
 	{
+		OX_ASSERT(parent != this);
 		OX_ASSERT(parent);
 		if (!parent)
 			return;
@@ -1047,6 +1049,21 @@ namespace oxygine
 
 			t = t->getNextSibling();
 			removeTween(c);
+		}
+	}
+
+	void Actor::removeTweensByName(const string &name)
+	{
+		spTween t = _tweens._first;
+		while (t)
+		{			
+			spTween c = t;
+			t = t->getNextSibling();
+
+			if (c->isName(name))
+			{
+				removeTween(c);
+			}
 		}
 	}
 

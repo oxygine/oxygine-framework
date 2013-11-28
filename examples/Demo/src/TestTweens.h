@@ -29,8 +29,8 @@ public:
 
 		_sprite = new Sprite();
 		_sprite->attachTo(content);
-		_sprite->setAnchor(Vector2(0.5f, 0.5f));
-		_sprite->setAnimFrame(resources.getResAnim("anim"));
+		_sprite->setAnchor(0.5f, 0.5f);
+		_sprite->setResAnim(resources.getResAnim("anim"));
 		_sprite->setPosition(getWidth()/2.0f, getHeight()/2);		
 
 		updateEase();
@@ -40,7 +40,7 @@ public:
 	{
 		spColorRectSprite bg = new ColorRectSprite();
 		bg->setSize(230, 230);
-		bg->setColor(Color(128, 128, 128, 255));
+		bg->setColor(Color::Gray);
 
 		spColorRectSprite parent = new ColorRectSprite();
 		parent->setSize(200, 200);
@@ -50,14 +50,14 @@ public:
 		while (f <= 1.001f)
 		{
 			spColorRectSprite cr = new ColorRectSprite();
-			cr->setSize(Point(2, 2));
-			cr->setColor(Color(255, 0, 0, 255));
+			cr->setSize(2, 2);
+			cr->setColor(Color::Red);
 			parent->addChild(cr);
 
 			float x = f * parent->getWidth();
 			float y = (1.0f - Tween::calcEase(ease, f)) * parent->getHeight();
 
-			cr->setPosition(Vector2(x - 1, y - 1));
+			cr->setPosition(x - 1, y - 1);
 
 			f += 0.005f;
 		}
@@ -83,7 +83,7 @@ public:
 
 	void tweenDone(Event *event)
 	{
-		showPopup("TweenDone");
+		notify("TweenDone");
 	}
 
 	void _addTween(spTween tween)

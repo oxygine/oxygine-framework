@@ -8,13 +8,18 @@ namespace oxygine
 		class STDFileSystem: public FileSystem
 		{
 		public:
-			STDFileSystem();
-			void setExtendedFolder(const char *folder);
+			STDFileSystem(bool readonly);
+
+			string getFullPath(const char *path);
+			void setPath(const char *folder);
 
 		protected:
-			string _extended;
+			string _path;			
+			char* _getFullPath(const char *path, char buff[512]);
 
 			status _open(const char *file_, const char *mode, error_policy ep, fileHandle*& fh);
+			status _deleteFile(const char* file);
+			status _renameFile(const char* src, const char *dest);
 			bool _isExists(const char *file);
 		};
 	}	
