@@ -170,7 +170,7 @@ namespace oxygine
 			if (_readonly)
 			{
 #if __S3E__
-				sprintf(buff, "rom://%s", path);
+				sprintf(buff, "rom://%s%s", _path.c_str(), path);
 #else
 				sprintf(buff, "%s%s", _path.c_str(), path);
 #endif
@@ -178,7 +178,7 @@ namespace oxygine
 			else
 			{
 #if __S3E__
-				sprintf(buff, "ram://%s", path);
+				sprintf(buff, "ram://%s%s", _path.c_str(), path);
 #else
 	#ifdef  WIN32
 				sprintf(buff, "../data-ram/%s%s", _path.c_str(), path);
