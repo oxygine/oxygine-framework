@@ -21,6 +21,7 @@
 #endif
 
 
+//makefourcc('_', '_', '_', '_')
 #define makefourcc(a,data,c,d) ( ((unsigned int)a) | (((unsigned int)data)<< 8) | (((unsigned int)c)<<16) | (((unsigned int)d)<<24))
 
 /**main oxygine namespace*/

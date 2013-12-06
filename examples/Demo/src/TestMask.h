@@ -14,7 +14,8 @@ public:
 	{		
 		_mask = initActor(new Sprite, 
 			arg_scale = 3,
-			arg_alpha = 64,
+			arg_priority = 1,
+			arg_alpha = 100,
 			arg_x = 100,
 			arg_y = 50,
 			arg_anchor = Vector2(0.5f, 0.5f),
@@ -31,17 +32,22 @@ public:
 		_masked->setMask(_mask);
 
 
+		spSprite sp = new Sprite;
+		sp->attachTo(_masked);
+		sp->setResAnim(resources.getResAnim("bg"));
+
+
 		TextStyle style;
-		style.font = resourcesUI.getResFont("main")->getFont();
-		style.color = Color(0, 255, 50, 255);
+		style.font = resourcesUI.getResFont("big")->getFont();
+		style.color = Color::BlanchedAlmond,
 		style.vAlign = TextStyle::VALIGN_MIDDLE;
 		style.hAlign = TextStyle::HALIGN_CENTER;
 		style.multiline = true;
 
 		spTextActor text = initActor(new TextActor(), 
 			arg_attachTo = _masked,
-			arg_scale = 2,
 			arg_pos = content->getSize()/2,
+			arg_scale = 1.5f,
 			arg_text = "Oxygine. Masked text",
 			arg_style = style);		
 

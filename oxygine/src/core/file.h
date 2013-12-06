@@ -64,7 +64,7 @@ namespace oxygine
 
 		bool deleteFile(const char *path, error_policy ep = ep_show_warning);
 		bool rename(const char *src, const char *dest, error_policy ep = ep_show_warning);
-		void makeDirectory(const char *path);
+		bool makeDirectory(const char *path);
 		void deleteDirectory(const char *path);
 
 		/**setExtendedFolder sets additional "hook" folder where files would be searched initially.*/

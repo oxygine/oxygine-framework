@@ -236,6 +236,22 @@ namespace oxygine
 			return status_error;
 		}
 
+		FileSystem::status STDFileSystem::_makeDirectory(const char* path)
+		{
+			char buff[512];
+			_getFullPath(path, buff);
+
+#if __S3E__
+			s3eFileMakeDirectory(buff);
+#elif WIN32
+			mkdir(buff);
+#else
+			mkdir(buff, 0777);
+#endif
+
+			return status_error;
+		}
+
 		FileSystem::status STDFileSystem::_renameFile(const char* src, const char *dest)		
 		{
 			char buffSrc[512];

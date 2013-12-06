@@ -77,6 +77,7 @@ void run()
 #endif
 
 	core::init(&desc);	
+	example_preinit();
 	
 	//create RootActor. RootActor is a root node
 	RootActor::instance = new ExampleRootActor();	

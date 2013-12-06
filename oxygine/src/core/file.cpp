@@ -159,15 +159,9 @@ namespace oxygine
 			return _nfs.isExists(file);
 		}
 
-		void makeDirectory(const char *path)
+		bool makeDirectory(const char *path)
 		{
-#if __S3E__
-			s3eFileMakeDirectory(path);
-#elif WIN32
-			mkdir(path);
-#else
-			mkdir(path, 0777);
-#endif
+			return _nfs.makeDirectory(path) == FileSystem::status_ok;
 		}
 
 		void deleteDirectory(const char *path)

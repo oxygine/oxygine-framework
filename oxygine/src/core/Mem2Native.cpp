@@ -21,115 +21,114 @@ namespace oxygine
 	}
 
 	void Mem2Native::push(spMemoryTexture src, spNativeTexture dest)
-	{				
-		{
-			MutexAutoLock al(_mutex);
-			texture t;
-			t.src = src.get();
-			t.dest = dest.get();		
+	{			
+		//_messages.send(src.get(), dest.get());
 
-			_textures.push_back(t);
-		}
-
-
-		sleep(10);
-
-		volatile int size = 0;
-		do 
-		{			
-			{
-				MutexAutoLock al(_mutex);
-				size = _textures.size();
-			}		
-
-			sleep(10);
-			
-		} while (size > 0);
-
-		//log::messageln("push done");
+		src->addRef();
+		dest->addRef();
+		_messages.post(src.get(), dest.get());
 	}
-
-	void Mem2Native::updateNext()
+	
+	bool Mem2Native::isEmpty()
 	{
-	}
-
-	bool Mem2Native::isEmpty() const
-	{
+		return _prev == Point(0,0) && _messages.empty();
+		/*
 		bool empty = false;
 		MutexAutoLock al(_mutex);
 		empty = _textures.empty();
 		return empty;
+		*/
+	}
+
+	void Mem2Native::updateTexture(Point &prev, MemoryTexture *src, NativeTexture *dest)
+	{
+		int SIZE = _size;
+		if (!SIZE)
+			SIZE = RECT_SIZE;
+
+		if (isCompressedFormat(src->getFormat()))
+		{
+			dest->init(src->lock(), false);
+		}
+		else
+		{
+
+			Rect textureRect(0, 0, src->getWidth(), src->getHeight());
+
+			if (dest->getHandle() == 0)
+				dest->init(textureRect.getWidth(), textureRect.getHeight(), src->getFormat());		
+
+
+			Rect srcRect(prev.x, prev.y, min(SIZE, textureRect.getWidth()), min(SIZE, textureRect.getHeight()));
+			srcRect.clip(textureRect);
+
+
+			ImageData srcim = src->lock(&srcRect);
+
+
+			ImageData destim;
+			if (srcRect != textureRect)
+			{
+				int pitch = srcRect.getWidth() * getBytesPerPixel(dest->getFormat());
+				_buffer.resize(srcRect.getHeight() * pitch);
+				destim = ImageData(
+					srcRect.getWidth(), srcRect.getHeight(),
+					pitch, 
+					dest->getFormat(), 
+					&_buffer[0]
+				);
+
+				operations::copy(srcim, destim);
+			}		
+			else
+			{
+				destim = srcim;
+			}
+
+			dest->updateRegion(srcRect.pos.x, srcRect.pos.y, destim);
+			
+			prev.x += SIZE;
+			if (prev.x >= textureRect.getWidth())
+			{
+				prev.x = 0;
+				prev.y += SIZE;
+
+			}
+
+			if (prev.y >= textureRect.getBottom())
+			{
+				_buffer.clear();
+				prev = Point(0,0);
+
+				src->releaseRef();
+				dest->releaseRef();
+			}
+		}
 	}
 
 	void Mem2Native::update()
 	{
-		MutexAutoLock al(_mutex);
-		
-		if (!_textures.empty())
+		//update only one texture per frame
+		if (_prev == Point(0,0))
 		{
-			int SIZE = _size;
-			if (!SIZE)
-				SIZE = RECT_SIZE;
-
-			texture &current = _textures.front();
-			if (isCompressedFormat(current.src->getFormat()))
+			ThreadMessages::message ev;
+			while (_messages.peek(ev, true))
 			{
-				current.dest->init(current.src->lock(), false);
-				_textures.pop_front();
-			}
-			else
-			{
-
-				Rect textureRect(0, 0, current.src->getWidth(), current.src->getHeight());
-
-				if (current.dest->getHandle() == 0)
-					current.dest->init(textureRect.getWidth(), textureRect.getHeight(), current.src->getFormat());		
-			
-
-				Rect srcRect(_prev.x, _prev.y, min(SIZE, textureRect.getWidth()), min(SIZE, textureRect.getHeight()));
-				srcRect.clip(textureRect);
-								
-
-				ImageData src = current.src->lock(&srcRect);
-		
-
-				ImageData dest;
-				if (srcRect != textureRect)
+				MemoryTexture *src = (MemoryTexture *)ev.arg1;
+				NativeTexture *dest = (NativeTexture *)ev.arg2;
+				
+				updateTexture(_prev, src, dest);
+				if(_prev != Point(0,0))
 				{
-					int pitch = srcRect.getWidth() * getBytesPerPixel(current.dest->getFormat());
-					_buffer.resize(srcRect.getHeight() * pitch);
-					dest = ImageData(
-						srcRect.getWidth(), srcRect.getHeight(),
-						pitch, 
-						current.dest->getFormat(), 
-						&_buffer[0]
-					);
-
-					operations::copy(src, dest);
-				}		
-				else
-				{
-					dest = src;
-				}
-
-				current.dest->updateRegion(srcRect.pos.x, srcRect.pos.y, dest);
-				_buffer.clear();
-
-				_prev.x += SIZE;
-				if (_prev.x >= textureRect.getWidth())
-				{
-					_prev.x = 0;
-					_prev.y += SIZE;
-
-				}
-
-				if (_prev.y >= textureRect.getBottom())
-				{
-					_textures.pop_front();
-					_prev = Point(0,0);
-					//log::messageln("_textures.pop_front();");
+					_src = src;
+					_dest = dest;
+					break;
 				}
 			}
+		}
+		else
+		{
+			updateTexture(_prev, _src, _dest);
 		}
 	}
 }

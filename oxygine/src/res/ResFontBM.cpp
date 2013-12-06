@@ -9,7 +9,8 @@
 #include "CreateResourceContext.h"
 #include "utils/stringUtils.h"
 #include "core/Mem2Native.h"
- 
+#include "core/Renderer.h"
+
 namespace oxygine
 {
 	Resource *ResFontBM::create(CreateResourceContext &context)
@@ -51,7 +52,7 @@ namespace oxygine
 		return font;
 	}
 
-	ResFontBM::ResFontBM():_font(0), _format(TF_R4G4B4A4), _premultipliedAlpha(true)
+	ResFontBM::ResFontBM():_font(0), _format(TF_R8G8B8A8), _premultipliedAlpha(false)
 	{
 
 	}
@@ -98,7 +99,11 @@ namespace oxygine
 		file::buffer bf;
 		file::read(p.file.c_str(), bf);
 
-		mt->init(bf, !_premultipliedAlpha, _format);		
+		bool premultAlpha = !_premultipliedAlpha;
+		if (!Renderer::getPremultipliedAlphaRender())
+			premultAlpha = false;
+
+		mt->init(bf, premultAlpha, _format);		
 		load_context->createTexture(mt, p.texture);
 		p.texture->reg(CLOSURE(this, &ResFontBM::_restore), 0);
 	}

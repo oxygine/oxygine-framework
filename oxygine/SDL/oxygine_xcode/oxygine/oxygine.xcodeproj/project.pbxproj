@@ -39,6 +39,8 @@
 		04AEC310182BD912006413A9 /* ShaderProgramGL.h in Headers */ = {isa = PBXBuildFile; fileRef = 04AEC30E182BD912006413A9 /* ShaderProgramGL.h */; };
 		04AEC313182BD98D006413A9 /* UberShaderProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04AEC311182BD98D006413A9 /* UberShaderProgram.cpp */; };
 		04AEC314182BD98D006413A9 /* UberShaderProgram.h in Headers */ = {isa = PBXBuildFile; fileRef = 04AEC312182BD98D006413A9 /* UberShaderProgram.h */; };
+		04D6FB4C1851914000A5403A /* ThreadMessages.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04D6FB4A1851914000A5403A /* ThreadMessages.cpp */; };
+		04D6FB4D1851914000A5403A /* ThreadMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = 04D6FB4B1851914000A5403A /* ThreadMessages.h */; };
 		C38704A217C0C6AC00015CA8 /* VideoDriverGLES11.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C38704A017C0C6AC00015CA8 /* VideoDriverGLES11.cpp */; };
 		C38704A317C0C6AC00015CA8 /* VideoDriverGLES11.h in Headers */ = {isa = PBXBuildFile; fileRef = C38704A117C0C6AC00015CA8 /* VideoDriverGLES11.h */; };
 		C38704A617C0C71700015CA8 /* VideoDriverGLES20.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C38704A417C0C71700015CA8 /* VideoDriverGLES20.cpp */; };
@@ -230,6 +232,8 @@
 		04AEC30E182BD912006413A9 /* ShaderProgramGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShaderProgramGL.h; path = gl/ShaderProgramGL.h; sourceTree = "<group>"; };
 		04AEC311182BD98D006413A9 /* UberShaderProgram.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UberShaderProgram.cpp; sourceTree = "<group>"; };
 		04AEC312182BD98D006413A9 /* UberShaderProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UberShaderProgram.h; sourceTree = "<group>"; };
+		04D6FB4A1851914000A5403A /* ThreadMessages.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ThreadMessages.cpp; sourceTree = "<group>"; };
+		04D6FB4B1851914000A5403A /* ThreadMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadMessages.h; sourceTree = "<group>"; };
 		C38704A017C0C6AC00015CA8 /* VideoDriverGLES11.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VideoDriverGLES11.cpp; path = gl/VideoDriverGLES11.cpp; sourceTree = "<group>"; };
 		C38704A117C0C6AC00015CA8 /* VideoDriverGLES11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VideoDriverGLES11.h; path = gl/VideoDriverGLES11.h; sourceTree = "<group>"; };
 		C38704A417C0C71700015CA8 /* VideoDriverGLES20.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VideoDriverGLES20.cpp; path = gl/VideoDriverGLES20.cpp; sourceTree = "<group>"; };
@@ -546,6 +550,8 @@
 		C3E86F6816EBC8EB00052915 /* core */ = {
 			isa = PBXGroup;
 			children = (
+				04D6FB4A1851914000A5403A /* ThreadMessages.cpp */,
+				04D6FB4B1851914000A5403A /* ThreadMessages.h */,
 				04AEC311182BD98D006413A9 /* UberShaderProgram.cpp */,
 				04AEC312182BD98D006413A9 /* UberShaderProgram.h */,
 				04967C4B180B3D7400D66EFA /* Restorable.cpp */,
@@ -810,6 +816,7 @@
 				C3E8707116EBC8EB00052915 /* Sprite.h in Headers */,
 				C3E8707316EBC8EB00052915 /* Aligner.h in Headers */,
 				0472E36117F8A1A80016A832 /* system_data.h in Headers */,
+				04D6FB4D1851914000A5403A /* ThreadMessages.h in Headers */,
 				C3E8707516EBC8EB00052915 /* Node.h in Headers */,
 				C3E8707716EBC8EB00052915 /* TextBuilder.h in Headers */,
 				C3E8707916EBC8EB00052915 /* TextActor.h in Headers */,
@@ -944,6 +951,7 @@
 				C3E8706E16EBC8EB00052915 /* SlidingActor.cpp in Sources */,
 				C3E8707016EBC8EB00052915 /* Sprite.cpp in Sources */,
 				C3E8707216EBC8EB00052915 /* Aligner.cpp in Sources */,
+				04D6FB4C1851914000A5403A /* ThreadMessages.cpp in Sources */,
 				C3E8707416EBC8EB00052915 /* Node.cpp in Sources */,
 				C3E8707616EBC8EB00052915 /* TextBuilder.cpp in Sources */,
 				C3E8707816EBC8EB00052915 /* TextActor.cpp in Sources */,

@@ -66,22 +66,22 @@ namespace oxygine
 
 	ThreadLoading::ThreadLoading(const ThreadLoading &src, cloneOptions opt):Actor(src, opt)
 	{
-		_thread = 0;
+		_thread = pthread_self();
 		_threadDone = false;
 
 		_resources = src._resources;		
 		_ress = src._ress;
 	}
 
-	ThreadLoading::ThreadLoading():_thread(0), _threadDone(false)
+	ThreadLoading::ThreadLoading():_thread(pthread_self()), _threadDone(false)
 	{
 		setInputEnabled(false);
 	}
 
 	ThreadLoading::~ThreadLoading()
 	{
-		if (_thread)
-			s3eThreadJoin((s3eThread*)_thread);
+		//if (!pthread_equal(_thread, pthread_self()))
+		//	pthread_join(_thread, 0);
 	}
 
 	/*
@@ -184,7 +184,8 @@ namespace oxygine
 		}		
 
 		parent->addChild(this);
-		_thread = s3eThreadCreate(_staticThreadFunc, this);
+		pthread_create(&_thread, 0, _staticThreadFunc, this);
+		//_thread = s3eThreadCreate(_staticThreadFunc, this);
 	}
 
 	/*

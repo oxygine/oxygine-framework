@@ -30,6 +30,7 @@ public:
 			RectF(0, 0, size.x/texture->getWidth(), size.y/texture->getHeight()), 
 			RectF(Vector2(0,0), size), size);
 		preview->setAnimFrame(frame);		
+		preview->setBlendMode(blend_disabled);
 
 		content->addEventListener(TouchEvent::MOVE, CLOSURE(this, &TestRender2Texture::onMove));
 		content->addEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &TestRender2Texture::onDown));
@@ -64,7 +65,7 @@ public:
 		const Diffuse &df = frame.getDiffuse();
 		r.setDiffuse(df);
 		r.setPrimaryColor(color);
-		r.setBlendMode(blend_premultiplied_alpha);
+		r.setBlendMode(blend_alpha);
 		float pressure =  te->pressure;
 		//log::messageln("pressure %.2f", pressure);
 		//pressure = pressure * pressure;

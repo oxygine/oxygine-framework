@@ -104,7 +104,9 @@ def build_bmfont(need_md5, fnt, bm_config, ext_folder, scale, font_chars):
 
     png_file = os.path.splitext(fnt)[0] + "_0.png"
     font_image = Image.open(png_file)
-    bbox = font_image.getbbox()
+    font_image.load()
+    _, _, _, a = font_image.split()
+    bbox = a.getbbox()
     h = bbox[3] + 2     
     if h > 512:
         h = 1024                

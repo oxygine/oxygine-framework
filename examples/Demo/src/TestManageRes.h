@@ -28,7 +28,6 @@ public:
 			if (ra->isName("bg"))
 			{
 				sprite->setPosition(0,0);
-				sprite->setScale(getWidth()/(float)sprite->getWidth());
 				sprite->setPriority(-1);
 			}
 			else

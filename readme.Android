@@ -12,7 +12,10 @@ how to build. Steps:
 - unpack oxygine-framework\oxygine\SDL\android\SDLTests.zip to the same level with oxygine-framework and SDL
   (to the "root" folder, see example above)
 - goto SDLTests\android-project
-- copy assets from oxygine's example
+- check local.properties and path to sdk
+- check that you have Android-12 sdk installed
+- copy latest source code from SDL\android-project\src\org\libsdl\app\ to SDLTests\android-project\src\org\libsdl\app\
+- copy assets from oxygine's Demo example
 - run build.cmd
 - run ant_debug.bat
 - apk is ready here: SDLTests\android-project\bin !

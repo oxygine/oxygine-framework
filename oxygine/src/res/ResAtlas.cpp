@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include "core/Mem2Native.h"
 #include "core/VideoDriver.h"
+#include "core/Renderer.h"
 
 #ifdef __S3E__
 #include "IwImage.h"
@@ -223,7 +224,7 @@ namespace oxygine
 					file::buffer bf;
 					file::read((path + file).c_str(), bf);
 
-					mt.init(bf, true, tf);
+					mt.init(bf, Renderer::getPremultipliedAlphaRender(), tf);
 					im = mt.lock();
 					if (im.w)
 					{
@@ -312,7 +313,10 @@ namespace oxygine
 								df.base = texture;
 								df.alpha = alpha;
 								//compressed data could not be premultiplied 
-								df.premultiplied = !compressed;
+								if (Renderer::getPremultipliedAlphaRender())
+									df.premultiplied = !compressed;
+								else
+									df.premultiplied = true;//render should think that it is already premultiplied and don't worry about alpha
 
 								frame.init(ra, df,
 									srcRect, destRect, 
@@ -373,6 +377,7 @@ namespace oxygine
 								AnimationFrame frame;
 								Diffuse df;
 								df.base = ad.texture;
+								df.premultiplied = true;//!Renderer::getPremultipliedAlphaRender();
 								frame.init(ra, df, srcRect, destRect, Vector2((float)frame_width, (float)frame_height) * scaleFactor);
 								frames.push_back(frame);
 							}
@@ -452,7 +457,7 @@ namespace oxygine
 		file::buffer bf;
 		file::read(file.c_str(), bf);
 		LOGD("atlas file loaded: %s", file.c_str());
-		mt->init(bf, true, nt->getFormat());
+		mt->init(bf, Renderer::getPremultipliedAlphaRender(), nt->getFormat());
 		//mt->init(2048, 2048, TF_R8G8B8A8);
 		im = mt->lock();
 		LOGD("atlas size: %d %d", im.w, im.h);

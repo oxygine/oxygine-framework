@@ -24,7 +24,7 @@
 #include "initActor.h"
 #include <stdio.h>
 #include <stdarg.h>
-
+#include "MaskedSprite.h"
 
 #ifdef __S3E__
 #include "s3eMemory.h"
@@ -41,6 +41,8 @@ namespace oxygine
 	{
 		if (resSystem)
 			return;
+
+		spActor a = new MaskedSprite;
 
 		zp.setPrefix("system/");
 		zp.add(system_data, system_size);

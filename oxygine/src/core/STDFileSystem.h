@@ -20,6 +20,8 @@ namespace oxygine
 			status _open(const char *file_, const char *mode, error_policy ep, fileHandle*& fh);
 			status _deleteFile(const char* file);
 			status _renameFile(const char* src, const char *dest);
+			status _makeDirectory(const char* path);
+
 			bool _isExists(const char *file);
 		};
 	}	

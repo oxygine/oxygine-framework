@@ -3,6 +3,7 @@
 #include "Actor.h"
 #include "core/Mem2Native.h"
 #include "res/Resource.h"
+#include "pthread.h"
 
 namespace oxygine
 {
@@ -50,7 +51,8 @@ namespace oxygine
 		Mem2Native _m2n;
 		Mutex _m;
 
-		void *_thread;
+		pthread_t _thread;
+		//void *_thread;
 		volatile bool _threadDone;
 
 		typedef list<Resources*> resources;

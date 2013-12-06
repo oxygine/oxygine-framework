@@ -1,4 +1,3 @@
-#pragma once
 #include "CreateResourceContext.h"
 #include "core/NativeTexture.h"
 #include "MemoryTexture.h"

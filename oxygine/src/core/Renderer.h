@@ -133,6 +133,15 @@ namespace oxygine
 	public:
 		typedef AffineTransform transform;
 
+		static bool getPremultipliedAlphaRender();
+		/**There are 2 modes of loading and blending/rendering sprites: normal and premultiplied alpha.
+			You should set it before loading any assets. 
+			Premultiplied mode is more advanced and faster than normal. In this mode RGB pixels of textures premultiplying to alpha when textures are loading and using blend_premultiply_alpha as default Sprites blend option.
+			http://blog.rarepebble.com/111/premultiplied-alpha-in-opengl/
+			Default value is premultiplied = true
+		*/
+		static void setPremultipliedAlphaRender(bool pre);
+
 		/**Sets default rendering opengl options for 2D*/
 		static void setDefaultSettings();
 		/**Initializes internal classes. Called automatically from oxygine::init();*/

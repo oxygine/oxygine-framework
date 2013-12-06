@@ -169,12 +169,12 @@ namespace oxygine
 		}
 
 		/**initializes color by RGBA and replaces alpha*/
-		Color(unsigned int rgba, unsigned char a)
+		Color(unsigned int rgba, unsigned char a_)
 		{
 			r = rgba >> 24;
 			g = (rgba >> 16) & 0xFF;
 			b = (rgba >> 8) & 0xFF;
-			a = a;
+			a = a_;
 		}
 
 		unsigned char operator [](int i) const

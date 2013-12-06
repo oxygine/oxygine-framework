@@ -13,6 +13,18 @@
 
 namespace oxygine
 {
+	bool _premultipliedRender = true;
+	bool Renderer::getPremultipliedAlphaRender()
+	{
+		return _premultipliedRender;
+	}
+
+	void Renderer::setPremultipliedAlphaRender(bool pre)
+	{
+		_premultipliedRender = pre;
+	}
+
+
 	//Renderer::Stats Renderer::statsPrev;
 	//Renderer::Stats Renderer::statsCurrent;
 	bool _restored = false;
@@ -230,7 +242,7 @@ namespace oxygine
 		if (base == 0 || base->getHandle() == 0)
 			base = white;
 
-		int shaderFlags = _shaderFlags;
+		unsigned int shaderFlags = _shaderFlags;
 
 		if (basePremultiplied)			
 			shaderFlags &= ~UberShaderProgram::ALPHA_PREMULTIPLY;

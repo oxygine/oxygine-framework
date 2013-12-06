@@ -5,7 +5,7 @@ fileVersion=1
 fontName=Arial
 fontFile=
 charSet=177
-fontSize=-20
+fontSize=-16
 aa=1
 scaleH=100
 useSmoothing=1
@@ -16,8 +16,8 @@ disableBoxChars=1
 outputInvalidCharGlyph=0
 dontIncludeKerningPairs=0
 useHinting=0
-renderFromOutline=1
-useClearType=0
+renderFromOutline=0
+useClearType=1
 
 # character alignment
 paddingDown=0
@@ -37,17 +37,17 @@ fontDescFormat=1
 fourChnlPacked=0
 textureFormat=png
 textureCompression=0
-alphaChnl=1
-redChnl=0
-greenChnl=0
-blueChnl=0
+alphaChnl=0
+redChnl=4
+greenChnl=4
+blueChnl=4
 invA=0
 invR=0
 invG=0
 invB=0
 
 # outline
-outlineThickness=1
+outlineThickness=0
 
 # selected chars
 chars=160

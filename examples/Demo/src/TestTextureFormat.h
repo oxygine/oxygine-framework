@@ -32,14 +32,7 @@ public:
 
 		spSprite sp = new Sprite;
 		sp->attachTo(content);
-
 		sp->setResAnim(res);
-		sp->setScale(getWidth()/(float)sp->getWidth());
-
-		sp = new Sprite;
-		sp->attachTo(content);
-		sp->setResAnim(resources.getResAnim("logo2" + prefix));
-		sp->setPosition(getSize()/2);
 	}
 
 	void clicked(string id)

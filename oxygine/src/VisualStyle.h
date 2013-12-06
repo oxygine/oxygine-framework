@@ -9,8 +9,9 @@ namespace oxygine
 	class RenderState;
 	class VisualStyle
 	{
-	public:
-		VisualStyle():_color(255,255,255,255), _blend(blend_premultiplied_alpha){}
+	public:	
+
+		VisualStyle();
 
 		const Color&		getColor() const {return _color;}
 		blend_mode			getBlendMode() const {return _blend;}

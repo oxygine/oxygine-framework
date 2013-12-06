@@ -132,6 +132,21 @@ public:
 	}
 };
 
+void example_preinit()
+{
+	/**
+	There are 2 modes of loading and blending/rendering sprites: normal and premultiplied alpha.
+	You should set it before loading any assets. 
+	Premultiplied mode is more advanced and faster than normal. In this mode RGB pixels of textures premultiplying to alpha when textures are loading and using blend_premultiply_alpha as default Sprites blend option.
+	Default value is premultiplied = true
+	http://blog.rarepebble.com/111/premultiplied-alpha-in-opengl/
+
+	I set it to false to simplify shaders for UserShaderDemo
+	*/
+
+	Renderer::setPremultipliedAlphaRender(false);
+}
+
 void example_init()
 {
 	file::setExtendedFolder("ext");

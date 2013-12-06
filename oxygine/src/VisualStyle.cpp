@@ -5,6 +5,11 @@
 
 namespace oxygine
 {
+	VisualStyle::VisualStyle():_color(255,255,255,255), _blend(Renderer::getPremultipliedAlphaRender() ? blend_premultiplied_alpha : blend_alpha)
+	{
+
+	}
+
 	VStyleActor::VStyleActor(const VStyleActor &src, cloneOptions opt):Actor(src, opt)
 	{
 		_vstyle = src._vstyle;

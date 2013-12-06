@@ -1,5 +1,6 @@
 #pragma once
 #include "oxygine_include.h"
+#include "pthread.h"
 namespace oxygine
 {
 	class Mutex
@@ -15,7 +16,8 @@ namespace oxygine
 		Mutex(const Mutex &){}
 		void operator = (const Mutex &){}
 
-		void *_handle;
+		pthread_mutex_t _handle;
+		//void *_handle;
 	};
 
 	class MutexAutoLock

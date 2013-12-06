@@ -6,6 +6,7 @@
 #include "NativeTexture.h"
 #include "MemoryTexture.h"
 #include "Mutex.h"
+#include "ThreadMessages.h"
 
 namespace oxygine
 {
@@ -19,7 +20,7 @@ namespace oxygine
 		Mem2Native();
 		~Mem2Native();
 		
-		bool isEmpty() const;
+		bool isEmpty();
 
 		void push(spMemoryTexture src, spNativeTexture dest);
 		void update();
@@ -27,22 +28,16 @@ namespace oxygine
 		void setUpdateSize(int size){_size = size;}
 
 	private:
-		struct texture
-		{
-			MemoryTexture *src;
-			NativeTexture *dest;
-		};
+
+		void updateTexture(Point &prev, MemoryTexture *src, NativeTexture *dest);
 
 		int _size;
-
-		typedef list<texture> textures;
-		textures _textures;
-
 		Point _prev;
-
-		void updateNext();
+		
+		MemoryTexture *_src;
+		NativeTexture *_dest;
 		
 		vector<unsigned char> _buffer;
-		mutable Mutex _mutex;
+		ThreadMessages _messages;
 	};
 }

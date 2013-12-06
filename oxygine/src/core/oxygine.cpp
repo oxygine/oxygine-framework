@@ -25,6 +25,7 @@
 
 #include "gl/oxgl.h"
 #include "winnie_alloc/winnie_alloc.h"
+#include "ThreadMessages.h"
 
 #ifdef __S3E__
 #include "s3e.h"
@@ -75,6 +76,8 @@ namespace oxygine
 
 
 	IVideoDriver::Stats _videoStats;
+
+	ThreadMessages _threadMessages;
 
     void checkGLError()
     {

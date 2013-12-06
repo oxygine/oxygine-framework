@@ -9,7 +9,7 @@ DECLARE_SMART(ShaderSprite, spShaderSprite);
 class ShaderSprite: public Sprite
 {
 public:
-	ShaderSprite():_program(0), _val(0)
+	ShaderSprite():_program(0), _val(0,0,0,0)
 	{
 
 	}
@@ -19,24 +19,24 @@ public:
 		_program = p;
 	}
 
-	float getVal() const 
+	const Vector4& getVal() const 
 	{
 		return _val;
 	}
 
-	void setVal(float v)
+	void setVal(const Vector4& v)
 	{
 		_val = v;
 	}
 
-	typedef GetSet<float, float, ShaderSprite, &ShaderSprite::getVal, &ShaderSprite::setVal>	TweenVal;
+	typedef GetSet<Vector4, const Vector4&, ShaderSprite, &ShaderSprite::getVal, &ShaderSprite::setVal>	TweenVal;
 
 private:
-	float _val;
+	Vector4 _val;
 	UberShaderProgram* _program;
 	void setUniforms(ShaderProgram *prog)
 	{
-		prog->setUniform("interp", _val);
+		prog->setUniform("userValue", &_val, 1);
 	}
 
 	void doRender(const RenderState &rs)
@@ -53,67 +53,73 @@ private:
 class TestUserShader: public Test
 {
 public:
-	UberShaderProgram *_shader;
-	TestUserShader():_shader(0)
-	{
-		addButton("test", "test");
+	UberShaderProgram *_shaderMono;
+	UberShaderProgram *_shaderAddColor;
+	UberShaderProgram *_shaderInvert;
 
-		_shader = new UberShaderProgram();
-		_shader->init(Renderer::uberShaderBody, 
+	spShaderSprite _sprite;
+
+	TestUserShader():_shaderMono(0), _shaderAddColor(0)
+	{
+		_shaderMono = new UberShaderProgram();
+		_shaderMono->init(Renderer::uberShaderBody, 
 			"#define MODIFY_BASE\n"
-			"uniform lowp float interp;"
+			"uniform lowp vec4 userValue;"
 			"lowp vec4 modify_base(lowp vec4 base)\n"
 			"{\n"
 			"lowp float c = (base.r + base.g + base.b)/3.0;\n"
-			"return mix(vec4(c, c, c, base.a), base, interp);\n"
+			"return mix(vec4(c, c, c, base.a), base, userValue.r);\n"
 			"}\n");
+
+		_shaderAddColor = new UberShaderProgram();
+		_shaderAddColor->init(Renderer::uberShaderBody, 
+			"#define MODIFY_BASE\n"
+			"uniform lowp vec4 userValue;"
+			"lowp vec4 modify_base(lowp vec4 base)\n"
+			"{\n"
+			"return base + userValue;\n"
+			"}\n");
+
+		_shaderInvert = new UberShaderProgram();
+		_shaderInvert->init(Renderer::uberShaderBody, 
+			"#define MODIFY_BASE\n"
+			"uniform lowp vec4 userValue;"
+			"lowp vec4 modify_base(lowp vec4 base)\n"
+			"{\n"
+			"\n"
+			"return vec4(mix(vec4(1.0, 1.0, 1.0, 1.0) - base, base, userValue.r).rgb, base.a);\n"
+			"}\n");
+
+
+		_sprite = initActor(new ShaderSprite, 
+			arg_resAnim = resources.getResAnim("bg"),
+			arg_attachTo = content
+			//arg_pos = content->getSize()/2,
+			//arg_anchor = Vector2(0.5f, 0.5f)
+			);
+
+		_sprite->addTween(ShaderSprite::TweenVal(Vector4(1,1,1,0)), 5000, -1, true);
+		_sprite->setShaderProgram(_shaderInvert);
+		
+		toggle t[] = {
+			toggle("->shader:add color", 0, _shaderAddColor),
+			toggle("->shader:mono", 0, _shaderMono), 
+			toggle("->shader:invert", 0, _shaderInvert)};
+		addToggle("shader", t, 3);		
 	}
 
 	~TestUserShader()
 	{
-		delete _shader;
+		delete _shaderMono;
+		delete _shaderAddColor;
 	}
 
-	void clicked(string id)
+	void toggleClicked(string id, const toggle *data)
 	{
-		Vector2 size = content->getSize();
-		spNativeTexture texture;
-		texture = IVideoDriver::instance->createTexture();
-		texture->init((int)size.x, (int)size.y, TF_R8G8B8A8, true);
-
-		Renderer r;
-		RenderState rs;
-		rs.renderer = &r;
-
-
-		//Point size = content->getSize().cast<Point>();
-		Matrix view = makeViewMatrix((int)size.x, (int)size.y, true);
-		Matrix proj;
-		Matrix::orthoLH(proj, size.x, size.y, 0.0f, 1.0f);
-		r.setViewProjTransform(view, proj);
-
-		Rect vp(Point(0, 0), size.cast<Point>());
-
-		r.begin(texture, vp, 0);
-		getRoot()->render(r);
-		r.end();
-
-
-		spShaderSprite sprite = new ShaderSprite;			
-		Vector2 pos(50, 50);
-		sprite->setPosition(pos);
-
-		AnimationFrame frame;
-		Diffuse df;
-		df.base = texture;
-		frame.init(0, df,
-			RectF(0, 0, size.x/texture->getWidth(), size.y/texture->getHeight()), 
-			RectF(Vector2(0,0), size), size);
-		sprite->setAnimFrame(frame);		
-
-
-		sprite->attachTo(content);
-		sprite->setShaderProgram(_shader);
-		sprite->addTween(ShaderSprite::TweenVal(1), 5000, -1, true);
+		if (id == "shader")
+		{
+			UberShaderProgram *shader = (UberShaderProgram *)data->data;
+			_sprite->setShaderProgram(shader);
+		}
 	}
 };

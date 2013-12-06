@@ -16,10 +16,10 @@ public:
 		//addButton("radial_ccw", "dir: radial_ccw");
 
 		bar = new ProgressBar(); 
-		bar->setResAnim(resources.getResAnim("logo2"));
-		//bar->setAnchor(Vector2(0.5f, 0.5f));
+		bar->setResAnim(resources.getResAnim("bg"));
+		bar->setAnchor(Vector2(0.5f, 0.5f));
 		bar->setPosition(getSize()/2);
-		//bar->setScale(2);
+		bar->setScale(0.5f);
 		content->addChild(bar);
 	}
 

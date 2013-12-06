@@ -25,6 +25,9 @@ namespace oxygine
 		VectorT4 &operator*=(T);
 		VectorT4 &operator/=(T);
 
+		VectorT4 operator * (T) const;
+		VectorT4 operator / (T) const;
+
 		VectorT3<T> xyz()const;
 
 		inline T &operator[](int i){return m[i];}
@@ -127,6 +130,20 @@ namespace oxygine
 		T is = T(1.0)/s;
 		x*=is; y*=is; z*=is; w*=is; return (*this);
 	}
+
+	template <class T>
+	VectorT4<T> VectorT4<T>::operator * (T s) const
+	{
+		return VectorT4(x*s, y*s, z*s, w*s);
+	}
+
+	template <class T>
+	VectorT4<T> VectorT4<T>::operator / (T v) const
+	{
+		T s = T(1)/v;
+		return VectorT4(x*s, y*s, z*s, w*s);
+	}
+
 	template <class T>
 	inline T VectorT4<T>::dot(const VectorT4 &v1, const VectorT4 &v2)
 	{

@@ -50,6 +50,7 @@ set(OXYGINE_INCLUDE_DIRS
 	${OXYGINE_ROOT_SRC}
 	${SDL2_INCLUDE_DIRS}
 	${THIRD_PARTY}/glew
+	${THIRD_PARTY}/pthreads/include/
 	${THIRD_PARTY}/zlib)
 
 include_directories(${OXYGINE_INCLUDE_DIRS})
@@ -83,6 +84,7 @@ if (MSVC)
 	set(OXYGINE_CORE_LIBS
 		${OXYGINE_CORE_LIBS}
 		glew32
+		pthreadVCE2
 		libpng
 		libjpeg
 		libzlib)
@@ -90,6 +92,7 @@ else(MSVC)
 	set(OXYGINE_CORE_LIBS
 		${OXYGINE_CORE_LIBS}
 		z
+		pthread
 		png
 		jpeg		
 	)
