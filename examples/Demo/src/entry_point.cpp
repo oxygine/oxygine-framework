@@ -1,5 +1,10 @@
+/**
+Attention!
+This file has Oxygine initialization stuff.
+If you just started you don't need to understand it exactly you could check it later. 
+You could start from example.cpp and example.h it has main functions being called from there
+*/
 #include <stdio.h>
-
 #include "core/Renderer.h"
 #include "RootActor.h"
 #include "DebugActor.h"
@@ -35,6 +40,7 @@ public:
 	}
 };
 
+//called each frame
 int mainloop()
 {
 	example_update();

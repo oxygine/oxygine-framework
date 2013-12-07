@@ -285,6 +285,9 @@
     <ClCompile Include="..\..\src\core\gl\ShaderProgramGL.cpp">
       <Filter>src\gl</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\core\ThreadMessages.cpp">
+      <Filter>src\core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\closure\closure.h">
@@ -610,6 +613,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\core\gl\ShaderProgramGL.h">
       <Filter>src\gl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\ThreadMessages.h">
+      <Filter>src\core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

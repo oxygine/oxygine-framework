@@ -26,7 +26,7 @@ namespace oxygine
 
 		src->addRef();
 		dest->addRef();
-		_messages.post(src.get(), dest.get());
+		_messages.post(0, src.get(), dest.get());
 	}
 	
 	bool Mem2Native::isEmpty()

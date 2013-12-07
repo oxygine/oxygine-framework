@@ -1,4 +1,4 @@
-1. Download SDL2 (http://www.libsdl.org/)
+1. Download  latest SDL2 source snapshot http://libsdl.org/hg.php
 2. Put it on the same level with oxygine-framework
 root\
      oxygine-framework
