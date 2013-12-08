@@ -2,6 +2,12 @@
 #include "Game.h"
 #include "res.h"
 #include "Joystick.h"
+#include "Rocket.h"
+
+Player::Player():_lastRocketSpawn(0)
+{
+
+}
 
 void Player::_init()
 {
@@ -41,5 +47,21 @@ void Player::_update(const UpdateState &us)
 
 		//if player moves show engine's fire
 		_engine->setVisible(true);
+	}
+
+
+	if (_game->_fire->getDirection(dir))
+	{
+		//fire rockets each 300 ms
+		if (_lastRocketSpawn + 300 < us.time)
+		{
+			_lastRocketSpawn = us.time;
+
+			dir.normalize();
+
+			//create rocket
+			spRocket rocket = new Rocket(dir);
+			rocket->init(_view->getPosition(), _game);
+		}		
 	}
 }

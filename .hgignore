@@ -88,5 +88,6 @@ examples/Demo/build_demo_vc11/
 examples/TutorialResources/build_tutorialresources_vc10
 examples/Game/part1/build_game_vc
 examples/Game/part1/build_game_vc10/
+examples/Game/part2/build_game_vc10
 syntax: regexp
 ^build/

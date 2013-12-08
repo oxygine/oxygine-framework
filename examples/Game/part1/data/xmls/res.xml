@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<resources>
-	<set path = "images" />
-	<atlas>
-		<image file="controller.png" />
-	</atlas>
-</resources>

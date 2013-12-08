@@ -52,6 +52,8 @@ namespace oxygine
 				s.program = 0;
 			}			
 		}
+
+		unreg();
 	}
 
 	UberShaderProgram::shader *UberShaderProgram::getShaderProgram(int flags)

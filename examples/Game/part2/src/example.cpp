@@ -11,7 +11,7 @@ void example_init()
 {
 	//load resources
 	res::load();
-	
+
 	//create scene with game
 	spGame game = new Game;
 	game->init();
@@ -20,7 +20,7 @@ void example_init()
 
 void example_update()
 {
-	
+
 }
 
 void example_destroy()
