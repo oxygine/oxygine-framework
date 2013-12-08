@@ -145,7 +145,7 @@ namespace oxygine
 			virtual unsigned int getSize() const
 			{
 				oxFileSeek(_handle, 0, ox_FILESEEK_END);
-				unsigned int size  = oxFileTell(_handle);
+				unsigned int size  = (unsigned int)oxFileTell(_handle);
 				oxFileSeek(_handle, 0, ox_FILESEEK_SET);
 
 				return size;
@@ -159,7 +159,7 @@ namespace oxygine
 		{
 #ifdef WIN32
 			if (!_readonly)
-				mkdir(getFullPath("").c_str());
+				_mkdir(getFullPath("").c_str());
 #endif
 		}
 
@@ -244,7 +244,7 @@ namespace oxygine
 #if __S3E__
 			s3eFileMakeDirectory(buff);
 #elif WIN32
-			mkdir(buff);
+			_mkdir(buff);
 #else
 			mkdir(buff, 0777);
 #endif

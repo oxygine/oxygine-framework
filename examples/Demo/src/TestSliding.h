@@ -33,6 +33,8 @@ public:
 				arg_y = i * 100.0f,
 				arg_attachTo = content);
 
+			c->setCull(true);//cull invisible parts
+
 			spButton button = initActor(new Button, 
 				arg_resAnim = resourcesUI.getResAnim("button"),
 				arg_attachTo = c);

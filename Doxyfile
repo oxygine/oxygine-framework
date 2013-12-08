@@ -719,7 +719,13 @@ RECURSIVE              = YES
 # run.
 
 EXCLUDE                = oxygine/src/text_utils/ \
-                         oxygine/src/test/
+                         oxygine/src/minizip/ \
+                         oxygine/src/winnie_alloc/ \
+                         oxygine/src/closure/ \
+                         oxygine/src/dev_tools/ \
+                         oxygine/src/pugixml/ \
+                         oxygine/src/core/stage3d/ \
+
 
 # The EXCLUDE_SYMLINKS tag can be used to select whether or not files or 
 # directories that are symbolic links (a Unix file system feature) are excluded 

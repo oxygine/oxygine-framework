@@ -13,6 +13,11 @@
 	#endif
 #else
 	#define OXYGINE_SDL 1
+	#ifdef WIN32
+		#ifndef _CRT_SECURE_NO_WARNINGS
+			#define _CRT_SECURE_NO_WARNINGS
+		#endif
+	#endif
 #endif
 
 

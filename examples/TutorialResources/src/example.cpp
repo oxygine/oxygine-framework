@@ -3,6 +3,10 @@ using namespace oxygine;
 
 Resources animals;
 
+void example_preinit()
+{
+
+}
 void example_init()
 {
 	animals.loadXML("animals.xml");
@@ -16,6 +20,11 @@ void example_init()
 	cat->setResAnim(animals.getResAnim("cat"));
 	cat->setPosition(600, 300);
 	cat->attachTo(getRoot());
+}
+
+void example_update()
+{
+
 }
 
 void example_destroy()

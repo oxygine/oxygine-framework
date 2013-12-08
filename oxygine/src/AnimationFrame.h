@@ -22,10 +22,11 @@ namespace oxygine
 	class AnimationFrame
 	{
 	public:
-		AnimationFrame(): _flags(0), _srcRect(0, 0, 1, 1), _destRect(0, 0, 1, 1), _frameSize(0, 0), _resAnim(0){}
+		AnimationFrame():/* _flags(0), */_srcRect(0, 0, 1, 1), _destRect(0, 0, 1, 1), _frameSize(0, 0), _resAnim(0){}
 
 		void init(ResAnim *rs, const Diffuse &df, 
 			const RectF &srcRect, const RectF &destRect, const Vector2 &frame_size);
+		/**ResAnim should be valid!*/
 		AnimationFrame clip(const RectF &rect) const;
 		AnimationFrame flip(bool vertical, bool horizontal) const;
 
@@ -49,16 +50,13 @@ namespace oxygine
 		{
 			clipped = 0x01,
 		};
-		unsigned short	_flags;
+		
 		Diffuse			_diffuse;
-		/*
-		spTexture		_baseTexture;
-		spTexture		_alphaTexture;
-		bool			_premultiplied;
-		*/
+
 		RectF			_srcRect;
 		RectF			_destRect;
 		Vector2			_frameSize;//real size without clipping
 		ResAnim*		_resAnim;
+		//unsigned short	_flags;
 	};
 }

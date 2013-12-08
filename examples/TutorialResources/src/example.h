@@ -1,5 +1,4 @@
+void example_preinit();
 void example_init();
+void example_update();
 void example_destroy();
-
-const int VirtualWidth = 960;
-const int VirtualHeight = 640;

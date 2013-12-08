@@ -102,6 +102,10 @@ public:
 	}
 };
 
+void example_preinit()
+{
+}
+
 void example_init()
 {
 	//load xml file with resources definition

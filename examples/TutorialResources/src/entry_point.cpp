@@ -1,5 +1,10 @@
+/**
+Attention!
+This file has Oxygine initialization stuff.
+If you just started you don't need to understand it exactly you could check it later. 
+You could start from example.cpp and example.h it has main functions being called from there
+*/
 #include <stdio.h>
-
 #include "core/Renderer.h"
 #include "RootActor.h"
 #include "DebugActor.h"
@@ -12,20 +17,49 @@ using namespace oxygine;
 Renderer renderer;
 Rect viewport;
 
+
+class ExampleRootActor: public RootActor
+{
+public:
+	ExampleRootActor()
+	{
+		//each mobile application should handle focus lost
+		//and free/restore GPU resources
+		addEventListener(RootActor::DEACTIVATE, CLOSURE(this, &ExampleRootActor::onDeactivate));
+		addEventListener(RootActor::ACTIVATE, CLOSURE(this, &ExampleRootActor::onActivate));
+	}
+
+	void onDeactivate(Event *)
+	{
+		core::reset();
+	}
+
+	void onActivate(Event *)
+	{
+		core::restore();
+	}
+};
+
+//called each frame
 int mainloop()
 {
 	example_update();
 	//update our rootActor
 	//Actor::update would be called also for children
-	RootActor::instance->update();
+	getRoot()->update();
 
 	Color clear(33, 33, 33, 255);
 	//start rendering and clear viewport
-	renderer.begin(0, viewport, &clear);
-	//begin rendering from RootActor. 
-	RootActor::instance->render(renderer);
-	//rendering done
-	renderer.end();
+	if (renderer.begin(0, viewport, &clear))
+	{
+		//begin rendering from RootActor. 
+		getRoot()->render(renderer);
+		//rendering done
+		renderer.end();
+
+		core::swapDisplayBuffers();
+	}
+	
 
 	//update internal components
 	//all input events would be passed to RootActor::instance.handleEvent
@@ -39,34 +73,32 @@ int mainloop()
 void run()
 {	
 	//initialize oxygine's internal stuff
-	core::init();
-	
+	core::init_desc desc;
+
+#if OXYGINE_SDL
+	//we could setup initial window size on SDL builds
+	//desc.w = 960;
+	//desc.h = 660;
+	//marmalade settings could be changed from emulator's menu
+#endif
+
+	core::init(&desc);	
+	example_preinit();
 	
 	//create RootActor. RootActor is a root node
-	RootActor::instance = new RootActor();
-
-	
+	RootActor::instance = new ExampleRootActor();	
 	Point size = core::getDisplaySize();
-
-	//initialize it
-	//first argument is real display size of device.
-	//second is your "virtual" preferred size. You could change it to any size you need
-	//VirtualWidth and VirtualHeight are defined in example.h	
-	RootActor::instance->init(size, 
-		Point(VirtualWidth, VirtualHeight));
+	getRoot()->init(size, size);
 	
-
-	//DebugActor is a helper node it shows FPS and memory usage
+	//DebugActor is a helper node it shows FPS and memory usage and other useful stuff
 	DebugActor::initialize();
 
-
 	//create and add new DebugActor to root actor as child
-	RootActor::instance->addChild(new DebugActor());
+	getRoot()->addChild(new DebugActor());
 
 
-	//it is view and projection matrix  initialization stuff
 	
-	Matrix view = makeViewMatrix(size.x, size.y); //Returns View matrix where Left Top corner is (0,0), and right bottom is (w,h)
+	Matrix view = makeViewMatrix(size.x, size.y); 
 
 	viewport = Rect(0, 0, size.x, size.y);
 
@@ -74,18 +106,16 @@ void run()
 	//initialize projection matrix
 	Matrix::orthoLH(proj, (float)size.x, (float)size.y, 0, 1);
 	
-	//initialize Renderer
 	//Renderer is class helper for rendering primitives and batching them
 	//Renderer is lightweight class you could create it many of times
-	//for example if you need to render something into RenderTarget (FBO)
 	renderer.setDriver(IVideoDriver::instance);
-	renderer.setViewTransform(view);
-	renderer.setProjTransform(proj);
 
+	//initialization view and projection matrix 	
+	//where Left Top corner is (0, 0), and right bottom is (width, height)
+	renderer.initCoordinateSystem(size.x, size.y);
 
-	//initialize this example stuff. check example.cpp
+	//initialize this example stuff. see example.cpp
 	example_init();
-
 
 	bool done = false;	
 
@@ -96,17 +126,16 @@ void run()
 		if (done)
 			break;
     }
-	//so user closed application
+	//so user want to leave application...
 	
-	//lets dump all created objects into Output
+	//lets dump all created objects into log
 	//all created and not freed resources would be displayed
 	ObjectBase::dumpCreatedObjects();
 
-
 	//lets cleanup everything right now and call ObjectBase::dumpObjects() again
 	//we need to free all allocated resources and delete all created actors
-	//yes, actor is smart pointer and actually you don't need it remove by hands
-	//but now we want delete it forcedly
+	//all actors/sprites are smart pointer objects and actually you don't need it remove them by hands
+	//but now we want delete it by hands
 
 	//check example.cpp
 	example_destroy();	
@@ -120,7 +149,6 @@ void run()
 	//dump list should be empty now
 	//we deleted everything and could be sure that there aren't any memory leaks
 	ObjectBase::dumpCreatedObjects();
-
 	//end
 }
 

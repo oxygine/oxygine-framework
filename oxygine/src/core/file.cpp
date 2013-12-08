@@ -169,7 +169,11 @@ namespace oxygine
 #if __S3E__
 			s3eFileDeleteDirectory(path);
 #else
+#ifdef WIN32
+			_rmdir(path);
+#else
 			rmdir(path);
+#endif
 #endif
 		}
 

@@ -1,4 +1,5 @@
 #include "AnimationFrame.h"
+#include "res/ResAnim.h"
 namespace oxygine
 {
 	void AnimationFrame::init(ResAnim *rs, const Diffuse &df, const RectF &srcRect, const RectF &destRect, const Vector2 &frame_size)
@@ -21,6 +22,8 @@ namespace oxygine
 		RectF srcRect = _srcRect * Vector2(w, h);
 
 		float sc = 1.0f;//(float)srcRect.getWidth() / f._destRect.getWidth();
+		if (_resAnim)
+			sc = _resAnim->getScaleFactor();
 
 
 		f._srcRect.pos = srcRect.pos - (_destRect.pos - f._destRect.pos) * sc;

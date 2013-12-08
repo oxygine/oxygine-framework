@@ -1,5 +1,10 @@
+/**
+Attention!
+This file has Oxygine initialization stuff.
+If you just started you don't need to understand it exactly you could check it later. 
+You could start from example.cpp and example.h it has main functions being called from there
+*/
 #include <stdio.h>
-
 #include "core/Renderer.h"
 #include "RootActor.h"
 #include "DebugActor.h"
@@ -35,7 +40,8 @@ public:
 	}
 };
 
-int mainloop() 
+//called each frame
+int mainloop()
 {
 	example_update();
 	//update our rootActor
@@ -77,6 +83,7 @@ void run()
 #endif
 
 	core::init(&desc);	
+	example_preinit();
 	
 	//create RootActor. RootActor is a root node
 	RootActor::instance = new ExampleRootActor();	
@@ -90,8 +97,7 @@ void run()
 	getRoot()->addChild(new DebugActor());
 
 
-	//initialization view and projection matrix 	
-	//makeViewMatrix returns View matrix where Left Top corner is (0,0), and right bottom is (w,h)
+	
 	Matrix view = makeViewMatrix(size.x, size.y); 
 
 	viewport = Rect(0, 0, size.x, size.y);
@@ -100,12 +106,13 @@ void run()
 	//initialize projection matrix
 	Matrix::orthoLH(proj, (float)size.x, (float)size.y, 0, 1);
 	
-	//initialize Renderer
 	//Renderer is class helper for rendering primitives and batching them
 	//Renderer is lightweight class you could create it many of times
-	//for example if you need to render something into RenderTarget (FBO)
 	renderer.setDriver(IVideoDriver::instance);
-	renderer.setViewProjTransform(view, proj);
+
+	//initialization view and projection matrix 	
+	//where Left Top corner is (0, 0), and right bottom is (width, height)
+	renderer.initCoordinateSystem(size.x, size.y);
 
 	//initialize this example stuff. see example.cpp
 	example_init();

@@ -4,6 +4,12 @@
 #include "shared.h"
 
 using namespace oxygine;
+
+void example_preinit()
+{
+
+}
+
 void example_init()
 {
 	//load xml file with resources definition

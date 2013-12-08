@@ -85,5 +85,6 @@ oxygine/system_data/data/
 examples/Demo/win32/My Inspector XE Results *
 examples/DemoBox2D/build_box2d_vc11/
 examples/Demo/build_demo_vc11/
+examples/TutorialResources/build_tutorialresources_vc10
 syntax: regexp
 ^build/
