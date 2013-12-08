@@ -110,6 +110,7 @@ public:
 
 	~TestUserShader()
 	{
+		delete _shaderInvert;
 		delete _shaderMono;
 		delete _shaderAddColor;
 	}

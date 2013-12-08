@@ -6,7 +6,7 @@ import zipfile
 dest = "../../temp/oxygine-framework/"
 
 print "cleaning temp..."
-shutil.rmtree("temp", True)
+shutil.rmtree("../../temp", True)
 
 print "hg archive..."
 os.system("hg archive " + dest)

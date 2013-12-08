@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<resources>
+	<set path = "images" />
+	<atlas>
+		<image file="joystick.png" />
+		<image file="finger.png" />
+	</atlas>
+
+	<atlas>
+		<image file="sky.jpg" />
+		<image file="ship.png" />
+		<image file="shipengine.png" />
+	</atlas>
+</resources>
