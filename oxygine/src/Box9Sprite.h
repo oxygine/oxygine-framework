@@ -21,6 +21,9 @@ namespace oxygine
 		void setVerticalMode(StretchMode m);
 		void setHorizontalMode(StretchMode m);
 
+		/**
+		Set distance from left, right, top and bottom edges
+		*/
 		void setGuides(float x1, float x2, float y1, float y2);
 		void setVerticalGuides(float x1, float x2);
 		void setHorizontalGuides(float y1, float y2);

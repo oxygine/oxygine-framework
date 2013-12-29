@@ -466,7 +466,7 @@ namespace oxygine
 						break;
 					}
 					_image.format = tf;
-					_offset = sizeof(pvr_header);
+					_offset = sizeof(pvr_header) + header->meta_data_size;
 					_image.pitch = (buffer.getSize() - _offset) / _image.h;
 					_buffer.swap(buffer.data);
 				}

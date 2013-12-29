@@ -21,12 +21,11 @@ namespace oxygine
 	}
 
 	void Mem2Native::push(spMemoryTexture src, spNativeTexture dest)
-	{			
-		//_messages.send(src.get(), dest.get());
-
+	{	
 		src->addRef();
 		dest->addRef();
-		_messages.post(0, src.get(), dest.get());
+		_messages.send(0, src.get(), dest.get());
+		//_messages.post(0, src.get(), dest.get());
 	}
 	
 	bool Mem2Native::isEmpty()

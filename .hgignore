@@ -89,5 +89,8 @@ examples/TutorialResources/build_tutorialresources_vc10
 examples/Game/part1/build_game_vc
 examples/Game/part1/build_game_vc10/
 examples/Game/part2/build_game_vc10
+examples/Game/part3/build_game_vc10
+examples/Game/part4/build_game_vc10/
+examples/Game - Copy/
 syntax: regexp
 ^build/

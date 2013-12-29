@@ -27,7 +27,7 @@ namespace oxygine
 			vector<char> bf;
 			bf.resize(length);
 			glGetShaderInfoLog(shader, bf.size(), NULL, &bf.front());
-			log::message("shader compiled: %s", &bf.front());
+			log::messageln("shader compiled: %s", &bf.front());
 
 			GLint success;
 			glGetShaderiv(shader, GL_COMPILE_STATUS, &success);

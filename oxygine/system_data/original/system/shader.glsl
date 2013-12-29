@@ -42,6 +42,7 @@ lowp vec4 get_base()
 #endif
 
 #ifdef MODIFY_BASE
+	//define MODIFY_BASE and declare your own function modify_base
 	base = modify_base(base);
 #endif
 
@@ -50,7 +51,13 @@ lowp vec4 get_base()
 
 lowp vec4 get_color()
 {
+
+#ifdef REPLACED_GET_BASE
+	//define REPLACED_GET_BASE and declare your own function replaced_get_base()
+	lowp vec4 base = replaced_get_base();
+#else
 	lowp vec4 base = get_base();
+#endif
 
 
 #ifdef MASK
@@ -66,12 +73,24 @@ lowp vec4 get_color()
 	base = base * mask_alpha;
 #endif
 
+#ifdef DONT_MULT_BY_RESULT_COLOR
+	//for your purposes
+	return base;
+#else
 	return base * result_color;
+#endif	
 }
 
 
 void program_main_ps()
 {	
+
+#ifdef REPLACED_GET_COLOR
+	//define REPLACED_GET_COLOR and declare your own function replaced_get_color()
+	gl_FragColor = replaced_get_color();
+#else
 	gl_FragColor = get_color();
+#endif
+
 }
 #endif

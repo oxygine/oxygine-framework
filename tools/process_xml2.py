@@ -12,6 +12,8 @@ def get_parser():
     parser.add_argument("-r", "--resize", help = "downscale/upscale by scale factor", action="store_true", default = False)
     parser.add_argument("-us", "--upscale", help = "allow upscale. good option for very HD displays with texture compression", action="store_true", default = False)
     parser.add_argument("-c", "--compression", help = "compression type of images. default is pure rgba8888", default = "")
+    parser.add_argument("-q", "--quality", help = "select quality to compressed textures", choices = ["default", "fast", "best"], default = "default")
+    parser.add_argument("-d", "--dither", help = "added dithering to compressed textures (pvr option)", action="store_true", default = False)
     #parser.add_argument("--android_sdk", help = "path to android sdk", default = "")
     parser.add_argument("-debug", "--debug", help = "debug mode", type=bool, default = False)
     parser.add_argument("-w", "--warnings", help = "show warnings", type=bool, default = False)

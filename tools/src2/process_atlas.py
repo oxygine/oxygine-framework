@@ -113,6 +113,7 @@ class settings:
         self.max_w = 2048
         self.max_h = 2048
         self.atlasses = []
+        self.square = False
 
 def pack(st, frames, sw, sh):                       
                 
@@ -164,6 +165,9 @@ def pck(st, frames):
         for sw in sizes_w:
             for sh in sizes_h:
                 end = sh == sizes_h[-1] and sw == sizes_w[-1]
+                
+                if st.square and sw != sh:
+                    continue
                 
                 if sw * sh < sq and not end:
                     continue                
@@ -385,6 +389,7 @@ class atlas_Processor(process.Process):
         st.set_node = set_node
         st.max_w = context.args.max_width
         st.max_h = context.args.max_height
+        st.square = context.compression == "pvrtc"
         
         pck(st, frames) 
 
@@ -412,7 +417,13 @@ class atlas_Processor(process.Process):
             def compress(src, dest, fmt):
                 cmd = context.helper.path_pvrtextool + " -i %s -f %s,UBN,lRGB -o %s" % (src, fmt, dest)
                 cmd += " -l" #alpha bleed
-                if upscale:
+                                
+                if context.args.quality == "best":
+                    cmd += " -q pvrtcbest"
+                else:
+                    cmd += " -q pvrtcfast"
+                    
+                if upscale or context.args.dither:
                     cmd += " -dither"                            
                 cmd += " -shh" #silent
                 os.system(cmd)

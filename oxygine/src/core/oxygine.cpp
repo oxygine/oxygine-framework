@@ -695,7 +695,9 @@ namespace oxygine
 
 #endif
 #ifdef OXYGINE_SDL
-			OX_ASSERT(!"requestQuit");
+			SDL_Event ev;
+			ev.type = SDL_QUIT;
+			SDL_PushEvent(&ev);
 #endif	
 		}
 

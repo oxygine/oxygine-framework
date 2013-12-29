@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<resources>
+	<set path = "images/ui" />
+	<atlas>
+		<image file="joystick.png" />
+		<image file="finger.png" />
+		<image file="play.png" />
+		<image file="logo2.png" />
+		<image file="menu.png" />
+		<image file="box9.png" />
+		<image file="bg.jpg" />
+		<image file="buttons.png" rows="5" cols="2"/>
+	</atlas>
+
+	<set path = "fonts" />
+	<font file="normal.fnt"/>
+	<font id="big" file="huge.fnt"/>
+
+	<set path = "images" />
+	<atlas>
+		<image file="sky.jpg" />
+		<image file="ship.png" />
+		<image file="shipengine.png" />
+		<image file="rocket.png" />
+		<image file="explosion.png" cols="12"/>
+		<image file="asteroid.png"/>
+	</atlas>
+</resources>

@@ -15,7 +15,7 @@
 #else
 #ifdef WIN32
 #include <Windows.h>
-#define LOGD(str) OutputDebugStringA(str)
+#define LOGD(str) fputs(str, stdout); OutputDebugStringA(str);
 #else
 #define LOGD(str) fputs(str, stdout)
 #endif
