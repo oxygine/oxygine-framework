@@ -1,21 +1,18 @@
-You need SDL2.0
-(hg clone http://hg.libsdl.org/SDL)
-
-folders structure:
-root\
-     oxygine-framework
-     SDL
-     SDLTests
-     
-
+1. read readme.SDL2
+2. Example 'Demo' has configured android project
 how to build. Steps:
-- unpack oxygine-framework\oxygine\SDL\android\SDLTests.zip to the same level with oxygine-framework and SDL
-  (to the "root" folder, see example above)
-- goto SDLTests\android-project
-- check local.properties and path to sdk
+- goto oxygine-framework/examples/demo/proj.android/
+- check local.properties and path to android sdk
 - check that you have Android-12 sdk installed
-- copy latest source code from SDL\android-project\src\org\libsdl\app\ to SDLTests\android-project\src\org\libsdl\app\
-- copy assets from oxygine's Demo example
+- copy latest source code 
+	from SDL/android-project/src/org/libsdl/app/
+	to oxygine-framework/examples/demo/proj.android/src/org/libsdl/app/
+- copy assets from oxygine's Demo example:
+  from oxygine-framework\examples\Demo\data\
+  to oxygine-framework\examples\Demo\proj.android\assets\
+- application is ready to build
+
+you could use this batch files
 - run build.cmd
 - run ant_debug.bat
-- apk is ready here: SDLTests\android-project\bin !
+- apk is ready
