@@ -92,5 +92,9 @@ examples/Game/part2/build_game_vc10
 examples/Game/part3/build_game_vc10
 examples/Game/part4/build_game_vc10/
 examples/Game - Copy/
+examples/Demo/proj.marmalade/build_demo_vc10
+examples/Demo/proj.win32/Debug
+examples/Demo/proj.win32/Release
+examples/Demo/data-ram/
 syntax: regexp
 ^build/

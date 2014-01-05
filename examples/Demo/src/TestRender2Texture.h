@@ -66,7 +66,7 @@ public:
 		r.setDiffuse(df);
 		r.setPrimaryColor(color);
 		r.setBlendMode(blend_alpha);
-		float pressure =  te->pressure;
+		float pressure =  1.0f;//te->pressure;
 		//log::messageln("pressure %.2f", pressure);
 		//pressure = pressure * pressure;
 		r.draw(frame.getSrcRect(), 

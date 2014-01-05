@@ -392,6 +392,41 @@ namespace oxygine
 		}
 	};
 
+	class PixelB8G8R8A8
+	{
+		/*
+		in memory: B8 G8 R8 A8
+		in dword: A8 R8 G8 B8
+		*/
+
+	public:
+		void getPixel(const unsigned char *data, Pixel &p) const
+		{
+			p.r = data[2];
+			p.g = data[1];
+			p.b = data[0];
+			p.a = data[3];
+		}
+
+		void setPixel(unsigned char *data, const Pixel &p)
+		{
+			data[2] = p.r;
+			data[1] = p.g;
+			data[0] = p.b;
+			data[3] = p.a;
+		}
+
+		void copy(const unsigned char *src, unsigned char *dst)
+		{
+			*((unsigned int *)dst) = *((unsigned int *)src);
+		}
+
+		unsigned char snap_a(unsigned char alpha) const
+		{
+			return alpha;
+		}
+	};
+
 	class PixelX8R8G8B8 : public PixelA8R8G8B8{};
 	class PixelR8G8B8X8 : public PixelR8G8B8A8{};
 

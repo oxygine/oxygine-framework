@@ -4,5 +4,6 @@
   #define IPHONE_TOUCH_EFFICIENT_DANGEROUS  
   
 - open xcode 5 project from:
-  examples\Demo\ios\OxygineDemo\
+  examples\Demo\proj.ios\
+- select correct scheme: demo_ios-> iOS Simulator or real device
 - build and run!

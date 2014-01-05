@@ -11,6 +11,7 @@ namespace oxygine
 		case TF_A8L8:
 			return 2;
 		case TF_R8G8B8A8:
+		case TF_B8G8R8A8:
 			return 4;
 		case TF_R8G8B8:
 			return 3;

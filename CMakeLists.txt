@@ -121,3 +121,7 @@ set(OXYGINE_INCLUDE_DIRS
 	${OXYGINE_INCLUDE_DIRS}
 	PARENT_SCOPE)
 
+set(CMAKE_INSTALL_PREFIX ../libs)
+install(TARGETS oxygine-framework CONFIGURATIONS Debug DESTINATION ./debug)
+install(TARGETS oxygine-framework CONFIGURATIONS Release DESTINATION ./release)
+

@@ -2,7 +2,7 @@
 
 2. There is prebuilt solution for VS2010 with Demo example:
 =================================================================================================
-- open solution from oxygine-framework\examples\Demo\win32\
+- open solution from oxygine-framework\examples\Demo\proj.win32\
 - if you don't have directx sdk installed then find open SDL_config_windows.h and comment this line:
     //#define SDL_AUDIO_DRIVER_XAUDIO2    1
 - try to build Demo

@@ -253,6 +253,7 @@ namespace oxygine
 				desc = *desc_ptr;
 
 	#ifdef __S3E__
+            log::messageln("S3E build");
 			if (!IwGLInit())
 			{
 				s3eDebugErrorShow(S3E_MESSAGE_CONTINUE, "eglInit failed");
@@ -294,7 +295,7 @@ namespace oxygine
 		
 	#ifdef OXYGINE_SDL
 
-			log::messageln("sdl");
+			log::messageln("SDL build");
 			int flags = SDL_WINDOW_SHOWN;
 
 	#ifndef USE_EGL
@@ -306,25 +307,38 @@ namespace oxygine
 			SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 0);
 			SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 0);
 			SDL_GL_SetAttribute(SDL_GL_RETAINED_BACKING, 0);
-			SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
+			//SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
 			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
-			flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_BORDERLESS;
+			flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
+            
+#if TARGET_OS_IPHONE
+            flags |= SDL_WINDOW_BORDERLESS;
+#endif
+            
 	#endif
+            
 
 			SDL_DisplayMode mode;
 			SDL_GetCurrentDisplayMode(0, &mode);
 			log::messageln("display mode: %d %d", mode.w, mode.h);
 
-	#ifdef WIN32
-			flags &= ~SDL_WINDOW_BORDERLESS;
-	#endif
+            if (desc.w == -1 && desc.h == -1)
+            {
+                desc.w = 960;
+                desc.h = 640;
+            }
 
 			_window = SDL_CreateWindow(desc.title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, desc.w, desc.h, flags);
 
 
 	#ifndef USE_EGL
 			_context = SDL_GL_CreateContext(_window);
+            if (!_context)
+            {
+                log::error("can't create gl context");
+                return;
+            }
 
 			initGLExtensions();
 	#else

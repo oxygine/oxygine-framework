@@ -73,7 +73,7 @@
 #endif
 
 namespace oxygine {void checkGLError();}
-//#define CHECKGL() checkGLError()
-#define CHECKGL() {}
+#define CHECKGL() checkGLError()
+//#define CHECKGL() {}
 
 void initGLExtensions();

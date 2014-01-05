@@ -463,7 +463,11 @@ class atlas_Processor(process.Process):
                 os.remove(alpha_path)
                 image_atlas_el.setAttribute("alpha", pkm_alpha)            
             else:
-                path_base = base_name + ".png"
+                if context.args.nopng:
+                    path_base = base_name + ".tga"
+                else:
+                    path_base = base_name + ".png"
+                    
                 path = context.get_inner_dest(path_base)
                 image_atlas_el.setAttribute("file", path_base)
                 image.save(path)            
@@ -473,7 +477,9 @@ class atlas_Processor(process.Process):
 
                     compress(path, context.get_inner_dest(base_name + ".pvr"), "PVRTC1_4")
                     image_atlas_el.setAttribute("file", base_name + ".pvr")
-                    os.remove(path)
+                    os.remove(path)             
+                    
+                    
 
 
             image_atlas_el.setAttribute("format", ox_fmt)

@@ -4,6 +4,8 @@
 #include "core/file.h"
 #include "core/log.h"
 
+#include "utils/ImageUtils.h"
+
 extern "C"
 {
     #include "png.h"
@@ -21,6 +23,7 @@ namespace oxygine
 		IT_PNG,
 		IT_PKM,
 		IT_PVR,
+		IT_TGA,
 		IT_JPEG
 	};
 	class CCImageHelper
@@ -35,7 +38,7 @@ namespace oxygine
 
 		static boolean JPEGFillInputBuffer(j_decompress_ptr cinfo)
 		{
-			return 0;
+			return FALSE;
 		}
 
 		static void JPEGSkipInputData(j_decompress_ptr cinfo, long num_bytes)
@@ -62,6 +65,8 @@ namespace oxygine
 			return IT_PKM;
 		if (dt == 0x03525650)
 			return IT_PVR;
+		if (data[0] == 0 && data[1] == 0 && data[2] == 2)
+			return IT_TGA;
 
 		return IT_UNKNOWN;
 	}
@@ -93,7 +98,25 @@ namespace oxygine
 		unsigned int num_mips;
 		unsigned int meta_data_size;
 	};
-	
+
+#pragma pack(push, 1)
+	struct tga_header
+	{
+		char  idlength;
+		char  colourmaptype;
+		char  datatypecode;
+		short int colourmaporigin;
+		short int colourmaplength;
+		char  colourmapdepth;
+		short int x_origin;
+		short int y_origin;
+		short width;
+		short height;
+		char  bitsperpixel;
+		char  imagedescriptor;
+	};
+#pragma pack(pop)
+
 	unsigned short swapByteOrder(unsigned short us)
 	{
 		return (us >> 8) |	(us << 8);
@@ -469,6 +492,32 @@ namespace oxygine
 					_offset = sizeof(pvr_header) + header->meta_data_size;
 					_image.pitch = (buffer.getSize() - _offset) / _image.h;
 					_buffer.swap(buffer.data);
+				}
+				break;
+			case IT_TGA:
+				{
+					const tga_header* header = (const tga_header*)buffer.getData();
+					if (header->bitsperpixel == 32)
+					{
+						int pitch = header->width * 4;
+
+						ImageData src;
+						if (!(header->imagedescriptor & 32))
+						{
+							src = ImageData(header->width, header->height, -pitch, TF_B8G8R8A8, (char*)buffer.getData() + sizeof(tga_header) + (header->height - 1) * pitch);
+						}
+						else
+						{
+							src = ImageData(header->width, header->height, pitch, TF_B8G8R8A8, (char*)buffer.getData() + sizeof(tga_header));
+						}
+
+						init(header->width, header->height, format);
+						updateRegion(0, 0, src);						
+						
+
+//						saveImage(lock(), "test.png", "png");
+					}
+					int q=0;
 				}
 				break;
 			default:
