@@ -35,7 +35,7 @@ namespace file
 
 		bf.data.resize(file_info.uncompressed_size);
 		r = unzReadCurrentFile(entry->zp, &bf.data.front(), bf.data.size());
-		OX_ASSERT(r == file_info.uncompressed_size);
+		OX_ASSERT(r == (int)file_info.uncompressed_size);
 
 		unzCloseCurrentFile(entry->zp);
 		return true;
@@ -167,6 +167,18 @@ namespace file
 			int r = unzCloseCurrentFile(_entry->zp);
 			OX_ASSERT(r == UNZ_OK);
 			delete this;
+		}
+
+		int	seek(unsigned int offset, int whence)
+		{
+			OX_ASSERT(!"not implemented");
+			return 0;
+		}
+
+		unsigned int tell() const
+		{
+			OX_ASSERT(!"not implemented");
+			return 0;
 		}
 
 		unsigned int read(void *dest, unsigned int size)

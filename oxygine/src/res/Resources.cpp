@@ -30,6 +30,14 @@ namespace oxygine
 		strcpy(r.id, resTypeID);
 				
 		registeredResources::iterator it = lower_bound(_registeredResources.begin(), _registeredResources.end(), r.id, registeredResource::comparePred2);
+		if (it != _registeredResources.end())
+		{
+			if(!strcmp(it->id, resTypeID))
+			{
+				OX_ASSERT(!"resource already registered");
+				return;
+			}
+		}
 		_registeredResources.insert(it, r);
 
 		/*

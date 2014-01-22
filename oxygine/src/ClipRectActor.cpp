@@ -36,7 +36,7 @@ namespace oxygine
 
 	void ClipRectActor::handleEvent(Event *event)
 	{
-		bool touchEvent = event->type > _et_TouchFirst && event->type < _et_TouchLast;
+		bool touchEvent = (event->type > (int)_et_TouchFirst && event->type < (int)_et_TouchLast);
 		if (touchEvent)
 		{
 			TouchEvent *te = safeCast<TouchEvent*>(event);

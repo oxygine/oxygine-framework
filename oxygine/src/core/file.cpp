@@ -93,6 +93,18 @@ namespace oxygine
 			fh->release();
 		}
 
+		int seek(handle h, unsigned int offset, int whence)
+		{
+			fileHandle *fh = (fileHandle *)h;
+			return fh->seek(offset, whence);
+		}
+
+		unsigned int tell(handle h)
+		{
+			fileHandle *fh = (fileHandle *)h;
+			return fh->tell();
+		}
+
 		bool deleteFile(const char *path, error_policy ep)
 		{
 			bool ok = _nfs.deleteFile(path) == FileSystem::status_ok;

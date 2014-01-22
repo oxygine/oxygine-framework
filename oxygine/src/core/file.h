@@ -44,6 +44,9 @@ namespace oxygine
 		/**Closes opened file handle*/
 		void close(handle);
 
+		int seek(handle, unsigned int offset, int whence);
+		unsigned int tell(handle);
+
 		/**Reads bytes into user memory*/
 		unsigned int read(handle, void *dest, unsigned int size);
 

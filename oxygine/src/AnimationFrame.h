@@ -27,8 +27,8 @@ namespace oxygine
 		void init(ResAnim *rs, const Diffuse &df, 
 			const RectF &srcRect, const RectF &destRect, const Vector2 &frame_size);
 		/**ResAnim should be valid!*/
-		AnimationFrame clip(const RectF &rect) const;
-		AnimationFrame flip(bool vertical, bool horizontal) const;
+		AnimationFrame getClipped(const RectF &rect) const;
+		AnimationFrame getFlipped(bool vertical, bool horizontal) const;
 
 		/**Returns size of frame in pixels*/		
 		const Vector2&	getSize() const {return _frameSize;}

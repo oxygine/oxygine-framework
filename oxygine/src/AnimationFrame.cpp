@@ -11,7 +11,7 @@ namespace oxygine
 		_frameSize = frame_size.cast<PointS>();
 	}
 
-	AnimationFrame AnimationFrame::clip(const RectF &rect) const
+	AnimationFrame AnimationFrame::getClipped(const RectF &rect) const
 	{
 		AnimationFrame f = *this;
 		float w = (float)_diffuse.base->getWidth();
@@ -36,7 +36,7 @@ namespace oxygine
 		return f;
 	}
 
-	AnimationFrame AnimationFrame::flip(bool vertical, bool horizontal) const
+	AnimationFrame AnimationFrame::getFlipped(bool vertical, bool horizontal) const
 	{
 		AnimationFrame f = *this;
 		if (vertical)

@@ -142,6 +142,20 @@ namespace oxygine
 				return oxFileWrite(src,1, size, _handle);
 			}
 
+			int seek(unsigned int offset, int whence)
+			{
+#ifdef __S3E__
+				return oxFileSeek(_handle, offset, (s3eFileSeekOrigin)whence);
+#else
+				return oxFileSeek(_handle, offset, whence);
+#endif
+			}
+
+			unsigned int tell() const
+			{
+				return oxFileTell(_handle);
+			}
+
 			virtual unsigned int getSize() const
 			{
 				oxFileSeek(_handle, 0, ox_FILESEEK_END);

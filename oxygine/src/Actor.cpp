@@ -328,7 +328,7 @@ namespace oxygine
 
 			if (_parent)
 			{
-				bool touchEvent = event->type > _et_TouchFirst && event->type < _et_TouchLast;
+				bool touchEvent = (event->type > (int)_et_TouchFirst) && (event->type < (int)_et_TouchLast);
 
 				if(touchEvent)
 				{	
@@ -347,7 +347,7 @@ namespace oxygine
 
 	void Actor::handleEvent(Event *event)
 	{
-		bool touchEvent = event->type > _et_TouchFirst && event->type < _et_TouchLast;
+		bool touchEvent = (event->type > (int)_et_TouchFirst) && (event->type < (int)_et_TouchLast);
 		if (touchEvent)
 		{
 			if (!(_flags & flag_visible) || getAlpha() == 0)

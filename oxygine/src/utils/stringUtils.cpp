@@ -178,16 +178,17 @@ namespace oxygine
 
 		const char &c = *utfstr++;
 		p[0] = c;
-
+		
+		if((c & 0xE0) == 0xE0)
+		{
+			p[1] = *utfstr++;
+			p[2] = *utfstr++;
+		}
+		else
 		if((c & 0xC0) == 0xC0)
 		{
 			p[1] = *utfstr++;
-		} else
-			if((c & 0xE0) == 0xE0)
-			{
-				p[1] = *utfstr++;
-				p[2] = *utfstr++;
-			}
+		} 
 
 		return utfstr;
 	}

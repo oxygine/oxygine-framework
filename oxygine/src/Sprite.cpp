@@ -15,7 +15,12 @@ namespace oxygine
 
 	Sprite::~Sprite()
 	{
-	
+		if (_flags & flag_manageResAnim)
+		{
+			ResAnim *rs = _frame.getResAnim();
+			if (rs)
+				rs->getAtlas()->unload();
+		}		
 	}
 
 	Sprite::Sprite(const Sprite &src, cloneOptions opt):VStyleActor(src, opt)

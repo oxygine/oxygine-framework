@@ -256,14 +256,14 @@ namespace oxygine
 					{
 						if (xc == 0) // select correct index for _guides% arrays
 							xgi = 0;
-						else if (xc == _pointsX.size() - 2)
+						else if (xc == (int)_pointsX.size() - 2)
 							xgi = 2;
 						else
 							xgi = 1;
 					
 						if (yc == 0)
 							ygi = 0;
-						else if (yc == _pointsY.size() - 2)
+						else if (yc == (int)_pointsY.size() - 2)
 							ygi = 2;
 						else
 							ygi = 1;

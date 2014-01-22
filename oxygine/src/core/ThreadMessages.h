@@ -4,6 +4,24 @@
 #include "pthread.h"
 namespace oxygine
 {
+	class MutexPthreadLock
+	{
+	public:
+		MutexPthreadLock(pthread_mutex_t &m, bool lock = true):_mutex(m), _locked(lock)
+		{
+			if (_locked)
+				pthread_mutex_lock(&_mutex);
+		}
+
+		~MutexPthreadLock()
+		{
+			pthread_mutex_unlock(&_mutex);
+		}
+
+		pthread_mutex_t& _mutex;
+		bool _locked;
+	};
+
 	class ThreadMessages
 	{
 	public:		
@@ -23,6 +41,8 @@ namespace oxygine
 			bool _replied;
 		};
 
+		typedef std::vector<message> messages;
+
 		ThreadMessages();
 		~ThreadMessages();
 
@@ -30,6 +50,7 @@ namespace oxygine
 		void wait();
 		void get(message &ev);
 		bool peek(message &ev, bool del);
+		void clear();
 				
 		void*send(int msgid, void *arg1, void *arg2);
 		void sendCallback(int msgid, void *arg1, void *arg2, callback cb, void *cbData);
@@ -37,9 +58,14 @@ namespace oxygine
 
 		void reply(void *val);		
 
+		/*
+		messages &pause(pthread_mutex_t &mutex);
+		void resume();
+		*/
+
 	private:
 		void _replyLast(void *val);
-		std::vector<message> _events;
+		messages _events;
 		unsigned int _id;
 		unsigned int _waitReplyID;
 		//unsigned int _lastGetID;

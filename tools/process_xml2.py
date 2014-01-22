@@ -12,7 +12,7 @@ def get_parser():
     parser.add_argument("-r", "--resize", help = "downscale/upscale by scale factor", action="store_true", default = False)
     parser.add_argument("-us", "--upscale", help = "allow upscale. good option for very HD displays with texture compression", action="store_true", default = False)
     parser.add_argument("-c", "--compression", help = "type of images compression. default is pure rgba8888 packed to png", 
-                        choices = ["pvrtc", "etc1"], default = "")
+                        choices = ["pvrtc", "etc1", "no"], default = "")
     parser.add_argument("-np", "--nopng", help = "store images without packing to png", 
                             action="store_true", default = False)    
     parser.add_argument("-q", "--quality", help = "select quality to compressed textures", 

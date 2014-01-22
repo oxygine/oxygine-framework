@@ -78,11 +78,12 @@ namespace oxygine
 			const ResAnim *_resAnim;
 			int _col;
 			int _row;
+			bool _managed;
 			AnimationFrame _frame;
 			bool _useResAnim;
 
 		public:
-			animFrame(int col = 0, int row = 0):_col(col), _row(row), _resAnim(0), _useResAnim(true){}
+			animFrame(bool managed, int col, int row):_col(col), _row(row), _resAnim(0), _useResAnim(true), _managed(managed){}
 
 			animFrame &operator = (const ResAnim *r)
 			{
@@ -100,6 +101,8 @@ namespace oxygine
 
 			void apply(Sprite *s) const
 			{
+				if (_managed)
+					s->setManageResAnim(_managed);
 				if (_useResAnim)
 					return s->setAnimFrame(_resAnim, _col, _row);
 				return s->setAnimFrame(_frame);
@@ -153,8 +156,9 @@ namespace oxygine
 		
 
 //sprite or button
-#define arg_animFrame args::animFrame()
-#define arg_resAnim args::animFrame()
+#define arg_animFrame args::animFrame(false, 0, 0)
+#define arg_resAnim args::animFrame(false, 0, 0)
+#define arg_managedResAnim args::animFrame(true, 0, 0)
 
 //TextActor
 #define arg_style args::style()

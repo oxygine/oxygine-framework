@@ -86,7 +86,7 @@ voidpf ZCALLBACK fopen_mem_func (opaque, filename, mode)
      * size of an int and therefore may need addressing for 64bit
      * architectures
      */
-    if (sscanf(filename,"%x+%x",&mem->base,&mem->size)!=2)
+    if (sscanf(filename,"%x+%x", (unsigned int*)&mem->base, (unsigned int*)&mem->size)!=2)
       return NULL;
 
     if (mode & ZLIB_FILEFUNC_MODE_CREATE)
