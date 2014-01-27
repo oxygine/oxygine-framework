@@ -1,6 +1,7 @@
 #include "blocking.h"
 #include "Button.h"
 #include "Tweener.h"
+#include "RootActor.h"
 
 namespace oxygine
 {
@@ -68,12 +69,13 @@ namespace oxygine
 
 			clickWait(spActor button, timeMS timeOut):_clicked(false), _timeOut(timeOut)
 			{
-				timeMS start = getTimeMS();
+				spClock clock = getRoot()->getClock();
+				timeMS start = clock->getTime();
 				button->addEventListener(TouchEvent::CLICK, CLOSURE(this, &clickWait::click));
 				do
 				{
 					yield();
-					if (timeOut > 0 && (getTimeMS() - start > timeOut))					
+					if (timeOut > 0 && (clock->getTime() - start > timeOut))					
 						break;
 				} while (!_clicked);
 

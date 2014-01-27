@@ -96,5 +96,8 @@ examples/Demo/proj.marmalade/build_demo_vc10
 examples/Demo/proj.win32/Debug
 examples/Demo/proj.win32/Release
 examples/Demo/data-ram/
+examples/Demo/proj.android/libs/
+examples/Demo/proj.android/obj/
+obj/
 syntax: regexp
 ^build/

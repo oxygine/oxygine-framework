@@ -488,6 +488,7 @@ namespace oxygine
 			Restorable::releaseAll();
 			Renderer::reset();
 			IVideoDriver::instance->reset();
+			log::messageln("core::reset() done");
 		}
 
 		void restore()
@@ -496,6 +497,7 @@ namespace oxygine
 			IVideoDriver::instance->restore();
 			Renderer::restore();
 			Restorable::restoreAll();
+			log::messageln("core::restore() done");
 		}
 
 		
@@ -530,6 +532,11 @@ namespace oxygine
 
 		bool update()
 		{
+			ThreadMessages::message msg;
+			while (_threadMessages.peek(msg, true))
+			{
+
+			}
 #ifdef __S3E__
 
 			s3eDeviceYield(0);
@@ -715,6 +722,11 @@ namespace oxygine
 #endif	
 		}
 
+		ThreadMessages& getMainThreadMessages()
+		{
+			return _threadMessages;
+		}
+
 		Point getDisplaySize()
 		{
 	#if __S3E__
@@ -781,6 +793,12 @@ namespace oxygine
 	{
 #ifdef __S3E__
 		return s3eTimerGetUTC();
+#elif WIN32
+		FILETIME tm;
+		GetSystemTimeAsFileTime(&tm);
+		int64 t = tm.dwLowDateTime + (int64(tm.dwHighDateTime) << 32);
+		int64 utc = (t - 116444736000000000LL)/10000;
+		return utc;		
 #endif
 		return getTimeMS();
 	}

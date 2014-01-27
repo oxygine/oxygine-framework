@@ -49,6 +49,10 @@ namespace oxygine
 		_counter -= 1;
 		//OX_ASSERT(_counter >= 0);
 	}
+	void Clock::resetPause()
+	{
+		_counter = 0;
+	}
 
 	void Clock::update(timeMS globalTime)
 	{

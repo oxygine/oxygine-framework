@@ -38,6 +38,6 @@ namespace oxygine
 		NativeTexture *_dest;
 		
 		vector<unsigned char> _buffer;
-		ThreadMessages _messages;
+		ThreadMessages _messages;//todo, use global messages
 	};
 }

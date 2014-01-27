@@ -80,9 +80,9 @@ namespace oxygine
 		MutexAutoLock al(_mutex);
 		OX_ASSERT(_restoring == false);
 		restorable::iterator i = findRestorable(this);
+		//OX_ASSERT(i != _restorable.end());
 		if (i != _restorable.end())
 		{
-			OX_ASSERT(i != _restorable.end());
 			_restorable.erase(i);
 		}
 		_registered = false;

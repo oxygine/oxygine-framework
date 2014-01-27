@@ -65,7 +65,7 @@ namespace file
 			entry.pos = pos;
 			entry.zp = zp;
 
-			strcpy(entry.name, entry.name);
+			//strcpy(entry.name, entry.name);
 
 			_files.push_back(entry);
 

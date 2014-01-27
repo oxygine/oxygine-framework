@@ -36,8 +36,14 @@ namespace oxygine
 #ifdef __S3E__
 		timespec ts;
 		clock_gettime(CLOCK_REALTIME, &ts);
-		ts.tv_sec += 1;
-		//ts.tv_nsec += 5000;
+		//ts.tv_sec += 1;
+		ts.tv_nsec += 300 * 1000000;
+		if (ts.tv_nsec >= 1000000000)
+		{
+			ts.tv_nsec -= 1000000000;
+			++ts.tv_sec;
+		}
+		
 		pthread_cond_timedwait(cond, mutex, &ts);
 #else
 		pthread_cond_wait(cond, mutex);		
@@ -177,6 +183,7 @@ namespace oxygine
 		return _last._result;
 	}
 
+	/*
 	void ThreadMessages::sendCallback(int msgid, void *arg1, void *arg2, callback cb, void *cbData)
 	{
 		message ev;
@@ -191,6 +198,7 @@ namespace oxygine
 		_events.push_back(ev);
 		pthread_cond_signal(&_cond);
 	}
+	*/
 
 	void ThreadMessages::post(int msgid, void *arg1, void *arg2)
 	{
@@ -198,6 +206,21 @@ namespace oxygine
 		ev.msgid = msgid;
 		ev.arg1 = arg1;
 		ev.arg2 = arg2;		
+
+		MutexPthreadLock lock(_mutex);
+		ev._id = ++_id;
+		_events.push_back(ev);
+		pthread_cond_signal(&_cond);
+	}
+
+	void ThreadMessages::postCallback(int msgid, void *arg1, void *arg2, callback cb, void *cbData)
+	{
+		message ev;
+		ev.msgid = msgid;
+		ev.arg1 = arg1;
+		ev.arg2 = arg2;	
+		ev.cb = cb;
+		ev.cbData = cbData;		
 
 		MutexPthreadLock lock(_mutex);
 		ev._id = ++_id;

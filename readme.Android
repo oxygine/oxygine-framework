@@ -1,6 +1,7 @@
 1. read readme.SDL2
 2. Example 'Demo' has configured android project
 how to build. Steps:
+- make sure that you have android-12 SDK, NDK apache-ant installed and all ENVIRONMENT variables configured properly
 - goto oxygine-framework/examples/demo/proj.android/
 - check local.properties and path to android sdk
 - check that you have Android-12 sdk installed
@@ -13,6 +14,7 @@ how to build. Steps:
 - application is ready to build
 
 you could use this batch files
+
 - run build.cmd
 - run ant_debug.bat
 - apk is ready

@@ -53,8 +53,9 @@ namespace oxygine
 		void clear();
 				
 		void*send(int msgid, void *arg1, void *arg2);
-		void sendCallback(int msgid, void *arg1, void *arg2, callback cb, void *cbData);
+		//void sendCallback(int msgid, void *arg1, void *arg2, callback cb, void *cbData);
 		void post(int msgid, void *arg1, void *arg2);
+		void postCallback(int msgid, void *arg1, void *arg2, callback cb, void *cbData);
 
 		void reply(void *val);		
 

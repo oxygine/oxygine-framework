@@ -1,5 +1,5 @@
 LOCAL_PATH := $(call my-dir)
-OXYGINE_LIBS := $(LOCAL_PATH)/oxygine/third_party/android/libraries/$(TARGET_ARCH_ABI)
+OXYGINE_LIBS := oxygine/third_party/android/libraries/$(TARGET_ARCH_ABI)
 
 include $(CLEAR_VARS)
 LOCAL_MODULE := ox_libpng_static
@@ -22,7 +22,6 @@ LOCAL_CPP_EXTENSION := .cpp
 
 OXYGINE_SRC := $(LOCAL_PATH)/oxygine/src
 
-
 LOCAL_SRC_FILES := \
 				$(subst $(LOCAL_PATH)/,, \
 				$(wildcard $(OXYGINE_SRC)/closure/*.cpp) \
@@ -36,8 +35,12 @@ LOCAL_SRC_FILES := \
 				$(wildcard $(OXYGINE_SRC)/winnie_alloc/*.cpp) \
 				$(wildcard $(OXYGINE_SRC)/minizip/*.c) \
 				$(wildcard $(OXYGINE_SRC)/*.cpp) \
-				$(wildcard $(OXYGINE_SRC)/../greenlets/src/*.c) \
 				)
+
+OXYGINE_SRC := oxygine/src
+
+LOCAL_SRC_FILES += \
+				oxygine/greenlets/src/greenlet.c \
 
 LOCAL_SRC_FILES += \
 				$(OXYGINE_SRC)/core/gl/NativeTextureGLES.cpp \
@@ -50,6 +53,7 @@ LOCAL_SRC_FILES += \
 SDL_PATH := $(LOCAL_PATH)/../SDL/include/
 THIRD_PARTY := $(LOCAL_PATH)/oxygine/third_party/android/
 
+OXYGINE_SRC := $(LOCAL_PATH)/oxygine/src
 LOCAL_C_INCLUDES := $(OXYGINE_SRC)/ \
 					$(OXYGINE_SRC)/../greenlets/src/ \
 					$(SDL_PATH) \
@@ -64,4 +68,5 @@ LOCAL_WHOLE_STATIC_LIBRARIES := ox_libpng_static ox_libjpeg_static
 					
 include $(BUILD_STATIC_LIBRARY)
 
+$(call import-add-path, $(LOCAL_PATH)/../)
 $(call import-module, SDL)

@@ -1,6 +1,7 @@
 #pragma once
 #include "oxygine_include.h"
 #include "intrusive_ptr.h"
+#include "ref_counter.h"
 #include "closure/closure.h"
 
 #include "math/vector2.h"
@@ -9,6 +10,7 @@
 #include "math/matrix.h"
 #include "log.h"
 #include "ox_debug.h"
+#include "ThreadMessages.h"
 
 #ifndef __S3E__
 #if defined(_MSC_VER) || defined(__BORLANDC__)
@@ -102,6 +104,8 @@ namespace oxygine
 
 		/** Returns display size in pixels*/
 		Point getDisplaySize();
+
+		ThreadMessages& getMainThreadMessages(); 
 
 #ifdef OXYGINE_SDL
 		bool isActive();

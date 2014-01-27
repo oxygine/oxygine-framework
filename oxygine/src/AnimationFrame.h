@@ -33,7 +33,7 @@ namespace oxygine
 		/**Returns size of frame in pixels*/		
 		const Vector2&	getSize() const {return _frameSize;}
 		float			getWidth() const {return _frameSize.x;}
-		float			getHeight() const {return _frameSize.x;}
+		float			getHeight() const {return _frameSize.y;}
 		//deprecated, use getSize
 		const Vector2&	getFrameSize() const {return _frameSize;}
 

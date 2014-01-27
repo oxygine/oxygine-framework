@@ -25,6 +25,7 @@ namespace oxygine
 
 		void	pause();
 		void	resume();
+		void	resetPause();
 
 		void	update(timeMS globalTime = -1);
 		timeMS  doTick();
