@@ -103,6 +103,7 @@ namespace oxygine
 		int _openedFiles = 0;
 		oxHandle* oxFileOpen(const char* filename, const char* mode)
 		{
+			log::messageln("oxFileOpen %s", filename);
 			oxHandle *h = oxFileOpen_(filename, mode);
 			if (h)
 				_openedFiles++;
@@ -158,11 +159,13 @@ namespace oxygine
 
 			virtual unsigned int getSize() const
 			{
+#ifdef __S3E__
 				oxFileSeek(_handle, 0, ox_FILESEEK_END);
 				unsigned int size  = (unsigned int)oxFileTell(_handle);
 				oxFileSeek(_handle, 0, ox_FILESEEK_SET);
-
 				return size;
+#endif
+				return SDL_RWsize((SDL_RWops*)_handle);				
 			}
 
 		private:
@@ -171,38 +174,13 @@ namespace oxygine
 
 		STDFileSystem::STDFileSystem(bool readonly):FileSystem(readonly)
 		{
-#ifdef WIN32
-			if (!_readonly)
-				_mkdir(getFullPath("").c_str());
-#endif
 		}
 
 		char* STDFileSystem::_getFullPath(const char *path, char buff[512])
 		{
 			buff[0] = 0;
 
-			if (_readonly)
-			{
-#if __S3E__
-				sprintf(buff, "rom://%s%s", _path.c_str(), path);
-#else
-				sprintf(buff, "%s%s", _path.c_str(), path);
-#endif
-			}
-			else
-			{
-#if __S3E__
-				sprintf(buff, "ram://%s%s", _path.c_str(), path);
-#else
-	#ifdef  WIN32
-				sprintf(buff, "../data-ram/%s%s", _path.c_str(), path);
-	#else
-				strcpy(buff, path);
-				log::warning("not implemented fs");
-	#endif
-#endif
-			}
-
+			sprintf(buff, "%s%s", _path.c_str(), path);
 
 			return buff;
 		}
@@ -244,6 +222,7 @@ namespace oxygine
 #if __S3E__
 			s3eFileDelete(buff);
 #else
+			LOGD("STDFileSystem::_deleteFile %s", buff);
 			::remove(buff);
 #endif
 

@@ -1,1 +1,1 @@
-ndk-build -C %CD%
+ndk-build NDK_MODULE_PATH=../../../../

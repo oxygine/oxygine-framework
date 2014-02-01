@@ -1012,10 +1012,11 @@
 					"$(THIRD_PARTY)/libpng",
 					"$(THIRD_PARTY)/libjpeg",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				ONLY_ACTIVE_ARCH = YES;
+				MACOSX_DEPLOYMENT_TARGET = "";
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				SDL = ../../../../../SDL/;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				THIRD_PARTY = ../../../third_party/macosx/;
 			};
 			name = Debug;
@@ -1044,9 +1045,11 @@
 					"$(THIRD_PARTY)/libpng",
 					"$(THIRD_PARTY)/libjpeg",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = "";
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				SDL = ../../../../../SDL/;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				THIRD_PARTY = ../../../third_party/macosx/;
 			};
 			name = Release;
@@ -1064,6 +1067,7 @@
 					"$(THIRD_PARTY)/libpng",
 					"$(THIRD_PARTY)/libjpeg",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = oxygine_ios;
 			};
 			name = Debug;
@@ -1081,6 +1085,7 @@
 					"$(THIRD_PARTY)/libpng",
 					"$(THIRD_PARTY)/libjpeg",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = oxygine_ios;
 			};
 			name = Release;

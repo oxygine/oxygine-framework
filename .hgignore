@@ -24,13 +24,11 @@ oxygine/greenlets/greenlets/greenlets.sdf
 *.ipch
 *.opensdf
 oxygine/greenlets/greenlets_xcode/
-oxygine/cocos2dx/android/obj/
 examples/Match3/build_match3_vc10
 oxygine/greenlets/android/obj/
 *.sdf
 oxygine/cocos2dx/win32/Release/
 examples/HelloWorld/build_helloworld_vc10/
-oxygine/SDL/android/obj/
 examples/SDL/HelloWorld/win32/Debug/
 oxygine/SDL/win32/Debug/
 examples/DemoBox2D/box2d/build_box2d_vc10
@@ -99,5 +97,11 @@ examples/Demo/data-ram/
 examples/Demo/proj.android/libs/
 examples/Demo/proj.android/obj/
 obj/
+examples/Demo/proj.android/bin/
+examples/Demo/proj.android/gen/
+examples/Demo/proj.android/.idea
+examples/Demo/proj.android/out
+*.iml
+examples/Demo/proj.android/assets/
 syntax: regexp
 ^build/

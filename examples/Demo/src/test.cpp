@@ -155,7 +155,7 @@ void Test::back(Event *event)
 
 void Test::notify(string txt, int time)
 {
-	int N = 0;
+	size_t N = 0;
 	for (size_t i = 0; i < MAX_NOTIFIES; ++i)
 	{
 		if (_notifies[i])
@@ -195,6 +195,6 @@ void Test::notify(string txt, int time)
 
 void Test::notifyDone(Event *ev)
 {
-	int N = (int)ev->currentTarget->getUserData();
+	size_t N = size_t(ev->currentTarget->getUserData());
 	_notifies[N] -= 1;
 }

@@ -24,7 +24,7 @@ namespace oxygine
 			//OX_ASSERT(strcmp(dest, "/") == 0);
 
 			normalize("/../", dest);
-			OX_ASSERT(strcmp(dest, "../") == 0);
+			OX_ASSERT(strcmp(dest, "/../") == 0);
 
 			normalize("../c\\", dest);
 			OX_ASSERT(strcmp(dest, "../c/") == 0);
@@ -34,7 +34,7 @@ namespace oxygine
 
 
 			normalize("\\/\\///\\/", dest);// \n
-			OX_ASSERT(strcmp(dest, "") == 0);
+			OX_ASSERT(strcmp(dest, "/") == 0);
 
 			normalize("a/b/..\\//..///\\/../c\\\\/", dest);
 			OX_ASSERT(strcmp(dest, "../c/") == 0);
@@ -121,12 +121,19 @@ namespace oxygine
 		}
 
 		void normalize(const char *src, char *dest)
-		{
-			char *copy = dest;
+		{			
 			OX_ASSERT(src != dest);
 
-			char last = 0;
-			
+			//const char *srccopy = src;
+			if (*src == '/' || *src == '\\')
+			{
+				*dest = '/';
+				++src;
+				++dest;
+			}		
+			char *copy = dest;
+
+			char last = 0;		
 
 			*dest = 0;
 			while(*src)
@@ -137,7 +144,7 @@ namespace oxygine
 
 				if (c == '\\')
 					c = '/';
-				if (c == '/' && last == '.' && last_last == '.' && dest > copy + 2)
+				if (c == '/' && last == '.' && last_last == '.' && (dest > copy + 2))
 				{
 					dest -= 3;
 					while (dest > copy)

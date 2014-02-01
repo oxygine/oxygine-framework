@@ -88,9 +88,62 @@ namespace file
 		add(zp);
 	}
 
+
+	voidpf ZCALLBACK ox_fopen(voidpf opaque, const char* filename, int mode)
+	{
+		return file::open(filename, "rb");
+	}
+
+	uLong ZCALLBACK ox_fread(voidpf opaque, voidpf stream, void* buf, uLong size)
+	{
+		return file::read(stream, buf, size);
+	}
+
+	/*
+	uLong ZCALLBACK ox_fwriteOF(voidpf opaque, voidpf stream, const void* buf, uLong size)
+	{
+
+	}
+	*/
+
+	long ZCALLBACK ox_ftell(voidpf opaque, voidpf stream)
+	{
+		return file::tell(stream);
+	}
+
+	long ZCALLBACK ox_fseek(voidpf opaque, voidpf stream, uLong offset, int origin)
+	{
+		file::seek(stream, offset, origin);
+		return 0;
+	}
+
+	int ZCALLBACK ox_fclose(voidpf opaque, voidpf stream)
+	{
+		file::close(stream);;
+		return 0;
+	}
+
+	int ZCALLBACK ox_ferror(voidpf opaque, voidpf stream)
+	{
+		return 0;
+	}
+
+
+
 	void Zips::add(const char *name)
 	{
-		unzFile zp = unzOpen(name);
+		zlib_filefunc_def zpfs;
+		memset(&zpfs, 0, sizeof(zpfs));
+
+		zpfs.zopen_file = ox_fopen;
+		zpfs.zread_file = ox_fread;
+		zpfs.zwrite_file= 0;
+		zpfs.ztell_file = ox_ftell;
+		zpfs.zseek_file = ox_fseek;
+		zpfs.zclose_file= ox_fclose;
+		zpfs.zerror_file= ox_ferror;
+
+		unzFile zp = unzOpen2(name, &zpfs);//todo, optimize search in zip
 		OX_ASSERT(zp);
 		if (!zp)
 			return;

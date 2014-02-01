@@ -17,6 +17,8 @@
 #else
 #if WIN32
 #include <direct.h>
+#else
+#include "SDL_system.h"
 #endif
 #endif
 
@@ -46,12 +48,28 @@ namespace oxygine
 		*/
 		STDFileSystem _nfs(true);
 		STDFileSystem _nfsWrite(false);
-		STDFileSystem _nfsExtended(true);
+		//STDFileSystem _nfsExtended(true);
 
 		void init()
 		{
+#ifdef __S3E__
+			_nfs.setPath("rom://");
+			_nfsWrite.setPath("ram://");
+#endif
+
+#ifdef __ANDROID__
+			log::messageln("internal %s", SDL_AndroidGetInternalStoragePath());
+			log::messageln("external %s", SDL_AndroidGetExternalStoragePath());
+			_nfsWrite.setPath(SDL_AndroidGetInternalStoragePath());
+#endif // __ANDROID__
+
+#ifdef WIN32
+			_mkdir("../data-ram/");
+			_nfsWrite.setPath("../data-ram/");			
+#endif
+
 			_nfs.mount(&_nfsWrite);
-			_nfs.mount(&_nfsExtended);
+			//_nfs.mount(&_nfsExtended);
 		}
 
 		void mount(FileSystem *fs)
@@ -196,18 +214,20 @@ namespace oxygine
 				return;
 			write(ac.getHandle(), data.getData(), data.getSize());
 		}
+		/*
 
 		void setExtendedFolder(const char *folder)
 		{
 			_nfsExtended.setPath(folder);			
 		}
+		*/
 
-		file::FileSystem &fs()
+		file::STDFileSystem &fs()
 		{
 			return _nfs;
 		}
 
-		file::FileSystem &wfs()
+		file::STDFileSystem &wfs()
 		{
 			return _nfsWrite;
 		}

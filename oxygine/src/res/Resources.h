@@ -48,7 +48,9 @@ namespace oxygine
 		@param use load counter internally
 		@param use not standard folder with prebuilt resources (atlasses, fonts, etc)
 		*/
-		void loadXML(const string &file, LoadResourcesContext *load_context = 0, bool load_completely = true, bool use_load_counter = false, const string &prebuilt_folder = "");
+		void loadXML(const string &file, LoadResourcesContext *load_context = 0, 
+			bool load_completely = true, bool use_load_counter = false,
+			const string &prebuilt_folder = "");
 
 		/**Adds your own Resource and becomes resource owner. Added resource will be deleted from destructor by calling 'delete'.*/
 		void add(Resource *r);

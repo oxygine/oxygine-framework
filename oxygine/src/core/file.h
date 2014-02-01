@@ -7,25 +7,10 @@
 
 namespace oxygine
 {
-	/**Input/Output files api.*/
-
-	/**
-	some notes:
-	setExtendedFolder could be used as hook for High Definition art assets.
-		If file is missing in additional folder it would be searched from root resources folder.
-		here is folders structure example:
-	root:
-		images/ \n
-		atlasses\ \n
-		xmls/ \n
-		fonts/ \n
-		HD/images/ \n
-		  /fonts/ \n
-		if you want use HD resources you should add setAdditionalFolder("HD");
-	*/
-
 	namespace file
 	{
+		class STDFileSystem;
+
 		class buffer
 		{
 		public:		
@@ -69,14 +54,11 @@ namespace oxygine
 		bool rename(const char *src, const char *dest, error_policy ep = ep_show_warning);
 		bool makeDirectory(const char *path);
 		void deleteDirectory(const char *path);
-
-		/**setExtendedFolder sets additional "hook" folder where files would be searched initially.*/
-		void setExtendedFolder(const char *folder);
-
+		
 		//returns main fs
-		file::FileSystem &fs();
+		file::STDFileSystem &fs();
 		//returns writable fs
-		file::FileSystem &wfs();
+		file::STDFileSystem &wfs();
 
 		class autoClose
 		{

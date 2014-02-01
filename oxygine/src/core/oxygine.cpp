@@ -49,6 +49,9 @@ using namespace AS3::ui;
 #include "gl/VideoDriverGLES20.h"
 #endif
 
+#ifdef __ANDROID__
+#include "core/android/jniUtils.h"
+#endif
 
 #ifdef OXYGINE_SDL
 #include "coroutines.h"
@@ -800,17 +803,37 @@ namespace oxygine
 		int64 utc = (t - 116444736000000000LL)/10000;
 		return utc;		
 #endif
+#ifdef __ANDROID__
+		return jniGetTimeUTCMS();
+#endif
 		return getTimeMS();
+	}
+
+	bool	isNetworkAvaible()
+	{
+#ifdef __S3E__
+		return s3eSocketGetInt(S3E_SOCKET_NETWORK_AVAILABLE) == 1;
+#endif
+#ifdef __ANDROID__
+		return jniIsNetworkAvailable();
+#endif		
+		return true;
+	}
+
+	std::string		getLanguage()
+	{
+#ifdef __ANDROID__
+		return jniGetLanguage();
+#endif		
+		return "unknown";
 	}
 
 	void	sleep(timeMS time)
 	{
 #if __S3E__
 		s3eDeviceYield(time);
-#elif OXYGINE_SDL
-		SDL_Delay(time);
 #else
-		OX_ASSERT(0);
+		SDL_Delay(time);
 #endif
 	}
 }

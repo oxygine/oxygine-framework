@@ -15,6 +15,7 @@
 #include "TestClipRect.h"
 #include "TestUserShader.h"
 #include "TestMask.h"
+#include "core/STDFileSystem.h"
 
 #ifdef __S3E__
 #include "s3eKeyboard.h"
@@ -147,9 +148,14 @@ void example_preinit()
 	Renderer::setPremultipliedAlphaRender(false);
 }
 
+file::STDFileSystem extfs(true);
+
 void example_init()
 {
-	file::setExtendedFolder("ext");
+	//mount additional file system with inner path "ext"
+	//it would be used for searching path in data/ext
+	extfs.setPath(file::fs().getFullPath("ext").c_str());
+	file::mount(&extfs);
 
 	//load xml file with resources definition
 	resources.loadXML("xmls/res.xml");
@@ -183,5 +189,3 @@ void example_destroy()
 	resources.free();
 	resourcesUI.free();
 }
-
-

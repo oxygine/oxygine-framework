@@ -129,7 +129,10 @@ namespace oxygine
 		return Resource::comparePred(*ob1, *ob2);
 	}
 
-	void Resources::loadXML(const string &xml_name, LoadResourcesContext *load_context, bool load_completely, bool use_load_counter, const string &prebuilt_folder_)
+	void Resources::loadXML(const string &xml_name, 
+		LoadResourcesContext *load_context, 
+		bool load_completely, bool use_load_counter, 
+		const string &prebuilt_folder_)
 	{
 		_name = xml_name;
 

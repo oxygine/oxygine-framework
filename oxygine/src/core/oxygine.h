@@ -11,6 +11,7 @@
 #include "log.h"
 #include "ox_debug.h"
 #include "ThreadMessages.h"
+#include <string>
 
 #ifndef __S3E__
 #if defined(_MSC_VER) || defined(__BORLANDC__)
@@ -63,11 +64,12 @@ namespace oxygine
 	}
 
 	/** returns local app time in milliseconds (1sec = 1000ms). Counting starts from zero*/	
-	timeMS getTimeMS();
+	timeMS			getTimeMS();
+	int64			getTimeUTCMS();
+	bool			isNetworkAvaible();
+	/**returns locale. ISO 639-1 */
+	std::string		getLanguage();
 
-	/**return UTC time in seconds*/
-	int		getTimeUTC();//deprecated
-	int64	getTimeUTCMS();
 
 
 	void	sleep(timeMS);
