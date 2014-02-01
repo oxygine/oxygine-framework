@@ -15,7 +15,6 @@ oxygine.zip
 *.pyc
 oxygine/sdl/oxygine/Debug/
 *.ncb
-*.user
 *.suo
 oxygine/cocos2dx/win32/Debug/
 oxygine/template/oxygine/Debug/
@@ -103,5 +102,8 @@ examples/Demo/proj.android/.idea
 examples/Demo/proj.android/out
 *.iml
 examples/Demo/proj.android/assets/
+libs/
+examples/Game/part3/proj.win32/Debug/
+examples/HelloWorld/proj.win32/Debug/
 syntax: regexp
 ^build/

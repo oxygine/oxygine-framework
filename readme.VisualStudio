@@ -1,14 +1,28 @@
 1. read readme.SDL2
 
-2. There is prebuilt solution for VS2010 with Demo example:
+2a. There are prebuilt example solutions for VS2010:
 =================================================================================================
-- open solution from oxygine-framework\examples\Demo\proj.win32\
-- if you don't have directx sdk installed then find open SDL_config_windows.h and comment this line:
-    //#define SDL_AUDIO_DRIVER_XAUDIO2    1
+- goto oxygine-framework\examples and choose any example. Lets call it "Demo" 
+- open it's solution from located in oxygine-framework\examples\Demo\proj.win32\
+- if you don't have directx sdk installed then go to SDL and find file: SDL_config_windows.h
+- then find this line:
+	#define SDL_AUDIO_DRIVER_XAUDIO2    1
+- and comment it:
+	//#define SDL_AUDIO_DRIVER_XAUDIO2    1
 - try to build Demo
 - copy
    all required dlls from  oxygine-framework\oxygine\third_party\win32\dlls\
    and SDL2.dll from SDL\VisualC\SDL\Win32\   <Debug> or <Release>
-   to 	 oxygine-framework\examples\Demo\data\   
+   to  oxygine-framework\examples\Demo\data\   
 - ready! run!
 =================================================================================================
+
+2b. You could generate your own Solution in any place.
+- you need installed Python 2.7
+- you need to run this script
+  oxygine-framework\tools\gen_template.py
+
+example:
+	gen_template.py MyProject -t win32 -d path/to/MyProject/
+	
+

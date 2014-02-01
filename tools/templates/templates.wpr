@@ -1,0 +1,24 @@
+#!wing
+#!version=5.0
+##################################################################
+# Wing IDE project file                                          #
+##################################################################
+[project attributes]
+proj.directory-list = [{'dirloc': loc('.'),
+                        'excludes': (),
+                        'filter': u'*',
+                        'include_hidden': False,
+                        'recursive': True,
+                        'watch_for_changes': True},
+                       {'dirloc': loc('..'),
+                        'excludes': (),
+                        'filter': u'*',
+                        'include_hidden': False,
+                        'recursive': True,
+                        'watch_for_changes': True}]
+proj.file-list = [loc('../gen.py')]
+proj.file-type = 'shared'
+proj.launch-config = {loc('gen.py'): ('project',
+                                      (u'example -t win32 -d folder/temp -s d:\\oxygine-framework\\examples\\Demo\\src\\',
+                                       ''))}
+proj.main-file = loc('../gen_template.py')
