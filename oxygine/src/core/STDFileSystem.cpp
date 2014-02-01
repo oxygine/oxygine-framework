@@ -103,7 +103,7 @@ namespace oxygine
 		int _openedFiles = 0;
 		oxHandle* oxFileOpen(const char* filename, const char* mode)
 		{
-			log::messageln("oxFileOpen %s", filename);
+			//log::messageln("oxFileOpen %s", filename);
 			oxHandle *h = oxFileOpen_(filename, mode);
 			if (h)
 				_openedFiles++;
