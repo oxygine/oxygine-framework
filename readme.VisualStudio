@@ -23,6 +23,6 @@
   oxygine-framework\tools\gen_template.py
 
 example:
-	gen_template.py MyProject -t win32 -d path/to/MyProject/
+	python gen_template.py MyProject -t win32 -d path/to/MyProject/
 	
 

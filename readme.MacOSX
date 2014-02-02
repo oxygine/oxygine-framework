@@ -1,9 +1,20 @@
 1. read readme.SDL2
-2.
+2a. Examples folder have configured MacOSX projects (exception is demobox2d)
+=================================================================================================
 - goto SDL/src/video/uikit/SDL_uikitview.h and comment line:
   #define IPHONE_TOUCH_EFFICIENT_DANGEROUS  
   
+- goto oxygine-framework\examples and choose any example. Lets call it "Demo" 
 - open xcode 5 project from:
   examples\Demo\proj.macosx\
 - select correct scheme: demo_macosx->mac 32 bit
 - build and run!
+
+2b. You could generate your own MacOSX project.
+=================================================================================================
+- you need installed Python 2.7
+- you need to run this script
+  oxygine-framework\tools\gen_template.py
+
+example:
+	python gen_template.py MyProject -t macosx -d path/to/MyProject/

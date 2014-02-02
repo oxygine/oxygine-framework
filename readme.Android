@@ -1,5 +1,5 @@
 1. read readme.SDL2
-2a. Examples  have configured android project (exception is demobox2d)
+2a. Examples folder have configured android project (exception is demobox2d)
 =================================================================================================
 how to build. Steps:
 - install Android NKD and setup it
@@ -42,4 +42,4 @@ how to build. Steps:
   oxygine-framework\tools\gen_template.py
 
 example:
-	gen_template.py MyProject -t android -d path/to/MyProject/
+	python gen_template.py MyProject -t android -d path/to/MyProject/

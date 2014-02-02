@@ -256,7 +256,7 @@ bool Field::BackSwap()
 
 void Field::DropEndCallback(Event *ev)
 {
-	safeSpCast<Jewel>(ev->currentTarget)->setState(jsNormal);
+	safeSpCast<Jewel>(ev->target)->setState(jsNormal);
 	droped_count--;
 	if (droped_count==0) 
 	{
@@ -428,7 +428,7 @@ bool Field::DropField()
 
 void Field::EndAnimationCallback(Event *ev)
 {
-	safeSpCast<Jewel>(ev->currentTarget)->AnimationEnd();
+	safeSpCast<Jewel>(ev->target)->AnimationEnd();
 	animated_count--;
 
 	if (animated_count==0) 

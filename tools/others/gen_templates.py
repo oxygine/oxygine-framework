@@ -3,7 +3,7 @@ def gen(path, project = ""):
 	if not project:
 		project = path
 
-	for platform in ["win32", "android"]:
+	for platform in ["win32", "android", "macosx", "ios"]:
 		dest = "../../examples/" + path + "/proj." + platform
 		src =  "../../examples/" + path + "/src"
 		import shutil
@@ -16,7 +16,7 @@ def gen(path, project = ""):
 
 
 gen("Demo")
-gen("DemoBox2D")
+#gen("DemoBox2D")
 gen("Game/part1", "GamePart1")
 gen("Game/part2", "GamePart2")
 gen("Game/part3", "GamePart3")

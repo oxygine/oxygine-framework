@@ -13,15 +13,18 @@
 		04059FEF187202AC00BA6557 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04059FEE187202AC00BA6557 /* OpenGL.framework */; };
 		0405A00018720D2200BA6557 /* libjpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04059FF01872031A00BA6557 /* libjpeg.a */; };
 		0405A00118720D2200BA6557 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04059FF11872031A00BA6557 /* libpng.a */; };
-		0405A0061872139000BA6557 /* demo in Resources */ = {isa = PBXBuildFile; fileRef = 0405A0021872139000BA6557 /* demo */; };
-		0405A0071872139000BA6557 /* ext in Resources */ = {isa = PBXBuildFile; fileRef = 0405A0031872139000BA6557 /* ext */; };
-		0405A0081872139000BA6557 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 0405A0041872139000BA6557 /* images */; };
-		0405A0091872139000BA6557 /* xmls in Resources */ = {isa = PBXBuildFile; fileRef = 0405A0051872139000BA6557 /* xmls */; };
 		049B57321871FBE900EF3C66 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 049B57311871FBE900EF3C66 /* Cocoa.framework */; };
 		049B574A1871FBE900EF3C66 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 049B57491871FBE900EF3C66 /* Images.xcassets */; };
-		04A57D601871FF9F0068B1E5 /* entry_point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04A57D3A1871FF9F0068B1E5 /* entry_point.cpp */; };
-		04A57D621871FF9F0068B1E5 /* example.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04A57D3C1871FF9F0068B1E5 /* example.cpp */; };
-		04A57D651871FF9F0068B1E5 /* test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04A57D401871FF9F0068B1E5 /* test.cpp */; };
+		2DC477AC10D6C07B3FE008F6 /* ../src/entry_point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360377333740D8A2FD15BBE6 /* ../src/entry_point.cpp */; };
+		DA49ED8903C628BA578C8670 /* ../src/example.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BF9628FC8D38F9748F0CDEB /* ../src/example.cpp */; };
+		C8860D93875589970329DCCD /* ../src/test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DA100C319512824B7570663 /* ../src/test.cpp */; };
+		1E839D002B2BA83FC83A695A /* ../data/app.config.txt in Sources */ = {isa = PBXBuildFile; fileRef = 04FE4D4FB640E0DF92DFB865 /* ../data/app.config.txt */; };
+		3A631A475DE035FC53ADE5EA /* ../data/demo in Sources */ = {isa = PBXBuildFile; fileRef = 7F3B12E3C9D554D9FE28101D /* ../data/demo */; };
+		CD59C69314E9E74CD0A11E03 /* ../data/ext in Sources */ = {isa = PBXBuildFile; fileRef = F6123B1E6FE4471A00F49751 /* ../data/ext */; };
+		EFF139F8BA484314F7AAF645 /* ../data/images in Sources */ = {isa = PBXBuildFile; fileRef = 5DE458993031811A4C7D28C1 /* ../data/images */; };
+		F2CFD518E4E2E05ECEDBB262 /* ../data/xmls in Sources */ = {isa = PBXBuildFile; fileRef = BA41FC88D76540A6905224D6 /* ../data/xmls */; };
+
+		
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,43 +82,45 @@
 /* Begin PBXFileReference section */
 		04059FEC187202A200BA6557 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		04059FEE187202AC00BA6557 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
-		04059FF01872031A00BA6557 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = ../../../oxygine/third_party/macosx/libraries/libjpeg.a; sourceTree = "<group>"; };
-		04059FF11872031A00BA6557 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = ../../../oxygine/third_party/macosx/libraries/libpng.a; sourceTree = "<group>"; };
-		04059FF4187203A600BA6557 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = ../../../oxygine/third_party/ios/libraries/libjpeg.a; sourceTree = "<group>"; };
-		04059FF5187203A600BA6557 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = ../../../oxygine/third_party/ios/libraries/libpng.a; sourceTree = "<group>"; };
-		0405A0021872139000BA6557 /* demo */ = {isa = PBXFileReference; lastKnownFileType = folder; name = demo; path = ../../data/demo; sourceTree = "<group>"; };
-		0405A0031872139000BA6557 /* ext */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ext; path = ../../data/ext; sourceTree = "<group>"; };
-		0405A0041872139000BA6557 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = ../../data/images; sourceTree = "<group>"; };
-		0405A0051872139000BA6557 /* xmls */ = {isa = PBXFileReference; lastKnownFileType = folder; name = xmls; path = ../../data/xmls; sourceTree = "<group>"; };
-		049B572E1871FBE900EF3C66 /* demo_macosx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = demo_macosx.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		04059FF01872031A00BA6557 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = ../../../..//oxygine-framework/oxygine/third_party/macosx/libraries/libjpeg.a; sourceTree = "<group>"; };
+		04059FF11872031A00BA6557 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = ../../../..//oxygine-framework/oxygine/third_party/macosx/libraries/libpng.a; sourceTree = "<group>"; };
+		04059FF4187203A600BA6557 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = ../../../..//oxygine-framework/oxygine/third_party/ios/libraries/libjpeg.a; sourceTree = "<group>"; };
+		04059FF5187203A600BA6557 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = ../../../..//oxygine-framework/oxygine/third_party/ios/libraries/libpng.a; sourceTree = "<group>"; };
+		049B572E1871FBE900EF3C66 /* demo_macosx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo_macosx.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		049B57311871FBE900EF3C66 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		049B57341871FBE900EF3C66 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		049B57351871FBE900EF3C66 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		049B57361871FBE900EF3C66 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		049B57391871FBE900EF3C66 /* demo_macosx-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "demo_macosx-Info.plist"; sourceTree = "<group>"; };
-		049B57491871FBE900EF3C66 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		049B57391871FBE900EF3C66 /* demo_macosx-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Demo_macosx-Info.plist"; sourceTree = "<group>"; };
+		049B57491871FBE900EF3C66 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Demo/Images.xcassets; sourceTree = "<group>"; };
 		049B57501871FBE900EF3C66 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		04A57D3A1871FF9F0068B1E5 /* entry_point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = entry_point.cpp; path = ../../src/entry_point.cpp; sourceTree = "<group>"; };
-		04A57D3C1871FF9F0068B1E5 /* example.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = example.cpp; path = ../../src/example.cpp; sourceTree = "<group>"; };
-		04A57D3E1871FF9F0068B1E5 /* example.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = example.h; path = ../../src/example.h; sourceTree = "<group>"; };
-		04A57D401871FF9F0068B1E5 /* test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = test.cpp; path = ../../src/test.cpp; sourceTree = "<group>"; };
-		04A57D421871FF9F0068B1E5 /* test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = test.h; path = ../../src/test.h; sourceTree = "<group>"; };
-		04A57D441871FF9F0068B1E5 /* TestBox9Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestBox9Sprite.h; path = ../../src/TestBox9Sprite.h; sourceTree = "<group>"; };
-		04A57D461871FF9F0068B1E5 /* TestClipRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestClipRect.h; path = ../../src/TestClipRect.h; sourceTree = "<group>"; };
-		04A57D491871FF9F0068B1E5 /* TestDrag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestDrag.h; path = ../../src/TestDrag.h; sourceTree = "<group>"; };
-		04A57D4B1871FF9F0068B1E5 /* TestManageRes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestManageRes.h; path = ../../src/TestManageRes.h; sourceTree = "<group>"; };
-		04A57D4D1871FF9F0068B1E5 /* TestMask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestMask.h; path = ../../src/TestMask.h; sourceTree = "<group>"; };
-		04A57D4F1871FF9F0068B1E5 /* TestPerf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestPerf.h; path = ../../src/TestPerf.h; sourceTree = "<group>"; };
-		04A57D511871FF9F0068B1E5 /* TestProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestProgressBar.h; path = ../../src/TestProgressBar.h; sourceTree = "<group>"; };
-		04A57D531871FF9F0068B1E5 /* TestRender2Texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestRender2Texture.h; path = ../../src/TestRender2Texture.h; sourceTree = "<group>"; };
-		04A57D551871FF9F0068B1E5 /* TestSliding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestSliding.h; path = ../../src/TestSliding.h; sourceTree = "<group>"; };
-		04A57D561871FF9F0068B1E5 /* TestTexel2Pixel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestTexel2Pixel.h; path = ../../src/TestTexel2Pixel.h; sourceTree = "<group>"; };
-		04A57D581871FF9F0068B1E5 /* TestText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestText.h; path = ../../src/TestText.h; sourceTree = "<group>"; };
-		04A57D5A1871FF9F0068B1E5 /* TestTextureFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestTextureFormat.h; path = ../../src/TestTextureFormat.h; sourceTree = "<group>"; };
-		04A57D5C1871FF9F0068B1E5 /* TestTweens.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestTweens.h; path = ../../src/TestTweens.h; sourceTree = "<group>"; };
-		04A57D5E1871FF9F0068B1E5 /* TestUserShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestUserShader.h; path = ../../src/TestUserShader.h; sourceTree = "<group>"; };
-		04A57D761871FFEB0068B1E5 /* oxygine_macosx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = oxygine_macosx.xcodeproj; path = ../../../oxygine/SDL/macosx/oxygine_macosx/oxygine_macosx.xcodeproj; sourceTree = "<group>"; };
-		04A57D7E1872012A0068B1E5 /* SDL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SDL.xcodeproj; path = ../../../../SDL/Xcode/SDL/SDL.xcodeproj; sourceTree = "<group>"; };
+		360377333740D8A2FD15BBE6 /* ../src/entry_point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = entry_point.cpp; path = ../src/entry_point.cpp; sourceTree = "<group>"; };
+		0BF9628FC8D38F9748F0CDEB /* ../src/example.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = example.cpp; path = ../src/example.cpp; sourceTree = "<group>"; };
+		4DA100C319512824B7570663 /* ../src/test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = test.cpp; path = ../src/test.cpp; sourceTree = "<group>"; };
+		2CE4BD5BB9DEF92439C0AB58 /* ../src/example.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = example.h; path = ../src/example.h; sourceTree = "<group>"; };
+		F196143B0370A9D348494ACC /* ../src/test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = test.h; path = ../src/test.h; sourceTree = "<group>"; };
+		7746CA7A63049ED8F7D6BF42 /* ../src/TestBox9Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestBox9Sprite.h; path = ../src/TestBox9Sprite.h; sourceTree = "<group>"; };
+		D954BD82D7708B65A08FB6B9 /* ../src/TestClipRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestClipRect.h; path = ../src/TestClipRect.h; sourceTree = "<group>"; };
+		BD0E956CC3A2F7EB94822B5C /* ../src/TestDrag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestDrag.h; path = ../src/TestDrag.h; sourceTree = "<group>"; };
+		7623D793B59EF0CD569E6EC2 /* ../src/TestManageRes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestManageRes.h; path = ../src/TestManageRes.h; sourceTree = "<group>"; };
+		AFA30E959880563E6ABBBC4F /* ../src/TestMask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestMask.h; path = ../src/TestMask.h; sourceTree = "<group>"; };
+		B52CCD463855CF91A7FBDB8E /* ../src/TestPerf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestPerf.h; path = ../src/TestPerf.h; sourceTree = "<group>"; };
+		7EEFDEEC289FCBB5FA67F822 /* ../src/TestProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestProgressBar.h; path = ../src/TestProgressBar.h; sourceTree = "<group>"; };
+		4E9DE6A8FCBDF43BC876EC90 /* ../src/TestRender2Texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestRender2Texture.h; path = ../src/TestRender2Texture.h; sourceTree = "<group>"; };
+		8F2AFB956EEAEED67C5B7571 /* ../src/TestSliding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestSliding.h; path = ../src/TestSliding.h; sourceTree = "<group>"; };
+		047F6BD19F885FF186A1447C /* ../src/TestTexel2Pixel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestTexel2Pixel.h; path = ../src/TestTexel2Pixel.h; sourceTree = "<group>"; };
+		C570FAEF487CD34B62389F89 /* ../src/TestText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestText.h; path = ../src/TestText.h; sourceTree = "<group>"; };
+		2418B9A339E6004913AF5980 /* ../src/TestTextureFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestTextureFormat.h; path = ../src/TestTextureFormat.h; sourceTree = "<group>"; };
+		CAD9D6A98986EA8082368448 /* ../src/TestTweens.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestTweens.h; path = ../src/TestTweens.h; sourceTree = "<group>"; };
+		67194AC90FEA68E7C96E6907 /* ../src/TestUserShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestUserShader.h; path = ../src/TestUserShader.h; sourceTree = "<group>"; };
+		04FE4D4FB640E0DF92DFB865 /* ../data/app.config.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wtf; name = app.config.txt; path = ../data/app.config.txt; sourceTree = "<group>"; };
+		7F3B12E3C9D554D9FE28101D /* ../data/demo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = demo; path = ../data/demo; sourceTree = "<group>"; };
+		F6123B1E6FE4471A00F49751 /* ../data/ext */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = ext; path = ../data/ext; sourceTree = "<group>"; };
+		5DE458993031811A4C7D28C1 /* ../data/images */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = images; path = ../data/images; sourceTree = "<group>"; };
+		BA41FC88D76540A6905224D6 /* ../data/xmls */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = xmls; path = ../data/xmls; sourceTree = "<group>"; };
+
+		04A57D761871FFEB0068B1E5 /* oxygine_macosx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = oxygine_macosx.xcodeproj; path = ../../../..//oxygine-framework/oxygine/SDL/macosx/oxygine_macosx/oxygine_macosx.xcodeproj; sourceTree = "<group>"; };
+		04A57D7E1872012A0068B1E5 /* SDL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SDL.xcodeproj; path = ../../../..//SDL/Xcode/SDL/SDL.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,9 +152,11 @@
 		049B57251871FBE900EF3C66 = {
 			isa = PBXGroup;
 			children = (
+				049B57491871FBE900EF3C66 /* Images.xcassets */,
+				049B57381871FBE900EF3C66 /* Supporting Files */,
+				04A57D391871FF8B0068B1E5 /* src */,
 				04A57D7E1872012A0068B1E5 /* SDL.xcodeproj */,
 				04A57D761871FFEB0068B1E5 /* oxygine_macosx.xcodeproj */,
-				049B57371871FBE900EF3C66 /* demo */,
 				049B57301871FBE900EF3C66 /* Frameworks */,
 				049B572F1871FBE900EF3C66 /* Products */,
 			);
@@ -158,7 +165,7 @@
 		049B572F1871FBE900EF3C66 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				049B572E1871FBE900EF3C66 /* demo_macosx.app */,
+				049B572E1871FBE900EF3C66 /* Demo_macosx.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -192,9 +199,6 @@
 		049B57371871FBE900EF3C66 /* demo */ = {
 			isa = PBXGroup;
 			children = (
-				04A57D391871FF8B0068B1E5 /* src */,
-				049B57491871FBE900EF3C66 /* Images.xcassets */,
-				049B57381871FBE900EF3C66 /* Supporting Files */,
 			);
 			path = demo;
 			sourceTree = "<group>";
@@ -202,11 +206,13 @@
 		049B57381871FBE900EF3C66 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				0405A0021872139000BA6557 /* demo */,
-				0405A0031872139000BA6557 /* ext */,
-				0405A0041872139000BA6557 /* images */,
-				0405A0051872139000BA6557 /* xmls */,
-				049B57391871FBE900EF3C66 /* demo_macosx-Info.plist */,
+				04FE4D4FB640E0DF92DFB865 /* app.config.txt */, 
+				7F3B12E3C9D554D9FE28101D /* demo */, 
+				F6123B1E6FE4471A00F49751 /* ext */, 
+				5DE458993031811A4C7D28C1 /* images */, 
+				BA41FC88D76540A6905224D6 /* xmls */, 
+
+				049B57391871FBE900EF3C66 /* Demo_macosx-Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -214,25 +220,26 @@
 		04A57D391871FF8B0068B1E5 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				04A57D3A1871FF9F0068B1E5 /* entry_point.cpp */,
-				04A57D3C1871FF9F0068B1E5 /* example.cpp */,
-				04A57D3E1871FF9F0068B1E5 /* example.h */,
-				04A57D401871FF9F0068B1E5 /* test.cpp */,
-				04A57D421871FF9F0068B1E5 /* test.h */,
-				04A57D441871FF9F0068B1E5 /* TestBox9Sprite.h */,
-				04A57D461871FF9F0068B1E5 /* TestClipRect.h */,
-				04A57D491871FF9F0068B1E5 /* TestDrag.h */,
-				04A57D4B1871FF9F0068B1E5 /* TestManageRes.h */,
-				04A57D4D1871FF9F0068B1E5 /* TestMask.h */,
-				04A57D4F1871FF9F0068B1E5 /* TestPerf.h */,
-				04A57D511871FF9F0068B1E5 /* TestProgressBar.h */,
-				04A57D531871FF9F0068B1E5 /* TestRender2Texture.h */,
-				04A57D551871FF9F0068B1E5 /* TestSliding.h */,
-				04A57D561871FF9F0068B1E5 /* TestTexel2Pixel.h */,
-				04A57D581871FF9F0068B1E5 /* TestText.h */,
-				04A57D5A1871FF9F0068B1E5 /* TestTextureFormat.h */,
-				04A57D5C1871FF9F0068B1E5 /* TestTweens.h */,
-				04A57D5E1871FF9F0068B1E5 /* TestUserShader.h */,
+				360377333740D8A2FD15BBE6 /* entry_point.cpp */, 
+				0BF9628FC8D38F9748F0CDEB /* example.cpp */, 
+				4DA100C319512824B7570663 /* test.cpp */, 
+				2CE4BD5BB9DEF92439C0AB58 /* example.h */, 
+				F196143B0370A9D348494ACC /* test.h */, 
+				7746CA7A63049ED8F7D6BF42 /* TestBox9Sprite.h */, 
+				D954BD82D7708B65A08FB6B9 /* TestClipRect.h */, 
+				BD0E956CC3A2F7EB94822B5C /* TestDrag.h */, 
+				7623D793B59EF0CD569E6EC2 /* TestManageRes.h */, 
+				AFA30E959880563E6ABBBC4F /* TestMask.h */, 
+				B52CCD463855CF91A7FBDB8E /* TestPerf.h */, 
+				7EEFDEEC289FCBB5FA67F822 /* TestProgressBar.h */, 
+				4E9DE6A8FCBDF43BC876EC90 /* TestRender2Texture.h */, 
+				8F2AFB956EEAEED67C5B7571 /* TestSliding.h */, 
+				047F6BD19F885FF186A1447C /* TestTexel2Pixel.h */, 
+				C570FAEF487CD34B62389F89 /* TestText.h */, 
+				2418B9A339E6004913AF5980 /* TestTextureFormat.h */, 
+				CAD9D6A98986EA8082368448 /* TestTweens.h */, 
+				67194AC90FEA68E7C96E6907 /* TestUserShader.h */, 
+
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -251,9 +258,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		049B572D1871FBE900EF3C66 /* demo_macosx */ = {
+		049B572D1871FBE900EF3C66 /* Demo_macosx */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 049B575F1871FBE900EF3C66 /* Build configuration list for PBXNativeTarget "demo_macosx" */;
+			buildConfigurationList = 049B575F1871FBE900EF3C66 /* Build configuration list for PBXNativeTarget "Demo_macosx" */;
 			buildPhases = (
 				049B572A1871FBE900EF3C66 /* Sources */,
 				049B572B1871FBE900EF3C66 /* Frameworks */,
@@ -265,9 +272,9 @@
 				04059FE91872027200BA6557 /* PBXTargetDependency */,
 				04A57D8F187201EF0068B1E5 /* PBXTargetDependency */,
 			);
-			name = demo_macosx;
-			productName = demo;
-			productReference = 049B572E1871FBE900EF3C66 /* demo_macosx.app */;
+			name = Demo_macosx;
+			productName = Demo;
+			productReference = 049B572E1871FBE900EF3C66 /* Demo_macosx.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -279,7 +286,7 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = oxygine;
 			};
-			buildConfigurationList = 049B57291871FBE900EF3C66 /* Build configuration list for PBXProject "demo_macosx" */;
+			buildConfigurationList = 049B57291871FBE900EF3C66 /* Build configuration list for PBXProject "Demo_macosx" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -302,7 +309,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				049B572D1871FBE900EF3C66 /* demo_macosx */,
+				049B572D1871FBE900EF3C66 /* Demo_macosx */,
 			);
 		};
 /* End PBXProject section */
@@ -350,11 +357,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0405A0081872139000BA6557 /* images in Resources */,
-				0405A0071872139000BA6557 /* ext in Resources */,
-				0405A0061872139000BA6557 /* demo in Resources */,
+				1E839D002B2BA83FC83A695A /* app.config.txt */, 
+				3A631A475DE035FC53ADE5EA /* demo */, 
+				CD59C69314E9E74CD0A11E03 /* ext */, 
+				EFF139F8BA484314F7AAF645 /* images */, 
+				F2CFD518E4E2E05ECEDBB262 /* xmls */, 
+
 				049B574A1871FBE900EF3C66 /* Images.xcassets in Resources */,
-				0405A0091872139000BA6557 /* xmls in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -365,9 +374,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04A57D621871FF9F0068B1E5 /* example.cpp in Sources */,
-				04A57D601871FF9F0068B1E5 /* entry_point.cpp in Sources */,
-				04A57D651871FF9F0068B1E5 /* test.cpp in Sources */,
+				2DC477AC10D6C07B3FE008F6 /* entry_point.cpp */, 
+				DA49ED8903C628BA578C8670 /* example.cpp */, 
+				C8860D93875589970329DCCD /* test.cpp */, 
+
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -422,7 +432,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/../../../oxygine/src $(PROJECT_DIR)/../../../../SDL/include";
+				USER_HEADER_SEARCH_PATHS = "../../../..//oxygine-framework/oxygine/src ../../../..//SDL/include";
 				VALID_ARCHS = i386;
 			};
 			name = Debug;
@@ -457,7 +467,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/../../../oxygine/src $(PROJECT_DIR)/../../../../SDL/include";
+				USER_HEADER_SEARCH_PATHS = "../../../..//oxygine-framework/oxygine/src ../../../..//SDL/include";
 				VALID_ARCHS = i386;
 			};
 			name = Release;
@@ -469,14 +479,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "demo/demo_macosx-Prefix.pch";
-				INFOPLIST_FILE = "demo/demo_macosx-Info.plist";
+				GCC_PREFIX_HEADER = "Demo/Demo_macosx-Prefix.pch";
+				INFOPLIST_FILE = "Demo_macosx-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/Mac/dev/oxygine-framework/oxygine/third_party/macosx/libraries",
-					"/Users/Mac/dev/oxygine-framework/oxygine/third_party/ios/libraries",
+					"../../../..//oxygine-framework/oxygine/third_party/macosx/libraries",
+					"../../../..//oxygine-framework/oxygine/third_party/ios/libraries",
 				);
-				PRODUCT_NAME = demo_macosx;
+				PRODUCT_NAME = Demo_macosx;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -488,14 +498,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "demo/demo_macosx-Prefix.pch";
-				INFOPLIST_FILE = "demo/demo_macosx-Info.plist";
+				GCC_PREFIX_HEADER = "Demo/Demo_macosx-Prefix.pch";
+				INFOPLIST_FILE = "Demo_macosx-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/Mac/dev/oxygine-framework/oxygine/third_party/macosx/libraries",
-					"/Users/Mac/dev/oxygine-framework/oxygine/third_party/ios/libraries",
+					"../../../..//oxygine-framework/oxygine/third_party/macosx/libraries",
+					"../../../..//oxygine-framework/oxygine/third_party/ios/libraries",
 				);
-				PRODUCT_NAME = demo_macosx;
+				PRODUCT_NAME = Demo_macosx;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -503,7 +513,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		049B57291871FBE900EF3C66 /* Build configuration list for PBXProject "demo_macosx" */ = {
+		049B57291871FBE900EF3C66 /* Build configuration list for PBXProject "Demo_macosx" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				049B575D1871FBE900EF3C66 /* Debug */,
@@ -512,7 +522,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		049B575F1871FBE900EF3C66 /* Build configuration list for PBXNativeTarget "demo_macosx" */ = {
+		049B575F1871FBE900EF3C66 /* Build configuration list for PBXNativeTarget "Demo_macosx" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				049B57601871FBE900EF3C66 /* Debug */,
