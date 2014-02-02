@@ -1,24 +1,45 @@
 1. read readme.SDL2
-2. Example 'Demo' has configured android project
+2a. Examples  have configured android project (exception is demobox2d)
+=================================================================================================
 how to build. Steps:
-- make sure that you have android-12 SDK, NDK apache-ant installed and all ENVIRONMENT variables configured properly
+- install Android NKD and setup it
+- install Android SDK - 12 or newer (if newer need to fix some properties in example)
+- install apache-ant 
+- configure environment variables properly:
+  NDK_ROOT points to root NDK folder 
+  	example: d:\android\android-ndk-r9c\
+  ANDROID_HOME points to root Android SDK folder
+  	example: d:/android/android-sdk/
+  JAVA_HOME points to JDK 
+  	example: c:\Program Files (x86)\Java\jdk1.6.0_26\
 
-- goto oxygine-framework/examples/demo/proj.android and oxygine-framework/oxygine/SDL/android/lib
-- open local.properties and fix path to android sdk
-- check that you have Android-12 sdk installed or change it in project.properties to your version
+- add necessary paths to environment variable PATH:
+  JDK 
+  	example: c:\Program Files (x86)\Java\jdk1.6.0_26\bin\
+  apache-ant
+  	example: d:\android\apache-ant\bin\
+  NDK tools 
+  	example: d:\android\android-ndk-r9c\
+  Android SDK tools and platform-tools
+  	example: d:\android\android-sdk\platform-tools\
+  	example: d:\android\android-sdk\tools\)
 
 - copy latest source code 
 	from SDL/android-project/src/
 	to oxygine-framework/oxygine/SDL/android/lib/src/
 
-- copy all assets (files and folders) from assets from oxygine's Demo example:
-  from oxygine-framework\examples\Demo\data\
-  to oxygine-framework\examples\Demo\proj.android\assets\
-- application is ready to build
+- goto oxygine-framework\examples and choose any example. Lets call it "Demo" 
+- try to build and run it using these scripts located in proj.android folder:
+	build.cmd
+	install.cmd
 
 
-try to build it using these shell commands:
-ndk-build
-ant debug
 
-apk is ready!
+2b. You could generate your own android build config.
+=================================================================================================
+- you need installed Python 2.7
+- you need to run this script
+  oxygine-framework\tools\gen_template.py
+
+example:
+	gen_template.py MyProject -t android -d path/to/MyProject/

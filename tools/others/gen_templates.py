@@ -3,12 +3,14 @@ def gen(path, project = ""):
 	if not project:
 		project = path
 
-	dest = "../../examples/" + path + "/proj.win32"
-	src =  "../../examples/" + path + "/src"
-	cmd = "python ../templates/gen.py %s -d %s -s %s" % (project, dest, src)
-	print cmd
-	os.system(cmd)
-	pass
+	for platform in ["win32", "android"]:
+		dest = "../../examples/" + path + "/proj." + platform
+		src =  "../../examples/" + path + "/src"
+		import shutil
+		shutil.rmtree(dest, True)
+		cmd = "python ../gen_template.py %s -d %s -s %s -t %s" % (project, dest, src, platform)
+		print cmd
+		os.system(cmd)
 
 
 

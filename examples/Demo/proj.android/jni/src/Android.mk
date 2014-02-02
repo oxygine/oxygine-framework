@@ -4,13 +4,9 @@ include $(CLEAR_VARS)
 LOCAL_MODULE := main
 
 #SDK_ROOT points to folder with SDL and oxygine-framework
-SDK_ROOT = /../../../../../../
-SRC := ../../../src
+LOCAL_SRC_FILES := ../../../../../..//SDL/src/main/android/SDL_android_main.c
 
-LOCAL_SRC_FILES :=  $(SDK_ROOT)/SDL/src/main/android/SDL_android_main.c \
-					$(SRC)/entry_point.cpp \
-					$(SRC)/example.cpp \
-					$(SRC)/test.cpp
+LOCAL_SRC_FILES += ../../../src/entry_point.cpp ../../../src/example.cpp ../../../src/test.cpp 
 
 
 LOCAL_STATIC_LIBRARIES := oxygine-framework_static
