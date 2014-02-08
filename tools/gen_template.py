@@ -67,7 +67,13 @@ def run(args):
     data = "../data"
     abs_data = os.path.normpath(args.dest + "/" + data)
     
-    data_files = glob.glob(abs_data + "/*")
+    data_files_ = glob.glob(abs_data + "/*")
+    data_files = []
+    for d in data_files_:
+        if os.path.splitext(d)[1]  in (".dll", ):
+            continue
+        data_files.append(d)
+
     cpp_files = glob.glob(args.src + "/*.cpp")
     h_files = glob.glob(args.src + "/*.h")    
 
@@ -254,7 +260,7 @@ def run(args):
                 dest_file.write(dest_data)      
             else:
                 print "copying file: " + dest_path
-                import shutil
+                import shutil                
                 shutil.copyfile(src_path, dest_path)
 
 

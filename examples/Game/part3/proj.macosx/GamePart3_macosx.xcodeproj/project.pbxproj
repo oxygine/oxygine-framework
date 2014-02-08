@@ -28,12 +28,8 @@
 		F87DC9641C1B8FCF28948580 /* ../src/Rocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7746CA7A63049ED8F7D6BF42 /* ../src/Rocket.cpp */; };
 		9850666D9BEB7BAAA6AAECDC /* ../src/Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D954BD82D7708B65A08FB6B9 /* ../src/Scene.cpp */; };
 		33E41D858B2ABD49382CD53F /* ../src/Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD0E956CC3A2F7EB94822B5C /* ../src/Unit.cpp */; };
-		3BB41671209E30BDF95D1B16 /* ../data/glew32.dll in Sources */ = {isa = PBXBuildFile; fileRef = 7623D793B59EF0CD569E6EC2 /* ../data/glew32.dll */; };
-		E02A0627DE00D04110ABADA6 /* ../data/images in Sources */ = {isa = PBXBuildFile; fileRef = AFA30E959880563E6ABBBC4F /* ../data/images */; };
-		2EDD01D75F08726BE081C106 /* ../data/pthreadVCE2.dll in Sources */ = {isa = PBXBuildFile; fileRef = B52CCD463855CF91A7FBDB8E /* ../data/pthreadVCE2.dll */; };
-		D42581590DA5455B882E551F /* ../data/SDL2.dll in Sources */ = {isa = PBXBuildFile; fileRef = 7EEFDEEC289FCBB5FA67F822 /* ../data/SDL2.dll */; };
-		A9E26B018414A811DA2D05DB /* ../data/xmls in Sources */ = {isa = PBXBuildFile; fileRef = 4E9DE6A8FCBDF43BC876EC90 /* ../data/xmls */; };
-		D734B014EBF89888DF6A4489 /* ../data/zlib1.dll in Sources */ = {isa = PBXBuildFile; fileRef = 8F2AFB956EEAEED67C5B7571 /* ../data/zlib1.dll */; };
+		3BB41671209E30BDF95D1B16 /* ../data/images in Sources */ = {isa = PBXBuildFile; fileRef = 7623D793B59EF0CD569E6EC2 /* ../data/images */; };
+		E02A0627DE00D04110ABADA6 /* ../data/xmls in Sources */ = {isa = PBXBuildFile; fileRef = AFA30E959880563E6ABBBC4F /* ../data/xmls */; };
 
 		
 /* End PBXBuildFile section */
@@ -118,24 +114,20 @@
 		7746CA7A63049ED8F7D6BF42 /* ../src/Rocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Rocket.cpp; path = ../src/Rocket.cpp; sourceTree = "<group>"; };
 		D954BD82D7708B65A08FB6B9 /* ../src/Scene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Scene.cpp; path = ../src/Scene.cpp; sourceTree = "<group>"; };
 		BD0E956CC3A2F7EB94822B5C /* ../src/Unit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Unit.cpp; path = ../src/Unit.cpp; sourceTree = "<group>"; };
-		047F6BD19F885FF186A1447C /* ../src/Enemy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Enemy.h; path = ../src/Enemy.h; sourceTree = "<group>"; };
-		C570FAEF487CD34B62389F89 /* ../src/example.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = example.h; path = ../src/example.h; sourceTree = "<group>"; };
-		2418B9A339E6004913AF5980 /* ../src/Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Game.h; path = ../src/Game.h; sourceTree = "<group>"; };
-		CAD9D6A98986EA8082368448 /* ../src/GameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameScene.h; path = ../src/GameScene.h; sourceTree = "<group>"; };
-		67194AC90FEA68E7C96E6907 /* ../src/Joystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Joystick.h; path = ../src/Joystick.h; sourceTree = "<group>"; };
-		5AFC0664D7BA80AE2A75BF0E /* ../src/MainMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainMenuScene.h; path = ../src/MainMenuScene.h; sourceTree = "<group>"; };
-		12CAC42FDF06ABE860CFEA53 /* ../src/MyButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyButton.h; path = ../src/MyButton.h; sourceTree = "<group>"; };
-		0F4469FB587862663D529DC9 /* ../src/Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Player.h; path = ../src/Player.h; sourceTree = "<group>"; };
-		B6A9281364AF5D3B581D374C /* ../src/res.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = res.h; path = ../src/res.h; sourceTree = "<group>"; };
-		4013C6794AAE8DFC641D2870 /* ../src/Rocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Rocket.h; path = ../src/Rocket.h; sourceTree = "<group>"; };
-		22E408FD6FCDA6E7E8E76952 /* ../src/Scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Scene.h; path = ../src/Scene.h; sourceTree = "<group>"; };
-		C0253E2158DFD901AD4F8991 /* ../src/Unit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Unit.h; path = ../src/Unit.h; sourceTree = "<group>"; };
-		7623D793B59EF0CD569E6EC2 /* ../data/glew32.dll */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wtf; name = glew32.dll; path = ../data/glew32.dll; sourceTree = "<group>"; };
-		AFA30E959880563E6ABBBC4F /* ../data/images */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = images; path = ../data/images; sourceTree = "<group>"; };
-		B52CCD463855CF91A7FBDB8E /* ../data/pthreadVCE2.dll */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wtf; name = pthreadVCE2.dll; path = ../data/pthreadVCE2.dll; sourceTree = "<group>"; };
-		7EEFDEEC289FCBB5FA67F822 /* ../data/SDL2.dll */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wtf; name = SDL2.dll; path = ../data/SDL2.dll; sourceTree = "<group>"; };
-		4E9DE6A8FCBDF43BC876EC90 /* ../data/xmls */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = xmls; path = ../data/xmls; sourceTree = "<group>"; };
-		8F2AFB956EEAEED67C5B7571 /* ../data/zlib1.dll */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wtf; name = zlib1.dll; path = ../data/zlib1.dll; sourceTree = "<group>"; };
+		B52CCD463855CF91A7FBDB8E /* ../src/Enemy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Enemy.h; path = ../src/Enemy.h; sourceTree = "<group>"; };
+		7EEFDEEC289FCBB5FA67F822 /* ../src/example.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = example.h; path = ../src/example.h; sourceTree = "<group>"; };
+		4E9DE6A8FCBDF43BC876EC90 /* ../src/Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Game.h; path = ../src/Game.h; sourceTree = "<group>"; };
+		8F2AFB956EEAEED67C5B7571 /* ../src/GameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameScene.h; path = ../src/GameScene.h; sourceTree = "<group>"; };
+		047F6BD19F885FF186A1447C /* ../src/Joystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Joystick.h; path = ../src/Joystick.h; sourceTree = "<group>"; };
+		C570FAEF487CD34B62389F89 /* ../src/MainMenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainMenuScene.h; path = ../src/MainMenuScene.h; sourceTree = "<group>"; };
+		2418B9A339E6004913AF5980 /* ../src/MyButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyButton.h; path = ../src/MyButton.h; sourceTree = "<group>"; };
+		CAD9D6A98986EA8082368448 /* ../src/Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Player.h; path = ../src/Player.h; sourceTree = "<group>"; };
+		67194AC90FEA68E7C96E6907 /* ../src/res.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = res.h; path = ../src/res.h; sourceTree = "<group>"; };
+		5AFC0664D7BA80AE2A75BF0E /* ../src/Rocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Rocket.h; path = ../src/Rocket.h; sourceTree = "<group>"; };
+		12CAC42FDF06ABE860CFEA53 /* ../src/Scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Scene.h; path = ../src/Scene.h; sourceTree = "<group>"; };
+		0F4469FB587862663D529DC9 /* ../src/Unit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Unit.h; path = ../src/Unit.h; sourceTree = "<group>"; };
+		7623D793B59EF0CD569E6EC2 /* ../data/images */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = images; path = ../data/images; sourceTree = "<group>"; };
+		AFA30E959880563E6ABBBC4F /* ../data/xmls */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = xmls; path = ../data/xmls; sourceTree = "<group>"; };
 
 		04A57D761871FFEB0068B1E5 /* oxygine_macosx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = oxygine_macosx.xcodeproj; path = ../../../../..//oxygine-framework/oxygine/SDL/macosx/oxygine_macosx/oxygine_macosx.xcodeproj; sourceTree = "<group>"; };
 		04A57D7E1872012A0068B1E5 /* SDL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SDL.xcodeproj; path = ../../../../..//SDL/Xcode/SDL/SDL.xcodeproj; sourceTree = "<group>"; };
@@ -224,12 +216,8 @@
 		049B57381871FBE900EF3C66 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				7623D793B59EF0CD569E6EC2 /* glew32.dll */, 
-				AFA30E959880563E6ABBBC4F /* images */, 
-				B52CCD463855CF91A7FBDB8E /* pthreadVCE2.dll */, 
-				7EEFDEEC289FCBB5FA67F822 /* SDL2.dll */, 
-				4E9DE6A8FCBDF43BC876EC90 /* xmls */, 
-				8F2AFB956EEAEED67C5B7571 /* zlib1.dll */, 
+				7623D793B59EF0CD569E6EC2 /* images */, 
+				AFA30E959880563E6ABBBC4F /* xmls */, 
 
 				049B57391871FBE900EF3C66 /* GamePart3_macosx-Info.plist */,
 			);
@@ -252,18 +240,18 @@
 				7746CA7A63049ED8F7D6BF42 /* Rocket.cpp */, 
 				D954BD82D7708B65A08FB6B9 /* Scene.cpp */, 
 				BD0E956CC3A2F7EB94822B5C /* Unit.cpp */, 
-				047F6BD19F885FF186A1447C /* Enemy.h */, 
-				C570FAEF487CD34B62389F89 /* example.h */, 
-				2418B9A339E6004913AF5980 /* Game.h */, 
-				CAD9D6A98986EA8082368448 /* GameScene.h */, 
-				67194AC90FEA68E7C96E6907 /* Joystick.h */, 
-				5AFC0664D7BA80AE2A75BF0E /* MainMenuScene.h */, 
-				12CAC42FDF06ABE860CFEA53 /* MyButton.h */, 
-				0F4469FB587862663D529DC9 /* Player.h */, 
-				B6A9281364AF5D3B581D374C /* res.h */, 
-				4013C6794AAE8DFC641D2870 /* Rocket.h */, 
-				22E408FD6FCDA6E7E8E76952 /* Scene.h */, 
-				C0253E2158DFD901AD4F8991 /* Unit.h */, 
+				B52CCD463855CF91A7FBDB8E /* Enemy.h */, 
+				7EEFDEEC289FCBB5FA67F822 /* example.h */, 
+				4E9DE6A8FCBDF43BC876EC90 /* Game.h */, 
+				8F2AFB956EEAEED67C5B7571 /* GameScene.h */, 
+				047F6BD19F885FF186A1447C /* Joystick.h */, 
+				C570FAEF487CD34B62389F89 /* MainMenuScene.h */, 
+				2418B9A339E6004913AF5980 /* MyButton.h */, 
+				CAD9D6A98986EA8082368448 /* Player.h */, 
+				67194AC90FEA68E7C96E6907 /* res.h */, 
+				5AFC0664D7BA80AE2A75BF0E /* Rocket.h */, 
+				12CAC42FDF06ABE860CFEA53 /* Scene.h */, 
+				0F4469FB587862663D529DC9 /* Unit.h */, 
 
 			);
 			name = src;
@@ -382,12 +370,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3BB41671209E30BDF95D1B16 /* glew32.dll */, 
-				E02A0627DE00D04110ABADA6 /* images */, 
-				2EDD01D75F08726BE081C106 /* pthreadVCE2.dll */, 
-				D42581590DA5455B882E551F /* SDL2.dll */, 
-				A9E26B018414A811DA2D05DB /* xmls */, 
-				D734B014EBF89888DF6A4489 /* zlib1.dll */, 
+				3BB41671209E30BDF95D1B16 /* images */, 
+				E02A0627DE00D04110ABADA6 /* xmls */, 
 
 				049B574A1871FBE900EF3C66 /* Images.xcassets in Resources */,
 			);

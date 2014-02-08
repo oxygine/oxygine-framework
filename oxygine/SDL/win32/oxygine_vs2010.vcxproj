@@ -139,6 +139,7 @@
     <ClCompile Include="..\..\src\EventDispatcher.cpp" />
     <ClCompile Include="..\..\src\Font.cpp" />
     <ClCompile Include="..\..\src\Input.cpp" />
+    <ClCompile Include="..\..\src\InputText.cpp" />
     <ClCompile Include="..\..\src\MaskedSprite.cpp" />
     <ClCompile Include="..\..\src\MemoryTexture.cpp" />
     <ClCompile Include="..\..\src\minizip\ioapi.c" />
@@ -233,6 +234,7 @@
     <ClInclude Include="..\..\src\Font.h" />
     <ClInclude Include="..\..\src\InitActor.h" />
     <ClInclude Include="..\..\src\Input.h" />
+    <ClInclude Include="..\..\src\InputText.h" />
     <ClInclude Include="..\..\src\MaskedSprite.h" />
     <ClInclude Include="..\..\src\MemoryTexture.h" />
     <ClInclude Include="..\..\src\minizip\ioapi.h" />

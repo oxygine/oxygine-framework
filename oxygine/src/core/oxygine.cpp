@@ -660,6 +660,19 @@ namespace oxygine
 							input->getTouchByID((int)event.tfinger.fingerId));
 					}				
 					break;
+					/*
+				case SDL_TEXTEDITING:
+					{
+						int q=0;
+					}
+					break;
+				case SDL_TEXTINPUT:
+					{
+						log::messageln("t: %s", event.text.text);
+						int q=0;
+					}
+					break;
+					*/
 				}
 			}
 
@@ -707,8 +720,10 @@ namespace oxygine
 		{
 #ifdef __S3E__
 			s3eOSExecExecute(str, false);
+#elif __ANDROID__
+			jniBrowse(str);
 #else
-			OX_ASSERT(!"execute");
+			OX_ASSERT(!"execute not implemented");
 #endif
 		}
 
@@ -825,7 +840,7 @@ namespace oxygine
 #ifdef __ANDROID__
 		return jniGetLanguage();
 #endif		
-		return "unknown";
+		return "en";
 	}
 
 	void	sleep(timeMS time)

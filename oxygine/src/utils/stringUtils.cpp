@@ -23,6 +23,9 @@ namespace oxygine
 			//normalize("//", dest);
 			//OX_ASSERT(strcmp(dest, "/") == 0);
 
+			normalize("rom://abc", dest);
+			OX_ASSERT(strcmp(dest, "rom://abc") == 0);
+
 			normalize("/../", dest);
 			OX_ASSERT(strcmp(dest, "/../") == 0);
 
@@ -144,6 +147,13 @@ namespace oxygine
 
 				if (c == '\\')
 					c = '/';
+				if (c == ':')
+				{
+					*dest++ = *src++;
+					*dest++ = *src++;
+					*dest++ = *src++;
+					continue;
+				}
 				if (c == '/' && last == '.' && last_last == '.' && (dest > copy + 2))
 				{
 					dest -= 3;

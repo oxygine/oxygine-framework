@@ -12,7 +12,7 @@
 
 
 //#define LOGD(...) oxygine::log::messageln(__VA_ARGS__)
-#define LOGD(...) 
+#define LOGD(...) ((void)0)
 
 #if __S3E__
 #define USE_S3E_FILE
@@ -164,8 +164,9 @@ namespace oxygine
 				unsigned int size  = (unsigned int)oxFileTell(_handle);
 				oxFileSeek(_handle, 0, ox_FILESEEK_SET);
 				return size;
-#endif
+#else
 				return SDL_RWsize((SDL_RWops*)_handle);				
+#endif				
 			}
 
 		private:
@@ -193,11 +194,11 @@ namespace oxygine
 
 		void STDFileSystem::setPath(const char *folder)
 		{
-			_path = folder;
-			_path += "/";
+			_path = folder;			
 			char norm[512];
-			path::normalize(_path.c_str(), norm);
+			path::normalize(_path.c_str(), norm);			
 			_path = norm;
+			_path += "/";
 		}
 
 

@@ -15,7 +15,7 @@ namespace oxygine
 		MemoryTexture();
 		~MemoryTexture();
 
-		void init(file::buffer &bf, bool premultiplied = false, TextureFormat format = TF_UNDEFINED);
+		bool init(file::buffer &bf, bool premultiplied = false, TextureFormat format = TF_UNDEFINED);
 		void init(const ImageData &src);
 		void init(int w, int h, TextureFormat Format);
 

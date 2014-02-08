@@ -195,6 +195,8 @@
 		049B57221871F21E00EF3C66 /* winnie_alloc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B56621871F21E00EF3C66 /* winnie_alloc.cpp */; };
 		049B57231871F21E00EF3C66 /* winnie_alloc.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B56631871F21E00EF3C66 /* winnie_alloc.h */; };
 		049B57241871F21E00EF3C66 /* winnie_alloc_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B56641871F21E00EF3C66 /* winnie_alloc_config.h */; };
+		04B3A71F18A6594D004C67E3 /* InputText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04B3A71D18A6594D004C67E3 /* InputText.cpp */; };
+		04B3A72018A6594D004C67E3 /* InputText.h in Headers */ = {isa = PBXBuildFile; fileRef = 04B3A71E18A6594D004C67E3 /* InputText.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -395,6 +397,8 @@
 		049B56621871F21E00EF3C66 /* winnie_alloc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = winnie_alloc.cpp; sourceTree = "<group>"; };
 		049B56631871F21E00EF3C66 /* winnie_alloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = winnie_alloc.h; sourceTree = "<group>"; };
 		049B56641871F21E00EF3C66 /* winnie_alloc_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = winnie_alloc_config.h; sourceTree = "<group>"; };
+		04B3A71D18A6594D004C67E3 /* InputText.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InputText.cpp; path = ../../../src/InputText.cpp; sourceTree = "<group>"; };
+		04B3A71E18A6594D004C67E3 /* InputText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InputText.h; path = ../../../src/InputText.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -427,6 +431,8 @@
 		049B55901871F21000EF3C66 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				04B3A71D18A6594D004C67E3 /* InputText.cpp */,
+				04B3A71E18A6594D004C67E3 /* InputText.h */,
 				049B55911871F21D00EF3C66 /* Actor.cpp */,
 				049B55921871F21D00EF3C66 /* Actor.h */,
 				049B55931871F21D00EF3C66 /* AnimationFrame.cpp */,
@@ -839,6 +845,7 @@
 				049B56F41871F21E00EF3C66 /* CreateResourceContext.h in Headers */,
 				049B571D1871F21E00EF3C66 /* stringUtils.h in Headers */,
 				049B56AF1871F21E00EF3C66 /* system_data.h in Headers */,
+				04B3A72018A6594D004C67E3 /* InputText.h in Headers */,
 				049B571B1871F21E00EF3C66 /* intrusive_list.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -912,6 +919,7 @@
 				049B56DF1871F21E00EF3C66 /* MemoryTexture.cpp in Sources */,
 				049B56ED1871F21E00EF3C66 /* ProgressBar.cpp in Sources */,
 				049B56A31871F21E00EF3C66 /* Renderer.cpp in Sources */,
+				04B3A71F18A6594D004C67E3 /* InputText.cpp in Sources */,
 				049B57191871F21E00EF3C66 /* ImageUtils.cpp in Sources */,
 				049B569C1871F21E00EF3C66 /* Object.cpp in Sources */,
 				049B56D21871F21E00EF3C66 /* Input.cpp in Sources */,
@@ -1094,6 +1102,7 @@
 				049B52C11871EDE900EF3C66 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

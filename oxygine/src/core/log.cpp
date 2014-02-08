@@ -9,7 +9,7 @@
 
 #if defined(ANDROID)
 #include <android/log.h>
-#define  LOG_TAG    "oxygine"
+#define  LOG_TAG    "SDL"
 #define  LOGD(str)  __android_log_write(ANDROID_LOG_DEBUG, LOG_TAG, str)
 
 #else
@@ -66,7 +66,8 @@ namespace oxygine
 			
 			int len = strlen(buff);
 			int i = vsnprintf(buff + len, sizeof(buff) - len, format, args);
-						
+			if (i == -1)
+				buff[SIZE - 1] = 0;
 			out_line(buff, i + len);
 		}
 
@@ -77,7 +78,8 @@ namespace oxygine
 
 			int len = strlen(buff);
 			int i = vsnprintf(buff + len, sizeof(buff) - len, format, args);
-
+			if (i == -1)
+				buff[SIZE - 1] = 0;
 			out(buff);
 		}
 

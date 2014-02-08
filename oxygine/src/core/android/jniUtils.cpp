@@ -71,14 +71,6 @@ namespace oxygine
 		return 0;
 	}
 
-	std::string 	getString(JNIEnv *env, jstring jstr)
-	{
-		const char *cstr = env->GetStringUTFChars(jstr, 0);
-		string str = cstr;
-		env->ReleaseStringUTFChars(jstr, cstr);
-		return str;
-	}
-
 	std::string		jniGetLanguage()
 	{
 		try
@@ -88,7 +80,7 @@ namespace oxygine
 
 			jstring jstr = (jstring)env->CallStaticObjectMethod(_jUtils, _jUtils_getLanguage);
 
-			return getString(env, jstr);
+			return jniGetString(env, jstr);
 		}
 		catch(const notFound&)
 		{
@@ -114,6 +106,50 @@ namespace oxygine
 		}
 
 		return false;
+	}
+
+	bool			jniExit()
+	{
+		try
+		{
+			JNIEnv *env = jniGetEnv();
+			LOCAL_REF_HOLDER(env);
+
+			jmethodID m = env->GetStaticMethodID(_jUtils, "exit", "()V");
+			JNI_NOT_NULL(m);
+			env->CallStaticVoidMethod(_jUtils, m);			
+		}
+		catch(const notFound&){}		
+	}
+
+	void			jniMoveTaskToBack()
+	{
+		try
+		{
+			JNIEnv *env = jniGetEnv();
+			LOCAL_REF_HOLDER(env);
+
+			jmethodID m = env->GetStaticMethodID(_jUtils, "moveTaskToBack", "()V");
+			JNI_NOT_NULL(m);
+			env->CallStaticVoidMethod(_jUtils, m);			
+		}
+		catch(const notFound&){}		
+	}
+
+	void			jniBrowse(const char *url)
+	{
+		try
+		{
+			JNIEnv *env = jniGetEnv();
+			LOCAL_REF_HOLDER(env);
+
+			jstring jstr = env->NewStringUTF(url);
+
+			jmethodID m = env->GetStaticMethodID(_jUtils, "browse", "(Ljava/lang/String;)V");
+			JNI_NOT_NULL(m);
+			env->CallStaticVoidMethod(_jUtils, m, jstr);
+		}
+		catch(const notFound&){}				
 	}
 }
 

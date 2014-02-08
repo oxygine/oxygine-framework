@@ -1,8 +1,11 @@
 #pragma once
 #include <jni.h> 
 #include <android/log.h>
+#include <string>
 namespace oxygine
 {
+	using namespace std;
+	
 	#define STRINGIZE_DETAIL(x) #x
 	#define STRINGIZE(x) STRINGIZE_DETAIL(x)
 
@@ -40,4 +43,5 @@ namespace oxygine
 
 
 	JNIEnv* jniGetEnv(void);
+	std::string jniGetString(JNIEnv *env, jstring jstr);
 }

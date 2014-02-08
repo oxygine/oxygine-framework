@@ -20,6 +20,7 @@
 #include "Font.h"
 #include "initActor.h"
 #include "Input.h"
+#include "InputText.h"
 #include "MemoryTexture.h"
 #include "Multithreading.h"
 #include "PointerState.h"

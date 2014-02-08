@@ -16,4 +16,8 @@ namespace oxygine
 	/**returns locale. ISO 639-1 */
 	std::string		jniGetLanguage();
 	bool			jniIsNetworkAvailable();
+
+	bool			jniExit();
+	void			jniMoveTaskToBack();
+	void			jniBrowse(const char *url);
 }

@@ -15,6 +15,7 @@
 #include "TestClipRect.h"
 #include "TestUserShader.h"
 #include "TestMask.h"
+#include "TestInputText.h"
 #include "core/STDFileSystem.h"
 
 #ifdef __S3E__
@@ -56,6 +57,8 @@ public:
 		addButton("cliprect", "ClipRect Actor");		
 		addButton("usershader", "User Shader");		
 		addButton("mask", "Mask");		
+		addButton("inputtext", "Input Text");		
+		
 	}
 
 	void clicked(string id)
@@ -129,6 +132,11 @@ public:
 		if (id == "mask")
 		{
 			getRoot()->addChild(new TestMask);
+		}
+
+		if (id == "inputtext")
+		{
+			getRoot()->addChild(new TestInputText);
 		}
 	}
 };

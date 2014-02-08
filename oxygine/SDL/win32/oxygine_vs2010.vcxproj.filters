@@ -288,6 +288,9 @@
     <ClCompile Include="..\..\src\core\ThreadMessages.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\InputText.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\closure\closure.h">
@@ -616,6 +619,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\core\ThreadMessages.h">
       <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\InputText.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

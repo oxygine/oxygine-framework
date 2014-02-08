@@ -11,4 +11,12 @@ namespace oxygine
 	{
 		return Android_JNI_GetEnv();
 	}
+
+	std::string jniGetString(JNIEnv *env, jstring jstr)
+	{
+		const char *cstr = env->GetStringUTFChars(jstr, 0);
+		string str = cstr;
+		env->ReleaseStringUTFChars(jstr, cstr);
+		return str;
+	}
 }

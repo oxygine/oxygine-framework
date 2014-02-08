@@ -47,7 +47,7 @@
 namespace oxygine{namespace log{void error(const char *format, ...);}}
 #define OX_ASSERT(x) if (!(x)) oxygine::log::error("Assert! %d %s", __LINE__, __FILE__); (assert(x))
 #else
-#define OX_ASSERT(x) (assert(x))
+#define OX_ASSERT(x) (if (!(x)) oxygine::log::error("Assert! %d %s", __LINE__, __FILE__))
 #endif
 
 #define OXYGINE_HAS_RESTORE

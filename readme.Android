@@ -24,9 +24,10 @@ how to build. Steps:
   	example: d:\android\android-sdk\platform-tools\
   	example: d:\android\android-sdk\tools\)
 
-- copy latest source code 
+- copy latest source code (and don't forget to update it if you updated SDL)
 	from SDL/android-project/src/
 	to oxygine-framework/oxygine/SDL/android/lib/src/
+
 
 - goto oxygine-framework\examples and choose any example. Lets call it "Demo" 
 - try to build and run it using these scripts located in proj.android folder:

@@ -424,7 +424,7 @@ namespace oxygine
 		memset(&_buffer.front(), 0, _buffer.size());
 	}
 
-	void MemoryTexture::init(file::buffer &buffer, bool premultiplied, TextureFormat format)
+	bool MemoryTexture::init(file::buffer &buffer, bool premultiplied, TextureFormat format)
 	{
 		cleanup();
 
@@ -517,14 +517,20 @@ namespace oxygine
 
 //						saveImage(lock(), "test.png", "png");
 					}
-					int q=0;
+					else
+					{
+						log::warning("tga 32bpp only supported");
+						return false;
+					}
 				}
 				break;
 			default:
 				log::warning("MemoryTexture. can't unpack data %s");
+				return false;
 				break;
 			}			
 		}
+		return true;
 	}
 
 	void MemoryTexture::init(const ImageData &src)

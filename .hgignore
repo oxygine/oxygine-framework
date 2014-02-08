@@ -106,5 +106,7 @@ libs/
 examples/Game/part3/proj.win32/Debug/
 examples/HelloWorld/proj.win32/Debug/
 examples/Match3/proj.win32/Debug/
+examples/HelloWorld/proj.android/bin/
+examples/HelloWorld/proj.android/gen/
 syntax: regexp
 ^build/

@@ -39,6 +39,8 @@
 		04AEC310182BD912006413A9 /* ShaderProgramGL.h in Headers */ = {isa = PBXBuildFile; fileRef = 04AEC30E182BD912006413A9 /* ShaderProgramGL.h */; };
 		04AEC313182BD98D006413A9 /* UberShaderProgram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04AEC311182BD98D006413A9 /* UberShaderProgram.cpp */; };
 		04AEC314182BD98D006413A9 /* UberShaderProgram.h in Headers */ = {isa = PBXBuildFile; fileRef = 04AEC312182BD98D006413A9 /* UberShaderProgram.h */; };
+		04B3A71918A65668004C67E3 /* InputText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04B3A71718A65668004C67E3 /* InputText.cpp */; };
+		04B3A71A18A65668004C67E3 /* InputText.h in Headers */ = {isa = PBXBuildFile; fileRef = 04B3A71818A65668004C67E3 /* InputText.h */; };
 		04D6FB4C1851914000A5403A /* ThreadMessages.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04D6FB4A1851914000A5403A /* ThreadMessages.cpp */; };
 		04D6FB4D1851914000A5403A /* ThreadMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = 04D6FB4B1851914000A5403A /* ThreadMessages.h */; };
 		C38704A217C0C6AC00015CA8 /* VideoDriverGLES11.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C38704A017C0C6AC00015CA8 /* VideoDriverGLES11.cpp */; };
@@ -232,6 +234,8 @@
 		04AEC30E182BD912006413A9 /* ShaderProgramGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShaderProgramGL.h; path = gl/ShaderProgramGL.h; sourceTree = "<group>"; };
 		04AEC311182BD98D006413A9 /* UberShaderProgram.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UberShaderProgram.cpp; sourceTree = "<group>"; };
 		04AEC312182BD98D006413A9 /* UberShaderProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UberShaderProgram.h; sourceTree = "<group>"; };
+		04B3A71718A65668004C67E3 /* InputText.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InputText.cpp; path = ../../../src/InputText.cpp; sourceTree = "<group>"; };
+		04B3A71818A65668004C67E3 /* InputText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InputText.h; path = ../../../src/InputText.h; sourceTree = "<group>"; };
 		04D6FB4A1851914000A5403A /* ThreadMessages.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ThreadMessages.cpp; sourceTree = "<group>"; };
 		04D6FB4B1851914000A5403A /* ThreadMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadMessages.h; sourceTree = "<group>"; };
 		C38704A017C0C6AC00015CA8 /* VideoDriverGLES11.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VideoDriverGLES11.cpp; path = gl/VideoDriverGLES11.cpp; sourceTree = "<group>"; };
@@ -468,6 +472,8 @@
 		C3E86F5316EBC8C200052915 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				04B3A71718A65668004C67E3 /* InputText.cpp */,
+				04B3A71818A65668004C67E3 /* InputText.h */,
 				0472E37B17F8A2EC0016A832 /* MaskedSprite.cpp */,
 				0472E37C17F8A2EC0016A832 /* MaskedSprite.h */,
 				0472E37D17F8A2EC0016A832 /* oxygine_include.h */,
@@ -845,6 +851,7 @@
 				0472E36217F8A1A80016A832 /* vertex.h in Headers */,
 				C3EE216417BECD7200715678 /* VideoDriverGL.h in Headers */,
 				C38704A317C0C6AC00015CA8 /* VideoDriverGLES11.h in Headers */,
+				04B3A71A18A65668004C67E3 /* InputText.h in Headers */,
 				C38704A717C0C71700015CA8 /* VideoDriverGLES20.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -918,6 +925,7 @@
 				C3E8701F16EBC8EB00052915 /* Mutex.cpp in Sources */,
 				C3E8702116EBC8EB00052915 /* NativeTexture.cpp in Sources */,
 				C3E8702316EBC8EB00052915 /* Object.cpp in Sources */,
+				04B3A71918A65668004C67E3 /* InputText.cpp in Sources */,
 				C3E8702816EBC8EB00052915 /* oxygine.cpp in Sources */,
 				04967C4D180B3D7400D66EFA /* Restorable.cpp in Sources */,
 				C3E8702C16EBC8EB00052915 /* Renderer.cpp in Sources */,
