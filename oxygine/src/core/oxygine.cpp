@@ -566,6 +566,10 @@ namespace oxygine
 			SDL_Event event;
 			while (SDL_PollEvent(&event)) 
 			{
+				Event ev(Input::event_platform);
+				ev.userData = &event;
+				Input::instance.dispatchEvent(&ev);
+
 				switch(event.type)
 				{
 				case SDL_QUIT:
@@ -617,13 +621,13 @@ namespace oxygine
 				case SDL_MOUSEWHEEL:
 					input->sendPointerWheelEvent(event.wheel.y, &input->_pointerMouse);
 					break;
+#if SDL_VIDEO_OPENGL
 				case SDL_MOUSEMOTION:
 					input->sendPointerMotionEvent((float)event.motion.x, (float)event.motion.y, 1.0f, &input->_pointerMouse);
 					break;
 				case SDL_MOUSEBUTTONDOWN:
 				case SDL_MOUSEBUTTONUP:
 					{
-#ifndef ANDROID
 						MouseButton b = MouseButton_Left;
 						switch(event.button.button)
 						{
@@ -634,9 +638,9 @@ namespace oxygine
 
 						input->sendPointerButtonEvent(b, (float)event.button.x, (float)event.button.y, 1.0f, 
 							event.type == SDL_MOUSEBUTTONDOWN ? TouchEvent::TOUCH_DOWN : TouchEvent::TOUCH_UP, &input->_pointerMouse);
-#endif
 					}					
 					break;
+#else
 
 				case SDL_FINGERMOTION:
 					{
@@ -660,6 +664,7 @@ namespace oxygine
 							input->getTouchByID((int)event.tfinger.fingerId));
 					}				
 					break;
+#endif
 					/*
 				case SDL_TEXTEDITING:
 					{

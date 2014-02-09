@@ -1,5 +1,6 @@
 #pragma once
 #include "oxygine_include.h"
+#include "EventDispatcher.h"
 #include "math/vector3.h"
 #include "math/vector2.h"
 #include "closure/closure.h"
@@ -14,13 +15,18 @@ namespace oxygine
 	
 	const int MAX_TOUCHES = 8;
 
-	class Input
+	class Input: public EventDispatcher
 	{
 	public:
 		static Input instance;
 
 		Input();
 		~Input();
+
+		enum
+		{
+			event_platform = makefourcc('_', 's', 'd', 'l')
+		};
 
 		void cleanup();
 

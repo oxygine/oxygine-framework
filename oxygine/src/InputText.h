@@ -37,8 +37,8 @@ namespace oxygine
 		void updateText();
 		static InputText *_active;		
 
-#ifndef __S3E__		
-		static int SDLCALL onSDLEvent(void *userdata, SDL_Event * event);
+		void _onPlatform(Event *event);
+#ifndef __S3E__
 		int _onSDLEvent(SDL_Event *event);
 #endif
 	};

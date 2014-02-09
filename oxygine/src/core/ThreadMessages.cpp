@@ -31,19 +31,28 @@ namespace oxygine
 			pthread_cond_wait(&_cond, &_mutex);			
 	}
 
+	void addtime(timespec& ts, int ms)
+	{
+		ts.tv_nsec += ms * 1000000;
+		while(ts.tv_nsec >= 1000000000)
+		{
+			ts.tv_nsec -= 1000000000;
+			++ts.tv_sec;
+		}
+	}
+
+
 	void mywait(pthread_cond_t *cond, pthread_mutex_t *mutex)
 	{
 #ifdef __S3E__
 		timespec ts;
 		clock_gettime(CLOCK_REALTIME, &ts);
-		//ts.tv_sec += 1;
-		ts.tv_nsec += 300 * 1000000;
-		if (ts.tv_nsec >= 1000000000)
-		{
-			ts.tv_nsec -= 1000000000;
-			++ts.tv_sec;
-		}
-		
+		addtime(ts, 300);		
+		pthread_cond_timedwait(cond, mutex, &ts);
+#elif __ANDROID__
+		timespec ts;
+		clock_gettime(CLOCK_REALTIME, &ts);
+		addtime(ts, 500);		
 		pthread_cond_timedwait(cond, mutex, &ts);
 #else
 		pthread_cond_wait(cond, mutex);		

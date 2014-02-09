@@ -3,6 +3,9 @@
 #include "core/log.h"
 #include <string.h>
 
+//#define LOGD(...) oxygine::log::message("input: "); oxygine::log::messageln(__VA_ARGS__)
+#define LOGD(...) ((void)0)
+
 namespace oxygine
 {
 	Input Input::instance;
@@ -29,6 +32,8 @@ namespace oxygine
 
 		ps->_position = p;
 
+		LOGD("sendPointerButtonEvent %d - (%.2f, %.2f), %d", me.index, p.x, p.y, type);
+
 		getRoot()->handleEvent(&me);
 	}
 
@@ -39,6 +44,7 @@ namespace oxygine
 		me.pressure = pressure;
 		ps->_position = Vector2(x, y);
 
+		LOGD("sendPointerMotionEvent %d - (%.2f, %.2f)", me.index, x, y);
 		getRoot()->handleEvent(&me);
 	}
 
@@ -55,6 +61,7 @@ namespace oxygine
 
 	Input::Input()
 	{
+		addRef();
 		_pointerMouse.init(MAX_TOUCHES + 1);
 		for (int i = 0; i < MAX_TOUCHES; ++i)
 			_pointers[i].init(i + 1);
