@@ -31,7 +31,10 @@ def run(args):
         #return
         pass
 
-    templates_path = os.path.split(__file__)[0] + "/templates/"
+    templates_path = os.path.dirname(__file__)
+    if not templates_path:
+        templates_path = "."
+    templates_path += "/templates/"
     root_path = templates_path + "/../../../"
     root_path = os.path.abspath(root_path)
 
