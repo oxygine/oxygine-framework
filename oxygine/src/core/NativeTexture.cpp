@@ -56,8 +56,8 @@ namespace oxygine
 	
 		std::vector<spNativeTexture> t;
 
-		const ObjectBase::createdObjects &obj = ObjectBase::getCreatedObjects();
-		for (ObjectBase::createdObjects::const_iterator i = obj.begin(); i != obj.end(); ++i)
+		const ObjectBase::__createdObjects &obj = ObjectBase::__getCreatedObjects();
+		for (ObjectBase::__createdObjects::const_iterator i = obj.begin(); i != obj.end(); ++i)
 		{
 			ObjectBase *ob = *i;
 			NativeTexture *nt = dynamic_cast<NativeTexture *>(ob);

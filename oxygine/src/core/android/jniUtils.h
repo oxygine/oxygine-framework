@@ -1,6 +1,6 @@
 #pragma once
 #include "oxygine_include.h"
-#include "jnihelper.h"
+#include "jniHelper.h"
 #include "core/oxygine.h"
 #include <string>
 

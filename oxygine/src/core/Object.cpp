@@ -9,7 +9,11 @@
 
 namespace oxygine
 {
-	ObjectBase::createdObjects ObjectBase::__objects;
+	ObjectBase::__createdObjects&	ObjectBase::__getCreatedObjects()
+	{
+		static __createdObjects __objects;
+		return __objects;
+	}
 
 	int ObjectBase::_lastID = 0;
 	int ObjectBase::_assertCtorID = -1;	
@@ -71,17 +75,17 @@ namespace oxygine
 
 	ObjectBase::ObjectBase(const ObjectBase &src):__id(0), __name(0)
 	{
-#ifdef OXYGINE_DEBUG_OBJECTS
-		{
-			MutexAutoLock m(mutexDebugList);
-			__objects.push_back(this);
-		}		
-#endif
+		__addToDebugList(this);
 
 		__userData = src.__userData;
 		if (src.__name)
 			setName(*src.__name);
 		__generateID();
+	}
+
+	void ObjectBase::__removeFromDebugList()
+	{
+		__removeFromDebugList(this);		
 	}
 
 	void ObjectBase::__generateID()
@@ -94,12 +98,7 @@ namespace oxygine
 
 	ObjectBase::ObjectBase(bool assignID):__userData(0), __name(0), __id(0)
 	{
-#ifdef OXYGINE_DEBUG_OBJECTS
-		{
-			MutexAutoLock m(mutexDebugList);
-			__objects.push_back(this);
-		}		
-#endif
+		__addToDebugList(this);
 
 		if (assignID)
 			__generateID();
@@ -118,7 +117,10 @@ namespace oxygine
 	ObjectBase::~ObjectBase()
 	{
 		OX_ASSERT(_assertDtorID != __id);
+
+#ifdef OXYGINE_DEBUG_TRACE_LEAKS
 		__removeFromDebugList(this);
+#endif
 
 		if (__name)
 		{
@@ -127,14 +129,30 @@ namespace oxygine
 		}
 	}
 
-	void ObjectBase::__removeFromDebugList(ObjectBase *base)
+	void ObjectBase::__addToDebugList(ObjectBase *base)
 	{
-#ifdef OXYGINE_DEBUG_OBJECTS
+#ifdef OXYGINE_DEBUG_TRACE_LEAKS		
 		{
 			MutexAutoLock m(mutexDebugList);
-			createdObjects::iterator i = std::find(__objects.begin(), __objects.end(), base);
-			OX_ASSERT(i != __objects.end());
-			__objects.erase(i);	
+			base->__traceLeak = true;
+			__getCreatedObjects().push_back(base);
+		}		
+#endif
+	}
+
+	void ObjectBase::__removeFromDebugList(ObjectBase *base)
+	{
+#ifdef OXYGINE_DEBUG_TRACE_LEAKS		
+		{
+			MutexAutoLock m_(mutexDebugList);
+			if (base->__traceLeak)
+			{
+				base->__traceLeak = false;   
+				__createdObjects& objs = __getCreatedObjects();
+				__createdObjects::iterator i = std::find(objs.begin(), objs.end(), base);
+				OX_ASSERT(i != objs.end());
+				objs.erase(i);	
+			}			
 		}		
 #endif
 	}
@@ -158,12 +176,13 @@ namespace oxygine
 
 	void ObjectBase::dumpCreatedObjects()
 	{
-#ifdef OXYGINE_DEBUG_OBJECTS
+#ifdef OXYGINE_DEBUG_TRACE_LEAKS
 		MutexAutoLock m(mutexDebugList);
 
 		log::messageln("\n\n\nallocated objects:");
 		int n = 0;		
-		for (createdObjects::iterator i = __objects.begin(); i != __objects.end(); ++i)
+		__createdObjects& objs = __getCreatedObjects();
+		for (__createdObjects::iterator i = objs.begin(); i != objs.end(); ++i)
 		{
 			ObjectBase *object = *i;
 			//log::message("%d)", n);
@@ -171,7 +190,7 @@ namespace oxygine
 
 			++n;
 		}
-		log::message("total: %d -----------------------------\n\n\n", (int)__objects.size());
+		log::message("total: %d -----------------------------\n\n\n", (int)objs.size());
 #endif
 	}
 

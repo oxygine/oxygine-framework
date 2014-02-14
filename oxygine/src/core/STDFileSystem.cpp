@@ -148,13 +148,13 @@ namespace oxygine
 #ifdef __S3E__
 				return oxFileSeek(_handle, offset, (s3eFileSeekOrigin)whence);
 #else
-				return oxFileSeek(_handle, offset, whence);
+				return (int)oxFileSeek(_handle, offset, whence);
 #endif
 			}
 
 			unsigned int tell() const
 			{
-				return oxFileTell(_handle);
+				return (unsigned int)oxFileTell(_handle);
 			}
 
 			virtual unsigned int getSize() const
@@ -165,7 +165,7 @@ namespace oxygine
 				oxFileSeek(_handle, 0, ox_FILESEEK_SET);
 				return size;
 #else
-				return SDL_RWsize((SDL_RWops*)_handle);				
+				return (int)SDL_RWsize((SDL_RWops*)_handle);				
 #endif				
 			}
 

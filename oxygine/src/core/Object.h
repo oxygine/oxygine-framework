@@ -54,10 +54,13 @@ namespace oxygine
 		{return ob.getName() < name;}
 
 
-		typedef vector<ObjectBase*> createdObjects;
-		static const createdObjects&	getCreatedObjects(){return __objects;}		
+		//debug functions
+		typedef vector<ObjectBase*> __createdObjects;
+		static __createdObjects&	__getCreatedObjects();
+		void __removeFromDebugList();
 
 	protected:
+		static void __addToDebugList(ObjectBase *base);
 		static void __removeFromDebugList(ObjectBase *base);
 		void __generateID();
 
@@ -67,7 +70,10 @@ namespace oxygine
 		int __id;
 		void *__userData;
 
-		static createdObjects __objects;
+
+#ifdef OXYGINE_DEBUG_TRACE_LEAKS
+		bool __traceLeak;
+#endif
 
 		static int _lastID;
 		static int _assertCtorID;

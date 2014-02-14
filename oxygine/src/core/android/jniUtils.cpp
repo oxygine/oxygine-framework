@@ -1,5 +1,5 @@
 #include "jniUtils.h"
-#include "jnihelper.h"
+#include "jniHelper.h"
 
 jobject _jmainActivity = 0;
 jclass _jmainActivityClass = 0;

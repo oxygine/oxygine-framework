@@ -122,7 +122,7 @@ namespace oxygine
 		addButton(x, "t2p", "t2p");
 #endif
 
-#ifdef OXYGINE_DEBUG_OBJECTS
+#ifdef OXYGINE_DEBUG_TRACE_LEAKS
 		
 		addButton(x, "images", "images");		
 #endif
@@ -242,8 +242,8 @@ namespace oxygine
 		s << "fps=" << fps << " mem=" << mem_used << endl;
 		s << "mfree=" << mem_free << endl;
 
-#ifdef OXYGINE_DEBUG_OBJECTS
-		s << "objects=" << (int)__objects.size() << endl;
+#ifdef OXYGINE_DEBUG_TRACE_LEAKS
+		s << "objects=" << (int)ObjectBase::__getCreatedObjects().size() << endl;
 #endif
 		s << "batches="<< _videoStats.batches << " triangles=" << _videoStats.triangles << endl;
 		s << "update=" << getRoot()->_statUpdate << "ms ";

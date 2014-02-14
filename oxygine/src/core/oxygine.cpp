@@ -251,6 +251,8 @@ namespace oxygine
 
 		void init(init_desc *desc_ptr)
 		{
+			Input::instance.__removeFromDebugList();
+
 			log::messageln("initialize oxygine");
 			if (desc_ptr)
 				desc = *desc_ptr;
