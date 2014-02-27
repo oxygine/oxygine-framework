@@ -170,6 +170,9 @@ namespace oxygine
 			fileHandle *fh = (fileHandle*)fh_;
 
 			unsigned int size  = fh->getSize();
+			if (!size)
+				return 0;
+
 			dest.data.resize(size);
 			unsigned int t = fh->read(&dest.data[0], size);
 			LOGD("read file %x %d", fh, t);

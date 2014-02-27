@@ -21,6 +21,19 @@ namespace oxygine
 
 		_lastID++;
 
+		/*
+#ifdef OX_DEBUG
+		for (listeners::iterator i = _listeners->begin(); i != _listeners->end(); ++i)
+		{
+			const listener& ls = *i;
+			if (ls.type == et && cb == ls.cb)
+			{
+				OX_ASSERT(!"you are already added this event listener");
+			}
+		}
+#endif
+		*/
+
 		listener ls;
 		ls.type = et;
 		ls.cb = cb;

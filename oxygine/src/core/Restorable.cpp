@@ -22,7 +22,12 @@ namespace oxygine
 	void Restorable::restoreAll()
 	{
 		restorable rs;
-		swap(rs, _restorable);
+		
+		{
+			MutexAutoLock al(_mutex);
+			swap(rs, _restorable);
+		}
+
 		for (restorable::iterator i = rs.begin(); i != rs.end(); ++i)
 		{
 			Restorable *r = *i;
@@ -34,14 +39,21 @@ namespace oxygine
 	void Restorable::releaseAll()
 	{
 		restorable rs;
-		swap(rs, _restorable);
+		{
+			MutexAutoLock al(_mutex);
+			swap(rs, _restorable);
+		}
+		
 		for (restorable::iterator i = rs.begin(); i != rs.end(); ++i)
 		{
 			Restorable *r = *i;
 			r->release();
 		}
 
-		swap(rs, _restorable);
+		{
+			MutexAutoLock al(_mutex);
+			swap(rs, _restorable);
+		}		
 	}
 
 	Restorable::Restorable(): _registered(false)

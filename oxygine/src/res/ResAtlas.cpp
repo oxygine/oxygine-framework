@@ -445,7 +445,14 @@ namespace oxygine
 
 	ResAtlas::~ResAtlas()
 	{
-
+		for (atlasses::iterator i = _atlasses.begin(); i != _atlasses.end(); ++i)
+		{
+			atlas &atl = *i;
+			if (atl.base)
+				atl.base->release();
+			if (atl.alpha)
+				atl.alpha->release();
+		}
 	}
 
 	void load_texture(const string &file, spNativeTexture nt, LoadResourcesContext *load_context)

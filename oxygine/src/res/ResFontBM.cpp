@@ -71,9 +71,14 @@ namespace oxygine
 
 	void ResFontBM::cleanup()
 	{
+		for (pages::iterator i = _pages.begin(); i != _pages.end(); ++i)
+		{
+			const page &p = *i;
+			p.texture->release();
+		}
+		_pages.clear();
 		delete _font;
 		_font = 0;
-		_pages.clear();
 	}
 
 	void ResFontBM::_restore(Restorable *r, void*)
@@ -181,7 +186,7 @@ namespace oxygine
 		pugi::xml_node info = root.child("info");
 
 		//<info face="Century Gothic" size="-24" bold="0" italic="0" charset="" unicode="1" stretchH="100" smooth="1" aa="1" padding="0,0,0,0" spacing="1,1" outline="0"/>
-		int fontSize  = info.attribute("size").as_int();
+		int fontSize = info.attribute("size").as_int();
 		
 
 		pugi::xml_node common = info.next_sibling("common");
@@ -226,7 +231,7 @@ namespace oxygine
 
 				
 
-		fontSize = -fontSize;
+		fontSize = abs(fontSize);
 		Font *font = new Font();
 		font->init(getName().c_str(), fontSize, fontSize, lineHeight + fontSize - base);
 		_font = font;

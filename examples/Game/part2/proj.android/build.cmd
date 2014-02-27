@@ -1,1 +1,1 @@
-ndk-build NDK_MODULE_PATH=../../../../../
+ndk-build NDK_MODULE_PATH=../../../../../ %*

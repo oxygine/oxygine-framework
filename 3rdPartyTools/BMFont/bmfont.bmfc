@@ -5,7 +5,7 @@ fileVersion=1
 fontName=Arial
 fontFile=
 charSet=177
-fontSize=-16
+fontSize=-32
 aa=1
 scaleH=100
 useSmoothing=1
@@ -50,6 +50,6 @@ invB=0
 outlineThickness=0
 
 # selected chars
-chars=160
+chars=32-126
 
 # imported icon images
