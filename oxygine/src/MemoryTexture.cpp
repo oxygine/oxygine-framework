@@ -8,12 +8,17 @@
 
 extern "C"
 {
+#ifdef OX_HAVE_LIBPNG
     #include "png.h"
+#endif
+
+#ifdef OX_HAVE_LIBJPEG
 	#include "jpeglib.h"
+#endif // OX_HAVE_LIBJPEG
 };
 
 //#define  LOGD(...)  log::messageln(__VA_ARGS__)
-#define  LOGD(...)  
+#define  LOGD(...)
 
 namespace oxygine
 {
@@ -26,6 +31,8 @@ namespace oxygine
 		IT_TGA,
 		IT_JPEG
 	};
+
+#ifdef OX_HAVE_LIBJPEG
 	class CCImageHelper
 	{
 	public:
@@ -52,6 +59,107 @@ namespace oxygine
 		}
 	};
 
+	bool _initWithJpgData(MemoryTexture &mt, void * data, int nSize, bool premultiplied, TextureFormat format)
+	{
+		bool bRet = false;
+
+
+		jpeg_decompress_struct cinfo;
+		memset(&cinfo, 0, sizeof(cinfo));
+
+		JSAMPARRAY buffer;      /* Output row buffer */
+		int row_stride;     /* physical row width in output buffer */
+
+		jpeg_source_mgr srcmgr;
+
+		srcmgr.bytes_in_buffer = nSize;
+		srcmgr.next_input_byte = (JOCTET*)data;
+		srcmgr.init_source = CCImageHelper::JPEGInitSource;
+		srcmgr.fill_input_buffer = CCImageHelper::JPEGFillInputBuffer;
+		srcmgr.skip_input_data = CCImageHelper::JPEGSkipInputData;
+		srcmgr.resync_to_restart = jpeg_resync_to_restart;
+		srcmgr.term_source = CCImageHelper::JPEGTermSource;
+
+		jpeg_error_mgr jerr;
+		cinfo.err = jpeg_std_error(&jerr);
+
+		jpeg_create_decompress(&cinfo);
+		cinfo.src = &srcmgr;
+
+		jpeg_read_header(&cinfo, TRUE);
+		jpeg_start_decompress(&cinfo);
+
+		/* JSAMPLEs per row in output buffer */
+		row_stride = cinfo.output_width * cinfo.output_components;
+
+		/* Make a one-row-high sample array that will go away when done with image */
+		buffer = (*cinfo.mem->alloc_sarray)
+			((j_common_ptr)&cinfo, JPOOL_IMAGE, row_stride, 1);
+
+		int copy_rows = (int)cinfo.output_height;
+		int copy_width = (int)cinfo.output_width;
+
+		if (copy_width < 0 || copy_rows < 0)
+		{
+			//printf("jpeg is fully off screen\n");
+			return bRet;
+		}
+		int startx = 0;
+		int starty = 0;
+		int bytesPerPix = 4;
+
+		TextureFormat destFormat = format;
+		if (destFormat == TF_UNDEFINED)
+			destFormat = TF_R8G8B8A8;
+
+		mt.init(copy_width, copy_rows, destFormat);
+		ImageData dest = mt.lock();
+		dest.h = 1;
+		ImageData src(copy_width, 1, copy_width * 3, TF_R8G8B8);
+
+		while (cinfo.output_scanline < cinfo.output_height)// count through the image
+		{
+			/* jpeg_read_scanlines expects an array of pointers to scanlines.
+			* Here the array is only one element long, but you could ask for
+			* more than one scanline at a time if that's more convenient.
+			*/
+			(void)jpeg_read_scanlines(&cinfo, buffer, 1);
+
+			if (starty-- <= 0)// count down from start
+			{
+				if (copy_rows-- > 0)
+				{
+					src.data = buffer[0];
+					operations::blit(src, dest);
+					dest.data += dest.pitch;
+
+					/*
+					for (int xx=startx; xx < copy_width; xx++)
+					{
+					uint8 r = buffer[0][xx*3+0];
+					uint8 b = buffer[0][xx*3+1];
+					uint8 g = buffer[0][xx*3+2];
+
+					*dst++ = r;
+					*dst++ = b;
+					*dst++ = g;
+					*dst++ = 255;
+					}
+
+					*/
+				}
+			}
+		}
+
+		(void)jpeg_finish_decompress(&cinfo);
+		jpeg_destroy_decompress(&cinfo);
+
+		//printf("jpeg display done\n");
+
+		bRet = true;
+		return bRet;
+	}
+#endif // OX_HAVE_LIBJPEG
 
 	ImageType getImageType(const void *Data, size_t size)
 	{
@@ -122,115 +230,9 @@ namespace oxygine
 		return (us >> 8) |	(us << 8);
 	}
 
-	bool _initWithPkmData(MemoryTexture &mt, file::buffer &bf)
-	{	
 
-		return true;
-	}
-	
-	bool _initWithJpgData(MemoryTexture &mt, void * data, int nSize, bool premultiplied, TextureFormat format)
-	{
-		bool bRet = false;
-
-
-		jpeg_decompress_struct cinfo;
-		memset(&cinfo, 0, sizeof(cinfo));
-
-		JSAMPARRAY buffer;      /* Output row buffer */
-		int row_stride;     /* physical row width in output buffer */
-
-		jpeg_source_mgr srcmgr;
-
-		srcmgr.bytes_in_buffer = nSize;
-		srcmgr.next_input_byte = (JOCTET*) data;
-		srcmgr.init_source = CCImageHelper::JPEGInitSource;
-		srcmgr.fill_input_buffer = CCImageHelper::JPEGFillInputBuffer;
-		srcmgr.skip_input_data = CCImageHelper::JPEGSkipInputData;
-		srcmgr.resync_to_restart = jpeg_resync_to_restart;
-		srcmgr.term_source = CCImageHelper::JPEGTermSource;
-
-		jpeg_error_mgr jerr;
-		cinfo.err = jpeg_std_error(&jerr);
-
-		jpeg_create_decompress(&cinfo);
-		cinfo.src = &srcmgr;
-
-		jpeg_read_header(&cinfo, TRUE);
-		jpeg_start_decompress(&cinfo);
-
-		/* JSAMPLEs per row in output buffer */
-		row_stride = cinfo.output_width * cinfo.output_components;
-
-		/* Make a one-row-high sample array that will go away when done with image */
-		buffer = (*cinfo.mem->alloc_sarray)
-			((j_common_ptr) &cinfo, JPOOL_IMAGE, row_stride, 1);
-
-		int copy_rows  = (int)cinfo.output_height;
-		int copy_width = (int)cinfo.output_width;
-
-	   if (copy_width < 0 || copy_rows < 0)
-		{
-			//printf("jpeg is fully off screen\n");
-			return bRet;
-		}
-		int startx=0;
-		int starty=0;
-		int bytesPerPix = 4;
-
-		TextureFormat destFormat = format;
-		if (destFormat == TF_UNDEFINED)
-			destFormat = TF_R8G8B8A8;
-
-		mt.init(copy_width, copy_rows, destFormat);
-		ImageData dest = mt.lock();
-		dest.h = 1;
-		ImageData src(copy_width, 1, copy_width * 3, TF_R8G8B8);
-
-		while (cinfo.output_scanline < cinfo.output_height)// count through the image
-		{
-			/* jpeg_read_scanlines expects an array of pointers to scanlines.
-			 * Here the array is only one element long, but you could ask for
-			 * more than one scanline at a time if that's more convenient.
-			 */
-			(void) jpeg_read_scanlines(&cinfo, buffer, 1);
-
-			if (starty-- <= 0)// count down from start
-			{
-				if (copy_rows-- > 0)
-				{
-					src.data = buffer[0];
-					operations::blit(src, dest);
-					dest.data += dest.pitch;
-
-					/*
-					for (int xx=startx; xx < copy_width; xx++)
-					{
-						uint8 r = buffer[0][xx*3+0];
-						uint8 b = buffer[0][xx*3+1];
-						uint8 g = buffer[0][xx*3+2];
-
-						*dst++ = r;
-						*dst++ = b;
-						*dst++ = g;
-						*dst++ = 255;
-					}
-
-					*/
-				}
-			}
-		}
-
-		(void) jpeg_finish_decompress(&cinfo);
-		jpeg_destroy_decompress(&cinfo);
-
-		//printf("jpeg display done\n");
-
-		bRet = true;
-		return bRet;
-	}
-
-
-	typedef struct 
+#ifdef OX_HAVE_LIBPNG
+	typedef struct
 	{
 		unsigned char* data;
 		int size;
@@ -238,7 +240,7 @@ namespace oxygine
 	}tImageSource;
 
 	static void pngReadCallback(png_structp png_ptr, png_bytep data, png_size_t length)
-	{		
+	{
 		tImageSource* isource = (tImageSource*)png_get_io_ptr(png_ptr);
 
 		LOGD("png read l: %d, %d", length, isource->offset);
@@ -261,11 +263,11 @@ namespace oxygine
 	{
 		LOGD("reading png...");
 		bool bRet = false;
-		png_byte        header[8]   = {0}; 
+		png_byte        header[8]   = {0};
 		png_structp     png_ptr     =   0;
 		png_infop       info_ptr    = 0;
 
-		do 
+		do
 		{
 			// png header len is 8 bytes
 			//CC_BREAK_IF(nDatalen < 8);
@@ -297,7 +299,7 @@ namespace oxygine
 			// PNG_TRANSFORM_PACKING: expand 1, 2 and 4-bit samples to bytes
 			// PNG_TRANSFORM_STRIP_16: strip 16-bit samples to 8 bits
 			// PNG_TRANSFORM_GRAY_TO_RGB: expand grayscale samples to RGB (or GA to RGBA)
-			png_read_png(png_ptr, info_ptr, PNG_TRANSFORM_EXPAND | PNG_TRANSFORM_PACKING 
+			png_read_png(png_ptr, info_ptr, PNG_TRANSFORM_EXPAND | PNG_TRANSFORM_PACKING
 				| PNG_TRANSFORM_STRIP_16 /*| PNG_TRANSFORM_GRAY_TO_RGB*/, 0);
 
 			LOGD("reading png...2a");
@@ -308,7 +310,7 @@ namespace oxygine
 			png_get_IHDR(png_ptr, info_ptr, &nWidth, &nHeight, &nBitsPerComponent, &color_type, 0, 0, 0);
 
 			LOGD("reading png...3");
-			
+
 			TextureFormat srcFormat = TF_UNDEFINED;
 			if (color_type == PNG_COLOR_TYPE_GRAY)
 				srcFormat = TF_L8;
@@ -374,7 +376,7 @@ namespace oxygine
 					dest.data += dest.pitch;
 				}
 			}
-			
+
 			LOGD("reading png...6");
 
 			bRet        = true;
@@ -390,6 +392,8 @@ namespace oxygine
 		return bRet;
 	}
 
+#endif
+
 
 
 	MemoryTexture::MemoryTexture():_offset(0)
@@ -400,7 +404,7 @@ namespace oxygine
 	MemoryTexture::~MemoryTexture()
 	{
 
-	}	
+	}
 
 	void MemoryTexture::cleanup()
 	{
@@ -416,7 +420,7 @@ namespace oxygine
 
 		operations::blit(src, dst);
 	}
-	
+
 	void MemoryTexture::fill_zero()
 	{
 		if (_buffer.empty())
@@ -434,12 +438,16 @@ namespace oxygine
 			ImageType type = getImageType(buffer.getData(), buffer.getSize());
 			switch(type)
 			{
+#ifdef OX_HAVE_LIBPNG
 			case IT_PNG:
 				_initWithPngData(*this, (void*)buffer.getData(), buffer.getSize(), premultiplied, format);
-				break;
+				return true;
+#endif
+#ifdef OX_HAVE_LIBJPEG
 			case IT_JPEG:
 				_initWithJpgData(*this, (void*)buffer.getData(), buffer.getSize(), premultiplied, format);
-				break;
+				return true;
+#endif
 			case IT_PKM:
 				{
 					const pkm_header *header = (const pkm_header *)buffer.getData();
@@ -455,7 +463,7 @@ namespace oxygine
 					_image.pitch = (buffer.getSize() - _offset) / _image.h;
 					_buffer.swap(buffer.data);
 				}
-				break;
+				return true;
 			case IT_PVR:
 				{
 					const pvr_header *header = (const pvr_header *)buffer.getData();
@@ -492,6 +500,7 @@ namespace oxygine
 					_offset = sizeof(pvr_header) + header->meta_data_size;
 					_image.pitch = (buffer.getSize() - _offset) / _image.h;
 					_buffer.swap(buffer.data);
+					return true;
 				}
 				break;
 			case IT_TGA:
@@ -512,25 +521,28 @@ namespace oxygine
 						}
 
 						init(header->width, header->height, format);
-						updateRegion(0, 0, src);						
-						
+						updateRegion(0, 0, src);
 
+						return true;
 //						saveImage(lock(), "test.png", "png");
 					}
 					else
 					{
 						log::warning("tga 32bpp only supported");
-						return false;
 					}
+					break;
 				}
 				break;
 			default:
-				log::warning("MemoryTexture. can't unpack data %s");
-				return false;
+				log::warning("MemoryTexture. can't unpack data unknown file format");
 				break;
-			}			
+			}
 		}
-		return true;
+
+		init(16, 16, TF_R8G8B8A8);
+		fill_zero();
+
+		return false;
 	}
 
 	void MemoryTexture::init(const ImageData &src)
@@ -547,19 +559,19 @@ namespace oxygine
 		_image = ImageData(w, h, w * bytesPerPixel, Format, &_buffer.front());
 	}
 
-	
 
-	int	MemoryTexture::getWidth() const 
+
+	int	MemoryTexture::getWidth() const
 	{
 		return _image.w;
 	}
 
-	int	MemoryTexture::getHeight() const 
+	int	MemoryTexture::getHeight() const
 	{
 		return _image.h;
 	}
 
-	TextureFormat MemoryTexture::getFormat() const 
+	TextureFormat MemoryTexture::getFormat() const
 	{
 		return _image.format;
 	}
@@ -567,7 +579,7 @@ namespace oxygine
 	ImageData MemoryTexture::lock(lock_flags, const Rect *pRect)
 	{
 		Rect rect(0, 0, _image.w, _image.h);
-		if (pRect)	
+		if (pRect)
 		{
 			rect = *pRect;
 			OX_ASSERT(rect.getX() + rect.getWidth() <= _image.w);

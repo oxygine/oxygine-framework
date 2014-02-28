@@ -11,6 +11,9 @@ define MARMALADE
 debug_define OXYGINE_MARMALADE
 define OXYGINE_MARMALADE
 
+define OX_HAVE_LIBJPEG
+define OX_HAVE_LIBPNG
+
 files
 {
 	[src]

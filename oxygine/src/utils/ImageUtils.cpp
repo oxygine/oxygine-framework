@@ -4,7 +4,9 @@
 #include "png.h"
 extern "C"
 {
-#include "jpeglib.h"
+#ifdef OX_HAVE_LIBJPEG
+    #include "jpeglib.h"
+#endif
 };
 
 
@@ -39,6 +41,7 @@ namespace oxygine
 
 	void serializeImage(const ImageData &im, file::buffer &bf, const char *format)
 	{
+    #ifdef OX_HAVE_LIBJPEG
 		char *filename = (char *)"test_jpeg.jpg";
 		int quality    = 50;
 
@@ -82,7 +85,7 @@ namespace oxygine
 		for(size_t y=0;y<cinfo.image_height; y++)
 			for(size_t x=0;x<cinfo.image_width; x++)
 			{
-				unsigned int pixelIdx = ((y*cinfo.image_height)+x) * cinfo.input_components; 
+				unsigned int pixelIdx = ((y*cinfo.image_height)+x) * cinfo.input_components;
 
 				if(x%2==y%2)
 				{
@@ -118,7 +121,8 @@ namespace oxygine
 			fclose(outfile);
 			jpeg_destroy_compress(&cinfo);
 
-			printf("SUCCESS\n");  
-			
+			printf("SUCCESS\n");
+        #endif
+
 	}
 }

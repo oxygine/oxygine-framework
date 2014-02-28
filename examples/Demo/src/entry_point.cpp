@@ -1,7 +1,7 @@
 /**
 Attention!
 This file has Oxygine initialization stuff.
-If you just started you don't need to understand it exactly you could check it later. 
+If you just started you don't need to understand it exactly you could check it later.
 You could start from example.cpp and example.h it has main functions being called from there
 */
 #include <stdio.h>
@@ -52,14 +52,14 @@ int mainloop()
 	//start rendering and clear viewport
 	if (renderer.begin(0, viewport, &clear))
 	{
-		//begin rendering from RootActor. 
+		//begin rendering from RootActor.
 		getRoot()->render(renderer);
 		//rendering done
 		renderer.end();
 
 		core::swapDisplayBuffers();
 	}
-	
+
 
 	//update internal components
 	//all input events would be passed to RootActor::instance.handleEvent
@@ -71,7 +71,7 @@ int mainloop()
 
 //it is application entry point
 void run()
-{	
+{
 	//initialize oxygine's internal stuff
 	core::init_desc desc;
 
@@ -82,14 +82,14 @@ void run()
 	//marmalade settings could be changed from emulator's menu
 #endif
 
-	core::init(&desc);	
+	core::init(&desc);
 	example_preinit();
-	
+
 	//create RootActor. RootActor is a root node
-	RootActor::instance = new ExampleRootActor();	
+	RootActor::instance = new ExampleRootActor();
 	Point size = core::getDisplaySize();
 	getRoot()->init(size, size);
-	
+
 	//DebugActor is a helper node it shows FPS and memory usage and other useful stuff
 	DebugActor::initialize();
 
@@ -97,27 +97,27 @@ void run()
 	getRoot()->addChild(new DebugActor());
 
 
-	
-	Matrix view = makeViewMatrix(size.x, size.y); 
+
+	Matrix view = makeViewMatrix(size.x, size.y);
 
 	viewport = Rect(0, 0, size.x, size.y);
 
 	Matrix proj;
 	//initialize projection matrix
 	Matrix::orthoLH(proj, (float)size.x, (float)size.y, 0, 1);
-	
+
 	//Renderer is class helper for rendering primitives and batching them
 	//Renderer is lightweight class you could create it many of times
 	renderer.setDriver(IVideoDriver::instance);
 
-	//initialization view and projection matrix 	
+	//initialization view and projection matrix
 	//where Left Top corner is (0, 0), and right bottom is (width, height)
 	renderer.initCoordinateSystem(size.x, size.y);
 
 	//initialize this example stuff. see example.cpp
 	example_init();
 
-	bool done = false;	
+	bool done = false;
 
 	//here is main game loop
     while (1)
@@ -127,7 +127,7 @@ void run()
 			break;
     }
 	//so user want to leave application...
-	
+
 	//lets dump all created objects into log
 	//all created and not freed resources would be displayed
 	ObjectBase::dumpCreatedObjects();
@@ -138,8 +138,8 @@ void run()
 	//but now we want delete it by hands
 
 	//check example.cpp
-	example_destroy();	
-	
+	example_destroy();
+
 
 	renderer.cleanup();
 
@@ -162,6 +162,15 @@ int main(int argc, char* argv[])
 
 
 #ifdef OXYGINE_SDL
+#ifdef __MINGW32__
+int WinMain(HINSTANCE hInstance,
+                     HINSTANCE hPrevInstance,
+                     LPSTR lpCmdLine,int nCmdShow)
+{
+    run();
+    return 0;
+}
+#else
 #include "SDL_main.h"
 extern "C"
 {
@@ -171,6 +180,7 @@ extern "C"
 		return 0;
 	}
 };
+#endif
 #endif
 
 #ifdef __FLASHPLAYER__

@@ -114,5 +114,6 @@ examples/Game/part4/data/*.dll
 examples/Game/part4/proj.android/bin/
 examples/Game/part4/proj.android/gen/
 examples/Match3/data/*.dll
+examples/buildcb/
 syntax: regexp
 ^build/

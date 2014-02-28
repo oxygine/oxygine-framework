@@ -5,7 +5,7 @@
 #include "closure/closure.h"
 #include "Input.h"
 #include "EventDispatcher.h"
-
+#undef OUT
 namespace oxygine
 {
 
@@ -19,7 +19,7 @@ namespace oxygine
 		_et_TouchClick,
 		_et_TouchOver,
 		_et_TouchOut,
-		
+
 		_et_WheelUp,
 		_et_WheelDown,
 
@@ -28,7 +28,7 @@ namespace oxygine
 		_et_Complete,
 		//_et_RollOver,
 		//_et_RollOut,
-		
+
 
 		_et_maxEvent = 0xFFFFFFFF
 	};
@@ -43,7 +43,7 @@ namespace oxygine
 	class TouchEvent: public Event
 	{
 	public:
-		enum 
+		enum
 		{
 			/*
 			CLICK = makefourcc('_', 'C', 'L', 'C'),
@@ -63,7 +63,7 @@ namespace oxygine
 			MOVE = _et_TouchMove,
 			TOUCH_DOWN = _et_TouchDown,
 			TOUCH_UP = _et_TouchUp,
-			
+
 			WHEEL_UP = _et_WheelUp,
 			WHEEL_DOWN = _et_WheelDown,
 		};

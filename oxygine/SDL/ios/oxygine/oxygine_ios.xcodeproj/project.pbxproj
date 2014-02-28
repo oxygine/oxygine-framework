@@ -1066,7 +1066,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
-				GCC_PREPROCESSOR_DEFINITIONS = "_DEBUG=1";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"_DEBUG=1",
+					OX_HAVE_LIBPNG,
+				);
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = (
 					../../../greenlets/src,
@@ -1084,7 +1087,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
-				GCC_PREPROCESSOR_DEFINITIONS = "";
+				GCC_PREPROCESSOR_DEFINITIONS = OX_HAVE_LIBPNG;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = (
 					../../../greenlets/src,

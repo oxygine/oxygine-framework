@@ -11,6 +11,9 @@ subproject iwgl
 debug_define MARMALADE
 define MARMALADE
 
+define OX_HAVE_LIBJPEG
+define OX_HAVE_LIBPNG
+
 files
 {
 	[src]

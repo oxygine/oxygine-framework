@@ -6,14 +6,15 @@
 	#include "IwImage.h"
 	#include "IwGL.h"
 	#include "GLES/gl.h"
-	#define GL_GLEXT_PROTOTYPES 
+	#define GL_GLEXT_PROTOTYPES
 	#include "GLES/glext.h"
 	#include <gles/egl.h>
 #else
 	#include "SDL_config.h"
 
 	#if WIN32
-		#include "glew.h"
+        #define GL_GLEXT_PROTOTYPES
+		#include "SDL_opengl.h"
 
 		#define GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG                      0x8C00
 		#define GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG                      0x8C01
@@ -24,7 +25,7 @@
 
 	#elif __ANDROID__
 		#include "GLES2/gl2.h"
-		#define GL_GLEXT_PROTOTYPES 
+		#define GL_GLEXT_PROTOTYPES
 		#include "GLES2/gl2ext.h"
 
 		#define glGenFramebuffers			glGenFramebuffers

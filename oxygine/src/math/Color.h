@@ -194,17 +194,12 @@ namespace oxygine
 			return c;
 		}
 
-		static Color RGB(int rgb)
-		{
-			return Color(rgb >> 16 , (rgb >> 8) & 0xff, rgb & 0xff);
-		}
-
 		static Color interpolate(const Color &a, const Color &b, float v)
 		{
 			Color c;
 			for (int i = 0; i < 4; ++i)
 				c.colors[i] = oxygine::interpolate(a.colors[i], b.colors[i], v);
-			
+
 			return c;
 		}
 
@@ -214,21 +209,21 @@ namespace oxygine
 		float getAlphaF() const{return a / 255.0f;}
 
 		Color operator + (const Color &c) const
-		{			
+		{
 			Color v(
-				scalar::clamp(r + c.r, 0, 255), 
-				scalar::clamp(g + c.g, 0, 255), 
-				scalar::clamp(b + c.b, 0, 255), 
+				scalar::clamp(r + c.r, 0, 255),
+				scalar::clamp(g + c.g, 0, 255),
+				scalar::clamp(b + c.b, 0, 255),
 				scalar::clamp(a + c.a, 0, 255));
 			return v;
 		}
 
 		Color operator - (const Color &c) const
-		{			
+		{
 			Color v(
-				scalar::clamp(r - c.r, 0, 255), 
-				scalar::clamp(g - c.g, 0, 255), 
-				scalar::clamp(b - c.b, 0, 255), 
+				scalar::clamp(r - c.r, 0, 255),
+				scalar::clamp(g - c.g, 0, 255),
+				scalar::clamp(b - c.b, 0, 255),
 				scalar::clamp(a - c.a, 0, 255));
 			return v;
 		}
@@ -237,9 +232,9 @@ namespace oxygine
 		Color operator * (const Color &c) const
 		{
 			Color v(
-				r * c.r / 255, 
-				g * c.g / 255, 
-				b * c.b / 255, 
+				r * c.r / 255,
+				g * c.g / 255,
+				b * c.b / 255,
 				a * c.a / 255);
 			return v;
 		}
@@ -259,7 +254,7 @@ namespace oxygine
 			Color r(
 				r * 255 / cc.r,
 				g * 255 / cc.g,
-				b * 255 / cc.b, 
+				b * 255 / cc.b,
 				a * 255 / cc.a);
 			return r;
 		}
@@ -270,7 +265,7 @@ namespace oxygine
 			Color c = *this;
 			c.r = (c.r * a)/255;
 			c.g = (c.g * a)/255;
-			c.b = (c.b * a)/255;			
+			c.b = (c.b * a)/255;
 
 			return c;
 		}
@@ -290,7 +285,7 @@ namespace oxygine
 			struct
 			{
 				unsigned char a, r, g, b;
-			};			
+			};
 			unsigned int argb;
 			unsigned char colors[4];
 		};
