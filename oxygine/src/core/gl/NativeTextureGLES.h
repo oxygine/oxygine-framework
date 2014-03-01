@@ -35,8 +35,8 @@ namespace oxygine
 		friend class VideoDriverGLES20;
 		NativeTextureGLES();
 
-		unsigned int _id;
-		unsigned int _fbo;
+		size_t _id;
+		size_t _fbo;
 
 		TextureFormat _format;
 		int _width;

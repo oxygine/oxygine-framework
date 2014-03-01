@@ -28,6 +28,7 @@
 
 
 
+
 voidpf ZCALLBACK fopen_mem_func OF((
    voidpf opaque,
    const char* filename,
@@ -71,12 +72,20 @@ typedef struct ourmemory_s {
   uLong cur_offset; /* Current offset in the area */
 } ourmemory_t;
 
+typedef struct zmemdata_s
+{
+	char* data;
+	uLong size;
+} zmemdata_t;
+
 voidpf ZCALLBACK fopen_mem_func (opaque, filename, mode)
    voidpf opaque;
    const char* filename;
    int mode;
 {
     ourmemory_t *mem = malloc(sizeof(*mem));
+	  zmemdata_t *data = (zmemdata_t*)(filename);
+
     if (mem==NULL)
       return NULL; /* Can't allocate space, so failed */
 
@@ -86,8 +95,13 @@ voidpf ZCALLBACK fopen_mem_func (opaque, filename, mode)
      * size of an int and therefore may need addressing for 64bit
      * architectures
      */
-    if (sscanf(filename,"%x+%x", (unsigned int*)&mem->base, (unsigned int*)&mem->size)!=2)
-      return NULL;
+
+    //if (sscanf(filename,"%ld+%ld", (size_t*)&mem->base, (size_t*)&mem->size)!=2)
+    //  return NULL;
+	
+    mem->base = data->data;
+  	mem->size = data->size;
+
 
     if (mode & ZLIB_FILEFUNC_MODE_CREATE)
       mem->limit=0; /* When writing we start with 0 bytes written */

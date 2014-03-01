@@ -25,6 +25,9 @@
 3. How to build and run Oxygine on Linux with CMake
 =================================================================================================
 make and install SDL2
+- also should be installed packages (apt-get install):
+  - libjpeg8-dev zlib1g-dev libpng12-dev
+  - freeglut3 (needed only opengl)
 - goto examples
 - create folder "build"
 - make

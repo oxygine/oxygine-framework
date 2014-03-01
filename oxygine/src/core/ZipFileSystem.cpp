@@ -78,9 +78,12 @@ namespace file
 	{
 		zlib_filefunc_def ff;
 		fill_memory_filefunc(&ff);
-		char str[255];
-		safe_sprintf(str, "%x+%x", data, size);
-		unzFile zp = unzOpen2(str, &ff);
+		
+		zmemdata dta;
+		dta.data = (char*)data;
+		dta.size = size;
+		//log::messageln(str);
+		unzFile zp = unzOpen2((const char*)&dta, &ff);
 		OX_ASSERT(zp);
 		if (!zp)
 			return;

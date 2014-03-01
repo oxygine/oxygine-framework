@@ -334,14 +334,21 @@ namespace oxygine
                 desc.h = 640;
             }
 
+            log::messageln("creating window %d %d", desc.w, desc.h);
+
 			_window = SDL_CreateWindow(desc.title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, desc.w, desc.h, flags);
 
 
 	#ifndef USE_EGL
+			if (!_window)
+			{
+				log::error("can't create window: %s", SDL_GetError());
+                return;	
+			}
 			_context = SDL_GL_CreateContext(_window);
             if (!_context)
             {
-                log::error("can't create gl context");
+                log::error("can't create gl context: %s", SDL_GetError());
                 return;
             }
 

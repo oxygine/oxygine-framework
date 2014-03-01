@@ -76,9 +76,9 @@ namespace oxygine
 		return pixel;
 	}	
 
-	unsigned int createTexture()
+	size_t createTexture()
 	{
-		unsigned int id = 0;
+		GLuint id = 0;
 		glGenTextures(1, &id);
 		glBindTexture(GL_TEXTURE_2D, id);
 
@@ -161,7 +161,7 @@ namespace oxygine
 	void NativeTextureGLES::init(nativeTextureHandle id, int w, int h, TextureFormat tf)
 	{
 		release();
-		_id = (unsigned int)id;
+		_id = (size_t)id;
 		_width = w;
 		_height = h;
 		_format = tf;
@@ -169,7 +169,7 @@ namespace oxygine
 
 	void NativeTextureGLES::init(const ImageData &src, bool sysMemCopy)
 	{
-		unsigned int id = createTexture();
+		size_t id = createTexture();
 
 		glPixel p = SurfaceFormat2GL(src.format);
 		if (p.compressed)		
@@ -202,14 +202,14 @@ namespace oxygine
 		if (_id)
 		{
 			NativeTextureGLES::created--;
-			glDeleteTextures(1, &_id);
+			glDeleteTextures(1, (GLuint*)&_id);
 			_id = 0;
 		}
 		
 
 		if (_fbo)
 		{
-			glDeleteFramebuffers(1, &_fbo);		
+			glDeleteFramebuffers(1, (GLuint*)&_fbo);		
 			_fbo = 0;
 		}
 

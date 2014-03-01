@@ -76,7 +76,7 @@ namespace oxygine
 	{
 		glActiveTexture(GL_TEXTURE0 + sampler);
 		if (t)
-			glBindTexture(GL_TEXTURE_2D, (unsigned int)t->getHandle());	
+			glBindTexture(GL_TEXTURE_2D, (GLuint)((size_t)t->getHandle()));	
 		else
 			glBindTexture(GL_TEXTURE_2D, 0);
         CHECKGL();
