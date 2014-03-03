@@ -86,8 +86,8 @@ namespace oxygine
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, f);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, f);
 
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
-		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
 		NativeTextureGLES::created++;
         
@@ -195,6 +195,18 @@ namespace oxygine
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, f);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, f);
         CHECKGL();
+	}
+
+	void NativeTextureGLES::setWrapMode(bool clamp2edge)
+	{
+		glBindTexture(GL_TEXTURE_2D, _id);
+
+		unsigned int f = clamp2edge ? GL_CLAMP_TO_EDGE : GL_REPEAT;
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, f);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, f);
+
+		CHECKGL();
 	}
 
 	void NativeTextureGLES::release()

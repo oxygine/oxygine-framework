@@ -146,6 +146,8 @@ namespace oxygine
 				path = xml_name.substr(0, i + 1);
 			}
 		}
+
+		path = "";
 		
 		FS_LOG("step0");
 		file::buffer fb;
@@ -224,7 +226,8 @@ namespace oxygine
 					if (!strcmp(attr.name(), "path"))
 					{
 						path = getPath(path.c_str(), attr.value());
-						path += "/";
+						if (!path.empty())
+							path += "/";
 					}
 					if (!strcmp(attr.name(), "load"))
 					{

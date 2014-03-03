@@ -103,7 +103,7 @@ namespace oxygine
 		int _openedFiles = 0;
 		oxHandle* oxFileOpen(const char* filename, const char* mode)
 		{
-			//log::messageln("oxFileOpen %s", filename);
+			LOGD("oxFileOpen %s", filename);
 			oxHandle *h = oxFileOpen_(filename, mode);
 			if (h)
 				_openedFiles++;
@@ -198,7 +198,10 @@ namespace oxygine
 			char norm[512];
 			path::normalize(_path.c_str(), norm);			
 			_path = norm;
-			_path += "/";
+			if (!_path.empty() && _path[_path.size() - 1] != '/')
+			{
+				_path += "/";
+			}			
 		}
 
 

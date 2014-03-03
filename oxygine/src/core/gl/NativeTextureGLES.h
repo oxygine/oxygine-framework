@@ -25,6 +25,7 @@ namespace oxygine
 		void unlock();
 
 		void setLinearFiltration(bool enable);
+		void setWrapMode(bool clamp2edge);
 
 		void updateRegion(int x, int y, const ImageData &data);
 		void apply(const Rect *rect = 0);
