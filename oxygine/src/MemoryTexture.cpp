@@ -521,7 +521,19 @@ namespace oxygine
 						}
 
 						init(header->width, header->height, format);
-						updateRegion(0, 0, src);
+
+						if (premultiplied)
+						{
+							operations::op_premultipliedAlpha op;
+							ImageData dest = lock();
+							applyOperation(op, src, dest);
+						}
+						else
+						{
+							updateRegion(0, 0, src);
+						}
+
+						
 
 						return true;
 //						saveImage(lock(), "test.png", "png");

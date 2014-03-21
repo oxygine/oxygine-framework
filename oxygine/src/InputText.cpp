@@ -12,6 +12,16 @@ namespace oxygine
 {
 	InputText *InputText::_active = 0;
 
+	InputText::InputText():_maxLength(0)
+	{
+
+	}
+
+	InputText::~InputText()
+	{
+
+	}
+
 	void InputText::stopAnyInput()
 	{
 		if (!_active)
@@ -69,6 +79,11 @@ namespace oxygine
 		_disallowed = ws2utf8(str.c_str());
 	}
 
+	void InputText::setMaxTextLength(int v)
+	{
+		_maxLength = v;
+	}
+
 	void InputText::stop()
 	{
 #ifndef __S3E__
@@ -105,6 +120,32 @@ namespace oxygine
 		}
 		return false;
 	}
+
+	int getLen(const char *str)
+	{
+		int i = 0;
+		while(*str)
+		{
+			++i;
+			int code = 0;
+			str = getNextCode(code, str);			
+		}
+		return i;
+	}
+
+	int getLastPos(const char *str)
+	{
+		const char *begin = str;
+		const char *prev = str;
+		while(*str)
+		{
+			prev = str;
+			int code = 0;
+			str = getNextCode(code, str);
+		}
+		return prev - begin;
+	}
+
 #ifndef __S3E__
 	int InputText::_onSDLEvent(SDL_Event *event)
 	{
@@ -118,6 +159,12 @@ namespace oxygine
 			break;
 		case SDL_TEXTINPUT:
 			{
+				if (_maxLength)
+				{
+					if (getLen(_txt.c_str()) >= _maxLength)
+						return 0;
+				}
+
 				SDL_TextInputEvent &te = event->text;
 
 				int newCode = 0;
@@ -147,13 +194,16 @@ namespace oxygine
 			break;
 		case SDL_KEYDOWN:
 			{
-				log::messageln("SDL_KEYDOWN");
+				//log::messageln("SDL_KEYDOWN");
 				switch (event->key.keysym.sym)
 				{
 				case SDLK_BACKSPACE:
 					{
 						if (!_txt.empty())
-							_txt.erase(_txt.end() - 1);
+						{
+							int pos = getLastPos(_txt.c_str());
+							_txt.erase(_txt.begin() + pos, _txt.end());
+						}
 						updateText();
 					}
 					break;

@@ -1,0 +1,11 @@
+cmake_minimum_required (VERSION 2.6)
+project (HelloWorld)
+
+add_subdirectory(../../../..//oxygine-framework oxygine-framework)
+add_definitions(${OXYGINE_DEFINITIONS})
+include_directories(${OXYGINE_INCLUDE_DIRS})
+link_directories(${OXYGINE_LIBRARY_DIRS})
+
+add_executable(HelloWorld ../src/entry_point.cpp ../src/example.cpp  ../src/example.h )
+
+target_link_libraries(HelloWorld ${OXYGINE_CORE_LIBS})

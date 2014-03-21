@@ -58,7 +58,7 @@ namespace oxygine
 		/**Calls Resource::load for each resoure in the list*/
 		void load(LoadResourcesContext *context = 0, ResLoadedCallback cb = ResLoadedCallback());
 
-		/**Unloads data from memory, all handles remains valid*/
+		/**Unloads data from memory, all resources handles remain valid*/
 		void unload();			
 
 		/**Completely deletes all resources*/

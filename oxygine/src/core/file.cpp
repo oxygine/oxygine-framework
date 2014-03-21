@@ -28,27 +28,14 @@
 #define LOGD(...) 
 
 
-//#define LOGD(...) {}
-
 namespace oxygine
 {
 	namespace file
 	{
 		string _additionalFolder;
-		/*
-		FileSystem &getFS()
-		{
-			static bool initialized = false;
-			if (!initialized)
-			{
 
-			}
-			return ;
-		}
-		*/
 		STDFileSystem _nfs(true);
 		STDFileSystem _nfsWrite(false);
-		//STDFileSystem _nfsExtended(true);
 
 		void init()
 		{
@@ -69,7 +56,6 @@ namespace oxygine
 #endif
 
 			_nfs.mount(&_nfsWrite);
-			//_nfs.mount(&_nfsExtended);
 		}
 
 		void mount(FileSystem *fs)
@@ -217,13 +203,6 @@ namespace oxygine
 				return;
 			write(ac.getHandle(), data.getData(), data.getSize());
 		}
-		/*
-
-		void setExtendedFolder(const char *folder)
-		{
-			_nfsExtended.setPath(folder);			
-		}
-		*/
 
 		file::STDFileSystem &fs()
 		{

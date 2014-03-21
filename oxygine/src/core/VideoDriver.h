@@ -79,6 +79,11 @@ namespace oxygine
 		virtual void setState(STATE, unsigned int value) = 0;
 		virtual void setBlendFunc(BLEND_TYPE src, BLEND_TYPE dest) = 0;
 
+		virtual void setUniform(const char *id, const Vector4 *v, int num) = 0;
+		virtual void setUniform(const char *id, const Matrix *) = 0;
+		virtual void setUniform(const char *id, float v) = 0;
+		virtual void setUniformInt(const char *id, int v) = 0;
+
 		virtual void setDebugStats(bool enable) = 0;
 
 		virtual void swapped() = 0;
@@ -100,6 +105,11 @@ namespace oxygine
 		void draw(PRIMITIVE_TYPE pt, const VertexDeclaration *decl, const void *verticesData, unsigned int verticesDataSize){}
 		void draw(PRIMITIVE_TYPE pt, const VertexDeclaration *decl, const void *verticesData, unsigned int verticesDataSize, const void *indicesData, unsigned int indicesDataSize, bool indicesShortType){}
 
+
+		void setUniformInt(const char *id, int v){}
+		void setUniform(const char *id, const Vector4 *v, int num){}
+		void setUniform(const char *id, const Matrix *mat){}
+		void setUniform(const char *id, float val){}
 
 		void setScissorRect(const Rect *);
 		void setDefaultSettings();

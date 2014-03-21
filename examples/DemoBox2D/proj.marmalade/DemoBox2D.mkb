@@ -2,16 +2,16 @@
 
 options
 {
-	module_path="../../oxygine/marmalade/"
+	module_path="../../../oxygine/marmalade/"
 	enable-exceptions=1
 }
 
-includepath src
+includepath ../src
 
 files
 {
 	[src]
-	(src)
+	(../src)
 	"*.h"
 	"*.cpp"
 }

@@ -90,6 +90,13 @@ def run(args):
             
             SRC = process(tmsrc, relto, args.src, cpp_files)
             #INCLUDE = process(tminc, relto, args.src, h_files)              
+
+        if args.type == "cmake":
+            tmsrc = "${FILE} "
+            relto = dest_path
+            
+            SRC = process(tmsrc, relto, args.src, cpp_files)
+            INCLUDE = process(tmsrc, relto, args.src, h_files)              
             
         if args.type == "win32":
             tmsrc = """<ClCompile Include="${FILE}" />"""
@@ -276,7 +283,7 @@ if __name__ == "__main__":
     import argparse	
     parser = argparse.ArgumentParser(description="oxygine projects template generator")
     parser.add_argument("-t", "--type", help = "choose your IDE/build tools", 
-                        choices = ["win32", "android", "macosx", "ios"], default = "win32")
+                        choices = ["win32", "android", "macosx", "ios", "cmake"], default = "win32")
 
     parser.add_argument("-s", "--src", help = "folder with already created source files", default = "")   
 

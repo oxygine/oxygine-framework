@@ -282,7 +282,7 @@ namespace oxygine
 		if (prog != _program)
 		{
 			_driver->setShaderProgram(prog);
-			prog->setUniform("mat", &_vp);
+			_driver->setUniform("mat", &_vp);
 		}
 		_program = prog;
 	}
@@ -327,14 +327,14 @@ namespace oxygine
 				_driver->setTexture(UberShaderProgram::SAMPLER_MASK, _mask);
 
 				Vector4 v(_clipMask.getLeft(), _clipMask.getTop(), _clipMask.getRight(), _clipMask.getBottom());
-				prog->setUniform("clip_mask", &v, 1);
+				_driver->setUniform("clip_mask", &v, 1);
 			}
 
 			
 			UberShaderProgram::ShaderUniformsCallback cb = _uberShader->getShaderUniformsCallback();
 			if (cb)
 			{
-				cb(prog);
+				cb(_driver, prog);
 			}			
 
 			size_t count = _vertices.size() / _vdecl->size;

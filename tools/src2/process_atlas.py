@@ -366,8 +366,7 @@ class atlas_Processor(process.Process):
 
         compression = context.compression
 
-        def get_frame_size(frame):
-            
+        def get_aligned_frame_size(frame):            
             def align_pixel(p):
                 if not context.compression:
                     return p + 1
@@ -378,18 +377,27 @@ class atlas_Processor(process.Process):
                 else:
                     p += 8 - v
                 return p
-            sz = frame.image.size            
+            sz = frame.image.size
             return align_pixel(sz[0] + frame.border_left + frame.border_right), align_pixel(sz[1] + frame.border_top + frame.border_bottom)
+        
+        def get_original_frame_size(frame):
+            sz = frame.image.size
+            return sz
+        
         
         def set_node(frame, node):
             frame.node = node
         
         st = settings()
-        st.get_size = get_frame_size
+        st.get_size = get_aligned_frame_size
         st.set_node = set_node
         st.max_w = context.args.max_width
         st.max_h = context.args.max_height
         st.square = context.compression == "pvrtc"
+        
+        if len(frames) == 1:
+            st.get_size = get_original_frame_size
+            st.padding = 0
         
         pck(st, frames) 
 

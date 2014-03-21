@@ -28,8 +28,13 @@ namespace oxygine
 
 		void setShaderProgram(ShaderProgram*);
 		void setTexture(int sampler, spNativeTexture);
+		void setUniformInt(const char *id, int v);		
+		void setUniform(const char *id, const Vector4 *v, int num);
+		void setUniform(const char *id, const Matrix *mat);
+		void setUniform(const char *id, float val);
 
-	protected:		
+	protected:
+		int _program;
 		void updateConstants();
 	};
 }

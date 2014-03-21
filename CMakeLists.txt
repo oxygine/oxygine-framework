@@ -19,7 +19,7 @@ else(WIN32)
 	endif()
 endif(WIN32)
 
-set(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/oxygine/greenlets/src/greenlet.c)
+#set(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/oxygine/greenlets/src/greenlet.c)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/oxygine/greenlets/src/)
 
 set(OX_HAVE_LIBJPEG 1)

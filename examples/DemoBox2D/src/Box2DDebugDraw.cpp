@@ -48,7 +48,7 @@ void Box2DDraw::doRender(const RenderState &rs)
 	rs.renderer->getDriver()->setShaderProgram(_program);
 
 	Matrix m = Matrix(rs.transform) * rs.renderer->getViewProjection();
-	_program->setUniform("projection", &m);
+	rs.renderer->getDriver()->setUniform("projection", &m);
 
 	glEnable(GL_BLEND);
 	glBlendFunc  (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -152,14 +152,14 @@ void Box2DDraw::drawPrimitives(bool drawTriangles, bool drawLines, int count, co
 	if (drawTriangles)
 	{
 		Vector4 c(color.r, color.g, color.b, 0.5f);
-		_program->setUniform("color", &c, 1);
+		IVideoDriver::instance->setUniform("color", &c, 1);
 		glDrawArrays(GL_TRIANGLE_FAN, 0, count);
 	}
 
 	if (drawLines)
 	{
 		Vector4 c(color.r, color.g, color.b, 1.0f);
-		_program->setUniform("color", &c, 1);
+		IVideoDriver::instance->setUniform("color", &c, 1);
 		glDrawArrays(GL_LINE_LOOP, 0, count);
 	}
 	 

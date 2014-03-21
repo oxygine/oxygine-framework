@@ -17,6 +17,24 @@ namespace oxygine
 	}
 
 
+	void ShaderProgramGL::init(GLuint p)
+	{
+		_program = p;
+	}
+
+	unsigned int ShaderProgramGL::getID() const 
+	{
+		return _program;
+	}
+
+	int ShaderProgramGL::getUniformLocation(const char *id) const
+	{
+		int i = glGetUniformLocation(_program, id);
+		if (i == -1)
+			int q=0;
+		CHECKGL();
+		return i;
+	}
 
 	void printShaderInfoLog(GLuint shader)
 	{

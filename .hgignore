@@ -110,10 +110,9 @@ examples/HelloWorld/proj.android/bin/
 examples/HelloWorld/proj.android/gen/
 examples/Game/part1/proj.win32/Debug/
 examples/Game/part4/proj.win32/Debug/
-examples/Game/part4/data/*.dll
-examples/Game/part4/proj.android/bin/
-examples/Game/part4/proj.android/gen/
-examples/Match3/data/*.dll
-examples/buildcb/
+examples/DemoBox2D/box2d/Debug/
+examples/DemoBox2D/box2d/Release/
+examples/DemoBox2D/proj.marmalade/build_demobox2d_*
+examples/TutorialResources/proj.win32/Debug/
 syntax: regexp
 ^build/

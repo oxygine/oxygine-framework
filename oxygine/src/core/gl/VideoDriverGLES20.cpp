@@ -21,7 +21,7 @@
 
 namespace oxygine
 {    
-	VideoDriverGLES20::VideoDriverGLES20()
+	VideoDriverGLES20::VideoDriverGLES20():_program(0)
 	{
 	}
 
@@ -69,6 +69,7 @@ namespace oxygine
 		ShaderProgramGL* prog = safeCast<ShaderProgramGL*>(prog_);
 		unsigned int id = prog->getID();
 		glUseProgram(id);
+		_program = id;
         CHECKGL();
 	}
 
@@ -159,4 +160,43 @@ namespace oxygine
         CHECKGL();
 		//setProgram(_us.getShaderProgram(0)->program);
 	}
+
+	void VideoDriverGLES20::setUniformInt(const char *id, int v)
+	{
+		int location = glGetUniformLocation(_program, id);
+		if (location == -1)
+			return;
+		glUniform1i(location, v);
+		CHECKGL();
+	}
+
+
+
+	void VideoDriverGLES20::setUniform(const char *id, const Vector4 *v, int num)
+	{
+		int p = glGetUniformLocation(_program, id);
+		if (p == -1)
+			return;
+		glUniform4fv(p, num, v->m);
+		CHECKGL();
+	}
+
+	void VideoDriverGLES20::setUniform(const char *id, const Matrix *mat)
+	{
+		int p = glGetUniformLocation(_program, id);
+		if (p == -1)
+			return;
+		glUniformMatrix4fv(p, 1, GL_FALSE, mat->ml);
+		CHECKGL();
+	}
+
+	void VideoDriverGLES20::setUniform(const char *id, float val)
+	{
+		int p = glGetUniformLocation(_program, id);
+		if (p == -1)
+			return;
+		glUniform1f(p, val);
+		CHECKGL();
+	}
+
 }

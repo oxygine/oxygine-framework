@@ -17,6 +17,9 @@ namespace oxygine
 	class InputText: public EventDispatcher
 	{
 	public:
+		InputText();
+		~InputText();
+
 		/**Shows virtual keyboard(if supported on platform) and sends pressed chars to TextActor*/
 		void start(spTextActor textActor);
 		void stop();
@@ -25,6 +28,7 @@ namespace oxygine
 		void setAllowedSymbols(const wstring &str);
 		void setDisallowedSymbols(const string &utf8str);
 		void setDisallowedSymbols(const wstring &str);
+		void setMaxTextLength(int);
 
 		static void stopAnyInput();
 
@@ -34,6 +38,7 @@ namespace oxygine
 		string _allowed;
 		string _disallowed;
 		string _txt;
+		int	_maxLength;
 		void updateText();
 		static InputText *_active;		
 

@@ -100,19 +100,20 @@ namespace oxygine
 			int vs = ShaderProgramGL::createShader(GL_VERTEX_SHADER, data, prepend, append);					
 
 			ShaderProgramGL *pgl = new ShaderProgramGL;
-			const VertexDeclarationGL *decl = ((VideoDriverGLES20*)IVideoDriver::instance)->getVertexDeclaration(bformat);
+			VideoDriverGLES20 *driver = ((VideoDriverGLES20*)IVideoDriver::instance);
+			const VertexDeclarationGL *decl = driver->getVertexDeclaration(bformat);
 			pgl->init(ShaderProgramGL::createProgram(vs, fs, decl));
 
             
             CHECKGL();
 
-			glUseProgram(pgl->getID());
+			driver->setShaderProgram(pgl);
             
             CHECKGL();
 
-			pgl->setUniformInt("base_texture", UberShaderProgram::SAMPLER_BASE);
-			pgl->setUniformInt("alpha_texture", UberShaderProgram::SAMPLER_ALPHA);
-			pgl->setUniformInt("mask_texture", UberShaderProgram::SAMPLER_MASK);
+			driver->setUniformInt("base_texture", UberShaderProgram::SAMPLER_BASE);
+			driver->setUniformInt("alpha_texture", UberShaderProgram::SAMPLER_ALPHA);
+			driver->setUniformInt("mask_texture", UberShaderProgram::SAMPLER_MASK);
 
 			s.program = pgl;
             

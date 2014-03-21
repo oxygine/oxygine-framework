@@ -1,13 +1,6 @@
 #include "Mem2Native.h"
 #include "ImageDataOperations.h"
 
-#if __S3E__
-#include "s3eDevice.h"
-#elif OXYGINE_SDL
-#include "SDL_timer.h"
-#else
-#endif
-
 namespace oxygine
 {
 	const int RECT_SIZE = 4096;

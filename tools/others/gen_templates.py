@@ -16,10 +16,11 @@ def gen(path, project = ""):
 
 
 gen("Demo")
-#gen("DemoBox2D")
 gen("Game/part1", "GamePart1")
 gen("Game/part2", "GamePart2")
 gen("Game/part3", "GamePart3")
 gen("Game/part4", "GamePart4")
+#gen("TutorialResources")
 gen("HelloWorld")
 gen("Match3")
+#gen("DemoBox2D")

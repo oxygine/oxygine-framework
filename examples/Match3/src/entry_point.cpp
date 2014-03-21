@@ -82,8 +82,9 @@ void run()
 	//marmalade settings could be changed from emulator's menu
 #endif
 
-	core::init(&desc);
 	example_preinit();
+	core::init(&desc);
+	
 
 	//create RootActor. RootActor is a root node
 	RootActor::instance = new ExampleRootActor();

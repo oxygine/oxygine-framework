@@ -176,9 +176,10 @@ namespace oxygine
 		/**Returns true if actor is child or located deeper in current subtree*/
 		bool isDescendant(spActor actor);
 		
-		
-		void insertChildBefore(spActor actor, spActor insertBefore);
-		void insertChildAfter(spActor actor, spActor insertAfter);
+		/**Inserts the specified actor before "where" actor as a child*/
+		void insertChildBefore(spActor actor, spActor where);
+		/**Inserts the specified actor after "where" actor as a child*/
+		void insertChildAfter(spActor actor, spActor where);
 		void addChild(spActor actor);
 		void addChild(Actor *actor);//avoid conversion to spActor
 		void attachTo(spActor parent);

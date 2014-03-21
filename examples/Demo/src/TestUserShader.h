@@ -34,9 +34,9 @@ public:
 private:
 	Vector4 _val;
 	UberShaderProgram* _program;
-	void setUniforms(ShaderProgram *prog)
+	void setUniforms(IVideoDriver *driver, ShaderProgram *prog)
 	{
-		prog->setUniform("userValue", &_val, 1);
+		driver->setUniform("userValue", &_val, 1);
 	}
 
 	void doRender(const RenderState &rs)

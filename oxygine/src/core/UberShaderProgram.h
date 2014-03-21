@@ -5,6 +5,7 @@
 namespace oxygine
 {
 	class ShaderProgram;
+	class IVideoDriver;
 
 	class UberShaderProgram: public Restorable
 	{
@@ -40,7 +41,7 @@ namespace oxygine
 
 		void release();
 
-		typedef Closure<void (ShaderProgram *)> ShaderUniformsCallback;
+		typedef Closure<void (IVideoDriver* , ShaderProgram *)> ShaderUniformsCallback;
 		void setShaderUniformsCallback(ShaderUniformsCallback cb){_cb = cb;}
 
 		ShaderUniformsCallback	getShaderUniformsCallback() const {return _cb;}

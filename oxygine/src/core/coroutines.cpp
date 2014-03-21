@@ -6,7 +6,7 @@
 #include "IwFibre.h"
 #elif OXYGINE_SDL
 #include "greenlet.h"
-#define GREENLETS 1
+#define GREENLETS 0
 #endif
 //#include "greenlet.h"
 
