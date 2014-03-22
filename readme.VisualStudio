@@ -14,6 +14,7 @@
    all required dlls from  oxygine-framework\oxygine\third_party\win32\dlls\
    and SDL2.dll from SDL\VisualC\SDL\Win32\   <Debug> or <Release>
    to  oxygine-framework\examples\Demo\data\   
+- working directory of Demo project should point to "data" folder (right click on Demo -> Config.Properties->Debugging->set working dir)
 - ready! run!
 =================================================================================================
 
