@@ -64,6 +64,7 @@ class ResAnim:
         self.frame_scale = 1.0
         self.columns = 0
         self.rows = 0
+        self.walker = None
 
 
 def frame_cmp_sort(f1, f2):
@@ -188,25 +189,28 @@ class atlas_Processor(process.Process):
     def __init__(self):
         self.atlas_group_id = 0
 
-    def process(self, context, el):
+    def process(self, context, walker):
         self.atlas_group_id += 1
 
-        meta = context.add_meta()
+        #meta = context.add_meta()
 
         anims = []
 
         frames = []
+        
+        while True:
+            next = walker.next()
+            if not next:
+                break
 
-        for image_el in el.childNodes:
-            if image_el.nodeName == "set":
-                context._process_set(image_el)
-
-            if image_el.nodeName != "image":
-                continue
+            image_el = next.root
+            
 
             image_name = image_el.getAttribute("file")
             if not image_name:
                 continue
+            
+            file_path = next.getPath("file")
 
 
             #print image_path
@@ -217,7 +221,7 @@ class atlas_Processor(process.Process):
 
             #virtual_width = 1        
             #virtual_height = 1
-            path = context.get_current_src_path(image_name)
+            path = context.src_data + file_path
             try:
                 image = Image.open(path)
             except IOError:      
@@ -235,6 +239,7 @@ class atlas_Processor(process.Process):
 
 
             resAnim = ResAnim()            
+            resAnim.walker = next
             resAnim.image = image
             resAnim.name = image_name                        
 
@@ -273,15 +278,7 @@ class atlas_Processor(process.Process):
             if size_warning:
                 context.warnings += 1
 
-            scale_quality = image_el.getAttribute("scale_quality")
-            if scale_quality:
-                scale_quality = float(scale_quality)
-            else:
-                scale_quality = 1.0
-
-
-
-            finalScale = context.get_apply_scale(True, scale_quality)
+            finalScale = context.get_apply_scale(True, walker)
             upscale = False            
             if finalScale > 1:
                 if not context.args.upscale:
@@ -289,7 +286,8 @@ class atlas_Processor(process.Process):
                 else:
                     upscale = True
 
-            resAnim.frame_scale = context.get_apply_scale(False, scale_quality)
+            resAnim.frame_scale = context.get_apply_scale(False, walker)
+            #todo, fix bug when frame_scale > 1 and finalScale = 1
 
             resAnim.frame_size = (applyScale(frame_width, finalScale),
                                   applyScale(frame_height, finalScale))
@@ -415,8 +413,9 @@ class atlas_Processor(process.Process):
                 image.paste(fr.image, rect)
                 fr.atlas_id = atlas_id
 
-            image_atlas_el = context.get_meta_doc().createElement("image")                
-            meta.appendChild(image_atlas_el)            
+            image_atlas_el = walker.root_meta.ownerDocument.createElement("atlas")                
+            walker.root_meta.insertBefore(image_atlas_el,  anims[0].walker.root_meta)
+            #meta.appendChild(image_atlas_el)            
 
 
             base_name = "%d_%d" % (self.atlas_group_id, atlas_id)
@@ -500,12 +499,12 @@ class atlas_Processor(process.Process):
             if 0:
                 anim = ResAnim()
 
-            image_frames_el = context.get_meta_doc().createElement("frames")
+            image_frames_el = anim.walker.root_meta
 
             image_frames_el.setAttribute("fs", "%d,%d,%d,%d,%f" % (anim.columns, anim.rows, 
                                                                    anim.frame_size[0], anim.frame_size[1], 
                                                                    anim.frame_scale))
-            meta.appendChild(image_frames_el)
+            #meta.appendChild(image_frames_el)
 
             if context.debug:
                 image_frames_el.setAttribute("debug_image", anim.name)
@@ -518,5 +517,5 @@ class atlas_Processor(process.Process):
                                                   fr.bbox[0], fr.bbox[1],
                                                   fr.bbox[2] - fr.bbox[0], fr.bbox[3] - fr.bbox[1])
 
-            text = context.get_meta_doc().createTextNode(data)
+            text = image_frames_el.ownerDocument.createTextNode(data)
             image_frames_el.appendChild(text)

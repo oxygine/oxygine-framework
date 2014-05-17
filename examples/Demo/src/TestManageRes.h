@@ -56,6 +56,8 @@ public:
 	{
 		notify("Loaded!");
 		ui->getChild("loading")->addTween(Sprite::TweenAlpha(0), 400)->setDetachActor(true);
+
+		releaseRef();//added ref earlier from void clicked(id)
 	}
 
 	void toggleClicked(string id, const toggle *data)
@@ -86,6 +88,9 @@ public:
 
 			spThreadLoading l = new ThreadLoading;
 			l->addEventListener(ThreadLoading::COMPLETE, CLOSURE(this, &ManageResTest::_loaded));
+			
+			addRef();//protect Test instance from automatic delete if you close it to fast
+
 			l->add(&resources);
 			if (id == "mt_slow")
 				l->setUpdateSize(128);

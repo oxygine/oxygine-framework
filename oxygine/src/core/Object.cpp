@@ -18,9 +18,17 @@ namespace oxygine
 	int ObjectBase::_lastID = 0;
 	int ObjectBase::_assertCtorID = -1;	
 	int ObjectBase::_assertDtorID = -1;	
+	bool _tracingLeaks = false;
 
 	
-	Mutex mutexDebugList;
+
+	//Mutex mutexDebugList;
+
+	Mutex& getMutex()
+	{
+		static Mutex mutex;
+		return mutex;
+	}
 
 #if OBJECT_POOL_ALLOCATOR
 	void* PoolObject::operator new(size_t size)
@@ -129,11 +137,22 @@ namespace oxygine
 		}
 	}
 
+	void ObjectBase::__startTracingLeaks()
+	{
+		_tracingLeaks = true;
+	}
+
+	void ObjectBase::__stopTracingLeaks()
+	{
+		_tracingLeaks = false;
+	}
+
 	void ObjectBase::__addToDebugList(ObjectBase *base)
 	{
 #ifdef OXYGINE_DEBUG_TRACE_LEAKS		
+		if (_tracingLeaks)
 		{
-			MutexAutoLock m(mutexDebugList);
+			MutexAutoLock m(getMutex());
 			base->__traceLeak = true;
 			__getCreatedObjects().push_back(base);
 		}		
@@ -143,8 +162,9 @@ namespace oxygine
 	void ObjectBase::__removeFromDebugList(ObjectBase *base)
 	{
 #ifdef OXYGINE_DEBUG_TRACE_LEAKS		
-		{
-			MutexAutoLock m_(mutexDebugList);
+		if (_tracingLeaks)
+		{	
+			MutexAutoLock m_(getMutex());
 			if (base->__traceLeak)
 			{
 				base->__traceLeak = false;   
@@ -177,7 +197,7 @@ namespace oxygine
 	void ObjectBase::dumpCreatedObjects()
 	{
 #ifdef OXYGINE_DEBUG_TRACE_LEAKS
-		MutexAutoLock m(mutexDebugList);
+		MutexAutoLock m(getMutex());
 
 		log::messageln("\n\n\nallocated objects:");
 		int n = 0;		

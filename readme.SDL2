@@ -1,6 +1,0 @@
-1. Download  latest SDL2 source snapshot http://libsdl.org/hg.php
-2. Put it on the same level with oxygine-framework
-root\
-     oxygine-framework
-     SDL
-3. read other "readme.*" for your platform (readme.iOS, readme.Android, etc)

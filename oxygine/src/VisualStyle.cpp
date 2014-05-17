@@ -2,6 +2,8 @@
 #include "Actor.h"
 #include <sstream>
 #include "RenderState.h"
+#include "Serialize.h"
+#include "utils/stringUtils.h"
 
 namespace oxygine
 {
@@ -10,11 +12,11 @@ namespace oxygine
 
 	}
 
-	VStyleActor::VStyleActor(const VStyleActor &src, cloneOptions opt):Actor(src, opt)
+	void VStyleActor::copyFrom(const VStyleActor &src, cloneOptions opt)
 	{
+		Actor::copyFrom(src, opt);
 		_vstyle = src._vstyle;
 	}
-
 
 	void VisualStyle::_apply(const RenderState &rs)
 	{
@@ -42,5 +44,22 @@ namespace oxygine
 		
 
 		return stream.str();
+	}
+
+	void VStyleActor::serialize(serializedata* data)
+	{
+        Actor::serialize(data);
+		if (_vstyle.getColor() != Color(0xffffffff))
+			data->node.append_attribute("color").set_value(color2hex(_vstyle.getColor()).c_str());
+		//if (_vstyle.getBlendMode() != )
+		//data->node.append_attribute("blend").set_value(color2hex(_vstyle.getColor()).c_str());
+
+		data->node.set_name("VStyleActor");
+	}
+
+	void VStyleActor::deserialize(const deserializedata* data)
+	{
+        Actor::deserialize(data);
+		setColor(hex2color(data->node.attribute("color").as_string("ffffffff")));		
 	}
 }

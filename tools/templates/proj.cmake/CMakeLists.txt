@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 2.6)
 project (${PROJECT})
 
-add_subdirectory(${ROOT}/oxygine-framework oxygine-framework)
+add_subdirectory(${OXYGINE} oxygine-framework)
 add_definitions(${OXYGINE_DEFINITIONS})
 include_directories(${OXYGINE_INCLUDE_DIRS})
 link_directories(${OXYGINE_LIBRARY_DIRS})

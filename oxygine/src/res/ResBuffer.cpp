@@ -6,11 +6,12 @@ namespace oxygine
 	Resource *ResBuffer::create(CreateResourceContext &context)
 	{
 		ResBuffer *rs = new ResBuffer();
-		string file = context.node.attribute("file").value();
+		pugi::xml_node node = context.walker.getNode();
+		string file = node.attribute("file").value();
 
-		rs->setName(Resource::extractID(context.node, file, ""));
-		rs->init((*context.folder + file).c_str());
-		setNode(rs, context.node);
+		rs->setName(Resource::extractID(node, file, ""));
+		rs->init(context.walker.getPath("file").c_str());
+		setNode(rs, node);
 
 		return rs;
 	}

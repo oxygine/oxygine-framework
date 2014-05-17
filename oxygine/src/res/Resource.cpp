@@ -5,7 +5,7 @@
 
 namespace oxygine
 {
-	Resource::Resource():_loadCounter(0), _useLoadCounter(false)
+	Resource::Resource():_loadCounter(0), _useLoadCounter(false), _parent(0)
 	{
 
 	}
@@ -41,17 +41,22 @@ namespace oxygine
 		{
 			if (file.empty())
 				return lower(def);
-			char head[255];
-			char tail[255];
-			path::split(file.c_str(), head, tail);
-
-			char name[255];
-			char ext[255];
-			path::splitExt(tail, name, ext); 
-			return lower(name);
+			return extractID(file);
 		}
 
 		return lower(id);
+	}
+
+	string Resource::extractID(const string &file)
+	{	
+		char head[255];
+		char tail[255];
+		path::split(file.c_str(), head, tail);
+
+		char name[255];
+		char ext[255];
+		path::splitExt(tail, name, ext); 
+		return lower(name);
 	}
 	 
 	

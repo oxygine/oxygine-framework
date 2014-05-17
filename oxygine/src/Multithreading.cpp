@@ -64,8 +64,9 @@ namespace oxygine
 		Mem2Native *_m2n;
 	};
 
-	ThreadLoading::ThreadLoading(const ThreadLoading &src, cloneOptions opt):Actor(src, opt)
+	void ThreadLoading::copyFrom(const ThreadLoading &src, cloneOptions opt)
 	{
+		Actor::copyFrom(src, opt);
 		_thread = pthread_self();
 		_threadDone = false;
 

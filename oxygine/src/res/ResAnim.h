@@ -22,7 +22,8 @@ namespace oxygine
 
 		void init(MemoryTexture *original, int columns = 1, int rows = 1, float scaleFactor = 1.0f);
 		void init(animationFrames &frames, int columns, float scaleFactor = 1.0f);
-		
+		/**creates animation frames from NativeTexture*/
+		void init(spNativeTexture texture, const Point &originalSize, int columns, int rows, float scaleFactor);		
 		
 		/*adds additional column. use it only if rows = 1*/
 		//void addFrame(const AnimationFrame &frame);
@@ -41,7 +42,8 @@ namespace oxygine
 
 		operator const AnimationFrame &();
 
-	private:
+    protected:
+        
 		void _load(LoadResourcesContext *ctx = 0);
 		void _unload();
 

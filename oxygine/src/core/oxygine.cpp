@@ -244,7 +244,7 @@ namespace oxygine
 			if(!_context)
 			{
 				_context = SDL_GL_CreateContext(_window);
-				initGLExtensions();
+				initGLExtensions(SDL_GL_GetProcAddress);
 			}
 #endif			
 		}
@@ -319,8 +319,7 @@ namespace oxygine
             
 #if TARGET_OS_IPHONE
             flags |= SDL_WINDOW_BORDERLESS;
-#endif
-            
+#endif            
 	#endif
             
 
@@ -351,8 +350,7 @@ namespace oxygine
                 log::error("can't create gl context: %s", SDL_GetError());
                 return;
             }
-
-			initGLExtensions();
+			
 	#else
 
 			HWND				hWnd	= 0;
@@ -417,14 +415,25 @@ namespace oxygine
 
 	#endif
 
+            file::init();
+
+			init2();			
+		}
+
+		void init2()
+		{
+#ifndef __S3E__
+			initGLExtensions(SDL_GL_GetProcAddress);
+#endif
+
 			Point size = getDisplaySize();
 			log::messageln("display size: %d %d", size.x, size.y);
-		
 
-	#if __S3E__
+
+#if __S3E__
 			int glversion = s3eGLGetInt(S3E_GL_VERSION);
 			int major_gl = glversion >> 8;
-		
+
 			if (major_gl == 2)
 				IVideoDriver::instance = new VideoDriverGLES20();
 			else
@@ -433,25 +442,25 @@ namespace oxygine
 				//IVideoDriver::instance = new VideoDriverGLES11();			
 			}
 
-	#elif __FLASHPLAYER__
+#elif __FLASHPLAYER__
 			{
 				VideoDriverStage3D *vd = new VideoDriverStage3D();
 				vd->init();
 				IVideoDriver::instance = vd;
 			}
-			
-			//IVideoDriver::instance = new VideoDriverNull();
-	#else
-			IVideoDriver::instance = new VideoDriverGLES20();			
-	#endif
 
-		
-            checkGLError();
+			//IVideoDriver::instance = new VideoDriverNull();
+#else
+			IVideoDriver::instance = new VideoDriverGLES20();			
+#endif
+
+
+			checkGLError();
 
 			IVideoDriver::instance->setDefaultSettings();
 
-            checkGLError();
-            
+			checkGLError();
+
 			Renderer::initialize();
 
 			Resources::registerResourceType(ResAtlas::create, "atlas");
@@ -461,10 +470,10 @@ namespace oxygine
 			Resources::registerResourceType(ResFontBM::createSD, "sdfont");
 			Resources::registerResourceType(ResStarlingAtlas::create, "starling_atlas");
 
-            checkGLError();
+			checkGLError();
 			log::messageln("oxygine initialized");
 
-			file::init();
+
 		}
 
 #ifdef OXYGINE_SDL
@@ -491,6 +500,11 @@ namespace oxygine
 		bool hasFocus()
 		{
 			return focus;
+		}
+
+		void* getWindow()
+		{
+			return _window;
 		}
 #endif
 
@@ -719,7 +733,8 @@ namespace oxygine
 #endif
 
 			spActor temp = RootActor::instance;
-			RootActor::instance->cleanup();
+            if (RootActor::instance)
+                RootActor::instance->cleanup();
 			RootActor::instance = 0;	
 
 			Input::instance.cleanup();
@@ -759,6 +774,7 @@ namespace oxygine
 			return _threadMessages;
 		}
 
+		Point _qtFixedSize(0,0);
 		Point getDisplaySize()
 		{
 	#if __S3E__
@@ -778,6 +794,13 @@ namespace oxygine
 			}
 
 			return Point(width, height);
+	#endif
+	
+	#ifdef OXYGINE_QT
+			if (!_window)
+			{
+				return _qtFixedSize;
+			}
 	#endif
 
 	#if OXYGINE_SDL

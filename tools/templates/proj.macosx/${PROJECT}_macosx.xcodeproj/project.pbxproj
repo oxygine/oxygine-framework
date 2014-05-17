@@ -74,10 +74,10 @@ ${PBXBuildFile}
 /* Begin PBXFileReference section */
 		04059FEC187202A200BA6557 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		04059FEE187202AC00BA6557 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
-		04059FF01872031A00BA6557 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = ${ROOT}/oxygine-framework/oxygine/third_party/macosx/libraries/libjpeg.a; sourceTree = "<group>"; };
-		04059FF11872031A00BA6557 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = ${ROOT}/oxygine-framework/oxygine/third_party/macosx/libraries/libpng.a; sourceTree = "<group>"; };
-		04059FF4187203A600BA6557 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = ${ROOT}/oxygine-framework/oxygine/third_party/ios/libraries/libjpeg.a; sourceTree = "<group>"; };
-		04059FF5187203A600BA6557 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = ${ROOT}/oxygine-framework/oxygine/third_party/ios/libraries/libpng.a; sourceTree = "<group>"; };
+		04059FF01872031A00BA6557 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = ${OXYGINE}/oxygine/third_party/macosx/libraries/libjpeg.a; sourceTree = "<group>"; };
+		04059FF11872031A00BA6557 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = ${OXYGINE}/oxygine/third_party/macosx/libraries/libpng.a; sourceTree = "<group>"; };
+		04059FF4187203A600BA6557 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = ${OXYGINE}/oxygine/third_party/ios/libraries/libjpeg.a; sourceTree = "<group>"; };
+		04059FF5187203A600BA6557 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = ${OXYGINE}/oxygine/third_party/ios/libraries/libpng.a; sourceTree = "<group>"; };
 		049B572E1871FBE900EF3C66 /* demo_macosx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ${PROJECT}_macosx.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		049B57311871FBE900EF3C66 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		049B57341871FBE900EF3C66 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -87,7 +87,7 @@ ${PBXBuildFile}
 		049B57491871FBE900EF3C66 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ${PROJECT}/Images.xcassets; sourceTree = "<group>"; };
 		049B57501871FBE900EF3C66 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 ${PBXFileReference}
-		04A57D761871FFEB0068B1E5 /* oxygine_macosx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = oxygine_macosx.xcodeproj; path = ${ROOT}/oxygine-framework/oxygine/SDL/macosx/oxygine_macosx/oxygine_macosx.xcodeproj; sourceTree = "<group>"; };
+		04A57D761871FFEB0068B1E5 /* oxygine_macosx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = oxygine_macosx.xcodeproj; path = ${OXYGINE}/oxygine/SDL/macosx/oxygine_macosx/oxygine_macosx.xcodeproj; sourceTree = "<group>"; };
 		04A57D7E1872012A0068B1E5 /* SDL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SDL.xcodeproj; path = ${ROOT}/SDL/Xcode/SDL/SDL.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -368,7 +368,7 @@ ${PBXSourcesBuildPhase}
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "${ROOT}/oxygine-framework/oxygine/src ${ROOT}/SDL/include";
+				USER_HEADER_SEARCH_PATHS = "${OXYGINE}/oxygine/src ${ROOT}/SDL/include";
 				VALID_ARCHS = i386;
 			};
 			name = Debug;
@@ -403,7 +403,7 @@ ${PBXSourcesBuildPhase}
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = "${ROOT}/oxygine-framework/oxygine/src ${ROOT}/SDL/include";
+				USER_HEADER_SEARCH_PATHS = "${OXYGINE}/oxygine/src ${ROOT}/SDL/include";
 				VALID_ARCHS = i386;
 			};
 			name = Release;
@@ -419,8 +419,8 @@ ${PBXSourcesBuildPhase}
 				INFOPLIST_FILE = "${PROJECT}_macosx-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"${ROOT}/oxygine-framework/oxygine/third_party/macosx/libraries",
-					"${ROOT}/oxygine-framework/oxygine/third_party/ios/libraries",
+					"${OXYGINE}/oxygine/third_party/macosx/libraries",
+					"${OXYGINE}/oxygine/third_party/ios/libraries",
 				);
 				PRODUCT_NAME = ${PROJECT}_macosx;
 				WRAPPER_EXTENSION = app;
@@ -438,8 +438,8 @@ ${PBXSourcesBuildPhase}
 				INFOPLIST_FILE = "${PROJECT}_macosx-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"${ROOT}/oxygine-framework/oxygine/third_party/macosx/libraries",
-					"${ROOT}/oxygine-framework/oxygine/third_party/ios/libraries",
+					"${OXYGINE}/oxygine/third_party/macosx/libraries",
+					"${OXYGINE}/oxygine/third_party/ios/libraries",
 				);
 				PRODUCT_NAME = ${PROJECT}_macosx;
 				WRAPPER_EXTENSION = app;

@@ -1,6 +1,7 @@
 #include "ProgressBar.h"
 #include "RenderState.h"
 #include <sstream>
+#include "Serialize.h"
 namespace oxygine
 {
 	void fill_tex_coord(vertexPCT2 &vt, unsigned int rgba, const Vector2 &pnt, float nu, float nv)
@@ -45,9 +46,10 @@ namespace oxygine
 	{
 
 	}
-
-	ProgressBar::ProgressBar(const ProgressBar &src, cloneOptions opt):Sprite(src, opt)
+	
+	void ProgressBar::copyFrom(const ProgressBar &src, cloneOptions opt)
 	{
+		Sprite::copyFrom(src, opt);
 		_progress = src._progress;
 		_direction = src._direction;
 		_originalFrame = src._originalFrame;
@@ -364,5 +366,12 @@ namespace oxygine
 	ProgressBar::direction ProgressBar::getDirection() const
 	{
 		return _direction;
+	}
+
+	void ProgressBar::serialize(serializedata* data)
+	{
+		Sprite::serialize(data);
+		pugi::xml_node node = data->node;
+		data->node.set_name("ProgressBar");
 	}
 }

@@ -91,8 +91,8 @@ namespace oxygine
 	{
 		if (!_content)
 			return;
-		float w = std::max(0.0f, _content->getWidth() - _clip->getWidth());
-		float h = std::max(0.0f, _content->getHeight() - _clip->getHeight());
+		float w = std::max(0.0f, _content->getWidth() * _content->getScaleX() - _clip->getWidth());
+		float h = std::max(0.0f, _content->getHeight() * _content->getScaleY() - _clip->getHeight());
 		RectF bounds(-w, -h, w, h);		
 
 		_drag.setDragBounds(bounds);

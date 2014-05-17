@@ -2,11 +2,13 @@
 #include "RootActor.h"
 #include "core/log.h"
 #include "RenderState.h"
+#include "Serialize.h"
 
 namespace oxygine
 {
-	ClipRectActor::ClipRectActor(const ClipRectActor &src, cloneOptions opt):Actor(src, opt)
+	void ClipRectActor::copyFrom(const ClipRectActor &src, cloneOptions opt)
 	{
+		Actor::copyFrom(src, opt);
 		_culling = src._culling;
 		_clipping = src._clipping;
 	}
@@ -98,5 +100,17 @@ namespace oxygine
 
 			rs.renderer->getDriver()->setScissorRect(scissorEnabled ? &scissorRect : 0);
 		}
+	}
+
+	void ClipRectActor::serialize(serializedata* data)
+	{
+		Actor::serialize(data);
+		pugi::xml_node node = data->node;
+		node.set_name("Sprite");
+	}
+
+	void ClipRectActor::deserialize(const deserializedata* data)
+	{
+		Actor::deserialize(data);
 	}
 }

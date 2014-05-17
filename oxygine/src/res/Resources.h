@@ -6,7 +6,7 @@
 #include "pugixml/pugixml.hpp"
 #include "closure/closure.h"
 #include "core/Object.h"
-
+#include "Resource.h"
 
 namespace pugi
 {
@@ -25,7 +25,7 @@ namespace oxygine
 	class LoadResourcesContext; 
 
 
-	class Resources
+	class Resources: public Resource
 	{
 	public:
 		typedef Resource* (*createResourceCallback)(CreateResourceContext &context);
@@ -36,6 +36,7 @@ namespace oxygine
 		@param resource type string identifier. Max id length is 15 chars. These IDs are already occupied: 'set', 'atlas', ' image', 'font', 'buffer'
 		*/
 		static void registerResourceType(createResourceCallback creationCallback, const char *resTypeID);
+		static void unregisterResourceType(const char *resTypeID);
 
 		
 		Resources();
@@ -52,8 +53,8 @@ namespace oxygine
 			bool load_completely = true, bool use_load_counter = false,
 			const string &prebuilt_folder = "");
 
-		/**Adds your own Resource and becomes resource owner. Added resource will be deleted from destructor by calling 'delete'.*/
-		void add(Resource *r);
+        /**Adds your own Resource and becomes resource owner if Own is true. Owned resource will be deleted from destructor by calling 'delete'.*/
+		void add(Resource *r, bool own);
 		
 		/**Calls Resource::load for each resoure in the list*/
 		void load(LoadResourcesContext *context = 0, ResLoadedCallback cb = ResLoadedCallback());
@@ -71,8 +72,8 @@ namespace oxygine
 		Resource *get(const string &id, error_policy ep = ep_show_error);
 
 		/** returns resource by index */
-		Resource *get(int index){return _resources[index];}
-		int		  getCount() const {return (int)_resources.size();}
+		Resource *get(int index){return _fastAccessResources[index];}
+		int		  getCount() const {return (int)_fastAccessResources.size();}
 
 		Resource * operator[](const string &id){return get(id);}
 		
@@ -95,9 +96,10 @@ namespace oxygine
 		void print();
 
 	protected:
-		void loadAtlas(const string &path, const pugi::xml_node &node, const pugi::xml_node &meta);
+        void updateName(const string &filename);
+		void _load(LoadResourcesContext *context);
+		void _unload();
 
-	private:
 		struct registeredResource
 		{
 			registeredResource(){id[0]=0;}
@@ -123,8 +125,8 @@ namespace oxygine
 		
 		typedef vector<Resource*> resources;
 		resources _resources;
-
-		//typedef vector<
+		resources _owned;
+		resources _fastAccessResources;
 
 		typedef vector< registeredResource > registeredResources;
 		static registeredResources _registeredResources;

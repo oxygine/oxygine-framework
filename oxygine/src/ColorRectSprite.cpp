@@ -1,12 +1,13 @@
 #include "ColorRectSprite.h"
 #include "core/Renderer.h"
 #include "RenderState.h"
+#include "Serialize.h"
 
 namespace oxygine
 {
-	ColorRectSprite::ColorRectSprite(const ColorRectSprite &src, cloneOptions opt):Sprite(src, opt)
+	void ColorRectSprite::copyFrom(const ColorRectSprite &src, cloneOptions opt)
 	{
-
+		Sprite::copyFrom(src, opt);
 	}
 
 	ColorRectSprite::ColorRectSprite()
@@ -28,5 +29,13 @@ namespace oxygine
 		RectF srcRect = getSrcRect();		
 		RectF destRect = getDestRect();
 		rs.renderer->draw(srcRect, destRect);
+	}
+
+	void ColorRectSprite::serialize(serializedata* data)
+	{
+		Actor::serialize(data);
+		pugi::xml_node node = data->node;
+		//node.append_attribute("")
+		data->node.set_name("ColorRectSprite");
 	}
 }

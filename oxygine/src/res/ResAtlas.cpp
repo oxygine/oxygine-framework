@@ -21,7 +21,8 @@
 
 namespace oxygine
 {
-	string getPath(const char *currentPath, const char *str);
+    int defaultAtlasWidth = 2048;
+    int defaultAtlasHeight = 2048;
 
 	struct atlas_data
 	{
@@ -97,20 +98,22 @@ namespace oxygine
 
 	void ResAtlas::loadAtlas(CreateResourceContext &context)
 	{
-		string path = *context.folder;
+		//string path = context.walker.getCurrentFolder();
 
-		int w = context.node.attribute("width").as_int(2048);
-		int h = context.node.attribute("height").as_int(2048);
-		const char *format = context.node.attribute("format").as_string("8888");
+		pugi::xml_node node = context.walker.getNode(); 
+		pugi::xml_node meta = context.walker.getMeta();
+
+        int w = node.attribute("width").as_int(defaultAtlasWidth);
+        int h = node.attribute("height").as_int(defaultAtlasHeight);
+		const char *format = node.attribute("format").as_string("8888");
 
 		atlas_data ad;
 
 
 		TextureFormat tf = string2TextureFormat(format);
 
-		pugi::xml_node child_node = context.node.first_child();
-		
-		pugi::xml_node meta_image = context.meta.child("image");
+		pugi::xml_node child_node = node.first_child();		
+		pugi::xml_node meta_image = meta.child("atlas");
 		
 		bool compressed = false;
 
@@ -137,39 +140,25 @@ namespace oxygine
 
 			addAtlas(tf, *context.prebuilt_folder + file, alpha_file, w, h);
 
-			meta_image = meta_image.next_sibling("image");
+			meta_image = meta_image.next_sibling("atlas");
+			context.walker.nextMeta();
 		}
 
-		pugi::xml_node meta_frames = context.meta.child("frames");
-
-		float scaleFactor = context.scale_factor;
-
+		//
 
 		vector<ResAnim*> anims;
-
-
-		child_node = context.node.first_child();
-		while (!child_node.empty())
+	
+		
+		while (true)
 		{
+			XmlWalker walker = context.walker.next();
+			if (walker.empty())
+				break;
+
+			pugi::xml_node child_node = walker.getNode();
+			pugi::xml_node meta_frames = walker.getMeta();
+
 			const char *name = child_node.name();
-			if (!strcmp(name, "set"))
-			{
-				pugi::xml_attribute attr = child_node.first_attribute();
-				while(attr)
-				{
-					if (!strcmp(attr.name(), "path"))
-					{
-						path = getPath(path.c_str(), attr.value());
-						path += "/";
-					}
-					if (!strcmp(attr.name(), "scale_factor"))
-					{
-						scaleFactor = attr.as_float(scaleFactor);
-					}
-					attr = attr.next_attribute();
-				}				
-			}
-			else
 			if (!strcmp(name, "image"))
 			{
 				string id = child_node.attribute("id").value();
@@ -178,14 +167,15 @@ namespace oxygine
 				if (file.empty())
 				{
 					ResAnim *ra = new ResAnim(this);
-					ra->init(0, 0, 0, scaleFactor);
+					ra->init(0, 0, 0, walker.getScaleFactor());
 					init_resAnim(ra, file, child_node);
-					context.resources->add(ra);
+					ra->setParent(this);
+					context.resources->add(ra, true);
 					child_node = child_node.next_sibling();
 					continue;
 				}
 
-				if (context.meta)
+				if (meta)
 				{
 					OX_ASSERT(meta_frames && "Did you recreate atlasses?");
 				}
@@ -203,7 +193,7 @@ namespace oxygine
 				float frame_scale = 1.0f;
 				bool loaded = false;
 
-				if (meta_frames  || context.meta)
+				if (meta_frames  || meta)
 				{
 					const char *frame_size = meta_frames.attribute("fs").value();
 
@@ -222,7 +212,7 @@ namespace oxygine
 				else
 				{
 					file::buffer bf;
-					file::read((path + file).c_str(), bf);
+					file::read(walker.getPath("file").c_str(), bf);
 
 					mt.init(bf, Renderer::getPremultipliedAlphaRender(), tf);
 					im = mt.lock();
@@ -261,7 +251,7 @@ namespace oxygine
 					
 					ResAnim *ra = new ResAnim(this);
 
-					if (context.meta)
+					if (meta)
 					{
 						OX_ASSERT(meta_frames);
 
@@ -356,7 +346,7 @@ namespace oxygine
 								if (s == false)
 								{
 									apply_atlas(ad);
-									next_atlas(w, h, tf, ad, path.c_str());
+									next_atlas(w, h, tf, ad, walker.getCurrentFolder().c_str());
 									s = ad.atlas.add(&ad.mt, srcImage, dest);
 									OX_ASSERT(s);
 								}
@@ -371,14 +361,14 @@ namespace oxygine
 								
 								RectF srcRect(dest.pos.x * iw, dest.pos.y * ih, dest.size.x * iw, dest.size.y * ih);
 
-								Vector2 sizeScaled = Vector2((float)dest.size.x, (float)dest.size.y) * scaleFactor;
+								Vector2 sizeScaled = Vector2((float)dest.size.x, (float)dest.size.y) * walker.getScaleFactor();
 								RectF destRect(Vector2(0, 0), sizeScaled);
 
 								AnimationFrame frame;
 								Diffuse df;
 								df.base = ad.texture;
 								df.premultiplied = true;//!Renderer::getPremultipliedAlphaRender();
-								frame.init(ra, df, srcRect, destRect, Vector2((float)frame_width, (float)frame_height) * scaleFactor);
+								frame.init(ra, df, srcRect, destRect, Vector2((float)frame_width, (float)frame_height) * walker.getScaleFactor());
 								frames.push_back(frame);
 							}
 						}
@@ -388,20 +378,18 @@ namespace oxygine
 					
 					init_resAnim(ra, file, child_node);
 					
-					ra->init(frames, columns, scaleFactor);					
-					context.resources->add(ra);
+					ra->init(frames, columns, walker.getScaleFactor());					
+					ra->setParent(this);
+					context.resources->add(ra, true);
 				}
 
 
-				if (context.meta)
+				if (meta)
 				{
 					OX_ASSERT(meta_frames);
 					meta_frames = meta_frames.next_sibling();
 				}
-
 			}
-
-			child_node = child_node.next_sibling();
 		}
 
 		apply_atlas(ad);
@@ -430,11 +418,12 @@ namespace oxygine
 
 	Resource *ResAtlas::create(CreateResourceContext &context)
 	{
+		context.walker.checkSetAttributes();
 		ResAtlas *ra = new ResAtlas();
-		ra->setName(Resource::extractID(context.node, "", string("!atlas:") + *context.xml_name));
+		ra->setName(Resource::extractID(context.walker.getNode(), "", string("!atlas:") + *context.xml_name));
 		ra->loadAtlas(context);
-		setNode(ra, context.node);
-		context.meta = context.meta.next_sibling();
+		setNode(ra, context.walker.getNode());
+		//context.meta = context.meta.next_sibling();
 		return ra;
 	}
 

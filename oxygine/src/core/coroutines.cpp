@@ -5,7 +5,7 @@
 #if __S3E__
 #include "IwFibre.h"
 #elif OXYGINE_SDL
-#include "greenlet.h"
+//#include "greenlet.h"
 #define GREENLETS 0
 #endif
 //#include "greenlet.h"

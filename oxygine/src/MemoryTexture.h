@@ -25,10 +25,11 @@ namespace oxygine
 		
 		void fill_zero();
 
-		unsigned int getSizeVRAM() const {return _buffer.size();}
-		int	getWidth() const;
-		int getHeight() const;
-		TextureFormat getFormat() const;
+		unsigned int	getSizeVRAM() const {return _buffer.size();}
+		int				getWidth() const;
+		int				getHeight() const;
+		const Point&	getSize() const;
+		TextureFormat	getFormat() const;
 
 		ImageData	lock(lock_flags f = 0, const Rect *pRect = 0);
 		ImageData	lock(const Rect *pRect);

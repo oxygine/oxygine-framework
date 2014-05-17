@@ -8,7 +8,7 @@ namespace oxygine
 	class Box9Sprite: public Sprite
 	{
 	public:
-		DECLARE_COPYCLONE(Box9Sprite);
+		DECLARE_COPYCLONE_NEW(Box9Sprite);
 		enum StretchMode
 		{
 			TILING, 
@@ -27,6 +27,8 @@ namespace oxygine
 		void setGuides(float x1, float x2, float y1, float y2);
 		void setVerticalGuides(float x1, float x2);
 		void setHorizontalGuides(float y1, float y2);
+
+		std::string dump(const dumpOptions &) const;
 
 
 		virtual RectF getDestRect() const;

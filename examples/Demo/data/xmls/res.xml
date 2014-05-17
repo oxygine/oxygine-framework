@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <resources>
-	<set path = "images" />
+	<set path = "./../images" />
 	<atlas id = "primary" format="8888">
 		<image file="gray.png"/>
 		<image file="logo2.png" /> <!-- border=2 adds 2 pixel border from each side of image in atlas to avoid problem with mask -->
@@ -17,6 +17,7 @@
 		<image file="t2p.png"/>
 		<image file="slide.png"/>
 		<image file="box9.png"/>
+		<image file="box9a.png"/>
 	</atlas>
 	
 	<set load = "false" /> <!--do not load next atlasses by default-->

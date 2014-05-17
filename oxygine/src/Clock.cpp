@@ -70,6 +70,8 @@ namespace oxygine
 
 		if (dt > 100)
 			dt = 100;
+		if (dt < 0)
+			dt = 1;
 
 		if (_counter > 0)
 			dt = 0;//todo destTime == srcTime ??

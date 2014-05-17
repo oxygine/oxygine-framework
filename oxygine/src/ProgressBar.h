@@ -19,7 +19,7 @@ namespace oxygine
 			__dir_radial_ccw//not implemented!!
 		};
 
-		DECLARE_COPYCLONE(ProgressBar);
+		DECLARE_COPYCLONE_NEW(ProgressBar);
 
 		ProgressBar();
 		~ProgressBar();
@@ -34,6 +34,7 @@ namespace oxygine
 		void setDirection(direction dir);
 
 		string dump(const dumpOptions &) const;
+		void serialize(serializedata* data);
 		
 		typedef GetSet<float, float, ProgressBar, &ProgressBar::getProgress, &ProgressBar::setProgress> TweenProgress;		
 

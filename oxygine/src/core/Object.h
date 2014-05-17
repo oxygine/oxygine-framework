@@ -46,18 +46,15 @@ namespace oxygine
 		static void showAssertInCtor(int id);
 		/**Shows assert when object with this unique ID will be destroyed.*/
 		static void showAssertInDtor(int id);
-
-
-		static bool comparePred (const ObjectBase &ob1, const ObjectBase &ob2)
-		{return ob1.getName() < ob2.getName();}
-		static bool findPred (const ObjectBase &ob, const string &name)
-		{return ob.getName() < name;}
-
-
+		
 		//debug functions
 		typedef vector<ObjectBase*> __createdObjects;
 		static __createdObjects&	__getCreatedObjects();
+
+		static void __startTracingLeaks();
+		static void __stopTracingLeaks();
 		void __removeFromDebugList();
+		
 
 	protected:
 		static void __addToDebugList(ObjectBase *base);

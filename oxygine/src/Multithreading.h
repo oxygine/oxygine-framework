@@ -15,7 +15,7 @@ namespace oxygine
 	class ThreadLoading: public Actor
 	{
 	public:
-		DECLARE_COPYCLONE(ThreadLoading);
+		DECLARE_COPYCLONE_NEW(ThreadLoading);
 
 		enum
 		{

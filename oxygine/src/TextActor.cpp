@@ -12,6 +12,7 @@
 #include "core/gl/VideoDriverGLES20.h"
 #include "text_utils/TextBuilder.h"
 #include "text_utils/Node.h"
+#include "Serialize.h"
 
 namespace oxygine
 {
@@ -32,8 +33,9 @@ namespace oxygine
 		_root = 0;
 	}
 
-	TextActor::TextActor(const TextActor &src, cloneOptions opt):VStyleActor(src, opt)
+	void TextActor::copyFrom(const TextActor &src, cloneOptions opt)
 	{
+		VStyleActor::copyFrom(src, opt);
 		_text = src._text;
 		_style = src._style;
 		_root = 0;
@@ -294,7 +296,37 @@ namespace oxygine
 #ifdef SD_FONT
 		dc.renderer->drawBatch();
 		driver->setProgramMain();
-#endif
+#endif		
+	}
+
+	void TextActor::serialize(serializedata* data)
+	{
+		VStyleActor::serialize(data);
+		pugi::xml_node node = data->node;
+
+		TextStyle def;
+				
+		if (!_text.empty())
+			node.append_attribute("text").set_value(_text.c_str());
+		setAttr(node, "fontsize2scale", _style.fontSize2Scale, def.fontSize2Scale);		
+		setAttr(node, "valign", _style.vAlign, def.vAlign);
+		setAttr(node, "halign", _style.hAlign, def.hAlign);
+		setAttr(node, "multiline", _style.multiline, def.multiline);
+		node.set_name("TextActor");
+	}
+
+	void TextActor::deserialize(const deserializedata* data)
+	{
+		VStyleActor::deserialize(data);
+		pugi::xml_node node = data->node;
+
+		TextStyle def;
 		
+		_style.vAlign = (TextStyle::VerticalAlign)node.attribute("valign").as_int(def.vAlign);
+		_style.hAlign = (TextStyle::HorizontalAlign)node.attribute("halign").as_int(def.hAlign);
+		_style.multiline = node.attribute("multiline").as_bool(def.multiline);
+		_style.fontSize2Scale = node.attribute("fontsize2scale").as_int(def.fontSize2Scale);
+		needRebuild();
+		setText(node.attribute("text").as_string());
 	}
 }

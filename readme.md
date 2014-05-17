@@ -1,3 +1,6 @@
+**oxygine-framework/readme** folder has insructions how to build and run oxygine on different platforms.
+
+
 # Oxygine is C++ engine for 2d mobile games. 
 One more shell around OpenGL/D3D API you would say? No, this is a set of classes and tools to create a game according to your requirements.
 
@@ -22,10 +25,10 @@ Source code is available under MIT license (use for free anywhere).
 		sprite->setScale(0.5f);
 		
 		//run animation tween
-		sprite->addTween(TweenAnim(gameResources.getResAnim("anim2")), duration, loops));
+		sprite->addTween(TweenAnim(gameResources.getResAnim("anim2")), duration, loops);
 		
 		//run position tween
-		sprite->addTween(Sprite::TweenPosition(x, y), duration, loops));
+		sprite->addTween(Sprite::TweenPosition(x, y), duration, loops);
 		
 		//handle events
 		sprite->addEventListener(TouchEvent::CLICK, CLOSURE(this, &someClass::onClick));

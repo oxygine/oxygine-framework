@@ -77,4 +77,5 @@ namespace oxygine {void checkGLError();}
 #define CHECKGL() checkGLError()
 //#define CHECKGL() {}
 
-void initGLExtensions();
+typedef void*  (*myGetProcAdress)(const char *);
+void initGLExtensions(myGetProcAdress);

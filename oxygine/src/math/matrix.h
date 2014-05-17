@@ -168,7 +168,7 @@ namespace oxygine
 	void MatrixT<T>::translation(const vector3 &t)
 	{
 		matrix tm;
-		matrix::translation(&tm, t);
+        matrix::translation(tm, t);
 		*this = *this * tm;
 	}
 
@@ -176,7 +176,7 @@ namespace oxygine
 	void MatrixT<T>::scaling(const vector3 &s)
 	{
 		matrix sm;
-		matrix::scaling(&sm, s);
+        matrix::scaling(sm, s);
 		*this =*this * sm;
 	}
 

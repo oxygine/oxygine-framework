@@ -1,13 +1,13 @@
-1. read readme.SDL2
-2a. Examples folder have configured iOS projects (exception is demobox2d)
+1. start from readme.txt
+2a. Examples folder have configured MacOSX projects (exception is demobox2d)
 =================================================================================================
 - goto SDL/src/video/uikit/SDL_uikitview.h and comment line:
   #define IPHONE_TOUCH_EFFICIENT_DANGEROUS  
   
 - goto oxygine-framework\examples and choose any example. Lets call it "Demo" 
 - open xcode 5 project from:
-  examples\Demo\proj.ios\
-- select correct scheme: demo_ios-> iOS Simulator or real device (But not 64bits!)
+  examples\Demo\proj.macosx\
+- select correct scheme: demo_macosx->mac 32 bit
 - build and run!
 
 2b. You could generate your own MacOSX project.
@@ -17,4 +17,4 @@
   oxygine-framework\tools\gen_template.py
 
 example:
-	python gen_template.py MyProject -t ios -d path/to/MyProject/
+	python gen_template.py MyProject -t macosx -d path/to/MyProject/

@@ -137,37 +137,40 @@ extern "C"
 	}
 }
 
-void initGLExtensions()
+void initGLExtensions(myGetProcAdress func)
 {
-	_glUseProgram = (PFNGLUSEPROGRAMPROC)SDL_GL_GetProcAddress("glUseProgram");
-	_glVertexAttribPointer = (PFNGLVERTEXATTRIBPOINTERPROC)SDL_GL_GetProcAddress("glVertexAttribPointer");
-	_glActiveTexture = (PFNGLACTIVETEXTUREPROC)SDL_GL_GetProcAddress("glActiveTexture");
-	_glEnableVertexAttribArray = (PFNGLENABLEVERTEXATTRIBARRAYPROC)SDL_GL_GetProcAddress("glEnableVertexAttribArray");
-	_glDisableVertexAttribArray = (PFNGLDISABLEVERTEXATTRIBARRAYPROC)SDL_GL_GetProcAddress("glDisableVertexAttribArray");
-	_glDeleteProgram = (PFNGLDELETEPROGRAMPROC)SDL_GL_GetProcAddress("glDeleteProgram");
-	_glGetShaderiv = (PFNGLGETSHADERIVPROC)SDL_GL_GetProcAddress("glGetShaderiv");
-	_glGetShaderInfoLog = (PFNGLGETSHADERINFOLOGPROC)SDL_GL_GetProcAddress("glGetShaderInfoLog");
-	_glCreateShader = (PFNGLCREATESHADERPROC)SDL_GL_GetProcAddress("glCreateShader");
-	_glCreateProgram = (PFNGLCREATEPROGRAMPROC)SDL_GL_GetProcAddress("glCreateProgram");
-	_glAttachShader = (PFNGLATTACHSHADERPROC)SDL_GL_GetProcAddress("glAttachShader");
-	_glShaderSource = (PFNGLSHADERSOURCEPROC)SDL_GL_GetProcAddress("glShaderSource");
-	_glCompileShader = (PFNGLCOMPILESHADERPROC)SDL_GL_GetProcAddress("glCompileShader");
-	_glBindAttribLocation = (PFNGLBINDATTRIBLOCATIONPROC)SDL_GL_GetProcAddress("glBindAttribLocation");
-	_glLinkProgram = (PFNGLLINKPROGRAMPROC)SDL_GL_GetProcAddress("glLinkProgram");
-	_glUniform1i = (PFNGLUNIFORM1IPROC)SDL_GL_GetProcAddress("glUniform1i");
-	_glUniform4fv = (PFNGLUNIFORM4FVPROC)SDL_GL_GetProcAddress("glUniform4fv");
-	_glUniform1f = (PFNGLUNIFORM1FPROC)SDL_GL_GetProcAddress("glUniform1f");
-	_glUniformMatrix4fv = (PFNGLUNIFORMMATRIX4FVPROC)SDL_GL_GetProcAddress("glUniformMatrix4fv");
-	_glBindFramebuffer = (PFNGLBINDFRAMEBUFFERPROC)SDL_GL_GetProcAddress("glBindFramebuffer");
-	_glGenFramebuffers = (PFNGLGENFRAMEBUFFERSPROC)SDL_GL_GetProcAddress("glGenFramebuffers");
-	_glCheckFramebufferStatus = (PFNGLCHECKFRAMEBUFFERSTATUSPROC)SDL_GL_GetProcAddress("glCheckFramebufferStatus");
-	_glDeleteFramebuffers = (PFNGLDELETEFRAMEBUFFERSPROC)SDL_GL_GetProcAddress("glDeleteFramebuffers");
-	_glGetUniformLocation = (PFNGLGETUNIFORMLOCATIONPROC)SDL_GL_GetProcAddress("glGetUniformLocation");
-	_glFramebufferTexture2D = (PFNGLFRAMEBUFFERTEXTURE2DPROC)SDL_GL_GetProcAddress("glFramebufferTexture2D");
-	_glCompressedTexImage2D = (PFNGLCOMPRESSEDTEXIMAGE2DPROC)SDL_GL_GetProcAddress("glCompressedTexImage2D");
+    if (_glUseProgram)
+        return;
+
+	_glUseProgram = (PFNGLUSEPROGRAMPROC)func("glUseProgram");
+	_glVertexAttribPointer = (PFNGLVERTEXATTRIBPOINTERPROC)func("glVertexAttribPointer");
+	_glActiveTexture = (PFNGLACTIVETEXTUREPROC)func("glActiveTexture");
+	_glEnableVertexAttribArray = (PFNGLENABLEVERTEXATTRIBARRAYPROC)func("glEnableVertexAttribArray");
+	_glDisableVertexAttribArray = (PFNGLDISABLEVERTEXATTRIBARRAYPROC)func("glDisableVertexAttribArray");
+	_glDeleteProgram = (PFNGLDELETEPROGRAMPROC)func("glDeleteProgram");
+	_glGetShaderiv = (PFNGLGETSHADERIVPROC)func("glGetShaderiv");
+	_glGetShaderInfoLog = (PFNGLGETSHADERINFOLOGPROC)func("glGetShaderInfoLog");
+	_glCreateShader = (PFNGLCREATESHADERPROC)func("glCreateShader");
+	_glCreateProgram = (PFNGLCREATEPROGRAMPROC)func("glCreateProgram");
+	_glAttachShader = (PFNGLATTACHSHADERPROC)func("glAttachShader");
+	_glShaderSource = (PFNGLSHADERSOURCEPROC)func("glShaderSource");
+	_glCompileShader = (PFNGLCOMPILESHADERPROC)func("glCompileShader");
+	_glBindAttribLocation = (PFNGLBINDATTRIBLOCATIONPROC)func("glBindAttribLocation");
+	_glLinkProgram = (PFNGLLINKPROGRAMPROC)func("glLinkProgram");
+	_glUniform1i = (PFNGLUNIFORM1IPROC)func("glUniform1i");
+	_glUniform4fv = (PFNGLUNIFORM4FVPROC)func("glUniform4fv");
+	_glUniform1f = (PFNGLUNIFORM1FPROC)func("glUniform1f");
+	_glUniformMatrix4fv = (PFNGLUNIFORMMATRIX4FVPROC)func("glUniformMatrix4fv");
+	_glBindFramebuffer = (PFNGLBINDFRAMEBUFFERPROC)func("glBindFramebuffer");
+	_glGenFramebuffers = (PFNGLGENFRAMEBUFFERSPROC)func("glGenFramebuffers");
+	_glCheckFramebufferStatus = (PFNGLCHECKFRAMEBUFFERSTATUSPROC)func("glCheckFramebufferStatus");
+	_glDeleteFramebuffers = (PFNGLDELETEFRAMEBUFFERSPROC)func("glDeleteFramebuffers");
+	_glGetUniformLocation = (PFNGLGETUNIFORMLOCATIONPROC)func("glGetUniformLocation");
+	_glFramebufferTexture2D = (PFNGLFRAMEBUFFERTEXTURE2DPROC)func("glFramebufferTexture2D");
+	_glCompressedTexImage2D = (PFNGLCOMPRESSEDTEXIMAGE2DPROC)func("glCompressedTexImage2D");
 }
 #else
-void initGLExtensions()
+void initGLExtensions(myGetProcAdress func)
 {
 }
 #endif

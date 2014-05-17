@@ -17,9 +17,13 @@ namespace oxygine
 	class TextActor : public VStyleActor
 	{
 	public:
-		DECLARE_COPYCLONE(TextActor);
+		DECLARE_COPYCLONE_NEW(TextActor);
 		TextActor();
 		~TextActor();
+		
+		void serialize(serializedata* data);
+		void deserialize(const deserializedata* data);
+
 		/**Returns current text style*/
 		const TextStyle&	getStyle() const {return _style;}
 		/**Returns text bounds*/

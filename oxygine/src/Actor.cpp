@@ -13,6 +13,7 @@
 #include "utils/stringUtils.h"
 #include "RenderState.h"
 #include <stdio.h>
+#include "Serialize.h"
 
 //#include ""
 
@@ -46,7 +47,7 @@ namespace oxygine
 		//addEventListener(et_MouseMove, CLOSURE(this, &Actor::_onMouseEvent));
 	}
 
-	Actor::Actor(const Actor &src, cloneOptions opt):EventDispatcher(src)
+	void Actor::copyFrom(const Actor &src, cloneOptions opt)
 	{
 		_pos = src._pos;
 		_extendedIsOn = src._extendedIsOn;
@@ -63,7 +64,7 @@ namespace oxygine
 
 		_transform = src._transform;
 		_transformInvert = src._transformInvert;
-		
+
 
 		if (!(opt & cloneOptionsDoNotCloneClildren))
 		{
@@ -82,7 +83,11 @@ namespace oxygine
 			setRotation(0);
 			setScale(1);
 		}
+
+		if (src.__getName())
+			setName(src.getName());
 	}
+	
 
 	Actor::~Actor()
 	{
@@ -454,6 +459,14 @@ namespace oxygine
 		_flags |= flag_transformDirty | flag_transformInvertDirty;
 	}
 
+	void Actor::setTransform(const AffineTransform &tr)
+	{
+		_transform = tr;
+		_flags &= ~flag_transformDirty;
+		_flags &= ~flag_fastTransform;
+		_flags |= flag_transformInvertDirty;		
+	}
+
 
 	void Actor::setPriority(short zorder)
 	{
@@ -520,10 +533,15 @@ namespace oxygine
 
 	}
 
+    void Actor::_setSize(const Vector2 &size)
+    {
+        _size = size;
+        _flags |= flag_transformDirty | flag_transformInvertDirty;
+    }
+
 	void Actor::setSize(const Vector2 &size)
 	{
-		_size = size;
-		_flags |= flag_transformDirty | flag_transformInvertDirty;
+        _setSize(size);
 		sizeChanged(size);
 	}	
 
@@ -644,6 +662,9 @@ namespace oxygine
 
 	Actor* Actor::getDescendant(const string &name, error_policy ep)
 	{
+		if (isName(name.c_str()))
+			return this;
+
 		Actor *actor = _getDescendant(name);
 		if (!actor)
 		{
@@ -654,17 +675,25 @@ namespace oxygine
 
 	Actor* Actor::_getDescendant(const string &name)
 	{
-		if (isName(name.c_str()))
-			return this;
-
 		Actor *child = _children._first.get();
+		while (child)
+		{
+			if (child->isName(name.c_str()))
+				return child;
+			
+			child = child->getNextSibling().get();
+		}
+
+		child = _children._first.get();
 		while (child)
 		{
 			Actor *des = child->_getDescendant(name);
 			if (des)
 				return des;
+
 			child = child->getNextSibling().get();
 		}
+		
 		return 0;
 	}
 
@@ -719,12 +748,13 @@ namespace oxygine
 			OX_ASSERT(insertBefore->getParent() == this);
 		}
 
-		//actor->removeFromParent();
-		
-		
+        actor->detach();
+
+        /*
 		OX_ASSERT(actor->getParent() == 0);
 		if (actor->getParent())
 			return;
+            */
 			
 
 		if (insertBefore)
@@ -782,6 +812,19 @@ namespace oxygine
 		else
 			insertChildBefore(actor, 0);
 	}
+
+    void Actor::prependChild(spActor actor)
+    {
+        prependChild(actor.get());
+    }
+
+    void Actor::prependChild(Actor *actor)
+    {
+        if (getFirstChild())
+            insertChildBefore(actor, getFirstChild());
+        else
+            addChild(actor);
+    }
 
 	void Actor::addChild(spActor actor)
 	{
@@ -1064,6 +1107,116 @@ namespace oxygine
 			{
 				removeTween(c);
 			}
+		}
+	}
+
+
+
+
+	void Actor::serialize(serializedata* data)
+	{
+		//node.set_name("actor");
+		pugi::xml_node node = data->node;
+		
+		node.append_attribute("name").set_value(getName().c_str());
+		setAttrV2(node, "pos", getPosition(), Vector2(0, 0));
+		setAttrV2(node, "scale", getScale(), Vector2(1, 1));
+		setAttrV2(node, "size", getSize(), Vector2(0, 0));
+		setAttr(node, "rotation", getRotation(), 0.0f);
+		setAttr(node, "visible", getVisible(), true);
+		setAttr(node, "input", getInputEnabled(), true);
+		setAttr(node, "inputch", getInputChildrenEnabled(), true);
+		setAttr(node, "alpha", getAlpha(), (unsigned char)255);		
+
+		if (data->withChildren)
+		{
+			spActor child = getFirstChild();
+			while (child)
+			{
+				serializedata d = *data;
+				d.node = node.append_child("-");
+				child->serialize(&d);
+				child = child->getNextSibling();
+			}
+		}
+
+		node.set_name("Actor");
+	}
+
+	Vector2 attr2Vector2(const char *data)
+	{
+		Vector2 v;
+		sscanf(data, "%f,%f", &v.x, &v.y);
+		return v;
+	}
+
+	void Actor::deserialize(const deserializedata* data)
+	{
+		pugi::xml_node node = data->node;
+		pugi::xml_attribute attr = node.first_attribute();
+		while (attr)
+		{
+			const char *name = attr.name();
+
+			do 
+			{
+				if (!strcmp(name, "name"))
+				{
+					setName(attr.as_string());
+					break;
+				}
+				if (!strcmp(name, "pos"))
+				{
+					setPosition(attr2Vector2(attr.as_string()));
+					break;
+				}
+				if (!strcmp(name, "scale"))
+				{
+					setScale(attr2Vector2(attr.as_string()));
+					break;
+				}
+				if (!strcmp(name, "size"))
+				{
+					setSize(attr2Vector2(attr.as_string()));
+					break;
+				}
+				if (!strcmp(name, "rotation"))
+				{
+					setRotation(attr.as_float());
+					break;
+				}
+				if (!strcmp(name, "visible"))
+				{
+					setVisible(attr.as_bool());
+					break;
+				}
+				if (!strcmp(name, "input"))
+				{
+					setInputEnabled(attr.as_bool());
+					break;
+				}
+				if (!strcmp(name, "inputch"))
+				{
+					setInputChildrenEnabled(attr.as_bool());
+					break;
+				}
+				if (!strcmp(name, "alpha"))
+				{
+					setAlpha(static_cast<unsigned char>(attr.as_int()));
+					break;
+				}
+			} while (0);
+
+
+			attr = attr.next_attribute();
+		}
+
+		pugi::xml_node item = node.first_child();
+		while (!item.empty())
+		{
+			spActor actor = deserializedata::deser(item, data->factory);
+			addChild(actor);
+			item = item.next_sibling();
 		}
 	}
 

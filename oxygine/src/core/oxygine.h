@@ -90,6 +90,7 @@ namespace oxygine
 
 		/** Initializes engine internal components*/
 		void init(init_desc *desc = 0);
+		void init2();
 		void release();
 		void requestQuit();
 

@@ -28,11 +28,15 @@ namespace oxygine
 		blend_mode _blend;
 	};
 
+    DECLARE_SMART(VStyleActor, spVStyleActor);
 	class VStyleActor: public Actor
 	{
 	public:
-		DECLARE_COPYCLONE(VStyleActor);
+		DECLARE_COPYCLONE_NEW(VStyleActor);
 		VStyleActor(){}
+
+		void serialize(serializedata* data);
+		void deserialize(const deserializedata* data);
 
 		blend_mode				getBlendMode() const {return _vstyle.getBlendMode();}
 		const Color&			getColor() const {return _vstyle.getColor();}

@@ -35,15 +35,19 @@ def run(args):
     if not templates_path:
         templates_path = "."
     templates_path += "/templates/"
-    root_path = templates_path + "/../../../"
+    ox_path = templates_path + "/../../"
+    root_path = ox_path + "../"    
     root_path = os.path.abspath(root_path)
+    ox_path = os.path.abspath(ox_path)
 
 
     dest_path = os.path.abspath(args.dest) + "/"
 
     root_path = relpath(root_path, dest_path) + "/"
+    ox_path = relpath(ox_path, dest_path) + "/"
 
 
+    values["OXYGINE"] = unixpath(ox_path)
     values["ROOT"] = unixpath(root_path)
 
 

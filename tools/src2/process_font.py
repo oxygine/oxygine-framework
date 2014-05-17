@@ -11,20 +11,24 @@ class bmfc_font_Processor(process.Process):
     def __init__(self):
         pass
     
-    def process(self, context, el):
+    def process(self, context, walker):
+        el = walker.root
         file_name = el.getAttribute("file")
         id = el.getAttribute("id")
         if not id:
             id = os.path.split(os.path.splitext(file_name)[0])[1]
             
-        path_font = context.get_current_src_path(file_name)
-        chars = el.getAttribute("chars")
+        path_font = context.src_data + walker.getPath("file")
+        chars = walker.getPath("chars")
         build_bmfont(context.args.md5, 
-                     context.get_inner_dest(id + ".fnt"), path_font, context.get_inner_dest(""), 
-                     context.get_apply_scale(True), context.get_current_src_path(chars))
+                     context.get_inner_dest(id + ".fnt"), 
+                     path_font, 
+                     context.get_inner_dest(""), 
+                     context.get_apply_scale(True, walker), 
+                     context.src_data + chars)
         
-        meta = context.add_meta()
-        font_size = int(get_bmfc_fontSize(path_font) * context.scale_factor)
+        meta = walker.root_meta
+        font_size = int(get_bmfc_fontSize(path_font) * walker.scale_factor)
         meta.setAttribute("size", str(font_size))        
         meta.setAttribute("sf", str(context.scale))
         
@@ -34,15 +38,16 @@ class font_Processor(process.Process):
     def __init__(self):
         pass
     
-    def process(self, context, el):
+    def process(self, context, walker):
+        el = walker.root
         file_name = el.getAttribute("file")            
 
-        meta = context.add_meta()
+        meta = walker.root_meta
     
-        font_doc = context._open_xml(context.get_current_src_path(file_name))
+        font_doc = context._open_xml(context.src_data + walker.getPath("file"))
     
         font_info = font_doc.getElementsByTagName("info")[0]
-        size = -int(int(font_info.getAttribute("size")) * context.scale_factor)
+        size = -int(int(font_info.getAttribute("size")) * walker.scale_factor)
         meta.setAttribute("size", str(size))        
         meta.setAttribute("sf", str(context.scale))
 

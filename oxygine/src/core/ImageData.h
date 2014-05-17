@@ -8,6 +8,7 @@ namespace oxygine
 	enum TextureFormat
 	{
 		TF_UNDEFINED,
+        TF_A8,//luminance
 		TF_L8,//luminance
 		TF_A8L8,//luminance+alpha
 		TF_R8G8B8A8,
@@ -28,6 +29,7 @@ namespace oxygine
 #define ALL_FORMATS_SWITCH(format) \
 	switch(format) \
 	{ \
+        FORMAT_CASE(A8); \
 		FORMAT_CASE(L8); \
 		FORMAT_CASE(A8L8); \
 		FORMAT_CASE(R8G8B8A8); \

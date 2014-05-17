@@ -12,7 +12,7 @@ namespace oxygine
 	class ClipRectActor : public Actor
 	{
 	public:
-		DECLARE_COPYCLONE(ClipRectActor);
+		DECLARE_COPYCLONE_NEW(ClipRectActor);
 		ClipRectActor();
 		~ClipRectActor();
 
@@ -26,6 +26,9 @@ namespace oxygine
 
 
 		void handleEvent(Event *event);
+
+		void serialize(serializedata* data);
+		void deserialize(const deserializedata* data);
 
 	protected:
 

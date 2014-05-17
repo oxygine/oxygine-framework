@@ -2,11 +2,14 @@
 #include "res/ResAnim.h"
 #include "math/ScalarMath.h"
 #include "RenderState.h"
+#include <sstream>
 
 namespace oxygine
 {
-	Box9Sprite::Box9Sprite(const Box9Sprite &src, cloneOptions opt):Sprite(src, opt)
+	void Box9Sprite::copyFrom(const Box9Sprite &src, cloneOptions opt)
 	{
+		Sprite::copyFrom(src, opt);
+
 		_prepared = src._prepared;
 
 		_vertMode = src._vertMode;
@@ -223,6 +226,40 @@ namespace oxygine
 		}
 
 		_prepared = true;
+	}
+
+	string stretchMode2String(Box9Sprite::StretchMode s)
+	{
+		switch (s)
+		{
+		case Box9Sprite::TILING:
+			return "tiling";
+		case Box9Sprite::TILING_FULL:
+			return "tiling_full";
+		case Box9Sprite::STRETCHING:
+			return "stretching";
+		}
+
+		return "";
+	}
+
+	std::string Box9Sprite::dump(const dumpOptions &options) const
+	{
+		stringstream stream;
+		stream << "{Box9Sprite}\n";
+		stream << "guideX1=" << _guideX[0] << " ";
+		stream << "guideX2=" << _guideX[1] << " ";
+		stream << "guideY1=" << _guideY[0] << " ";
+		stream << "guideY2=" << _guideY[1] << " ";
+
+		stream << "vert=" << stretchMode2String(_vertMode) << " ";
+		stream << "hor=" << stretchMode2String(_horzMode) << " ";
+
+		stream << "\n";
+
+
+		stream << Sprite::dump(options);
+		return stream.str();
 	}
 
 	void Box9Sprite::sizeChanged(const Vector2 &size)

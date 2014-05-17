@@ -28,7 +28,13 @@ namespace oxygine
 	bool _enabled = true;
 	FILE *fh = 0;
 
+	
+#ifdef __S3E__
 	const int SIZE = 512;
+#else
+	const int SIZE = 4096;
+#endif
+
 	namespace log
 	{
 		void enable()

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04670867192795E700D71824 /* Serialize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04670865192795E700D71824 /* Serialize.cpp */; };
+		04670868192795E700D71824 /* Serialize.h in Headers */ = {isa = PBXBuildFile; fileRef = 04670866192795E700D71824 /* Serialize.h */; };
 		049B56651871F21E00EF3C66 /* Actor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B55911871F21D00EF3C66 /* Actor.cpp */; };
 		049B56661871F21E00EF3C66 /* Actor.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B55921871F21D00EF3C66 /* Actor.h */; };
 		049B56671871F21E00EF3C66 /* AnimationFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B55931871F21D00EF3C66 /* AnimationFrame.cpp */; };
@@ -200,6 +202,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		04670865192795E700D71824 /* Serialize.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Serialize.cpp; path = ../../../src/Serialize.cpp; sourceTree = "<group>"; };
+		04670866192795E700D71824 /* Serialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Serialize.h; path = ../../../src/Serialize.h; sourceTree = "<group>"; };
 		049B52BB1871EDE900EF3C66 /* liboxygine_macosx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liboxygine_macosx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		049B55911871F21D00EF3C66 /* Actor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Actor.cpp; path = ../../../src/Actor.cpp; sourceTree = "<group>"; };
 		049B55921871F21D00EF3C66 /* Actor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Actor.h; path = ../../../src/Actor.h; sourceTree = "<group>"; };
@@ -431,6 +435,8 @@
 		049B55901871F21000EF3C66 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				04670865192795E700D71824 /* Serialize.cpp */,
+				04670866192795E700D71824 /* Serialize.h */,
 				04B3A71D18A6594D004C67E3 /* InputText.cpp */,
 				04B3A71E18A6594D004C67E3 /* InputText.h */,
 				049B55911871F21D00EF3C66 /* Actor.cpp */,
@@ -765,6 +771,7 @@
 				049B56B51871F21E00EF3C66 /* UberShaderProgram.h in Headers */,
 				049B56E21871F21E00EF3C66 /* ioapi.h in Headers */,
 				049B56A41871F21E00EF3C66 /* Renderer.h in Headers */,
+				04670868192795E700D71824 /* Serialize.h in Headers */,
 				049B56D01871F21E00EF3C66 /* Font.h in Headers */,
 				049B56DE1871F21E00EF3C66 /* vector4.h in Headers */,
 				049B56A21871F21E00EF3C66 /* ref_counter.h in Headers */,
@@ -971,6 +978,7 @@
 				049B56FF1871F21E00EF3C66 /* Resource.cpp in Sources */,
 				049B56D61871F21E00EF3C66 /* AffineTransform.cpp in Sources */,
 				049B568A1871F21E00EF3C66 /* VideoDriverGLES20.cpp in Sources */,
+				04670867192795E700D71824 /* Serialize.cpp in Sources */,
 				049B56CD1871F21E00EF3C66 /* EventDispatcher.cpp in Sources */,
 				049B56C01871F21E00EF3C66 /* TexturesInspector.cpp in Sources */,
 				049B56771871F21E00EF3C66 /* coroutines.cpp in Sources */,

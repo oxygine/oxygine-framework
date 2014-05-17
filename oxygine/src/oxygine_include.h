@@ -45,7 +45,11 @@
 
 #if OXYGINE_ASSERT2LOG
 namespace oxygine{namespace log{void error(const char *format, ...);}}
-#define OX_ASSERT(x) if (!(x)) oxygine::log::error("Assert! %d %s", __LINE__, __FILE__); (assert(x))
+#ifdef OXYGINE_QT
+#define OX_ASSERT(x) if (!(x)) {__asm("int3");oxygine::log::error("Assert! %d %s", __LINE__, __FILE__); }(assert(x))
+#else
+#define OX_ASSERT(x) if (!(x)) {oxygine::log::error("Assert! %d %s", __LINE__, __FILE__);}(assert(x))
+#endif
 #else
 #define OX_ASSERT(x) (if (!(x)) oxygine::log::error("Assert! %d %s", __LINE__, __FILE__))
 #endif

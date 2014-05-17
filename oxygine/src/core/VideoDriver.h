@@ -63,8 +63,8 @@ namespace oxygine
 		virtual spNativeTexture createTexture() = 0;
 
 		virtual void begin(const Rect &viewport, const Color *color) = 0;				
-		virtual void draw(PRIMITIVE_TYPE pt, const VertexDeclaration *decl, const void *verticesData, unsigned int numVertices) = 0;
-		virtual void draw(PRIMITIVE_TYPE pt, const VertexDeclaration *decl, const void *verticesData, unsigned int numVertices, const void *indicesData, unsigned int numIndices, bool indicesShortType) = 0;
+        virtual void draw(PRIMITIVE_TYPE pt, const VertexDeclaration *decl, const void *verticesData, unsigned int verticesDataSize) = 0;
+        virtual void draw(PRIMITIVE_TYPE pt, const VertexDeclaration *decl, const void *verticesData, unsigned int verticesDataSize, const void *indicesData, unsigned int numIndices, bool indicesShortType) = 0;
 
 		virtual void	getStats(Stats &s) const = 0;
 		virtual void	getViewport(Rect &r) const = 0;

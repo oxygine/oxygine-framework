@@ -6,8 +6,9 @@ namespace oxygine
 	{
 		switch (tf)
 		{
-		case TF_L8:
-			return 1;
+        case TF_A8:
+        case TF_L8:
+            return 1;
 		case TF_A8L8:
 			return 2;
 		case TF_R8G8B8A8:
@@ -56,6 +57,7 @@ namespace oxygine
 	TextureFormat string2TextureFormat(const char *str)
 	{
 #define CMP(fmt, shrt) if (!strcmp_cns(str, #fmt) || (shrt && !strcmp_cns(str, shrt))) return TF_##fmt
+        CMP(A8, 0);
 		CMP(L8, 0);
 		CMP(A8L8, 0);
 		CMP(R8G8B8, "888");
@@ -79,6 +81,8 @@ namespace oxygine
 	{
 		switch (tf)
 		{
+        case TF_A8:
+            return "A8";
 		case TF_L8:
 			return "L8";
 		case TF_A8L8:

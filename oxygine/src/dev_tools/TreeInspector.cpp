@@ -141,8 +141,8 @@ namespace oxygine
 
 		
 
-		addEventListener(TouchEvent::WHEEL_DOWN, CLOSURE(this, &TreeInspector::wheel));
-		addEventListener(TouchEvent::WHEEL_UP, CLOSURE(this, &TreeInspector::wheel));
+		getRoot()->addEventListener(TouchEvent::WHEEL_DOWN, CLOSURE(this, &TreeInspector::wheel));
+		getRoot()->addEventListener(TouchEvent::WHEEL_UP, CLOSURE(this, &TreeInspector::wheel));
 
 		updateSizes();
 	}
@@ -161,6 +161,7 @@ namespace oxygine
 	void TreeInspector::close(Event *ev)
 	{
 		detach();
+		getRoot()->removeEventListeners(this);
 		//return true;
 	}
 

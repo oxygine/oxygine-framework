@@ -1,9 +1,9 @@
-1. read readme.SDL2
+1. start from readme.txt
 2a. Examples folder have configured android project (exception is demobox2d)
 =================================================================================================
 how to build. Steps:
 - install Android NKD and setup it
-- install Android SDK - 12 or newer (if newer need to fix some properties in example)
+- install Android SDK - 12 (if newer need to fix some properties in example)
 - install apache-ant 
 - configure environment variables properly:
   NDK_ROOT points to root NDK folder 
@@ -27,7 +27,6 @@ how to build. Steps:
 - copy latest source code (and don't forget to update it if you updated SDL)
 	from SDL/android-project/src/
 	to oxygine-framework/oxygine/SDL/android/lib/src/
-
 
 - goto oxygine-framework\examples and choose any example. Lets call it "Demo" 
 - try to build and run it using these scripts located in proj.android folder:

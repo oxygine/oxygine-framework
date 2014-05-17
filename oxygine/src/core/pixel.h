@@ -53,6 +53,11 @@ namespace oxygine
 		{
 			*((unsigned char *)dst) = *((unsigned char*)src);
 		}
+
+        unsigned char snap_a(unsigned char alpha) const
+        {
+            return alpha;
+        }
 	};
 
 	class PixelL8
@@ -107,7 +112,7 @@ namespace oxygine
 
 		unsigned char snap_a(unsigned char alpha) const
 		{
-			return 255;
+            return alpha;
 		}
 	};
 

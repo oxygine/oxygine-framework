@@ -18,7 +18,7 @@ namespace oxygine
 	class Sprite : public VStyleActor
 	{
 	public:
-		DECLARE_COPYCLONE(Sprite);
+		DECLARE_COPYCLONE_NEW(Sprite);
 
 		Sprite();
 		~Sprite();
@@ -38,6 +38,8 @@ namespace oxygine
 		void					setAnimFrame(const ResAnim *resanim, int col = 0, int row = 0);		
 		virtual void			setResAnim(const ResAnim *resanim);
 		
+		void serialize(serializedata* data);
+		void deserialize(const deserializedata* data);
 		
 		std::string dump(const dumpOptions &) const;
 	protected:

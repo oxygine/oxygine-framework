@@ -583,6 +583,11 @@ namespace oxygine
 		return _image.h;
 	}
 
+	const Point& MemoryTexture::getSize() const
+	{
+		return *((Point*)&_image.w);
+	}
+
 	TextureFormat MemoryTexture::getFormat() const
 	{
 		return _image.format;

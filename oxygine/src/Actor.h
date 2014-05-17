@@ -35,6 +35,7 @@ namespace oxygine
 	typedef std::vector<spActor> actors;
 
 	
+	/*
 	template<class T>
 	T *create(T *item, const Vector2 *pos, const char *name)
 	{
@@ -44,6 +45,7 @@ namespace oxygine
 			item->setName(name);
 		return item;
 	}
+	*/
 
 	typedef Closure<void (const UpdateState &us)> UpdateCallback;
 	typedef Closure<void (const RenderState &rs)> RenderCallback;
@@ -55,16 +57,33 @@ namespace oxygine
 
 
 #define DECLARE_COPYCLONE(type) type(const type &src, cloneOptions);\
-	virtual type* clone(cloneOptions opt=0) const {return new type(*this, opt);}
+	virtual type* clone(cloneOptions opt=0) const {return new type(*this, opt);}\
 
 
+#define DECLARE_COPYCLONE_NEW(type)  type(const type &src, cloneOptions opt = 0){copyFrom(src, opt);}\
+	virtual type* clone(cloneOptions opt=0) const {type *tp = new type(); tp->copyFrom(*this, opt); return tp;}\
+	virtual void copyFrom(const type &src, cloneOptions opt = 0);
+
+
+
+
+	struct serializedata;
+	struct deserializedata;
+
+
+	class Serializable
+	{
+	public:
+		virtual void serialize(serializedata*){}
+		virtual void deserialize(const deserializedata*){}
+	};
 	
 
-	class Actor : public EventDispatcher, public intrusive_list_item<spActor>
+	class Actor : public EventDispatcher, public intrusive_list_item<spActor>, public Serializable
 	{
 		typedef intrusive_list_item<spActor> intr_list;
 	public:
-		DECLARE_COPYCLONE(Actor);
+		DECLARE_COPYCLONE_NEW(Actor);
 
 		Actor();
 		virtual ~Actor();
@@ -103,8 +122,8 @@ namespace oxygine
 		float				getX() const {return _pos.x;}
 		float				getY() const {return _pos.y;}		
 		const Vector2&		getScale() const {return _scale;}
-		const float			getScaleX() const {return _scale.x;}
-		const float			getScaleY() const {return _scale.y;}
+		float               getScaleX() const {return _scale.x;}
+		float               getScaleY() const {return _scale.y;}
 		/**Returns rotation angle in radians*/
 		float				getRotation() const {return _rotation;}		
 		int					getPriority() const {return _zOrder;}				
@@ -117,6 +136,7 @@ namespace oxygine
 		const spClock&		getClock() const;
 		virtual RectF		getDestRect() const;
 		bool				getInputEnabled() const {return (_flags & flag_inputEnabled) != 0;}
+		bool				getInputChildrenEnabled() const {return (_flags & flag_inputChildrenEnabled) != 0;}
 		bool				getChildrenRelative() const {return (_flags & flag_childrenRelative) != 0;;}
 		UpdateCallback		getCallbackDoUpdate() const {return _cbDoUpdate;}
 		//RenderCallback		getCallbackDoRender() const {return _cbDoRender;}
@@ -133,7 +153,8 @@ namespace oxygine
 		void setPosition(float x, float y);
 		void setX(float x);
 		void setY(float y);
-
+		/**Overwrites transformation matrix. position/scale/rotation would be ignored until you change them*/
+		void setTransform(const AffineTransform &tr);
 		/** set z order draw priority, from back (low value) to front (high value). Max value is 32000, Min value -32000*/
 		void setPriority(short zorder);
 		void setScale(float scale);
@@ -180,6 +201,8 @@ namespace oxygine
 		void insertChildBefore(spActor actor, spActor where);
 		/**Inserts the specified actor after "where" actor as a child*/
 		void insertChildAfter(spActor actor, spActor where);
+		void prependChild(spActor actor);
+		void prependChild(Actor *actor);
 		void addChild(spActor actor);
 		void addChild(Actor *actor);//avoid conversion to spActor
 		void attachTo(spActor parent);
@@ -237,10 +260,18 @@ namespace oxygine
 		typedef GetSet<float, float, Actor, &Actor::getHeight, &Actor::setHeight>								TweenHeight;
 		typedef GetSet<float, float, Actor, &Actor::getRotation, &Actor::setRotation>							TweenRotation;
 		typedef GetSet2Args1Arg<float, Vector2, const Vector2 &, Actor, &Actor::getScale, &Actor::setScale>		TweenScale;
+		typedef GetSet<float, float, Actor, &Actor::getScaleX, &Actor::setScaleX>								TweenScaleX;
+		typedef GetSet<float, float, Actor, &Actor::getScaleY, &Actor::setScaleY>								TweenScaleY;
 		typedef GetSet<unsigned char, unsigned char, Actor, &Actor::getAlpha, &Actor::setAlpha>					TweenAlpha;
 		
 
+		void serialize(serializedata* data);
+		void deserialize(const deserializedata* data);
+
 	protected:
+		void _setSize(const Vector2 &);
+		
+
 		Actor*	_getDescendant(const string &name);
 		spTween _addTween(spTween tween, bool rel);
 

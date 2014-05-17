@@ -14,16 +14,16 @@ namespace oxygine
 		ResStarlingAtlas *ra = new ResStarlingAtlas();
 		ra->setName(string("!atlas:") + *context.xml_name);
 		ra->loadAtlas(context);
-		setNode(ra, context.node);
-		context.meta = context.meta.next_sibling();
+		setNode(ra, context.walker.getNode());
 		return ra;
 	}
 
 	void ResStarlingAtlas::loadAtlas(CreateResourceContext &context)
 	{
+		/*
 		const char *xml_name = context.node.attribute("file").value();
 
-		string xml_path = *context.folder + xml_name;		
+		string xml_path = context.walker->getCurrentFolder() + xml_name;		
 
 
 		file::buffer fb;
@@ -33,7 +33,7 @@ namespace oxygine
 		doc.load_buffer_inplace(&fb.data[0], fb.data.size());
 
 		pugi::xml_node starling_xml = doc.first_child();
-		_imagePath = *context.folder + starling_xml.attribute("imagePath").value();
+		_imagePath = context->getCurrentFolder() + starling_xml.attribute("imagePath").value();
 
 		_texture = IVideoDriver::instance->createTexture();
 
@@ -118,8 +118,7 @@ namespace oxygine
 			resAnim->init(frames, frames.size());
 			context.resources->add(resAnim);
 		}
-
-
+		*/
 	}
 
 	ResStarlingAtlas::ResStarlingAtlas()

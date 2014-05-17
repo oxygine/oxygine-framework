@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0467086C192796A000D71824 /* Serialize.h in Headers */ = {isa = PBXBuildFile; fileRef = 0467086B192796A000D71824 /* Serialize.h */; };
+		0467086E192796E500D71824 /* Serialize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0467086D192796E500D71824 /* Serialize.cpp */; };
 		0472E35717F8A1A80016A832 /* file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0472E34817F8A1A80016A832 /* file.cpp */; };
 		0472E35817F8A1A80016A832 /* file.h in Headers */ = {isa = PBXBuildFile; fileRef = 0472E34917F8A1A80016A832 /* file.h */; };
 		0472E35917F8A1A80016A832 /* FileSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0472E34A17F8A1A80016A832 /* FileSystem.cpp */; };
@@ -201,6 +203,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0467086B192796A000D71824 /* Serialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Serialize.h; path = ../../../src/Serialize.h; sourceTree = "<group>"; };
+		0467086D192796E500D71824 /* Serialize.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Serialize.cpp; path = ../../../src/Serialize.cpp; sourceTree = "<group>"; };
 		0472E34817F8A1A80016A832 /* file.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = file.cpp; sourceTree = "<group>"; };
 		0472E34917F8A1A80016A832 /* file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file.h; sourceTree = "<group>"; };
 		0472E34A17F8A1A80016A832 /* FileSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileSystem.cpp; sourceTree = "<group>"; };
@@ -472,6 +476,8 @@
 		C3E86F5316EBC8C200052915 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				0467086D192796E500D71824 /* Serialize.cpp */,
+				0467086B192796A000D71824 /* Serialize.h */,
 				04B3A71718A65668004C67E3 /* InputText.cpp */,
 				04B3A71818A65668004C67E3 /* InputText.h */,
 				0472E37B17F8A2EC0016A832 /* MaskedSprite.cpp */,
@@ -771,6 +777,7 @@
 				C3E8702016EBC8EB00052915 /* Mutex.h in Headers */,
 				C3E8702216EBC8EB00052915 /* NativeTexture.h in Headers */,
 				C3E8702416EBC8EB00052915 /* Object.h in Headers */,
+				0467086C192796A000D71824 /* Serialize.h in Headers */,
 				C3E8702516EBC8EB00052915 /* ox_debug.h in Headers */,
 				C3E8702916EBC8EB00052915 /* oxygine.h in Headers */,
 				C3E8702A16EBC8EB00052915 /* pixel.h in Headers */,
@@ -977,6 +984,7 @@
 				C38EC26F1709649300568283 /* DeveloperMenu.cpp in Sources */,
 				C38EC2711709649300568283 /* TexturesInspector.cpp in Sources */,
 				C38EC2731709649300568283 /* TreeInspector.cpp in Sources */,
+				0467086E192796E500D71824 /* Serialize.cpp in Sources */,
 				C38EC2751709649300568283 /* TreeInspectorLine.cpp in Sources */,
 				C38EC2771709649300568283 /* TreeInspectorPage.cpp in Sources */,
 				C38EC2791709649300568283 /* TreeInspectorPreview.cpp in Sources */,

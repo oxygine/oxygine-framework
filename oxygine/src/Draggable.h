@@ -21,6 +21,7 @@ namespace oxygine
 
 		Actor*			getDragClient() const {return _dragClient;}
 		const RectF&	getDragBounds() const {return _bounds;}
+		const Vector2&  getClientPos() const {return _clientPos;}
 		bool			isDragging() const {return _pressed;}
 
 		bool getDragEnabled() const {return _dragEnabled;}

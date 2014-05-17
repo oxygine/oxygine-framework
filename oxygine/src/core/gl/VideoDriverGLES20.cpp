@@ -117,7 +117,7 @@ namespace oxygine
         CHECKGL();
 	}
 
-	void VideoDriverGLES20::draw(PRIMITIVE_TYPE pt, const VertexDeclaration *decl_, const void *vdata, unsigned int numVertices, const void *indicesData, unsigned int numIndices, bool indicesShortType)
+    void VideoDriverGLES20::draw(PRIMITIVE_TYPE pt, const VertexDeclaration *decl_, const void *vdata, unsigned int verticesDataSize, const void *indicesData, unsigned int numIndices, bool indicesShortType)
 	{
 		const VertexDeclarationGL *decl = static_cast<const VertexDeclarationGL*>(decl_);
 

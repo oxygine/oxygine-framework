@@ -78,10 +78,14 @@ namespace oxygine
 			_actor->removeEventListeners(this);
 			_actor = 0;
 		}
+
+        _pressed = false;
 	}
 
 	void Draggable::init(Actor *actor)
 	{
+        destroy();
+
 		_singleDrag = false;
 		_actor = actor;
 		_dragClient = actor;

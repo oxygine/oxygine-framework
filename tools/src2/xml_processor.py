@@ -6,6 +6,89 @@ import process_font
 import process_starling_atlas
 import oxygine_helper
 
+class XmlWalker:
+    def __init__(self, src, folder, scale_factor, node, meta_node, scale_quality):
+        self.base = folder
+        self.path = folder
+        self.scale_factor = scale_factor
+        self.root = node        
+        self.last = None
+        self.root_meta = meta_node
+        self.last_meta = None        
+        self.src = src
+        self.scale_quality = scale_quality
+        self.checkSetAttributes()
+    
+    def getType(self):
+        return self.root
+    
+    def getPath(self, attr):
+        path = self.root.getAttribute(attr)
+        if path.startswith("./") or path.startswith(".\\"):
+            path = path[2:len(path)]
+            
+        return self.path + path
+    
+    def setSrcFullPath(self, path):
+        return self.src + path
+                       
+            
+    
+    def checkSetAttributes(self):
+        self._checkSetAttributes(self.root)
+        
+    def _checkSetAttributes(self, node):
+        path = node.getAttribute("path")
+        if path:
+            if 0:
+                path = ""
+            if path.startswith("./") or path.startswith(".\\"):
+                path = self.base + path[2:len(path)]
+            self.path = path + "/"
+        scale_factor = node.getAttribute("scale_factor")
+        if scale_factor:
+            self.scale_factor = float(scale_factor)
+            
+        scale_quality = node.getAttribute("scale_quality")
+        if scale_quality:
+            self.scale_quality = float(scale_quality)        
+    
+    def next(self):
+        while True:
+            if not self.last:
+                if len(self.root.childNodes) == 0:
+                    return None                
+                self.last = self.root.childNodes[0]
+            else:
+                self.last = self.last.nextSibling                
+                
+            if not self.last:
+                return None
+            
+            if self.last.nodeType == self.last.TEXT_NODE:
+                continue
+            
+            if self.last.nodeType == self.last.COMMENT_NODE:
+                continue            
+            
+            meta = self.root_meta.ownerDocument.createElement(self.last.nodeName)
+            self.root_meta.appendChild(meta)
+            self.last_meta = meta
+            
+                
+            if self.last.nodeName == "set":
+                self._checkSetAttributes(self.last)
+                continue
+            
+            
+                
+            break
+            
+        return XmlWalker(self.src, self.path, self.scale_factor, self.last, self.last_meta, self.scale_quality)
+                
+            
+        
+
 class XmlProcessor:
     def __init__(self, args):
         self.src_data = args.src_data + "/"
@@ -24,16 +107,16 @@ class XmlProcessor:
         
         self.warnings = 0
         self.errors = 0
-        self.scale_factor = 1.0
-        self.scale_quality = 1.0
+        #self.scale_factor = 1.0
+        #self.scale_quality = 1.0
         self.scale = args.scale
         self.debug = args.debug
         
         self.processors = {}
-        self.path_current = ""
+        #self.path_current = ""
 
         self._meta_doc = None
-        self._meta_element = None
+        #self._meta_element = None
         
         self.helper = oxygine_helper.helper(os.path.split(__file__)[0] + "/../../")
 
@@ -49,24 +132,29 @@ class XmlProcessor:
     def register_processor(self, processor):
         self.processors[processor.node_id] = processor
         
-    def get_apply_scale(self, applyScaleFactor, scale_quality = 1.0):
+    def get_apply_scale(self, applyScaleFactor, walker):
         """
         returns scale should be applied to image
         """
-        v = self.scale * self.scale_quality * scale_quality
+        v = self.scale * walker.scale_quality
         if applyScaleFactor:
-            v *= self.scale_factor
+            v *= walker.scale_factor
         return v
     
-    def add_meta(self):
-        meta = self._meta_doc.createElement(self._current_processor.node_id)
+    """
+    def add_meta(self, node_id = ""):
+        if not node_id:
+            node_id = self._current_processor.node_id
+        meta = self._meta_doc.createElement(node_id)
         self._meta_element.appendChild(meta) 
         
         return meta
 
     def get_meta_doc(self):
         return self._meta_doc    
+        """
 
+    """
     def _process_set(self, el):        
         path = el.getAttribute("path")
         if path:
@@ -84,11 +172,15 @@ class XmlProcessor:
         if scale_quality:
             self.scale_quality = float(scale_quality)
             
+        self.add_meta("set");
+        """
+            
 
     def _open_xml(self, path):
         with open(path, "r") as file:
             font_doc = minidom.parse(file)
             return font_doc.documentElement
+        
     
     def _get_src_path(self, local_path):
         return self.src_data + local_path
@@ -96,14 +188,16 @@ class XmlProcessor:
     def _get_dest_path(self, local_path):
         return self.dest_data + local_path
     
+    
     def _get_meta_xml_path(self, local_path):
         return self._get_dest_path(self.xml_name) + ".ox" + "/" + local_path
-    
+    """    
     def get_current_src_path(self, local = ""):
         return self._get_src_path(self.path_current + local)    
-
+    """
     def get_inner_dest(self, inner_local_path = ""):
         return self._get_meta_xml_path(self._current_processor.node_id + "/" + inner_local_path)
+    
     
     def log(self, st):
         print st
@@ -129,8 +223,8 @@ class XmlProcessor:
         del file
 
         self._meta_doc = minidom.Document()
-        self._meta_element = self._meta_doc.createElement("resources")
-        self._meta_doc.appendChild(self._meta_element)
+        meta_element = self._meta_doc.createElement("resources")
+        self._meta_doc.appendChild(meta_element)
         
         totalAtlasses = 0
 
@@ -142,7 +236,28 @@ class XmlProcessor:
         except OSError:
             pass
         
+        xml_folder = os.path.split(self.path_xml)[0] + "/"
+        
+        walker = XmlWalker(self.src_data, xml_folder, 1.0, doc.documentElement, meta_element, 1.0)
+        
+        while True:
+            next = walker.next();
+            if not next:
+                break
+            
+            name = next.root.nodeName
+            
+            if name in self.processors:
+                proc = self.processors[name]
+                self._current_processor = proc                
+                try:
+                    if proc.create_folder:
+                        os.makedirs(self.get_inner_dest(""))
+                except OSError:
+                    pass
+                proc.process(self, next)
 
+        """
         for el in doc.documentElement.childNodes:
             name = el.nodeName
             
@@ -160,6 +275,7 @@ class XmlProcessor:
                 self._process_set(el)                
             if name == "sdfont":      
                 self._process_sdf_font(el)      
+        """
 
         path_ox_dest = self._get_meta_xml_path("meta.xml")
         
@@ -168,9 +284,9 @@ class XmlProcessor:
             print "saving ox file: \n" + os.path.normpath(path_ox_dest)
             
         if self.args.debug:
-            self._meta_element.writexml(file, "\t", "\t", "\n")
+            meta_element.writexml(file, "\t", "\t", "\n")
         else:
-            self._meta_element.writexml(file)
+            meta_element.writexml(file)
         
                 
         #if self.verbosity > 1:

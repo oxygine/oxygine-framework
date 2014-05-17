@@ -5,6 +5,7 @@
 #include "RenderState.h"
 #include "utils/stringUtils.h"
 #include "RootActor.h"
+#include "Serialize.h"
 
 namespace oxygine
 {
@@ -23,8 +24,10 @@ namespace oxygine
 		}		
 	}
 
-	Sprite::Sprite(const Sprite &src, cloneOptions opt):VStyleActor(src, opt)
+	void Sprite::copyFrom(const Sprite &src, cloneOptions opt)
 	{
+		VStyleActor::copyFrom(src, opt);
+
 		_frame = src._frame;
 		_vstyle= src._vstyle;
 		if (getManageResAnim())
@@ -138,6 +141,53 @@ namespace oxygine
 			RectF destRect = getDestRect();
 			rs.renderer->draw(_frame.getSrcRect(), destRect);
 		}		
+	}
+
+	void Sprite::serialize(serializedata* data)
+	{
+		VStyleActor::serialize(data);		
+
+		pugi::xml_node node = data->node;		
+		node.remove_attribute("size");
+
+		const ResAnim *rs = getResAnim();
+		if (rs)
+		{
+			Resource *r = rs->getParent();
+			const char* hint = "";
+			if (r)
+			{
+				r = r->getParent();
+				if (r)
+					hint = r->getName().c_str();
+			}
+
+			if (rs->getName().find(':') == string::npos)
+			{
+				char name[255];
+				safe_sprintf(name, "%s:%s", hint, rs->getName().c_str());
+				node.append_attribute("resanim").set_value(name);
+			}
+			else
+			{
+				node.append_attribute("resanim").set_value(rs->getName().c_str());
+			}
+		}
+
+		node.set_name("Sprite");
+	}
+
+	void Sprite::deserialize(const deserializedata* data)
+	{
+        VStyleActor::deserialize(data);
+
+		pugi::xml_node node = data->node;
+		const char *res = node.attribute("resanim").as_string(0);
+		if (res)
+		{
+			ResAnim *rs = safeCast<ResAnim*>(data->factory->getResAnim(res));
+			setResAnim(rs);
+		}
 	}
 
 

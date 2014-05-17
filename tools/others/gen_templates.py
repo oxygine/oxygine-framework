@@ -3,7 +3,7 @@ def gen(path, project = ""):
 	if not project:
 		project = path
 
-	for platform in ["win32", "android", "macosx", "ios"]:
+	for platform in ["win32", "android", "macosx", "ios", "cmake"]:
 		dest = "../../examples/" + path + "/proj." + platform
 		src =  "../../examples/" + path + "/src"
 		import shutil
@@ -20,7 +20,7 @@ gen("Game/part1", "GamePart1")
 gen("Game/part2", "GamePart2")
 gen("Game/part3", "GamePart3")
 gen("Game/part4", "GamePart4")
-#gen("TutorialResources")
+gen("TutorialResources")
 gen("HelloWorld")
 gen("Match3")
 #gen("DemoBox2D")

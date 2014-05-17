@@ -28,6 +28,22 @@ namespace oxygine
 			_src = get(t);
 		}
 
+        void init(valueRef src)
+        {
+            _initialized = true;
+            _src = src;
+        }
+
+        void setSrc(type &t)
+        {
+            set(t, _src);
+        }
+
+        void setDest(type &t)
+        {
+            set(t, _dest);
+        }
+
 		void update(type &t, float p, const UpdateState &us)
 		{
 			OX_ASSERT(_initialized);			

@@ -10,7 +10,7 @@ namespace oxygine
 	class Button: public Sprite
 	{
 	public:
-		DECLARE_COPYCLONE(Button);
+		DECLARE_COPYCLONE_NEW(Button);
 
 		Button();
 		~Button();

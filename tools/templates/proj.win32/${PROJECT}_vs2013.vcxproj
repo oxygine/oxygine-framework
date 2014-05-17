@@ -53,13 +53,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>${ROOT}/oxygine-framework/oxygine/src;${ROOT}/SDL/include;${ROOT}/oxygine-framework/oxygine/third_party/win32/pthreads/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>${OXYGINE}/oxygine/src;${ROOT}/SDL/include;${OXYGINE}/oxygine/third_party/win32/pthreads/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>libjpeg.lib;libpng.lib;libzlib.lib;opengl32.lib;pthreadVCE2.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>${ROOT}/oxygine-framework/oxygine/third_party/win32/libraries;${ROOT}/oxygine-framework/libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>${OXYGINE}/oxygine/third_party/win32/libraries;${OXYGINE}/libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -71,14 +71,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>${ROOT}/oxygine-framework/oxygine/src;${ROOT}/SDL/include;${ROOT}/oxygine-framework/oxygine/third_party/win32/pthreads/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>${OXYGINE}/oxygine/src;${ROOT}/SDL/include;${OXYGINE}/oxygine/third_party/win32/pthreads/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>${ROOT}/oxygine-framework/oxygine/third_party/win32/libraries;${ROOT}/oxygine-framework/libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>${OXYGINE}/oxygine/third_party/win32/libraries;${OXYGINE}/libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libjpeg.lib;libpng.lib;libzlib.lib;opengl32.lib;pthreadVCE2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -89,7 +89,7 @@
     <ProjectReference Include="${ROOT}\SDL\VisualC\SDL\SDL_VS2013.vcxproj">
       <Project>{81ce8daf-ebb2-4761-8e45-b71abcca8c68}</Project>
     </ProjectReference>
-    <ProjectReference Include="${ROOT}\oxygine-framework\oxygine\SDL\win32\oxygine_vs2013.vcxproj">
+    <ProjectReference Include="${OXYGINE}\oxygine\SDL\win32\oxygine_vs2013.vcxproj">
       <Project>{52411305-cfe1-4fa8-9885-5729bfc816cf}</Project>
     </ProjectReference>
   </ItemGroup>

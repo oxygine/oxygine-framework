@@ -23,6 +23,12 @@ namespace oxygine
 			//normalize("//", dest);
 			//OX_ASSERT(strcmp(dest, "/") == 0);
 
+			normalize("ab/cd/../qw", dest);
+			OX_ASSERT(strcmp(dest, "ab/qw") == 0);
+			normalize("ab/cd/ef/../../qw", dest);
+			OX_ASSERT(strcmp(dest, "ab/qw") == 0);
+			
+
 			normalize("rom://abc", dest);
 			OX_ASSERT(strcmp(dest, "rom://abc") == 0);
 
@@ -127,6 +133,7 @@ namespace oxygine
 		{			
 			OX_ASSERT(src != dest);
 
+			const char *destcopy = dest;
 			//const char *srccopy = src;
 			if (*src == '/' || *src == '\\')
 			{
@@ -161,7 +168,10 @@ namespace oxygine
 					{
 						--dest;
 						if (*dest == '/')
+						{
+							++dest;
 							break;						
+						}
 					}
 
 					++src;

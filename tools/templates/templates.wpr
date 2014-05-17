@@ -18,13 +18,7 @@ proj.directory-list = [{'dirloc': loc('.'),
                         'watch_for_changes': True}]
 proj.file-list = [loc('../gen.py')]
 proj.file-type = 'shared'
-proj.launch-config = {loc('../gen.py'): ('project',
-        (u'example -t win32 -d folder/temp -s d:\\oxygine-framework\\examples\\Demo\\src\\ --data d:\\oxygine-framework\\examples\\Demo\\data',
-         '')),
-                      loc('../gen_template.py'): ('project',
-        (u'Demo -t win32 -d e:/Demo/proj.win32  -s e:\\Demo\\src\\',
-         '')),
-                      loc('gen.py'): ('project',
-                                      (u'example -t win32 -d folder/temp -s d:\\oxygine-framework\\examples\\Demo\\src\\ --data d:\\oxygine-framework\\examples\\Demo\\data',
-                                       ''))}
+proj.launch-config = {loc('../gen_template.py'): ('project',
+        (u'MyGame -t macosx -d d:/dropbox/Demo/proj.macosx  -s d:/dropbox/Demo/src/',
+         ''))}
 proj.main-file = loc('../gen_template.py')

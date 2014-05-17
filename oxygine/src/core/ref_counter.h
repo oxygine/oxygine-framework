@@ -14,12 +14,12 @@ namespace oxygine
 		ref_counter():_ref_counter(0){}
 		virtual ~ref_counter(){}
 
-		virtual void addRef()
+		void addRef()
 		{
 			++_ref_counter;
 		}
 
-		virtual void releaseRef()
+		void releaseRef()
 		{
 			if (0 == --_ref_counter)
 				delete this;

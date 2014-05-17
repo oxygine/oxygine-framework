@@ -72,6 +72,8 @@ int mainloop()
 //it is application entry point
 void run()
 {
+	ObjectBase::__startTracingLeaks();
+
 	//initialize oxygine's internal stuff
 	core::init_desc desc;
 
@@ -150,6 +152,8 @@ void run()
 	//dump list should be empty now
 	//we deleted everything and could be sure that there aren't any memory leaks
 	ObjectBase::dumpCreatedObjects();
+
+	ObjectBase::__stopTracingLeaks();
 	//end
 }
 

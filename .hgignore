@@ -114,5 +114,13 @@ examples/DemoBox2D/box2d/Debug/
 examples/DemoBox2D/box2d/Release/
 examples/DemoBox2D/proj.marmalade/build_demobox2d_*
 examples/TutorialResources/proj.win32/Debug/
+oxygine/SDL/qt/build-oxygine-*
+examples/HelloWorld/build-hello-*
+examples/DemoBox2D/proj.win32/Debug/
+oxygine/SDL/qt/build-oxygine-Debug
+examples/Demo/proj.android/local.properties
+proguard-project.txt
+examples/Demo/proj.marmalade/build_demo_
+examples/Demo/proj.marmalade/build_demo_*
 syntax: regexp
 ^build/

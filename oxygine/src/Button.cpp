@@ -3,18 +3,13 @@
 
 namespace oxygine
 {
-
-	Button::Button(const Button &src, cloneOptions opt):Sprite(src, opt), _btnOvered(0), _btnPressed(0)
+	void Button::copyFrom(const Button &src, cloneOptions opt)
 	{
+		Sprite::copyFrom(src, opt);
+
 		_state = src._state;
 		_resAnim = src._resAnim;
 		_row = src._row;
-
-		EventCallback ncb = CLOSURE(this, &Button::_mouseEvent);
-		addEventListener(TouchEvent::TOUCH_DOWN, ncb);
-		addEventListener(TouchEvent::OVER, ncb);
-		addEventListener(TouchEvent::OUT, ncb);
-		addEventListener(TouchEvent::CLICK, ncb);
 	}
 
 	Button::Button():_state(stateNormal), _resAnim(0), _row(0), _btnPressed(0), _btnOvered(0)

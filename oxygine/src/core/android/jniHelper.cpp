@@ -14,6 +14,8 @@ namespace oxygine
 
 	std::string jniGetString(JNIEnv *env, jstring jstr)
 	{
+		if (!jstr)
+			return "";
 		const char *cstr = env->GetStringUTFChars(jstr, 0);
 		string str = cstr;
 		env->ReleaseStringUTFChars(jstr, cstr);

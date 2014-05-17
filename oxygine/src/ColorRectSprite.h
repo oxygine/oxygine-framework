@@ -9,9 +9,11 @@ namespace oxygine
 	class ColorRectSprite: public Sprite
 	{
 	public:
-		DECLARE_COPYCLONE(ColorRectSprite);
+		DECLARE_COPYCLONE_NEW(ColorRectSprite);
 		ColorRectSprite();
 		~ColorRectSprite();
+
+		void serialize(serializedata* data);
 
 		void doRender(const RenderState &rs);
 

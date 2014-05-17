@@ -10,7 +10,7 @@
 #include "utils/stringUtils.h"
 #include "core/Mem2Native.h"
 #include "core/Renderer.h"
-
+#include "Resources.h"
 namespace oxygine
 {
 	Resource *ResFontBM::create(CreateResourceContext &context)
@@ -19,9 +19,10 @@ namespace oxygine
 		
 		font = new ResFontBM();		
 		font->_createFont(&context, false, false);
-		setNode(font, context.node);
+		setNode(font, context.walker.getNode());
+		context.resources->add(font, false);
 		
-		context.meta = context.meta.next_sibling();
+		//context.meta = context.meta.next_sibling();
 
 		return font;
 	}
@@ -32,9 +33,10 @@ namespace oxygine
 
 		font = new ResFontBM();		
 		font->_createFont(&context, false, true);
-		setNode(font, context.node);
+		setNode(font, context.walker.getNode());
+		context.resources->add(font, false);
 
-		context.meta = context.meta.next_sibling();
+		//context.meta = context.meta.next_sibling();
 
 		return font;
 	}
@@ -45,9 +47,9 @@ namespace oxygine
 
 		font = new ResFontBM();		
 		font->_createFont(&context, true, false);
-		setNode(font, context.node);
+		setNode(font, context.walker.getNode());
 
-		context.meta = context.meta.next_sibling();
+		//context.meta = context.meta.next_sibling();
 
 		return font;
 	}
@@ -157,10 +159,11 @@ namespace oxygine
 
 		if (context)
 		{
-			_premultipliedAlpha = context->node.attribute("premultiplied_alpha").as_bool(_premultipliedAlpha);
+			pugi::xml_node node = context->walker.getNode();
+			_premultipliedAlpha = node.attribute("premultiplied_alpha").as_bool(_premultipliedAlpha);
 			
-			_file = *context->folder + context->node.attribute("file").as_string();			
-			setName(Resource::extractID(context->node, _file, ""));
+			_file = context->walker.getPath("file");
+			setName(Resource::extractID(node, _file, ""));
 
 			if (bmc)
 			{
@@ -238,7 +241,7 @@ namespace oxygine
 
 		if (context)
 		{
-			float scale_factor = context->meta.attribute("sf").as_float(1);
+			float scale_factor = context->walker.getMeta().attribute("sf").as_float(1);
 			_font->setScaleFactor(scale_factor);
 		}
 		
