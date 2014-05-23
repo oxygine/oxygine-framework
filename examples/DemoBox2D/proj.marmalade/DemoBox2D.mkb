@@ -3,6 +3,7 @@
 options
 {
 	module_path="../../../oxygine/marmalade/"
+	s3e-data-dir="../data"
 	enable-exceptions=1
 }
 

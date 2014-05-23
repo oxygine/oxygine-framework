@@ -49,8 +49,10 @@ namespace oxygine
 #define DECLARE_SMART(class_name, spname) class class_name;\
 	typedef oxygine::intrusive_ptr<class_name> spname;
 
-#define DECLARENS_SMART(name_space, class_name, spname) namespace name_space{class class_name;\
-	typedef oxygine::intrusive_ptr<class_name> spname;\
+#define DECLARENS_SMART(name_space, class_name, spname) namespace name_space \
+	{\
+		class class_name;\
+		typedef oxygine::intrusive_ptr<class_name> spname;\
 	}
 
 }

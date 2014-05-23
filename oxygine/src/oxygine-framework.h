@@ -35,6 +35,7 @@
 #include "Tweener.h"
 #include "UpdateState.h"
 #include "VisualStyle.h"
+#include "Serialize.h"
 
 //closure/
 #include "closure/closure.h"

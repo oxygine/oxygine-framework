@@ -112,7 +112,6 @@ namespace oxygine
 
 		TextureFormat tf = string2TextureFormat(format);
 
-		pugi::xml_node child_node = node.first_child();		
 		pugi::xml_node meta_image = meta.child("atlas");
 		
 		bool compressed = false;
@@ -171,7 +170,6 @@ namespace oxygine
 					init_resAnim(ra, file, child_node);
 					ra->setParent(this);
 					context.resources->add(ra, true);
-					child_node = child_node.next_sibling();
 					continue;
 				}
 
@@ -381,13 +379,6 @@ namespace oxygine
 					ra->init(frames, columns, walker.getScaleFactor());					
 					ra->setParent(this);
 					context.resources->add(ra, true);
-				}
-
-
-				if (meta)
-				{
-					OX_ASSERT(meta_frames);
-					meta_frames = meta_frames.next_sibling();
 				}
 			}
 		}

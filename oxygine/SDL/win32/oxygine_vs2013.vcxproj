@@ -160,6 +160,7 @@
     <ClCompile Include="..\..\src\res\Resources.cpp" />
     <ClCompile Include="..\..\src\res\ResStarlingAtlas.cpp" />
     <ClCompile Include="..\..\src\RootActor.cpp" />
+    <ClCompile Include="..\..\src\Serialize.cpp" />
     <ClCompile Include="..\..\src\SlidingActor.cpp" />
     <ClCompile Include="..\..\src\Sprite.cpp" />
     <ClCompile Include="..\..\src\TextActor.cpp" />
@@ -257,6 +258,7 @@
     <ClInclude Include="..\..\src\res\Resources.h" />
     <ClInclude Include="..\..\src\res\ResStarlingAtlas.h" />
     <ClInclude Include="..\..\src\RootActor.h" />
+    <ClInclude Include="..\..\src\Serialize.h" />
     <ClInclude Include="..\..\src\SlidingActor.h" />
     <ClInclude Include="..\..\src\Sprite.h" />
     <ClInclude Include="..\..\src\TextActor.h" />

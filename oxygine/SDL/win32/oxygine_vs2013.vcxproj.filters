@@ -291,6 +291,7 @@
     <ClCompile Include="..\..\src\InputText.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\Serialize.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\closure\closure.h">
@@ -623,6 +624,7 @@
     <ClInclude Include="..\..\src\InputText.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\Serialize.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
