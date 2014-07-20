@@ -61,7 +61,7 @@ extern "C"
 		_glAttachShader(program, shader);
 	}
 	PFNGLSHADERSOURCEPROC _glShaderSource = 0;
-	GLAPI void APIENTRY glShaderSource(GLuint shader, GLsizei count, const GLchar* *string, const GLint *length)
+	GLAPI void APIENTRY glShaderSource(GLuint shader, GLsizei count, const GLchar * const* string, const GLint *length)
 	{
 		_glShaderSource(shader, count, string, length);
 	}
