@@ -8,10 +8,17 @@ namespace oxygine
 	TextActor name is deprecated.
 	*/
 
+	DECLARE_SMART(TextActor, spTextActor);
 	class TextActor : public TextField
 	{
 	public:
+		DECLARE_COPYCLONE_NEW(TextActor);
 		OXYGINE_DEPRECATED
 		TextActor(){}
 	};
+
+	inline void TextActor::copyFrom(const TextActor &src, cloneOptions opt)
+	{
+		TextField::copyFrom(src, opt);
+	}
 }
