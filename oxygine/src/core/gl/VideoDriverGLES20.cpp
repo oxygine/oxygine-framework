@@ -21,8 +21,10 @@
 
 namespace oxygine
 {    
-	VideoDriverGLES20::VideoDriverGLES20():_program(0)
+	VideoDriverGLES20::VideoDriverGLES20() :_program(0), _vbo(0), _ibo(0)
 	{
+		glGenBuffers(1, &_vbo);
+		glGenBuffers(1, &_ibo);
 	}
 
 	VideoDriverGLES20::~VideoDriverGLES20()
@@ -119,19 +121,27 @@ namespace oxygine
 
     void VideoDriverGLES20::draw(PRIMITIVE_TYPE pt, const VertexDeclaration *decl_, const void *vdata, unsigned int verticesDataSize, const void *indicesData, unsigned int numIndices, bool indicesShortType)
 	{
+		glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+		glBufferData(GL_ARRAY_BUFFER, verticesDataSize * decl_->size, vdata, GL_DYNAMIC_DRAW);
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _ibo);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, numIndices * (indicesShortType ? 2 : 1), indicesData, GL_DYNAMIC_DRAW);
+
 		const VertexDeclarationGL *decl = static_cast<const VertexDeclarationGL*>(decl_);
 
 		const unsigned char *verticesData = (const unsigned char *)vdata;
+
 
 		const VertexDeclarationGL::Element *el = decl->elements;
 		for (int i = 0; i < decl->numElements; ++i)		
 		{	
 			glEnableVertexAttribArray(el->index);
-			glVertexAttribPointer(el->index, el->size, el->elemType, el->normalized, decl->size, verticesData + el->offset);			
+			glVertexAttribPointer(el->index, el->size, el->elemType, el->normalized, decl->size, (void*)(el->offset));
 			el++;
 		}
 
-		glDrawElements(getPT(pt), numIndices, indicesShortType ? GL_UNSIGNED_SHORT : GL_UNSIGNED_BYTE, indicesData);
+		
+		glDrawElements(getPT(pt), numIndices, indicesShortType ? GL_UNSIGNED_SHORT : GL_UNSIGNED_BYTE, 0);
 
 		el = decl->elements;
 		for (int i = 0; i < decl->numElements; ++i)		
@@ -139,6 +149,9 @@ namespace oxygine
 			glDisableVertexAttribArray(el->index);
 			el++;
 		}
+
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 
 #if OXYGINE_TRACE_VIDEO_STATS
@@ -186,6 +199,13 @@ namespace oxygine
 		int p = glGetUniformLocation(_program, id);
 		if (p == -1)
 			return;
+		/*
+		log::messageln("mat ");
+		for (int i = 0; i < 16; ++i)
+		{
+			log::messageln("%g ", mat->ml[i]);
+		}
+		*/
 		glUniformMatrix4fv(p, 1, GL_FALSE, mat->ml);
 		CHECKGL();
 	}

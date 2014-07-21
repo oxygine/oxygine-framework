@@ -1,7 +1,7 @@
 #include "TreeInspectorPreview.h"
 #include "TreeInspector.h"
 #include "RootActor.h"
-#include "TextActor.h"
+#include "TextField.h"
 #include "res/Resources.h"
 #include "RenderState.h"
 

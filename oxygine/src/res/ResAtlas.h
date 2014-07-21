@@ -37,6 +37,7 @@ namespace oxygine
 
 		void addAtlas(TextureFormat tf, const string &base, const string &alpha, int w, int h);
 		const atlas& getAtlas(int i) const {return _atlasses[i];}
+		int getNum() const { return (int)_atlasses.size(); }
 
 	protected:
 		void _restore(Restorable *r, void *user);
@@ -52,4 +53,7 @@ namespace oxygine
 		typedef vector<atlas> atlasses;
 		atlasses _atlasses;
 	};
+
+	typedef void (*load_texture_hook)(const string &file, spNativeTexture nt, LoadResourcesContext *load_context);
+	void set_load_texture_hook(load_texture_hook);
 }

@@ -6,9 +6,12 @@ namespace oxygine
 	/***/
 	namespace log
 	{
+		/**By default logging is enabled*/
 		void enable();
+		/**Display logging*/
 		void disable();
 
+		/**pure out to log*/
 		void out(const char *str);
 
 		//outputs message without end line

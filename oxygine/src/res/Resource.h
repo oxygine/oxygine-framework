@@ -12,7 +12,8 @@ namespace oxygine
 	class LoadResourcesContext;
 	class LoadResourcesContext;
 
-	class Resource: public ObjectBase
+	DECLARE_SMART(Resource, spResource);
+	class Resource: public Object//Base
 	{
 	public:
 		Resource();

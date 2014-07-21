@@ -13,5 +13,5 @@ public:
 private:
 	void onEvent(Event *);
 
-	spTextActor _text;
+	spTextField _text;
 };

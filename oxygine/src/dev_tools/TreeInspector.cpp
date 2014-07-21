@@ -15,7 +15,7 @@
 #include "Font.h"
 #include "RootActor.h"
 
-#include "TextActor.h"
+#include "TextField.h"
 #include "DebugActor.h"
 
 #include "SlidingActor.h"

@@ -51,10 +51,8 @@ namespace file
 		reset();
 	}
 
-	void Zips::add(unzFile zp)
+	void Zips::read(unzFile zp)
 	{
-		_zps.push_back(zp);
-
 		do 
 		{
 			unz_file_pos pos;
@@ -82,15 +80,41 @@ namespace file
 		zmemdata dta;
 		dta.data = (char*)data;
 		dta.size = size;
-		//log::messageln(str);
+
 		unzFile zp = unzOpen2((const char*)&dta, &ff);
 		OX_ASSERT(zp);
 		if (!zp)
 			return;
 
-		add(zp);
+
+		zpitem item;
+		item.handle = zp;
+		_zps.push_back(item);
+
+		read(zp);
 	}
 
+	void Zips::add(vector<char> &data)
+	{
+		zlib_filefunc_def ff;
+		fill_memory_filefunc(&ff);
+
+		zmemdata dta;
+		dta.data = (char*)&data.front();
+		dta.size = data.size();
+
+		unzFile zp = unzOpen2((const char*)&dta, &ff);
+		OX_ASSERT(zp);
+		if (!zp)
+			return;
+		
+		_zps.push_back(zpitem());
+		zpitem& item = _zps.back();
+		item.handle = zp;
+		swap(item.data, data);
+
+		read(zp);
+	}
 
 	voidpf ZCALLBACK ox_fopen(voidpf opaque, const char* filename, int mode)
 	{
@@ -151,7 +175,7 @@ namespace file
 		if (!zp)
 			return;
 
-		add(zp);
+		read(zp);
 	}
 
 	void Zips::update()
@@ -172,8 +196,8 @@ namespace file
 	{
 		for (zips::iterator i = _zps.begin(); i != _zps.end(); ++i)
 		{
-			unzFile f = *i;
-			unzClose(f);
+			zpitem &f = *i;
+			unzClose(f.handle);
 		}
 
 		_zps.resize(0);
@@ -267,6 +291,11 @@ namespace file
 	void ZipFileSystem::add(const unsigned char* data, unsigned int size)
 	{
 		_zips.add(data, size);
+	}
+
+	void ZipFileSystem::add(vector<char> &data)
+	{
+		_zips.add(data);
 	}
 
 	void ZipFileSystem::reset()

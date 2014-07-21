@@ -98,7 +98,7 @@ namespace oxygine
 	{
 		for (resources::iterator i = _resources.begin(); i != _resources.end(); ++i)
 		{
-			Resource *res = *i;
+			Resource *res = (*i).get();
 			//log::messageln("loading res: %s", res->getName().c_str());
 			res->load(context);
 			//if (cb)
@@ -110,19 +110,21 @@ namespace oxygine
 	{
 		for (resources::iterator i = _resources.begin(); i != _resources.end(); ++i)
 		{
-			Resource *res = *i;
+			Resource *res = (*i).get();
 			res->unload();
 		}
 	}
 
 	void Resources::free()
 	{
+		/*
 		for (resources::iterator i = _owned.begin(); i != _owned.end(); ++i)
 		{
 			Resource *res = (*i);
 			delete res;
 		}
 		_owned.resize(0);
+		*/
 		_fastAccessResources.resize(0);
 		_resources.resize(0);
 
@@ -131,6 +133,8 @@ namespace oxygine
 			delete _docs[i];
 		}
 		_docs.resize(0);
+
+		__freeName();		
 	}
 	
     void Resources::updateName(const string &filename)
@@ -149,6 +153,16 @@ namespace oxygine
 		bool operator () (const ObjectBase* res, const char *name) const
 		{
 			return strcmp(res->getName().c_str(), name) < 0;
+		}
+
+		bool operator () (const spResource& res, const char *name) const
+		{
+			return strcmp(res->getName().c_str(), name) < 0;
+		}
+
+		bool operator () (const spResource& resA, const spResource& resB) const
+		{
+			return strcmp(resA->getName().c_str(), resB->getName().c_str()) < 0;
 		}
 
 		bool operator () (const char *name, const ObjectBase* res) const
@@ -258,7 +272,7 @@ namespace oxygine
 			context.xml_name = &xml_name;
 			context.resources = this;
 
-			string prebuilt_xml_folder = prebuilt_folder + "/" + type + "/";
+			string prebuilt_xml_folder = prebuilt_folder + type + "/";
 			context.prebuilt_folder = &prebuilt_xml_folder;
 
 
@@ -276,15 +290,15 @@ namespace oxygine
 					res->load(load_context);
                 res->setParent(this);
 				_resources.push_back(res);
-				_owned.push_back(res);
+				//_owned.push_back(res);
 			}
 		}
 
-		sort(_fastAccessResources.begin(), _fastAccessResources.end(), ObjectBasePredicate());
+		sort();
 		FS_LOG("xml loaded");
 	}
 
-	void Resources::add(Resource *r, bool own)
+	void Resources::add(Resource *r)
 	{
 		OX_ASSERT(r);
 		if (!r)
@@ -299,8 +313,8 @@ namespace oxygine
 		r->setName(lower(r->getName()));
 		_fastAccessResources.push_back(r);	
 
-		if (own)
-			_owned.push_back(r);
+		//if (own)
+		//	_owned.push_back(r);
 		//OX_ASSERT(0);
 	}
 
@@ -310,21 +324,32 @@ namespace oxygine
 		log::message("resources:\n");
 		for (resources::iterator i = _fastAccessResources.begin(); i != _fastAccessResources.end(); ++i)
 		{
-			Resource *res = *i;
+			spResource res = *i;
 			log::message("%s\n", res->getName().c_str());
 		}
+	}
+
+	void Resources::sort()
+	{
+		std::sort(_fastAccessResources.begin(), _fastAccessResources.end(), ObjectBasePredicate());
+	}
+
+	Resources::resources& Resources::_getResources()
+	{
+		return _resources; 
 	}
 
 	Resource *Resources::get(const string &id_, error_policy ep)
 	{	
 		string id = lower(id_);
 
-		resources::iterator it = lower_bound(_fastAccessResources.begin(), _fastAccessResources.end(), id.c_str(), ObjectBasePredicate());
+		resources::iterator it = lower_bound(_fastAccessResources.begin(), _fastAccessResources.end(), 
+			id.c_str(), ObjectBasePredicate());
 		
 		if (it != _fastAccessResources.end())
 		{
 			if ((*it)->getName() == id)
-				return (*it);
+				return (*it).get();
 		}
 
 		handleErrorPolicy(ep, "can't find resource: '%s' in '%s'", id.c_str(), _name.c_str());

@@ -252,7 +252,7 @@ namespace oxygine
 		}
 		else
 		{
-			LOGD("png error");
+			log::error("png error");
 			png_error(png_ptr, "pngReaderCallback failed");
 		}
 	}

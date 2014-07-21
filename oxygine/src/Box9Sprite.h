@@ -18,6 +18,9 @@ namespace oxygine
 
 		Box9Sprite();
 
+		StretchMode getVerticalMode() const {return _vertMode;}
+		StretchMode getHorizontalMode() const {return _horzMode;}
+
 		void setVerticalMode(StretchMode m);
 		void setHorizontalMode(StretchMode m);
 
@@ -30,6 +33,8 @@ namespace oxygine
 
 		std::string dump(const dumpOptions &) const;
 
+		void serialize(serializedata* data);
+		void deserialize(const deserializedata* data);
 
 		virtual RectF getDestRect() const;
 

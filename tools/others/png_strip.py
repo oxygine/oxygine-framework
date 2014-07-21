@@ -4,7 +4,7 @@ import glob
 images = []
 w = 0
 h = 0
-for g in glob.glob("*.png"):
+for g in sorted(glob.glob("*.png")):
     im = Image.open(g)
     images.append(im)
     h = max(h, im.size[1])

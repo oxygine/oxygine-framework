@@ -3,6 +3,10 @@
 #include "Tweener.h"
 #include "RootActor.h"
 
+#if _MSC_VER
+#define __func__ __FUNCTION__
+#endif
+
 namespace oxygine
 {
 	namespace blocking
@@ -21,11 +25,19 @@ namespace oxygine
 
 		int yield()
 		{
+#if OXYGINE_NO_YEILD
+			log::error("%s not supported", __func__);
+			return 0;
+#endif
 			return _mainLoopFunc();
 		}
 
 		void waitTween(spTween tween)
 		{		
+#if OXYGINE_NO_YEILD
+			log::error("%s not supported", __func__);
+			return;
+#endif
 			if (tween->getDelay() == 0)//todo, workaround, fix assert for tweens with delay
 			{
 				OX_ASSERT(tween->isStarted());
@@ -39,6 +51,11 @@ namespace oxygine
 
 		void waitTime(spClock clock, timeMS time)
 		{
+#if OXYGINE_NO_YEILD
+			log::error("%s not supported", __func__);
+			return;
+#endif
+
 			timeMS start = clock->getTime();
 			while(clock->getTime() - start < time)
 			{
@@ -48,6 +65,10 @@ namespace oxygine
 
 		void waitTime(timeMS time)
 		{
+#if OXYGINE_NO_YEILD
+			log::error("%s not supported", __func__);
+			return;
+#endif
 			timeMS start = getTimeMS();
 			while(getTimeMS() - start < time)
 			{
@@ -85,6 +106,10 @@ namespace oxygine
 
 		void waitClick(spActor button, timeMS timeOut)
 		{
+#if OXYGINE_NO_YEILD
+			log::error("%s not supported", __func__);
+			return;
+#endif
 			clickWait w(button, timeOut);			
 		}
 	}

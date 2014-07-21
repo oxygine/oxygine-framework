@@ -18,10 +18,11 @@
 		2DC477AC10D6C07B3FE008F6 /* ../src/entry_point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360377333740D8A2FD15BBE6 /* ../src/entry_point.cpp */; };
 		DA49ED8903C628BA578C8670 /* ../src/example.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BF9628FC8D38F9748F0CDEB /* ../src/example.cpp */; };
 		C8860D93875589970329DCCD /* ../data/app.config.txt in Sources */ = {isa = PBXBuildFile; fileRef = 4DA100C319512824B7570663 /* ../data/app.config.txt */; };
-		1E839D002B2BA83FC83A695A /* ../data/fonts in Sources */ = {isa = PBXBuildFile; fileRef = 04FE4D4FB640E0DF92DFB865 /* ../data/fonts */; };
-		3A631A475DE035FC53ADE5EA /* ../data/images in Sources */ = {isa = PBXBuildFile; fileRef = 7F3B12E3C9D554D9FE28101D /* ../data/images */; };
-		CD59C69314E9E74CD0A11E03 /* ../data/res.xml in Sources */ = {isa = PBXBuildFile; fileRef = F6123B1E6FE4471A00F49751 /* ../data/res.xml */; };
-		EFF139F8BA484314F7AAF645 /* ../data/xml in Sources */ = {isa = PBXBuildFile; fileRef = 5DE458993031811A4C7D28C1 /* ../data/xml */; };
+		1E839D002B2BA83FC83A695A /* ../data/data.js in Sources */ = {isa = PBXBuildFile; fileRef = 04FE4D4FB640E0DF92DFB865 /* ../data/data.js */; };
+		3A631A475DE035FC53ADE5EA /* ../data/fonts in Sources */ = {isa = PBXBuildFile; fileRef = 7F3B12E3C9D554D9FE28101D /* ../data/fonts */; };
+		CD59C69314E9E74CD0A11E03 /* ../data/images in Sources */ = {isa = PBXBuildFile; fileRef = F6123B1E6FE4471A00F49751 /* ../data/images */; };
+		EFF139F8BA484314F7AAF645 /* ../data/pack.py in Sources */ = {isa = PBXBuildFile; fileRef = 5DE458993031811A4C7D28C1 /* ../data/pack.py */; };
+		F2CFD518E4E2E05ECEDBB262 /* ../data/res.xml in Sources */ = {isa = PBXBuildFile; fileRef = BA41FC88D76540A6905224D6 /* ../data/res.xml */; };
 
 		
 /* End PBXBuildFile section */
@@ -95,12 +96,13 @@
 		049B57501871FBE900EF3C66 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		360377333740D8A2FD15BBE6 /* ../src/entry_point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = entry_point.cpp; path = ../src/entry_point.cpp; sourceTree = "<group>"; };
 		0BF9628FC8D38F9748F0CDEB /* ../src/example.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = example.cpp; path = ../src/example.cpp; sourceTree = "<group>"; };
-		BA41FC88D76540A6905224D6 /* ../src/example.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = example.h; path = ../src/example.h; sourceTree = "<group>"; };
+		2CE4BD5BB9DEF92439C0AB58 /* ../src/example.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = example.h; path = ../src/example.h; sourceTree = "<group>"; };
 		4DA100C319512824B7570663 /* ../data/app.config.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wtf; name = app.config.txt; path = ../data/app.config.txt; sourceTree = "<group>"; };
-		04FE4D4FB640E0DF92DFB865 /* ../data/fonts */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = fonts; path = ../data/fonts; sourceTree = "<group>"; };
-		7F3B12E3C9D554D9FE28101D /* ../data/images */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = images; path = ../data/images; sourceTree = "<group>"; };
-		F6123B1E6FE4471A00F49751 /* ../data/res.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wtf; name = res.xml; path = ../data/res.xml; sourceTree = "<group>"; };
-		5DE458993031811A4C7D28C1 /* ../data/xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = xml; path = ../data/xml; sourceTree = "<group>"; };
+		04FE4D4FB640E0DF92DFB865 /* ../data/data.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wtf; name = data.js; path = ../data/data.js; sourceTree = "<group>"; };
+		7F3B12E3C9D554D9FE28101D /* ../data/fonts */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = fonts; path = ../data/fonts; sourceTree = "<group>"; };
+		F6123B1E6FE4471A00F49751 /* ../data/images */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = images; path = ../data/images; sourceTree = "<group>"; };
+		5DE458993031811A4C7D28C1 /* ../data/pack.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wtf; name = pack.py; path = ../data/pack.py; sourceTree = "<group>"; };
+		BA41FC88D76540A6905224D6 /* ../data/res.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wtf; name = res.xml; path = ../data/res.xml; sourceTree = "<group>"; };
 
 		04A57D761871FFEB0068B1E5 /* oxygine_macosx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = oxygine_macosx.xcodeproj; path = ../../..//oxygine/SDL/macosx/oxygine_macosx/oxygine_macosx.xcodeproj; sourceTree = "<group>"; };
 		04A57D7E1872012A0068B1E5 /* SDL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SDL.xcodeproj; path = ../../../..//SDL/Xcode/SDL/SDL.xcodeproj; sourceTree = "<group>"; };
@@ -190,10 +192,11 @@
 			isa = PBXGroup;
 			children = (
 				4DA100C319512824B7570663 /* app.config.txt */, 
-				04FE4D4FB640E0DF92DFB865 /* fonts */, 
-				7F3B12E3C9D554D9FE28101D /* images */, 
-				F6123B1E6FE4471A00F49751 /* res.xml */, 
-				5DE458993031811A4C7D28C1 /* xml */, 
+				04FE4D4FB640E0DF92DFB865 /* data.js */, 
+				7F3B12E3C9D554D9FE28101D /* fonts */, 
+				F6123B1E6FE4471A00F49751 /* images */, 
+				5DE458993031811A4C7D28C1 /* pack.py */, 
+				BA41FC88D76540A6905224D6 /* res.xml */, 
 
 				049B57391871FBE900EF3C66 /* HelloWorld_macosx-Info.plist */,
 			);
@@ -205,7 +208,7 @@
 			children = (
 				360377333740D8A2FD15BBE6 /* entry_point.cpp */, 
 				0BF9628FC8D38F9748F0CDEB /* example.cpp */, 
-				BA41FC88D76540A6905224D6 /* example.h */, 
+				2CE4BD5BB9DEF92439C0AB58 /* example.h */, 
 
 			);
 			name = src;
@@ -325,10 +328,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				C8860D93875589970329DCCD /* app.config.txt */, 
-				1E839D002B2BA83FC83A695A /* fonts */, 
-				3A631A475DE035FC53ADE5EA /* images */, 
-				CD59C69314E9E74CD0A11E03 /* res.xml */, 
-				EFF139F8BA484314F7AAF645 /* xml */, 
+				1E839D002B2BA83FC83A695A /* data.js */, 
+				3A631A475DE035FC53ADE5EA /* fonts */, 
+				CD59C69314E9E74CD0A11E03 /* images */, 
+				EFF139F8BA484314F7AAF645 /* pack.py */, 
+				F2CFD518E4E2E05ECEDBB262 /* res.xml */, 
 
 				049B574A1871FBE900EF3C66 /* Images.xcassets in Resources */,
 			);

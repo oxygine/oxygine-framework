@@ -1,5 +1,6 @@
 from string import Template
 import os
+import io
 import glob
 from mimetypes import guess_type
 from mimetypes import add_type
@@ -74,15 +75,15 @@ def run(args):
     data = "../data"
     abs_data = os.path.normpath(args.dest + "/" + data)
     
-    data_files_ = glob.glob(abs_data + "/*")
+    data_files_ = sorted(glob.glob(abs_data + "/*"))
     data_files = []
     for d in data_files_:
         if os.path.splitext(d)[1]  in (".dll", ):
             continue
         data_files.append(d)
 
-    cpp_files = glob.glob(args.src + "/*.cpp")
-    h_files = glob.glob(args.src + "/*.h")    
+    cpp_files = sorted(glob.glob(args.src + "/*.cpp"))
+    h_files = sorted(glob.glob(args.src + "/*.h") )   
 
     if args.src:
         
@@ -95,7 +96,7 @@ def run(args):
             SRC = process(tmsrc, relto, args.src, cpp_files)
             #INCLUDE = process(tminc, relto, args.src, h_files)              
 
-        if args.type == "cmake":
+        if args.type == "cmake" or args.type == "emscripten":
             tmsrc = "${FILE} "
             relto = dest_path
             
@@ -270,8 +271,13 @@ def run(args):
                 t = Template(src_data)
                 dest_data = t.safe_substitute(**values)                 
 
-                dest_file = open(dest_path, "w")
-                dest_file.write(dest_data)      
+                if args.type == "ios" or args.type == "macosx":
+                    dest_file = io.open(dest_path, "w", newline="\n")
+                    dest_file.write(unicode(dest_data, encoding='utf-8')) 
+                else:
+                    dest_file = io.open(dest_path, "w")
+                    dest_file.write(dest_data)      
+                
             else:
                 print "copying file: " + dest_path
                 import shutil                
@@ -287,7 +293,7 @@ if __name__ == "__main__":
     import argparse	
     parser = argparse.ArgumentParser(description="oxygine projects template generator")
     parser.add_argument("-t", "--type", help = "choose your IDE/build tools", 
-                        choices = ["win32", "android", "macosx", "ios", "cmake"], default = "win32")
+                        choices = ["win32", "android", "macosx", "ios", "cmake", "emscripten"], default = "win32")
 
     parser.add_argument("-s", "--src", help = "folder with already created source files", default = "")   
 

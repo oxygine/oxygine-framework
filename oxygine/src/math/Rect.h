@@ -103,6 +103,12 @@ namespace oxygine
 
 		void setWidth(T v) {size.x = v;}
 		void setHeight(T v) {size.y = v;}
+
+		void moveLeft(T v) {T p = pos.x; pos.x = v; size.x += p - v;}
+		void moveTop(T v) {T p = pos.y; pos.y = v; size.y += p - v;}
+		void moveRight(T v) {size.x = v - pos.x;}
+		void moveBottom(T v) {size.y = v - pos.y;}
+
 		void expand(const point2 &v1, const point2 &v2){pos -= v1; size += v1 + v2;}
 
 		template<class R>

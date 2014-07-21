@@ -41,7 +41,7 @@ public:
 			button->addEventListener(TouchEvent::CLICK, CLOSURE(this, &TestSliding::testClick));
 		}
 
-		spTextActor title = initActor(new TextActor, 
+		spTextField title = initActor(new TextField, 
 			arg_text = "Sliding demo", 
 			arg_w = content->getWidth(),
 			arg_vAlign = TextStyle::VALIGN_TOP,

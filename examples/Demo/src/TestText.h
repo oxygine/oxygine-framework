@@ -32,9 +32,9 @@ public:
 
 	spColorRectSprite bg;
 	spColorRectSprite spriteTextRect;
-	spTextActor text;
+	spTextField text;
 
-	spTextActor textDetails;
+	spTextField textDetails;
 
 	TestText()
 	{
@@ -43,7 +43,7 @@ public:
 		addButton("next", "Next Test");
 		addButton("prev", "Prev Test");		
 
-		textDetails = new TextActor;
+		textDetails = new TextField;
 		textDetails->attachTo(ui);
 		textDetails->setSize(Vector2(300, 0));
 		textDetails->setPosition(200.0f, getRoot()->getHeight() - 10);
@@ -68,7 +68,7 @@ public:
 		spriteTextRect->attachTo(bg);
 		spriteTextRect->setColor(Color(Color::Red, 80));
 
-		text = new TextActor;
+		text = new TextField;
 		text->attachTo(bg);
 
 		Vector2 size(420, 300);

@@ -48,12 +48,16 @@ namespace oxygine
 
 	string *ObjectBase::__getName() const
 	{
+#if DYNAMIC_OBJECT_NAME
 		if (!__name)
 		{
 			__name = (string*)fastAlloc(sizeof(string));
 			new (__name) string;			
 		}
 		return __name;
+#else
+		return &__name;
+#endif
 	}
 
 	const std::string &ObjectBase::getName() const
@@ -63,15 +67,18 @@ namespace oxygine
 
 	bool ObjectBase::isName(const string &name) const
 	{
-		if (__name && *__name == name)
-			return true;
-		return false;
+		return isName(name.c_str());
 	}
 
 	bool ObjectBase::isName(const char *name) const
 	{
+#if DYNAMIC_OBJECT_NAME
 		if (__name && !strcmp(__name->c_str(), name))
 			return true;
+#else
+		if (__name == name)
+			return true;
+#endif
 		return false;
 	}
 
@@ -86,8 +93,12 @@ namespace oxygine
 		__addToDebugList(this);
 
 		__userData = src.__userData;
+#if DYNAMIC_OBJECT_NAME
 		if (src.__name)
 			setName(*src.__name);
+#else
+		setName(src.__name);
+#endif
 		__generateID();
 	}
 
@@ -104,8 +115,11 @@ namespace oxygine
 		OX_ASSERT(_assertCtorID != __id);
 	}
 
-	ObjectBase::ObjectBase(bool assignID):__userData(0), __name(0), __id(0)
+	ObjectBase::ObjectBase(bool assignID):__userData(0), __id(0)
 	{
+#if DYNAMIC_OBJECT_NAME
+		__name = 0;
+#endif
 		__addToDebugList(this);
 
 		if (assignID)
@@ -122,6 +136,20 @@ namespace oxygine
 		_assertDtorID = id;
 	}
 
+	void ObjectBase::__freeName() const
+	{
+#if DYNAMIC_OBJECT_NAME
+		if (__name)
+		{
+			__name->~string();
+			fastFree(__name);		
+			__name = 0;
+		}
+#else
+		__name.clear();
+#endif
+	}
+
 	ObjectBase::~ObjectBase()
 	{
 		OX_ASSERT(_assertDtorID != __id);
@@ -130,11 +158,7 @@ namespace oxygine
 		__removeFromDebugList(this);
 #endif
 
-		if (__name)
-		{
-			__name->~string();
-			fastFree(__name);		
-		}
+		__freeName();
 	}
 
 	void ObjectBase::__startTracingLeaks()
@@ -186,8 +210,12 @@ namespace oxygine
 		if (o)
 		{
 			safe_sprintf(refs, "%d", o->_ref_counter);
+#if DYNAMIC_OBJECT_NAME
 			if (o->__name)
 				name = *o->__name;
+#else
+			name = o->__name;
+#endif
 		}
 
 				

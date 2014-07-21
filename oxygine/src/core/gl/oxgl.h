@@ -59,6 +59,16 @@
 
 		    #define GL_ETC1_RGB8_OES                                        0x8D64
 		#endif
+	#elif EMSCRIPTEN
+		#include "GLES2/gl2.h"
+		#define GL_GLEXT_PROTOTYPES
+		#include "GLES2/gl2ext.h"
+
+		#define glGenFramebuffers			glGenFramebuffers
+		#define glBindFramebuffer			glBindFramebuffer
+		#define glFramebufferTexture2D		glFramebufferTexture2D
+		#define glDeleteFramebuffers		glDeleteFramebuffers
+		#define glCheckFramebufferStatus	glCheckFramebufferStatus
 
 	#elif __unix__
 		#define GL_GLEXT_PROTOTYPES

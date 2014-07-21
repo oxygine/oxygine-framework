@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		048AD0AE197D24AB001963EF /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 048AD0AD197D24AB001963EF /* CoreMotion.framework */; };
 		04998D3617F8A97D003441C3 /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04998D3517F8A96E003441C3 /* libSDL2.a */; };
 		04998EE617F8ADB4003441C3 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 04998EE117F8ADB4003441C3 /* libz.dylib */; };
 		04998EE717F8ADB4003441C3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04998EE217F8ADB4003441C3 /* QuartzCore.framework */; };
 		04998EE817F8ADB4003441C3 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04998EE317F8ADB4003441C3 /* AudioToolbox.framework */; };
+		04998EE917F8ADB4003441C3 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04998EE417F8ADB4003441C3 /* CoreAudio.framework */; };
 		04998EE917F8ADB4003441C3 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04998EE417F8ADB4003441C3 /* CoreAudio.framework */; };
 		04998EEA17F8ADB4003441C3 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04998EE517F8ADB4003441C3 /* OpenGLES.framework */; };
 		04998EEE17F8ADD4003441C3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04998EEB17F8ADD4003441C3 /* UIKit.framework */; };
@@ -62,6 +64,7 @@ ${PBXBuildFile}
 		04998EE217F8ADB4003441C3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		04998EE317F8ADB4003441C3 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		04998EE417F8ADB4003441C3 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		048AD0AD197D24AB001963EF /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		04998EE517F8ADB4003441C3 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		04998EEB17F8ADD4003441C3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		04998EEC17F8ADD4003441C3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -80,6 +83,7 @@ ${PBXFileReference}
 				049B52B11871EBFA00EF3C66 /* liboxygine_ios.a in Frameworks */,
 				04998D3617F8A97D003441C3 /* libSDL2.a in Frameworks */,
 				04998EF017F8ADD4003441C3 /* CoreGraphics.framework in Frameworks */,
+				048AD0AE197D24AB001963EF /* CoreMotion.framework in Frameworks */,
 				04998EEF17F8ADD4003441C3 /* Foundation.framework in Frameworks */,
 				04998EE617F8ADB4003441C3 /* libz.dylib in Frameworks */,
 				04998EE917F8ADB4003441C3 /* CoreAudio.framework in Frameworks */,
@@ -131,6 +135,7 @@ ${PBXFileReference}
 			isa = PBXGroup;
 			children = (
 				04998EEB17F8ADD4003441C3 /* UIKit.framework */,
+				048AD0AD197D24AB001963EF /* CoreMotion.framework */,
 				04998EEC17F8ADD4003441C3 /* Foundation.framework */,
 				04998EED17F8ADD4003441C3 /* CoreGraphics.framework */,
 				04998EE217F8ADB4003441C3 /* QuartzCore.framework */,

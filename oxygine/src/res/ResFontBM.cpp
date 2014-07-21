@@ -20,7 +20,7 @@ namespace oxygine
 		font = new ResFontBM();		
 		font->_createFont(&context, false, false);
 		setNode(font, context.walker.getNode());
-		context.resources->add(font, false);
+		context.resources->add(font);
 		
 		//context.meta = context.meta.next_sibling();
 
@@ -34,7 +34,7 @@ namespace oxygine
 		font = new ResFontBM();		
 		font->_createFont(&context, false, true);
 		setNode(font, context.walker.getNode());
-		context.resources->add(font, false);
+		context.resources->add(font);
 
 		//context.meta = context.meta.next_sibling();
 

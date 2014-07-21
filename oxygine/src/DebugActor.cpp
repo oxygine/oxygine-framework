@@ -16,7 +16,7 @@
 
 #include "DebugActor.h"
 #include "RootActor.h"
-#include "TextActor.h"
+#include "TextField.h"
 #include "ColorRectSprite.h"
 #include "Button.h"
 #include "Event.h"
@@ -129,7 +129,7 @@ namespace oxygine
 		
 		
 
-		_text = new TextActor;
+		_text = new TextField;
 		addChild(_text);
 		_text->setInputEnabled(false);
 		_text->setStyle(st);
@@ -230,22 +230,29 @@ namespace oxygine
 			_frames = 0;
 		}
 
+		stringstream s;
+		s << "fps=" << fps << endl;
+
+		
+
+#ifdef __S3E__
 		int mem_used = -1;
 		int mem_free = -1;
 
-#ifdef __S3E__
 		mem_used = s3eMemoryGetInt(S3E_MEMORY_USED);
 		mem_free = s3eMemoryGetInt(S3E_MEMORY_FREE);
-#endif
 
-		stringstream s;
-		s << "fps=" << fps << " mem=" << mem_used << endl;
-		s << "mfree=" << mem_free << endl;
+		s << "mfree=" << mem_free << " mem=" << mem_used << endl;
+#endif
+		
+		
 
 #ifdef OXYGINE_DEBUG_TRACE_LEAKS
 		s << "objects=" << (int)ObjectBase::__getCreatedObjects().size() << endl;
 #endif
+#ifdef OXYGINE_TRACE_VIDEO_STATS
 		s << "batches="<< _videoStats.batches << " triangles=" << _videoStats.triangles << endl;
+#endif
 		s << "update=" << getRoot()->_statUpdate << "ms ";
 		s << "render=" << getRoot()->_statRender << "ms ";
 		s << "textures=" << NativeTexture::created << " ";

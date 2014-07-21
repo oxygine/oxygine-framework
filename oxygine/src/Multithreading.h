@@ -28,8 +28,8 @@ namespace oxygine
 		//float getProgress() const;
 
 		bool isCompleted();
-		void add(Resources *res);
-		void add(Resource *res);
+		virtual void add(Resources *res);
+		virtual void add(Resource *res);
 
 		/**Adds self to 'parent' actor as child and starts loading thread. Removes self automatically from 'parent' when loading is completed*/
 		void start(spActor parent);

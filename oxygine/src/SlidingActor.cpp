@@ -1,10 +1,10 @@
 #include "SlidingActor.h"
 #include "ClipRectActor.h"
-//#include "DragHandler.h"
 #include "PointerState.h"
 #include "UpdateState.h"
 #include "Draggable.h"
 #include "initActor.h"
+#include "Serialize.h"
 
 namespace oxygine
 {
@@ -316,5 +316,17 @@ namespace oxygine
 			}			
 			break;
 		}
+	}
+
+	void SlidingActor::serialize(serializedata* data)
+	{
+		Actor::serialize(data);
+
+		data->node.set_name("SlidingActor");
+	}
+
+	void SlidingActor::deserialize(const deserializedata* data)
+	{
+		Actor::deserialize(data);
 	}
 }

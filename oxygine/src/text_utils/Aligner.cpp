@@ -26,7 +26,7 @@ namespace oxygine
 			case TextStyle::HALIGN_DEFAULT:
 				tx = 0;
 				break;
-			case TextStyle::HALIGN_CENTER:
+			case TextStyle::HALIGN_MIDDLE:
 				tx = width/2 - rx/2;
 				break;
 			case TextStyle::HALIGN_RIGHT:

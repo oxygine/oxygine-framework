@@ -30,7 +30,7 @@ void MyButton::setText(const string &txt)
 {
 	if (!_text)
 	{		
-		//create TextActor if it wasn't created yet
+		//create TextField if it wasn't created yet
 		TextStyle style;
 		style.font = res::ui.getResFont("normal")->getFont();
 		style.vAlign = TextStyle::VALIGN_MIDDLE;
@@ -38,7 +38,7 @@ void MyButton::setText(const string &txt)
 
 		//attach it to MyButton and set the same size as button
 		//text would be centered
-		_text = initActor(new TextActor,
+		_text = initActor(new TextField,
 			arg_style = style,
 			arg_size = getSize(),
 			arg_attachTo = this);

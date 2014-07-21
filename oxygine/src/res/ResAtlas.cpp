@@ -169,7 +169,7 @@ namespace oxygine
 					ra->init(0, 0, 0, walker.getScaleFactor());
 					init_resAnim(ra, file, child_node);
 					ra->setParent(this);
-					context.resources->add(ra, true);
+					context.resources->add(ra);
 					continue;
 				}
 
@@ -378,7 +378,7 @@ namespace oxygine
 					
 					ra->init(frames, columns, walker.getScaleFactor());					
 					ra->setParent(this);
-					context.resources->add(ra, true);
+					context.resources->add(ra);
 				}
 			}
 		}
@@ -435,7 +435,14 @@ namespace oxygine
 		}
 	}
 
-	void load_texture(const string &file, spNativeTexture nt, LoadResourcesContext *load_context)
+	static load_texture_hook _hook = 0;
+	void set_load_texture_hook(load_texture_hook hook)
+	{
+		_hook = hook;
+	}
+
+
+	void load_texture_internal(const string &file, spNativeTexture nt, LoadResourcesContext *load_context)
 	{
 		ImageData im;
 		spMemoryTexture mt = new MemoryTexture;
@@ -451,6 +458,17 @@ namespace oxygine
 
 		//Object::dumpCreatedObjects();
 		load_context->createTexture(mt, nt);
+	}
+
+	void load_texture(const string &file, spNativeTexture nt, LoadResourcesContext *load_context)
+	{
+		if (_hook)
+		{
+			_hook(file, nt, load_context);
+			return;
+		}
+
+		load_texture_internal(file, nt, load_context);
 	}
 
 	void ResAtlas::_restore(Restorable *r, void *)

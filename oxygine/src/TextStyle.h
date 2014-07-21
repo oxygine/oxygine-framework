@@ -13,7 +13,8 @@ namespace oxygine
 		{
 			HALIGN_DEFAULT,
 			HALIGN_LEFT, 
-			HALIGN_CENTER, 
+			HALIGN_MIDDLE,
+			HALIGN_CENTER = HALIGN_MIDDLE,//HALIGN_CENTER deprecated
 			HALIGN_RIGHT
 		};
 

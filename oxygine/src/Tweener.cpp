@@ -43,6 +43,11 @@ namespace oxygine
 		_cbDone = cb;
 	}
 
+	void Tween::addDoneCallback(EventCallback cb)
+	{
+		addEventListener(TweenEvent::DONE, cb);
+	}
+
 	float Tween::calcEase(EASE ease, float v)
 	{
 		float vi;

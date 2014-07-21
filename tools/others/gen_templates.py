@@ -3,7 +3,10 @@ def gen(path, project = ""):
 	if not project:
 		project = path
 
-	for platform in ["win32", "android", "macosx", "ios", "cmake"]:
+	projs = ("win32", "android", "macosx", "ios", "cmake", "emscripten")
+	projs = ("ios", "macosx")
+
+	for platform in projs:
 		dest = "../../examples/" + path + "/proj." + platform
 		src =  "../../examples/" + path + "/src"
 		import shutil

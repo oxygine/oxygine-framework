@@ -34,6 +34,8 @@
 		0472E38017F8A2EC0016A832 /* MaskedSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 0472E37C17F8A2EC0016A832 /* MaskedSprite.h */; };
 		0472E38117F8A2EC0016A832 /* oxygine_include.h in Headers */ = {isa = PBXBuildFile; fileRef = 0472E37D17F8A2EC0016A832 /* oxygine_include.h */; };
 		0472E38217F8A2EC0016A832 /* oxygine-framework.h in Headers */ = {isa = PBXBuildFile; fileRef = 0472E37E17F8A2EC0016A832 /* oxygine-framework.h */; };
+		048AD0AA197D2444001963EF /* TextField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 048AD0A8197D2444001963EF /* TextField.cpp */; };
+		048AD0AB197D2444001963EF /* TextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 048AD0A9197D2444001963EF /* TextField.h */; };
 		04967C4D180B3D7400D66EFA /* Restorable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04967C4B180B3D7400D66EFA /* Restorable.cpp */; };
 		04967C4E180B3D7400D66EFA /* Restorable.h in Headers */ = {isa = PBXBuildFile; fileRef = 04967C4C180B3D7400D66EFA /* Restorable.h */; };
 		049B64AB1803054300EC333E /* CreateResourceContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B64AA1803054300EC333E /* CreateResourceContext.cpp */; };
@@ -45,8 +47,6 @@
 		04B3A71A18A65668004C67E3 /* InputText.h in Headers */ = {isa = PBXBuildFile; fileRef = 04B3A71818A65668004C67E3 /* InputText.h */; };
 		04D6FB4C1851914000A5403A /* ThreadMessages.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04D6FB4A1851914000A5403A /* ThreadMessages.cpp */; };
 		04D6FB4D1851914000A5403A /* ThreadMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = 04D6FB4B1851914000A5403A /* ThreadMessages.h */; };
-		C38704A217C0C6AC00015CA8 /* VideoDriverGLES11.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C38704A017C0C6AC00015CA8 /* VideoDriverGLES11.cpp */; };
-		C38704A317C0C6AC00015CA8 /* VideoDriverGLES11.h in Headers */ = {isa = PBXBuildFile; fileRef = C38704A117C0C6AC00015CA8 /* VideoDriverGLES11.h */; };
 		C38704A617C0C71700015CA8 /* VideoDriverGLES20.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C38704A417C0C71700015CA8 /* VideoDriverGLES20.cpp */; };
 		C38704A717C0C71700015CA8 /* VideoDriverGLES20.h in Headers */ = {isa = PBXBuildFile; fileRef = C38704A517C0C71700015CA8 /* VideoDriverGLES20.h */; };
 		C38EC22C1709600E00568283 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C38EC22B1709600E00568283 /* OpenGLES.framework */; };
@@ -172,7 +172,6 @@
 		C3E8707516EBC8EB00052915 /* Node.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FD816EBC8EB00052915 /* Node.h */; };
 		C3E8707616EBC8EB00052915 /* TextBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3E86FD916EBC8EB00052915 /* TextBuilder.cpp */; };
 		C3E8707716EBC8EB00052915 /* TextBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FDA16EBC8EB00052915 /* TextBuilder.h */; };
-		C3E8707816EBC8EB00052915 /* TextActor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3E86FDB16EBC8EB00052915 /* TextActor.cpp */; };
 		C3E8707916EBC8EB00052915 /* TextActor.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FDC16EBC8EB00052915 /* TextActor.h */; };
 		C3E8707A16EBC8EB00052915 /* TextStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FDD16EBC8EB00052915 /* TextStyle.h */; };
 		C3E8708316EBC8EB00052915 /* Tweener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3E86FE916EBC8EB00052915 /* Tweener.cpp */; };
@@ -230,6 +229,8 @@
 		0472E37C17F8A2EC0016A832 /* MaskedSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MaskedSprite.h; path = ../../../src/MaskedSprite.h; sourceTree = "<group>"; };
 		0472E37D17F8A2EC0016A832 /* oxygine_include.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = oxygine_include.h; path = ../../../src/oxygine_include.h; sourceTree = "<group>"; };
 		0472E37E17F8A2EC0016A832 /* oxygine-framework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "oxygine-framework.h"; path = "../../../src/oxygine-framework.h"; sourceTree = "<group>"; };
+		048AD0A8197D2444001963EF /* TextField.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextField.cpp; path = ../../../src/TextField.cpp; sourceTree = "<group>"; };
+		048AD0A9197D2444001963EF /* TextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextField.h; path = ../../../src/TextField.h; sourceTree = "<group>"; };
 		048B7AAB17FDE25E00AE2D0B /* shader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; name = shader.glsl; path = ../../../system_data/original/system/shader.glsl; sourceTree = "<group>"; };
 		04967C4B180B3D7400D66EFA /* Restorable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Restorable.cpp; sourceTree = "<group>"; };
 		04967C4C180B3D7400D66EFA /* Restorable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Restorable.h; sourceTree = "<group>"; };
@@ -242,8 +243,6 @@
 		04B3A71818A65668004C67E3 /* InputText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InputText.h; path = ../../../src/InputText.h; sourceTree = "<group>"; };
 		04D6FB4A1851914000A5403A /* ThreadMessages.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ThreadMessages.cpp; sourceTree = "<group>"; };
 		04D6FB4B1851914000A5403A /* ThreadMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadMessages.h; sourceTree = "<group>"; };
-		C38704A017C0C6AC00015CA8 /* VideoDriverGLES11.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VideoDriverGLES11.cpp; path = gl/VideoDriverGLES11.cpp; sourceTree = "<group>"; };
-		C38704A117C0C6AC00015CA8 /* VideoDriverGLES11.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VideoDriverGLES11.h; path = gl/VideoDriverGLES11.h; sourceTree = "<group>"; };
 		C38704A417C0C71700015CA8 /* VideoDriverGLES20.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VideoDriverGLES20.cpp; path = gl/VideoDriverGLES20.cpp; sourceTree = "<group>"; };
 		C38704A517C0C71700015CA8 /* VideoDriverGLES20.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VideoDriverGLES20.h; path = gl/VideoDriverGLES20.h; sourceTree = "<group>"; };
 		C38EC22B1709600E00568283 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -376,7 +375,6 @@
 		C3E86FD816EBC8EB00052915 /* Node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Node.h; sourceTree = "<group>"; };
 		C3E86FD916EBC8EB00052915 /* TextBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextBuilder.cpp; sourceTree = "<group>"; };
 		C3E86FDA16EBC8EB00052915 /* TextBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextBuilder.h; sourceTree = "<group>"; };
-		C3E86FDB16EBC8EB00052915 /* TextActor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextActor.cpp; path = ../../../src/TextActor.cpp; sourceTree = "<group>"; };
 		C3E86FDC16EBC8EB00052915 /* TextActor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextActor.h; path = ../../../src/TextActor.h; sourceTree = "<group>"; };
 		C3E86FDD16EBC8EB00052915 /* TextStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextStyle.h; path = ../../../src/TextStyle.h; sourceTree = "<group>"; };
 		C3E86FE916EBC8EB00052915 /* Tweener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Tweener.cpp; path = ../../../src/Tweener.cpp; sourceTree = "<group>"; };
@@ -476,6 +474,8 @@
 		C3E86F5316EBC8C200052915 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				048AD0A8197D2444001963EF /* TextField.cpp */,
+				048AD0A9197D2444001963EF /* TextField.h */,
 				0467086D192796E500D71824 /* Serialize.cpp */,
 				0467086B192796A000D71824 /* Serialize.h */,
 				04B3A71718A65668004C67E3 /* InputText.cpp */,
@@ -535,7 +535,6 @@
 				C3E86FD216EBC8EB00052915 /* Sprite.cpp */,
 				C3E86FD316EBC8EB00052915 /* Sprite.h */,
 				C3E86FD416EBC8EB00052915 /* text_utils */,
-				C3E86FDB16EBC8EB00052915 /* TextActor.cpp */,
 				C3E86FDC16EBC8EB00052915 /* TextActor.h */,
 				C3E86FDD16EBC8EB00052915 /* TextStyle.h */,
 				C3E86FE916EBC8EB00052915 /* Tweener.cpp */,
@@ -729,8 +728,6 @@
 				04AEC30E182BD912006413A9 /* ShaderProgramGL.h */,
 				C38704A417C0C71700015CA8 /* VideoDriverGLES20.cpp */,
 				C38704A517C0C71700015CA8 /* VideoDriverGLES20.h */,
-				C38704A017C0C6AC00015CA8 /* VideoDriverGLES11.cpp */,
-				C38704A117C0C6AC00015CA8 /* VideoDriverGLES11.h */,
 				C3EE215117BECD7200715678 /* NativeTextureGLES.cpp */,
 				C3EE215217BECD7200715678 /* NativeTextureGLES.h */,
 				C3EE215317BECD7200715678 /* oxgl.cpp */,
@@ -772,6 +769,7 @@
 				C3E8701716EBC8EB00052915 /* ImageDataOperations.h in Headers */,
 				C3E8701816EBC8EB00052915 /* intrusive_ptr.h in Headers */,
 				C3E8701A16EBC8EB00052915 /* logging.h in Headers */,
+				048AD0AB197D2444001963EF /* TextField.h in Headers */,
 				C3E8701C16EBC8EB00052915 /* Mem2Native.h in Headers */,
 				C3E8701E16EBC8EB00052915 /* memory_pool.h in Headers */,
 				C3E8702016EBC8EB00052915 /* Mutex.h in Headers */,
@@ -857,7 +855,6 @@
 				C3EE216217BECD7200715678 /* VertexDeclarationGL.h in Headers */,
 				0472E36217F8A1A80016A832 /* vertex.h in Headers */,
 				C3EE216417BECD7200715678 /* VideoDriverGL.h in Headers */,
-				C38704A317C0C6AC00015CA8 /* VideoDriverGLES11.h in Headers */,
 				04B3A71A18A65668004C67E3 /* InputText.h in Headers */,
 				C38704A717C0C71700015CA8 /* VideoDriverGLES20.h in Headers */,
 			);
@@ -969,7 +966,6 @@
 				04D6FB4C1851914000A5403A /* ThreadMessages.cpp in Sources */,
 				C3E8707416EBC8EB00052915 /* Node.cpp in Sources */,
 				C3E8707616EBC8EB00052915 /* TextBuilder.cpp in Sources */,
-				C3E8707816EBC8EB00052915 /* TextActor.cpp in Sources */,
 				C3E8708316EBC8EB00052915 /* Tweener.cpp in Sources */,
 				04AEC30F182BD912006413A9 /* ShaderProgramGL.cpp in Sources */,
 				C3E8708616EBC8EB00052915 /* AtlasTool.cpp in Sources */,
@@ -981,6 +977,7 @@
 				C3E8708F16EBC8EB00052915 /* system_alloc.cpp in Sources */,
 				0472E35917F8A1A80016A832 /* FileSystem.cpp in Sources */,
 				C3E8709116EBC8EB00052915 /* winnie_alloc.cpp in Sources */,
+				048AD0AA197D2444001963EF /* TextField.cpp in Sources */,
 				C38EC26F1709649300568283 /* DeveloperMenu.cpp in Sources */,
 				C38EC2711709649300568283 /* TexturesInspector.cpp in Sources */,
 				C38EC2731709649300568283 /* TreeInspector.cpp in Sources */,
@@ -992,7 +989,6 @@
 				C3EE215F17BECD7200715678 /* oxgl.cpp in Sources */,
 				C3EE216117BECD7200715678 /* VertexDeclarationGL.cpp in Sources */,
 				C3EE216317BECD7200715678 /* VideoDriverGL.cpp in Sources */,
-				C38704A217C0C6AC00015CA8 /* VideoDriverGLES11.cpp in Sources */,
 				0472E35B17F8A1A80016A832 /* log.cpp in Sources */,
 				C38704A617C0C71700015CA8 /* VideoDriverGLES20.cpp in Sources */,
 				049B64AB1803054300EC333E /* CreateResourceContext.cpp in Sources */,

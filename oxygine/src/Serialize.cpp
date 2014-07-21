@@ -1,9 +1,10 @@
 #include "Serialize.h"
 #include "Sprite.h"
-#include "TextActor.h"
+#include "TextField.h"
 #include "ColorRectSprite.h"
 #include "ClipRectActor.h"
 #include "ProgressBar.h"
+#include "SlidingActor.h"
 namespace oxygine
 {
     //#define S(s) #s
@@ -13,9 +14,10 @@ namespace oxygine
 	spActor creator::create(const char *type) const
 	{
 		CREATE(Sprite);
-		CREATE(TextActor);		
+		CREATE(TextField);		
 		CREATE(Actor);
 		CREATE(ProgressBar);
+		CREATE(SlidingActor);
 		CREATE(ColorRectSprite);
 		CREATE(ClipRectActor);
 

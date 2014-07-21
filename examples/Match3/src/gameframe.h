@@ -1,6 +1,6 @@
 #pragma once
 #include "Actor.h"
-#include "TextActor.h"
+#include "TextField.h"
 #include "Button.h"
 #include "jewels.h"
 

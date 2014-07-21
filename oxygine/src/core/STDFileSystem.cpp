@@ -15,79 +15,79 @@
 #define LOGD(...) ((void)0)
 
 #if __S3E__
-#define USE_S3E_FILE
-#include "IwAutoFile.h"
-#include "s3eFile.h"	
+	#define USE_S3E_FILE
+	#include "IwAutoFile.h"
+	#include "s3eFile.h"	
 
-typedef s3eFile oxHandle;
+	typedef s3eFile oxHandle;
 
-#define oxFileOpen_ s3eFileOpen
-#define oxFileClose_ s3eFileClose
-#define oxFileSeek s3eFileSeek
-#define oxFileTell s3eFileTell
-#define oxFileWrite s3eFileWrite
-#define	ox_FILESEEK_END S3E_FILESEEK_END
-#define	ox_FILESEEK_SET S3E_FILESEEK_SET
+	#define oxFileOpen_ s3eFileOpen
+	#define oxFileClose_ s3eFileClose
+	#define oxFileSeek s3eFileSeek
+	#define oxFileTell s3eFileTell
+	#define oxFileWrite s3eFileWrite
+	#define	ox_FILESEEK_END S3E_FILESEEK_END
+	#define	ox_FILESEEK_SET S3E_FILESEEK_SET
 
-#define oxFileRead s3eFileRead
-#define oxExists(name) s3eFileCheckExists(name)
+	#define oxFileRead s3eFileRead
+	#define oxExists(name) s3eFileCheckExists(name)
 
 #elif OXYGINE_SDL
-#ifdef WIN32
-#include <direct.h>
-#endif
+	#ifdef WIN32
+		#include <direct.h>
+	#endif
 
-#include <sys/stat.h>
-#include <sys/types.h>
-#include "SDL_rwops.h"	
+	#include <sys/stat.h>
+	#include <sys/types.h>
+	#include "SDL_rwops.h"	
 
-typedef SDL_RWops oxHandle;
-//todo remove s3e
-#define oxFileOpen_ SDL_RWFromFile
-#define oxFileClose_ SDL_RWclose
-#define oxFileSeek SDL_RWseek
-#define oxFileTell SDL_RWtell
-#define oxFileWrite(ptr, size, n, handle) SDL_RWwrite(handle, ptr, size, n)
-#define	ox_FILESEEK_END RW_SEEK_END
-#define	ox_FILESEEK_SET RW_SEEK_SET
+	typedef SDL_RWops oxHandle;
+	//todo remove s3e
+	#define oxFileOpen_ SDL_RWFromFile
+	#define oxFileClose_ SDL_RWclose
+	#define oxFileSeek SDL_RWseek
+	#define oxFileTell SDL_RWtell
+	#define oxFileWrite(ptr, size, n, handle) SDL_RWwrite(handle, ptr, size, n)
+	#define	ox_FILESEEK_END RW_SEEK_END
+	#define	ox_FILESEEK_SET RW_SEEK_SET
 
-bool sdlExists(const char *name)
-{
-	//return true;
-	LOGD("check file exists: %s___", name);
-	oxHandle* h = oxFileOpen_(name, "rb");
-	LOGD("check ");
-	if (h)
-		oxFileClose_(h);
-	LOGD("check file exists: %s %d", name, (int)(h != 0));
-	return h != 0;
-}
-#define oxExists(name) sdlExists(name)
-#define oxFileRead(ptr, size, n, handle) SDL_RWread(handle, ptr, size, n)
+	bool sdlExists(const char *name)
+	{
+		//return true;
+		LOGD("check file exists: %s___", name);
+		oxHandle* h = oxFileOpen_(name, "rb");
+		LOGD("check ");
+		if (h)
+			oxFileClose_(h);
+		LOGD("check file exists: %s %d", name, (int)(h != 0));
+		return h != 0;
+	}
+	#define oxExists(name) sdlExists(name)
+	#define oxFileRead(ptr, size, n, handle) SDL_RWread(handle, ptr, size, n)
 
 #else
 
-#ifdef WIN32
-#include <direct.h>
-#endif
+	#ifdef WIN32
+	#include <direct.h>
+	#endif
 
-#define USE_STDIO
-#include <stdio.h>
-#include <sys/stat.h>	
+	#define USE_STDIO
+	#include <stdio.h>
+	#include <sys/stat.h>	
 
-typedef FILE oxHandle;
+	typedef FILE oxHandle;
 
-//todo remove s3e
-#define oxFileOpen_ fopen
-#define oxFileClose_ fclose
-#define oxFileSeek fseek
-#define oxFileTell ftell
-#define oxFileWrite fwrite
-#define	ox_FILESEEK_END SEEK_END
-#define	ox_FILESEEK_SET SEEK_SET
+	//todo remove s3e
+	#define oxFileOpen_ fopen
+	#define oxFileClose_ fclose
+	#define oxFileSeek fseek
+	#define oxFileTell ftell
+	#define oxFileWrite fwrite
+	#define	ox_FILESEEK_END SEEK_END
+	#define	ox_FILESEEK_SET SEEK_SET
 
-#define oxExists(name) (true)
-#define oxFileRead(ptr, size, n, handle) fread(ptr, size, n, handle)
+	#define oxExists(name) (true)
+	#define oxFileRead(ptr, size, n, handle) fread(ptr, size, n, handle)
 
 #endif//__S3E__
 
@@ -159,13 +159,13 @@ namespace oxygine
 
 			virtual unsigned int getSize() const
 			{
-#ifdef __S3E__
+#if OXYGINE_SDL
+				return (int)SDL_RWsize((SDL_RWops*)_handle);				
+#else
 				oxFileSeek(_handle, 0, ox_FILESEEK_END);
 				unsigned int size  = (unsigned int)oxFileTell(_handle);
 				oxFileSeek(_handle, 0, ox_FILESEEK_SET);
 				return size;
-#else
-				return (int)SDL_RWsize((SDL_RWops*)_handle);				
 #endif				
 			}
 

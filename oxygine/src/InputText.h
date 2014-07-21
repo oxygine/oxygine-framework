@@ -3,7 +3,7 @@
 #include "EventDispatcher.h"
 #include <string>
 
-#ifndef __S3E__
+#ifdef OXYGINE_SDL
 #include "SDL.h"
 #endif
 
@@ -11,7 +11,7 @@ namespace oxygine
 {
 	using namespace std;
 
-	DECLARE_SMART(TextActor, spTextActor);
+	DECLARE_SMART(TextField, spTextField);
 	DECLARE_SMART(InputText, spInputText);
 
 	class InputText: public EventDispatcher
@@ -20,8 +20,8 @@ namespace oxygine
 		InputText();
 		~InputText();
 
-		/**Shows virtual keyboard(if supported on platform) and sends pressed chars to TextActor*/
-		void start(spTextActor textActor);
+		/**Shows virtual keyboard(if supported on platform) and sends pressed chars to TextField*/
+		void start(spTextField textActor);
 		void stop();
 
 		void setAllowedSymbols(const string &utf8str);
@@ -33,7 +33,7 @@ namespace oxygine
 		static void stopAnyInput();
 
 	private:
-		spTextActor _textActor;
+		spTextField _textActor;
 
 		string _allowed;
 		string _disallowed;
@@ -43,7 +43,8 @@ namespace oxygine
 		static InputText *_active;		
 
 		void _onPlatform(Event *event);
-#ifndef __S3E__
+
+#ifdef OXYGINE_SDL
 		int _onSDLEvent(SDL_Event *event);
 #endif
 	};

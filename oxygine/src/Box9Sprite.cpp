@@ -2,6 +2,7 @@
 #include "res/ResAnim.h"
 #include "math/ScalarMath.h"
 #include "RenderState.h"
+#include "Serialize.h"
 #include <sstream>
 
 namespace oxygine
@@ -72,7 +73,7 @@ namespace oxygine
 		_guideY[1] = y2;
 		_prepared = false;
 	}
-
+	
 	void Box9Sprite::animFrameChanged(const AnimationFrame &f)
 	{
 		_prepared = false;
@@ -313,5 +314,17 @@ namespace oxygine
 				}
 			}
 		}
+	}
+
+	void Box9Sprite::serialize(serializedata* data)
+	{
+		Sprite::serialize(data);
+		setAttrV2(data->node, "size", getSize(), Vector2(0, 0));
+		data->node.set_name("Box9Sprite");
+	}
+
+	void Box9Sprite::deserialize(const deserializedata* data)
+	{
+		Sprite::deserialize(data);		
 	}
 }

@@ -29,7 +29,7 @@ namespace oxygine
 	}
 
 
-	string XmlWalker::getPath(const char *attrName)
+	string XmlWalker::getPath(const char *attrName) const
 	{
 		const char *str = _root.attribute(attrName).as_string();
 		if (str[0] == '.' && (str[1] == '/' || str[1] == '\\'))

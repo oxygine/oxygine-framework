@@ -122,5 +122,12 @@ examples/Demo/proj.android/local.properties
 proguard-project.txt
 examples/Demo/proj.marmalade/build_demo_
 examples/Demo/proj.marmalade/build_demo_*
+examples/DemoBox2D/data/*.dll
+examples/Game/part4/data/*.dll
+examples/HelloWorld/data/*.dll
+examples/Match3/data/*.dll
+examples/TutorialResources/data/*.dll
+examples/Demo/proj.win32/Win32/
+data.js
 syntax: regexp
 ^build/

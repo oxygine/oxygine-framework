@@ -2,7 +2,7 @@
 #include "TreeInspectorPage.h"
 #include "TreeInspectorPreview.h"
 #include "TreeInspector.h"
-#include "TextActor.h"
+#include "TextField.h"
 #include "res/ResFont.h"
 #include "res/Resources.h"
 
@@ -30,7 +30,7 @@ namespace oxygine
 		addChild(_item);
 
 		
-		spTextActor tb = new TextActor();
+		spTextField tb = new TextField();
 		tb->setInputEnabled(false);
 		tb->setColor(Color::Black);
 	

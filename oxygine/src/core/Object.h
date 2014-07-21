@@ -61,8 +61,14 @@ namespace oxygine
 		static void __removeFromDebugList(ObjectBase *base);
 		void __generateID();
 
-		mutable string *__name;//stl strings from marmalade allocate 16 bytes!!
+#if		DYNAMIC_OBJECT_NAME
+		//some objects dont need name
+		mutable string *__name;
+#else
+		mutable string __name;
+#endif
 		string *__getName() const;
+		void __freeName() const;
 
 		int __id;
 		void *__userData;

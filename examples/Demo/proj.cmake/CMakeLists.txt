@@ -6,6 +6,6 @@ add_definitions(${OXYGINE_DEFINITIONS})
 include_directories(${OXYGINE_INCLUDE_DIRS})
 link_directories(${OXYGINE_LIBRARY_DIRS})
 
-add_executable(Demo ../src/entry_point.cpp ../src/example.cpp ../src/test.cpp  ../src/example.h ../src/test.h ../src/TestBox9Sprite.h ../src/TestClipRect.h ../src/TestDrag.h ../src/TestInputText.h ../src/TestManageRes.h ../src/TestMask.h ../src/TestPerf.h ../src/TestProgressBar.h ../src/TestRender2Texture.h ../src/TestSliding.h ../src/TestTexel2Pixel.h ../src/TestText.h ../src/TestTextureFormat.h ../src/TestTweens.h ../src/TestUserShader.h )
+add_executable(Demo ../src/entry_point.cpp ../src/example.cpp ../src/test.cpp  ../src/TestBox9Sprite.h ../src/TestClipRect.h ../src/TestDrag.h ../src/TestInputText.h ../src/TestManageRes.h ../src/TestMask.h ../src/TestPerf.h ../src/TestProgressBar.h ../src/TestRender2Texture.h ../src/TestSliding.h ../src/TestTexel2Pixel.h ../src/TestText.h ../src/TestTextureFormat.h ../src/TestTweens.h ../src/TestUserShader.h ../src/example.h ../src/test.h )
 
 target_link_libraries(Demo ${OXYGINE_CORE_LIBS})

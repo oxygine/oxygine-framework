@@ -25,7 +25,12 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/oxygine/greenlets/src/)
 set(OX_HAVE_LIBJPEG 1)
 set(OX_HAVE_LIBPNG 1)
 
-if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+if (EMSCRIPTEN)
+	set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-Wno-warn-absolute-paths")
+	set(OX_HAVE_LIBJPEG 0)
+	set(OX_HAVE_LIBPNG 1)
+	set(THIRD_PARTY ${CMAKE_CURRENT_SOURCE_DIR}/oxygine/third_party/emscripten)
+elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	set(THIRD_PARTY ${CMAKE_CURRENT_SOURCE_DIR}/oxygine/third_party/linux)
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 	set(THIRD_PARTY ${CMAKE_CURRENT_SOURCE_DIR}/oxygine/third_party/ios)
@@ -89,6 +94,8 @@ if (WIN32)
 		${CORE_LIBS}
 		pthreadVCE2
 		)
+elseif(EMSCRIPTEN)
+
 else(WIN32)
 	set(CORE_LIBS
 		${CORE_LIBS}
@@ -106,9 +113,17 @@ if (OX_HAVE_LIBPNG)
 endif(OX_HAVE_LIBPNG)
 
 #add z library
-set(CORE_LIBS
-	${CORE_LIBS}
-	${libprefix}z${libprefix})
+if (EMSCRIPTEN)
+	set(CORE_LIBS
+		${CORE_LIBS}
+		libz
+		libpng16
+	)
+else(EMSCRIPTEN)
+	set(CORE_LIBS
+		${CORE_LIBS}
+		${libprefix}z${libprefix})
+endif(EMSCRIPTEN)
 
 #add jpeg library
 if (OX_HAVE_LIBJPEG)

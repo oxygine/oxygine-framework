@@ -44,7 +44,7 @@ public:
 		style.hAlign = TextStyle::HALIGN_CENTER;
 		style.multiline = true;
 
-		spTextActor text = initActor(new TextActor(), 
+		spTextField text = initActor(new TextField(), 
 			arg_attachTo = _masked,
 			arg_pos = content->getSize()/2,
 			arg_scale = 1.5f,

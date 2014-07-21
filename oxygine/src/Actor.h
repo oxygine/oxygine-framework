@@ -126,6 +126,7 @@ namespace oxygine
 		float               getScaleY() const {return _scale.y;}
 		/**Returns rotation angle in radians*/
 		float				getRotation() const {return _rotation;}		
+		float				getRotationDegrees() const {return _rotation / MATH_PI * 180.0f;}
 		int					getPriority() const {return _zOrder;}				
 		bool				getVisible() const {return (_flags & flag_visible) != 0;}
 		Actor*				getParent() const {return _parent;}
@@ -164,6 +165,8 @@ namespace oxygine
 		void setScaleY(float sy);
 		/**Sets rotation angle in radians*/
 		void setRotation(float angle);
+		/**Sets rotation angle in degrees. Converts internally to radians. (use setRotation!)*/
+		void setRotationDegrees(float angle);
 		/**This option is connected with Anchor. By default value is True*/
 		void setChildrenRelative(bool r){_flags &= ~flag_childrenRelative; if (r) _flags |= flag_childrenRelative;}
 		
@@ -259,6 +262,7 @@ namespace oxygine
 		typedef GetSet<float, float, Actor, &Actor::getWidth, &Actor::setWidth>									TweenWidth;
 		typedef GetSet<float, float, Actor, &Actor::getHeight, &Actor::setHeight>								TweenHeight;
 		typedef GetSet<float, float, Actor, &Actor::getRotation, &Actor::setRotation>							TweenRotation;
+		typedef GetSet<float, float, Actor, &Actor::getRotationDegrees, &Actor::setRotationDegrees>				TweenRotationDegrees;
 		typedef GetSet2Args1Arg<float, Vector2, const Vector2 &, Actor, &Actor::getScale, &Actor::setScale>		TweenScale;
 		typedef GetSet<float, float, Actor, &Actor::getScaleX, &Actor::setScaleX>								TweenScaleX;
 		typedef GetSet<float, float, Actor, &Actor::getScaleY, &Actor::setScaleY>								TweenScaleY;

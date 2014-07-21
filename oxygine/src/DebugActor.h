@@ -11,7 +11,7 @@ namespace oxygine
 	class ResAnim;
 	class Resources;
 
-	DECLARE_SMART(TextActor, spTextActor);
+	DECLARE_SMART(TextField, spTextField);
 	DECLARE_SMART(ColorRectSprite, spColorRectSprite);
 	DECLARE_SMART(DebugActor, spDebugActor);
 
@@ -29,6 +29,7 @@ namespace oxygine
 		DebugActor();
 		~DebugActor();
 
+		/**where to display DebugActor. 0 - top left, 1 - top right, 2 - bottom right, 3 - bottom left corner*/
 		void setCornerPosition(int corner);
 		//void addDebugString(const string &str);
 		void addDebugString(const char *format, ...);
@@ -48,7 +49,7 @@ namespace oxygine
 	private:
 		
 		spColorRectSprite _bg;
-		spTextActor _text;
+		spTextField _text;
 		string _debugText;
 		int _frames;
 		timeMS _startTime;

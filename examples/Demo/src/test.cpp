@@ -14,9 +14,9 @@ public:
 	vector<Test::toggle> _items;
 };
 
-spTextActor createText(string txt)
+spTextField createText(string txt)
 {
-	spTextActor text = new TextActor();
+	spTextField text = new TextField();
 
 	TextStyle style;
 	style.font = resourcesUI.getResFont("main")->getFont();
@@ -39,7 +39,7 @@ spButton createButtonHelper(spButton button, string txt, EventCallback cb)
 	button->addEventListener(TouchEvent::CLICK, cb);
 
 	//create Actor with Text and it to button as child
-	spTextActor text = createText(txt);
+	spTextField text = createText(txt);
 	text->setSize(button->getSize());
 	text->attachTo(button);
 
@@ -121,7 +121,7 @@ void Test::updateText(string id, string txt)
 	if (!child)
 		return;
 
-	spTextActor t = safeSpCast<TextActor>(child->getFirstChild());
+	spTextField t = safeSpCast<TextField>(child->getFirstChild());
 	if (!t)
 		return;
 	t->setText(txt);
@@ -140,7 +140,7 @@ void Test::_toggleClicked(Event *event)
 	toggleClicked(event->currentTarget->getName(), &t->_items[t->_current]);
 
 	t->_current = (t->_current + 1) % t->_items.size();
-	spTextActor ta = safeSpCast<TextActor>(t->getFirstChild());
+	spTextField ta = safeSpCast<TextField>(t->getFirstChild());
 	const toggle *data = &t->_items[t->_current];
 	ta->setText(data->text);
 }
@@ -181,13 +181,13 @@ void Test::notify(string txt, int time)
 	tq->add(Actor::TweenAlpha(255), 300, 1, false, 0, Tween::ease_inExpo);
 	tq->add(Actor::TweenAlpha(0), 300, 1, false, 1200);
 	tq->setDetachActor(true);
-	tq->setDoneCallback(CLOSURE(this, &Test::notifyDone));
+	tq->addDoneCallback(CLOSURE(this, &Test::notifyDone));
 
 	sprite->addTween(tq);
 	sprite->attachTo(ui);
 	sprite->setPosition(2.0f, getHeight() - 100.0f - N * sprite->getHeight() * 1.1f);
 
-	spTextActor text = createText(txt);
+	spTextField text = createText(txt);
 	text->attachTo(sprite);
 	text->setColor(Color::Black);
 	text->setPosition(sprite->getSize()/2);

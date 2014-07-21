@@ -126,9 +126,6 @@
     <ClCompile Include="..\..\src\core\gl\oxgl.cpp">
       <Filter>src\gl</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\gl\VideoDriverGLES11.cpp">
-      <Filter>src\gl</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\core\gl\VideoDriverGLES20.cpp">
       <Filter>src\gl</Filter>
     </ClCompile>
@@ -264,9 +261,6 @@
     <ClCompile Include="..\..\src\Sprite.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\TextActor.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\Tweener.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -292,6 +286,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\Serialize.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\TextField.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -417,9 +414,6 @@
       <Filter>src\gl</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\core\gl\oxgl.h">
-      <Filter>src\gl</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\core\gl\VideoDriverGLES11.h">
       <Filter>src\gl</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\core\gl\VideoDriverGLES20.h">
@@ -596,9 +590,6 @@
     <ClInclude Include="..\..\src\Sprite.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\TextActor.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\TextStyle.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -627,6 +618,12 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Serialize.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\TextField.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\TextActor.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

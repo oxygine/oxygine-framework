@@ -1,0 +1,38 @@
+1. start from readme.txt
+2. emscripten build configured with CMakeFiles
+
+how to build. Steps:
+- install Emscripten SDK and setup it
+- install CMake
+- install JDK version 6/7
+- if you are Windows user you need also install Make tool:
+  - install GnuMake (http://gnuwin32.sourceforge.net/packages/make.htm) or any other 
+
+
+- configure environment variables properly:
+  EMSCRIPTEN points to Emscripten SDK folder with emcc
+  	example: d:\Emscripten\emscripten\1.16.0\   
+  JAVA_HOME points to JDK 
+  	example: c:\Program Files (x86)\Java\jdk1.6.0_26\
+
+- add necessary paths to environment variable PATH:
+  EMSCRIPTEN
+  	example: d:\Emscripten\emscripten\1.16.0\
+  JDK 
+  	example: "c:\Program Files (x86)\Java\jdk1.6.0_26\bin\"
+
+
+- select any example from examples folder. I chose Demo
+- go to folder oxygine-framework/examples/Demo/proj.emscripten
+- run: build
+- goto new created build folder and open Demo.html with Browser
+
+
+2b. You could generate your own emscipten build configuration
+=================================================================================================
+- you need installed Python 2.7
+- you need to run this script
+  oxygine-framework\tools\gen_template.py
+
+example:
+	python gen_template.py MyProject -t emscripten -d path/to/MyProject/

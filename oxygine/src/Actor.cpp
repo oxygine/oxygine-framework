@@ -104,11 +104,14 @@ namespace oxygine
 		stringstream stream;
 		stream << "{" << typeid(*this).name() << "}";
 		//stream << this;
-		
+
+#if DYNAMIC_OBJECT_NAME
 		if (__name && __name->size())
-		{
-			stream << " name='" << div(*__name, Color::Red) << "'";			
-		}
+			stream << " name='" << div(*__name, Color::Red) << "'";
+#else
+		if (__name.size())
+			stream << " name='" << div(__name, Color::Red) << "'";
+#endif
 
 		stream << " id='" << getObjectID()<< "'";
 		stream << "\n";
@@ -526,6 +529,12 @@ namespace oxygine
 		_rotation = rotation;
 		_flags |= flag_transformDirty | flag_transformInvertDirty;
 		_flags &= ~flag_fastTransform;
+	}
+
+	void Actor::setRotationDegrees(float degr)
+	{
+		float rad = degr * MATH_PI / 180.0f;
+		setRotation(rad);
 	}
 
 	void Actor::sizeChanged(const Vector2 &size)

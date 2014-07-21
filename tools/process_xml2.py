@@ -2,7 +2,7 @@
 
 def get_parser():
     import argparse	
-    parser = argparse.ArgumentParser(description="process xml resources file")
+    parser = argparse.ArgumentParser(description="This tool is being used to processing and optimizing xml resources file. It generated .ox folder with meta.xml file inside. Meta file has optimized information about resources, atlasses.")
     parser.add_argument("--src_data", help = "root folder contains all resources", default = ".")
     parser.add_argument("--dest_data", help = "dest root folder for generated files", default = ".")
     parser.add_argument("-x", "--xml", help = "xml file to process", default = ".", required = True)

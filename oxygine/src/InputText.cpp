@@ -1,9 +1,9 @@
 #include "InputText.h"
-#include "TextActor.h"
+#include "TextField.h"
 #include "utils/stringUtils.h"
 #include "Input.h"
 
-#ifndef __S3E__
+#ifdef OXYGINE_SDL
 #include "SDL_keyboard.h"
 #include "SDL_events.h"
 #endif
@@ -30,7 +30,7 @@ namespace oxygine
 		_active = 0;
 	}
 
-	void InputText::start(spTextActor ta)
+	void InputText::start(spTextField ta)
 	{
 #ifdef __S3E__
 		log::error("InputText isn't implemented for MARMALADE");
@@ -51,7 +51,7 @@ namespace oxygine
 
 		Input::instance.addEventListener(Input::event_platform, CLOSURE(this, &InputText::_onPlatform));
 
-#ifndef __S3E__
+#ifdef OXYGINE_SDL
 		SDL_StartTextInput();
 #endif
 		//log::messageln("InputText::start  %x", this);
@@ -86,7 +86,7 @@ namespace oxygine
 
 	void InputText::stop()
 	{
-#ifndef __S3E__
+#ifdef OXYGINE_SDL
 		SDL_StopTextInput();
 #endif
 		Input::instance.removeEventListeners(this);
@@ -99,7 +99,7 @@ namespace oxygine
 
 	void InputText::_onPlatform(Event *event)
 	{
-#ifndef __S3E__
+#ifdef OXYGINE_SDL
 		_onSDLEvent((SDL_Event*)event->userData);
 #endif
 	}
@@ -146,7 +146,7 @@ namespace oxygine
 		return prev - begin;
 	}
 
-#ifndef __S3E__
+#ifdef OXYGINE_SDL
 	int InputText::_onSDLEvent(SDL_Event *event)
 	{
 		switch(event->type)

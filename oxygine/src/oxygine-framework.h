@@ -30,7 +30,8 @@
 #include "SlidingActor.h"
 #include "Sprite.h"
 #include "MaskedSprite.h"
-#include "TextActor.h"
+#include "TextField.h"
+#include "TextActor.h"//deprecated
 #include "TextStyle.h"
 #include "Tweener.h"
 #include "UpdateState.h"

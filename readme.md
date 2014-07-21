@@ -43,7 +43,7 @@ Source code is available under MIT license (use for free anywhere).
 
 ##Features:
 - Language C++.
-- For rendering OpenGL(ES) 1.1 and 2.0 is used. Shaders supported.
+- For rendering 2.0 is used. Custom shaders supported.
 - Compressed textures supported.
 - Component based system, simple and predictable OOP API. Possibility to inherit from classes and overload their behavior.
 - No global mega managers of everything, that dictates requirements to the way you write your code.
@@ -69,6 +69,8 @@ For different event handlers(or tweens) you can setup callbacks based on Winnie.
 - It is possible to partially unload from memory “heavy” resources, like atlases. The handler to work with atlas will be still valid (as well as his size) and will even have texture point, but the texture itself will be empty. This is very important when you have strict memory limitations : for example if you created all UI with all resources loaded, but there is no need to display them.
 - Fast automatic batching.
 - Bitmap fonts based on [BMFont](http://www.angelcode.com/products/bmfont/). Possibility to add your own font type.
+
+You could build it on top of the Marmalade, SDL2 or adapt it for your platform. Oxygine could be build with Emscripten for internet browser too.
 
 And this is not all. There are a lot of features, but it is easy to use them, framework is not a monster and very intuitively clear. Viewing of couple examples would be enough to understand how it works.
 

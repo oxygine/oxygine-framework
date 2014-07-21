@@ -3,7 +3,7 @@
 #include "Actor.h"
 #include "Sprite.h"
 #include "Button.h"
-#include "TextActor.h"
+#include "TextField.h"
 namespace oxygine
 {
 
@@ -63,14 +63,14 @@ namespace oxygine
 		typedef argT<void*, void*, ObjectBase, &ObjectBase::setUserData> userData;
 		typedef argT<char, char, Actor, &Actor::setExtendedClickArea> extendedClickArea;
 
-		typedef argT<TextStyle, const TextStyle &, TextActor, &TextActor::setStyle> style;	
-		typedef argT<std::string, const std::string &, TextActor, &TextActor::setText> text;	
-		typedef argT<std::string, const std::string &, TextActor, &TextActor::setHtmlText> htmlText;	
-		typedef argT<TextStyle::HorizontalAlign, TextStyle::HorizontalAlign, TextActor, &TextActor::setHAlign> hAlign;	
-		typedef argT<TextStyle::VerticalAlign, TextStyle::VerticalAlign, TextActor, &TextActor::setVAlign> vAlign;	
-		typedef argT<int, int, TextActor, &TextActor::setFontSize2Scale> fontSize2Scale;	
-		typedef argT<Font*, Font*, TextActor, &TextActor::setFont> font;	
-		typedef argT<bool, bool, TextActor, &TextActor::setMultiline> multiline;
+		typedef argT<TextStyle, const TextStyle &, TextField, &TextField::setStyle> style;	
+		typedef argT<std::string, const std::string &, TextField, &TextField::setText> text;	
+		typedef argT<std::string, const std::string &, TextField, &TextField::setHtmlText> htmlText;	
+		typedef argT<TextStyle::HorizontalAlign, TextStyle::HorizontalAlign, TextField, &TextField::setHAlign> hAlign;	
+		typedef argT<TextStyle::VerticalAlign, TextStyle::VerticalAlign, TextField, &TextField::setVAlign> vAlign;	
+		typedef argT<int, int, TextField, &TextField::setFontSize2Scale> fontSize2Scale;	
+		typedef argT<Font*, Font*, TextField, &TextField::setFont> font;	
+		typedef argT<bool, bool, TextField, &TextField::setMultiline> multiline;
 
 
 		class animFrame
@@ -160,7 +160,7 @@ namespace oxygine
 #define arg_resAnim args::animFrame(false, 0, 0)
 #define arg_managedResAnim args::animFrame(true, 0, 0)
 
-//TextActor
+//TextField
 #define arg_style args::style()
 #define arg_text args::text()
 #define arg_htmlText args::htmlText()

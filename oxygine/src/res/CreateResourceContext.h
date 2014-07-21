@@ -20,7 +20,7 @@ namespace oxygine
 		bool empty() const {return _root.empty();}
 
 		const string&	getCurrentFolder() const {return _path;}
-		string			getPath(const char *attrName);
+		string			getPath(const char *attrName) const;
 		pugi::xml_node	getNode() const {return _root;}
 		pugi::xml_node	getMeta() const {return _rootMeta;}
 		float			getScaleFactor() const {return _scaleFactor;}

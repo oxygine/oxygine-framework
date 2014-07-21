@@ -33,7 +33,7 @@ void Scene::hide()
 	//detach when done
 	tween->setDetachActor(true);
 	//and call Scene::hidden	
-	tween->setDoneCallback(CLOSURE(this, &Scene::hidden));
+	tween->addDoneCallback(CLOSURE(this, &Scene::hidden));
 }
 
 void Scene::hidden(Event *ev)

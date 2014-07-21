@@ -22,7 +22,7 @@ GameMenu::GameMenu()
 
 	float y = _view->getHeight()/2 - 80;
 
-	//initialize TextStyle for TextActor
+	//initialize TextStyle for TextField
 	//TextStyle is plain struct with "setting" for Text
 	TextStyle style;
 	style.font = res::ui.getResFont("big")->getFont();
@@ -31,7 +31,7 @@ GameMenu::GameMenu()
 	//horizontal align
 	style.hAlign = TextStyle::HALIGN_CENTER;
 
-	spTextActor paused = initActor(new TextActor,
+	spTextField paused = initActor(new TextField,
 		arg_style = style,
 		//colored text by "html" tags
 		arg_htmlText = "Paused<div c='00FF00'>!</div>",
@@ -90,7 +90,7 @@ void GameMenu::_show()
 	tq->add(Actor::TweenHeight(300), 500);
 	tq->add(Actor::TweenWidth(300), 500);
 	//and show buttons when done
-	tq->setDoneCallback(CLOSURE(this, &GameMenu::showButtons));
+	tq->addDoneCallback(CLOSURE(this, &GameMenu::showButtons));
 	_bg->addTween(tq);
 }
 

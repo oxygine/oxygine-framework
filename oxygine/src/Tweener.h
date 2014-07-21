@@ -13,12 +13,12 @@
 
 namespace oxygine
 {	
-	template<typename value, typename valueRef, typename C, valueRef (C::*GetF) () const, void (C::*SetF)(valueRef)>
+	template<typename Value, typename valueRef, typename C, valueRef (C::*GetF) () const, void (C::*SetF)(valueRef)>
 	class GetSet
 	{
 	public:
 		typedef C type;
-
+		typedef Value value;
 
 		GetSet(valueRef dest):_dest(dest), _initialized(false){}
 
@@ -51,15 +51,17 @@ namespace oxygine
 			set(t, v);
 		}
 
+		static valueRef get(C &c)
+		{
+			return (c.*GetF)();
+		}
+
 	private:
 		value _dest;
 		value _src;
 		bool _initialized;
 
-		static valueRef get(C &c) 
-		{
-			return (c.*GetF)();
-		}
+
 
 		static void set(C &c, valueRef v) 
 		{
@@ -151,9 +153,13 @@ namespace oxygine
 		bool		isStarted() const {return _status != status_not_started;}
 		bool		isDone() const {return _status == status_remove;}
 
+		/**set custom user data object to Tween. Could be used for store some useful data*/
 		void setDataObject(spObject data) {_data = data;}
-		void setDoneCallback(EventCallback cb);//deprecated. use tween->addEventListener(TweenEvent::DONE, ...)
+		/**callback would be called when tween done. Could be added more than one*/
+		void addDoneCallback(EventCallback cb);
+		/**set Easing function*/
 		void setEase(EASE ease){_ease = ease;}
+		/**set Delay before starting tween*/
 		void setDelay(timeMS delay){_delay = delay;}
 		/** loops = -1 means infinity repeat cycles*/
 		void setLoops(int loops){_loops = loops;}
@@ -170,6 +176,9 @@ namespace oxygine
 		void update(Actor &actor, const UpdateState &us);	
 
 		static float calcEase(EASE ease, float v);
+
+		OXYGINE_DEPRECATED
+		void setDoneCallback(EventCallback cb);//deprecated. use tween->addDoneCallback or tween->addEventListener(TweenEvent::DONE, ...)
 
 	protected:
 		void done(Actor &, const UpdateState &us);

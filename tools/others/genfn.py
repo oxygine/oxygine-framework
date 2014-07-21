@@ -26,7 +26,11 @@ funcs = ["glUseProgram",
          "glDeleteFramebuffers", 
          "glGetUniformLocation", 
          "glFramebufferTexture2D", 
-         "glCompressedTexImage2D", ]
+         "glCompressedTexImage2D", 
+         "glBindBuffer",
+         "glGenBuffers",
+         "glBufferData",
+         "glDeleteBuffers"]
 
 
 #GLAPI void APIENTRY glDeleteProgram (GLuint program);

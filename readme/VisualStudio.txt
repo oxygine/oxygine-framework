@@ -12,13 +12,15 @@
 - try to build Demo
 - copy
    all required dlls from  oxygine-framework\oxygine\third_party\win32\dlls\
-   and SDL2.dll from SDL\VisualC\SDL\Win32\   <Debug> or <Release>
+   and SDL2.dll from 
+   oxygine-framework\examples\Demo\proj.win32\Win32\ <Debug> or <Release>
+   (SDL\VisualC\SDL\Win32\   <Debug> or <Release>)
    to  oxygine-framework\examples\Demo\data\   
 - working directory of Demo project should point to "data" folder (right click on Demo -> Config.Properties->Debugging->set working dir)
 - ready! run!
 =================================================================================================
 
-2b. You could generate your own Solution in any place.
+2b. You could generate your own Solution anywhere
 - you need installed Python 2.7
 - you need to run this script
   oxygine-framework\tools\gen_template.py

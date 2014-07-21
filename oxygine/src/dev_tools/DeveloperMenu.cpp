@@ -1,7 +1,7 @@
 #include "DeveloperMenu.h"
 #include "ColorRectSprite.h"
 #include "ClipRectActor.h"
-#include "TextActor.h"
+#include "TextField.h"
 #include "DebugActor.h"
 #include "res/Resources.h"
 #include "initActor.h"
@@ -71,9 +71,9 @@ namespace oxygine
 		close->addEventListener(TouchEvent::CLICK, CLOSURE(this, &DeveloperMenu::close));
 
 
-		spTextActor title = initActor(new TextActor,
+		spTextField title = initActor(new TextField,
 			arg_style = style,
-			arg_hAlign = TextStyle::HALIGN_CENTER,
+			arg_hAlign = TextStyle::HALIGN_MIDDLE,
 			arg_vAlign = TextStyle::VALIGN_MIDDLE,
 			arg_text = text,
 			arg_width = top->getWidth(),

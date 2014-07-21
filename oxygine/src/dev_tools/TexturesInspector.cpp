@@ -6,7 +6,7 @@
 #include "SlidingActor.h"
 #include "DebugActor.h"
 #include "res/Resources.h"
-#include "TextActor.h"
+#include "TextField.h"
 #include "ColorRectSprite.h"
 #include "utils/stringUtils.h"
 
@@ -51,7 +51,7 @@ namespace oxygine
 				textureFormat2String(t->getFormat()),
 				t->getWidth(), t->getHeight(), t->getObjectID());
 
-			spTextActor text = initActor(new TextActor,
+			spTextField text = initActor(new TextField,
 				arg_color = Color::Black,
 				arg_w = (float)itemSize.x,
 				arg_vAlign = TextStyle::VALIGN_TOP,
@@ -82,7 +82,7 @@ namespace oxygine
 		vector<spNativeTexture> textures = NativeTexture::getCreatedTextures();
 
 		
-		spTextActor text = initActor(new TextActor,
+		spTextField text = initActor(new TextField,
 			arg_color = Color::White,
 			arg_w = itemSize.x * 3.0f,
 			arg_h = 30.0f,

@@ -6,11 +6,17 @@
 #include <stdio.h>
 #include <stdarg.h>
 
+
+//#define OXYGINE_NO_YEILD 1
+
 #if __S3E__
 	#define OXYGINE_MARMALADE 1
 	#ifdef IW_DEBUG
 		#define OX_DEBUG 1
 	#endif
+#elif EMSCRIPTEN
+	#define OXYGINE_EMSCRIPTEN 1
+	
 #else
 	#define OXYGINE_SDL 1
 	#ifdef WIN32
@@ -28,10 +34,14 @@
 #endif
 
 
+#define DYNAMIC_OBJECT_NAME 1
+
 
 #ifndef OX_DEBUG
-	#define USE_MEMORY_POOL 1
-	#define OBJECT_POOL_ALLOCATOR 1
+	#ifndef EMSCRIPTEN
+		#define USE_MEMORY_POOL 1
+		#define OBJECT_POOL_ALLOCATOR 1
+	#endif
 #endif
 
 #if OX_DEBUG
@@ -56,4 +66,13 @@ namespace oxygine{namespace log{void error(const char *format, ...);}}
 
 #define OXYGINE_HAS_RESTORE
 
+#ifdef __GNUC__
+#define OXYGINE_DEPRECATED __attribute__((deprecated))
+#elif defined(_MSC_VER)
+#define OXYGINE_DEPRECATED __declspec(deprecated)
+#else
+#pragma message("WARNING: You need to implement DEPRECATED for this compiler")
+#define OXYGINE_DEPRECATED
 #endif
+
+#endif //OXYGINE_INCLUDE

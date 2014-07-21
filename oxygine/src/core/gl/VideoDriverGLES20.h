@@ -34,6 +34,9 @@ namespace oxygine
 		void setUniform(const char *id, float val);
 
 	protected:
+		GLuint _vbo;
+		GLuint _ibo;
+
 		int _program;
 		void updateConstants();
 	};

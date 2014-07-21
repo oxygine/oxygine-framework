@@ -11,7 +11,7 @@ class TextWithBackground: public ColorRectSprite
 public:
 	TextWithBackground(const string &defText)
 	{
-		text = new TextActor;
+		text = new TextField;
 		//text won't handle any touch event
 		text->setInputEnabled(false);
 
@@ -27,7 +27,7 @@ public:
 		addChild(text);		
 	}
 
-	spTextActor text;
+	spTextField text;
 
 	void sizeChanged(const Vector2 &size)
 	{

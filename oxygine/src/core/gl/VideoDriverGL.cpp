@@ -108,6 +108,7 @@ namespace oxygine
 		glGetIntegerv(GL_VIEWPORT, vp);
 
 		r = Rect(vp[0], vp[1], vp[2], vp[3]);;
+		//log::messageln("vp %d %d %d %d", vp[0], vp[1], vp[2], vp[3]);
         CHECKGL();
 	}
 

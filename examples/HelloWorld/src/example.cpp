@@ -12,7 +12,7 @@ DECLARE_SMART(MainActor, spMainActor);
 class MainActor: public Actor
 {
 public:
-	spTextActor _text;
+	spTextField _text;
 
 	MainActor()
 	{	
@@ -36,7 +36,7 @@ public:
 		//second part
 
 		//create Actor with Text and it to button as child
-		spTextActor text = new TextActor();
+		spTextField text = new TextField();
 		text->attachTo(button);
 		//centered in button
 		text->setPosition(button->getSize()/2);

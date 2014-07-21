@@ -28,6 +28,7 @@ namespace oxygine
 	class Resources: public Resource
 	{
 	public:
+		typedef vector<spResource> resources;
 		typedef Resource* (*createResourceCallback)(CreateResourceContext &context);
 		typedef Closure<void (Resource *)> ResLoadedCallback;
 
@@ -54,7 +55,7 @@ namespace oxygine
 			const string &prebuilt_folder = "");
 
         /**Adds your own Resource and becomes resource owner if Own is true. Owned resource will be deleted from destructor by calling 'delete'.*/
-		void add(Resource *r, bool own);
+		void add(Resource *r);
 		
 		/**Calls Resource::load for each resoure in the list*/
 		void load(LoadResourcesContext *context = 0, ResLoadedCallback cb = ResLoadedCallback());
@@ -72,7 +73,7 @@ namespace oxygine
 		Resource *get(const string &id, error_policy ep = ep_show_error);
 
 		/** returns resource by index */
-		Resource *get(int index){return _fastAccessResources[index];}
+		Resource *get(int index){return _fastAccessResources[index].get();}
 		int		  getCount() const {return (int)_fastAccessResources.size();}
 
 		Resource * operator[](const string &id){return get(id);}
@@ -92,13 +93,19 @@ namespace oxygine
 		template<class T>
 		T *getT(const string &id, error_policy ep = ep_show_error){return safeCast<T*> (get(id, ep));}
 
+		/**sorting manually added resources*/
+		void sort();
 		/**debug function. prints all loaded resources*/
-		void print();
+		void print();		
+
+
+		resources& _getResources();
 
 	protected:
         void updateName(const string &filename);
 		void _load(LoadResourcesContext *context);
 		void _unload();
+
 
 		struct registeredResource
 		{
@@ -123,9 +130,8 @@ namespace oxygine
 		};
 
 		
-		typedef vector<Resource*> resources;
 		resources _resources;
-		resources _owned;
+		//resources _owned;
 		resources _fastAccessResources;
 
 		typedef vector< registeredResource > registeredResources;

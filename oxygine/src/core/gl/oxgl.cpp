@@ -59,6 +59,7 @@ extern "C"
 	GLAPI void APIENTRY glAttachShader(GLuint program, GLuint shader)
 	{
 		_glAttachShader(program, shader);
+
 	}
 	PFNGLSHADERSOURCEPROC _glShaderSource = 0;
 	GLAPI void APIENTRY glShaderSource(GLuint shader, GLsizei count, const GLchar * const* string, const GLint *length)
@@ -135,6 +136,30 @@ extern "C"
 	{
 		_glCompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data);
 	}
+
+	PFNGLBINDBUFFERPROC _glBindBuffer = 0;
+	GLAPI void APIENTRY glBindBuffer(GLenum target, GLuint buffer)
+	{
+		_glBindBuffer(target, buffer);
+	}
+	
+	PFNGLGENBUFFERSPROC _glGenBuffers = 0;
+	GLAPI void APIENTRY glGenBuffers(GLsizei n, GLuint *buffers)
+	{
+		_glGenBuffers(n, buffers);
+	}
+
+	PFNGLBUFFERDATAPROC _glBufferData = 0;
+	GLAPI void APIENTRY glBufferData(GLenum target, GLsizeiptr size, const GLvoid *data, GLenum usage)
+	{
+		_glBufferData(target, size, data, usage);
+	}
+
+	PFNGLDELETEBUFFERSPROC _glDeleteBuffers = 0;
+	GLAPI void APIENTRY glDeleteBuffers(GLsizei n, const GLuint *buffers)
+	{
+		_glDeleteBuffers(n, buffers);
+	}
 }
 
 void initGLExtensions(myGetProcAdress func)
@@ -168,6 +193,12 @@ void initGLExtensions(myGetProcAdress func)
 	_glGetUniformLocation = (PFNGLGETUNIFORMLOCATIONPROC)func("glGetUniformLocation");
 	_glFramebufferTexture2D = (PFNGLFRAMEBUFFERTEXTURE2DPROC)func("glFramebufferTexture2D");
 	_glCompressedTexImage2D = (PFNGLCOMPRESSEDTEXIMAGE2DPROC)func("glCompressedTexImage2D");
+
+	_glBindBuffer = (PFNGLBINDBUFFERPROC)func("glBindBuffer");
+	_glGenBuffers = (PFNGLGENBUFFERSPROC)func("glGenBuffers");
+	_glBufferData = (PFNGLBUFFERDATAPROC)func("glBufferData");
+	_glDeleteBuffers = (PFNGLDELETEBUFFERSPROC)func("glDeleteBuffers");
+
 }
 #else
 void initGLExtensions(myGetProcAdress func)

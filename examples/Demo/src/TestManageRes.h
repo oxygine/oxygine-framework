@@ -1,6 +1,10 @@
 #pragma once
 #include "test.h"
 #include "Multithreading.h"
+#ifdef EMSCRIPTEN
+#include <emscripten.h>
+#endif
+
 class ManageResTest: public Test
 {
 public:
@@ -8,8 +12,11 @@ public:
 	{
 		toggle sw[] = {toggle("unload resources", 1), toggle("load resources", 0)};
 		addToggle("switch", sw, 2);
+#ifdef EMSCRIPTEN
+#else
 		addButton("mt", "Multithreading loading");
 		addButton("mt_slow", "MT loading (slow demo)");
+#endif
 
 
 		for (int i = 0; i < resources.getCount(); ++i)
@@ -36,7 +43,7 @@ public:
 			}
 		}
 
-		spTextActor text = new TextActor;
+		spTextField text = new TextField;
 		text->attachTo(content);
 
 		text->setSize(300, 200);

@@ -12,13 +12,14 @@ You could start from example.cpp and example.h it has main functions being calle
 #include "example.h"
 
 
+
 using namespace oxygine;
 
 Renderer renderer;
 Rect viewport;
 
 
-class ExampleRootActor: public RootActor
+class ExampleRootActor : public RootActor
 {
 public:
 	ExampleRootActor()
@@ -72,19 +73,22 @@ int mainloop()
 //it is application entry point
 void run()
 {
+	ObjectBase::__startTracingLeaks();
+
 	//initialize oxygine's internal stuff
 	core::init_desc desc;
 
-#if OXYGINE_SDL
+#if OXYGINE_SDL || OXYGINE_EMSCRIPTEN
 	//we could setup initial window size on SDL builds
-	//desc.w = 960;
-	//desc.h = 660;
+	desc.w = 960;
+	desc.h = 640;
 	//marmalade settings could be changed from emulator's menu
 #endif
 
+
 	example_preinit();
 	core::init(&desc);
-	
+
 
 	//create RootActor. RootActor is a root node
 	RootActor::instance = new ExampleRootActor();
@@ -118,15 +122,23 @@ void run()
 	//initialize this example stuff. see example.cpp
 	example_init();
 
+#ifdef EMSCRIPTEN
+	/*
+	if you build for Emscripten mainloop would be called automatically outside. 
+	see emscripten_set_main_loop below
+	*/	
+	return;
+#endif
+
 	bool done = false;
 
 	//here is main game loop
-    while (1)
-    {
+	while (1)
+	{
 		int done = mainloop();
 		if (done)
 			break;
-    }
+	}
 	//so user want to leave application...
 
 	//lets dump all created objects into log
@@ -150,14 +162,16 @@ void run()
 	//dump list should be empty now
 	//we deleted everything and could be sure that there aren't any memory leaks
 	ObjectBase::dumpCreatedObjects();
+
+	ObjectBase::__stopTracingLeaks();
 	//end
 }
 
 #ifdef __S3E__
 int main(int argc, char* argv[])
 {
-    run();
-    return 0;
+	run();
+	return 0;
 }
 #endif
 
@@ -165,11 +179,11 @@ int main(int argc, char* argv[])
 #ifdef OXYGINE_SDL
 #ifdef __MINGW32__
 int WinMain(HINSTANCE hInstance,
-                     HINSTANCE hPrevInstance,
-                     LPSTR lpCmdLine,int nCmdShow)
+	HINSTANCE hPrevInstance,
+	LPSTR lpCmdLine, int nCmdShow)
 {
-    run();
-    return 0;
+	run();
+	return 0;
 }
 #else
 #include "SDL_main.h"
@@ -184,11 +198,15 @@ extern "C"
 #endif
 #endif
 
-#ifdef __FLASHPLAYER__
+#ifdef EMSCRIPTEN
+#include <emscripten.h>
+
+void one(){ mainloop(); }
+
 int main(int argc, char* argv[])
 {
-	printf("test\n");
 	run();
+	emscripten_set_main_loop(one, 0, 0);
 	return 0;
 }
 #endif

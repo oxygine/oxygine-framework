@@ -28,6 +28,7 @@ namespace file
 
 		void add(const char *name);
 		void add(const unsigned char* data, unsigned int size);
+		void add(vector<char> &data);
 		
 		void update();
 
@@ -36,14 +37,20 @@ namespace file
 		const file_entry *getEntry(const char *name);
 
 	private:
-		void add(unzFile zp);
+		void read(unzFile zp);
 
 		bool _sort;
 
 		typedef vector<file_entry> files;
 		files _files;
 
-		typedef vector<unzFile> zips;
+		struct zpitem
+		{
+			unzFile handle;
+			vector<char> data;
+			zpitem():handle(0){}
+		};
+		typedef vector<zpitem> zips;
 		zips _zps;
 	};
 
@@ -56,7 +63,10 @@ namespace file
 		ZipFileSystem():FileSystem(true){}
 
 		void add(const char *zip);
+		//add zip from memory, data should not be deleted
 		void add(const unsigned char* data, unsigned int size);
+		//add zip from memory, vector would be swapped (emptied)
+		void add(vector<char> &data);
 		void reset();
 
 	protected:

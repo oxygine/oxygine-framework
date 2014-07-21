@@ -41,7 +41,9 @@ namespace oxygine
 		void setContent(spActor content);
 		void setLocked(bool locked);
 		void snap();
-		
+
+		void serialize(serializedata* data);
+		void deserialize(const deserializedata* data);		
 
 	protected:
 		void destroy();

@@ -249,7 +249,7 @@ THIRD_PARTY = $$ROOT/oxygine/third_party/win32_mingw
 
 INCLUDEPATH += $$THIRD_PARTY/libpng
 INCLUDEPATH += $$THIRD_PARTY/zlib
-INCLUDEPATH += $$THIRD_PARTY/pthreads
+#INCLUDEPATH += $$THIRD_PARTY/pthreads
 
 DEFINES += "OX_HAVE_LIBPNG=1"
 
