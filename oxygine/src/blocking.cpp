@@ -25,6 +25,7 @@ namespace oxygine
 
 		int yield()
 		{
+			OX_ASSERT(_mainLoopFunc);
 #if OXYGINE_NO_YEILD
 			log::error("%s not supported", __func__);
 			return 0;

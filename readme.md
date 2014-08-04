@@ -1,7 +1,7 @@
 **oxygine-framework/readme** folder has insructions how to build and run oxygine on different platforms.
 
 
-# Oxygine is C++ engine for 2d mobile games. 
+# Oxygine is C++ engine for 2D mobile games. 
 One more shell around OpenGL/D3D API you would say? No, this is a set of classes and tools to create a game according to your requirements.
 
 In the basis of the engine there is a scene graph, that is similar to Flash one. To be short, You can call this as Flash for C++, but more comfortable and way faster. Initially it was developed for mobile platforms (iOS, Android), but can be also used for PC games.
@@ -13,6 +13,13 @@ Source code is available under MIT license (use for free anywhere).
 - Necessary tools, documentation
 - Examples
 - Demo for testing and demonstration of base features
+
+##Supported platforms:
+- Android
+- iOS
+- Windows
+- MacOSX
+- Emscripten (web)
 
 
 ##Examples of code:
@@ -42,15 +49,15 @@ Source code is available under MIT license (use for free anywhere).
 		      arg_attachTo = getRoot());
 
 ##Features:
-- Language C++.
-- For rendering 2.0 is used. Custom shaders supported.
+- Programming language is C++.
+- For rendering OpenGL(ES) 2.0 is used. Custom shaders supported.
 - Compressed textures supported.
 - Component based system, simple and predictable OOP API. Possibility to inherit from classes and overload their behavior.
 - No global mega managers of everything, that dictates requirements to the way you write your code.
 - Effective and flexible work with resources, very close to your game.
 - Components of the engine have weak links between each other. Can be used together, separately or not at all.
 - Fast creation and deletion of objects using memory pools for all engine objects.
-- SceneGraph is built on smart pointers (analogue boost:intrusive_ptr). No need to hassle with memory control, memory leaks, but sometimes you need to fix loop references(by not doing them). It is somewhat similar to Flash ([diagrams with inheritance models](https://dl.dropbox.com/u/12679384/oxygine/actor_inheritance.png)). If you want to use your own scene graph you can use just low level images rendering system from Oxygine.
+- SceneGraph is somewhat similar to Flash ([diagrams with inheritance models](https://dl.dropbox.com/u/12679384/oxygine/actor_inheritance.png)). It is built on smart pointers (analogue boost:intrusive_ptr). No need to hassle with memory control, memory leaks. If you want to use your own scene graph you can use just low level images rendering system from Oxygine.
 - Debug Tools ([screenshot](https://dl.dropboxusercontent.com/u/12679384/oxygine/debug_tools.gif)). Tree Inspector is “Visual profiler” for Scene Graph. Right in the game you can view the graph and different branches to analyze and errors search. “Textures Inspector” shows you currently loaded textures into memory.
 “Textures Inspector” shows you currently loaded textures into memory ([screenshot](https://dl.dropbox.com/u/12679384/oxygine/textures_inspector.png))
 - Render to texture.
@@ -64,13 +71,13 @@ For different event handlers(or tweens) you can setup callbacks based on Winnie.
 - Accurate rendering of text with line wraps, vertical and horizontal alignment support, localization, utf-8. Base HTML tags support ([screenshot](https://dl.dropboxusercontent.com/u/12679384/oxygine/text_align.gif)).
 - If you want to add multiple sets of assets for different game resolutions it can be done on the engine level by writing just a few lines of code. You won’t need to adjust coordinates manually for different resolution. It is enough just to keep initial art in high-res.
 - Masking ([screenshot](https://dl.dropboxusercontent.com/u/12679384/oxygine/masking.gif), [screenshot](https://dl.dropboxusercontent.com/u/12679384/oxygine/mask.png))
-- Atlas assembling on the fly during the loading, if you didn’t make it before.
+- Atlas assembling on the fly during the loading, if you didn't make it before.
 - Multi-threaded resources loading.
-- It is possible to partially unload from memory “heavy” resources, like atlases. The handler to work with atlas will be still valid (as well as his size) and will even have texture point, but the texture itself will be empty. This is very important when you have strict memory limitations : for example if you created all UI with all resources loaded, but there is no need to display them.
+- It is possible to partially unload from memory “heavy” resources, like atlases. The resouce handle to work with atlas will be still valid (as well as his size) and will even have texture point, but the texture itself will be empty. This is very important when you have strict memory limitations: for example if you created all UI with all resources loaded, but there is no need to display them.
 - Fast automatic batching.
 - Bitmap fonts based on [BMFont](http://www.angelcode.com/products/bmfont/). Possibility to add your own font type.
 
-You could build it on top of the Marmalade, SDL2 or adapt it for your platform. Oxygine could be build with Emscripten for internet browser too.
+You could build it on top of the Marmalade, SDL2 or adapt it for your platform. Oxygine could be build with Emscripten for internet browser as well.
 
 And this is not all. There are a lot of features, but it is easy to use them, framework is not a monster and very intuitively clear. Viewing of couple examples would be enough to understand how it works.
 

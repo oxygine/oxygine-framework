@@ -275,7 +275,7 @@ def run(args):
                     dest_file = io.open(dest_path, "w", newline="\n")
                     dest_file.write(unicode(dest_data, encoding='utf-8')) 
                 else:
-                    dest_file = io.open(dest_path, "w")
+                    dest_file = open(dest_path, "w")
                     dest_file.write(dest_data)      
                 
             else:

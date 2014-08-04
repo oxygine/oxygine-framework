@@ -129,5 +129,6 @@ examples/Match3/data/*.dll
 examples/TutorialResources/data/*.dll
 examples/Demo/proj.win32/Win32/
 data.js
+examples/HelloWorld/proj.win32/Win32/
 syntax: regexp
 ^build/

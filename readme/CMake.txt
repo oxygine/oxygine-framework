@@ -1,6 +1,8 @@
 1. start from readme.txt
 2. How to build and run Oxygine on Windows with CMake and Visual Studio (tested with VS2010 and VS2012). Steps:
 =================================================================================================
+- build SDL with CMake or by VisualStudio (see oxygine-framework/readme/VisualStudio.txt)
+
 - build SDL2. It could be done with cmake or prebuild VC++ solution. Find SDL2.lib, SDL2main.lib and SDL2.dll
 - copy SDL2.lib and SDL2main.lib to oxygine-framework/libs
 
@@ -9,16 +11,14 @@
 - run: cmake .
 - open generated solution. 
 - Select Demo project and set it "as startup project".
-- set working directory for Demo project to (right mouse click to Demo project->properties->ConfigurationProperties->Debugging->WorkingDirectory): 
-   ..\data
-- copy
-   all required dlls from  oxygine-framework\oxygine\third_party\win32\dlls\
-   and SDL2.dll 
-   to oxygine-framework\examples\Demo\data\
+- set working directory for Demo project to "..\data"
+	(right mouse click on Demo -> project->properties->ConfigurationProperties->Debugging->WorkingDirectory)
+- copy all dlls from  oxygine-framework\oxygine\third_party\win32\dlls\
+   and SDL2.dll from oxygine-framework/libs 
+   to  oxygine-framework\examples\Demo\data\   
    
 - ready! run!
-=================================================================================================
-(for windows: cmake -DDIRECTX=0)
+
 
 3. How to build and run Oxygine on Linux with CMake
 =================================================================================================
@@ -35,3 +35,13 @@ make and install SDL2
   - copy all files from example/Demo/data to examples/Demo/proj.cmake
   - run ./Demo   
 =================================================================================================
+
+4. You could generate your own CMake configuration
+- you need installed Python 2.7
+- you need to run this script
+  oxygine-framework\tools\gen_template.py
+
+example:
+	python gen_template.py MyProject -t cmake -d path/to/MyProject/
+	
+

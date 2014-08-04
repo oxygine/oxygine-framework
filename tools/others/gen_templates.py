@@ -4,7 +4,7 @@ def gen(path, project = ""):
 		project = path
 
 	projs = ("win32", "android", "macosx", "ios", "cmake", "emscripten")
-	projs = ("ios", "macosx")
+	#projs = ("ios", "macosx")
 
 	for platform in projs:
 		dest = "../../examples/" + path + "/proj." + platform

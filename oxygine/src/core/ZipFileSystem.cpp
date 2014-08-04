@@ -175,6 +175,10 @@ namespace file
 		if (!zp)
 			return;
 
+		zpitem item;
+		item.handle = zp;
+		_zps.push_back(item);
+
 		read(zp);
 	}
 
@@ -285,6 +289,7 @@ namespace file
 
 	void ZipFileSystem::add(const char *zip)
 	{
+		log::messageln("ZipFileSystem::add %s", zip);
 		_zips.add(zip);
 	}
 

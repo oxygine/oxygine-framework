@@ -2,21 +2,24 @@
 
 2a. There are prebuilt example solutions for VS2010 and VS2013:
 =================================================================================================
+- build SDL:
+  - open SDL\include\SDL_config_windows.h in any text editor
+  - find this line:
+    #define SDL_AUDIO_DRIVER_XAUDIO2    1
+  - and comment it:
+    //#define SDL_AUDIO_DRIVER_XAUDIO2    1
+  - goto folder SDL\VisualC\ 
+  - open SDL_VS2010.sln (or any other) and build it as Release
+  - goto golder SDL\VisualC\Win32\Release\
+  - and copy SDL2.lib, SDL2main.lib and SDL2.dll to oxygine-framework/libs
+
 - goto oxygine-framework\examples and choose any example. Lets call it "Demo" 
 - open solution located in oxygine-framework\examples\Demo\proj.win32\
-- if you don't have directx sdk installed then go to SDL and find file: SDL_config_windows.h
-- then find this line:
-	#define SDL_AUDIO_DRIVER_XAUDIO2    1
-- and comment it:
-	//#define SDL_AUDIO_DRIVER_XAUDIO2    1
 - try to build Demo
-- copy
-   all required dlls from  oxygine-framework\oxygine\third_party\win32\dlls\
-   and SDL2.dll from 
-   oxygine-framework\examples\Demo\proj.win32\Win32\ <Debug> or <Release>
-   (SDL\VisualC\SDL\Win32\   <Debug> or <Release>)
+- copy all dlls from  oxygine-framework\oxygine\third_party\win32\dlls\
+   and SDL2.dll from oxygine-framework/libs 
    to  oxygine-framework\examples\Demo\data\   
-- working directory of Demo project should point to "data" folder (right click on Demo -> Config.Properties->Debugging->set working dir)
+- working directory of Demo project should point to "../data" folder (right mouse click on Demo -> project->properties->ConfigurationProperties->Debugging->WorkingDirectory)
 - ready! run!
 =================================================================================================
 

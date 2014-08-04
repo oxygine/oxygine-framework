@@ -62,7 +62,11 @@ extern "C"
 
 	}
 	PFNGLSHADERSOURCEPROC _glShaderSource = 0;
+#if GL_GLEXT_VERSION == 64
+	GLAPI void APIENTRY glShaderSource(GLuint shader, GLsizei count, const GLchar ** string, const GLint *length)
+#else
 	GLAPI void APIENTRY glShaderSource(GLuint shader, GLsizei count, const GLchar * const* string, const GLint *length)
+#endif
 	{
 		_glShaderSource(shader, count, string, length);
 	}

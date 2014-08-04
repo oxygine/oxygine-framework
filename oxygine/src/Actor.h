@@ -280,6 +280,7 @@ namespace oxygine
 		spTween _addTween(spTween tween, bool rel);
 
 		
+		/**doUpdate is virtual method for overloading in inherited classes. UpdateState struct has local time of Actor (relative to Clock) and delta time.*/
 		virtual void doUpdate(const UpdateState &us);
 		UpdateCallback _cbDoUpdate;
 		//RenderCallback _cbDoRender;
