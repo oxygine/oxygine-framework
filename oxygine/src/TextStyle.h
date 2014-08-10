@@ -34,7 +34,8 @@ namespace oxygine
 			linesOffset(0), 
 			kerning(0),
             multiline(false),
-			fontSize2Scale(0){}
+			fontSize2Scale(0),
+			breakLongWords(false){}
 
 		Font *font;
 
@@ -44,6 +45,7 @@ namespace oxygine
 		int linesOffset;//distance offset between lines 
 		int kerning;
 		bool multiline;
+		bool breakLongWords;//works with multiline flag. breakLongWords = false doesn't allow to break too long words
 		Color color;
 		int fontSize2Scale;
 	};

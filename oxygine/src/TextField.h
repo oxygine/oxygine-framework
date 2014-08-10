@@ -34,6 +34,7 @@ namespace oxygine
 		TextStyle::VerticalAlign	getVAlign() const;
 		TextStyle::HorizontalAlign	getHAlign() const;
 		bool						getMultiline() const;
+		bool						getBreakLongWords () const;
 
 		/**Overwrites TextStyle Vertical align*/
 		void setVAlign(TextStyle::VerticalAlign align);
@@ -41,6 +42,8 @@ namespace oxygine
 		void setHAlign(TextStyle::HorizontalAlign align);
 		/**Overwrites TextStyle multiline*/
 		void setMultiline(bool multiline);
+		/**Overwrites TextStyle breakLongWords*/
+		void setBreakLongWords(bool val);
 		/**Overwrites TextStyle linesOffset*/
 		void setLinesOffset(int offset);
 		/**Overwrites TextStyle scale2Size.*/

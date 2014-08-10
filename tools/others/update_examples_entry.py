@@ -1,6 +1,6 @@
 examples = "../../examples/"
 
-src = examples + "Demo/src/entry_point.cpp"
+demo = examples + "Demo/"
 parent = "../../../"
 
 items = (
@@ -19,7 +19,11 @@ items = (
      parent + "oxygine-sound/examples/example1/",
      )
 
-for item in items:
+def copy(item, name):
     import shutil
-    shutil.copyfile(src, item + "/src/entry_point.cpp")
+    shutil.copyfile(demo + name, item + "/" + name)
+
+for item in items:
+    copy(item, "src/entry_point.cpp")
+    copy(item, "data/app.icf")
     

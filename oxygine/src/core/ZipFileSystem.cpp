@@ -123,7 +123,7 @@ namespace file
 
 	uLong ZCALLBACK ox_fread(voidpf opaque, voidpf stream, void* buf, uLong size)
 	{
-		return file::read(stream, buf, size);
+		return file::read((handle)stream, buf, size);
 	}
 
 	/*
@@ -135,18 +135,18 @@ namespace file
 
 	long ZCALLBACK ox_ftell(voidpf opaque, voidpf stream)
 	{
-		return file::tell(stream);
+		return file::tell((handle)stream);
 	}
 
 	long ZCALLBACK ox_fseek(voidpf opaque, voidpf stream, uLong offset, int origin)
 	{
-		file::seek(stream, offset, origin);
+		file::seek((handle)stream, offset, origin);
 		return 0;
 	}
 
 	int ZCALLBACK ox_fclose(voidpf opaque, voidpf stream)
 	{
-		file::close(stream);;
+		file::close((handle)stream);
 		return 0;
 	}
 

@@ -87,7 +87,7 @@ namespace oxygine
 				handleErrorPolicy(ep, "can't open file: %s", file);
 			}
 
-			return fh;
+			return (handle)fh;
 		}
 
 		void close(handle h)
@@ -171,6 +171,19 @@ namespace oxygine
 			fh->write(data, size);
 		}
 
+		void write(const char *file, const buffer &data, error_policy ep)
+		{
+			write(file, data.getData(), data.getSize(), ep);
+		}
+
+		void write(const char *file, const void *data, unsigned int size, error_policy ep)
+		{
+			autoClose ac(open(file, "w", ep));
+			if (!ac.getHandle())
+				return;
+			write(ac.getHandle(), data, size);
+		}
+
 		
 
 		bool exists(const char *file)
@@ -194,15 +207,7 @@ namespace oxygine
 			rmdir(path);
 #endif
 #endif
-		}
-
-		void write(const char *file, const buffer &data, error_policy ep)
-		{
-			autoClose ac(open(file, "w", ep));
-			if (!ac.getHandle())
-				return;
-			write(ac.getHandle(), data.getData(), data.getSize());
-		}
+		}		
 
 		file::STDFileSystem &fs()
 		{

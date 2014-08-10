@@ -18,9 +18,9 @@
 		2DC477AC10D6C07B3FE008F6 /* ../src/entry_point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360377333740D8A2FD15BBE6 /* ../src/entry_point.cpp */; };
 		DA49ED8903C628BA578C8670 /* ../src/example.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BF9628FC8D38F9748F0CDEB /* ../src/example.cpp */; };
 		C8860D93875589970329DCCD /* ../src/test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DA100C319512824B7570663 /* ../src/test.cpp */; };
-		1E839D002B2BA83FC83A695A /* ../data/app.config.txt in Sources */ = {isa = PBXBuildFile; fileRef = 04FE4D4FB640E0DF92DFB865 /* ../data/app.config.txt */; };
-		3A631A475DE035FC53ADE5EA /* ../data/demo in Sources */ = {isa = PBXBuildFile; fileRef = 7F3B12E3C9D554D9FE28101D /* ../data/demo */; };
-		CD59C69314E9E74CD0A11E03 /* ../data/ext in Sources */ = {isa = PBXBuildFile; fileRef = F6123B1E6FE4471A00F49751 /* ../data/ext */; };
+		1E839D002B2BA83FC83A695A /* ../data/demo in Sources */ = {isa = PBXBuildFile; fileRef = 04FE4D4FB640E0DF92DFB865 /* ../data/demo */; };
+		3A631A475DE035FC53ADE5EA /* ../data/ext in Sources */ = {isa = PBXBuildFile; fileRef = 7F3B12E3C9D554D9FE28101D /* ../data/ext */; };
+		CD59C69314E9E74CD0A11E03 /* ../data/ident.free in Sources */ = {isa = PBXBuildFile; fileRef = F6123B1E6FE4471A00F49751 /* ../data/ident.free */; };
 		EFF139F8BA484314F7AAF645 /* ../data/images in Sources */ = {isa = PBXBuildFile; fileRef = 5DE458993031811A4C7D28C1 /* ../data/images */; };
 		F2CFD518E4E2E05ECEDBB262 /* ../data/xmls in Sources */ = {isa = PBXBuildFile; fileRef = BA41FC88D76540A6905224D6 /* ../data/xmls */; };
 
@@ -114,9 +114,9 @@
 		CAD9D6A98986EA8082368448 /* ../src/TestUserShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestUserShader.h; path = ../src/TestUserShader.h; sourceTree = "<group>"; };
 		67194AC90FEA68E7C96E6907 /* ../src/example.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = example.h; path = ../src/example.h; sourceTree = "<group>"; };
 		5AFC0664D7BA80AE2A75BF0E /* ../src/test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = test.h; path = ../src/test.h; sourceTree = "<group>"; };
-		04FE4D4FB640E0DF92DFB865 /* ../data/app.config.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wtf; name = app.config.txt; path = ../data/app.config.txt; sourceTree = "<group>"; };
-		7F3B12E3C9D554D9FE28101D /* ../data/demo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = demo; path = ../data/demo; sourceTree = "<group>"; };
-		F6123B1E6FE4471A00F49751 /* ../data/ext */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = ext; path = ../data/ext; sourceTree = "<group>"; };
+		04FE4D4FB640E0DF92DFB865 /* ../data/demo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = demo; path = ../data/demo; sourceTree = "<group>"; };
+		7F3B12E3C9D554D9FE28101D /* ../data/ext */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = ext; path = ../data/ext; sourceTree = "<group>"; };
+		F6123B1E6FE4471A00F49751 /* ../data/ident.free */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wtf; name = ident.free; path = ../data/ident.free; sourceTree = "<group>"; };
 		5DE458993031811A4C7D28C1 /* ../data/images */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = images; path = ../data/images; sourceTree = "<group>"; };
 		BA41FC88D76540A6905224D6 /* ../data/xmls */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = xmls; path = ../data/xmls; sourceTree = "<group>"; };
 
@@ -207,9 +207,9 @@
 		049B57381871FBE900EF3C66 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				04FE4D4FB640E0DF92DFB865 /* app.config.txt */, 
-				7F3B12E3C9D554D9FE28101D /* demo */, 
-				F6123B1E6FE4471A00F49751 /* ext */, 
+				04FE4D4FB640E0DF92DFB865 /* demo */, 
+				7F3B12E3C9D554D9FE28101D /* ext */, 
+				F6123B1E6FE4471A00F49751 /* ident.free */, 
 				5DE458993031811A4C7D28C1 /* images */, 
 				BA41FC88D76540A6905224D6 /* xmls */, 
 
@@ -359,9 +359,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1E839D002B2BA83FC83A695A /* app.config.txt */, 
-				3A631A475DE035FC53ADE5EA /* demo */, 
-				CD59C69314E9E74CD0A11E03 /* ext */, 
+				1E839D002B2BA83FC83A695A /* demo */, 
+				3A631A475DE035FC53ADE5EA /* ext */, 
+				CD59C69314E9E74CD0A11E03 /* ident.free */, 
 				EFF139F8BA484314F7AAF645 /* images */, 
 				F2CFD518E4E2E05ECEDBB262 /* xmls */, 
 

@@ -155,7 +155,9 @@ namespace oxygine
 
 		/**set custom user data object to Tween. Could be used for store some useful data*/
 		void setDataObject(spObject data) {_data = data;}
-		/**callback would be called when tween done. Could be added more than one*/
+		/**add callback would be called when tween done.  Could be added more than one. 
+		setDoneCallback is faster because it doesn't allocate memory for list internally
+		*/
 		void addDoneCallback(EventCallback cb);
 		/**set Easing function*/
 		void setEase(EASE ease){_ease = ease;}
@@ -177,8 +179,8 @@ namespace oxygine
 
 		static float calcEase(EASE ease, float v);
 
-		OXYGINE_DEPRECATED
-		void setDoneCallback(EventCallback cb);//deprecated. use tween->addDoneCallback or tween->addEventListener(TweenEvent::DONE, ...)
+		/**set callback when tween done. Doesn't allocate memory. faster than addDoneCallback*/
+		void setDoneCallback(EventCallback cb);
 
 	protected:
 		void done(Actor &, const UpdateState &us);

@@ -27,10 +27,9 @@
 		C8860D93875589970329DCCD /* ../src/gameframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DA100C319512824B7570663 /* ../src/gameframe.cpp */; };
 		1E839D002B2BA83FC83A695A /* ../src/jewels.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04FE4D4FB640E0DF92DFB865 /* ../src/jewels.cpp */; };
 		3A631A475DE035FC53ADE5EA /* ../src/shared.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F3B12E3C9D554D9FE28101D /* ../src/shared.cpp */; };
-		CD59C69314E9E74CD0A11E03 /* ../data/app.config.txt in Sources */ = {isa = PBXBuildFile; fileRef = F6123B1E6FE4471A00F49751 /* ../data/app.config.txt */; };
-		EFF139F8BA484314F7AAF645 /* ../data/fonts in Sources */ = {isa = PBXBuildFile; fileRef = 5DE458993031811A4C7D28C1 /* ../data/fonts */; };
-		F2CFD518E4E2E05ECEDBB262 /* ../data/images in Sources */ = {isa = PBXBuildFile; fileRef = BA41FC88D76540A6905224D6 /* ../data/images */; };
-		693088A7AB377368EE4A018E /* ../data/resources.xml in Sources */ = {isa = PBXBuildFile; fileRef = 2CE4BD5BB9DEF92439C0AB58 /* ../data/resources.xml */; };
+		CD59C69314E9E74CD0A11E03 /* ../data/fonts in Sources */ = {isa = PBXBuildFile; fileRef = F6123B1E6FE4471A00F49751 /* ../data/fonts */; };
+		EFF139F8BA484314F7AAF645 /* ../data/images in Sources */ = {isa = PBXBuildFile; fileRef = 5DE458993031811A4C7D28C1 /* ../data/images */; };
+		F2CFD518E4E2E05ECEDBB262 /* ../data/resources.xml in Sources */ = {isa = PBXBuildFile; fileRef = BA41FC88D76540A6905224D6 /* ../data/resources.xml */; };
 
 /* End PBXBuildFile section */
 
@@ -86,14 +85,13 @@
 		4DA100C319512824B7570663 /* ../src/gameframe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = gameframe.cpp; path = ../src/gameframe.cpp; sourceTree = "<group>"; };
 		04FE4D4FB640E0DF92DFB865 /* ../src/jewels.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jewels.cpp; path = ../src/jewels.cpp; sourceTree = "<group>"; };
 		7F3B12E3C9D554D9FE28101D /* ../src/shared.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = shared.cpp; path = ../src/shared.cpp; sourceTree = "<group>"; };
-		F196143B0370A9D348494ACC /* ../src/example.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = example.h; path = ../src/example.h; sourceTree = "<group>"; };
-		7746CA7A63049ED8F7D6BF42 /* ../src/gameframe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gameframe.h; path = ../src/gameframe.h; sourceTree = "<group>"; };
-		D954BD82D7708B65A08FB6B9 /* ../src/jewels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jewels.h; path = ../src/jewels.h; sourceTree = "<group>"; };
-		BD0E956CC3A2F7EB94822B5C /* ../src/shared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = shared.h; path = ../src/shared.h; sourceTree = "<group>"; };
-		F6123B1E6FE4471A00F49751 /* ../data/app.config.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wtf; name = app.config.txt; path = ../data/app.config.txt; sourceTree = "<group>"; };
-		5DE458993031811A4C7D28C1 /* ../data/fonts */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = fonts; path = ../data/fonts; sourceTree = "<group>"; };
-		BA41FC88D76540A6905224D6 /* ../data/images */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = images; path = ../data/images; sourceTree = "<group>"; };
-		2CE4BD5BB9DEF92439C0AB58 /* ../data/resources.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wtf; name = resources.xml; path = ../data/resources.xml; sourceTree = "<group>"; };
+		2CE4BD5BB9DEF92439C0AB58 /* ../src/example.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = example.h; path = ../src/example.h; sourceTree = "<group>"; };
+		F196143B0370A9D348494ACC /* ../src/gameframe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gameframe.h; path = ../src/gameframe.h; sourceTree = "<group>"; };
+		7746CA7A63049ED8F7D6BF42 /* ../src/jewels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jewels.h; path = ../src/jewels.h; sourceTree = "<group>"; };
+		D954BD82D7708B65A08FB6B9 /* ../src/shared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = shared.h; path = ../src/shared.h; sourceTree = "<group>"; };
+		F6123B1E6FE4471A00F49751 /* ../data/fonts */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = fonts; path = ../data/fonts; sourceTree = "<group>"; };
+		5DE458993031811A4C7D28C1 /* ../data/images */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = images; path = ../data/images; sourceTree = "<group>"; };
+		BA41FC88D76540A6905224D6 /* ../data/resources.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wtf; name = resources.xml; path = ../data/resources.xml; sourceTree = "<group>"; };
 
 /* End PBXFileReference section */
 
@@ -172,10 +170,9 @@
 		04998CF617F8A933003441C3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				F6123B1E6FE4471A00F49751 /* app.config.txt */, 
-				5DE458993031811A4C7D28C1 /* fonts */, 
-				BA41FC88D76540A6905224D6 /* images */, 
-				2CE4BD5BB9DEF92439C0AB58 /* resources.xml */, 
+				F6123B1E6FE4471A00F49751 /* fonts */, 
+				5DE458993031811A4C7D28C1 /* images */, 
+				BA41FC88D76540A6905224D6 /* resources.xml */, 
 
 			);
 			name = "Supporting Files";
@@ -197,10 +194,10 @@
 				4DA100C319512824B7570663 /* gameframe.cpp */, 
 				04FE4D4FB640E0DF92DFB865 /* jewels.cpp */, 
 				7F3B12E3C9D554D9FE28101D /* shared.cpp */, 
-				F196143B0370A9D348494ACC /* example.h */, 
-				7746CA7A63049ED8F7D6BF42 /* gameframe.h */, 
-				D954BD82D7708B65A08FB6B9 /* jewels.h */, 
-				BD0E956CC3A2F7EB94822B5C /* shared.h */, 
+				2CE4BD5BB9DEF92439C0AB58 /* example.h */, 
+				F196143B0370A9D348494ACC /* gameframe.h */, 
+				7746CA7A63049ED8F7D6BF42 /* jewels.h */, 
+				D954BD82D7708B65A08FB6B9 /* shared.h */, 
 
 			);
 			name = src;
@@ -296,10 +293,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				04E9AD3F1876FE84006A7317 /* Images.xcassets in Resources */,
-				CD59C69314E9E74CD0A11E03 /* app.config.txt */, 
-				EFF139F8BA484314F7AAF645 /* fonts */, 
-				F2CFD518E4E2E05ECEDBB262 /* images */, 
-				693088A7AB377368EE4A018E /* resources.xml */, 
+				CD59C69314E9E74CD0A11E03 /* fonts */, 
+				EFF139F8BA484314F7AAF645 /* images */, 
+				F2CFD518E4E2E05ECEDBB262 /* resources.xml */, 
 
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -187,8 +187,14 @@ namespace oxygine
 					if (_line[lastWordPos]->code == ' ' && _line[lastWordPos - 1]->code != ' ')
 						break;
 				}
+				
 				if (!lastWordPos)
-					lastWordPos = _line.size() - 1;
+				{
+					if (style.breakLongWords)
+						lastWordPos = _line.size() - 1;
+					else
+						return 0;
+				}
 			
 
 				int delta = _line.size() - lastWordPos;

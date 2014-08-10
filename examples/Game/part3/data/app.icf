@@ -3,6 +3,7 @@ MemSize = 64777216
 DispFixRot=Landscape
 SysGlesVersion=2
 SysStackSize=131072
+MemMgrMaxAllocWarning=0
 
 [Trace]
 ALL=0
@@ -17,3 +18,11 @@ FILE=0
 SURFACE=0
 MEMORY=0
 ERROR=0
+IW_GL=0
+SURFACE=0
+SOCKET=0
+JPEG=0
+VIDEO=0
+LOADER=0
+FILE=0
+IWCRT=0

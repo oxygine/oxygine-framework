@@ -13,7 +13,7 @@ namespace oxygine
 	{
 	public:
 		DECLARE_COPYCLONE_NEW(TextActor);
-		OXYGINE_DEPRECATED
+//		OXYGINE_DEPRECATED
 		TextActor(){}
 	};
 

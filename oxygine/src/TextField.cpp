@@ -68,6 +68,12 @@ namespace oxygine
 		needRebuild();
 	}
 
+	void TextField::setBreakLongWords(bool val)
+	{
+		_style.breakLongWords = val;
+		needRebuild();
+	}
+
 	void TextField::setLinesOffset(int offset)
 	{
 		_style.linesOffset = offset;
@@ -161,6 +167,11 @@ namespace oxygine
 		return _style.multiline;
 	}
 
+	bool TextField::getBreakLongWords() const
+	{
+		return _style.breakLongWords;
+	}
+
 	const Rect &TextField::getTextRect()
 	{
 		getRootNode();
@@ -246,6 +257,8 @@ namespace oxygine
 			stream << " vAlign=" << get_valign(s.vAlign);
 		if (!onlydiff || def.multiline != s.multiline)
 			stream << " " << (s.multiline ? "multiline" : "singleline");
+		if (!onlydiff || def.breakLongWords != s.breakLongWords)
+			stream << " " << (s.breakLongWords ? "breakLongWords=1" : "breakLongWords=0");
 		if (!onlydiff || def.kerning != s.kerning)
 			stream << " kerning=" << s.kerning;
 		if (!onlydiff || def.linesOffset != s.linesOffset)
@@ -332,6 +345,7 @@ namespace oxygine
 		setAttr(node, "valign", _style.vAlign, def.vAlign);
 		setAttr(node, "halign", _style.hAlign, def.hAlign);
 		setAttr(node, "multiline", _style.multiline, def.multiline);
+		setAttr(node, "breakLongWords", _style.breakLongWords, def.breakLongWords);
 		node.set_name("TextField");
 	}
 
@@ -345,6 +359,7 @@ namespace oxygine
 		_style.vAlign = (TextStyle::VerticalAlign)node.attribute("valign").as_int(def.vAlign);
 		_style.hAlign = (TextStyle::HorizontalAlign)node.attribute("halign").as_int(def.hAlign);
 		_style.multiline = node.attribute("multiline").as_bool(def.multiline);
+		_style.breakLongWords = node.attribute("breakLongWords").as_bool(def.breakLongWords);
 		_style.fontSize2Scale = node.attribute("fontsize2scale").as_int(def.fontSize2Scale);
 		needRebuild();
 		setText(node.attribute("text").as_string());

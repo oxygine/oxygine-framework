@@ -11,17 +11,41 @@ namespace oxygine
 	{
 		class STDFileSystem;
 
+		struct _handle_{};
+		typedef _handle_* handle;
+
+		/**memory buffer for files IO operations, emulates std::vector */
 		class buffer
 		{
-		public:		
+		public:
+            typedef unsigned char uchar;
+            
+			uchar& front() { return data.front(); }
+			const uchar& front() const { return data.front(); }
+
+			uchar& back() { return data.back(); }
+			const uchar& back() const { return data.back(); }
+
+			uchar& operator[](size_t i) { return data[i]; }
+			const uchar& operator[](size_t i) const { return data[i]; }
+
+			uchar& at(size_t i) { return data.at(i); }
+			const uchar& at(size_t i) const { return data.at(i); }
+
+			void push_back(uchar v){ return data.push_back(v); }
+			uchar pop_back(){ uchar v = data.back();  data.pop_back(); return v; }
+			void reserve(size_t v){ data.reserve(v); }
+			void resize(size_t v){ data.resize(v); }
+
+			size_t size() const { return data.size(); }
+			bool empty() const { return data.empty(); }
+
 			const void *getData() const {if (data.empty()) return 0; return &data[0];}
 			unsigned int getSize() const {return (unsigned int)data.size();}
 
-			typedef std::vector<unsigned char> buff;
+			typedef std::vector<uchar> buff;
 			buff data;
 		};
-
-		typedef void* handle;
 
 		/**Opens file for reading (mode = "r") or writing (mode = "w"). If file is missing returns zero.*/
 		handle open(const char *file, const char *mode, error_policy ep = ep_show_error);
@@ -35,10 +59,10 @@ namespace oxygine
 		/**Reads bytes into user memory*/
 		unsigned int read(handle, void *dest, unsigned int size);
 
-		/**Reads bytes into destination buffer. Clears existing buffer*/
+		/**Reads bytes into destination buffer with stdio flags = "rb". Clears existing buffer*/
 		void read(const char *file, buffer &dest, error_policy ep = ep_show_error);
 
-		/**Reads bytes into destination buffer*/
+		/**Reads bytes into destination buffer with stdio flags = "wb"*/
 		unsigned int read(handle, buffer &dest);
 
 		/**Writes bytes to file*/
@@ -46,19 +70,34 @@ namespace oxygine
 
 		/**Writes bytes to file*/
 		void write(const char *file, const buffer &data, error_policy ep = ep_show_error);
+		void write(const char *file, const void *data, unsigned int size, error_policy ep = ep_show_error);
 
 		/**Is file exists?*/
 		bool exists(const char *file);
 
+		/**Deletes file*/
 		bool deleteFile(const char *path, error_policy ep = ep_show_warning);
+
+		/**Renames file*/
 		bool rename(const char *src, const char *dest, error_policy ep = ep_show_warning);
+
+		/**Makes directory. Not recursive*/
 		bool makeDirectory(const char *path);
+
+		/**Deletes empty directory*/
 		void deleteDirectory(const char *path);
 		
-		//returns main fs
+		/**Returns primary read only FileSystem*/
 		file::STDFileSystem &fs();
-		//returns writable fs
+
+		/**Returns writable FileSystem*/
 		file::STDFileSystem &wfs();
+
+		/**Mounts additional FileSystem*/
+		void mount(FileSystem *fs);
+
+		/**Unmounts additional FileSystem*/
+		void unmount(FileSystem *fs);
 
 		class autoClose
 		{
