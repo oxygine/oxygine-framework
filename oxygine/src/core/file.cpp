@@ -186,8 +186,11 @@ namespace oxygine
 
 		
 
-		bool exists(const char *file)
+		bool exists(const char *file_)
 		{
+			char file[512];
+			path::normalize(file_, file);
+
 			return _nfs.isExists(file);
 		}
 

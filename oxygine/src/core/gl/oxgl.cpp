@@ -3,6 +3,11 @@
 
 #ifdef WIN32
 #include "SDL_video.h"
+
+//fix compile time error with latest SDL
+#undef GLAPI
+#define GLAPI
+
 extern "C"
 {
 	PFNGLUSEPROGRAMPROC _glUseProgram = 0;
@@ -29,10 +34,10 @@ extern "C"
 	GLAPI void APIENTRY glDisableVertexAttribArray(GLuint index)
 	{
 		_glDisableVertexAttribArray(index);
-	}
+	} 
 	PFNGLDELETEPROGRAMPROC _glDeleteProgram = 0;
 	GLAPI void APIENTRY glDeleteProgram(GLuint program)
-	{
+	{ 
 		_glDeleteProgram(program);
 	}
 	PFNGLGETSHADERIVPROC _glGetShaderiv = 0;
@@ -47,7 +52,7 @@ extern "C"
 	}
 	PFNGLCREATESHADERPROC _glCreateShader = 0;
 	GLAPI GLuint APIENTRY glCreateShader(GLenum type)
-	{
+	{ 
 		return _glCreateShader(type);
 	}
 	PFNGLCREATEPROGRAMPROC _glCreateProgram = 0;
@@ -164,6 +169,7 @@ extern "C"
 	{
 		_glDeleteBuffers(n, buffers);
 	}
+
 }
 
 void initGLExtensions(myGetProcAdress func)
@@ -202,7 +208,6 @@ void initGLExtensions(myGetProcAdress func)
 	_glGenBuffers = (PFNGLGENBUFFERSPROC)func("glGenBuffers");
 	_glBufferData = (PFNGLBUFFERDATAPROC)func("glBufferData");
 	_glDeleteBuffers = (PFNGLDELETEBUFFERSPROC)func("glDeleteBuffers");
-
 }
 #else
 void initGLExtensions(myGetProcAdress func)

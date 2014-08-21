@@ -9,8 +9,7 @@ namespace oxygine
 	template<class T>
 	inline T interpolate(T a, T b, float v)
 	{
-		T r = T(a + (b - a) * v);
-		return r;
+		return T(a + (b - a) * v);
 	}
 
 	namespace scalar

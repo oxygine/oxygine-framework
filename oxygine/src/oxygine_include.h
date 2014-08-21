@@ -16,7 +16,9 @@
 	#endif
 #elif EMSCRIPTEN
 	#define OXYGINE_EMSCRIPTEN 1
-	
+	#ifndef NDEBUG
+		#define OX_DEBUG 1
+	#endif // DEBUG	
 #else
 	#define OXYGINE_SDL 1
 	#ifdef WIN32
@@ -57,6 +59,8 @@
 namespace oxygine{namespace log{void error(const char *format, ...);}}
 #ifdef OXYGINE_QT
 #define OX_ASSERT(x) if (!(x)) {__asm("int3");oxygine::log::error("Assert! %d %s", __LINE__, __FILE__); }(assert(x))
+#elif EMSCRIPTEN
+#define OX_ASSERT(x) if (!(x)) {oxygine::log::error("Assert! %d %s", __LINE__, __FILE__);}
 #else
 #define OX_ASSERT(x) if (!(x)) {oxygine::log::error("Assert! %d %s", __LINE__, __FILE__);}(assert(x))
 #endif

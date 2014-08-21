@@ -8,9 +8,13 @@
 
 namespace oxygine
 {
+	const Color windowColor(64, 128, 128, 255);
+
 	DeveloperMenu::DeveloperMenu():_resSystem(0)
 	{
 		setName(getDefaultName());
+
+		setColor(windowColor);
 
 		DebugActor::initialize();
 		_resSystem = DebugActor::resSystem;
@@ -30,20 +34,28 @@ namespace oxygine
 
 	void DeveloperMenu::init(const Vector2 &size, const char *text, spActor data, const Color &color)
 	{
+		const float BORDER = 3;
+
+		float offset = 24;
+
 		setSize(size);
-		setWidth(data->getWidth());
+		setWidth(data->getWidth() + BORDER * 2);
+		setHeight(size.y + offset);
 		//setSize(data->getSize() + Point(0, offset));
 
 		spColorRectSprite top = new ColorRectSprite();
 		top->setWidth(getWidth());
+		top->setSize(size);
+
 
 		_topDrag.init(top.get());
 		_topDrag.setDragClient(this);
 		
 		addChild(top);
-		float offset = 24;
 
-		top->setColor(Color(64, 128, 128, 255));
+		
+
+		top->setColor(windowColor);
 		top->setSize(Vector2(getWidth(), offset));
 		top->setPriority(100);
 
@@ -51,7 +63,10 @@ namespace oxygine
 		body->setColor(color);
 		addChild(body);
 
-		body->setSize(Vector2(getWidth(), getHeight()));
+		
+
+		body->setSize(Vector2(getWidth() - BORDER * 2, getHeight()));
+		body->setX(BORDER);
 		body->setY((float)offset);
 
 

@@ -141,7 +141,7 @@ namespace oxygine
 			stream << " anchor=(" << getAnchor().x << "," << getAnchor().y << ")";
 
 		if (getRotation() != 0.0f)
-			stream << " rot=" << getRotation() / M_PI * 360.0f << "";
+			stream << " rot=" << getRotation() / MATH_PI * 360.0f << "";
 
 		int tweensCount = 0;
 		spTween t = _tweens._first;

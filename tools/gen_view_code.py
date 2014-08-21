@@ -30,7 +30,7 @@ def save_if_changed(name, content):
 
 mp_actor = class_type("spActor", "Actor", "Actor.h")
 mp_button = class_type("spButton", "Button", "Button.h")
-mp_text = class_type("spTextActor", "TextActor", "TextActor.h")
+mp_text = class_type("spTextField", "TextField", "TextField.h")
 mp_bar = class_type("spProgressBar", "ProgressBar", "ProgressBar.h")
 mp_clip = class_type("spClipRectActor", "ClipRectActor", "ClipRectActor.h")
 mp_sprite = class_type("spSprite", "Sprite", "Sprite.h")

@@ -1,4 +1,5 @@
-**oxygine-framework/readme** folder has insructions how to build and run oxygine on different platforms.
+# BUILD AND RUN 
+See **oxygine-framework/readme/** folder. It has insructions how to build and run oxygine on different platforms.
 
 
 # Oxygine is C++ engine for 2D mobile games. 

@@ -1,6 +1,7 @@
 #pragma once
 #include "oxygine_include.h"
 #include "ClipRectActor.h"
+#include "ColorRectSprite.h"
 #include "Draggable.h"
 
 namespace oxygine
@@ -8,7 +9,7 @@ namespace oxygine
 	DECLARE_SMART(DeveloperMenu, spDeveloperMenu);
 	class Resources;
 
-	class DeveloperMenu: public Actor
+	class DeveloperMenu: public ColorRectSprite
 	{
 	public:
 		static string getDefaultName(){return "tree_inspector";}

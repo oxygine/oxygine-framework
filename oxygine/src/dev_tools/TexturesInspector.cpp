@@ -39,14 +39,16 @@ namespace oxygine
 			addChild(image);
 
 			spColorRectSprite rect = initActor(new ColorRectSprite,
-				arg_color = Color(Color::White, 128),
+				arg_color = Color(Color::White, 255),
 				arg_attachTo = this);
+
+			rect->addTween(Sprite::TweenColor(Color(Color::White, 0)), 4000, -1, true);
 
 			char path[255];
 			path::normalize(t->getName().c_str(), path);
 
 			char txt[255];
-			safe_sprintf(txt, "%s\n<div c=\"ff0000\">%s</div>-<div c=\"0000ff\">%dx%d</div>\nid:%d", 
+			safe_sprintf(txt, "%s\n<div c=\"FF0000\">%s</div>-<div c=\"0000ff\">%dx%d</div>\nid: %d", 
 				path,
 				textureFormat2String(t->getFormat()),
 				t->getWidth(), t->getHeight(), t->getObjectID());
@@ -61,6 +63,7 @@ namespace oxygine
 				arg_htmlText = txt
 				);
 
+			text->setBreakLongWords(true);
 
 			rect->setSize(text->getTextRect().size.cast<Vector2>() + Vector2(2, 2));
 			rect->setY((itemSize.y - rect->getHeight())/2.0f);
@@ -84,6 +87,7 @@ namespace oxygine
 		
 		spTextField text = initActor(new TextField,
 			arg_color = Color::White,
+			arg_pos = Vector2(1,1),
 			arg_w = itemSize.x * 3.0f,
 			arg_h = 30.0f,
 			arg_vAlign = TextStyle::VALIGN_TOP,
@@ -92,9 +96,11 @@ namespace oxygine
 			arg_attachTo = slide
 			);
 
+
 		offsetY += text->getTextRect().getBottom() + 5;
 
 		spActor content = new Actor;
+		content->setX(2);
 		
 		
 		int numX = (int)(size.x / itemSize.x);

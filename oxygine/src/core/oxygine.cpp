@@ -37,20 +37,13 @@
 #include "s3eOSExec.h"
 #endif
 
-#if __FLASHPLAYER__
-#include "SDL_timer.h"
-#include "AS3/AS3.h"
-#include <Flash++.h>
-#include "agal.h"
-using namespace AS3::ui;
-#include "stage3d/VideoDriverStage3D.h"
-#else
-//#include "gl/VideoDriverGLES11.h"
+
 #include "gl/VideoDriverGLES20.h"
-#endif
+
 
 #ifdef EMSCRIPTEN
 //#include <EGL/egl.h>
+#include <sys/time.h>
 #include <emscripten.h>
 #include <SDL.h>
 #include <SDL_compat.h>
@@ -969,6 +962,13 @@ namespace oxygine
 		return utc;		
 #elif __ANDROID__
 		return jniGetTimeUTCMS();
+#elif EMSCRIPTEN
+		struct timeval tv;
+		gettimeofday(&tv, NULL);
+		int64 tm = 
+			(unsigned long long)(tv.tv_sec) * 1000 +
+			(unsigned long long)(tv.tv_usec) / 1000;
+		return tm;
 #endif
 		return getTimeMS();
 	}

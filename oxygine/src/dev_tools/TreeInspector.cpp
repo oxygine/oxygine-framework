@@ -153,7 +153,7 @@ namespace oxygine
 		Vector2 size = _rootPage->getSize();
 		_rootPage->updateSizesNew();
 		_rootPage->setPosition(pos);
-		_rootPage->setSize(size);
+		_rootPage->setSize(size + Vector2(0, 24));
 		//_rootPage->setPosition(0, 20);
 		_sliding->snap();
 	}

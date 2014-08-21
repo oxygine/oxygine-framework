@@ -131,6 +131,7 @@ namespace oxygine
 
 		_text = new TextField;
 		addChild(_text);
+		_text->setPosition(2, 5);
 		_text->setInputEnabled(false);
 		_text->setStyle(st);
 		_text->setWidth(getWidth());
@@ -181,11 +182,12 @@ namespace oxygine
 		else
 		{		
 			spDeveloperMenu dm = new DeveloperMenu();
-			dm->setPriority(getPriority() - 1); 
+			dm->setPriority(getPriority()  + 1); 
 			float scale = getRoot()->getScaleX();
 			Vector2 size = core::getDisplaySize();
 
 			Vector2 s = size;// * scale;
+			s.y -= 24;
 			
 			if (name == "tree")
 			{
@@ -202,7 +204,8 @@ namespace oxygine
 			}
 
 			dm->setScale(1.0f / scale);
-			dm->setPosition(-getRoot()->getPosition());
+			Vector2 p = -getRoot()->getPosition() / scale;
+			dm->setPosition(p);
 			getRoot()->addChild(dm);
 		}
 	}
@@ -258,14 +261,17 @@ namespace oxygine
 		s << "textures=" << NativeTexture::created << " ";
 		s << "\nlisteners=" << getRoot()->getListenersCount() << "";
 
-		s << "\n";
-		s << _debugText;
+		if (!_debugText.empty())
+		{
+			s << "\n";
+			s << _debugText;
+		}
 		_debugText = "";
 
 		_text->setText(s.str());
 
 		
-		setHeight(_text->getTextRect().size.y + 2.0f);
+		setHeight(_text->getTextRect().size.y + _text->getY() + 3);
 		_bg->setSize(getSize());
 
 
