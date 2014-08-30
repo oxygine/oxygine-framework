@@ -5,6 +5,8 @@
 		<image file="circle.png"/>
 		<image id="anim" file="anim1.png" cols = "7" /> <!-- 'id' is optional -->
 		<image file="button.png" cols = "3" />				
+		<image file="pen.png" />				
+		<image file="shot.png" />	
 	</atlas>
 	
 	<set path = "fonts" />

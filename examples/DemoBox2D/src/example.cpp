@@ -23,6 +23,65 @@ Vector2 convert(const b2Vec2 &pos)
 	return Vector2(pos.x * SCALE, pos.y * SCALE);
 }
 
+
+DECLARE_SMART(Circle, spCircle);
+class Circle : public Sprite
+{
+public:
+	Circle(b2World *world, const Vector2 &pos, float scale = 1)
+	{
+		setResAnim(gameResources.getResAnim("circle"));
+		setAnchor(Vector2(0.5f, 0.5f));
+		setTouchChildrenEnabled(false);
+
+		b2BodyDef bodyDef;
+		bodyDef.type = b2_dynamicBody;
+		bodyDef.position = convert(pos);
+
+		b2Body *body = world->CreateBody(&bodyDef);
+
+		setUserData(body);
+
+		setScale(scale);
+
+		b2CircleShape shape;
+		shape.m_radius = getWidth() / SCALE / 2 * scale;
+
+		b2FixtureDef fixtureDef;
+		fixtureDef.shape = &shape;
+		fixtureDef.density = 1.0f;
+		fixtureDef.friction = 0.3f;
+
+		body->CreateFixture(&fixtureDef);
+		body->SetUserData(this);
+	}
+};
+
+DECLARE_SMART(Static, spStatic);
+class Static : public Box9Sprite
+{
+public:
+	Static(b2World *world, const RectF &rc)
+	{
+		//setHorizontalMode(Box9Sprite::TILING_FULL);
+		//setVerticalMode(Box9Sprite::TILING_FULL);
+		setResAnim(gameResources.getResAnim("pen"));
+		setSize(rc.getSize());
+		setPosition(rc.getLeftTop());
+		setAnchor(Vector2(0.5f, 0.5f));
+
+		b2BodyDef groundBodyDef;
+		groundBodyDef.position = convert(getPosition());
+
+		b2Body* groundBody = world->CreateBody(&groundBodyDef);
+
+		b2PolygonShape groundBox;
+		b2Vec2 sz = convert(getSize()/2);
+		groundBox.SetAsBox(sz.x, sz.y);
+		groundBody->CreateFixture(&groundBox, 0.0f);
+	}
+};
+
 class MainActor: public Actor
 {
 public:	
@@ -35,23 +94,22 @@ public:
 
 		spButton btn = new Button;
 		btn->setResAnim(gameResources.getResAnim("button"));
-		btn->setX(getWidth() - btn->getWidth());
+		btn->setX(getWidth() - btn->getWidth() - 3);
+		btn->setY(3);
 		btn->attachTo(this);
 		btn->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MainActor::showHideDebug));
 
-		addEventListener(TouchEvent::CLICK, CLOSURE(this, &MainActor::displayClicked));
+		addEventListener(TouchEvent::CLICK, CLOSURE(this, &MainActor::click));
 
 
 		_world = new b2World(b2Vec2(0, 10), false);
 
-		
-		b2BodyDef groundBodyDef;
-		groundBodyDef.position = convert(Vector2(getWidth()/2, getHeight() - 10));
-		b2Body* groundBody = _world->CreateBody(&groundBodyDef);
 
-		b2PolygonShape groundBox;
-		groundBox.SetAsBox((getWidth() - 100)/2/SCALE, 10/SCALE);		
-		groundBody->CreateFixture(&groundBox, 0.0f);
+		spStatic ground = new Static(_world, RectF(getWidth() / 2, getHeight() - 10, getWidth() - 100, 30));
+		addChild(ground);
+
+		spCircle circle = new Circle(_world, getSize()/2, 2);
+		addChild(circle);
 	}
 	
 	void doUpdate(const UpdateState &us)
@@ -103,65 +161,35 @@ public:
 		_debugDraw->setPriority(1);
 	}
 
-	void circleClicked(Event *event)
+	void click(Event *event)
 	{
 		TouchEvent *te = safeCast<TouchEvent*>(event);
-		te->stopImmediatePropagation();
+				
+		if (event->target.get() == this)
+		{
+			spCircle circle = new Circle(_world, te->localPosition);
+			circle->attachTo(this);
+		}
 
-		spActor actor = safeSpCast<Actor>(event->currentTarget);
-		b2Body *body = (b2Body *)actor->getUserData();
-		
-		Vector2 dir = actor->getPosition() - actor->local2global(te->localPosition);
-		dir = dir / dir.length() * body->GetMass() * 200;
+		if (event->target->getUserData())
+		{
+			//shot to circle
+			spActor actor = safeSpCast<Actor>(event->target);
+			b2Body *body = (b2Body *)actor->getUserData();
 
-		body->ApplyForceToCenter(b2Vec2(dir.x, dir.y));
+			Vector2 dir = actor->getPosition() - te->localPosition;
+			dir = dir / dir.length() * body->GetMass() * 200;
 
-		//show click pos
-		spSprite sprite = new Sprite();		
-		sprite->setResAnim(gameResources.getResAnim("circle"));
-		sprite->setColor(Color(0xff00ffff));
-		sprite->setScale(0.2f);
-		sprite->setPosition(te->localPosition);
-		sprite->setAnchor(Vector2(0.5f, 0.5f));
-		sprite->attachTo(actor);
+			body->ApplyForceToCenter(b2Vec2(dir.x, dir.y));
+
+			spSprite sprite = new Sprite();
+			sprite->setResAnim(gameResources.getResAnim("shot"));
+			Vector2 local = actor->global2local(te->localPosition);
+			sprite->setPosition(local);
+			sprite->setAnchor(Vector2(0.5f, 0.5f));
+			sprite->attachTo(actor);
+		}
 	}
-
-	void displayClicked(Event *event)
-	{
-		TouchEvent *te = safeCast<TouchEvent*>(event);
-
-		spSprite sprite = new Sprite();		
-		sprite->setResAnim(gameResources.getResAnim("circle"));
-		sprite->attachTo(this);
-		sprite->setAnchor(Vector2(0.5f, 0.5f));
-		sprite->setPosition(te->localPosition);
-		sprite->setTouchChildrenEnabled(false);
-
-		sprite->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MainActor::circleClicked));
-		
-		b2BodyDef bodyDef;
-		bodyDef.type = b2_dynamicBody;
-		bodyDef.position = convert(te->localPosition);
-
-		b2Body *body = _world->CreateBody(&bodyDef);
-
-		sprite->setUserData(body);
-
-		float scale = (rand()%5)/10.0f + 0.5f;
-		sprite->setScale(scale);
-
-		b2CircleShape shape;
-		shape.m_radius = sprite->getWidth() / SCALE / 2 * scale;
-
-		b2FixtureDef fixtureDef;
-		fixtureDef.shape = &shape;
-		fixtureDef.density = 1.0f;
-		fixtureDef.friction = 0.3f;
-
-		body->CreateFixture(&fixtureDef);
-		body->SetUserData(sprite.get());
-	}
-
 };
 
 void example_preinit()
