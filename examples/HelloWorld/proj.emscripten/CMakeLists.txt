@@ -13,7 +13,7 @@ add_executable(HelloWorld ../src/entry_point.cpp ../src/example.cpp  ../src/exam
 
 set_target_properties(HelloWorld
     PROPERTIES 
-    LINK_FLAGS "-s WARN_ON_UNDEFINED_SYMBOLS=1 -s -Wno-warn-absolute-paths -s TOTAL_MEMORY=64435456")
+    LINK_FLAGS "-s FULL_ES2=1 -s WARN_ON_UNDEFINED_SYMBOLS=1 -s -Wno-warn-absolute-paths -s TOTAL_MEMORY=64435456")
 
 target_link_libraries(HelloWorld ${OXYGINE_CORE_LIBS})
 em_link_pre_js(HelloWorld ${CMAKE_CURRENT_SOURCE_DIR}/data.js)

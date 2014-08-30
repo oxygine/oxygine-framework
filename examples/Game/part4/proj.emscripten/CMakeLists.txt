@@ -13,7 +13,7 @@ add_executable(GamePart4 ../src/Enemy.cpp ../src/Game.cpp ../src/GameMenu.cpp ..
 
 set_target_properties(GamePart4
     PROPERTIES 
-    LINK_FLAGS "-s WARN_ON_UNDEFINED_SYMBOLS=1 -s -Wno-warn-absolute-paths -s TOTAL_MEMORY=64435456")
+    LINK_FLAGS "-s FULL_ES2=1 -s WARN_ON_UNDEFINED_SYMBOLS=1 -s -Wno-warn-absolute-paths -s TOTAL_MEMORY=64435456")
 
 target_link_libraries(GamePart4 ${OXYGINE_CORE_LIBS})
 em_link_pre_js(GamePart4 ${CMAKE_CURRENT_SOURCE_DIR}/data.js)

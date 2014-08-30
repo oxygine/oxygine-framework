@@ -13,7 +13,7 @@ add_executable(GamePart1 ../src/Game.cpp ../src/Joystick.cpp ../src/Player.cpp .
 
 set_target_properties(GamePart1
     PROPERTIES 
-    LINK_FLAGS "-s WARN_ON_UNDEFINED_SYMBOLS=1 -s -Wno-warn-absolute-paths -s TOTAL_MEMORY=64435456")
+    LINK_FLAGS "-s FULL_ES2=1 -s WARN_ON_UNDEFINED_SYMBOLS=1 -s -Wno-warn-absolute-paths -s TOTAL_MEMORY=64435456")
 
 target_link_libraries(GamePart1 ${OXYGINE_CORE_LIBS})
 em_link_pre_js(GamePart1 ${CMAKE_CURRENT_SOURCE_DIR}/data.js)

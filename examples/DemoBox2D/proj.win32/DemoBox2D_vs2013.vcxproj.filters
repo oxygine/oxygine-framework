@@ -14,7 +14,7 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="box2d">
-      <UniqueIdentifier>{76326c69-a386-4c83-a25b-7d99d8ef780a}</UniqueIdentifier>
+      <UniqueIdentifier>{bb41258f-69bd-4188-a5e2-ad130abb695e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
