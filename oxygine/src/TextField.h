@@ -82,7 +82,7 @@ namespace oxygine
 		text::Node *_root;
 		Rect _textRect;
 
-		text::Node *getRootNode();
+		text::Node *getStageNode();
 		void needRebuild();
 		void sizeChanged(const Vector2& size);
 	};

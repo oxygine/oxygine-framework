@@ -252,9 +252,6 @@
     <ClCompile Include="..\..\src\ProgressBar.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\RootActor.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\SlidingActor.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -289,6 +286,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\TextField.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Stage.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -624,6 +624,9 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\TextActor.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Stage.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

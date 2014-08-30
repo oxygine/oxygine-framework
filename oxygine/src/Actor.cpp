@@ -2,7 +2,7 @@
 #include "core/Texture.h"
 #include "core/Renderer.h"
 #include "res/ResAnim.h"
-#include "RootActor.h"
+#include "Stage.h"
 #include "Clock.h"
 #include "Tweener.h"
 #include "math/AffineTransform.h"
@@ -34,7 +34,7 @@ namespace oxygine
 			_anchor(0, 0),
 			_scale(1, 1),
 			_rotation(0),
-			_flags(flag_visible | flag_inputEnabled | flag_inputChildrenEnabled | flag_childrenRelative | flag_fastTransform),
+			_flags(flag_visible | flag_touchEnabled | flag_touchChildrenEnabled | flag_childrenRelative | flag_fastTransform),
 			_parent(0),
 			_alpha(255),
 			_pressed(0),
@@ -95,8 +95,8 @@ namespace oxygine
 		removeTweens();
 		//removeEventHandlers();
 		removeChildren();
-		if (getRoot())
-			getRoot()->removeEventListeners(this);
+		if (getStage())
+			getStage()->removeEventListeners(this);
 	}	
 
 	std::string Actor::dump(const dumpOptions &opt) const
@@ -215,11 +215,11 @@ namespace oxygine
 
 		if (v)
 		{
-			getRoot()->addEventListener( TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onMouseEvent));
+			getStage()->addEventListener( TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onMouseEvent));
 			//printf("added\n");
 		}
 		else
-			getRoot()->removeEventListener( TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onMouseEvent));
+			getStage()->removeEventListener( TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onMouseEvent));
 
 		if (!old)
 			updateState();
@@ -239,11 +239,11 @@ namespace oxygine
 			e.index = v;
 			dispatchEvent(&e);
 
-			getRoot()->addEventListener( TouchEvent::MOVE, CLOSURE(this, &Actor::_onMouseEvent));
+			getStage()->addEventListener( TouchEvent::MOVE, CLOSURE(this, &Actor::_onMouseEvent));
 		}
 		else
 		{
-			getRoot()->removeEventListener( TouchEvent::MOVE, CLOSURE(this, &Actor::_onMouseEvent));
+			getStage()->removeEventListener( TouchEvent::MOVE, CLOSURE(this, &Actor::_onMouseEvent));
 			//if (!_overed)
 			{
 				TouchEvent e(TouchEvent::OUT);
@@ -267,7 +267,7 @@ namespace oxygine
 			if (isDescendant(act))
 			{
 				if (event->phase == Event::phase_target)
-					getRoot()->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onMouseEvent));					
+					getStage()->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onMouseEvent));					
 				setPressed(me->index);
 				//_pressed = me->id;
 				//setPressed(true);
@@ -281,7 +281,7 @@ namespace oxygine
 					{
 						setPressed(0);			
 						//it is event from ROOT, convert to local space
-						Vector2 lp = convert_global2local(this, getRoot(), me->localPosition);
+						Vector2 lp = convert_global2local(this, getStage(), me->localPosition);
 						if (isDescendant(act))
 						{
 							TouchEvent e(TouchEvent::CLICK, true, lp);
@@ -305,7 +305,7 @@ namespace oxygine
 						setOvered(me->index);
 
 						if (event->phase == Event::phase_target)
-							getRoot()->addEventListener(TouchEvent::MOVE, CLOSURE(this, &Actor::_onMouseEvent));
+							getStage()->addEventListener(TouchEvent::MOVE, CLOSURE(this, &Actor::_onMouseEvent));
 					}
 				}
 				else
@@ -378,7 +378,7 @@ namespace oxygine
 		while (actor)
 		{
 			spActor prev = actor->_prev;
-			if (!touchEvent || (_flags & flag_inputChildrenEnabled))
+			if (!touchEvent || (_flags & flag_touchChildrenEnabled))
 				actor->handleEvent(event);
 			//if (event->target)
 			//	break;
@@ -394,7 +394,7 @@ namespace oxygine
 			TouchEvent *me = safeCast<TouchEvent *>(event);
 			if (!event->target)
 			{
-				if ((_flags & flag_inputEnabled) && isOn(me->localPosition))
+				if ((_flags & flag_touchEnabled) && isOn(me->localPosition))
 				{
 					event->phase = Event::phase_target;
 					event->target = this;
@@ -1201,12 +1201,12 @@ namespace oxygine
 				}
 				if (!strcmp(name, "input"))
 				{
-					setInputEnabled(attr.as_bool());
+					setTouchEnabled(attr.as_bool());
 					break;
 				}
 				if (!strcmp(name, "inputch"))
 				{
-					setInputChildrenEnabled(attr.as_bool());
+					setTouchChildrenEnabled(attr.as_bool());
 					break;
 				}
 				if (!strcmp(name, "alpha"))
@@ -1263,17 +1263,17 @@ namespace oxygine
 		return convert_local2global_(child.get(), parent.get(), pos);
 	}
 
-	Vector2 convert_local2root(spActor actor, const Vector2 &pos, spActor root)
+	Vector2 convert_local2stage(spActor actor, const Vector2 &pos, spActor root)
 	{
 		if (!root)
-			root = getRoot();
+			root = getStage();
 		return convert_local2global(actor, root, pos);
 	}
 
-	Vector2 convert_root2local(spActor actor, const Vector2 &pos, spActor root)
+	Vector2 convert_stage2local(spActor actor, const Vector2 &pos, spActor root)
 	{
 		if (!root)
-			root = getRoot();
+			root = getStage();
 		return convert_global2local(actor, root, pos);
 	}
 

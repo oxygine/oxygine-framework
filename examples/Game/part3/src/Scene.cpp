@@ -3,7 +3,7 @@
 Scene::Scene()
 {
 	_view = new Actor;
-	_view->setSize(getRoot()->getSize());
+	_view->setSize(getStage()->getSize());
 }
 
 void Scene::changeScene(spScene next)
@@ -14,7 +14,7 @@ void Scene::changeScene(spScene next)
 	tween->setDetachActor(true);
 
 	//show next scene
-	getRoot()->addChild(next->getView());
+	getStage()->addChild(next->getView());
 	next->getView()->setAlpha(0);
 	next->getView()->addTween(Actor::TweenAlpha(255), 300);
 }

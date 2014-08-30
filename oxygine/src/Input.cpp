@@ -1,5 +1,5 @@
 #include "Input.h"
-#include "RootActor.h"
+#include "Stage.h"
 #include "core/log.h"
 #include <string.h>
 
@@ -34,7 +34,7 @@ namespace oxygine
 
 		LOGD("sendPointerButtonEvent %d - (%.2f, %.2f), %d", me.index, p.x, p.y, type);
 
-		getRoot()->handleEvent(&me);
+		getStage()->handleEvent(&me);
 	}
 
 	void Input::sendPointerMotionEvent(float x, float y, float pressure, PointerState *ps)
@@ -45,7 +45,7 @@ namespace oxygine
 		ps->_position = Vector2(x, y);
 
 		LOGD("sendPointerMotionEvent %d - (%.2f, %.2f)", me.index, x, y);
-		getRoot()->handleEvent(&me);
+		getStage()->handleEvent(&me);
 	}
 
 	void Input::sendPointerWheelEvent(int scroll, PointerState *ps)
@@ -55,7 +55,7 @@ namespace oxygine
 
 		ps->_position = Vector2(0, 0);
 
-		getRoot()->handleEvent(&me);
+		getStage()->handleEvent(&me);
 	}
 
 

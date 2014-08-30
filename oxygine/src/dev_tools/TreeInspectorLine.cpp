@@ -11,7 +11,7 @@ namespace oxygine
 	
 	TreeInspectorLine::TreeInspectorLine():_page(0)
 	{
-		setInputEnabled(false);
+		setTouchEnabled(false);
 	}
 
 	TreeInspectorLine::~TreeInspectorLine()
@@ -31,7 +31,7 @@ namespace oxygine
 
 		
 		spTextField tb = new TextField();
-		tb->setInputEnabled(false);
+		tb->setTouchEnabled(false);
 		tb->setColor(Color::Black);
 	
 		const float minWidth = 300.0f;

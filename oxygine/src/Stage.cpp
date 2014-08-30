@@ -1,4 +1,4 @@
-#include "RootActor.h"
+#include "Stage.h"
 #include "core/Renderer.h"
 #include "math/Rect.h"
 #include "RenderState.h"
@@ -6,34 +6,34 @@
 
 namespace oxygine
 {
-	spRootActor RootActor::instance;
+	spStage Stage::instance;
 
-	RootActor::RootActor():_statUpdate(0), _statRender(0), _clipOuter(false), _viewport(0,0,0,0)
+	Stage::Stage():_statUpdate(0), _statRender(0), _clipOuter(false), _viewport(0,0,0,0)
 	{
 		spClock clock = new Clock();
 		setClock(clock);
-		setName("RootActor");
+		setName("Stage");
 
 		//addEventHandler(new EventHandler());
 	}
 
-	RootActor::~RootActor()
+	Stage::~Stage()
 	{
 
 	}
 
-	std::string RootActor::dump(const dumpOptions &opt) const
+	std::string Stage::dump(const dumpOptions &opt) const
 	{
 		stringstream st;
 
-		st << "{RootActor}\n";
+		st << "{Stage}\n";
 		//st << " displaySize=(" << _realDisplaySize.x << "," << _realDisplaySize.y << ")";
 		st << Actor::dump(opt);
 
 		return st.str();
 	}
 
-	Rect	RootActor::calcCenteredViewport(const Point &displaySize, const Point &gameSize)
+	Rect	Stage::calcCenteredViewport(const Point &displaySize, const Point &gameSize)
 	{
 		float width = (float)displaySize.x;
 		float height = (float)displaySize.y;
@@ -49,7 +49,7 @@ namespace oxygine
 		return Rect((free/2).cast<Point>(), size.cast<Point>());
 	}
 
-	void RootActor::init(const Point &displaySize, const Point &gameSize)
+	void Stage::init(const Point &displaySize, const Point &gameSize)
 	{
 		//_realDisplaySize = displaySize;
 		setSize(gameSize);
@@ -62,13 +62,13 @@ namespace oxygine
 		setPosition(_viewport.pos);
 	}
 
-	bool RootActor::isOn(const Vector2 &localPosition)
+	bool Stage::isOn(const Vector2 &localPosition)
 	{
 		return true;
 	}
 		
 
-	RectF RootActor::getDestRect() const
+	RectF Stage::getDestRect() const
 	{
 		Vector2 s = getSize() + getPosition();
 		RectF r = calcDestRectF(RectF(-getPosition(), s), s);
@@ -76,14 +76,14 @@ namespace oxygine
 	}
 
 	/*
-	bool RootActor::handleEvent(const EventState &es)
+	bool Stage::handleEvent(const EventState &es)
 	{
 		bool handled = Actor::handleEvent(es);
 		return handled;
 	}
 	*/
 
-	void RootActor::render(Renderer &r)
+	void Stage::render(Renderer &r)
 	{
 		timeMS t = getTimeMS();
 		RenderState rs;
@@ -104,11 +104,11 @@ namespace oxygine
 		_statRender = getTimeMS() - t;
 	}
 
-	void RootActor::cleanup()
+	void Stage::cleanup()
 	{
 	}
 
-	void RootActor::update()
+	void Stage::update()
 	{
 		timeMS t = getTimeMS();
 		UpdateState us;		

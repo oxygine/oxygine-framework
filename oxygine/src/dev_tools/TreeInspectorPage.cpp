@@ -9,7 +9,7 @@ namespace oxygine
 {
 	TreeInspectorPage::TreeInspectorPage(TreeInspector *tree, TreeInspectorPage *parentPage):_tree(tree), _parentPage(parentPage)
 	{
-		//setInputEnabled(false);
+		//setTouchEnabled(false);
 	}
 
 	TreeInspectorPage::~TreeInspectorPage()
@@ -52,7 +52,7 @@ namespace oxygine
 			}
 
 			_pages = new Actor();
-			_pages->setInputEnabled(false);
+			_pages->setTouchEnabled(false);
 			_pages->setX(-15);
 			_pages->setY((float)y);
 

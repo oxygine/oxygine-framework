@@ -15,7 +15,7 @@ GameScene::GameScene()
 
 	//Game Actor would have own Clock.
 	//clock is internal time of each Actor
-	//by default own clock has only RootActor
+	//by default own clock has only Stage
 	//clock could be paused and all children of this Actor would be paused to
 	_game->setClock(new Clock);
 

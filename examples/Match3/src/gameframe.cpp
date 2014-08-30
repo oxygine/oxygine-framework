@@ -489,9 +489,9 @@ GameFrame::GameFrame()
 	setResAnim(res.getResAnim("bg"));
 
 	spTField field = new Field();
-	float scale = getRoot()->getHeight() * 0.9f / field->getHeight();
+	float scale = getStage()->getHeight() * 0.9f / field->getHeight();
 	field->setScale(scale);
 
-	field->setPosition(getRoot()->getSize()/2 - field->getSize() * scale/2);
+	field->setPosition(getStage()->getSize()/2 - field->getSize() * scale/2);
 	addChild(field);
 }

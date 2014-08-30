@@ -2,7 +2,7 @@
 #include "core/Mem2Native.h"
 #include "res/Resources.h"
 #include "res/Resource.h"
-#include "RootActor.h"
+#include "Stage.h"
 #include "res/CreateResourceContext.h"
 
 #ifdef __S3E__
@@ -76,7 +76,7 @@ namespace oxygine
 
 	ThreadLoading::ThreadLoading():_thread(pthread_self()), _threadDone(false)
 	{
-		setInputEnabled(false);
+		setTouchEnabled(false);
 	}
 
 	ThreadLoading::~ThreadLoading()

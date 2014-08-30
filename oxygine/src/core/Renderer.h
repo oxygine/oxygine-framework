@@ -171,6 +171,8 @@ namespace oxygine
 		Vector2			getMaskedUV(const Vector2 &pos);
 		IVideoDriver*	getDriver();
 
+		bool			isMasked() const;
+
 
 		/**Begins rendering into RenderTexture or into primary framebuffer if rt is null*/
 		bool begin(spNativeTexture rt, const Rect &viewport, const Color *clearColor);

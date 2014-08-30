@@ -1,6 +1,6 @@
 #include "TreeInspectorPreview.h"
 #include "TreeInspector.h"
-#include "RootActor.h"
+#include "Stage.h"
 #include "TextField.h"
 #include "res/Resources.h"
 #include "RenderState.h"
@@ -9,7 +9,7 @@ namespace oxygine
 {
 	TreeInspectorPreview::TreeInspectorPreview(TreeInspector *tree): _tree(tree), _prevParent(0), _drawChildren(false)
 	{
-		setInputEnabled(false);
+		setTouchEnabled(false);
 	}
 
 	TreeInspectorPreview::~TreeInspectorPreview()

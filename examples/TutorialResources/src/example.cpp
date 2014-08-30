@@ -14,12 +14,12 @@ void example_init()
 	spSprite dog = new Sprite;
 	dog->setResAnim(animals.getResAnim("dog"));	
 	dog->setPosition(200, 300);
-	dog->attachTo(getRoot());
+	dog->attachTo(getStage());
 
 	spSprite cat = new Sprite;
 	cat->setResAnim(animals.getResAnim("cat"));
 	cat->setPosition(600, 300);
-	cat->attachTo(getRoot());
+	cat->attachTo(getStage());
 }
 
 void example_update()

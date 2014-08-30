@@ -38,7 +38,7 @@ public:
 
 	TestActor()
 	{	
-		_x = 90;//getRoot()->getWidth()/2.0f;
+		_x = 90;//getStage()->getWidth()/2.0f;
 		_y = 80;
 
 
@@ -67,76 +67,76 @@ public:
 
 		if (id == "perf")
 		{
-			getRoot()->addChild(new PerfTest);
+			getStage()->addChild(new PerfTest);
 		}
 		if (id == "tweens")
 		{
-			getRoot()->addChild(new TweensTest);
+			getStage()->addChild(new TweensTest);
 		}
 		if (id == "drag")
 		{
-			getRoot()->addChild(new DragTest);
+			getStage()->addChild(new DragTest);
 		}
 		if (id == "drag2")
 		{
-			getRoot()->addChild(new Drag2Test);
+			getStage()->addChild(new Drag2Test);
 		}
 		if (id == "manage_res")
 		{
-			getRoot()->addChild(new ManageResTest);
+			getStage()->addChild(new ManageResTest);
 		}
 		if (id == "r2t")
 		{
-			getRoot()->addChild(new TestRender2Texture);
+			getStage()->addChild(new TestRender2Texture);
 		}
 		if (id == "text")
 		{
-			getRoot()->addChild(new TestText);
+			getStage()->addChild(new TestText);
 		}
 
 		if (id == "progress_bar")
 		{
-			getRoot()->addChild(new TestProgressBar);
+			getStage()->addChild(new TestProgressBar);
 		}
 
 		if (id == "texture_format")
 		{
-			getRoot()->addChild(new TestTextureFormat);
+			getStage()->addChild(new TestTextureFormat);
 		}
 
 		if (id == "sliding")
 		{
-			getRoot()->addChild(new TestSliding);
+			getStage()->addChild(new TestSliding);
 		}
 
 		if (id == "t2p")
 		{
-			getRoot()->addChild(new TestTexel2Pixel);
+			getStage()->addChild(new TestTexel2Pixel);
 		}
 
 		if (id == "box9sprite")
 		{
-			getRoot()->addChild(new TestBox9Sprite);
+			getStage()->addChild(new TestBox9Sprite);
 		}
 
 		if (id == "cliprect")
 		{
-			getRoot()->addChild(new TestClipRect);
+			getStage()->addChild(new TestClipRect);
 		}
 
 		if (id == "usershader")
 		{
-			getRoot()->addChild(new TestUserShader);
+			getStage()->addChild(new TestUserShader);
 		}
 
 		if (id == "mask")
 		{
-			getRoot()->addChild(new TestMask);
+			getStage()->addChild(new TestMask);
 		}
 
 		if (id == "inputtext")
 		{
-			getRoot()->addChild(new TestInputText);
+			getStage()->addChild(new TestInputText);
 		}
 	}
 };
@@ -173,16 +173,16 @@ void example_init()
 	spSprite sp = initActor(new Sprite, 
 		arg_resAnim = resourcesUI.getResAnim("logo2"),
 		arg_input = false,
-		arg_attachTo = getRoot(),
+		arg_attachTo = getStage(),
 		arg_priority = 10,
 		arg_alpha = 128
 		);
 
-	sp->setX(getRoot()->getWidth() - sp->getWidth());
-	sp->setY(getRoot()->getHeight() - sp->getHeight());
+	sp->setX(getStage()->getWidth() - sp->getWidth());
+	sp->setY(getStage()->getHeight() - sp->getHeight());
 
 	_tests = new TestActor;
-	getRoot()->addChild(_tests);
+	getStage()->addChild(_tests);
 }
 
 void example_update()

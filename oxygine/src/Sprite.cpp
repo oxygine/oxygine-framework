@@ -4,7 +4,7 @@
 #include "core/Renderer.h"
 #include "RenderState.h"
 #include "utils/stringUtils.h"
-#include "RootActor.h"
+#include "Stage.h"
 #include "Serialize.h"
 
 namespace oxygine

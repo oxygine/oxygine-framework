@@ -6,7 +6,7 @@ Jewel::Jewel(int jewel_id)
 {
 	state = jsNormal;
 	Set(jewel_id);
-	setInputEnabled(false);
+	setTouchEnabled(false);
 	setAnchor(0.5f, 0.5f);
 }
 

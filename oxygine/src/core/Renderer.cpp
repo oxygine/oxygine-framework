@@ -434,7 +434,13 @@ namespace oxygine
 
 		_mask = 0;
 		_shaderFlags &= ~(UberShaderProgram::MASK | UberShaderProgram::MASK_R_CHANNEL);
+		_shaderFlags = 0;
 		_vdecl = _driver->getVertexDeclaration(VERTEX_PCT2);
+	}
+
+	bool Renderer::isMasked() const
+	{
+		return _mask;
 	}
 
 	Vector2	Renderer::getMaskedUV(const Vector2 &pos)

@@ -11,6 +11,8 @@
 		04670868192795E700D71824 /* Serialize.h in Headers */ = {isa = PBXBuildFile; fileRef = 04670866192795E700D71824 /* Serialize.h */; };
 		048AD0A4197D238D001963EF /* TextField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 048AD0A2197D238D001963EF /* TextField.cpp */; };
 		048AD0A5197D238D001963EF /* TextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 048AD0A3197D238D001963EF /* TextField.h */; };
+		048AD0D119B1FE96001963EF /* Stage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 048AD0CF19B1FE96001963EF /* Stage.cpp */; };
+		048AD0D219B1FE96001963EF /* Stage.h in Headers */ = {isa = PBXBuildFile; fileRef = 048AD0D019B1FE96001963EF /* Stage.h */; };
 		049B56651871F21E00EF3C66 /* Actor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B55911871F21D00EF3C66 /* Actor.cpp */; };
 		049B56661871F21E00EF3C66 /* Actor.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B55921871F21D00EF3C66 /* Actor.h */; };
 		049B56671871F21E00EF3C66 /* AnimationFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B55931871F21D00EF3C66 /* AnimationFrame.cpp */; };
@@ -165,7 +167,6 @@
 		049B57021871F21E00EF3C66 /* Resources.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B563D1871F21E00EF3C66 /* Resources.h */; };
 		049B57031871F21E00EF3C66 /* ResStarlingAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B563E1871F21E00EF3C66 /* ResStarlingAtlas.cpp */; };
 		049B57041871F21E00EF3C66 /* ResStarlingAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B563F1871F21E00EF3C66 /* ResStarlingAtlas.h */; };
-		049B57051871F21E00EF3C66 /* RootActor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B56401871F21E00EF3C66 /* RootActor.cpp */; };
 		049B57061871F21E00EF3C66 /* RootActor.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B56411871F21E00EF3C66 /* RootActor.h */; };
 		049B57071871F21E00EF3C66 /* SlidingActor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B56421871F21E00EF3C66 /* SlidingActor.cpp */; };
 		049B57081871F21E00EF3C66 /* SlidingActor.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B56431871F21E00EF3C66 /* SlidingActor.h */; };
@@ -205,6 +206,8 @@
 		04670866192795E700D71824 /* Serialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Serialize.h; path = ../../../src/Serialize.h; sourceTree = "<group>"; };
 		048AD0A2197D238D001963EF /* TextField.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextField.cpp; path = ../../../src/TextField.cpp; sourceTree = "<group>"; };
 		048AD0A3197D238D001963EF /* TextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextField.h; path = ../../../src/TextField.h; sourceTree = "<group>"; };
+		048AD0CF19B1FE96001963EF /* Stage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Stage.cpp; path = ../../../src/Stage.cpp; sourceTree = "<group>"; };
+		048AD0D019B1FE96001963EF /* Stage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Stage.h; path = ../../../src/Stage.h; sourceTree = "<group>"; };
 		049B52BB1871EDE900EF3C66 /* liboxygine_macosx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liboxygine_macosx.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		049B55911871F21D00EF3C66 /* Actor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Actor.cpp; path = ../../../src/Actor.cpp; sourceTree = "<group>"; };
 		049B55921871F21D00EF3C66 /* Actor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Actor.h; path = ../../../src/Actor.h; sourceTree = "<group>"; };
@@ -366,7 +369,6 @@
 		049B563D1871F21E00EF3C66 /* Resources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Resources.h; sourceTree = "<group>"; };
 		049B563E1871F21E00EF3C66 /* ResStarlingAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResStarlingAtlas.cpp; sourceTree = "<group>"; };
 		049B563F1871F21E00EF3C66 /* ResStarlingAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResStarlingAtlas.h; sourceTree = "<group>"; };
-		049B56401871F21E00EF3C66 /* RootActor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RootActor.cpp; path = ../../../src/RootActor.cpp; sourceTree = "<group>"; };
 		049B56411871F21E00EF3C66 /* RootActor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootActor.h; path = ../../../src/RootActor.h; sourceTree = "<group>"; };
 		049B56421871F21E00EF3C66 /* SlidingActor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SlidingActor.cpp; path = ../../../src/SlidingActor.cpp; sourceTree = "<group>"; };
 		049B56431871F21E00EF3C66 /* SlidingActor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SlidingActor.h; path = ../../../src/SlidingActor.h; sourceTree = "<group>"; };
@@ -433,6 +435,8 @@
 		049B55901871F21000EF3C66 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				048AD0CF19B1FE96001963EF /* Stage.cpp */,
+				048AD0D019B1FE96001963EF /* Stage.h */,
 				048AD0A2197D238D001963EF /* TextField.cpp */,
 				048AD0A3197D238D001963EF /* TextField.h */,
 				04670865192795E700D71824 /* Serialize.cpp */,
@@ -487,7 +491,6 @@
 				049B56251871F21D00EF3C66 /* pugixml */,
 				049B562B1871F21D00EF3C66 /* RenderState.h */,
 				049B562C1871F21D00EF3C66 /* res */,
-				049B56401871F21E00EF3C66 /* RootActor.cpp */,
 				049B56411871F21E00EF3C66 /* RootActor.h */,
 				049B56421871F21E00EF3C66 /* SlidingActor.cpp */,
 				049B56431871F21E00EF3C66 /* SlidingActor.h */,
@@ -768,6 +771,7 @@
 				049B56951871F21E00EF3C66 /* Mem2Native.h in Headers */,
 				049B56B51871F21E00EF3C66 /* UberShaderProgram.h in Headers */,
 				049B56E21871F21E00EF3C66 /* ioapi.h in Headers */,
+				048AD0D219B1FE96001963EF /* Stage.h in Headers */,
 				049B56A41871F21E00EF3C66 /* Renderer.h in Headers */,
 				04670868192795E700D71824 /* Serialize.h in Headers */,
 				049B56D01871F21E00EF3C66 /* Font.h in Headers */,
@@ -942,7 +946,6 @@
 				049B56F01871F21E00EF3C66 /* pugixml.cpp in Sources */,
 				049B56B81871F21E00EF3C66 /* VideoDriver.cpp in Sources */,
 				049B56F51871F21E00EF3C66 /* ResAnim.cpp in Sources */,
-				049B57051871F21E00EF3C66 /* RootActor.cpp in Sources */,
 				049B56791871F21E00EF3C66 /* file.cpp in Sources */,
 				049B566B1871F21E00EF3C66 /* Box9Sprite.cpp in Sources */,
 				049B56671871F21E00EF3C66 /* AnimationFrame.cpp in Sources */,
@@ -968,6 +971,7 @@
 				049B56711871F21E00EF3C66 /* Clock.cpp in Sources */,
 				049B56BE1871F21E00EF3C66 /* DeveloperMenu.cpp in Sources */,
 				048AD0A4197D238D001963EF /* TextField.cpp in Sources */,
+				048AD0D119B1FE96001963EF /* Stage.cpp in Sources */,
 				049B567E1871F21E00EF3C66 /* NativeTextureGLES.cpp in Sources */,
 				049B56AE1871F21E00EF3C66 /* system_data.cpp in Sources */,
 				049B569A1871F21E00EF3C66 /* NativeTexture.cpp in Sources */,

@@ -27,6 +27,7 @@
 #include "ProgressBar.h"
 #include "RenderState.h"
 #include "RootActor.h"
+#include "Stage.h"
 #include "SlidingActor.h"
 #include "Sprite.h"
 #include "MaskedSprite.h"

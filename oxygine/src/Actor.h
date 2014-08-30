@@ -136,8 +136,8 @@ namespace oxygine
 		unsigned char		getAlpha() const {return _alpha;}
 		const spClock&		getClock() const;
 		virtual RectF		getDestRect() const;
-		bool				getInputEnabled() const {return (_flags & flag_inputEnabled) != 0;}
-		bool				getInputChildrenEnabled() const {return (_flags & flag_inputChildrenEnabled) != 0;}
+		bool				getInputEnabled() const {return (_flags & flag_touchEnabled) != 0;}
+		bool				getInputChildrenEnabled() const {return (_flags & flag_touchChildrenEnabled) != 0;}
 		bool				getChildrenRelative() const {return (_flags & flag_childrenRelative) != 0;;}
 		UpdateCallback		getCallbackDoUpdate() const {return _cbDoUpdate;}
 		//RenderCallback		getCallbackDoRender() const {return _cbDoRender;}
@@ -186,10 +186,16 @@ namespace oxygine
 		void setCull(bool enable) {_flags &= ~flag_cull; if (enable) _flags |= flag_cull;}
 		/**Sets transparency. if alpha is 0 actor and children are completely invisible, don't rendering and don't receive events.*/
 		void setAlpha(unsigned char alpha){_alpha = alpha;}
-		/**Enables/Disables input events(touch, mouse) for Actor.*/
-		void setInputEnabled(bool enabled) {_flags &= ~flag_inputEnabled; if (enabled) _flags |= flag_inputEnabled;}
-		/**Enables/Disables input events(touch, mouse) for children of Actor.*/
-		void setInputChildrenEnabled(bool enabled) {_flags &= ~flag_inputChildrenEnabled; if (enabled) _flags |= flag_inputChildrenEnabled;}
+		
+		/**Deprecated, use setTouchEnabled*/
+		void setInputEnabled(bool enabled) { setTouchEnabled(enabled); }
+		/**Deprecated, use setTouchChildrenEnabled*/
+		void setInputChildrenEnabled(bool enabled) { setTouchChildrenEnabled(enabled); }
+
+		/**Enables/Disables Touch events for Actor.*/
+		void setTouchEnabled(bool enabled) { _flags &= ~flag_touchEnabled; if (enabled) _flags |= flag_touchEnabled; }
+		/**Enables/Disables Touch events for children of Actor.*/
+		void setTouchChildrenEnabled(bool enabled) { _flags &= ~flag_touchChildrenEnabled; if (enabled) _flags |= flag_touchChildrenEnabled; }
 
 		/**Sets callback which would be called each Actor::update cycle before doUpdate. Use it if you don't want inherit from Actor and overload Actor::doUpdate.*/
 		void setCallbackDoUpdate(UpdateCallback cb){_cbDoUpdate = cb;}
@@ -321,11 +327,11 @@ namespace oxygine
 		{
 			flag_anchorInPixels			= 1,
 			flag_visible				= 1 << 1,
-			flag_inputEnabled			= 1 << 2,
+			flag_touchEnabled			= 1 << 2,
 			flag_childrenRelative		= 1 << 3,
 			flag_transformDirty			= 1 << 4,
 			flag_transformInvertDirty	= 1 << 5,
-			flag_inputChildrenEnabled	= 1 << 6,
+			flag_touchChildrenEnabled	= 1 << 6,
 			flag_cull					= 1 << 7,
 			flag_fastTransform			= 1 << 8,
 			flag_last					= flag_fastTransform
@@ -356,11 +362,18 @@ namespace oxygine
 		RectF calcDestRectF(const RectF &destRect, const Vector2 &size) const;
 	};
 
-	Vector2 convert_global2local(spActor child, spActor parent, const Vector2 &pos);//deprecated, use convert_root2local
-	Vector2 convert_local2global(spActor child, spActor parent, const Vector2 &pos);//deprecated, use convert_local2root
+	Vector2 convert_global2local(spActor child, spActor parent, const Vector2 &pos);//deprecated, use convert_stage2local
+	Vector2 convert_local2global(spActor child, spActor parent, const Vector2 &pos);//deprecated, use convert_local2stage
+	
+	Vector2 convert_local2stage(spActor child, const Vector2 &pos, spActor root = 0);
+	Vector2 convert_stage2local(spActor child, const Vector2 &pos, spActor root = 0);
 
-	Vector2 convert_local2root(spActor child, const Vector2 &pos, spActor root = 0);
-	Vector2 convert_root2local(spActor child, const Vector2 &pos, spActor root = 0);
+	/**Deprecated*/
+	inline Vector2 convert_local2root(spActor child, const Vector2 &pos, spActor root = 0){ return convert_local2stage(child, pos, root); }
+	/**Deprecated*/
+	inline Vector2 convert_root2local(spActor child, const Vector2 &pos, spActor root = 0){ return convert_root2local(child, pos, root); }
+
+
 
 	Renderer::transform getGlobalTransform(spActor child);
 

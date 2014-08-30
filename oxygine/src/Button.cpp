@@ -1,5 +1,5 @@
 #include "Button.h"
-#include "RootActor.h"
+#include "Stage.h"
 
 namespace oxygine
 {
@@ -90,7 +90,7 @@ namespace oxygine
 					{
 						_btnPressed = me->index;
 						setState(statePressed);
-						getRoot()->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Button::_mouseEvent));
+						getStage()->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Button::_mouseEvent));
 					}					
 				}				
 			}
@@ -100,7 +100,7 @@ namespace oxygine
 				if (_btnPressed == me->index)
 				{				
 					setState(stateNormal);
-					getRoot()->removeEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Button::_mouseEvent));
+					getStage()->removeEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Button::_mouseEvent));
 					_btnPressed = 0;
 				}
 

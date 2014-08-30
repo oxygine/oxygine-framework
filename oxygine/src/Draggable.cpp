@@ -1,7 +1,7 @@
 #include "Draggable.h"
 #include "math/AffineTransform.h"
 #include "Actor.h"
-#include "RootActor.h"
+#include "Stage.h"
 
 namespace oxygine
 {
@@ -73,8 +73,8 @@ namespace oxygine
 	{
 		if (_actor && !_singleDrag)
 		{
-			if (getRoot())
-				getRoot()->removeEventListeners(this);
+			if (getStage())
+				getStage()->removeEventListeners(this);
 			_actor->removeEventListeners(this);
 			_actor = 0;
 		}
@@ -100,10 +100,10 @@ namespace oxygine
 		_actor = actor;
 		_dragClient = actor;
 
-		getRoot()->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Draggable::onEvent));
+		getStage()->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Draggable::onEvent));
 		
 		Vector2 src = pointer->getPosition().cast<Vector2>();
-		Vector2 pos = convert_root2local(actor->getParent(), src);
+		Vector2 pos = convert_stage2local(actor->getParent(), src);
 		actor->setPosition(pos - localPosition);
 
 		startDrag(localPosition);
@@ -118,7 +118,7 @@ namespace oxygine
 		//why I did add it?
 		//event->stopPropagation();
 
-		getRoot()->addEventListener(TouchEvent::MOVE, CLOSURE(this, &Draggable::onEvent));
+		getStage()->addEventListener(TouchEvent::MOVE, CLOSURE(this, &Draggable::onEvent));
 	}
 
 	void Draggable::onMove(const Vector2 &position)
@@ -128,7 +128,7 @@ namespace oxygine
 			Actor *client = _dragClient;
 
 
-			Vector2 localPos = convert_root2local(client, position);
+			Vector2 localPos = convert_stage2local(client, position);
 
 			Vector2 dragOffset = localPos - _dragPos;
 
@@ -165,7 +165,7 @@ namespace oxygine
 		case TouchEvent::TOUCH_UP:
 			{
 				_pressed = false;
-				getRoot()->removeEventListeners(this);
+				getStage()->removeEventListeners(this);
 			}
 			break;
 

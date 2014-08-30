@@ -46,7 +46,7 @@ public:
 		textDetails = new TextField;
 		textDetails->attachTo(ui);
 		textDetails->setSize(Vector2(300, 0));
-		textDetails->setPosition(200.0f, getRoot()->getHeight() - 10);
+		textDetails->setPosition(200.0f, getStage()->getHeight() - 10);
 		
 		TextStyle st;
 		st.font = resourcesUI.getResFont("main")->getFont();

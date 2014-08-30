@@ -131,5 +131,6 @@ examples/Demo/proj.win32/Win32/
 data.js
 examples/HelloWorld/proj.win32/Win32/
 ident.free
+examples/Game/part4/build_game_vc12/
 syntax: regexp
 ^build/

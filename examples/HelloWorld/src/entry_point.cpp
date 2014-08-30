@@ -6,7 +6,7 @@ You could start from example.cpp and example.h it has main functions being calle
 */
 #include <stdio.h>
 #include "core/Renderer.h"
-#include "RootActor.h"
+#include "Stage.h"
 #include "DebugActor.h"
 
 #include "example.h"
@@ -19,15 +19,15 @@ Renderer renderer;
 Rect viewport;
 
 
-class ExampleRootActor : public RootActor
+class ExampleStage : public Stage
 {
 public:
-	ExampleRootActor()
+	ExampleStage()
 	{
 		//each mobile application should handle focus lost
 		//and free/restore GPU resources
-		addEventListener(RootActor::DEACTIVATE, CLOSURE(this, &ExampleRootActor::onDeactivate));
-		addEventListener(RootActor::ACTIVATE, CLOSURE(this, &ExampleRootActor::onActivate));
+		addEventListener(Stage::DEACTIVATE, CLOSURE(this, &ExampleStage::onDeactivate));
+		addEventListener(Stage::ACTIVATE, CLOSURE(this, &ExampleStage::onActivate));
 	}
 
 	void onDeactivate(Event *)
@@ -45,16 +45,16 @@ public:
 int mainloop()
 {
 	example_update();
-	//update our rootActor
+	//update our stage
 	//Actor::update would be called also for children
-	getRoot()->update();
+	getStage()->update();
 
 	Color clear(33, 33, 33, 255);
 	//start rendering and clear viewport
 	if (renderer.begin(0, viewport, &clear))
 	{
-		//begin rendering from RootActor.
-		getRoot()->render(renderer);
+		//begin rendering from Stage.
+		getStage()->render(renderer);
 		//rendering done
 		renderer.end();
 
@@ -63,7 +63,7 @@ int mainloop()
 
 
 	//update internal components
-	//all input events would be passed to RootActor::instance.handleEvent
+	//all input events would be passed to Stage::instance.handleEvent
 	//if done is true then User requests quit from app.
 	bool done = core::update();
 
@@ -90,16 +90,16 @@ void run()
 	core::init(&desc);
 
 
-	//create RootActor. RootActor is a root node
-	RootActor::instance = new ExampleRootActor();
+	//create Stage. Stage is a root node
+	Stage::instance = new ExampleStage();
 	Point size = core::getDisplaySize();
-	getRoot()->init(size, size);
+	getStage()->init(size, size);
 
 	//DebugActor is a helper node it shows FPS and memory usage and other useful stuff
 	DebugActor::initialize();
 
-	//create and add new DebugActor to root actor as child
-	getRoot()->addChild(new DebugActor());
+	//create and add new DebugActor to stage as child
+	getStage()->addChild(new DebugActor());
 
 
 
@@ -156,7 +156,7 @@ void run()
 
 	renderer.cleanup();
 
-	/**releases all internal components and RootActor*/
+	/**releases all internal components and Stage*/
 	core::release();
 
 	//dump list should be empty now

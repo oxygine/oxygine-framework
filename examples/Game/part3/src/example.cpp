@@ -17,7 +17,7 @@ void example_init()
 
 	GameScene::instance = new GameScene;
 	MainMenuScene::instance = new MainMenuScene;
-	getRoot()->addChild(MainMenuScene::instance->getView());
+	getStage()->addChild(MainMenuScene::instance->getView());
 }
 
 void example_update()

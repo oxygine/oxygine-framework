@@ -31,7 +31,7 @@ public:
 
 	MainActor():_world(0)
 	{	
-		setSize(getRoot()->getSize());
+		setSize(getStage()->getSize());
 
 		spButton btn = new Button;
 		btn->setResAnim(gameResources.getResAnim("button"));
@@ -135,7 +135,7 @@ public:
 		sprite->attachTo(this);
 		sprite->setAnchor(Vector2(0.5f, 0.5f));
 		sprite->setPosition(te->localPosition);
-		sprite->setInputChildrenEnabled(false);
+		sprite->setTouchChildrenEnabled(false);
 
 		sprite->addEventListener(TouchEvent::CLICK, CLOSURE(this, &MainActor::circleClicked));
 		
@@ -177,8 +177,8 @@ void example_init()
 	//prefix 'sp' here means it is intrusive Smart Pointer
 	//it would be deleted automatically when you lost ref to it	
 	spMainActor actor = new MainActor;
-	//and add it to RootActor as child
-	getRoot()->addChild(actor);
+	//and add it to Stage as child
+	getStage()->addChild(actor);
 }
 
 void example_destroy()

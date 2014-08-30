@@ -16,7 +16,7 @@
 
 #include "Renderer.h"
 #include "DebugActor.h"
-#include "RootActor.h"
+#include "Stage.h"
 
 #include "res/ResStarlingAtlas.h"
 
@@ -225,15 +225,15 @@ namespace oxygine
 
 	int32 applicationPause(void* systemData, void* userData)
 	{
-		Event ev(RootActor::DEACTIVATE);
-		getRoot()->dispatchEvent(&ev);
+		Event ev(Stage::DEACTIVATE);
+		getStage()->dispatchEvent(&ev);
 		return 0;
 	}
 
 	int32 applicationUnPause(void* systemData, void* userData)
 	{
-		Event ev(RootActor::ACTIVATE);
-		getRoot()->dispatchEvent(&ev);
+		Event ev(Stage::ACTIVATE);
+		getStage()->dispatchEvent(&ev);
 		return 0;
 	}
 #endif
@@ -740,9 +740,9 @@ namespace oxygine
 								focusLost();
 
 							log::messageln("focus: %d", (int)focus);
-							Event ev(focus ? RootActor::ACTIVATE : RootActor::DEACTIVATE);
-							if (getRoot())
-								getRoot()->dispatchEvent(&ev);
+							Event ev(focus ? Stage::ACTIVATE : Stage::DEACTIVATE);
+							if (getStage())
+								getStage()->dispatchEvent(&ev);
 #endif							
 						}
 						//log::messageln("SDL_SYSWMEVENT %d", (int)event.window.event);
@@ -832,10 +832,10 @@ namespace oxygine
 			SDL_Quit();
 #endif
 
-			spActor temp = RootActor::instance;
-            if (RootActor::instance)
-                RootActor::instance->cleanup();
-			RootActor::instance = 0;	
+			spActor temp = Stage::instance;
+            if (Stage::instance)
+                Stage::instance->cleanup();
+			Stage::instance = 0;	
 
 			Input::instance.cleanup();
 

@@ -80,7 +80,7 @@ public:
 
 		if (id == "pause")
 		{
-			spClock clock = getRoot()->getClock();
+			spClock clock = getStage()->getClock();
 			if (t->value == 0)
 				clock->pause();
 			else

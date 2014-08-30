@@ -2,7 +2,7 @@
 2a. Examples folder have configured android project (exception is demobox2d)
 =================================================================================================
 how to build. Steps:
-- install Android NKD and setup it
+- install Android NDK and setup it
 - install Android SDK - 12 (if newer need to fix some properties in example)
 - install apache-ant 
 - install JDK version 6/7
@@ -32,8 +32,14 @@ how to build. Steps:
 - goto oxygine-framework\examples and choose any example. Lets call it "Demo" 
 - try to build and run it using these scripts located in proj.android folder:
 	build.cmd
-	install.cmd
+  ant_debug.bat
+	install.bat
 
+!!!note!!!:
+  folder with oxygine-framework should have exact name 'oxygine-framework'
+  not 'oxygine-framework-master' not 'oxygine-framework.git' etc.
+  otherwise you would see error:
+    > Android NDK: jni/src/Android.mk: Cannot find module with tag 'oxygine-framework'
 
 
 2b. You could generate your own android build config.

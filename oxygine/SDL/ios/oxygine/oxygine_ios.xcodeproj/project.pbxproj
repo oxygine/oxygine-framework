@@ -36,6 +36,8 @@
 		0472E38217F8A2EC0016A832 /* oxygine-framework.h in Headers */ = {isa = PBXBuildFile; fileRef = 0472E37E17F8A2EC0016A832 /* oxygine-framework.h */; };
 		048AD0AA197D2444001963EF /* TextField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 048AD0A8197D2444001963EF /* TextField.cpp */; };
 		048AD0AB197D2444001963EF /* TextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 048AD0A9197D2444001963EF /* TextField.h */; };
+		048AD0CB19B1FD74001963EF /* Stage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 048AD0C919B1FD74001963EF /* Stage.cpp */; };
+		048AD0CC19B1FD74001963EF /* Stage.h in Headers */ = {isa = PBXBuildFile; fileRef = 048AD0CA19B1FD74001963EF /* Stage.h */; };
 		04967C4D180B3D7400D66EFA /* Restorable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04967C4B180B3D7400D66EFA /* Restorable.cpp */; };
 		04967C4E180B3D7400D66EFA /* Restorable.h in Headers */ = {isa = PBXBuildFile; fileRef = 04967C4C180B3D7400D66EFA /* Restorable.h */; };
 		049B64AB1803054300EC333E /* CreateResourceContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B64AA1803054300EC333E /* CreateResourceContext.cpp */; };
@@ -160,7 +162,6 @@
 		C3E8706916EBC8EB00052915 /* Resources.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FCB16EBC8EB00052915 /* Resources.h */; };
 		C3E8706A16EBC8EB00052915 /* ResStarlingAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3E86FCC16EBC8EB00052915 /* ResStarlingAtlas.cpp */; };
 		C3E8706B16EBC8EB00052915 /* ResStarlingAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FCD16EBC8EB00052915 /* ResStarlingAtlas.h */; };
-		C3E8706C16EBC8EB00052915 /* RootActor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3E86FCE16EBC8EB00052915 /* RootActor.cpp */; };
 		C3E8706D16EBC8EB00052915 /* RootActor.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FCF16EBC8EB00052915 /* RootActor.h */; };
 		C3E8706E16EBC8EB00052915 /* SlidingActor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3E86FD016EBC8EB00052915 /* SlidingActor.cpp */; };
 		C3E8706F16EBC8EB00052915 /* SlidingActor.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FD116EBC8EB00052915 /* SlidingActor.h */; };
@@ -231,6 +232,8 @@
 		0472E37E17F8A2EC0016A832 /* oxygine-framework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "oxygine-framework.h"; path = "../../../src/oxygine-framework.h"; sourceTree = "<group>"; };
 		048AD0A8197D2444001963EF /* TextField.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TextField.cpp; path = ../../../src/TextField.cpp; sourceTree = "<group>"; };
 		048AD0A9197D2444001963EF /* TextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextField.h; path = ../../../src/TextField.h; sourceTree = "<group>"; };
+		048AD0C919B1FD74001963EF /* Stage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Stage.cpp; path = ../../../src/Stage.cpp; sourceTree = "<group>"; };
+		048AD0CA19B1FD74001963EF /* Stage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Stage.h; path = ../../../src/Stage.h; sourceTree = "<group>"; };
 		048B7AAB17FDE25E00AE2D0B /* shader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; name = shader.glsl; path = ../../../system_data/original/system/shader.glsl; sourceTree = "<group>"; };
 		04967C4B180B3D7400D66EFA /* Restorable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Restorable.cpp; sourceTree = "<group>"; };
 		04967C4C180B3D7400D66EFA /* Restorable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Restorable.h; sourceTree = "<group>"; };
@@ -363,7 +366,6 @@
 		C3E86FCB16EBC8EB00052915 /* Resources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Resources.h; sourceTree = "<group>"; };
 		C3E86FCC16EBC8EB00052915 /* ResStarlingAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResStarlingAtlas.cpp; sourceTree = "<group>"; };
 		C3E86FCD16EBC8EB00052915 /* ResStarlingAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResStarlingAtlas.h; sourceTree = "<group>"; };
-		C3E86FCE16EBC8EB00052915 /* RootActor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RootActor.cpp; path = ../../../src/RootActor.cpp; sourceTree = "<group>"; };
 		C3E86FCF16EBC8EB00052915 /* RootActor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootActor.h; path = ../../../src/RootActor.h; sourceTree = "<group>"; };
 		C3E86FD016EBC8EB00052915 /* SlidingActor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SlidingActor.cpp; path = ../../../src/SlidingActor.cpp; sourceTree = "<group>"; };
 		C3E86FD116EBC8EB00052915 /* SlidingActor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SlidingActor.h; path = ../../../src/SlidingActor.h; sourceTree = "<group>"; };
@@ -474,6 +476,8 @@
 		C3E86F5316EBC8C200052915 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				048AD0C919B1FD74001963EF /* Stage.cpp */,
+				048AD0CA19B1FD74001963EF /* Stage.h */,
 				048AD0A8197D2444001963EF /* TextField.cpp */,
 				048AD0A9197D2444001963EF /* TextField.h */,
 				0467086D192796E500D71824 /* Serialize.cpp */,
@@ -528,7 +532,6 @@
 				C3E86FB416EBC8EB00052915 /* pugixml */,
 				C3E86FBA16EBC8EB00052915 /* RenderState.h */,
 				C3E86FBB16EBC8EB00052915 /* res */,
-				C3E86FCE16EBC8EB00052915 /* RootActor.cpp */,
 				C3E86FCF16EBC8EB00052915 /* RootActor.h */,
 				C3E86FD016EBC8EB00052915 /* SlidingActor.cpp */,
 				C3E86FD116EBC8EB00052915 /* SlidingActor.h */,
@@ -774,6 +777,7 @@
 				C3E8701E16EBC8EB00052915 /* memory_pool.h in Headers */,
 				C3E8702016EBC8EB00052915 /* Mutex.h in Headers */,
 				C3E8702216EBC8EB00052915 /* NativeTexture.h in Headers */,
+				048AD0CC19B1FD74001963EF /* Stage.h in Headers */,
 				C3E8702416EBC8EB00052915 /* Object.h in Headers */,
 				0467086C192796A000D71824 /* Serialize.h in Headers */,
 				C3E8702516EBC8EB00052915 /* ox_debug.h in Headers */,
@@ -959,7 +963,6 @@
 				C3E8706816EBC8EB00052915 /* Resources.cpp in Sources */,
 				C3E8706A16EBC8EB00052915 /* ResStarlingAtlas.cpp in Sources */,
 				0472E37517F8A2D30016A832 /* ioapi.c in Sources */,
-				C3E8706C16EBC8EB00052915 /* RootActor.cpp in Sources */,
 				C3E8706E16EBC8EB00052915 /* SlidingActor.cpp in Sources */,
 				C3E8707016EBC8EB00052915 /* Sprite.cpp in Sources */,
 				C3E8707216EBC8EB00052915 /* Aligner.cpp in Sources */,
@@ -974,6 +977,7 @@
 				C3E8708B16EBC8EB00052915 /* stringUtils.cpp in Sources */,
 				0472E37917F8A2D30016A832 /* unzip.c in Sources */,
 				C3E8708D16EBC8EB00052915 /* VisualStyle.cpp in Sources */,
+				048AD0CB19B1FD74001963EF /* Stage.cpp in Sources */,
 				C3E8708F16EBC8EB00052915 /* system_alloc.cpp in Sources */,
 				0472E35917F8A1A80016A832 /* FileSystem.cpp in Sources */,
 				C3E8709116EBC8EB00052915 /* winnie_alloc.cpp in Sources */,

@@ -131,8 +131,11 @@ namespace oxygine
 			_last._replied = true;
 			_last._result = val;
 
-			if (_last.cb)			
+			if (_last.cb)
+			{
+				LOGDN("ThreadMessages::running callback");
 				_last.cb(_last);
+			}
 
 			LOGDN("ThreadMessages::_replyLast pre _waitReplyID = %d, _last._id = %d, _last.msgid=%d", _waitReplyID, _last._id, _last.msgid);
 

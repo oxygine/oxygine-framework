@@ -1,7 +1,7 @@
 #include "blocking.h"
 #include "Button.h"
 #include "Tweener.h"
-#include "RootActor.h"
+#include "Stage.h"
 
 #if _MSC_VER
 #define __func__ __FUNCTION__
@@ -91,7 +91,7 @@ namespace oxygine
 
 			clickWait(spActor button, timeMS timeOut):_clicked(false), _timeOut(timeOut)
 			{
-				spClock clock = getRoot()->getClock();
+				spClock clock = getStage()->getClock();
 				timeMS start = clock->getTime();
 				button->addEventListener(TouchEvent::CLICK, CLOSURE(this, &clickWait::click));
 				do

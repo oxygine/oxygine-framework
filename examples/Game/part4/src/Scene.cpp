@@ -3,7 +3,7 @@
 Scene::Scene()
 {
 	_view = new Actor;
-	_view->setSize(getRoot()->getSize());
+	_view->setSize(getStage()->getSize());
 }
 
 void Scene::changeScene(spScene next)
@@ -18,7 +18,7 @@ void Scene::changeScene(spScene next)
 void Scene::show()
 {
 	//add scene view to root
-	getRoot()->addChild(_view);
+	getStage()->addChild(_view);
 	//and fade in
 	_view->setAlpha(0);
 	_view->addTween(Actor::TweenAlpha(255), 300);

@@ -15,7 +15,7 @@ void example_init()
 	//create scene with game
 	spGame game = new Game;
 	game->init();
-	game->attachTo(getRoot());
+	game->attachTo(getStage());
 }
 
 void example_update()

@@ -13,7 +13,7 @@
 
 #include "MemoryTexture.h"
 #include "Font.h"
-#include "RootActor.h"
+#include "Stage.h"
 
 #include "TextField.h"
 #include "DebugActor.h"
@@ -77,8 +77,8 @@ namespace oxygine
 		_resSystem = DebugActor::resSystem;
 
 		setPriority(999);
-		//setInputEnabled(false);
-		//setInputChildrenEnabled(false);
+		//setTouchEnabled(false);
+		//setTouchChildrenEnabled(false);
 	}
 
 	void getDescendants(spActor actor, vector<spActor> &actors)
@@ -116,8 +116,8 @@ namespace oxygine
 
 		
 		_rootPage = new TreeInspectorPage(this, 0);		
-		//_rootPage->setInputChildrenEnabled(false);
-		//_rootPage->setInputEnabled(false);
+		//_rootPage->setTouchChildrenEnabled(false);
+		//_rootPage->setTouchEnabled(false);
 
 		
 		_rootPage->init(actor);
@@ -141,8 +141,8 @@ namespace oxygine
 
 		
 
-		getRoot()->addEventListener(TouchEvent::WHEEL_DOWN, CLOSURE(this, &TreeInspector::wheel));
-		getRoot()->addEventListener(TouchEvent::WHEEL_UP, CLOSURE(this, &TreeInspector::wheel));
+		getStage()->addEventListener(TouchEvent::WHEEL_DOWN, CLOSURE(this, &TreeInspector::wheel));
+		getStage()->addEventListener(TouchEvent::WHEEL_UP, CLOSURE(this, &TreeInspector::wheel));
 
 		updateSizes();
 	}
@@ -161,7 +161,7 @@ namespace oxygine
 	void TreeInspector::close(Event *ev)
 	{
 		detach();
-		getRoot()->removeEventListeners(this);
+		getStage()->removeEventListeners(this);
 		//return true;
 	}
 

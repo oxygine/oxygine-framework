@@ -1,5 +1,5 @@
 #include "ClipRectActor.h"
-#include "RootActor.h"
+#include "Stage.h"
 #include "core/log.h"
 #include "RenderState.h"
 #include "Serialize.h"

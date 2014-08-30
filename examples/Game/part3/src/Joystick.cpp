@@ -16,7 +16,7 @@ Joystick::Joystick():_pressed(false), _dir(0,0)
 	_finger->attachTo(this);
 	_finger->setVisible(false);
 	_finger->setAnchor(Vector2(0.5f, 0.5f));
-	_finger->setInputEnabled(false);
+	_finger->setTouchEnabled(false);
 }
 
 void Joystick::onEvent(Event *ev)

@@ -25,9 +25,9 @@ public:
 		//button has 3 columns for each state: Normal, Pressed, Overed
 		button->setResAnim(gameResources.getResAnim("button"));
 		//centered button at screen	
-		Vector2 pos = getRoot()->getSize()/2 - button->getSize()/2;
+		Vector2 pos = getStage()->getSize()/2 - button->getSize()/2;
 		button->setPosition(pos);
-		button->setInputChildrenEnabled(false);
+		button->setTouchChildrenEnabled(false);
 
 		//handle click to button
 		EventCallback cb = CLOSURE(this, &MainActor::displayClicked);
@@ -80,7 +80,7 @@ public:
 		//TweenAnim would change animation frames
 		sprite->addTween(TweenAnim(animation), duration, loops);
 
-		Vector2 destPos = getRoot()->getSize() - sprite->getSize();
+		Vector2 destPos = getStage()->getSize() - sprite->getSize();
 		Vector2 srcPos = Vector2(0, destPos.y);
 		//set sprite initial position
 		sprite->setPosition(srcPos);		
@@ -116,8 +116,8 @@ void example_init()
 	//prefix 'sp' here means it is intrusive Smart Pointer
 	//it would be deleted automatically when you lost ref to it	
 	spMainActor actor = new MainActor;
-	//and add it to RootActor as child
-	getRoot()->addChild(actor);
+	//and add it to Stage as child
+	getStage()->addChild(actor);
 }
 
 void example_update()

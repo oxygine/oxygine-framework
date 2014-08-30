@@ -17,7 +17,7 @@ Game::~Game()
 void Game::init()
 {
 	//scene layer would have size of display
-	setSize(getRoot()->getSize());
+	setSize(getStage()->getSize());
 
 	//create background
 	spSprite sky = new Sprite;

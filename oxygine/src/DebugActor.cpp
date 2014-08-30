@@ -15,7 +15,7 @@
 #include "dev_tools/TexturesInspector.h"
 
 #include "DebugActor.h"
-#include "RootActor.h"
+#include "Stage.h"
 #include "TextField.h"
 #include "ColorRectSprite.h"
 #include "Button.h"
@@ -91,12 +91,12 @@ namespace oxygine
 		setPriority(1000);
 
 		float scale = 1.0f;
-		if (getRoot())
-			scale = 1.0f/getRoot()->getScaleX();
+		if (getStage())
+			scale = 1.0f/getStage()->getScaleX();
 
 		setScale(scale);
 
-		setInputEnabled(false);
+		setTouchEnabled(false);
 		
 
 		TextStyle st;
@@ -111,7 +111,7 @@ namespace oxygine
 		_bg = new ColorRectSprite;
 		_bg->setColor(Color(Color::White, 64));
 		_bg->setSize(getSize());
-		_bg->setInputEnabled(false);
+		_bg->setTouchEnabled(false);
 		addChild(_bg);
 
 
@@ -132,12 +132,12 @@ namespace oxygine
 		_text = new TextField;
 		addChild(_text);
 		_text->setPosition(2, 5);
-		_text->setInputEnabled(false);
+		_text->setTouchEnabled(false);
 		_text->setStyle(st);
 		_text->setWidth(getWidth());
 		_text->setText("debug text");
 
-		getRoot()->addEventListener(TouchEvent::MOVE, CLOSURE(this, &DebugActor::onDAEvent));
+		getStage()->addEventListener(TouchEvent::MOVE, CLOSURE(this, &DebugActor::onDAEvent));
 
 		instance = this;
 	}
@@ -176,14 +176,14 @@ namespace oxygine
 			return;
 		}
 
-		spActor inspector = getRoot()->getChild(DeveloperMenu::getDefaultName(), ep_ignore_error);
+		spActor inspector = getStage()->getChild(DeveloperMenu::getDefaultName(), ep_ignore_error);
 		if (inspector)
 			inspector->detach();
 		else
 		{		
 			spDeveloperMenu dm = new DeveloperMenu();
 			dm->setPriority(getPriority()  + 1); 
-			float scale = getRoot()->getScaleX();
+			float scale = getStage()->getScaleX();
 			Vector2 size = core::getDisplaySize();
 
 			Vector2 s = size;// * scale;
@@ -192,7 +192,7 @@ namespace oxygine
 			if (name == "tree")
 			{
 				spTreeInspector tree = new TreeInspector;
-				tree->init(s, getRoot());
+				tree->init(s, getStage());
 
 				dm->init(s, "Tree Inspector", tree, Color(230, 230, 230, 255));
 			}
@@ -204,16 +204,16 @@ namespace oxygine
 			}
 
 			dm->setScale(1.0f / scale);
-			Vector2 p = -getRoot()->getPosition() / scale;
+			Vector2 p = -getStage()->getPosition() / scale;
 			dm->setPosition(p);
-			getRoot()->addChild(dm);
+			getStage()->addChild(dm);
 		}
 	}
 
 	DebugActor::~DebugActor()
 	{
-		if (getRoot())
-			getRoot()->removeEventListeners(this);
+		if (getStage())
+			getStage()->removeEventListeners(this);
 	}
 
 	extern IVideoDriver::Stats _videoStats;
@@ -256,10 +256,10 @@ namespace oxygine
 #ifdef OXYGINE_TRACE_VIDEO_STATS
 		s << "batches="<< _videoStats.batches << " triangles=" << _videoStats.triangles << endl;
 #endif
-		s << "update=" << getRoot()->_statUpdate << "ms ";
-		s << "render=" << getRoot()->_statRender << "ms ";
+		s << "update=" << getStage()->_statUpdate << "ms ";
+		s << "render=" << getStage()->_statRender << "ms ";
 		s << "textures=" << NativeTexture::created << " ";
-		s << "\nlisteners=" << getRoot()->getListenersCount() << "";
+		s << "\nlisteners=" << getStage()->getListenersCount() << "";
 
 		if (!_debugText.empty())
 		{
@@ -321,10 +321,10 @@ namespace oxygine
 	
 	void DebugActor::showTouchedActor(bool show)
 	{
-		getRoot()->removeEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &DebugActor::onEvent));
+		getStage()->removeEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &DebugActor::onEvent));
 		_showTouchedActor = show;
 		if (show)
-			getRoot()->addEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &DebugActor::onEvent));
+			getStage()->addEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &DebugActor::onEvent));
 
 		spActor btn = getChild("finger");
 		btn->removeTweens(true);
@@ -335,7 +335,7 @@ namespace oxygine
 	void DebugActor::onDAEvent(Event *ev)
 	{
 		TouchEvent *t = safeCast<TouchEvent*>(ev);
-		Vector2 loc = convert_global2local(this, getRoot(), t->localPosition);
+		Vector2 loc = convert_global2local(this, getStage(), t->localPosition);
 		setAlpha(isOn(loc) ? 64 : 255);
 	}
 
@@ -343,7 +343,7 @@ namespace oxygine
 	{
 		spActor actor = safeSpCast<Actor>(ev->target);
 		spColorRectSprite cr = new ColorRectSprite;
-		cr->setInputEnabled(false);
+		cr->setTouchEnabled(false);
 		//cr->setAlpha(100);
 		cr->setColor(Color(rand()%255, rand()%255, rand()%255, 0));
 		cr->setSize(actor->getSize());

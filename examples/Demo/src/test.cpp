@@ -49,7 +49,7 @@ spButton createButtonHelper(spButton button, string txt, EventCallback cb)
 
 Test::Test()
 {
-	setSize(getRoot()->getSize());
+	setSize(getStage()->getSize());
 
 	_x = getWidth() - 100;
 	_y = 2;
