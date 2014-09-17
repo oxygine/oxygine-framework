@@ -1,4 +1,4 @@
-#!python
+#!/usr/bin/python
 
 import os
 oxygine_path = os.path.realpath(".\\..\\")

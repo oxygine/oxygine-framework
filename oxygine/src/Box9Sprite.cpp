@@ -282,9 +282,9 @@ namespace oxygine
 				rs.renderer->setDiffuse(df);
 
 				// number of vertical blocks
-				int vc = _pointsX.size() - 1;
+				int vc = (int)_pointsX.size() - 1;
 				// number of horizontal blocks
-				int hc = _pointsY.size() - 1;
+				int hc = (int)_pointsY.size() - 1;
 			
 				int xgi = 0; // x guide index
 				int ygi = 0;

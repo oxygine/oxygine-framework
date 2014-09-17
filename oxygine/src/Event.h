@@ -6,6 +6,9 @@
 #include "Input.h"
 #include "EventDispatcher.h"
 #undef OUT
+
+struct SDL_KeyboardEvent;
+
 namespace oxygine
 {
 
@@ -24,6 +27,9 @@ namespace oxygine
 		_et_WheelDown,
 
 		_et_TouchLast,
+
+		_et_KeyDown,
+		_et_KeyUp,
 
 		_et_Complete,
 		//_et_RollOver,
@@ -81,4 +87,16 @@ namespace oxygine
 		pointer_index index;
 	};
 
+	/**supported only on SDL*/
+	class KeyEvent : public Event
+	{
+	public:
+		enum KEY_EVENT { 
+			KEY_DOWN = _et_KeyDown,
+			KEY_UP = _et_KeyUp
+		};
+
+		SDL_KeyboardEvent* data;
+		KeyEvent(KEY_EVENT k, SDL_KeyboardEvent* d) :Event(k), data(d){}
+	};
 }

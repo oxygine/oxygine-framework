@@ -83,8 +83,8 @@ set(OXYGINE_LIBRARY_DIRS
 set(CORE_LIBS 
 	${CORE_LIBS}
 	oxygine-framework
-	SDL2
 	SDL2main	
+	SDL2	
 	${OPENGL_LIBRARIES}		
 )
 

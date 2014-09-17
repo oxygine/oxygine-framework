@@ -343,7 +343,7 @@ namespace oxygine
 			png_bytep * rowPointers = png_get_rows(png_ptr, info_ptr);
 
 			LOGD("reading png...5");
-			ImageData src(nWidth, 1, png_get_rowbytes(png_ptr, info_ptr), srcFormat,  0);
+			ImageData src(nWidth, 1, (int)png_get_rowbytes(png_ptr, info_ptr), srcFormat,  0);
 			if (color_type == 4)
 			{
 				//src.data += 1;
@@ -460,7 +460,7 @@ namespace oxygine
 					_image.bytespp = 0;
 					_image.format = TF_ETC1;
 					_offset = sizeof(pkm_header);
-					_image.pitch = (buffer.getSize() - _offset) / _image.h;
+					_image.pitch = int(buffer.getSize() - _offset) / _image.h;
 					_buffer.swap(buffer.data);
 				}
 				return true;
@@ -498,7 +498,7 @@ namespace oxygine
 					}
 					_image.format = tf;
 					_offset = sizeof(pvr_header) + header->meta_data_size;
-					_image.pitch = (buffer.getSize() - _offset) / _image.h;
+					_image.pitch = int(buffer.getSize() - _offset) / _image.h;
 					_buffer.swap(buffer.data);
 					return true;
 				}

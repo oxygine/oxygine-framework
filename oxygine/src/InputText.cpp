@@ -143,7 +143,7 @@ namespace oxygine
 			int code = 0;
 			str = getNextCode(code, str);
 		}
-		return prev - begin;
+		return (int)(prev - begin);
 	}
 
 #ifdef OXYGINE_SDL

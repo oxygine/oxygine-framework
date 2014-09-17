@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import cStringIO
 lines = open("../../../SDL/include/SDL_opengl.h").readlines()
 funcs = ["glUseProgram", 

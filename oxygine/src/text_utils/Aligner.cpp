@@ -181,7 +181,7 @@ namespace oxygine
 			//
 			if (_lineWidth > width && getStyle().multiline && (width > 0) && _line.size() > 1)
 			{
-				int lastWordPos = _line.size() - 1;
+				int lastWordPos = (int)_line.size() - 1;
 				for (; lastWordPos > 0; --lastWordPos)
 				{
 					if (_line[lastWordPos]->code == ' ' && _line[lastWordPos - 1]->code != ' ')
@@ -191,13 +191,13 @@ namespace oxygine
 				if (!lastWordPos)
 				{
 					if (style.breakLongWords)
-						lastWordPos = _line.size() - 1;
+						lastWordPos = (int)_line.size() - 1;
 					else
 						return 0;
 				}
 			
 
-				int delta = _line.size() - lastWordPos;
+				int delta = (int)_line.size() - lastWordPos;
 				line leftPart;
 				leftPart.resize(delta + 1);
 				leftPart.assign(_line.begin() + lastWordPos, _line.end());

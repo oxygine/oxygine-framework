@@ -3,19 +3,18 @@ import process
 
 
 class starling_atlas_Processor(process.Process):
-    node_id = "starling_atlas"
+    node_id = "starling"
     def __init__(self):
         pass
     
-    def process(self, context, el):
-        file_name = el.getAttribute("file")         
-        
-        meta = context.add_meta(self.node_id)
-        file_doc = context._open_xml(context.get_current_src_path(file_path))
+    def process(self, context, walker):
+       
+        meta = walker.root_meta
+        file_doc = context._open_xml(context.src_data + walker.getPath("file"))
         
         file_root = file_doc
         image_name = file_root.getAttribute("imagePath")
-        image_path = context.get_current_src_path(image_name)
+        image_path = context.src_data + walker.path + image_name
         
         image = Image.open(image_path)
         image.load()

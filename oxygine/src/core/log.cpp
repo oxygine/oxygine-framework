@@ -74,7 +74,7 @@ namespace oxygine
 			char buff[SIZE] = {0};
 			strcpy(buff, pref);
 			
-			int len = strlen(buff);
+			int len = (int)strlen(buff);
 			int i = vsnprintf(buff + len, sizeof(buff) - len, format, args);
 			if (i == -1)
 				buff[SIZE - 1] = 0;
@@ -86,7 +86,7 @@ namespace oxygine
 			char buff[SIZE] = {0};
 			strcpy(buff, pref);
 
-			int len = strlen(buff);
+			int len = (int)strlen(buff);
 			int i = vsnprintf(buff + len, sizeof(buff) - len, format, args);
 			if (i == -1)
 				buff[SIZE - 1] = 0;

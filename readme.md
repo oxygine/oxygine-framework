@@ -1,6 +1,9 @@
 # BUILD AND RUN 
 See **oxygine-framework/readme/** folder. It has insructions how to build and run oxygine on different platforms.
 
+# Online documentation available at
+https://bitbucket.org/oxygine/oxygine-framework/wiki/Home
+
 
 # Oxygine is C++ engine for 2D mobile games. 
 One more shell around OpenGL/D3D API you would say? No, this is a set of classes and tools to create a game according to your requirements.

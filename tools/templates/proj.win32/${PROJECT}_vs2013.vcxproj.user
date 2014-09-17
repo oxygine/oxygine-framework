@@ -2,10 +2,12 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LocalDebuggerWorkingDirectory>${DATA}</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerEnvironment>PATH=${DATA};%PATH%;</LocalDebuggerEnvironment>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LocalDebuggerWorkingDirectory>../data</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerWorkingDirectory>${DATA}</LocalDebuggerWorkingDirectory>
+    <LocalDebuggerEnvironment>PATH=${DATA};%PATH%;</LocalDebuggerEnvironment>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
    </PropertyGroup>
 </Project>

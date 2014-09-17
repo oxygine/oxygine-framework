@@ -35,6 +35,11 @@ namespace oxygine
 		LOGD("sendPointerButtonEvent %d - (%.2f, %.2f), %d", me.index, p.x, p.y, type);
 
 		getStage()->handleEvent(&me);
+        
+        if (type == TouchEvent::TOUCH_UP)
+        {
+            _ids[ps->getIndex() - 1] = 0;
+        }
 	}
 
 	void Input::sendPointerMotionEvent(float x, float y, float pressure, PointerState *ps)

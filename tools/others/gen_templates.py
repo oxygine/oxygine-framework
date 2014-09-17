@@ -1,10 +1,13 @@
+#!/usr/bin/python
+
 import os
 def gen(path, project = ""):
 	if not project:
 		project = path
 
 	projs = ("win32", "android", "macosx", "ios", "cmake", "emscripten")
-	#projs = ("ios", "macosx")
+	projs = ("android", )
+	projs = ("ios", "macosx")
 
 	for platform in projs:
 		dest = "../../examples/" + path + "/proj." + platform

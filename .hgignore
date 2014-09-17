@@ -39,7 +39,6 @@ examples/Match3/build_match3_lib_vc10/
 examples/GameTemplate/build_gametemplate_lib_vc10/
 examples/GameTemplate/build_gametemplate_lib_vc10
 examples/HelloWorld/data-ram/log.txt
-examples/HelloWorld/data-ram/log.txt
 tools/out.xml
 examples/SDL/HelloWorld/win32/
 oxygine/SDL/win32/Release/
@@ -61,9 +60,6 @@ examples/Demo/build_demo_src_vc10
 examples/Demo/win32/Debug
 examples/Demo/data/*.dll
 examples/Demo/win32/Release/
-fccbuild
-examples/Demo/flash/vfsRootFSBackingStore.as
-examples/Demo/flash/VFS.abc
 *.orig
 oxygine/system_data/data2
 examples/Demo/build_demo_src_vc11
@@ -84,11 +80,7 @@ examples/DemoBox2D/build_box2d_vc11/
 examples/Demo/build_demo_vc11/
 examples/TutorialResources/build_tutorialresources_vc10
 examples/Game/part1/build_game_vc
-examples/Game/part1/build_game_vc10/
-examples/Game/part2/build_game_vc10
-examples/Game/part3/build_game_vc10
-examples/Game/part4/build_game_vc10/
-examples/Game - Copy/
+examples/Game/part1/build_game_vc10
 examples/Demo/proj.marmalade/build_demo_vc10
 examples/Demo/proj.win32/Debug
 examples/Demo/proj.win32/Release
@@ -132,5 +124,11 @@ data.js
 examples/HelloWorld/proj.win32/Win32/
 ident.free
 examples/Game/part4/build_game_vc12/
+Debug_vs2010
+Release_vs2010
+Debug_vs2013
+Release_vs2013
+examples/HelloWorld/proj.win32/Release/
+examples/Game/part4/build_game_vc10/
 syntax: regexp
 ^build/

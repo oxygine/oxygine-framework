@@ -69,6 +69,13 @@ extern "C"
 #endif
 
 
+#if !SDL_VIDEO_OPENGL					
+#define HANDLE_FOCUS_LOST 1
+#else
+#define HANDLE_FOCUS_LOST 0
+#endif
+
+
 namespace oxygine
 {
 	namespace file
@@ -576,7 +583,7 @@ namespace oxygine
 			Resources::registerResourceType(ResFontBM::create, "font");
 			Resources::registerResourceType(ResFontBM::createBM, "bmfc_font");
 			Resources::registerResourceType(ResFontBM::createSD, "sdfont");
-			Resources::registerResourceType(ResStarlingAtlas::create, "starling_atlas");
+			Resources::registerResourceType(ResStarlingAtlas::create, "starling");
 
 			checkGLError();
 			log::messageln("oxygine initialized");
@@ -733,7 +740,7 @@ namespace oxygine
 						if (focus != newFocus)
 						{
 							focus = newFocus;
-#if !SDL_VIDEO_OPENGL							
+#if HANDLE_FOCUS_LOST
 							if (focus)							
 								lostContext();
 							else
@@ -751,6 +758,16 @@ namespace oxygine
 				case SDL_MOUSEWHEEL:
 					input->sendPointerWheelEvent(event.wheel.y, &input->_pointerMouse);
 					break;
+				case SDL_KEYDOWN:
+				{
+					KeyEvent ev(KeyEvent::KEY_DOWN, &event.key);
+					getStage()->dispatchEvent(&ev);
+				} break;
+				case SDL_KEYUP:
+				{
+					KeyEvent ev(KeyEvent::KEY_UP, &event.key);
+					getStage()->dispatchEvent(&ev);
+				} break;
 #if SDL_VIDEO_OPENGL
 				case SDL_MOUSEMOTION:
 					input->sendPointerMotionEvent((float)event.motion.x, (float)event.motion.y, 1.0f, &input->_pointerMouse);

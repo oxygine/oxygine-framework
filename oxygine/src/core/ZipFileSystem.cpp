@@ -34,7 +34,7 @@ namespace file
 		unzOpenCurrentFile(entry->zp);		
 
 		bf.data.resize(file_info.uncompressed_size);
-		r = unzReadCurrentFile(entry->zp, &bf.data.front(), bf.data.size());
+		r = unzReadCurrentFile(entry->zp, &bf.data.front(), (int)bf.data.size());
 		OX_ASSERT(r == (int)file_info.uncompressed_size);
 
 		unzCloseCurrentFile(entry->zp);
@@ -123,7 +123,7 @@ namespace file
 
 	uLong ZCALLBACK ox_fread(voidpf opaque, voidpf stream, void* buf, uLong size)
 	{
-		return file::read((handle)stream, buf, size);
+		return file::read((handle)stream, buf, (unsigned int)size);
 	}
 
 	/*
@@ -140,7 +140,7 @@ namespace file
 
 	long ZCALLBACK ox_fseek(voidpf opaque, voidpf stream, uLong offset, int origin)
 	{
-		file::seek((handle)stream, offset, origin);
+		file::seek((handle)stream, (unsigned int)offset, origin);
 		return 0;
 	}
 

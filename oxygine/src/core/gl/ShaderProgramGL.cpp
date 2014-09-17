@@ -44,7 +44,7 @@ namespace oxygine
 		{
 			vector<char> bf;
 			bf.resize(length);
-			glGetShaderInfoLog(shader, bf.size(), NULL, &bf.front());
+			glGetShaderInfoLog(shader, (int)bf.size(), NULL, &bf.front());
 			log::messageln("shader compiled: %s", &bf.front());
 
 			GLint success;
@@ -92,7 +92,7 @@ namespace oxygine
 			ptr++;
 		}
 
-		int num = ptr - sources;
+		int num = (int)(ptr - sources);
 		glShaderSource(shader, num, sources, 0);
 		glCompileShader(shader);
 		printShaderInfoLog(shader);

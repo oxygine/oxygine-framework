@@ -66,6 +66,11 @@ namespace oxygine
 		_drag.snapClient2Bounds();
 	}
 
+	void SlidingActor::stop()
+	{
+		_speed = Vector2(0, 0);
+	}
+
 	void SlidingActor::setContent(spActor content)
 	{
 		if (_content)

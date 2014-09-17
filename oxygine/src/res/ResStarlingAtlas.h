@@ -6,6 +6,7 @@ namespace oxygine
 	using namespace std;
 
 	class Resources;
+	class Restorable;
 	class CreateResourceContext;
 	DECLARE_SMART(NativeTexture, spNativeTexture);
 
@@ -26,6 +27,7 @@ namespace oxygine
 		void loadAtlas(CreateResourceContext &context);
 		void _load(LoadResourcesContext *);
 		void _unload();
+		void _restore(Restorable *r, void *);
 
 		spNativeTexture _texture;
 		string _imagePath;

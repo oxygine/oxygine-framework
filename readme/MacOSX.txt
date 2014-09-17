@@ -1,9 +1,6 @@
 1. start from readme.txt
 2a. Examples folder have configured MacOSX projects (exception is demobox2d)
 =================================================================================================
-- goto SDL/src/video/uikit/SDL_uikitview.h and comment line:
-  #define IPHONE_TOUCH_EFFICIENT_DANGEROUS  
-  
 - goto oxygine-framework\examples and choose any example. Lets call it "Demo" 
 - open xcode 5 project from:
   examples\Demo\proj.macosx\

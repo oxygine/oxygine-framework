@@ -66,7 +66,7 @@ namespace oxygine
 
 		virtual void dispatchEvent(Event *event);
 
-		int getListenersCount() const {if (!_listeners) return 0; return _listeners->size();}
+		int getListenersCount() const {if (!_listeners) return 0; return (int)_listeners->size();}
 
 	protected:
 

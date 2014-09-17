@@ -5,6 +5,7 @@
 
 namespace oxygine
 {
+
 	DECLARE_SMART(Tween, spTween);
 	DECLARE_SMART(Clock, spClock);
 	DECLARE_SMART(Button, spButton);
@@ -15,6 +16,7 @@ namespace oxygine
 		/** optional
 			use default coroutines for yield or run your callback internally?
 		*/
+#if !OXYGINE_NO_YEILD
 		void setYieldCallback(yieldCallback f);
 
 		/**
@@ -26,5 +28,6 @@ namespace oxygine
 		void waitTime(spClock clock, timeMS time);
 		void waitTime(timeMS time);
 		void waitClick(spActor, timeMS timeOut = 0);
+#endif
 	}
 }

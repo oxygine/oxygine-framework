@@ -1,5 +1,5 @@
 ##DebugActor 
-DebugActor displays some usefull stats. Some of them available only in Debug mode:
+DebugActor displays some useful stats. Some of them available only in Debug mode:
 
 - **fps** - frames per second
 - **objects** - number of created instances of Object. Debug only, to enable it in release define OXYGINE_DEBUG_TRACE_LEAKS
@@ -22,7 +22,7 @@ To display custom text on DebugActor (image above) call it each frame:
 
 1. **Textures inspector** shows all created and not deleted textures. Debug only, to enable it in release define OXYGINE_DEBUG_TRACE_LEAKS
 2. **T2P** - Texel2Pixel. It shows "blurred" sprites displayed without texel to pixel precision on display
-3. **Finger** - Animates clicked actors under mouse cursor. Could be usefull to find out who blocked mouse events
+3. **Finger** - Animates clicked actors under mouse cursor. Could be useful to find out who blocked mouse events
 4. **Tree Inspector** show graph tree of actors with detailed info.
 
 #Logging
@@ -62,7 +62,7 @@ result:
 	id = 4, name = '', typeid = 'class oxygine::Sprite', refs = 0
 	total: 2 -----------------------------
 
-There are some usefull functions:
+There are some useful functions:
 
 		/**Shows assert when object with this unique ID will be created.*/ 
 		ObjectBase::showAssertInCtor(int id);

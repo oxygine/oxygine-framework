@@ -1,6 +1,9 @@
 1. start from readme.txt
 
-2a. There are prebuilt example solutions for VS2010 and VS2013:
+if you are using Oxygine All-In-One version with SDL included you could skip #2
+just go to any example and open it
+
+2. There are prebuilt example solutions for VS2010 and VS2013:
 =================================================================================================
 - build SDL:
   - open SDL\include\SDL_config_windows.h in any text editor
@@ -23,7 +26,7 @@
 - ready! run!
 =================================================================================================
 
-2b. You could generate your own Solution anywhere
+3. You could generate your own Solution anywhere
 - you need installed Python 2.7
 - you need to run this script
   oxygine-framework\tools\gen_template.py

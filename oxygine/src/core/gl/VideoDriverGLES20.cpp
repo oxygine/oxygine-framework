@@ -100,7 +100,7 @@ namespace oxygine
 		}
 
 		size_t primitives = size / decl->size;
-		glDrawArrays(getPT(pt), 0, primitives);
+		glDrawArrays(getPT(pt), 0, (GLsizei)primitives);
 
 		el = decl->elements;
 		for (int i = 0; i < decl->numElements; ++i)		
@@ -111,7 +111,7 @@ namespace oxygine
 
 
 #if OXYGINE_TRACE_VIDEO_STATS
-		_debugAddPrimitives(pt, primitives);
+		_debugAddPrimitives(pt, (int)(GLsizei)primitives);
 #endif
         
         CHECKGL();

@@ -106,7 +106,7 @@ namespace oxygine
 		release();
 
 
-		unsigned int id = createTexture();	
+		size_t id = createTexture();
 
 		if (rt)
 		{
@@ -127,7 +127,7 @@ namespace oxygine
 			unsigned int fbo = 0;
 			glGenFramebuffers(1, &fbo);
 			glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, id, 0);
+			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, (GLuint)id, 0);
 
 			//printf("created fbo: %d\n", fbo);
 

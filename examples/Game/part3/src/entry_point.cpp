@@ -101,10 +101,6 @@ void run()
 	//create and add new DebugActor to stage as child
 	getStage()->addChild(new DebugActor());
 
-
-
-	Matrix view = makeViewMatrix(size.x, size.y);
-
 	viewport = Rect(0, 0, size.x, size.y);
 
 	Matrix proj;
@@ -130,7 +126,6 @@ void run()
 	return;
 #endif
 
-	bool done = false;
 
 	//here is main game loop
 	while (1)

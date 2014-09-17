@@ -66,7 +66,7 @@ namespace oxygine
 
 		void reverse(char *str)
 		{
-			int len = strlen(str);
+			int len = (int)strlen(str);
 			int half = len/2;
 			for (int i = 0; i < half; ++i)
 			{
@@ -83,7 +83,7 @@ namespace oxygine
 			destTail[0] = 0;
 
 			int i = 0;
-			int len = strlen(src);
+			int len = (int)strlen(src);
 			while (len)
 			{
 				char c = src[len-1];
@@ -111,7 +111,7 @@ namespace oxygine
 			destHead[0] = 0;
 			destTail[0] = 0;
 
-			int len = strlen(src);
+			int len = (int)strlen(src);
 			int i = 0;
 			for (i = len - 1; i >= 0; --i)
 			{
@@ -239,7 +239,7 @@ namespace oxygine
 		if (!utf8str)
 			return L"";
 
-		int n = strlen(utf8str) + 1;
+		int n = (int)strlen(utf8str) + 1;
 		if (n == 1)
 			return L"";
 
@@ -277,7 +277,7 @@ namespace oxygine
 		if (!wstr)
 			return "";
 
-		int n = wcslen(wstr) + 1;
+		int n = (int)wcslen(wstr) + 1;
 		if (n == 1)
 			return "";
 
@@ -310,7 +310,7 @@ namespace oxygine
 
 	Color	hex2color(const char *str)
 	{
-		int len = strlen(str);
+		int len = (int)strlen(str);
 		if (len >= 6)
 		{
 

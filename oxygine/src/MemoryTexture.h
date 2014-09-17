@@ -25,7 +25,7 @@ namespace oxygine
 		
 		void fill_zero();
 
-		unsigned int	getSizeVRAM() const {return _buffer.size();}
+		unsigned int	getSizeVRAM() const {return (unsigned int)_buffer.size();}
 		int				getWidth() const;
 		int				getHeight() const;
 		const Point&	getSize() const;

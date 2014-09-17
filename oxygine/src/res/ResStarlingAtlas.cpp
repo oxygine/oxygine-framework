@@ -6,6 +6,7 @@
 #include "core/VideoDriver.h"
 #include "core/NativeTexture.h"
 #include "MemoryTexture.h"
+#include "CreateResourceContext.h"
 
 namespace oxygine
 {
@@ -17,14 +18,10 @@ namespace oxygine
 		setNode(ra, context.walker.getNode());
 		return ra;
 	}
-
+	
 	void ResStarlingAtlas::loadAtlas(CreateResourceContext &context)
 	{
-		/*
-		const char *xml_name = context.node.attribute("file").value();
-
-		string xml_path = context.walker->getCurrentFolder() + xml_name;		
-
+		string xml_path = context.walker.getPath("file");
 
 		file::buffer fb;
 		file::read(xml_path.c_str(), fb);
@@ -33,14 +30,18 @@ namespace oxygine
 		doc.load_buffer_inplace(&fb.data[0], fb.data.size());
 
 		pugi::xml_node starling_xml = doc.first_child();
-		_imagePath = context->getCurrentFolder() + starling_xml.attribute("imagePath").value();
+
+		pugi::xml_node root = doc.root().first_child();
+		_imagePath = context.walker.getCurrentFolder() + root.attribute("imagePath").as_string();
 
 		_texture = IVideoDriver::instance->createTexture();
 
-		if (context.meta)
+		pugi::xml_node meta = context.walker.getMeta();
+
+		if (!meta.empty())
 		{
-			int textureWidth = context.meta.attribute("tw").as_int();
-			int textureHeight = context.meta.attribute("th").as_int();
+			int textureWidth = meta.attribute("tw").as_int();
+			int textureHeight = meta.attribute("th").as_int();
 			_texture->init(0, textureWidth, textureHeight, TF_R8G8B8A8);
 		}
 		else
@@ -68,13 +69,11 @@ namespace oxygine
 		while (sub)
 		{
 			const char *name = sub.attribute("name").value();
-			int index_pos = strlen(name) - 4;
-			const char *index = name + index_pos;
+
 			char id[255];
 			strcpy(id, name);
-			id[index_pos] = 0;
 
-			int frame_index = atoi(index);
+			//int frame_index = atoi(index);
 
 			//todo optimize attributes 
 			int x = sub.attribute("x").as_int();
@@ -91,13 +90,14 @@ namespace oxygine
 			{
 				if (resAnim)
 				{
-					resAnim->init(frames, frames.size());
+					resAnim->init(frames, (int)frames.size());
+					resAnim->setParent(this);
 					context.resources->add(resAnim);
 					frames.clear();
 				}
 
 				resAnim = new ResAnim(this);
-				setNode(resAnim, context.node);
+				setNode(resAnim, context.walker.getNode());
 				resAnim->setName(id);
 			}
 
@@ -115,10 +115,10 @@ namespace oxygine
 
 		if (resAnim)
 		{
-			resAnim->init(frames, frames.size());
+			resAnim->init(frames, (int)frames.size());
+			resAnim->setParent(this);
 			context.resources->add(resAnim);
-		}
-		*/
+		}		
 	}
 
 	ResStarlingAtlas::ResStarlingAtlas()
@@ -131,25 +131,21 @@ namespace oxygine
 
 	}
 
+	void load_texture(const string &file, spNativeTexture nt, LoadResourcesContext *load_context);
+
+	void ResStarlingAtlas::_restore(Restorable *r, void *)
+	{
+		load_texture(_imagePath, _texture, &RestoreResourcesContext::instance);
+		_texture->reg(CLOSURE(this, &ResStarlingAtlas::_restore), 0);
+	}
+
 	void ResStarlingAtlas::_load(LoadResourcesContext *load_context)
 	{
-		if (_texture->getHandle())
+		if (!load_context->isNeedProceed(_texture))
 			return;
 
-		spMemoryTexture mt = new MemoryTexture;
-
-		ImageData im;
-
-		file::buffer bf;
-		file::read(_imagePath.c_str(), bf);
-			
-		mt->init(bf, true, _texture->getFormat());
-		im = mt->lock();
-			
-		if (load_context)
-			load_context->createTexture(mt, _texture);
-		else
-			_texture->init(mt->lock(), false);
+		load_texture(_imagePath, _texture, load_context);
+		_texture->reg(CLOSURE(this, &ResStarlingAtlas::_restore), 0);
 	}
 
 	void ResStarlingAtlas::_unload()

@@ -73,5 +73,4 @@ LOCAL_WHOLE_STATIC_LIBRARIES := ox_libpng_static ox_libjpeg_static
 					
 include $(BUILD_STATIC_LIBRARY)
 
-#$(call import-add-path, $(LOCAL_PATH)/../)
 $(call import-module, SDL)

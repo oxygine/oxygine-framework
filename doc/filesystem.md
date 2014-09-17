@@ -84,7 +84,7 @@ Or you could check it with **oxygine::file::exists** function. It is slower than
 
 ##Mounting and zipped archieves to filesytem
 
-First step is mount ZipFileSystem. More than one archieve could be mounted at once:
+First step is mount ZipFileSystem. More than one archive could be mounted at once:
 
 	#include "core/ZipFileSystem.h"
 

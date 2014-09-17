@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import os
 from xml.dom import minidom
 from gen_view_code.class_type import class_type

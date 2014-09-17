@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import os
 
 SKIP_EXT = (".dll", ".py", ".icf", ".py", ".js", ".ogg")

@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 examples = "../../examples/"
 
 demo = examples + "Demo/"

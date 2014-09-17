@@ -1,7 +1,10 @@
+#!/usr/bin/python
+
 from string import Template
 import os
 import io
 import glob
+import shutil
 from mimetypes import guess_type
 from mimetypes import add_type
 
@@ -53,7 +56,6 @@ def run(args):
 
 
     def process(template, relto, path, gl, fn = None):
-
         res = ""
         for src in gl:
             ext = os.path.splitext(src)[1]
@@ -85,6 +87,14 @@ def run(args):
     cpp_files = sorted(glob.glob(args.src + "/*.cpp"))
     h_files = sorted(glob.glob(args.src + "/*.h") )   
 
+    values["PBXBuildFile"] = ""
+    values["PBXFileReference"] = ""
+    values["PBXGroup_src"] = ""
+    values["PBXGroupSupporting"] = ""
+    values["PBXResourcesBuildPhase"] = ""
+    values["PBXSourcesBuildPhase"] = ""
+    
+
     if args.src:
         
         relto = dest_path
@@ -111,7 +121,7 @@ def run(args):
             INCLUDE = process(tminc, relto, args.src, h_files)              
             
 
-        if args.type == "macosx" or args.type == "ios":
+        if args.type in ("macosx", "ios"):
             import random            
             r = random.Random()
             r.seed(1)
@@ -172,7 +182,6 @@ def run(args):
             tm = "\t\t${GREF} /* ${FILE} in Sources */ = {isa = PBXBuildFile; fileRef = ${FREF} /* ${FILE} */; };\n"  
             values["PBXBuildFile"] = process(tm, relto, args.src, cpp_files, fn)
             values["PBXBuildFile"]+= process(tm, relto, abs_data, data_files, fn)
-
 
 
             #04A57D3A1871FF9F0068B1E5 /* entry_point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = entry_point.cpp; path = ../../src/entry_point.cpp; sourceTree = "<group>"; };
@@ -265,7 +274,11 @@ def run(args):
             if not tp[0]:
                 continue
 
-            if tp[0].split("/")[0] == "text":         
+            print tp[0]
+
+            q = tp[0].split("/")
+
+            if q[0] == "text" or q[1] in ("xml", "x-msdos-program"):
                 print "creating file: " + dest_path
                 src_data = open(src_path, "r").read()
                 t = Template(src_data)
@@ -277,10 +290,11 @@ def run(args):
                 else:
                     dest_file = open(dest_path, "w")
                     dest_file.write(dest_data)      
+
+                shutil.copystat(src_path, dest_path)
                 
             else:
-                print "copying file: " + dest_path
-                import shutil                
+                print "copying file: " + dest_path                                
                 shutil.copyfile(src_path, dest_path)
 
 

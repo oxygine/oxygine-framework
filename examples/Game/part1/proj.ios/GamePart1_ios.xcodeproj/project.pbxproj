@@ -246,7 +246,7 @@
 		04998CE417F8A933003441C3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Mac;
 			};
 			buildConfigurationList = 04998CE717F8A933003441C3 /* Build configuration list for PBXProject "GamePart1_ios" */;
@@ -344,7 +344,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -374,7 +373,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "../../../..//oxygine/src ../../../../..//SDL/include";
@@ -385,7 +384,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -432,6 +430,7 @@
 					"$(inherited)",
 					"../../../..//oxygine/third_party/ios/libraries",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = GamePart1_ios;
 				PROVISIONING_PROFILE = "A34F5D84-E1EB-47B5-AD4B-67D0FA4A5BE6";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -455,6 +454,7 @@
 					"$(inherited)",
 					"../../../..//oxygine/third_party/ios/libraries",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = GamePart1_ios;
 				PROVISIONING_PROFILE = "A34F5D84-E1EB-47B5-AD4B-67D0FA4A5BE6";
 				TARGETED_DEVICE_FAMILY = "1,2";

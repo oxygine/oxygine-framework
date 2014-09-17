@@ -61,8 +61,17 @@ public:
 
 		toggle ts[] = {toggle("enable snap", 0), toggle("disable snap", 1)};
 		addToggle("snap", ts, 2);
+
+		addButton("stop", "stop");
 	}
 
+	void clicked(string id)
+	{
+		if (id == "stop")
+		{
+			_sliding->stop();
+		}
+	}
 
 	void toggleClicked(string id, const toggle *data)
 	{

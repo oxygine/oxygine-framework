@@ -51,7 +51,6 @@ namespace oxygine
 
 	inline unsigned int getVertexSize(bvertex_format fmt)
 	{
-		int i = 0;
 		int offset = 0;
 
 		if (fmt & VERTEX_POSITION)
