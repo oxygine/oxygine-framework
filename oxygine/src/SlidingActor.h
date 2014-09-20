@@ -38,8 +38,11 @@ namespace oxygine
 
 		/**max allowed radius of touch move when content could be clicked*/
 		void setTouchThreshold(float rad);
+		/**sets actor vith scrollable data*/
 		void setContent(spActor content);
+		/**lock for user scrolling*/
 		void setLocked(bool locked);
+		/**snaps content*/
 		void snap();
 		/**stop if sliding*/
 		void stop();

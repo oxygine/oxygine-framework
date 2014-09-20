@@ -43,7 +43,7 @@ namespace oxygine
 		PointerState _pointers[MAX_TOUCHES];
 		PointerState _pointerMouse;
 
-		int _ids[MAX_TOUCHES];
+		int _ids[MAX_TOUCHES + 1];
 
 
 		void sendPointerButtonEvent(MouseButton button, float x, float y, float pressure, int type, PointerState *);

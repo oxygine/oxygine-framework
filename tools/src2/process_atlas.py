@@ -9,6 +9,11 @@ def as_int(attr, df = 0):
         return df
     return int(attr)
 
+def as_float(attr, df = 0):
+    if not attr:
+        return df
+    return float(attr)    
+
 def as_bool(attr):
     if not attr:
         return False
@@ -250,6 +255,8 @@ class atlas_Processor(process.Process):
             rows = as_int(image_el.getAttribute("rows"))
             frame_height = as_int(image_el.getAttribute("frame_height"))
             border = as_int(image_el.getAttribute("border"))
+            #sq = as_float(image_el.getAttribute("scale_quality"), 1)
+            #next.scale_quality *= sq
             
             if not columns:
                 columns = 1
@@ -278,7 +285,7 @@ class atlas_Processor(process.Process):
             if size_warning:
                 context.warnings += 1
 
-            finalScale = context.get_apply_scale(True, walker)
+            finalScale = context.get_apply_scale(True, next)
             upscale = False            
             if finalScale > 1:
                 if not context.args.upscale:
@@ -286,7 +293,7 @@ class atlas_Processor(process.Process):
                 else:
                     upscale = True
 
-            resAnim.frame_scale = context.get_apply_scale(False, walker)
+            resAnim.frame_scale = context.get_apply_scale(False, next)
             #todo, fix bug when frame_scale > 1 and finalScale = 1
 
             resAnim.frame_size = (applyScale(frame_width, finalScale),
@@ -366,7 +373,7 @@ class atlas_Processor(process.Process):
 
         def get_aligned_frame_size(frame):            
             def align_pixel(p):
-                if not context.compression:
+                if compression == "no":
                     return p + 1
                 align = 4
                 v = p % align

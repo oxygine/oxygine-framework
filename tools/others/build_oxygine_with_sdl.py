@@ -6,6 +6,7 @@ import zipfile
 temp = "../../temp"
 SDL_dest = temp + "/SDL"
 OXYGINE_dest = temp + "/oxygine-framework/"
+SOUND_dest = temp + "/oxygine-sound/"
 
 print "cleaning temp..."
 shutil.rmtree(temp, True)
@@ -15,6 +16,9 @@ cmd = "hg archive " + OXYGINE_dest
 os.system(cmd)
 
 cmd = "hg archive -R ../../../SDL %s" % (SDL_dest, )
+os.system(cmd)
+
+cmd = "hg archive -R ../../../oxygine-sound %s" % (SOUND_dest, )
 os.system(cmd)
 
 shutil.rmtree(SDL_dest + "/test")
@@ -55,6 +59,7 @@ def copy(path):
     
         
 enum(OXYGINE_dest + "/examples/", copy)
+enum(SOUND_dest + "/examples/", copy)
 
 shutil.copy(SDL_dest + "/android-project/src/org/libsdl/app/SDLActivity.java", 
             OXYGINE_dest + "/oxygine/SDL/android/lib/src/org/libsdl/app/SDLActivity.java")
