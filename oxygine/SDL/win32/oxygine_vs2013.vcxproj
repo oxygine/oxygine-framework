@@ -148,6 +148,7 @@
     <ClCompile Include="..\..\src\minizip\unzip.c" />
     <ClCompile Include="..\..\src\Multithreading.cpp" />
     <ClCompile Include="..\..\src\PointerState.cpp" />
+    <ClCompile Include="..\..\src\Polygon.cpp" />
     <ClCompile Include="..\..\src\ProgressBar.cpp" />
     <ClCompile Include="..\..\src\res\CreateResourceContext.cpp" />
     <ClCompile Include="..\..\src\res\ResAnim.cpp" />
@@ -244,6 +245,7 @@
     <ClInclude Include="..\..\src\Multithreading.h" />
     <ClInclude Include="..\..\src\oxygine-framework.h" />
     <ClInclude Include="..\..\src\PointerState.h" />
+    <ClInclude Include="..\..\src\Polygon.h" />
     <ClInclude Include="..\..\src\ProgressBar.h" />
     <ClInclude Include="..\..\src\RenderState.h" />
     <ClInclude Include="..\..\src\res\CreateResourceContext.h" />

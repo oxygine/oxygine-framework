@@ -448,6 +448,9 @@ namespace oxygine
                 desc.h = 640;
             }
 
+			if (desc.fullscreen)
+				flags |= SDL_WINDOW_FULLSCREEN;
+
             log::messageln("creating window %d %d", desc.w, desc.h);
 
 			_window = SDL_CreateWindow(desc.title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, desc.w, desc.h, flags);
@@ -464,7 +467,7 @@ namespace oxygine
                 return;
             }
 
-			SDL_GL_SetSwapInterval(1);
+			SDL_GL_SetSwapInterval(desc.vsync ? 1 : 0);
 			
 	#else
 

@@ -77,6 +77,11 @@ namespace oxygine
 		ptr++;
 #endif
 
+#ifdef EMSCRIPTEN
+		*ptr = "precision float mediump;";
+#endif
+
+
 		if (prepend)
 		{
 			*ptr = prepend;

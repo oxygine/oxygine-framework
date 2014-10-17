@@ -79,11 +79,12 @@ namespace oxygine
 	{
 		struct init_desc
 		{
-			init_desc(): mode24bpp(true), w(-1), h(-1), fullscreen(false), title("Oxygine"){}
+			init_desc() : mode24bpp(true), w(-1), h(-1), fullscreen(false), title("Oxygine"), vsync(true){}
 
 			bool mode24bpp;
 			int w;
 			int h;
+			bool vsync;
 			bool fullscreen;
 			const char *title;
 		};

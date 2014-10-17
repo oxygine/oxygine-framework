@@ -3,7 +3,7 @@
 #include "utils/stringUtils.h"
 #include "Input.h"
 
-#ifdef OXYGINE_SDL
+#ifndef __S3E__
 #include "SDL_keyboard.h"
 #include "SDL_events.h"
 #endif
@@ -51,7 +51,7 @@ namespace oxygine
 
 		Input::instance.addEventListener(Input::event_platform, CLOSURE(this, &InputText::_onPlatform));
 
-#ifdef OXYGINE_SDL
+#ifndef __S3E__
 		SDL_StartTextInput();
 #endif
 		//log::messageln("InputText::start  %x", this);
@@ -86,7 +86,7 @@ namespace oxygine
 
 	void InputText::stop()
 	{
-#ifdef OXYGINE_SDL
+#ifndef __S3E__
 		SDL_StopTextInput();
 #endif
 		Input::instance.removeEventListeners(this);
@@ -99,7 +99,7 @@ namespace oxygine
 
 	void InputText::_onPlatform(Event *event)
 	{
-#ifdef OXYGINE_SDL
+#ifndef __S3E__
 		_onSDLEvent((SDL_Event*)event->userData);
 #endif
 	}
@@ -146,7 +146,7 @@ namespace oxygine
 		return (int)(prev - begin);
 	}
 
-#ifdef OXYGINE_SDL
+#ifndef __S3E__
 	int InputText::_onSDLEvent(SDL_Event *event)
 	{
 		switch(event->type)
@@ -166,6 +166,7 @@ namespace oxygine
 				}
 
 				SDL_TextInputEvent &te = event->text;
+				log::messageln("text: %d %d %d %d", (int)(te.text[0]), (int)(te.text[1]), (int)(te.text[2]), (int)(te.text[3]));
 
 				int newCode = 0;
 				getNextCode(newCode, te.text);

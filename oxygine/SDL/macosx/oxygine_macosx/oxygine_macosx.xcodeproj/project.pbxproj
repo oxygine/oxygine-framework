@@ -199,6 +199,8 @@
 		049B57241871F21E00EF3C66 /* winnie_alloc_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B56641871F21E00EF3C66 /* winnie_alloc_config.h */; };
 		04B3A71F18A6594D004C67E3 /* InputText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04B3A71D18A6594D004C67E3 /* InputText.cpp */; };
 		04B3A72018A6594D004C67E3 /* InputText.h in Headers */ = {isa = PBXBuildFile; fileRef = 04B3A71E18A6594D004C67E3 /* InputText.h */; };
+		92214D5E19F149BC00A4459A /* Polygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92214D5C19F149BC00A4459A /* Polygon.cpp */; };
+		92214D5F19F149BC00A4459A /* Polygon.h in Headers */ = {isa = PBXBuildFile; fileRef = 92214D5D19F149BC00A4459A /* Polygon.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -403,6 +405,8 @@
 		049B56641871F21E00EF3C66 /* winnie_alloc_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = winnie_alloc_config.h; sourceTree = "<group>"; };
 		04B3A71D18A6594D004C67E3 /* InputText.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InputText.cpp; path = ../../../src/InputText.cpp; sourceTree = "<group>"; };
 		04B3A71E18A6594D004C67E3 /* InputText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InputText.h; path = ../../../src/InputText.h; sourceTree = "<group>"; };
+		92214D5C19F149BC00A4459A /* Polygon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Polygon.cpp; path = ../../../src/Polygon.cpp; sourceTree = "<group>"; };
+		92214D5D19F149BC00A4459A /* Polygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Polygon.h; path = ../../../src/Polygon.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -435,6 +439,8 @@
 		049B55901871F21000EF3C66 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				92214D5C19F149BC00A4459A /* Polygon.cpp */,
+				92214D5D19F149BC00A4459A /* Polygon.h */,
 				048AD0CF19B1FE96001963EF /* Stage.cpp */,
 				048AD0D019B1FE96001963EF /* Stage.h */,
 				048AD0A2197D238D001963EF /* TextField.cpp */,
@@ -831,6 +837,7 @@
 				049B56931871F21E00EF3C66 /* logging.h in Headers */,
 				049B56E81871F21E00EF3C66 /* Multithreading.h in Headers */,
 				049B56C71871F21E00EF3C66 /* TreeInspectorPage.h in Headers */,
+				92214D5F19F149BC00A4459A /* Polygon.h in Headers */,
 				049B56B31871F21E00EF3C66 /* ThreadMessages.h in Headers */,
 				049B568D1871F21E00EF3C66 /* ImageData.h in Headers */,
 				049B57211871F21E00EF3C66 /* system_alloc.h in Headers */,
@@ -977,6 +984,7 @@
 				049B569A1871F21E00EF3C66 /* NativeTexture.cpp in Sources */,
 				049B56FF1871F21E00EF3C66 /* Resource.cpp in Sources */,
 				049B56D61871F21E00EF3C66 /* AffineTransform.cpp in Sources */,
+				92214D5E19F149BC00A4459A /* Polygon.cpp in Sources */,
 				049B568A1871F21E00EF3C66 /* VideoDriverGLES20.cpp in Sources */,
 				04670867192795E700D71824 /* Serialize.cpp in Sources */,
 				049B56CD1871F21E00EF3C66 /* EventDispatcher.cpp in Sources */,

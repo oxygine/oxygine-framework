@@ -39,11 +39,11 @@ public:
 	spActor createEaseTest(Tween::EASE ease)
 	{
 		spColorRectSprite bg = new ColorRectSprite();
-		bg->setSize(230, 230);
+		bg->setSize(330, 230);
 		bg->setColor(Color::Gray);
 
 		spColorRectSprite parent = new ColorRectSprite();
-		parent->setSize(200, 200);
+		parent->setSize(300, 200);
 		parent->setColor(Color(230, 230, 230, 255));
 
 		float f = 0;
@@ -59,7 +59,7 @@ public:
 
 			cr->setPosition(x - 1, y - 1);
 
-			f += 0.005f;
+			f += 0.0025f;
 		}
 
 		parent->setPosition(10, 15);
@@ -78,7 +78,7 @@ public:
 		_easeGraph->setY(getHeight()/2 - _easeGraph->getHeight()/2);
 		content->addChild(_easeGraph);
 
-		updateText("ease", enum2string(_ease));
+		updateText("ease", "ease: " + ease2String(_ease));
 	}
 
 	void tweenDone(Event *event)
@@ -88,53 +88,11 @@ public:
 
 	void _addTween(spTween tween)
 	{
-		tween->setEase(_ease);
+		tween->setEase(_ease); 
 		_sprite->addTween(tween);
 		tween->addEventListener(TweenEvent::DONE, CLOSURE(this, &TweensTest::tweenDone));
 	}
-
-	string enum2string(Tween::EASE e)
-	{
-		string str = "unknown";
-		switch(_ease)
-		{
-        case Tween::ease_unknown:
-            str = "ease: unknown";
-            break;
-		case Tween::ease_linear:
-			str = "ease: linear";
-			break;
-		case Tween::ease_inExpo:
-			str = "ease: inExpo";
-			break;
-		case Tween::ease_outExpo:
-			str = "ease: outExpo";
-			break;
-		case Tween::ease_inSin:
-			str = "ease: inSin";
-			break;
-		case Tween::ease_outSin:
-			str = "ease: outSin";
-			break;
-		case Tween::ease_inCubic:
-			str = "ease: inCubic";
-			break;
-		case Tween::ease_outCubic:
-			str = "ease: outCubic";
-			break;
-		case Tween::ease_inOutBack:
-			str = "ease: inOutBack";
-			break;
-		case Tween::ease_inBack:
-			str = "ease: inBack";
-			break;
-		case Tween::ease_outBack:
-			str = "ease: outBack";
-			break;
-		}
-		return str;
-	}
-
+	
 	void clicked(string id)
 	{
 		if (id == "ease")
@@ -192,6 +150,8 @@ public:
 
 		if (id == "complete")
 		{
+			_sprite->removeTweens(true);
+			/*
 			spTween t = _sprite->getFirstTween();
 			while(t)
 			{
@@ -199,6 +159,7 @@ public:
 				t->complete();//removes self from actor
 				t = next;
 			}
+			*/
 		}
 
 	}

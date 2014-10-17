@@ -417,8 +417,8 @@ namespace oxygine
 			srcRect.getLeftBottom());
 
 		_mask = mask;
-		if (_vdecl->bformat != VERTEX_PCT2T2)
-			_vdecl = _driver->getVertexDeclaration(VERTEX_PCT2T2);		
+		if (_vdecl->bformat != vertexPCT2T2::FORMAT)
+			_vdecl = _driver->getVertexDeclaration(vertexPCT2T2::FORMAT);
 		_clipMask = srcRect;
 		Vector2 v(1.0f / mask->getWidth(), 1.0f / mask->getHeight());
 		_clipMask.expand(v, v);
@@ -435,7 +435,7 @@ namespace oxygine
 		_mask = 0;
 		_shaderFlags &= ~(UberShaderProgram::MASK | UberShaderProgram::MASK_R_CHANNEL);
 		_shaderFlags = 0;
-		_vdecl = _driver->getVertexDeclaration(VERTEX_PCT2);
+		_vdecl = _driver->getVertexDeclaration(vertexPCT2::FORMAT);
 	}
 
 	bool Renderer::isMasked() const
@@ -494,7 +494,14 @@ namespace oxygine
 			drawBatch();
 	}
 
-	void Renderer::draw(const void *data, int size, bvertex_format format)
+	template <class T>
+	void append(vector<unsigned char> &buff, const T &t)
+	{
+		const unsigned char *ptr = (const unsigned char *)&t;
+		buff.insert(buff.end(), ptr, ptr + sizeof(t));
+	}
+
+	void Renderer::draw(const void *data, int size, bvertex_format format, bool worldTransform)
 	{
 		if (_vdecl->bformat != format)
 		{
@@ -509,7 +516,23 @@ namespace oxygine
 			drawBatch();
 		}		
 
-		_vertices.insert(_vertices.end(), (unsigned char*)data, (unsigned char*)data + size);
+		if (worldTransform)
+		{
+			const unsigned char *ptr = (const unsigned char *)data;
+			for (int i = 0; i < num; ++i)
+			{
+				const Vector2 *pos = (Vector2 *)ptr;
+				Vector2 t = _transform.transform(*pos);
+
+				append(_vertices, t);
+				_vertices.insert(_vertices.end(), ptr + sizeof(t), ptr + sizeof(t) + _vdecl->size - sizeof(t));
+
+				ptr += _vdecl->size;
+			}
+			
+		}
+		else
+			_vertices.insert(_vertices.end(), (unsigned char*)data, (unsigned char*)data + size);
 	}
 
 	
@@ -580,7 +603,7 @@ namespace oxygine
 		_program = 0;
 
 		getDriver()->begin(viewport, clearColor);
-		_vdecl = _driver->getVertexDeclaration(VERTEX_PCT2);
+		_vdecl = _driver->getVertexDeclaration(vertexPCT2::FORMAT);
 		_base = 0;
 		_mask = 0;
 		_alpha = 0;

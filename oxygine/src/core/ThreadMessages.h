@@ -47,6 +47,7 @@ namespace oxygine
 		~ThreadMessages();
 
 		bool empty();
+		size_t size();
 		void wait();
 		void get(message &ev);
 		bool peek(message &ev, bool del);

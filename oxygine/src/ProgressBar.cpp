@@ -298,7 +298,7 @@ namespace oxygine
 				fill_tex_coord(*pv, rgba, p2, u2, v2);			
 				pv++;
 
-				rs.renderer->draw(vertices, sizeof(vertices), VERTEX_PCT2);			
+				rs.renderer->draw(vertices, sizeof(vertices), vertexPCT2::FORMAT, false);			
 			}
 		}
 	}

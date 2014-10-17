@@ -199,7 +199,7 @@ namespace oxygine
 		void setPrimaryColor(const Color &);
 		/**Accumulates rectangles into batch or render it.*/
 		void draw(const RectF &srcRect, const RectF &destRect);		
-		void draw(const void *data, int size, bvertex_format format);
+		void draw(const void *data, int size, bvertex_format format, bool worldTransform = false);
 		/**Draws existing batch immediately.*/
 		void drawBatch();
 		/**Cleans existing accumulated batch.*/

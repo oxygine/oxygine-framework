@@ -19,6 +19,10 @@
 		<image file="box9.png"/>
 		<image file="box9a.png"/>
 	</atlas>
+
+	<atlas>
+		<image file="tiled.png"/>
+	</atlas>	
 	
 	<set load = "false" /> <!--do not load next atlasses by default-->
 	<atlas format="4444">

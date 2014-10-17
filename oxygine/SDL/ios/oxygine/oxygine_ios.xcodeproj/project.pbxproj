@@ -49,6 +49,8 @@
 		04B3A71A18A65668004C67E3 /* InputText.h in Headers */ = {isa = PBXBuildFile; fileRef = 04B3A71818A65668004C67E3 /* InputText.h */; };
 		04D6FB4C1851914000A5403A /* ThreadMessages.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04D6FB4A1851914000A5403A /* ThreadMessages.cpp */; };
 		04D6FB4D1851914000A5403A /* ThreadMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = 04D6FB4B1851914000A5403A /* ThreadMessages.h */; };
+		92214D6419F14A2F00A4459A /* Polygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92214D6219F14A2F00A4459A /* Polygon.cpp */; };
+		92214D6519F14A2F00A4459A /* Polygon.h in Headers */ = {isa = PBXBuildFile; fileRef = 92214D6319F14A2F00A4459A /* Polygon.h */; };
 		C38704A617C0C71700015CA8 /* VideoDriverGLES20.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C38704A417C0C71700015CA8 /* VideoDriverGLES20.cpp */; };
 		C38704A717C0C71700015CA8 /* VideoDriverGLES20.h in Headers */ = {isa = PBXBuildFile; fileRef = C38704A517C0C71700015CA8 /* VideoDriverGLES20.h */; };
 		C38EC22C1709600E00568283 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C38EC22B1709600E00568283 /* OpenGLES.framework */; };
@@ -246,6 +248,8 @@
 		04B3A71818A65668004C67E3 /* InputText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InputText.h; path = ../../../src/InputText.h; sourceTree = "<group>"; };
 		04D6FB4A1851914000A5403A /* ThreadMessages.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ThreadMessages.cpp; sourceTree = "<group>"; };
 		04D6FB4B1851914000A5403A /* ThreadMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadMessages.h; sourceTree = "<group>"; };
+		92214D6219F14A2F00A4459A /* Polygon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Polygon.cpp; path = ../../../src/Polygon.cpp; sourceTree = "<group>"; };
+		92214D6319F14A2F00A4459A /* Polygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Polygon.h; path = ../../../src/Polygon.h; sourceTree = "<group>"; };
 		C38704A417C0C71700015CA8 /* VideoDriverGLES20.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VideoDriverGLES20.cpp; path = gl/VideoDriverGLES20.cpp; sourceTree = "<group>"; };
 		C38704A517C0C71700015CA8 /* VideoDriverGLES20.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VideoDriverGLES20.h; path = gl/VideoDriverGLES20.h; sourceTree = "<group>"; };
 		C38EC22B1709600E00568283 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -476,6 +480,8 @@
 		C3E86F5316EBC8C200052915 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				92214D6219F14A2F00A4459A /* Polygon.cpp */,
+				92214D6319F14A2F00A4459A /* Polygon.h */,
 				048AD0C919B1FD74001963EF /* Stage.cpp */,
 				048AD0CA19B1FD74001963EF /* Stage.h */,
 				048AD0A8197D2444001963EF /* TextField.cpp */,
@@ -837,6 +843,7 @@
 				C3E8707916EBC8EB00052915 /* TextActor.h in Headers */,
 				C3E8707A16EBC8EB00052915 /* TextStyle.h in Headers */,
 				C3E8708416EBC8EB00052915 /* Tweener.h in Headers */,
+				92214D6519F14A2F00A4459A /* Polygon.h in Headers */,
 				C3E8708516EBC8EB00052915 /* UpdateState.h in Headers */,
 				C3E8708716EBC8EB00052915 /* AtlasTool.h in Headers */,
 				C3E8708916EBC8EB00052915 /* ImageUtils.h in Headers */,
@@ -983,6 +990,7 @@
 				C3E8709116EBC8EB00052915 /* winnie_alloc.cpp in Sources */,
 				048AD0AA197D2444001963EF /* TextField.cpp in Sources */,
 				C38EC26F1709649300568283 /* DeveloperMenu.cpp in Sources */,
+				92214D6419F14A2F00A4459A /* Polygon.cpp in Sources */,
 				C38EC2711709649300568283 /* TexturesInspector.cpp in Sources */,
 				C38EC2731709649300568283 /* TreeInspector.cpp in Sources */,
 				0467086E192796E500D71824 /* Serialize.cpp in Sources */,

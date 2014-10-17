@@ -46,8 +46,7 @@ namespace oxygine
 		return (vertexFormat >> (TEX_COORD_SIZE_BIT + 3*stage) ) & 0x7;
 	}
 
-#define VERTEX_PCT2  (VERTEX_POSITION | VERTEX_COLOR | VERTEX_NUM_TEXCOORDS(1) | VERTEX_TEXCOORD_SIZE(0, 2))
-#define VERTEX_PCT2T2  (VERTEX_POSITION | VERTEX_COLOR | VERTEX_NUM_TEXCOORDS(2) | VERTEX_TEXCOORD_SIZE(0, 2) | VERTEX_TEXCOORD_SIZE(1, 2))
+
 
 	inline unsigned int getVertexSize(bvertex_format fmt)
 	{
@@ -78,8 +77,6 @@ namespace oxygine
 		return offset;
 	}
 
-
-
 	struct vertexP2T2
 	{
 		float x, y;		
@@ -99,6 +96,7 @@ namespace oxygine
 
 	struct vertexPCT2
 	{
+		enum { FORMAT = VERTEX_POSITION | VERTEX_COLOR | VERTEX_NUM_TEXCOORDS(1) | VERTEX_TEXCOORD_SIZE(0, 2) };
 		float x, y, z;
 		unsigned int color;
 		float u, v;				
@@ -106,6 +104,11 @@ namespace oxygine
 
 	struct vertexPCT2T2: public vertexPCT2
 	{	
+		enum { FORMAT = VERTEX_POSITION | VERTEX_COLOR | VERTEX_NUM_TEXCOORDS(2) | VERTEX_TEXCOORD_SIZE(0, 2) | VERTEX_TEXCOORD_SIZE(1, 2)};
 		float u2, v2;				
 	};
+
+#define VERTEX_PCT2 vertexPCT2::FORMAT
+#define VERTEX_PCT2T2 vertexPCT2T2::FORMAT
+
 }

@@ -62,7 +62,7 @@ namespace oxygine
 
 		if (!s.program)
 		{
-			bvertex_format bformat = VERTEX_PCT2;
+			bvertex_format bformat = vertexPCT2::FORMAT;
 			s.flags = flags;
 			const char* data = (const char*)&_data.front();
 
@@ -84,7 +84,7 @@ namespace oxygine
 			if (flags & MASK)
 			{
 				strcat(prepend, "#define MASK\n");
-				bformat = VERTEX_PCT2T2;
+				bformat = vertexPCT2T2::FORMAT;
 			}
 
 			char *end = prepend + strlen(prepend);

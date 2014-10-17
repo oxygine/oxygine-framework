@@ -94,7 +94,15 @@ namespace oxygine
 	bool ThreadMessages::empty()
 	{
 		MutexPthreadLock lock(_mutex);
-		return _events.empty();
+		bool v = _events.empty();
+		return v;
+	}
+
+	size_t ThreadMessages::size()
+	{
+		MutexPthreadLock lock(_mutex);
+		size_t v = _events.size();
+		return v;
 	}
 
 	void ThreadMessages::clear()
@@ -181,7 +189,7 @@ namespace oxygine
 			LOGDN("ThreadMessages::send msgid=%d already replied", msgid);	
 		}
 				
-		while (!_last._replied)		
+		while (!_last._replied || _last._id != _waitReplyID)
 		{
 			LOGDN("ThreadMessages::send msgid=%d waiting reply...", msgid);	
 			mywait(&_cond, &_mutex);

@@ -473,6 +473,9 @@ namespace oxygine
 
 	void Actor::setPriority(short zorder)
 	{
+		if (_zOrder == zorder) // fixed by Evgeniy Golovin
+			return;
+
 		_zOrder = zorder;
 		if (_parent)
 		{
@@ -1095,12 +1098,12 @@ namespace oxygine
 		while (t)
 		{			
 			spTween c = t;
+			t = t->getNextSibling();
 
 			if (callComplete)
 				c->complete();
-
-			t = t->getNextSibling();
-			removeTween(c);
+			else
+				removeTween(c);
 		}
 	}
 

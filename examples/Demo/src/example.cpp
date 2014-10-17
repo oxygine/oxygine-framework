@@ -15,6 +15,7 @@
 #include "TestClipRect.h"
 #include "TestUserShader.h"
 #include "TestMask.h"
+#include "TestPolygon.h"
 #include "TestInputText.h"
 #include "core/STDFileSystem.h"
 
@@ -57,6 +58,7 @@ public:
 		addButton("cliprect", "ClipRect Actor");		
 		addButton("usershader", "User Shader");		
 		addButton("mask", "Mask");		
+		addButton("polygon", "Polygon");
 		addButton("inputtext", "Input Text");		
 		
 	}
@@ -132,6 +134,11 @@ public:
 		if (id == "mask")
 		{
 			getStage()->addChild(new TestMask);
+		}
+
+		if (id == "polygon")
+		{
+			getStage()->addChild(new TestPolygon);
 		}
 
 		if (id == "inputtext")

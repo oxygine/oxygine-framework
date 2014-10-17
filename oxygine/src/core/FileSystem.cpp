@@ -120,7 +120,7 @@ namespace oxygine
 
 			if (_readonly)
 			{
-				bool write = mode[0] == 'W' || mode[0] == 'w';
+				bool write = mode[0] == 'W' || mode[0] == 'w' || mode[0] == 'A' || mode[0] == 'a';
 				if (write)
 					return status_error;
 			}

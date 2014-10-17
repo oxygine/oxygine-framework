@@ -3,7 +3,7 @@
 #include "EventDispatcher.h"
 #include <string>
 
-#ifdef OXYGINE_SDL
+#ifndef __S3E__
 #include "SDL.h"
 #endif
 
@@ -44,7 +44,7 @@ namespace oxygine
 
 		void _onPlatform(Event *event);
 
-#ifdef OXYGINE_SDL
+#ifndef __S3E__
 		int _onSDLEvent(SDL_Event *event);
 #endif
 	};

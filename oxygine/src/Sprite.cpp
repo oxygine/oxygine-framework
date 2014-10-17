@@ -134,7 +134,11 @@ namespace oxygine
 	{		
 		_vstyle._apply(rs);
 		const Diffuse &df = _frame.getDiffuse();
+#ifdef EMSCRIPTEN
+		if (df.base && df.base->getHandle())
+#else
 		if (df.base)
+#endif
 		{
 			rs.renderer->setDiffuse(df);
 
