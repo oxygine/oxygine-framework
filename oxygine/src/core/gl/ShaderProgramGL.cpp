@@ -30,8 +30,7 @@ namespace oxygine
 	int ShaderProgramGL::getUniformLocation(const char *id) const
 	{
 		int i = glGetUniformLocation(_program, id);
-		if (i == -1)
-			int q=0;
+		//if (i == -1)
 		CHECKGL();
 		return i;
 	}

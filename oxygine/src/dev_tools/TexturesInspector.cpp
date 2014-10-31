@@ -105,7 +105,6 @@ namespace oxygine
 		
 		int numX = (int)(size.x / itemSize.x);
 
-		float y = 0;
 		int n = 0;
 		int mem = 0;
 		for (vector<spNativeTexture>::iterator i = textures.begin(); i != textures.end(); ++i)

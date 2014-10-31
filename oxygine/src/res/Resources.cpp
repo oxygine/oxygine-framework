@@ -238,8 +238,6 @@ namespace oxygine
 		pugi::xml_node resources_meta = doc_meta.first_child();
 
 
-		int i = 0;
-
 		string id;
 		//string file;
 		string rect_str;

@@ -53,10 +53,6 @@ namespace oxygine
 
 		void Node::finalPass(Aligner &rd)
 		{
-			float scaleFactor = rd.getScaleFactor();
-
-			int offsetY = rd.bounds.pos.y;
-
 			_finalPass(rd);
 
 			Node *child = _firstChild;

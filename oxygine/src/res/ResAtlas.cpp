@@ -177,9 +177,6 @@ namespace oxygine
 				{
 					OX_ASSERT(meta_frames && "Did you recreate atlasses?");
 				}
-
-								
-				int virtual_frame_width = 0;
 				
 				MemoryTexture mt;
 				ImageData im;
@@ -263,7 +260,6 @@ namespace oxygine
 						char *frames_data = (char*)meta_frames.first_child().value();
 
 						const char *begin = frames_data;
-						int i = 0;
 						while(*frames_data)
 						{
 							if (*frames_data == ';')

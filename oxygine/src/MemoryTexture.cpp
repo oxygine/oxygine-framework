@@ -104,9 +104,7 @@ namespace oxygine
 			//printf("jpeg is fully off screen\n");
 			return bRet;
 		}
-		int startx = 0;
 		int starty = 0;
-		int bytesPerPix = 4;
 
 		TextureFormat destFormat = format;
 		if (destFormat == TF_UNDEFINED)
