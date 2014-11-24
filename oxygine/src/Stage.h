@@ -21,7 +21,7 @@ namespace oxygine
 		static Rect	calcCenteredViewport(const Point &displaySize, const Point &gameSize);
 
 		Stage();
-		~Stage();
+		virtual ~Stage();
 
 		/**Initializes size, scale and position of Stage 
 		@param is real display size of device.
@@ -48,6 +48,8 @@ namespace oxygine
 		bool isOn(const Vector2 &localPosition);
 
 	private:
+		Stage(const Stage&);
+		const Stage& operator=(const Stage&);
 
 		timeMS _statUpdate;
 		timeMS _statRender;
