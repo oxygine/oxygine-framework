@@ -2,7 +2,7 @@
 #include "Actor.h"
 #include "Button.h"
 #include "RenderState.h"
-
+#include "STDRenderer.h"
 using namespace oxygine;
 
 
@@ -17,15 +17,16 @@ public:
 
 	void render(const RenderState &parentRS)
 	{
+		
 		parentRS.renderer->drawBatch();
 
 		RenderState rs = parentRS;
-		Renderer renderer = *parentRS.renderer;
-		renderer.cleanup();
-		renderer.setDriver(driver ? driver : IVideoDriver::instance);
+		STDRenderer renderer(driver ? driver : IVideoDriver::instance);
+		renderer.begin(parentRS.renderer);
 		rs.renderer = &renderer;
 		Actor::render(rs);
-	}
+		renderer.end();
+	}	
 };
 
 class Test: public Actor

@@ -5,6 +5,7 @@ varying mediump vec2 result_uv2;
 
 #ifdef VS
 uniform mediump mat4 mat;
+uniform mediump vec3 msk[4];
 attribute vec3 position;
 attribute vec4 color;
 attribute vec2 uv;
@@ -17,7 +18,11 @@ void program_main_vs()
 	result_color = color;
 	result_uv = uv;
 #ifdef MASK
-	result_uv2 = uv2;
+	mediump float a = dot(msk[0], vec3(1.0, position.x, position.y));
+	mediump float b = dot(msk[1], vec3(1.0, position.x, position.y));
+
+	result_uv2.x = dot(msk[2], vec3(1.0, a, b));
+	result_uv2.y = dot(msk[3], vec3(1.0, a, b));
 #endif
 }
 

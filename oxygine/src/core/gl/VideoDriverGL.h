@@ -14,6 +14,7 @@ namespace oxygine
 	public:
 		VideoDriverGL();
 
+
 		void	getStats(Stats &s) const;
 		void	getViewport(Rect &r) const;
 		bool	getScissorRect(Rect &) const;

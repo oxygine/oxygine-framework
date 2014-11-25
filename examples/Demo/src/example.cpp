@@ -14,6 +14,7 @@
 #include "TestBox9Sprite.h"
 #include "TestClipRect.h"
 #include "TestUserShader.h"
+#include "TestUserShader2.h"
 #include "TestMask.h"
 #include "TestPolygon.h"
 #include "TestInputText.h"
@@ -57,6 +58,7 @@ public:
 		addButton("box9sprite", "Box9 Sprite");		
 		addButton("cliprect", "ClipRect Actor");		
 		addButton("usershader", "User Shader");		
+		addButton("usershader2", "User Shader2");
 		addButton("mask", "Mask");		
 		addButton("polygon", "Polygon");
 		addButton("inputtext", "Input Text");		
@@ -129,6 +131,11 @@ public:
 		if (id == "usershader")
 		{
 			getStage()->addChild(new TestUserShader);
+		}
+
+		if (id == "usershader2")
+		{
+			getStage()->addChild(new TestUserShader2);
 		}
 
 		if (id == "mask")

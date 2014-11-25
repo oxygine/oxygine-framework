@@ -63,6 +63,21 @@ namespace oxygine
 		_begin(viewport, clearColor);
 	}
 
+	void VideoDriverGLES20::clear(const Color &color)
+	{
+		glClearColor(color.getRedF(), color.getGreenF(), color.getBlueF(), color.getAlphaF());
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		CHECKGL();
+	}
+
+	void VideoDriverGLES20::setViewport(const Rect &viewport)
+	{
+		glViewport(viewport.getX(), viewport.getY(), viewport.getWidth(), viewport.getHeight());
+
+		CHECKGL();
+	}
+
 	void VideoDriverGLES20::setShaderProgram(ShaderProgram* prog_)
 	{
         CHECKGL();
@@ -169,15 +184,31 @@ namespace oxygine
 		glUniform1i(location, v);
 		CHECKGL();
 	}
-
-
-
+	
 	void VideoDriverGLES20::setUniform(const char *id, const Vector4 *v, int num)
 	{
 		int p = glGetUniformLocation(_program, id);
 		if (p == -1)
 			return;
 		glUniform4fv(p, num, v->m);
+		CHECKGL();
+	}
+
+	void VideoDriverGLES20::setUniform(const char *id, const Vector2 *v, int num)
+	{
+		int p = glGetUniformLocation(_program, id);
+		if (p == -1)
+			return;
+		glUniform2fv(p, num, &v->x);
+		CHECKGL();
+	}
+
+	void VideoDriverGLES20::setUniform(const char *id, const Vector3 *v, int num)
+	{
+		int p = glGetUniformLocation(_program, id);
+		if (p == -1)
+			return;
+		glUniform3fv(p, num, &v->x);
 		CHECKGL();
 	}
 

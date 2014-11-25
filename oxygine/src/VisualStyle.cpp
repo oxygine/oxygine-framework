@@ -19,12 +19,19 @@ namespace oxygine
 	}
 
 	void VisualStyle::_apply(const RenderState &rs)
-	{
+	{	
+		//rs.renderer->setMaterial(&_material);		
 		rs.renderer->setBlendMode(_blend);
+		//rs.renderer->setTexture()
+	}
 
-		Color color = _color;
-		color.a = (color.a * rs.alpha) / 255;
-		rs.renderer->setPrimaryColor(color);
+	void VisualStyle::setColor(const Color &color)
+	{
+		_color = color;
+	}
+	void VisualStyle::setBlendMode(blend_mode mode)
+	{
+		_blend = mode; 
 	}
 
 	string VisualStyle::dump() const

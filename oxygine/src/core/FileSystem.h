@@ -38,6 +38,7 @@ namespace oxygine
 			status deleteFile(const char* file);
 			status renameFile(const char* src, const char *dest);
 			status makeDirectory(const char *path);
+			status deleteDirectory(const char *path);
 
 			status open(const char *file, const char *mode, error_policy ep, fileHandle *&fh);
 
@@ -49,6 +50,7 @@ namespace oxygine
 			virtual bool _isExists(const char *file);
 			virtual status _deleteFile(const char* file) = 0;
 			virtual status _makeDirectory(const char* path) = 0;
+			virtual status _deleteDirectory(const char* path) = 0;
 			virtual status _renameFile(const char* src, const char *dest) = 0;
 
 			char _prefix[32];

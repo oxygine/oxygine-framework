@@ -1,4 +1,4 @@
-from PIL import Image
+import Image
 from xml.dom import minidom
 import os
 import atlas
@@ -120,6 +120,7 @@ class settings:
         self.max_h = 2048
         self.atlasses = []
         self.square = False
+        self.npot = False
 
 def pack(st, frames, sw, sh):                       
                 
@@ -140,16 +141,23 @@ def pack(st, frames, sw, sh):
     return not_packed, atl
 
 
-def get_pow2list(mn, mx):
-    ls = []
-    mn = nextPOT(mn)
-    mx = nextPOT(mx)
-    while 1:
-        ls.append(mn)
-        mn *= 2
-        if mn > mx:
-            break
-    return ls
+def get_pow2list(npot, mn, mx):
+    #ls = []    
+    if npot:
+        while 1:
+            yield mn
+            mn += 64
+            if mn > mx:
+                yield mx
+                break
+    else:
+        mn = nextPOT(mn)
+        mx = nextPOT(mx)
+        while 1:
+            yield mn
+            mn *= 2
+            if mn > mx:
+                break
 
 def pck(st, frames):        
     if 0:
@@ -164,9 +172,8 @@ def pck(st, frames):
             min_w = max(min_w, size[0])
             min_h = max(min_h, size[1])
             
-        sizes_w = get_pow2list(min_w, st.max_w)
-        sizes_h = get_pow2list(min_h, st.max_h)
-                               
+        sizes_w = list(get_pow2list(st.npot, min_w, st.max_w))
+        sizes_h = list(get_pow2list(st.npot, min_h, st.max_h))
         
         for sw in sizes_w:
             for sh in sizes_h:
@@ -394,6 +401,7 @@ class atlas_Processor(process.Process):
             frame.node = node
         
         st = settings()
+        st.npot = context._npot
         st.get_size = get_aligned_frame_size
         st.set_node = set_node
         st.max_w = context.args.max_width
@@ -450,6 +458,7 @@ class atlas_Processor(process.Process):
                 base_alpha_name = base_name + "_alpha"
                 alpha_path = context.get_inner_dest(base_alpha_name + ".png")
                 alpha.save(alpha_path)
+                
                 image_atlas_el.setAttribute("alpha", base_alpha_name + ".png")
 
                 path_base = base_name + ".png"
@@ -491,7 +500,14 @@ class atlas_Processor(process.Process):
 
                     compress(path, context.get_inner_dest(base_name + ".pvr"), "PVRTC1_4")
                     image_atlas_el.setAttribute("file", base_name + ".pvr")
-                    os.remove(path)             
+                    os.remove(path)
+                    
+                if context.compression == "pvrtc2":
+                    ox_fmt = "PVRTC2_4RGBA"
+
+                    compress(path, context.get_inner_dest(base_name + ".pvr"), "PVRTC2_4")
+                    image_atlas_el.setAttribute("file", base_name + ".pvr")
+                    os.remove(path)                
                     
                     
 

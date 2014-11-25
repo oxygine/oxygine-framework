@@ -130,5 +130,8 @@ Debug_vs2013
 Release_vs2013
 examples/HelloWorld/proj.win32/Release/
 examples/Game/part4/build_game_vc10/
+build_release
+*/proj.android/gen/
+*/proj.android/bin/
 syntax: regexp
 ^build/

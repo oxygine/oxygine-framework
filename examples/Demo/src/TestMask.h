@@ -1,6 +1,8 @@
 #pragma once
 #include "test.h"
 #include "initActor.h"
+#include "Polygon.h"
+#include "TestPolygon.h"
 
 class TestMask: public Test
 {
@@ -32,6 +34,14 @@ public:
 		_masked->setMask(_mask);
 
 
+		spPolygon poly = new oxygine::Polygon;
+
+		vertexPCT2 *data = TestPolygon::createVertices(10);
+		poly->setVertices(data, sizeof(vertexPCT2) * 10 * 4, vertexPCT2::FORMAT, true);
+		poly->setPosition(getSize() / 2);
+		poly->setScale(1.3f);
+		_masked->addChild(poly);
+
 		spSprite sp = new Sprite;
 		sp->attachTo(_masked);
 		sp->setResAnim(resources.getResAnim("bg"));
@@ -49,7 +59,7 @@ public:
 			arg_pos = content->getSize()/2,
 			arg_scale = 1.5f,
 			arg_text = "Oxygine. Masked text",
-			arg_style = style);		
+			arg_style = style);
 
 
 		const Test::toggle sm[] = {Test::toggle("hide mask", 0), Test::toggle("show mask", 1), };

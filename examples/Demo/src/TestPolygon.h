@@ -37,7 +37,7 @@ public:
 		addButton("+1", "+1");
 	}
 
-	vertexPCT2 initVertex(const Vector2 &pos, unsigned int color)
+	static vertexPCT2 initVertex(const Vector2 &pos, unsigned int color)
 	{
 		vertexPCT2 v;
 		v.color = color;
@@ -50,7 +50,7 @@ public:
 		return v;
 	}
 
-	vertexPCT2 getVertex(int i, int num)
+	static vertexPCT2 getVertex(int i, int num)
 	{
 		float theta = 2.0f * MATH_PI / num * i;
 
@@ -62,7 +62,7 @@ public:
 		return initVertex(p, c.rgba());
 	}
 
-	void update(int num)
+	static vertexPCT2 *createVertices(int num)
 	{
 		int verticesCount = num * 4;
 
@@ -87,7 +87,13 @@ public:
 			++p;
 		}
 
-		poly->setVertices(vertices, sizeof(vertexPCT2) * verticesCount, vertexPCT2::FORMAT, true);
+		return vertices;
+	}
+
+	void update(int num)
+	{
+		vertexPCT2 *vertices = createVertices(num);
+		poly->setVertices(vertices, sizeof(vertexPCT2) * num * 4, vertexPCT2::FORMAT, true);
 	}
 
 	void clicked(string id)

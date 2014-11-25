@@ -76,6 +76,7 @@ namespace file
 		status _open(const char *file, const char *mode, error_policy ep, file::fileHandle *&fh);
 		status _deleteFile(const char* file);
 		status _makeDirectory(const char* file);
+		status _deleteDirectory(const char* file);
 		status _renameFile(const char* src, const char *dest);
 
 	};

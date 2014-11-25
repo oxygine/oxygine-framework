@@ -2,6 +2,8 @@
 #include "RenderState.h"
 #include <sstream>
 #include "Serialize.h"
+#include "STDRenderer.h"
+
 namespace oxygine
 {
 	void fill_tex_coord(vertexPCT2 &vt, unsigned int rgba, const Vector2 &pnt, float nu, float nv)
@@ -92,6 +94,7 @@ namespace oxygine
 
 		Vector2 newSize = _originalFrame.getFrameSize() * _progress;
 		_frame.init(_frame.getResAnim(), _frame.getDiffuse(), newSrc, newDest, newSize);
+		//_vstyle._material.srcRect = newSrc;
 	}
 
 	void ProgressBar::doRender(const RenderState &rs)
@@ -104,13 +107,15 @@ namespace oxygine
 			return;
 		}
 
+		STDRenderer *renderer = safeCast<STDRenderer*>(rs.renderer);
+
 		_vstyle._apply(rs);
 		const Diffuse &df = _frame.getDiffuse();
 		if (df.base)
 		{
-			rs.renderer->setDiffuse(df);
+			//renderer->setTexture_(df.base, df.alpha, df.premultiplied);
 
-			unsigned int rgba = rs.renderer->getPrimaryColor().rgba();
+			
 
 			RectF destRect = Sprite::getDestRect();
 
@@ -288,6 +293,7 @@ namespace oxygine
 				p2 = rs.transform.transform(p2);
 				p3 = rs.transform.transform(p3);
 
+				unsigned int rgba = getColor().rgba();
 
 				fill_tex_coord(*pv, rgba, p1, u1, v1);
 				pv++;
@@ -298,7 +304,7 @@ namespace oxygine
 				fill_tex_coord(*pv, rgba, p2, u2, v2);			
 				pv++;
 
-				rs.renderer->draw(vertices, sizeof(vertices), vertexPCT2::FORMAT, false);			
+				rs.renderer->addVertices(vertices, sizeof(vertices));
 			}
 		}
 	}

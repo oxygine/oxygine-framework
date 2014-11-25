@@ -198,8 +198,8 @@ namespace oxygine
 		void setTouchChildrenEnabled(bool enabled) { _flags &= ~flag_touchChildrenEnabled; if (enabled) _flags |= flag_touchChildrenEnabled; }
 
 		/**Sets callback which would be called each Actor::update cycle before doUpdate. Use it if you don't want inherit from Actor and overload Actor::doUpdate.*/
-		void setCallbackDoUpdate(UpdateCallback cb){_cbDoUpdate = cb;}
 		/**Sets callback which would be called each Actor::render cycle before doRender. Use it if you don't want inherit from Actor and overload Actor::doRender.*/
+		void setCallbackDoUpdate(UpdateCallback cb){_cbDoUpdate = cb;}
 		//void setCallbackDoRender(RenderCallback cb){_cbDoRender = cb;}
 
 		virtual bool isOn(const Vector2 &localPosition);

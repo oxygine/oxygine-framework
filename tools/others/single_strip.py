@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from PIL import Image
+import Image
 import sys
 image = sys.argv[1]
 cols = int(sys.argv[2])

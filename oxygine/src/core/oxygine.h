@@ -65,13 +65,15 @@ namespace oxygine
 
 	/** returns local app time in milliseconds (1sec = 1000ms). Counting starts from zero*/	
 	timeMS			getTimeMS();
+	/** returns UTC time in milliseconds */
 	int64			getTimeUTCMS();
+	/** is any network connection available?*/
 	bool			isNetworkAvaible();
 	/**returns locale. ISO 639-1 */
 	std::string		getLanguage();
 
 
-
+	/**sleep for milliseconds*/
 	void	sleep(timeMS);
 	
 		
@@ -79,7 +81,7 @@ namespace oxygine
 	{
 		struct init_desc
 		{
-			init_desc() : mode24bpp(true), w(-1), h(-1), fullscreen(false), title("Oxygine"), vsync(true){}
+			init_desc() : mode24bpp(true), w(-1), h(-1), fullscreen(false), title("Oxygine"), vsync(true), appName(0), comnpanyName(0){}
 
 			bool mode24bpp;
 			int w;
@@ -87,11 +89,17 @@ namespace oxygine
 			bool vsync;
 			bool fullscreen;
 			const char *title;
+
+			/** Application name to be used as part of the file system directory for writable storage. If appName is empty files would be written next to working directory*/
+			const char *appName;
+			/** Company name to be used as part of the file system directory for writable storage*/
+			const char *comnpanyName;
 		};
 
-		/** Initializes engine internal components*/
+		/** Initializes Oxygine*/
 		void init(init_desc *desc = 0);
-		void init2();
+			
+		
 		void release();
 		void requestQuit();
 
@@ -102,7 +110,9 @@ namespace oxygine
 
 		/** Update engine*/
 		bool update();
-		/** Swap Video buffers*/
+		/**returns True if device is ready for rendering*/
+		bool beginRendering();
+		/** Swap Video buffers*/		
 		void swapDisplayBuffers();
 		void execute(const char *);
 
@@ -128,4 +138,11 @@ namespace oxygine
 
 
 	void handleErrorPolicy(error_policy ep, const char *format, ...);
+
+
+	namespace core
+	{
+		/**internal usage*/
+		void init2();
+	}
 }

@@ -19,20 +19,25 @@ namespace oxygine
 	struct glyph;
 
 	class Aligner;
-	class Renderer;
+	class STDRenderer;
 	class RenderState;
+	class TextRenderer2;
 	
 	namespace text
 	{
 		typedef vector<Symbol> text_data;
+
 
 		class DrawContext
 		{
 		public:
 			DrawContext():rs(0), renderer(0){}
 
+			Color color;
+			Color primary;
+
 			const RenderState *rs;
-			Renderer *renderer;
+			TextRenderer2 *renderer;
 		};
 
 		class Node: public PoolObject

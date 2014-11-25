@@ -51,6 +51,10 @@
 		04D6FB4D1851914000A5403A /* ThreadMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = 04D6FB4B1851914000A5403A /* ThreadMessages.h */; };
 		92214D6419F14A2F00A4459A /* Polygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92214D6219F14A2F00A4459A /* Polygon.cpp */; };
 		92214D6519F14A2F00A4459A /* Polygon.h in Headers */ = {isa = PBXBuildFile; fileRef = 92214D6319F14A2F00A4459A /* Polygon.h */; };
+		923A9E971A1FCBB700A6F08E /* MaskedRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 923A9E931A1FCBB700A6F08E /* MaskedRenderer.cpp */; };
+		923A9E981A1FCBB700A6F08E /* MaskedRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 923A9E941A1FCBB700A6F08E /* MaskedRenderer.h */; };
+		923A9E991A1FCBB700A6F08E /* STDRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 923A9E951A1FCBB700A6F08E /* STDRenderer.cpp */; };
+		923A9E9A1A1FCBB700A6F08E /* STDRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 923A9E961A1FCBB700A6F08E /* STDRenderer.h */; };
 		C38704A617C0C71700015CA8 /* VideoDriverGLES20.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C38704A417C0C71700015CA8 /* VideoDriverGLES20.cpp */; };
 		C38704A717C0C71700015CA8 /* VideoDriverGLES20.h in Headers */ = {isa = PBXBuildFile; fileRef = C38704A517C0C71700015CA8 /* VideoDriverGLES20.h */; };
 		C38EC22C1709600E00568283 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C38EC22B1709600E00568283 /* OpenGLES.framework */; };
@@ -250,6 +254,10 @@
 		04D6FB4B1851914000A5403A /* ThreadMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadMessages.h; sourceTree = "<group>"; };
 		92214D6219F14A2F00A4459A /* Polygon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Polygon.cpp; path = ../../../src/Polygon.cpp; sourceTree = "<group>"; };
 		92214D6319F14A2F00A4459A /* Polygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Polygon.h; path = ../../../src/Polygon.h; sourceTree = "<group>"; };
+		923A9E931A1FCBB700A6F08E /* MaskedRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MaskedRenderer.cpp; path = ../../../src/MaskedRenderer.cpp; sourceTree = "<group>"; };
+		923A9E941A1FCBB700A6F08E /* MaskedRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MaskedRenderer.h; path = ../../../src/MaskedRenderer.h; sourceTree = "<group>"; };
+		923A9E951A1FCBB700A6F08E /* STDRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = STDRenderer.cpp; path = ../../../src/STDRenderer.cpp; sourceTree = "<group>"; };
+		923A9E961A1FCBB700A6F08E /* STDRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STDRenderer.h; path = ../../../src/STDRenderer.h; sourceTree = "<group>"; };
 		C38704A417C0C71700015CA8 /* VideoDriverGLES20.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VideoDriverGLES20.cpp; path = gl/VideoDriverGLES20.cpp; sourceTree = "<group>"; };
 		C38704A517C0C71700015CA8 /* VideoDriverGLES20.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VideoDriverGLES20.h; path = gl/VideoDriverGLES20.h; sourceTree = "<group>"; };
 		C38EC22B1709600E00568283 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -480,6 +488,10 @@
 		C3E86F5316EBC8C200052915 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				923A9E931A1FCBB700A6F08E /* MaskedRenderer.cpp */,
+				923A9E941A1FCBB700A6F08E /* MaskedRenderer.h */,
+				923A9E951A1FCBB700A6F08E /* STDRenderer.cpp */,
+				923A9E961A1FCBB700A6F08E /* STDRenderer.h */,
 				92214D6219F14A2F00A4459A /* Polygon.cpp */,
 				92214D6319F14A2F00A4459A /* Polygon.h */,
 				048AD0C919B1FD74001963EF /* Stage.cpp */,
@@ -764,6 +776,7 @@
 				C3E8700516EBC8EB00052915 /* Box9Sprite.h in Headers */,
 				C3E8700716EBC8EB00052915 /* Button.h in Headers */,
 				C3E8700916EBC8EB00052915 /* ClipRectActor.h in Headers */,
+				923A9E981A1FCBB700A6F08E /* MaskedRenderer.h in Headers */,
 				C3E8700B16EBC8EB00052915 /* Clock.h in Headers */,
 				C3E8700C16EBC8EB00052915 /* closure.h in Headers */,
 				C3E8700D16EBC8EB00052915 /* closure_impl.h in Headers */,
@@ -776,6 +789,7 @@
 				C3E8701516EBC8EB00052915 /* ImageData.h in Headers */,
 				0472E38017F8A2EC0016A832 /* MaskedSprite.h in Headers */,
 				C3E8701716EBC8EB00052915 /* ImageDataOperations.h in Headers */,
+				923A9E9A1A1FCBB700A6F08E /* STDRenderer.h in Headers */,
 				C3E8701816EBC8EB00052915 /* intrusive_ptr.h in Headers */,
 				C3E8701A16EBC8EB00052915 /* logging.h in Headers */,
 				048AD0AB197D2444001963EF /* TextField.h in Headers */,
@@ -960,10 +974,12 @@
 				C3E8705316EBC8EB00052915 /* PointerState.cpp in Sources */,
 				0472E35717F8A1A80016A832 /* file.cpp in Sources */,
 				C3E8705516EBC8EB00052915 /* ProgressBar.cpp in Sources */,
+				923A9E991A1FCBB700A6F08E /* STDRenderer.cpp in Sources */,
 				C3E8705816EBC8EB00052915 /* pugixml.cpp in Sources */,
 				C3E8705C16EBC8EB00052915 /* ResAnim.cpp in Sources */,
 				C3E8705E16EBC8EB00052915 /* ResAtlas.cpp in Sources */,
 				C3E8706016EBC8EB00052915 /* ResBuffer.cpp in Sources */,
+				923A9E971A1FCBB700A6F08E /* MaskedRenderer.cpp in Sources */,
 				C3E8706216EBC8EB00052915 /* ResFont.cpp in Sources */,
 				C3E8706416EBC8EB00052915 /* ResFontBM.cpp in Sources */,
 				C3E8706616EBC8EB00052915 /* Resource.cpp in Sources */,

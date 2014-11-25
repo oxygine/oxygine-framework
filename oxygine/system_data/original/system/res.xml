@@ -9,6 +9,7 @@
 		<image file="checker.png"/>
 		<image file="remove.png"/>
 		<image file="images.png"/>
+		<image file="logo.png"/>
 	</atlas>
 	
 	<set path = "system/fonts" />

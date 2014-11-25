@@ -201,6 +201,10 @@
 		04B3A72018A6594D004C67E3 /* InputText.h in Headers */ = {isa = PBXBuildFile; fileRef = 04B3A71E18A6594D004C67E3 /* InputText.h */; };
 		92214D5E19F149BC00A4459A /* Polygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92214D5C19F149BC00A4459A /* Polygon.cpp */; };
 		92214D5F19F149BC00A4459A /* Polygon.h in Headers */ = {isa = PBXBuildFile; fileRef = 92214D5D19F149BC00A4459A /* Polygon.h */; };
+		923A9E8B1A1FCA3500A6F08E /* STDRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 923A9E891A1FCA3500A6F08E /* STDRenderer.cpp */; };
+		923A9E8C1A1FCA3500A6F08E /* STDRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 923A9E8A1A1FCA3500A6F08E /* STDRenderer.h */; };
+		923A9E8F1A1FCA6600A6F08E /* MaskedRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 923A9E8D1A1FCA6600A6F08E /* MaskedRenderer.cpp */; };
+		923A9E901A1FCA6600A6F08E /* MaskedRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 923A9E8E1A1FCA6600A6F08E /* MaskedRenderer.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -407,6 +411,10 @@
 		04B3A71E18A6594D004C67E3 /* InputText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InputText.h; path = ../../../src/InputText.h; sourceTree = "<group>"; };
 		92214D5C19F149BC00A4459A /* Polygon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Polygon.cpp; path = ../../../src/Polygon.cpp; sourceTree = "<group>"; };
 		92214D5D19F149BC00A4459A /* Polygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Polygon.h; path = ../../../src/Polygon.h; sourceTree = "<group>"; };
+		923A9E891A1FCA3500A6F08E /* STDRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = STDRenderer.cpp; path = ../../../src/STDRenderer.cpp; sourceTree = "<group>"; };
+		923A9E8A1A1FCA3500A6F08E /* STDRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STDRenderer.h; path = ../../../src/STDRenderer.h; sourceTree = "<group>"; };
+		923A9E8D1A1FCA6600A6F08E /* MaskedRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MaskedRenderer.cpp; path = ../../../src/MaskedRenderer.cpp; sourceTree = "<group>"; };
+		923A9E8E1A1FCA6600A6F08E /* MaskedRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MaskedRenderer.h; path = ../../../src/MaskedRenderer.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -439,6 +447,10 @@
 		049B55901871F21000EF3C66 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				923A9E8D1A1FCA6600A6F08E /* MaskedRenderer.cpp */,
+				923A9E8E1A1FCA6600A6F08E /* MaskedRenderer.h */,
+				923A9E891A1FCA3500A6F08E /* STDRenderer.cpp */,
+				923A9E8A1A1FCA3500A6F08E /* STDRenderer.h */,
 				92214D5C19F149BC00A4459A /* Polygon.cpp */,
 				92214D5D19F149BC00A4459A /* Polygon.h */,
 				048AD0CF19B1FE96001963EF /* Stage.cpp */,
@@ -767,6 +779,7 @@
 				049B56C31871F21E00EF3C66 /* TreeInspector.h in Headers */,
 				049B57001871F21E00EF3C66 /* Resource.h in Headers */,
 				049B56EC1871F21E00EF3C66 /* PointerState.h in Headers */,
+				923A9E8C1A1FCA3500A6F08E /* STDRenderer.h in Headers */,
 				049B57061871F21E00EF3C66 /* RootActor.h in Headers */,
 				049B56B71871F21E00EF3C66 /* VertexDeclaration.h in Headers */,
 				049B56B11871F21E00EF3C66 /* Texture.h in Headers */,
@@ -797,6 +810,7 @@
 				049B570E1871F21E00EF3C66 /* Node.h in Headers */,
 				049B57161871F21E00EF3C66 /* UpdateState.h in Headers */,
 				049B57041871F21E00EF3C66 /* ResStarlingAtlas.h in Headers */,
+				923A9E901A1FCA6600A6F08E /* MaskedRenderer.h in Headers */,
 				049B56DB1871F21E00EF3C66 /* ScalarMath.h in Headers */,
 				049B56A01871F21E00EF3C66 /* oxygine.h in Headers */,
 				049B56A71871F21E00EF3C66 /* ShaderProgram.h in Headers */,
@@ -952,6 +966,7 @@
 				049B56A51871F21E00EF3C66 /* Restorable.cpp in Sources */,
 				049B56F01871F21E00EF3C66 /* pugixml.cpp in Sources */,
 				049B56B81871F21E00EF3C66 /* VideoDriver.cpp in Sources */,
+				923A9E8B1A1FCA3500A6F08E /* STDRenderer.cpp in Sources */,
 				049B56F51871F21E00EF3C66 /* ResAnim.cpp in Sources */,
 				049B56791871F21E00EF3C66 /* file.cpp in Sources */,
 				049B566B1871F21E00EF3C66 /* Box9Sprite.cpp in Sources */,
@@ -974,6 +989,7 @@
 				049B56E31871F21E00EF3C66 /* ioapi_mem.c in Sources */,
 				049B56C81871F21E00EF3C66 /* TreeInspectorPreview.cpp in Sources */,
 				049B569F1871F21E00EF3C66 /* oxygine.cpp in Sources */,
+				923A9E8F1A1FCA6600A6F08E /* MaskedRenderer.cpp in Sources */,
 				049B570F1871F21E00EF3C66 /* TextBuilder.cpp in Sources */,
 				049B56711871F21E00EF3C66 /* Clock.cpp in Sources */,
 				049B56BE1871F21E00EF3C66 /* DeveloperMenu.cpp in Sources */,

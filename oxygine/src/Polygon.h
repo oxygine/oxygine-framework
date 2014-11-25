@@ -34,9 +34,9 @@ namespace oxygine
 	protected:		
 		void doRender(const RenderState &rs);
 
+		const VertexDeclaration *_vdecl;
 		bool _own;
 		const unsigned char *_verticesData;
 		int _verticesSize;
-		int _bformat;
 	};
 }

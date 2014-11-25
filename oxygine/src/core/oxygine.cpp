@@ -75,12 +75,14 @@ extern "C"
 #define HANDLE_FOCUS_LOST 0
 #endif
 
+#define LOST_RESET_CONTEXT 0
+
 
 namespace oxygine
 {
 	namespace file
 	{
-		void init();
+		void init(const char *company, const char *app);
 	}
 
 
@@ -254,7 +256,9 @@ namespace oxygine
 	{
 		void focusLost()
 		{			
-			return;
+			if (!LOST_RESET_CONTEXT)
+				return;
+
 #if OXYGINE_SDL
 			log::messageln("focus lost");
 			SDL_GL_DeleteContext(_context);
@@ -263,9 +267,11 @@ namespace oxygine
 			
 		}
 
-		void lostContext()
+		void focusAcquired()
 		{
-			return;
+			if (!LOST_RESET_CONTEXT)
+				return;
+
 #if OXYGINE_SDL			
 			log::messageln("lost context");			
 			if(!_context)
@@ -275,6 +281,8 @@ namespace oxygine
 			}
 #endif			
 		}
+
+		//int eventsFilter(void *, SDL_Event *e);
 
 		void init(init_desc *desc_ptr)
 		{
@@ -320,9 +328,6 @@ namespace oxygine
 			s3eDeviceRegister(S3E_DEVICE_PAUSE, applicationPause, 0);
 	#endif
 	
-	#if __FLASHPLAYER__
-	#endif
-
 	#if EMSCRIPTEN
 			log::messageln("EMSCRIPTEN build");
 
@@ -340,75 +345,7 @@ namespace oxygine
 			SDL_Surface *screen;
 			screen = SDL_SetVideoMode(desc.w, desc.h, 32, SDL_OPENGL); 
 			_displaySize = Point(desc.w, desc.h);
-			/*
-
-
-			EGLConfig			eglConfig = 0;
-
-			EGLContext			eglContext = 0;
-			NativeWindowType	eglWindow = 0;
-			EGLint				pi32ConfigAttribs[128];
-
-#define CHECK_EGL_ERROR() {int v = eglGetError(); if (v != EGL_SUCCESS) log::error("egl error %d", v);}
-
-			eglDisplay = eglGetDisplay((NativeDisplayType)0);
-
-			CHECK_EGL_ERROR();
-
 			
-
-			CHECK_EGL_ERROR();
-
-			EGLint iMajorVersion = 2 , iMinorVersion = 1;
-			if (!eglInitialize(eglDisplay, &iMajorVersion, &iMinorVersion))
-			{
-				log::error("eglInitialize failed");
-			}
-			
-			CHECK_EGL_ERROR();
-			
-			bool mode24bpp = desc.mode24bpp;
-			int i = 0;
-			
-			pi32ConfigAttribs[i++] = EGL_RED_SIZE;
-			pi32ConfigAttribs[i++] = mode24bpp ? 8 : 5;
-			pi32ConfigAttribs[i++] = EGL_GREEN_SIZE;
-			pi32ConfigAttribs[i++] = mode24bpp ? 8 : 6;
-			pi32ConfigAttribs[i++] = EGL_BLUE_SIZE;
-			pi32ConfigAttribs[i++] = mode24bpp ? 8 : 5;
-			pi32ConfigAttribs[i++] = EGL_ALPHA_SIZE;
-			pi32ConfigAttribs[i++] = 0;
-			pi32ConfigAttribs[i++] = EGL_SURFACE_TYPE;
-			pi32ConfigAttribs[i++] = EGL_WINDOW_BIT;			
-			pi32ConfigAttribs[i++] = EGL_NONE;			
-			
-
-
-			EGLint iConfigs;
-			if (!eglChooseConfig(eglDisplay, pi32ConfigAttribs, &eglConfig, 1, &iConfigs) || (iConfigs != 1))
-			{
-				log::error("eglChooseConfig failed");
-			}
-
-			CHECK_EGL_ERROR();
-
-			eglSurface = eglCreateWindowSurface(eglDisplay, eglConfig, eglWindow, NULL);
-
-			if (eglSurface == EGL_NO_SURFACE)
-			{
-				eglGetError(); // Clear error
-				eglSurface = eglCreateWindowSurface(eglDisplay, eglConfig, NULL, NULL);
-			}
-
-			CHECK_EGL_ERROR();
-			int attrs[] = {EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE};
-			eglContext = eglCreateContext(eglDisplay, eglConfig, NULL, attrs);
-			eglMakeCurrent(eglDisplay, eglSurface, eglSurface, eglContext);
-			CHECK_EGL_ERROR();
-
-			checkGLError();
-			log::messageln("egl initialized");
-			*/
 
 	#endif
 		
@@ -468,6 +405,8 @@ namespace oxygine
             }
 
 			SDL_GL_SetSwapInterval(desc.vsync ? 1 : 0);
+
+			//SDL_SetEventFilter(eventsFilter, 0);
 			
 	#else
 
@@ -533,15 +472,33 @@ namespace oxygine
 
 	#endif
 
-            file::init();
+            file::init(desc.comnpanyName, desc.appName);
 
 			init2();			
 		}
 
+		/*
+		int eventsFilter(void *, SDL_Event *e)
+		{
+			log::messageln("%x", (int)(e->type));
+			switch (e->type)
+			{
+			case SDL_APP_WILLENTERBACKGROUND:
+			{
+				int q = 0;
+			}
+				break;
+			default:
+				break;
+			}
+			return 1;
+		}
+		*/
+
 		void init2()
 		{
 #ifdef OXYGINE_SDL
-			initGLExtensions(SDL_GL_GetProcAddress);
+			int missing = initGLExtensions(SDL_GL_GetProcAddress);
 #endif
 
 			Point size = getDisplaySize();
@@ -559,18 +516,9 @@ namespace oxygine
 				OX_ASSERT(!"gl version should be 2");
 				//IVideoDriver::instance = new VideoDriverGLES11();			
 			}
-
-#elif __FLASHPLAYER__
-			{
-				VideoDriverStage3D *vd = new VideoDriverStage3D();
-				vd->init();
-				IVideoDriver::instance = vd;
-			}
-
-			//IVideoDriver::instance = new VideoDriverNull();
-#else
-			IVideoDriver::instance = new VideoDriverGLES20();			
 #endif
+
+			IVideoDriver::instance = new VideoDriverGLES20();			
 
 
 			checkGLError();
@@ -590,8 +538,6 @@ namespace oxygine
 
 			checkGLError();
 			log::messageln("oxygine initialized");
-
-
 		}
 
 #if OXYGINE_SDL || EMSCRIPTEN
@@ -629,7 +575,7 @@ namespace oxygine
 			return _window;
 		}
 #endif
-
+		
 		void reset()
 		{
 			log::messageln("core::reset()");
@@ -649,9 +595,18 @@ namespace oxygine
 		}
 
 		
+		bool beginRendering()
+		{
+			return Renderer::isReady();
+		}
 
 		void swapDisplayBuffers()
 		{
+#if OXYGINE_SDL
+			if (!_context)
+				return;
+#endif
+
             checkGLError();
 #if __S3E__
 			IwGLSwapBuffers();
@@ -720,7 +675,7 @@ namespace oxygine
 				{
 				case SDL_QUIT:
 					done = true;
-					break;
+					break;				
 				case SDL_WINDOWEVENT:
 					{					
 						/*
@@ -744,15 +699,17 @@ namespace oxygine
 						{
 							focus = newFocus;
 #if HANDLE_FOCUS_LOST
-							if (focus)							
-								lostContext();
-							else
-								focusLost();
+
+							if (focus)
+								focusAcquired();
 
 							log::messageln("focus: %d", (int)focus);
 							Event ev(focus ? Stage::ACTIVATE : Stage::DEACTIVATE);
 							if (getStage())
 								getStage()->dispatchEvent(&ev);
+
+							if (!focus)
+								focusLost();							
 #endif							
 						}
 						//log::messageln("SDL_SYSWMEVENT %d", (int)event.window.event);
@@ -827,18 +784,6 @@ namespace oxygine
 
 			log::warning("update not implemented");
 			return true;
-			/*
-#if __FLASHPLAYER__
-			//log::messageln("update...");
-			//SDL_Delay(3);
-			SDL_Delay(3);
-			//log::messageln("update...2");
-			((VideoDriverStage3D*)IVideoDriver::instance)->present();
-			avm2_ui_thunk(handleFrame, NULL);	
-			//log::messageln("update...3");
-			return false;
-#endif
-			*/
 		}
 
 		void release()
@@ -934,9 +879,6 @@ namespace oxygine
 			return _displaySize;
 	#endif
 
-	#if	__FLASHPLAYER__
-			return Point(800, 600);
-	#endif
 			log::warning("getDisplaySize not implemented");
 			return Point(0, 0);
 		}

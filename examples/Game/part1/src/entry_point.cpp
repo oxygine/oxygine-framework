@@ -4,63 +4,30 @@ This file has Oxygine initialization stuff.
 If you just started you don't need to understand it exactly you could check it later.
 You could start from example.cpp and example.h it has main functions being called from there
 */
-#include <stdio.h>
-#include "core/Renderer.h"
 #include "Stage.h"
 #include "DebugActor.h"
-
 #include "example.h"
-
-
 
 using namespace oxygine;
 
-Renderer renderer;
-Rect viewport;
-
-
-class ExampleStage : public Stage
-{
-public:
-	ExampleStage()
-	{
-		//each mobile application should handle focus lost
-		//and free/restore GPU resources
-		addEventListener(Stage::DEACTIVATE, CLOSURE(this, &ExampleStage::onDeactivate));
-		addEventListener(Stage::ACTIVATE, CLOSURE(this, &ExampleStage::onActivate));
-	}
-
-	void onDeactivate(Event *)
-	{
-		core::reset();
-	}
-
-	void onActivate(Event *)
-	{
-		core::restore();
-	}
-};
 
 //called each frame
 int mainloop()
 {
 	example_update();
 	//update our stage
-	//Actor::update would be called also for children
+	//update all actors. Actor::update would be called also for all children
 	getStage()->update();
-
-	Color clear(33, 33, 33, 255);
-	//start rendering and clear viewport
-	if (renderer.begin(0, viewport, &clear))
-	{
-		//begin rendering from Stage.
-		getStage()->render(renderer);
-		//rendering done
-		renderer.end();
+	
+	if (core::beginRendering())
+	{		
+		Color clearColor(32, 32, 32, 255);
+		Rect viewport(Point(0, 0), core::getDisplaySize());
+		//render all actors. Actor::render would be called also for all children
+		getStage()->render(clearColor, viewport);
 
 		core::swapDisplayBuffers();
 	}
-
 
 	//update internal components
 	//all input events would be passed to Stage::instance.handleEvent
@@ -75,7 +42,7 @@ void run()
 {
 	ObjectBase::__startTracingLeaks();
 
-	//initialize oxygine's internal stuff
+	//initialize Oxygine's internal stuff
 	core::init_desc desc;
 
 #if OXYGINE_SDL || OXYGINE_EMSCRIPTEN
@@ -91,30 +58,13 @@ void run()
 
 
 	//create Stage. Stage is a root node
-	Stage::instance = new ExampleStage();
+	Stage::instance = new Stage(true);
 	Point size = core::getDisplaySize();
-	getStage()->init(size, size);
+	getStage()->setSize(size);
 
-	//DebugActor is a helper node it shows FPS and memory usage and other useful stuff
-	DebugActor::initialize();
-
-	//create and add new DebugActor to stage as child
-	getStage()->addChild(new DebugActor());
-
-	viewport = Rect(0, 0, size.x, size.y);
-
-	Matrix proj;
-	//initialize projection matrix
-	Matrix::orthoLH(proj, (float)size.x, (float)size.y, 0, 1);
-
-	//Renderer is class helper for rendering primitives and batching them
-	//Renderer is lightweight class you could create it many of times
-	renderer.setDriver(IVideoDriver::instance);
-
-	//initialization view and projection matrix
-	//where Left Top corner is (0, 0), and right bottom is (width, height)
-	renderer.initCoordinateSystem(size.x, size.y);
-
+	//DebugActor is a helper actor node. It shows FPS, memory usage and other useful stuff
+	DebugActor::show();
+		
 	//initialize this example stuff. see example.cpp
 	example_init();
 
@@ -134,7 +84,7 @@ void run()
 		if (done)
 			break;
 	}
-	//so user want to leave application...
+	//user wants to leave application...
 
 	//lets dump all created objects into log
 	//all created and not freed resources would be displayed
@@ -149,7 +99,7 @@ void run()
 	example_destroy();
 
 
-	renderer.cleanup();
+	//renderer.cleanup();
 
 	/**releases all internal components and Stage*/
 	core::release();

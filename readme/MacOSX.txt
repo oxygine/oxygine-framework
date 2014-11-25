@@ -2,7 +2,7 @@
 2a. Examples folder have configured MacOSX projects (exception is demobox2d)
 =================================================================================================
 - goto oxygine-framework\examples and choose any example. Lets call it "Demo" 
-- open xcode 5 project from:
+- open xcode project from:
   examples\Demo\proj.macosx\
 - select correct scheme: demo_macosx->mac 32 bit
 - build and run!

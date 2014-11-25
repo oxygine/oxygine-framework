@@ -1,28 +1,30 @@
 #include <string>
 #include "STDFileSystem.h"
 #include "file.h"
-#include "oxygine.h"
+//#include "oxygine.h"
 #include "log.h"
 #include "utils/stringUtils.h"
 #include "Object.h"
-
-#if defined(__APPLE__) || defined(ANDROID) || defined(__unix__)
-#include <unistd.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#endif
 
 #ifdef __S3E__
 #include <s3eFile.h>
 #else
 #if WIN32
-#include <direct.h>
-#else
-#include "SDL_system.h"
-#endif
+ #include <direct.h>
+ #else
+ #include "SDL_system.h"
+ #endif
 #endif
 
 
+#ifdef OXYGINE_SDL
+#  include "SDL_filesystem.h"
+#elif WIN32
+#  include <shlwapi.h>
+#  include <shlobj.h>
+#endif
+
+#include <sys/stat.h>
 
 //#define LOGD(...) oxygine::log::messageln(__VA_ARGS__)
 #define LOGD(...) 
@@ -37,24 +39,47 @@ namespace oxygine
 		STDFileSystem _nfs(true);
 		STDFileSystem _nfsWrite(false);
 
-		void init()
+		void init(const char *company, const char *app)
 		{
 #ifdef __S3E__
 			_nfs.setPath("rom://");
 			_nfsWrite.setPath("ram://");
-#endif
-
-#ifdef __ANDROID__
+#elif OXYGINE_SDL
+#  ifdef __ANDROID__
 			log::messageln("internal %s", SDL_AndroidGetInternalStoragePath());
 			log::messageln("external %s", SDL_AndroidGetExternalStoragePath());
 			_nfsWrite.setPath(SDL_AndroidGetInternalStoragePath());
-#endif // __ANDROID__
-
+#  else
+			if (company && app && *company && *app)
+			{
+				char *base_path = SDL_GetPrefPath(company, app);
+				if (base_path)
+				{
+					_nfsWrite.setPath(base_path);
+					SDL_free(base_path);
+				}
+			}
+			else
+			{
 #ifdef WIN32
-			_mkdir("../data-ram/");
-			_nfsWrite.setPath("../data-ram/");			
+				_mkdir("../data-ram/");
+#else
+                mkdir("../data-ram/", ACCESSPERMS);
 #endif
-
+				_nfsWrite.setPath("../data-ram/");
+			}
+#  endif
+#elif WIN32
+			char szPath[MAX_PATH];
+			// Get path for each computer, non-user specific and non-roaming data.
+			if (SHGetFolderPathA(NULL, CSIDL_COMMON_APPDATA, NULL, 0, szPath) == ERROR_SUCCESS)
+			{
+				PathAppendA(szPath, (std::string("\\") + oxygine::core::desc.c + "\\" + oxygine::core::desc.fsAppName + "\\").c_str());
+				if (SHCreateDirectoryExA(NULL, szPath, NULL) == ERROR_SUCCESS) { 
+					_nfsWrite.setPath(szPath);
+				}
+			}
+#endif
 			_nfs.mount(&_nfsWrite);
 		}
 
@@ -201,16 +226,8 @@ namespace oxygine
 
 		void deleteDirectory(const char *path)
 		{
-#if __S3E__
-			s3eFileDeleteDirectory(path);
-#else
-#ifdef WIN32
-			_rmdir(path);
-#else
-			rmdir(path);
-#endif
-#endif
-		}		
+			_nfs.deleteDirectory(path);
+		}
 
 		file::STDFileSystem &fs()
 		{

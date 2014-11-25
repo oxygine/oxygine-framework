@@ -1,5 +1,7 @@
 #include "MaskedSprite.h"
 #include "RenderState.h"
+#include "MaskedRenderer.h"
+
 namespace oxygine
 {
 	spSprite MaskedSprite::getMask() const
@@ -14,7 +16,7 @@ namespace oxygine
 
 	void MaskedSprite::render(const RenderState &parentRS)
 	{
-		if(_mask)
+		if (_mask)
 		{
 			Renderer::transform t = getGlobalTransform(_mask);
 			RectF maskDest = _mask->getDestRect();
@@ -22,15 +24,18 @@ namespace oxygine
 			//maskDest
 
 			const Diffuse &df = _mask->getAnimFrame().getDiffuse();
-			if (df.alpha)
-				parentRS.renderer->setMask(df.alpha, maskSrc, maskDest, t, true);
-			else
-				parentRS.renderer->setMask(df.base, maskSrc, maskDest, t, false);
 
+
+			MaskedRenderer mr(df.alpha ? df.alpha : df.base, maskSrc, maskDest, t, df.alpha ? true : false);
+			RenderState rs = parentRS;
+			rs.renderer = &mr;
+			mr.begin(parentRS.renderer);
+			Sprite::render(rs);
+			mr.end();
 		}
-
-		Sprite::render(parentRS);
-
-		parentRS.renderer->removeMask();
+		else
+		{
+			Sprite::render(parentRS);
+		}
 	}
 }

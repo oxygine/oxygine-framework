@@ -141,6 +141,7 @@
     <ClCompile Include="..\..\src\Font.cpp" />
     <ClCompile Include="..\..\src\Input.cpp" />
     <ClCompile Include="..\..\src\InputText.cpp" />
+    <ClCompile Include="..\..\src\MaskedRenderer.cpp" />
     <ClCompile Include="..\..\src\MaskedSprite.cpp" />
     <ClCompile Include="..\..\src\MemoryTexture.cpp" />
     <ClCompile Include="..\..\src\minizip\ioapi.c" />
@@ -163,6 +164,7 @@
     <ClCompile Include="..\..\src\Serialize.cpp" />
     <ClCompile Include="..\..\src\SlidingActor.cpp" />
     <ClCompile Include="..\..\src\Sprite.cpp" />
+    <ClCompile Include="..\..\src\STDRenderer.cpp" />
     <ClCompile Include="..\..\src\TextField.cpp" />
     <ClCompile Include="..\..\src\text_utils\Aligner.cpp" />
     <ClCompile Include="..\..\src\text_utils\Node.cpp" />
@@ -237,6 +239,7 @@
     <ClInclude Include="..\..\src\InitActor.h" />
     <ClInclude Include="..\..\src\Input.h" />
     <ClInclude Include="..\..\src\InputText.h" />
+    <ClInclude Include="..\..\src\MaskedRenderer.h" />
     <ClInclude Include="..\..\src\MaskedSprite.h" />
     <ClInclude Include="..\..\src\MemoryTexture.h" />
     <ClInclude Include="..\..\src\minizip\ioapi.h" />
@@ -261,6 +264,7 @@
     <ClInclude Include="..\..\src\Serialize.h" />
     <ClInclude Include="..\..\src\SlidingActor.h" />
     <ClInclude Include="..\..\src\Sprite.h" />
+    <ClInclude Include="..\..\src\STDRenderer.h" />
     <ClInclude Include="..\..\src\TextActor.h" />
     <ClInclude Include="..\..\src\TextField.h" />
     <ClInclude Include="..\..\src\TextStyle.h" />

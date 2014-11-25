@@ -24,6 +24,14 @@ namespace oxygine
 		*/
 		int yield();
 
+		// schedule a coroutine to be resumed later
+		void schedule(coroutine::handle fiber);
+
+		// resume all scheduled coroutines
+		void resumeAll();
+
+		// wait for variable to become equal to value
+		void waitValue(bool &variable, bool value);
 		void waitTween(spTween);
 		void waitTime(spClock clock, timeMS time);
 		void waitTime(timeMS time);

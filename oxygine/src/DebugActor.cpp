@@ -55,6 +55,15 @@ namespace oxygine
 		//log::messageln("initialized DebugActor");
 	}
 
+	void DebugActor::show()
+	{
+		initialize();
+		if (!DebugActor::instance)
+			DebugActor::instance = new DebugActor;
+
+		getStage()->addChild(DebugActor::instance);
+	}
+
 	void DebugActor::release()
 	{
 		instance = 0;

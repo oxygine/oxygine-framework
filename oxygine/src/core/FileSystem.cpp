@@ -100,6 +100,23 @@ namespace oxygine
 			return _makeDirectory(dest);
 		}
 
+		FileSystem::status FileSystem::deleteDirectory(const char *dest)
+		{
+			for (filesystems::reverse_iterator i = _filesystems.rbegin(); i != _filesystems.rend(); ++i) {
+				FileSystem *fs = *i;
+				if (fs->deleteDirectory(dest) == status_ok)
+					return status_ok;
+			}
+
+			if (_readonly)
+				return status_error;
+
+			if (!starts_with(dest, _prefix))
+				return status_error;
+
+			return _deleteDirectory(dest);
+		}
+
 		bool FileSystem::isExistsHere(const char *file)
 		{
 			return _isExists(file);

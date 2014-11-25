@@ -1,14 +1,14 @@
 #include "coroutines.h"
-#include "Tweener.h"
-#include "Clock.h"
 
 #if __S3E__
+#define OXYGINE_COROUTINES
 #include "IwFibre.h"
 #elif OXYGINE_SDL
-//#include "greenlet.h"
-#define GREENLETS 0
+#define OXYGINE_COROUTINES
+#define GREENLETS 1
+#include "greenlet.h"
+#else
 #endif
-//#include "greenlet.h"
 
 namespace oxygine
 {
@@ -16,10 +16,22 @@ namespace oxygine
 	{
 		int fiberPassData = 0;
 
+		void init()
+		{
+#if __S3E__
+#elif GREENLETS
+			greenlets_init();
+#else
+#endif
+		}
+
 		handle current()
 		{
 #if __S3E__
 			handle f = (handle)IwFibreGetCurrent();
+			return f;
+#elif GREENLETS
+			handle f = (handle)greenlet_getcurrent();
 			return f;
 #else
 			OX_ASSERT(!"not implemented");
@@ -48,6 +60,8 @@ namespace oxygine
 				resume(fiber, data);
 			IwFibreJoin((IwFibre*)fiber);
 			IwFibreDelete((IwFibre*)fiber);
+#elif GREENLETS
+			greenlet_kill((greenlet*)fiber);
 #else
 			//assert(0);
 #endif
@@ -76,6 +90,16 @@ namespace oxygine
 			}
 
 			return r;
+		}
+
+		bool isdead(handle fiber)
+		{
+#if __S3E__
+			return !IwFibreIsRunning((IwFibre*) fiber);
+#elif GREENLETS
+			return greenlet_isdead((greenlet*) fiber) != 0;
+#else
+#endif
 		}
 	}
 }

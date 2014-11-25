@@ -1,5 +1,5 @@
 #include "blocking.h"
-#include "Button.h"
+//#include "Button.h"
 #include "Tweener.h"
 #include "Stage.h"
 
@@ -11,8 +11,29 @@ namespace oxygine
 {
 	namespace blocking
 	{	
+		std::list<coroutine::handle> blocked;
+
+		void schedule(coroutine::handle fiber)
+		{
+			blocked.push_back(fiber);
+		}
+
+		void resumeAll()
+		{
+			std::list<coroutine::handle> __blocked(blocked);
+			blocked.clear();
+			for (std::list<coroutine::handle>::iterator i = __blocked.begin(); i != __blocked.end(); ++i) {
+				coroutine::handle y = *i;
+				coroutine::resume(y);
+				if (coroutine::isdead(y)) {
+					coroutine::terminate(y);
+				}                
+			}
+		}
+
 		int default_resume()
 		{
+			schedule(coroutine::current());
 			coroutine::resume();
 			return 0;
 		}
@@ -32,6 +53,17 @@ namespace oxygine
 #endif
 			return _mainLoopFunc();
 		}
+
+		void waitValue(bool &variable, bool value)
+		{
+#if OXYGINE_NO_YEILD
+			log::error("%s not supported", __func__);
+			return;
+#endif
+			while (variable != value) {
+				yield();
+			}
+	}
 
 		void waitTween(spTween tween)
 		{		

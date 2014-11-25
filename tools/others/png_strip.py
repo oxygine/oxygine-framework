@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from PIL import Image
+import Image
 import glob
 import argparse
 

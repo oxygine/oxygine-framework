@@ -102,10 +102,16 @@ namespace oxygine
 		float u, v;				
 	};
 
-	struct vertexPCT2T2: public vertexPCT2
-	{	
-		enum { FORMAT = VERTEX_POSITION | VERTEX_COLOR | VERTEX_NUM_TEXCOORDS(2) | VERTEX_TEXCOORD_SIZE(0, 2) | VERTEX_TEXCOORD_SIZE(1, 2)};
-		float u2, v2;				
+	struct vertexPCT2T2 : public vertexPCT2
+	{
+		enum { FORMAT = VERTEX_POSITION | VERTEX_COLOR | VERTEX_NUM_TEXCOORDS(2) | VERTEX_TEXCOORD_SIZE(0, 2) | VERTEX_TEXCOORD_SIZE(1, 2) };
+		float u2, v2;
+	};
+
+	struct vertexPCT2T2T2 : public vertexPCT2T2
+	{
+		enum { FORMAT = VERTEX_POSITION | VERTEX_COLOR | VERTEX_NUM_TEXCOORDS(3) | VERTEX_TEXCOORD_SIZE(0, 2) | VERTEX_TEXCOORD_SIZE(1, 2) | VERTEX_TEXCOORD_SIZE(2, 2) };
+		float u3, v3;
 	};
 
 #define VERTEX_PCT2 vertexPCT2::FORMAT

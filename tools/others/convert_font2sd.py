@@ -1,4 +1,4 @@
-from PIL import Image
+import Image
 from xml.dom import minidom
 import os
 import math

@@ -21,6 +21,7 @@ namespace oxygine
 			status _deleteFile(const char* file);
 			status _renameFile(const char* src, const char *dest);
 			status _makeDirectory(const char* path);
+			status _deleteDirectory(const char* path);
 
 			bool _isExists(const char *file);
 		};

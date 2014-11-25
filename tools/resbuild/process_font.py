@@ -1,4 +1,4 @@
-from PIL import Image
+import Image
 import os
 from xml.dom import minidom
 import tempfile

@@ -1,8 +1,9 @@
 #!/usr/bin/python
 
 import cStringIO
-lines = open("../../../SDL/include/SDL_opengl.h").readlines()
-funcs = ["glUseProgram", 
+lines = open("../../../SDL/include/SDL_opengl_glext.h").readlines()
+funcs = ["glShaderSource", 
+         "glUseProgram", 
          "glVertexAttribPointer", 
          "glActiveTexture", 
          "glEnableVertexAttribArray", 
@@ -12,12 +13,13 @@ funcs = ["glUseProgram",
          "glGetShaderInfoLog", 
          "glCreateShader", 
          "glCreateProgram", 
-         "glAttachShader", 
-         "glShaderSource", 
+         "glAttachShader",
          "glCompileShader", 
          "glBindAttribLocation", 
          "glLinkProgram", 
          "glUniform1i", 
+         "glUniform2fv",
+         "glUniform3fv",
          "glUniform4fv", 
          "glUniform1f", 
          "glUniformMatrix4fv", 
@@ -39,7 +41,23 @@ funcs = ["glUseProgram",
 #PFNGLDELETEPROGRAMPROC
 
 base = cStringIO.StringIO()
+defl = cStringIO.StringIO()
 init = cStringIO.StringIO()
+
+
+
+init.write("""
+void initGLExtensions(myGetProcAdress func)
+{
+    if (_glUseProgram)
+        return;
+
+""");
+
+base.write("""
+extern "C" 
+{
+""")
 
 def get(name):
 	shname = name[2:len(name)]
@@ -53,10 +71,14 @@ def get(name):
 				st = ""				
 				
 			st = st[0:-2]
+
 			
-			base.write("%s _%s = 0;\n" % (proc, name))
+			base.write("%s _%s = def_%s;\n" % (proc, name, name))
 			base.write(st + "\n")
+			stf = st.replace(name, "def_" + name)
+			defl.write(stf + "\n")
 			base.write("{\n")
+			defl.write("{")
 			
 			args = st[st.find("(") + 1:st.find(")")]
 			args = args.split(",")
@@ -72,6 +94,7 @@ def get(name):
 			base.write("\t")
 			if not st.startswith("GLAPI void"):
 				base.write("return ");				
+				defl.write("return 0;")
 			base.write("_%s(" %(name, ))
 			
 			d = ""
@@ -83,13 +106,21 @@ def get(name):
 			base.write(d)				
 
 			base.write("}\n")			
-			init.write("_%s = (%s)SDL_GL_GetProcAddress(\"%s\");\n" % (name, proc, name))
+			defl.write("}\n")			
+
+			init.write("GETFUNC(_%s, def_%s, %s, \"%s\");\n" % (name, name, proc, name))
 			
 			#st.replace(name, )
 			
 for f in funcs:
 	get(f)
+
+base.write("""
+}
+""")
 	
-	
+print defl.getvalue()
 print base.getvalue()
 print init.getvalue()
+
+open("res.cpp", "w").write(defl.getvalue() + base.getvalue() + init.getvalue())

@@ -88,4 +88,5 @@ namespace oxygine {void checkGLError();}
 //#define CHECKGL() {}
 
 typedef void*  (*myGetProcAdress)(const char *);
-void initGLExtensions(myGetProcAdress);
+/**returns number of missing functions/extensions*/
+int initGLExtensions(myGetProcAdress);

@@ -988,7 +988,7 @@ namespace oxygine
 				return false;
 		}
 
-		rs.renderer->setTransform(rs.transform);
+		//rs.renderer->setTransform(rs.transform);
 
 		return true;
 	}

@@ -36,6 +36,11 @@ namespace oxygine
 		//_restoring = false;
 	}
 
+	bool Restorable::isRestored()
+	{
+		return _restorable.empty();
+	}
+
 	void Restorable::releaseAll()
 	{
 		restorable rs;

@@ -17,6 +17,7 @@ public:
 	MainActor()
 	{	
 		//create Button actor
+		
 		spButton button = new Button();
 		//add it as child to current actor
 		addChild(button);
@@ -27,6 +28,7 @@ public:
 		//centered button at screen	
 		Vector2 pos = getStage()->getSize()/2 - button->getSize()/2;
 		button->setPosition(pos);
+		//button->setAlpha(128);
 		button->setTouchChildrenEnabled(false);
 
 		//handle click to button
@@ -37,9 +39,9 @@ public:
 
 		//create Actor with Text and it to button as child
 		spTextField text = new TextField();
-		text->attachTo(button);
+		text->attachTo(this);
 		//centered in button
-		text->setPosition(button->getSize()/2);
+		text->setPosition(getStage()->getSize()/2);
 
 		//initialize text style
 		//it would be centered and colored
@@ -92,7 +94,7 @@ public:
 		//first, move sprite to dest position
 		tweenQueue->add(Sprite::TweenPosition(destPos), 1500, 1);
 		//then fade it out smoothly
-		tweenQueue->add(Sprite::TweenAlpha(0), 1000, 1);
+		tweenQueue->add(Sprite::TweenAlpha(0), 1000, 100);
 		
 		sprite->addTween(tweenQueue);
 
@@ -104,6 +106,7 @@ public:
 
 void example_preinit()
 {
+	Renderer::setPremultipliedAlphaRender(true);
 }
 
 void example_init()

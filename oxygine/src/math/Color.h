@@ -9,6 +9,7 @@ namespace oxygine
 	public:
 		enum
 		{
+			/**ABGR(LE) colors table*/
 			AliceBlue            = 0xF0F8FFFF,
 			AntiqueWhite         = 0xFAEBD7FF,
 			Aqua                 = 0x00FFFFFF,
@@ -160,20 +161,26 @@ namespace oxygine
 			this->b = b;
 		}
 
-		Color(unsigned int rgba)
+		static Color fromRGBA(unsigned int rgba)
 		{
-			r = rgba >> 24;
-			g = (rgba >> 16) & 0xFF;
-			b = (rgba >> 8) & 0xFF;
-			a = rgba & 0xFF;
+			return Color(rgba & 0xFF, (rgba >> 8) & 0xFF, (rgba >> 16) & 0xFF, rgba >> 24);
+		}
+
+		/**use it to initialize color from table (ABGR)*/
+		Color(unsigned int abgr)
+		{
+			r = abgr >> 24;
+			g = (abgr >> 16) & 0xFF;
+			b = (abgr >> 8) & 0xFF;
+			a = abgr & 0xFF;
 		}
 
 		/**initializes color by RGBA and replaces alpha*/
-		Color(unsigned int rgba, unsigned char a_)
+		Color(unsigned int abgr, unsigned char a_)
 		{
-			r = rgba >> 24;
-			g = (rgba >> 16) & 0xFF;
-			b = (rgba >> 8) & 0xFF;
+			r = abgr >> 24;
+			g = (abgr >> 16) & 0xFF;
+			b = (abgr >> 8) & 0xFF;
 			a = a_;
 		}
 

@@ -4,6 +4,7 @@
 #include "TextField.h"
 #include "res/Resources.h"
 #include "RenderState.h"
+#include "STDRenderer.h"
 
 namespace oxygine
 {
@@ -38,12 +39,12 @@ namespace oxygine
 	void TreeInspectorPreview::init(spActor item)
 	{
 		//_item = item;
-		Renderer r(&_videoCache);
+		STDRenderer r(&_videoCache);
 		RenderState rs;
 		rs.renderer = &r;
 		rs.transform = item->getTransform();
-		r.begin(0, Rect(0,0,0,0), 0);
-		r.setTransform(rs.transform);
+		r.begin(0);
+		//r.setTransform(rs.transform);
 		item->doRender(rs);
 		r.end();
 		r.drawBatch();

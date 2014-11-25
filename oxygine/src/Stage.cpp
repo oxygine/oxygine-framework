@@ -2,24 +2,43 @@
 #include "core/Renderer.h"
 #include "math/Rect.h"
 #include "RenderState.h"
+#include "STDRenderer.h"
 #include <sstream>
 
 namespace oxygine
 {
 	spStage Stage::instance;
 
-	Stage::Stage():_statUpdate(0), _statRender(0), _clipOuter(false), _viewport(0,0,0,0)
+	Stage::Stage(bool autoReset) :_statUpdate(0), _statRender(0), _clipOuter(false), _viewport(0, 0, 0, 0)//, _active(true)
 	{
 		spClock clock = new Clock();
 		setClock(clock);
 		setName("Stage");
 
-		//addEventHandler(new EventHandler());
+		//each mobile application should handle focus lost
+		//and free/restore GPU resources
+		if (autoReset)
+		{
+			addEventListener(Stage::DEACTIVATE, CLOSURE(this, &Stage::onDeactivate));
+			addEventListener(Stage::ACTIVATE, CLOSURE(this, &Stage::onActivate));
+		}
 	}
 
 	Stage::~Stage()
 	{
 
+	}
+	
+	void Stage::onDeactivate(Event *)
+	{
+		//_active = false;
+		core::reset();
+	}
+
+	void Stage::onActivate(Event *)
+	{
+		core::restore();
+		//_active = true;
 	}
 
 	std::string Stage::dump(const dumpOptions &opt) const
@@ -102,6 +121,23 @@ namespace oxygine
 		Actor::render(rs);
 
 		_statRender = getTimeMS() - t;
+	}
+
+	void Stage::render(const Color &clearColor, const Rect &viewport)
+	{
+		//if (!_active)
+		//	return;
+
+		IVideoDriver *driver = IVideoDriver::instance;
+
+		driver->setViewport(viewport);
+		driver->clear(clearColor);
+
+		STDRenderer renderer(driver);
+		renderer.initCoordinateSystem(viewport.getWidth(), viewport.getHeight());
+		renderer.begin(0);
+		render(renderer);
+		renderer.end();
 	}
 
 	void Stage::cleanup()

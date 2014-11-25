@@ -5,12 +5,12 @@
 
 namespace oxygine
 {
-	UberShaderProgram::UberShaderProgram()
+	UberShaderProgramBase::UberShaderProgramBase()
 	{
 
 	}
 
-	void UberShaderProgram::init(const std::vector<unsigned char> &baseShader, const char *prepend, const char *append)		
+	void UberShaderProgramBase::init(const std::vector<unsigned char> &baseShader, const char *prepend, const char *append)		
 	{
 		_data = baseShader;
 
@@ -18,47 +18,28 @@ namespace oxygine
 		_data.insert(_data.end(), append, append + strlen(append));
 		_data.push_back(0);
 
-		reg(CLOSURE(this, &UberShaderProgram::_restore), 0);
+		reg(CLOSURE(this, &UberShaderProgramBase::_restore), 0);
 	}
 
-	void UberShaderProgram::releaseShaders()
-	{
-		for (int i = 0; i < SIZE; ++i)
-		{
-			shader &s = _shaders[i];
-			delete s.program;
-			s.program = 0;
-		}
-	}
-
-	UberShaderProgram::~UberShaderProgram()
+	UberShaderProgramBase::~UberShaderProgramBase()
 	{
 		releaseShaders();
 	}
 
-	void UberShaderProgram::_restore(Restorable *, void*)
+	void UberShaderProgramBase::_restore(Restorable *, void*)
 	{
 
 	}
 
-	void UberShaderProgram::release()
+	void UberShaderProgramBase::release()
 	{
-		for (int i = 0; i < SIZE; ++i)
-		{
-			shader &s = _shaders[i];
-			if (s.program)
-			{
-				delete s.program;
-				s.program = 0;
-			}			
-		}
-
+		releaseShaders();
 		unreg();
 	}
 
-	UberShaderProgram::shader *UberShaderProgram::getShaderProgram(int flags)
+	UberShaderProgramBase::shader *UberShaderProgram::getShaderProgram(int flags)
 	{
-		shader &s = _shaders[flags];
+		shader &s = _shaders[flags];		
 
 		if (!s.program)
 		{
@@ -84,7 +65,6 @@ namespace oxygine
 			if (flags & MASK)
 			{
 				strcat(prepend, "#define MASK\n");
-				bformat = vertexPCT2T2::FORMAT;
 			}
 
 			char *end = prepend + strlen(prepend);
@@ -123,4 +103,15 @@ namespace oxygine
 
 		return &s;
 	}
+
+	void UberShaderProgram::releaseShaders()
+	{
+		for (int i = 0; i < SIZE; ++i)
+		//for (shaders::iterator i = _shaders.begin(); i != _shaders.end(); ++i)
+		{
+			shader &s = _shaders[i];
+			delete s.program;
+			s.program = 0;
+		}
+	}	
 }

@@ -5,6 +5,7 @@
 #include "utils/stringUtils.h"
 #include "RenderState.h"
 #include "AnimationFrame.h"
+#include "STDRenderer.h"
 
 namespace oxygine
 {
@@ -132,10 +133,7 @@ namespace oxygine
 				const Symbol &s = _data[i];
 				if (!s.gl)
 					continue;
-				Diffuse df;
-				df.base = s.gl->texture;
-				dc.renderer->setDiffuse(df);
-				dc.renderer->draw(s.gl->src, s.destRect);
+				dc.renderer->draw(dc.rs->transform, s.gl->texture, dc.color.rgba(), s.gl->src, s.destRect);
 			}
 
 			drawChildren(dc);
@@ -211,6 +209,7 @@ namespace oxygine
 
 		void DivNode::draw(DrawContext &dc)
 		{
+			/*
 			Color prevColor = dc.renderer->getPrimaryColor();
 			
 			Color blendedColor = color;
@@ -219,6 +218,12 @@ namespace oxygine
 			dc.renderer->setPrimaryColor(blendedColor);
 			drawChildren(dc);						
 			dc.renderer->setPrimaryColor(prevColor);
+			*/
+
+			Color prev = dc.color;
+			dc.color = color * dc.primary;
+			drawChildren(dc);
+			dc.color = prev;
 		}
 
 		DivNode::DivNode(const pugi::xml_node &node)

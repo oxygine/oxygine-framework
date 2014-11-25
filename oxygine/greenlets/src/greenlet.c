@@ -492,9 +492,13 @@ gr_param greenlet_switch(greenlet* self, gr_param data)
 
 void greenlet_kill(greenlet *gr)
 {
-
+	kill_greenlet(gr);
 }
 
+int greenlet_isdead(greenlet* self)
+{
+	return (PyGreenlet_STARTED(self) && !PyGreenlet_ACTIVE(self));
+}
 
 int green_setrun(greenlet* self, PyObject* nrun, void* c)
 {

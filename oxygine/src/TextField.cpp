@@ -14,6 +14,8 @@
 #include "text_utils/Node.h"
 #include "Serialize.h"
 
+#include "STDRenderer.h"
+
 namespace oxygine
 {
 	TextField::TextField():
@@ -311,25 +313,27 @@ namespace oxygine
 		if (!root)
 			return;
 
+		if (_text == "Tree Inspector")
+			int q = 0;
+
 		VisualStyle vs = _vstyle;
-		vs.setColor(getColor() * _style.color);
 		vs._apply(rs);
+	
 		
+		
+		//TextRenderer
 		text::DrawContext dc;	
+		Color color = _vstyle.getColor();
+		color.a = (color.a * rs.alpha) / 255;
+		dc.primary = color.premultiplied();
+		dc.color = _style.color * dc.primary;
+
 		dc.rs = &rs;
-		dc.renderer = rs.renderer;
 
-#ifdef SD_FONT
-		dc.renderer->drawBatch();
-		VideoDriverGLES20 *driver = (VideoDriverGLES20 *)dc.renderer->getDriver();
-		driver->setProgramSDF();		
-#endif
+		TextRenderer2 tr(safeCast<STDRenderer*>(rs.renderer));
+		dc.renderer = &tr;
+
 		root->draw(dc);
-
-#ifdef SD_FONT
-		dc.renderer->drawBatch();
-		driver->setProgramMain();
-#endif		
 	}
 
 	void TextField::serialize(serializedata* data)

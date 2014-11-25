@@ -70,6 +70,8 @@ namespace oxygine{namespace log{void error(const char *format, ...);}}
 
 #define OXYGINE_HAS_RESTORE
 
+#define OXYGINE_RENDERER 2
+
 #ifdef __GNUC__
 #define OXYGINE_DEPRECATED __attribute__((deprecated))
 #elif defined(_MSC_VER)
@@ -78,5 +80,13 @@ namespace oxygine{namespace log{void error(const char *format, ...);}}
 #pragma message("WARNING: You need to implement DEPRECATED for this compiler")
 #define OXYGINE_DEPRECATED
 #endif
+
+
+#ifdef _MSC_VER
+#define OVERRIDE override
+#else
+#define OVERRIDE 
+#endif
+
 
 #endif //OXYGINE_INCLUDE

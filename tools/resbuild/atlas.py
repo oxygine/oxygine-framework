@@ -98,6 +98,7 @@ class Atlas:
         self.free_rects = []
         self.free_rects.append(rect(padding, padding, w - padding, h - padding))
         self.nodes = []
+        self.bounds = rect()
         Atlas.n += 1
         
     @staticmethod
@@ -121,7 +122,7 @@ class Atlas:
         
     def save(self):
         #return
-        from PIL import Image, ImageDraw
+        import Image, ImageDraw
         
         #SCALE = 50
         #OFFSET = 5

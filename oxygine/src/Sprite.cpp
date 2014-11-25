@@ -111,7 +111,7 @@ namespace oxygine
 		}		
 
 		_frame = frame;
-		setSize(_frame.getFrameSize());				
+		setSize(_frame.getFrameSize());
 
 		animFrameChanged(_frame);
 	}
@@ -132,6 +132,7 @@ namespace oxygine
 
 	void Sprite::doRender(const RenderState &rs)
 	{		
+		/*
 		_vstyle._apply(rs);
 		const Diffuse &df = _frame.getDiffuse();
 #ifdef EMSCRIPTEN
@@ -145,6 +146,22 @@ namespace oxygine
 			RectF destRect = getDestRect();
 			rs.renderer->draw(_frame.getSrcRect(), destRect);
 		}		
+
+		*/
+		
+		_vstyle._apply(rs);
+		
+		const Diffuse &df = _frame.getDiffuse();
+		const spNativeTexture &base = df.base;
+#ifdef EMSCRIPTEN
+		if (base && base->getHandle())
+#else
+		if (base)
+#endif
+		{
+			rs.renderer->setTexture(df.base, df.alpha, df.premultiplied);
+			rs.renderer->draw(&rs, getColor(), _frame.getSrcRect(), getDestRect());
+		}
 	}
 
 	void Sprite::serialize(serializedata* data)

@@ -116,6 +116,7 @@ class XmlProcessor:
         #self.path_current = ""
 
         self._meta_doc = None
+        self._npot = args.npot
         #self._meta_element = None
         
         self.helper = oxygine_helper.helper(os.path.split(__file__)[0] + "/../../")

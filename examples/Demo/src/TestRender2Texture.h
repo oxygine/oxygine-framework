@@ -48,29 +48,30 @@ public:
 		if (!te->getPointer()->isPressed())
 			return;
 
-		Renderer r;
+		STDRenderer renderer(0);
 		RenderState rs;
-		rs.renderer = &r;
+		rs.renderer = &renderer;
+	
 
+		Rect viewport(Point(0, 0), content->getSize().cast<Point>());
+		renderer.initCoordinateSystem(viewport.getWidth(), viewport.getHeight(), true);
 
-		Point size = content->getSize().cast<Point>();
+		IVideoDriver::instance->setRenderTarget(texture);
+		IVideoDriver::instance->setViewport(viewport);
 
-		r.initCoordinateSystem(size.x, size.y, true);
-		
-		Rect vp(Point(0, 0), size);
+		//begin rendering
+		renderer.begin(0);
 
-		r.begin(texture, vp, 0);
 		ResAnim *brush = resources.getResAnim("brush");
 		AnimationFrame frame = brush->getFrame(0,0);
 		const Diffuse &df = frame.getDiffuse();
-		r.setDiffuse(df);
-		r.setPrimaryColor(color);
-		r.setBlendMode(blend_alpha);
-		float pressure =  1.0f;//te->pressure;
-		//log::messageln("pressure %.2f", pressure);
-		//pressure = pressure * pressure;
-		r.draw(frame.getSrcRect(), 
-			RectF(te->localPosition - Vector2(16, 16) * pressure, Vector2(32, 32)  * pressure));
-		r.end();
+		renderer.setTexture(df.base, 0);
+		renderer.setBlendMode(blend_alpha);
+		RectF destRect(te->localPosition - Vector2(16, 16), Vector2(32, 32));
+		renderer.draw(&rs, color, frame.getSrcRect(), destRect);		
+		renderer.end();
+
+		//restore to default render target
+		IVideoDriver::instance->setRenderTarget(0);
 	}
 };

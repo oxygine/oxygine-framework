@@ -7,20 +7,24 @@ namespace oxygine
 	class Renderer;
 	class Color;
 	class Event;
-
-	typedef unsigned int dumpOptions;
-
-	class RenderState
+	
+	class RState
 	{
 	public:
-		RenderState():renderer(0), alpha(255), clip(0)
+		RState():alpha(255), clip(0)
 		{
 			transform.identity();
 		}
 
 		Renderer::transform transform;
-		Renderer *renderer;
 		unsigned char alpha;
 		const RectF* clip;
+	};
+
+	class RenderState: public RState
+	{
+	public:
+		RenderState():renderer(0){}
+		Renderer *renderer;		
 	};
 }

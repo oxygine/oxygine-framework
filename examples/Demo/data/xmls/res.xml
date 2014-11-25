@@ -18,6 +18,9 @@
 		<image file="slide.png"/>
 		<image file="box9.png"/>
 		<image file="box9a.png"/>
+		<image file="light.png"/>
+		<image file="normal.png"/>
+		<image file="defnormal.png"/>
 	</atlas>
 
 	<atlas>

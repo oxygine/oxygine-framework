@@ -224,10 +224,10 @@ namespace oxygine
 			_getFullPath(file, buff);
 
 #if __S3E__
-			s3eFileDelete(buff);
+			return(s3eFileDelete(buff) == S3E_RESULT_SUCCESS ? status_ok : status_error);
 #else
 			LOGD("STDFileSystem::_deleteFile %s", buff);
-			::remove(buff);
+			return(::remove(buff) != -1 ? status_ok : status_error);
 #endif
 
 			return status_error;
@@ -239,13 +239,27 @@ namespace oxygine
 			_getFullPath(path, buff);
 
 #if __S3E__
-			s3eFileMakeDirectory(buff);
+			return (s3eFileMakeDirectory(buff) == S3E_RESULT_SUCCESS ? status_ok : status_error);
 #elif WIN32
-			_mkdir(buff);
+			return (_mkdir(buff) != -1 ? status_ok : status_error);
 #else
-			mkdir(buff, 0777);
+			return (mkdir(buff, 0777) != -1 ? status_ok : status_error);
 #endif
+			return status_error;
+		}
 
+		FileSystem::status STDFileSystem::_deleteDirectory(const char* path)
+		{
+			char buff[512];
+			_getFullPath(path, buff);
+
+#if __S3E__
+			return (s3eFileDeleteDirectory(buff) == S3E_RESULT_SUCCESS ? status_ok : status_error);
+#elif WIN32
+			return (_mkdir(buff) != -1 ? status_ok : status_error);
+#else
+			return (mkdir(buff, 0777) != -1 ? status_ok : status_error);
+#endif
 			return status_error;
 		}
 
@@ -258,11 +272,10 @@ namespace oxygine
 			_getFullPath(dest, buffDest);
 
 #if __S3E__
-			s3eFileRename(buffSrc, buffDest);
+			return (s3eFileRename(buffSrc, buffDest) == S3E_RESULT_SUCCESS ? status_ok : status_error);
 #else
-			::rename(buffSrc, buffDest);
+			return (::rename(buffSrc, buffDest) != -1 ? status_ok : status_error);
 #endif
-
 			return status_error;
 		}
 

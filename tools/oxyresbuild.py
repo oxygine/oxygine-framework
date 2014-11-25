@@ -2,7 +2,7 @@
 
 def get_parser():
     import argparse	
-    parser = argparse.ArgumentParser(description="This tool is being used to processing and optimizing xml resources file. It generated .ox folder with meta.xml file inside. Meta file has optimized information about resources, atlasses.")
+    parser = argparse.ArgumentParser(description="oxyresbuild is being used to processing and optimizing xml resources file. It generated .ox folder with meta.xml file inside. Meta file has optimized information about resources, atlasses.")
     parser.add_argument("--src_data", help = "root folder contains all resources", default = ".")
     parser.add_argument("--dest_data", help = "dest root folder for generated files", default = ".")
     parser.add_argument("-x", "--xml", help = "xml file to process", default = ".", required = True)
@@ -12,7 +12,7 @@ def get_parser():
     parser.add_argument("-r", "--resize", help = "downscale/upscale by scale factor", action="store_true", default = False)
     parser.add_argument("-us", "--upscale", help = "allow upscale. good option for very HD displays with texture compression", action="store_true", default = False)
     parser.add_argument("-c", "--compression", help = "type of images compression. default is pure rgba8888 packed to png", 
-                        choices = ["pvrtc", "etc1", "no"], default = "")
+                        choices = ["pvrtc", "pvrtc2", "etc1", "no"], default = "")
     parser.add_argument("-np", "--nopng", help = "store images without packing to png", 
                             action="store_true", default = False)    
     parser.add_argument("-q", "--quality", help = "select quality to compressed textures", 
@@ -22,18 +22,15 @@ def get_parser():
     parser.add_argument("-debug", "--debug", help = "debug mode", action="store_true", default = False)
     parser.add_argument("-w", "--warnings", help = "show warnings", action="store_true", default = False)
     parser.add_argument("-v", "--verbosity", help = "verbosity level. 1 - only errors, 2 - normal. Default value is 2", type=int, default = 2)
-    parser.add_argument("--md5", help = "generates md5 lists for some special files", type=bool, default = False)    
+    parser.add_argument("--md5", help = "generates md5 lists for some special files", type=bool, default = False)
+    parser.add_argument("--npot", help = "not power of two atlasses", action="store_true", default = False)
     return parser
 
 def do(args):
     import os   
     import sys
 
-    folder = os.path.split(os.path.abspath(__file__))[0] + "/src2"  
-    if folder not in sys.path:
-        sys.path.append(folder)
-
-    import xml_processor
+    import resbuild.xml_processor as xml_processor
     p = xml_processor.XmlProcessor(args)
     p.process()
 

@@ -4,6 +4,7 @@
 #include "RenderState.h"
 #include "Serialize.h"
 #include <sstream>
+#include "STDRenderer.h"
 
 namespace oxygine
 {
@@ -275,11 +276,13 @@ namespace oxygine
 
 		_vstyle._apply(rs);
 		const Diffuse &df = _frame.getDiffuse();
+
+		STDRenderer *renderer = safeCast<STDRenderer*>(rs.renderer);
 		if (df.base)
 		{
 			if (_guidesX.size() >= 2 || _guidesY.size() >= 2)
 			{
-				rs.renderer->setDiffuse(df);
+				//renderer->setTexture_(df.base, df.alpha, df.premultiplied);
 
 				// number of vertical blocks
 				int vc = (int)_pointsX.size() - 1;
@@ -309,7 +312,7 @@ namespace oxygine
 						RectF srcRect(_guidesX[xgi], _guidesY[ygi], _guidesX[xgi+1] - _guidesX[xgi], _guidesY[ygi+1] - _guidesY[ygi]);
 						RectF destRect(_pointsX[xc], _pointsY[yc], _pointsX[xc+1] - _pointsX[xc], _pointsY[yc+1] - _pointsY[yc]);
 
-						rs.renderer->draw(srcRect, destRect);
+						renderer->draw(&rs, getColor(), srcRect, destRect);
 					}
 				}
 			}

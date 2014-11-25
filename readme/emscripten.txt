@@ -11,13 +11,13 @@ how to build. Steps:
 
 - configure environment variables properly:
   EMSCRIPTEN points to Emscripten SDK folder with emcc
-  	example: d:\Emscripten\emscripten\1.22.0\   
+  	example: d:\Emscripten\emscripten\1.25.0\   
   JAVA_HOME points to JDK 
   	example: c:\Program Files (x86)\Java\jdk1.6.0_26\
 
 - add necessary paths to environment variable PATH:
   EMSCRIPTEN
-  	example: d:\Emscripten\emscripten\1.22.0\
+  	example: d:\Emscripten\emscripten\1.25.0\
   JDK 
   	example: "c:\Program Files (x86)\Java\jdk1.6.0_26\bin\"
 

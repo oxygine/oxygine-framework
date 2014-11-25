@@ -35,10 +35,9 @@ namespace oxygine
 		return false;
 	}
 
-	const VertexDeclaration*	VideoDriverNull::getVertexDeclaration(bvertex_format) const
+	const VertexDeclaration*	VideoDriverNull::getVertexDeclaration(bvertex_format bf) const
 	{
-		OX_ASSERT(0);
-		return 0;
+		return IVideoDriver::instance->getVertexDeclaration(bf);
 	}
 
 	void VideoDriverNull::setScissorRect(const Rect *)

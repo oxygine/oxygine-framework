@@ -45,6 +45,7 @@ namespace oxygine
 		void			setSrcRect(const RectF &r){_srcRect = r;}
 		void			setDestRect(const RectF &r){_destRect = r;}
 		void			setResAnim(ResAnim *rs){_resAnim = rs;}
+		void			setDiffuse(const Diffuse &d){ _diffuse = d; }
 		
 
 	private:

@@ -16,9 +16,9 @@ items = (
      examples + "TutorialResources",
      parent + "oxygine-frame/examples/example1",
      parent + "oxygine-frame/examples/example2",
-     parent + "oxygine-magicparticles/example/HelloWorld",
+     parent + "oxygine-magicparticles/example/MPHello",
      parent + "oxygine-pipeline/example/game/project/",
-     parent + "oxygine-sound/examples/example1/",
+     parent + "oxygine-sound/examples/SoundDemo/",
      )
 
 def copy(item, name):
@@ -27,5 +27,5 @@ def copy(item, name):
 
 for item in items:
     copy(item, "src/entry_point.cpp")
-    copy(item, "data/app.icf")
+    #copy(item, "data/app.icf")
     

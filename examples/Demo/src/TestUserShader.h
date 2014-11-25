@@ -42,9 +42,10 @@ private:
 	void doRender(const RenderState &rs)
 	{
 		_program->setShaderUniformsCallback(CLOSURE(this, &ShaderSprite::setUniforms));
-		rs.renderer->setUberShaderProgram(_program);
+		STDRenderer *renderer = safeCast<STDRenderer*>(rs.renderer);
+		renderer->setUberShaderProgram(_program);
 		Sprite::doRender(rs);
-		rs.renderer->setUberShaderProgram(&Renderer::uberShader);
+		renderer->setUberShaderProgram(&Renderer::uberShader);
 
 		_program->setShaderUniformsCallback(UberShaderProgram::ShaderUniformsCallback());
 	}

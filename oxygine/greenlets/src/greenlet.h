@@ -45,6 +45,7 @@ greenlet *greenlet_getcurrent();
 void	 greenlet_kill(greenlet *);
 gr_param greenlet_run(greenlet* self, gr_param data);
 gr_param greenlet_switch(greenlet* self, gr_param data);
+int      greenlet_isdead(greenlet* self);
 
 
 #ifdef __cplusplus

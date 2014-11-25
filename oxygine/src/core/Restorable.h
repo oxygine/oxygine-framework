@@ -15,6 +15,7 @@ namespace oxygine
 		static const restorable &getObjects();
 		static void restoreAll();
 		static void releaseAll();
+		static bool isRestored();
 
 		virtual void *_getRestorableObject() = 0;
 		virtual void release() = 0;

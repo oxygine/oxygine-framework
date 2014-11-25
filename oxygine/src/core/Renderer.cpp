@@ -11,6 +11,8 @@
 #include "system_data.h"
 #include "UberShaderProgram.h"
 
+#include "RenderState.h"
+
 namespace oxygine
 {
 	bool _premultipliedRender = true;
@@ -31,7 +33,7 @@ namespace oxygine
 	spNativeTexture Renderer::white;
 	std::vector<unsigned char> Renderer::indices8;
 	std::vector<unsigned short> Renderer::indices16;
-	size_t _maxVertices = 0;
+	size_t Renderer::maxVertices = 0;
 	UberShaderProgram Renderer::uberShader;
 	std::vector<unsigned char> Renderer::uberShaderBody;
 	
@@ -105,7 +107,7 @@ namespace oxygine
 			indices16.push_back(i + 3);
 		}
 
-		_maxVertices = indices16.size()/3 * 2;
+		maxVertices = indices16.size()/3 * 2;
 
 		file::buffer shaderBody;
 		file::read("shader.glsl", shaderBody, ep_ignore_error);
@@ -143,6 +145,11 @@ namespace oxygine
 		uberShader.release();
 	}
 
+	bool Renderer::isReady()
+	{
+		return _restored;
+	}
+
 	void Renderer::restore()
 	{
 		MemoryTexture memwhite;
@@ -162,9 +169,9 @@ namespace oxygine
 	}
 
 
-	Renderer::Renderer(IVideoDriver *driver):_rt(0), _driver(driver), 
-		_viewport(0,0,0,0), _program(0), _uberShader(0), _blend(blend_disabled), 
-		_shaderFlags(0), _clipMask(0,0,0,0), _vdecl(0)
+	Renderer::Renderer(IVideoDriver *driver) :_driver(driver),
+		_program(0), 
+		 _vdecl(0), _previous(0)
 	{
 		if (!driver)
 			driver = IVideoDriver::instance;
@@ -173,14 +180,10 @@ namespace oxygine
 			setDriver(driver);
 
 		_vertices.reserve(32 * 1000);
-		setPrimaryColor(Color(0xffffffff));
 
-		//_view.identity();
-		//_proj.identity();
-		_transform.identity();
-		_vp.identity();
+		_vp.identity();		
 
-		_uberShader = &uberShader;
+		_vdecl = _driver->getVertexDeclaration(vertexPCT2::FORMAT);
 	}
 	
 	Renderer::~Renderer()
@@ -190,93 +193,10 @@ namespace oxygine
 
 	void Renderer::cleanup()
 	{
-		_base = 0;
-		_mask = 0;
-		_alpha =0;
+		_cleanup();
 		_vertices.resize(0);
 	}
-
-	void Renderer::setBlendMode(blend_mode blend)
-	{
-		if (_blend != blend)
-		{
-			drawBatch();
-
-			switch (blend)
-			{
-			case blend_disabled:
-				_driver->setState(IVideoDriver::STATE_BLEND, 0);
-				break;
-			case blend_premultiplied_alpha:
-				_driver->setBlendFunc(IVideoDriver::BT_ONE, IVideoDriver::BT_ONE_MINUS_SRC_ALPHA);
-				break;
-			case blend_alpha:
-				_driver->setBlendFunc(IVideoDriver::BT_SRC_ALPHA, IVideoDriver::BT_ONE_MINUS_SRC_ALPHA);
-				break;
-			case blend_add:
-				_driver->setBlendFunc(IVideoDriver::BT_ONE, IVideoDriver::BT_ONE);
-				break;
-			//case blend_sub:
-				//_driver->setBlendFunc(IVideoDriver::BT_ONE, IVideoDriver::BT_ONE);
-				//glBlendEquation(GL_FUNC_REVERSE_SUBTRACT);
-			//	break;
-			default:
-				OX_ASSERT(!"unknown blend");
-			}
-
-			if (_blend == blend_disabled)
-			{
-				_driver->setState(IVideoDriver::STATE_BLEND, 1);
-			}
-			_blend = blend;
-		}
-	}
-
-	void Renderer::setDiffuse(const Diffuse &df)
-	{
-		setTexture_(df.base, df.alpha, df.premultiplied);
-	}
-
-	void Renderer::setTexture_(spNativeTexture base, spNativeTexture alpha, bool basePremultiplied)
-	{
-		if (base == 0 || base->getHandle() == 0)
-			base = white;
-
-		unsigned int shaderFlags = _shaderFlags;
-
-		if (basePremultiplied)			
-			shaderFlags &= ~UberShaderProgram::ALPHA_PREMULTIPLY;
-		else
-			shaderFlags |= UberShaderProgram::ALPHA_PREMULTIPLY;
-		
-		if (alpha)
-			shaderFlags |= UberShaderProgram::SEPARATE_ALPHA;
-		else
-			shaderFlags &= ~UberShaderProgram::SEPARATE_ALPHA;
-				
-//##ifdef OX_DEBUG
-#if 0
-		if (_base != base){OX_ASSERT(_alpha != alpha);}
-		else{OX_ASSERT(_alpha == alpha);}
-#endif //OX_DEBUG
-
-		//no reason to check changed alpha because it is in pair with base
-		if (_base != base || /*_alpha != alpha || */_shaderFlags != shaderFlags)
-		{			
-			drawBatch();
-		}
-
-		_shaderFlags = shaderFlags;
-		
-		_base = base;
-		_alpha = alpha;
-	}
-
-	void Renderer::setTransform(const transform &m)
-	{
-		_transform = m;
-	}
-
+	
 	void Renderer::setShader(ShaderProgram *prog)
 	{
 		if (prog != _program)
@@ -286,67 +206,27 @@ namespace oxygine
 		}
 		_program = prog;
 	}
+	
 
-	void Renderer::setUberShaderProgram(UberShaderProgram* pr)
+	void Renderer::_drawBatch()
 	{
-		if (_uberShader != pr)
-		{
-			drawBatch();
-		}
+		size_t count = _vertices.size() / _vdecl->size;
+		size_t indices = (count * 3) / 2;
 
-		_uberShader = pr;
-	}
+		if (indices <= indices8.size())
+			getDriver()->draw(IVideoDriver::PT_TRIANGLES, _vdecl, &_vertices.front(), count, &indices8.front(), indices, false);
+		else
+			getDriver()->draw(IVideoDriver::PT_TRIANGLES, _vdecl, &_vertices.front(), count, &indices16.front(), indices, true);
 
-	const Color &Renderer::getPrimaryColor() const
-	{
-		return _primaryColor;
-	}
-
-	void Renderer::setPrimaryColor(const Color &c)
-	{
-		_primaryColor = c;
-		_primaryColorPremultiplied = _primaryColor.premultiplied();
+		_vertices.resize(0);
 	}
 
 	void Renderer::drawBatch()
 	{
 		if (!_vertices.empty())
 		{
-			ShaderProgram *prog = _uberShader->getShaderProgram(_shaderFlags)->program;
-			setShader(prog);
-
-			_driver->setTexture(UberShaderProgram::SAMPLER_BASE, _base);
-
-			if (_alpha)
-			{
-				_driver->setTexture(UberShaderProgram::SAMPLER_ALPHA, _alpha);
-			}
-
-			if (_mask) 
-			{
-				_driver->setTexture(UberShaderProgram::SAMPLER_MASK, _mask);
-
-				Vector4 v(_clipMask.getLeft(), _clipMask.getTop(), _clipMask.getRight(), _clipMask.getBottom());
-				_driver->setUniform("clip_mask", &v, 1);
-			}
-
-			
-			UberShaderProgram::ShaderUniformsCallback cb = _uberShader->getShaderUniformsCallback();
-			if (cb)
-			{
-				cb(_driver, prog);
-			}			
-
-			size_t count = _vertices.size() / _vdecl->size;
-			size_t indices = (count * 3)/2;
-
-			if (indices <= indices8.size())
-				getDriver()->draw(IVideoDriver::PT_TRIANGLES, _vdecl, &_vertices.front(), count, &indices8.front(), indices, false);
-			else
-				getDriver()->draw(IVideoDriver::PT_TRIANGLES, _vdecl, &_vertices.front(), count, &indices16.front(), indices, true);
-		
-			_vertices.resize(0);			
-			//b.shaderFlags = 0;
+			preDrawBatch();
+			_drawBatch();
 		}
 	}
 
@@ -401,106 +281,9 @@ namespace oxygine
 	}
 #endif	
 
-	void Renderer::setMask(spNativeTexture mask, const RectF &srcRect, const RectF &destRect, const transform &t, bool channelR)
-	{
-		if (_mask != mask)
-		{
-			drawBatch();
-		}
-
-		_clipUV = ClipUV(
-			t.transform(destRect.getLeftTop()),
-			t.transform(destRect.getRightTop()),
-			t.transform(destRect.getLeftBottom()),
-			srcRect.getLeftTop(),
-			srcRect.getRightTop(),
-			srcRect.getLeftBottom());
-
-		_mask = mask;
-		if (_vdecl->bformat != vertexPCT2T2::FORMAT)
-			_vdecl = _driver->getVertexDeclaration(vertexPCT2T2::FORMAT);
-		_clipMask = srcRect;
-		Vector2 v(1.0f / mask->getWidth(), 1.0f / mask->getHeight());
-		_clipMask.expand(v, v);
-
-		_shaderFlags |= UberShaderProgram::MASK;
-		if (channelR)
-			_shaderFlags |= UberShaderProgram::MASK_R_CHANNEL;
-	}
-
-	void Renderer::removeMask()
-	{
-		drawBatch();
-
-		_mask = 0;
-		_shaderFlags &= ~(UberShaderProgram::MASK | UberShaderProgram::MASK_R_CHANNEL);
-		_shaderFlags = 0;
-		_vdecl = _driver->getVertexDeclaration(vertexPCT2::FORMAT);
-	}
-
-	bool Renderer::isMasked() const
-	{
-		return _mask;
-	}
-
-	Vector2	Renderer::getMaskedUV(const Vector2 &pos)
-	{
-		Vector2 uv = _clipUV.calc(pos);
-		return uv;
-	}
-
-	void Renderer::draw(const RectF &srcRect, const RectF &destRect)
-	{
-		const Color* color = &_primaryColor;
-		if (_blend == blend_premultiplied_alpha)
-			color = &_primaryColorPremultiplied;
-
-		if (_mask)
-		{
-			vertexPCT2T2 v[4];
-			fillQuadT(v, srcRect, destRect, _transform, *color);
-			
-			for (int i = 0; i < 4; ++i)
-			{
-				Vector2 uv = _clipUV.calc(Vector2(v[i].x, v[i].y));
-				v[i].u2 = uv.x;
-				v[i].v2 = uv.y;
-			}
-
-			_vertices.insert(_vertices.end(), (unsigned char*)v, (unsigned char*)v + sizeof(v));
-		}
-		else
-		{
-			vertexPCT2 v[4];
-			fillQuadT(v, srcRect, destRect, _transform, *color);		
-
-#ifdef OXYGINE_DEBUG_T2P
-			if (_base != white && _showTexel2PixelErrors)
-			{
-				bool t = checkT2P(_viewport, _vp, &v[0], &v[3], _base->getWidth(), _base->getHeight());
-				if (!t)
-				{
-					float c = (sinf((float)getTimeMS()/200 + v[0].x * v[0].y) + 1)/2.0f;
-					Color b = interpolate(Color(rand() % 255, rand() % 255,rand() % 255, 255), *color, c);
-					fillQuadT(v, srcRect, destRect, _transform, b);		
-				}
-			}	
-#endif
-
-			_vertices.insert(_vertices.end(), (unsigned char*)v, (unsigned char*)v + sizeof(v));
-		}
 		
-		if (_vertices.size()/sizeof(_vdecl->size) >= _maxVertices)
-			drawBatch();
-	}
 
-	template <class T>
-	void append(vector<unsigned char> &buff, const T &t)
-	{
-		const unsigned char *ptr = (const unsigned char *)&t;
-		buff.insert(buff.end(), ptr, ptr + sizeof(t));
-	}
-
+	/*
 	void Renderer::draw(const void *data, int size, bvertex_format format, bool worldTransform)
 	{
 		if (_vdecl->bformat != format)
@@ -511,7 +294,7 @@ namespace oxygine
 
 		int num = size / _vdecl->size;
 		size_t currentNum = _vertices.size() / _vdecl->size;
-		if (currentNum + num >= _maxVertices)
+		if (currentNum + num >= maxVertices)
 		{
 			drawBatch();
 		}		
@@ -533,7 +316,9 @@ namespace oxygine
 		}
 		else
 			_vertices.insert(_vertices.end(), (unsigned char*)data, (unsigned char*)data + size);
+			
 	}
+	*/
 
 	
 
@@ -579,50 +364,57 @@ namespace oxygine
 
 	void Renderer::resetSettings()
 	{
-		_blend = blend_disabled;
+		_resetSettings();
 		_driver->setState(IVideoDriver::STATE_BLEND, 0);
-		_uberShader = &uberShader;
 		_program = 0;
 	}
-
-	bool Renderer::begin(spNativeTexture rt, const Rect &viewport, const Color *clearColor)
+	
+	void Renderer::begin(Renderer *prev)
 	{
-		if (!_restored)
-			return false;
-
-		//if (!getDriver()->isReady())
-		//	return false;
-		_rt = rt;
-
-		if (_rt)
+		OX_ASSERT(_vertices.empty() == true);
+		_previous = prev;
+		if (_previous)
 		{
-			getDriver()->setRenderTarget(_rt);
+			_previous->end();
+			_vp = _previous->_vp;
 		}
 
-		_viewport = viewport;
-		_program = 0;
-
-		getDriver()->begin(viewport, clearColor);
-		_vdecl = _driver->getVertexDeclaration(vertexPCT2::FORMAT);
-		_base = 0;
-		_mask = 0;
-		_alpha = 0;
 		_program = 0;
 		_vertices.resize(0);
 		resetSettings();		
 
-		return true;
+		_begin();		
 	}
 
 	void Renderer::end()
 	{
 		drawBatch();
 
-		if (_rt)
-		{
-			getDriver()->setRenderTarget(0);
-		}
+		if (_previous)
+			_previous->begin(0);
+	}
 
-		_rt = 0;
+	void Renderer::setVertexDeclaration(const VertexDeclaration *decl)
+	{
+		if (_vdecl != decl)
+			drawBatch();
+		_vdecl = decl;
+	}
+
+	void Renderer::addVertices(const void *data, unsigned int size)
+	{
+		_addVertices(data, size);
+		_checkDrawBatch();
+	}
+
+	void Renderer::_addVertices(const void *data, unsigned int size)
+	{
+		_vertices.insert(_vertices.end(), (const unsigned char*)data, (const unsigned char*)data + size);
+	}
+
+	void Renderer::_checkDrawBatch()
+	{
+		if (_vertices.size() / sizeof(_vdecl->size) >= maxVertices)
+			drawBatch();
 	}
 }

@@ -8,7 +8,7 @@ def helper(root = ""):
             import os
             root = os.environ["OXYGINE"] + "/"
         import sys
-        p = root + "/tools/src2/"
+        p = root + "/tools/resbuild/"
         sys.path.append(p)
         import oxygine_helper
         _helper = oxygine_helper.helper(root, VERSION)
