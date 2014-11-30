@@ -282,7 +282,7 @@ namespace oxygine
 		{
 			if (_guidesX.size() >= 2 || _guidesY.size() >= 2)
 			{
-				//renderer->setTexture_(df.base, df.alpha, df.premultiplied);
+				renderer->setTexture(df.base, df.alpha, df.premultiplied);
 
 				// number of vertical blocks
 				int vc = (int)_pointsX.size() - 1;

@@ -472,7 +472,7 @@ namespace oxygine
 
 	#endif
 
-            file::init(desc.comnpanyName, desc.appName);
+			file::init(desc.companyName, desc.appName);
 
 			init2();			
 		}

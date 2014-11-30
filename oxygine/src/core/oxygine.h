@@ -81,7 +81,7 @@ namespace oxygine
 	{
 		struct init_desc
 		{
-			init_desc() : mode24bpp(true), w(-1), h(-1), fullscreen(false), title("Oxygine"), vsync(true), appName(0), comnpanyName(0){}
+			init_desc() : mode24bpp(true), w(-1), h(-1), fullscreen(false), title("Oxygine"), vsync(true), appName(0), companyName(0){}
 
 			bool mode24bpp;
 			int w;
@@ -93,7 +93,7 @@ namespace oxygine
 			/** Application name to be used as part of the file system directory for writable storage. If appName is empty files would be written next to working directory*/
 			const char *appName;
 			/** Company name to be used as part of the file system directory for writable storage*/
-			const char *comnpanyName;
+			const char *companyName;
 		};
 
 		/** Initializes Oxygine*/
