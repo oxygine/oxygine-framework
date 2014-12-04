@@ -79,7 +79,7 @@ def recursive_zip(zipf, directory, folder = ""):
         elif os.path.isdir(os.path.join(directory, item)):
             recursive_zip(zipf, os.path.join(directory, item), folder + os.sep + item)
 
-destzip = "../../oxygine-framework.zip"
+destzip = "../../oxygine-framework-with-sdl.zip"
 with zipfile.ZipFile(destzip, "w", compression = zipfile.ZIP_DEFLATED) as zp:
     recursive_zip(zp, "../")
     

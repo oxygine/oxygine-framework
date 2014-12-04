@@ -55,6 +55,8 @@
 		923A9E981A1FCBB700A6F08E /* MaskedRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 923A9E941A1FCBB700A6F08E /* MaskedRenderer.h */; };
 		923A9E991A1FCBB700A6F08E /* STDRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 923A9E951A1FCBB700A6F08E /* STDRenderer.cpp */; };
 		923A9E9A1A1FCBB700A6F08E /* STDRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 923A9E961A1FCBB700A6F08E /* STDRenderer.h */; };
+		92DC0A251A2F0ED900D2B55C /* greenlet.c in Sources */ = {isa = PBXBuildFile; fileRef = 92DC0A231A2F0ED900D2B55C /* greenlet.c */; };
+		92DC0A261A2F0ED900D2B55C /* greenlet.h in Headers */ = {isa = PBXBuildFile; fileRef = 92DC0A241A2F0ED900D2B55C /* greenlet.h */; };
 		C38704A617C0C71700015CA8 /* VideoDriverGLES20.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C38704A417C0C71700015CA8 /* VideoDriverGLES20.cpp */; };
 		C38704A717C0C71700015CA8 /* VideoDriverGLES20.h in Headers */ = {isa = PBXBuildFile; fileRef = C38704A517C0C71700015CA8 /* VideoDriverGLES20.h */; };
 		C38EC22C1709600E00568283 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C38EC22B1709600E00568283 /* OpenGLES.framework */; };
@@ -258,6 +260,8 @@
 		923A9E941A1FCBB700A6F08E /* MaskedRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MaskedRenderer.h; path = ../../../src/MaskedRenderer.h; sourceTree = "<group>"; };
 		923A9E951A1FCBB700A6F08E /* STDRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = STDRenderer.cpp; path = ../../../src/STDRenderer.cpp; sourceTree = "<group>"; };
 		923A9E961A1FCBB700A6F08E /* STDRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STDRenderer.h; path = ../../../src/STDRenderer.h; sourceTree = "<group>"; };
+		92DC0A231A2F0ED900D2B55C /* greenlet.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = greenlet.c; path = ../../../greenlets/src/greenlet.c; sourceTree = "<group>"; };
+		92DC0A241A2F0ED900D2B55C /* greenlet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = greenlet.h; path = ../../../greenlets/src/greenlet.h; sourceTree = "<group>"; };
 		C38704A417C0C71700015CA8 /* VideoDriverGLES20.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VideoDriverGLES20.cpp; path = gl/VideoDriverGLES20.cpp; sourceTree = "<group>"; };
 		C38704A517C0C71700015CA8 /* VideoDriverGLES20.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VideoDriverGLES20.h; path = gl/VideoDriverGLES20.h; sourceTree = "<group>"; };
 		C38EC22B1709600E00568283 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -446,6 +450,15 @@
 			path = ../../../src/minizip;
 			sourceTree = "<group>";
 		};
+		92DC0A221A2F0EB700D2B55C /* greenlet */ = {
+			isa = PBXGroup;
+			children = (
+				92DC0A231A2F0ED900D2B55C /* greenlet.c */,
+				92DC0A241A2F0ED900D2B55C /* greenlet.h */,
+			);
+			name = greenlet;
+			sourceTree = "<group>";
+		};
 		C38EC2611709649300568283 /* dev_tools */ = {
 			isa = PBXGroup;
 			children = (
@@ -488,6 +501,7 @@
 		C3E86F5316EBC8C200052915 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				92DC0A221A2F0EB700D2B55C /* greenlet */,
 				923A9E931A1FCBB700A6F08E /* MaskedRenderer.cpp */,
 				923A9E941A1FCBB700A6F08E /* MaskedRenderer.h */,
 				923A9E951A1FCBB700A6F08E /* STDRenderer.cpp */,
@@ -828,6 +842,7 @@
 				C3E8704A16EBC8EB00052915 /* vector4.h in Headers */,
 				0472E37617F8A2D30016A832 /* ioapi.h in Headers */,
 				0472E37817F8A2D30016A832 /* ioapi_mem.h in Headers */,
+				92DC0A261A2F0ED900D2B55C /* greenlet.h in Headers */,
 				C3E8704C16EBC8EB00052915 /* MemoryTexture.h in Headers */,
 				C3E8704E16EBC8EB00052915 /* Multithreading.h in Headers */,
 				C3E8705416EBC8EB00052915 /* PointerState.h in Headers */,
@@ -936,6 +951,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92DC0A251A2F0ED900D2B55C /* greenlet.c in Sources */,
 				C3E86FFE16EBC8EB00052915 /* Actor.cpp in Sources */,
 				C3E8700016EBC8EB00052915 /* AnimationFrame.cpp in Sources */,
 				C3E8700216EBC8EB00052915 /* Blocking.cpp in Sources */,
