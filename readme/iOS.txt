@@ -3,9 +3,9 @@
 =================================================================================================
  
 - goto oxygine-framework\examples and choose any example. Lets call it "Demo" 
-- open xcode 5 project from:
+- open xcode project from:
   examples\Demo\proj.ios\
-- select correct scheme: demo_ios-> iOS Simulator or real device (But not 64bits!)
+- select correct scheme: demo_ios-> iOS Simulator or real device
 - build and run!
 
 2b. You could generate your own MacOSX project.

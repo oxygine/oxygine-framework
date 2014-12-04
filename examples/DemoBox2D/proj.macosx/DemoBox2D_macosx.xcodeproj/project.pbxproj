@@ -780,6 +780,7 @@
 					"../../..//oxygine/third_party/ios/libraries",
 				);
 				PRODUCT_NAME = DemoBox2D_macosx;
+				VALID_ARCHS = "i386 x86_64";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -799,6 +800,7 @@
 					"../../..//oxygine/third_party/ios/libraries",
 				);
 				PRODUCT_NAME = DemoBox2D_macosx;
+				VALID_ARCHS = "i386 x86_64";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

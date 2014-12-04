@@ -1,10 +1,8 @@
-/* libpng 1.6.8 STANDARD API DEFINITION */
-
 /* pnglibconf.h - library build configuration */
 
-/* Libpng version 1.6.8 - December 19, 2013 */
+/* libpng version 1.6.15,November 20, 2014 */
 
-/* Copyright (c) 1998-2013 Glenn Randers-Pehrson */
+/* Copyright (c) 1998-2014 Glenn Randers-Pehrson */
 
 /* This code is released under the libpng license. */
 /* For conditions of distribution and use, see the disclaimer */
@@ -187,7 +185,6 @@
 /* end of options */
 /* settings */
 #define PNG_API_RULE 0
-#define PNG_CALLOC_SUPPORTED
 #define PNG_COST_SHIFT 3
 #define PNG_DEFAULT_READ_MACROS 1
 #define PNG_GAMMA_THRESHOLD_FIXED 5000
@@ -201,7 +198,7 @@
 #define PNG_TEXT_Z_DEFAULT_STRATEGY 0
 #define PNG_WEIGHT_SHIFT 8
 #define PNG_ZBUF_SIZE 8192
-#define PNG_ZLIB_VERNUM 0 /* unknown */
+#define PNG_ZLIB_VERNUM 0x1250
 #define PNG_Z_DEFAULT_COMPRESSION (-1)
 #define PNG_Z_DEFAULT_NOFILTER_STRATEGY 0
 #define PNG_Z_DEFAULT_STRATEGY 1

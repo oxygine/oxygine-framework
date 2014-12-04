@@ -368,7 +368,7 @@ ${PBXSourcesBuildPhase}
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "${OXYGINE}/oxygine/src ${ROOT}/SDL/include";
-				VALID_ARCHS = i386;
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Debug;
 		};
@@ -402,7 +402,7 @@ ${PBXSourcesBuildPhase}
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "${OXYGINE}/oxygine/src ${ROOT}/SDL/include";
-				VALID_ARCHS = i386;
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Release;
 		};

@@ -4,7 +4,7 @@
 - goto oxygine-framework\examples and choose any example. Lets call it "Demo" 
 - open xcode project from:
   examples\Demo\proj.macosx\
-- select correct scheme: demo_macosx->mac 32 bit
+- select correct scheme: demo_macosx->mac 32 or 64 bit
 - build and run!
 
 2b. You could generate your own MacOSX project.
