@@ -133,8 +133,6 @@ namespace oxygine
 		{			
 			OX_ASSERT(src != dest);
 
-			const char *destcopy = dest;
-			//const char *srccopy = src;
 			if (*src == '/' || *src == '\\')
 			{
 				*dest = '/';
@@ -142,8 +140,6 @@ namespace oxygine
 				++dest;
 			}		
 			char *copy = dest;
-
-			char last = 0;		
 
 			*dest = 0;
 			while(*src)
@@ -193,7 +189,6 @@ namespace oxygine
 				
 			}
 			*dest = 0;
-			int q=0;
 		}
 	}
 

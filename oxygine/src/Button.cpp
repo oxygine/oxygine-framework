@@ -43,7 +43,7 @@ namespace oxygine
 	void Button::_mouseEvent(Event *event)
 	{
 		TouchEvent *me = safeCast<TouchEvent*>(event);
-		Actor *act = safeCast<Actor*>(event->target.get());
+		//Actor *act = safeCast<Actor*>(event->target.get());
 
 		switch(event->type)
 		{

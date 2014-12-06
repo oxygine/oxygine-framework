@@ -23,10 +23,16 @@ namespace oxygine
 		_textRect(0,0,0,0)
 	{
 		_flags |= flag_rebuild;
+		_style.font = NULL;
+
 		if (DebugActor::resSystem)
 		{
-			_style.font = DebugActor::resSystem->getResFont("system")->getFont();
+			if (ResFont *fnt = DebugActor::resSystem->getResFont("system")) {
+				_style.font = fnt->getFont();
+			}
 		}
+
+		OX_ASSERT(_style.font != NULL);
 	}
 
 	TextField::~TextField()

@@ -133,8 +133,6 @@ namespace oxygine
 			const Vector2 &size = destRect.size;
 			pos += size / 2.f;				
 
-			float maxSide = std::max( size.x, size.y );
-
 			Vector2 vecCenter( pos.x, pos.y );
 			Vector2 vdiag = Vector2( pos.x + size.x / 2.f, pos.y - size.y / 2.f ) - vecCenter;
 			Vector2 vdiag2 = Vector2( pos.x + size.x / 2.f, pos.y + size.y / 2.f ) - vecCenter;

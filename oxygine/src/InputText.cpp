@@ -153,8 +153,8 @@ namespace oxygine
 		{
 		case SDL_TEXTEDITING:
 			{
-				SDL_TextEditingEvent &te = event->edit;
-				int q=0;
+				//SDL_TextEditingEvent &te = event->edit;
+				//int q=0;
 			}
 			break;
 		case SDL_TEXTINPUT:

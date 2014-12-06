@@ -886,7 +886,6 @@ namespace oxygine
 		{
 			spTween tweenNext = tween->getNextSibling();
 
-			bool done = false;
 			if (tween->getParentList())
 				tween->update(*this, us);
 			if (tween->isDone() && tween->getParentList())

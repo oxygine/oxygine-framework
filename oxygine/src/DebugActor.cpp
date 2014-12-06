@@ -107,9 +107,15 @@ namespace oxygine
 
 		setTouchEnabled(false);
 		
-
 		TextStyle st;
-		st.font = resSystem->getResFont("system")->getFont();
+		st.font = NULL;
+    
+		if (ResFont *fnt = resSystem->getResFont("system")) {
+			st.font = fnt->getFont();
+		}
+
+		OX_ASSERT(st.font != NULL);
+
 		st.vAlign = TextStyle::VALIGN_TOP;
 		//st.color = Color(rand()%255, rand()%255, rand()%255, 255);
 		st.color = Color(Color::Black, 255);
@@ -164,7 +170,7 @@ namespace oxygine
 		va_list args;
 		va_start(args, format);
 		int len = (int)strlen(buff);
-		int i = vsnprintf(buff + len, sizeof(buff) - len, format, args);
+		vsnprintf(buff + len, sizeof(buff) - len, format, args);
 		va_end(args);
 
 		_debugText += buff;

@@ -278,7 +278,7 @@ namespace file
 		unsigned int getSize() const
 		{
 			unz_file_info file_info;
-			int res = unzGetCurrentFileInfo(_entry->zp, &file_info, 0, 0, 0, 0, 0, 0);
+			unzGetCurrentFileInfo(_entry->zp, &file_info, 0, 0, 0, 0, 0, 0);
 			return file_info.uncompressed_size;
 		}
 

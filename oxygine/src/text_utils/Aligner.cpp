@@ -102,9 +102,6 @@ namespace oxygine
 		{
 			if (!ln.empty())
 			{
-				Symbol &first = *ln.front();
-				Symbol &last = *ln.back();
-
 				//calculate real text width
 				int rx = 0;
 				for (size_t i = 0; i < ln.size(); ++i)
@@ -114,8 +111,6 @@ namespace oxygine
 				}
 
 				int tx = _alignX(rx);
-
-				int qx = 0;///_alignX(0) - _alignX(rx);
 
 				for (size_t i = 0; i < ln.size(); ++i)
 				{

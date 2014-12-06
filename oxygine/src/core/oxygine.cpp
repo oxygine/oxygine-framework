@@ -161,8 +161,7 @@ namespace oxygine
 
 		return ticks;
 #else
-		log::warning("getTimeMS not implemented");
-		assert(0);
+		#pragma error "getTimeMS not implemented"
 #endif		
 		return 0;
 	}

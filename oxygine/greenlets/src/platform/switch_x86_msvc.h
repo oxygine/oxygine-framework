@@ -35,6 +35,7 @@
    register 'ebp' modified by inline assembly code */
 #pragma optimize("g", off)
 #pragma warning(disable:4731)
+#pragma warning(disable:4733)
 
 static int
 slp_switch(void)
