@@ -72,12 +72,12 @@ namespace oxygine
 		free();		
 	}
 
-	ResAnim *Resources::getResAnim(const string &id, error_policy ep)
+	ResAnim *Resources::getResAnim(const string &id, error_policy ep) const
 	{
 		return getT<ResAnim>(id, ep);
 	}
 
-	ResFont *Resources::getResFont(const string &id, error_policy ep)
+	ResFont *Resources::getResFont(const string &id, error_policy ep) const
 	{
 		return getT<ResFont>(id, ep);
 	}
@@ -339,11 +339,11 @@ namespace oxygine
 		return _resources; 
 	}
 
-	Resource *Resources::get(const string &id_, error_policy ep)
+	Resource *Resources::get(const string &id_, error_policy ep) const
 	{	
 		string id = lower(id_);
 
-		resources::iterator it = lower_bound(_fastAccessResources.begin(), _fastAccessResources.end(), 
+		resources::const_iterator it = lower_bound(_fastAccessResources.begin(), _fastAccessResources.end(), 
 			id.c_str(), ObjectBasePredicate());
 		
 		if (it != _fastAccessResources.end())

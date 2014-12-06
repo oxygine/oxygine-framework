@@ -70,10 +70,10 @@ namespace oxygine
 		@param resource id
 		@param if showError is true and resource is missing warning/assert will appear
 		*/
-		Resource *get(const string &id, error_policy ep = ep_show_error);
+		Resource *get(const string &id, error_policy ep = ep_show_error) const;
 
 		/** returns resource by index */
-		Resource *get(int index){return _fastAccessResources[index].get();}
+		Resource *get(int index) const {return _fastAccessResources[index].get();}
 		int		  getCount() const {return (int)_fastAccessResources.size();}
 
 		Resource * operator[](const string &id){return get(id);}
@@ -82,16 +82,16 @@ namespace oxygine
 		@param resource id
 		@param if safe is true and resource is missing warning/assert will appear
 		*/
-		ResAnim *getResAnim(const string &id, error_policy ep = ep_show_error);
+		ResAnim *getResAnim(const string &id, error_policy ep = ep_show_error) const;
 		 
 		/** get animation resource by id
 		@param resource id
 		@param if safe is true and resource is missing warning/assert will appear
 		*/
-		ResFont *getResFont(const string &id, error_policy ep = ep_show_error);
+		ResFont *getResFont(const string &id, error_policy ep = ep_show_error) const;
 
 		template<class T>
-		T *getT(const string &id, error_policy ep = ep_show_error){return safeCast<T*> (get(id, ep));}
+		T *getT(const string &id, error_policy ep = ep_show_error) const {return safeCast<T*> (get(id, ep));}
 
 		/**sorting manually added resources*/
 		void sort();
