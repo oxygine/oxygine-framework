@@ -113,9 +113,7 @@ namespace oxygine
 		const Diffuse &df = _frame.getDiffuse();
 		if (df.base)
 		{
-			//renderer->setTexture_(df.base, df.alpha, df.premultiplied);
-
-			
+			renderer->setTexture(df.base, df.alpha, df.premultiplied);			
 
 			RectF destRect = Sprite::getDestRect();
 

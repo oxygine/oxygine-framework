@@ -120,8 +120,8 @@ namespace oxygine
 	{
 		_guidesX.resize(4);
 		_guidesY.resize(4);
-		_pointsX.resize(0);
-		_pointsY.resize(0);
+		_pointsX.clear();
+		_pointsY.clear();
 
 		float fFrameWidth = (float)_frame.getFrameSize().x;
 		float fFrameHeight = (float)_frame.getFrameSize().y;

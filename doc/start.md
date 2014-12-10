@@ -3,16 +3,26 @@
 ###Windows, MacOSX users
 [Download](http://oxygine.org/download.php) Oxygine. I recommend to download **All-In-One** version with SDL. It includes everything to fast and easy start and has prebuilt SDL binaries.
 
-Go to oxygine-framework/examples folder and open any of them. Each example has configuration folders for different platforms/OS:
+Go to **oxygine-framework/examples** folder and open any of them.
+There are examples:
+
+* **HelloWorld** is starting Point.
+* **Game** is tutorial example. It has 4 parts from beggining to advanced usage.
+* **Demo** has tests and demonstation Oxygine functionality. 
+* **DemoBox2D** is example with integrated Box2D.
+* **Match3** is match3 mechanics demonstration implemented on Oxygine.
+ 
+Each example has configuration folders for different platforms/OS:
 
 * **proj.win32** - solutions for VisualStudio
 * **proj.ios** - iOS xcode project
 * **proj.macosx** - MacOSX xcode project
+* **proj.marmalade** - Marmalade project
 * *proj.android* - build folder for Android SDK/NDK
 * *proj.cmake* - CMake configuration folder
 * *proj.emscripten* - Emscripten configuration folder
 
-> to build for android, cmake, emscripten check **oxygine-framework/readme** folder
+> if you have any troubles or if you need to build for android, cmake, emscripten check **oxygine-framework/readme** folder
 
 ###Advanced users 
 

@@ -1,5 +1,9 @@
-import Image
-import process
+try:
+    import Image
+except ImportError:
+    from PIL import Image
+    
+from . import process
 
 
 class starling_atlas_Processor(process.Process):

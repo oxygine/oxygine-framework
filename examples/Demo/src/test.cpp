@@ -195,6 +195,6 @@ void Test::notify(string txt, int time)
 
 void Test::notifyDone(Event *ev)
 {
-	size_t N = size_t(ev->currentTarget->getUserData());
+	size_t N = size_t(ev->target->getUserData());
 	_notifies[N] -= 1;
 }

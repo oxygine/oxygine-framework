@@ -8,10 +8,10 @@ SDL_dest = temp + "/SDL"
 OXYGINE_dest = temp + "/oxygine-framework/"
 SOUND_dest = temp + "/oxygine-sound/"
 
-print "cleaning temp..."
+print("cleaning temp...")
 shutil.rmtree(temp, True)
 
-print "hg archive..."
+print("hg archive...")
 cmd = "hg archive " + OXYGINE_dest
 os.system(cmd)
 
@@ -43,7 +43,7 @@ def enum(folder, cb):
         path = folder + item 
         if os.path.isdir(path):
             if item == "data":
-                print path
+                print(path)
                 cb(path)
             enum(path + "/", cb)
             
@@ -85,4 +85,4 @@ with zipfile.ZipFile(destzip, "w", compression = zipfile.ZIP_DEFLATED) as zp:
     
 shutil.copyfile(destzip, "../../../gdrive/oxygine/oxygine-framework-with-sdl.zip")
 
-print "done."
+print("done.")

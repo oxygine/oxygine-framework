@@ -5,10 +5,10 @@ import zipfile
 
 dest = "../../temp/oxygine-framework/"
 
-print "cleaning temp..."
+print("cleaning temp...")
 shutil.rmtree("../../temp", True)
 
-print "hg archive..."
+print("hg archive...")
 os.system("hg archive " + dest)
 os.chdir(dest)
 
@@ -26,4 +26,4 @@ with zipfile.ZipFile(destzip, "w", compression = zipfile.ZIP_DEFLATED) as zp:
     
 shutil.copyfile(destzip, "../../../gdrive/oxygine/oxygine-framework.zip")
 
-print "done."
+print("done.")

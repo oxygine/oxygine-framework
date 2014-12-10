@@ -22,10 +22,10 @@ if __name__ == "__main__":
         w += im.size[0]
         if not size:
             size = im.size        
-        print ("appending image: '{}' with size ({}, {}) ".format(g, im.size[0], im.size[1]))
+        print(("appending image: '{}' with size ({}, {}) ".format(g, im.size[0], im.size[1])))
         
         if size[0] != im.size[0]:
-            print ("warning! width should be {}".format(size[0]))
+            print(("warning! width should be {}".format(size[0])))
 
     anim = Image.new("RGBA", (w, h))
     w = 0
@@ -33,5 +33,5 @@ if __name__ == "__main__":
         anim.paste(im, (w, 0))
         w += im.size[0]
 
-    print ("writing result...\nfile=\"{}\" cols=\"{}\"".format(args.dest, len(images)))
+    print(("writing result...\nfile=\"{}\" cols=\"{}\"".format(args.dest, len(images))))
     anim.save(args.dest)

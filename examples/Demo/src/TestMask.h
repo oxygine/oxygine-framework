@@ -15,7 +15,7 @@ public:
 	TestMask():_lastSnow(0)
 	{		
 		_mask = initActor(new Sprite, 
-			arg_scale = 3,
+			arg_scale = 2.5f,
 			arg_priority = 1,
 			arg_alpha = 100,
 			arg_x = 100,

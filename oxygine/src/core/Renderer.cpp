@@ -194,7 +194,7 @@ namespace oxygine
 	void Renderer::cleanup()
 	{
 		_cleanup();
-		_vertices.resize(0);
+		_vertices.clear();
 	}
 	
 	void Renderer::setShader(ShaderProgram *prog)
@@ -218,7 +218,7 @@ namespace oxygine
 		else
 			getDriver()->draw(IVideoDriver::PT_TRIANGLES, _vdecl, &_vertices.front(), count, &indices16.front(), indices, true);
 
-		_vertices.resize(0);
+		_vertices.clear();
 	}
 
 	void Renderer::drawBatch()
@@ -380,7 +380,7 @@ namespace oxygine
 		}
 
 		_program = 0;
-		_vertices.resize(0);
+		_vertices.clear();
 		resetSettings();		
 
 		_begin();		

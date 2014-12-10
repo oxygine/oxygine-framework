@@ -214,7 +214,7 @@ if __name__ == "__main__":
     r = rect(0, 0, 10, 10)
     fr = []
     random.seed(0)
-    for x in xrange(200):
+    for x in range(200):
         fr.append(frame(random.randint(10,60), random.randint(10,60)))
     
     
@@ -244,6 +244,6 @@ if __name__ == "__main__":
     for f in fr:
         s += f.w * f.h   
     
-    print "left: " + str(s)
+    print("left: " + str(s))
     im.save("image-%s.png" %(s, ))
     

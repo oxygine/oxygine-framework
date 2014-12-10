@@ -108,7 +108,7 @@ namespace oxygine
 	void ThreadMessages::clear()
 	{
 		MutexPthreadLock lock(_mutex);
-		_events.resize(0);
+		_events.clear();
 	}
 
 	bool ThreadMessages::peek(message &ev, bool del)

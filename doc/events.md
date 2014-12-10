@@ -254,7 +254,7 @@ Custom events are useful for indicating events which are not inherently recogniz
 	class AchieveEarnedEvent: public Event
 	{
 	public:
-		enum {EVENT = makefourcc('A','c','E','r');}
+		enum {EVENT = makefourcc('A','c','E','r')};
 
 		string achievementID;
 

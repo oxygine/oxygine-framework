@@ -1,8 +1,13 @@
-import Image
+
+try:
+    import Image
+except ImportError:
+    from PIL import Image
+
 from xml.dom import minidom
 import os
-import atlas
-import process
+from . import atlas
+from . import process
 
 def as_int(attr, df = 0):
     if not attr:
@@ -26,8 +31,8 @@ def fixImage(image):
         return image
 
     data = image.load()
-    for y in xrange(image.size[1]):
-        for x in xrange(image.size[0]):
+    for y in range(image.size[1]):
+        for x in range(image.size[0]):
             a = data[x,y][3]
             #if a == 0 or a == 1:
             if a == 0:
@@ -38,8 +43,8 @@ def premultipliedAlpha(image):
     if image.mode != "RGBA":
         return image    
     data = image.load()
-    for y in xrange(image.size[1]):
-        for x in xrange(image.size[0]):
+    for y in range(image.size[1]):
+        for x in range(image.size[0]):
             dt = data[x,y]
             a = dt[3]
             data[x, y] = ((dt[0] * a) / 255, (dt[1] * a) / 255, (dt[2] * a) / 255, a)
@@ -310,9 +315,10 @@ class atlas_Processor(process.Process):
             resAnim.rows = rows
 
 
-            for row in xrange(rows):
-                for col in xrange(columns):
-                    rect = (col * frame_width, row * frame_height, (col + 1) * frame_width, (row + 1)* frame_height, )
+            for row in range(rows):
+                for col in range(columns):
+                    rect = (int(col * frame_width), int(row * frame_height), int((col + 1) * frame_width), int((row + 1)* frame_height), )
+ 
 
                     frame_image = image.crop(rect)      
 
@@ -380,7 +386,7 @@ class atlas_Processor(process.Process):
 
         def get_aligned_frame_size(frame):            
             def align_pixel(p):
-                if compression == "no":
+                if not compression or compression == "no":
                     return p + 1
                 align = 4
                 v = p % align

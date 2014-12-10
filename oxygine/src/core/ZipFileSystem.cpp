@@ -23,7 +23,7 @@ namespace file
 
 	bool readEntry(const file_entry *entry, file::buffer &bf)
 	{
-		bf.data.resize(0);
+		bf.data.clear();
 		int r = unzGoToFilePos(entry->zp, const_cast<unz_file_pos*>(&entry->pos));
 		OX_ASSERT(r == UNZ_OK);
 
@@ -204,8 +204,8 @@ namespace file
 			unzClose(f.handle);
 		}
 
-		_zps.resize(0);
-		_files.resize(0);
+		_zps.clear();
+		_files.clear();
 	}
 
 

@@ -748,6 +748,7 @@ EXCLUDE_PATTERNS       =
 # AClass::ANamespace, ANamespace::*Test
 
 EXCLUDE_SYMBOLS        = detail:* \
+                         TextActor \
                          pugi:* \
                          Closure \
                          AffineTransformT \

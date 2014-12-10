@@ -80,10 +80,10 @@ namespace oxygine
 		
 		//if (df.base)
 		{
-			//rs.renderer->setDiffuse(df);
+			rs.renderer->setTexture(df.base, df.alpha, df.premultiplied);
 			static vector<unsigned char> buff;
 			buff.reserve(_verticesSize);
-			buff.resize(0);
+			buff.clear();
 			int num = _verticesSize / _vdecl->size;
 			
 			const unsigned char *ptr = (const unsigned char *)_verticesData;

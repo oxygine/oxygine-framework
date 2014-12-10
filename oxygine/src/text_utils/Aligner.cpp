@@ -141,7 +141,7 @@ namespace oxygine
 			//assert(multiline == true); commented, becase even if multiline is false - there are breakLine markers, they could be used anyway							
 
 			_nextLine(_line);
-			_line.resize(0);
+			_line.clear();
 		}
 
 		float Aligner::getScaleFactor() const

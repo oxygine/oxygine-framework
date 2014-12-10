@@ -63,7 +63,7 @@ protected:
 	float _y;
 	spActor ui;
 	Content *content;
-	enum {MAX_NOTIFIES = 6};
+	enum {MAX_NOTIFIES = 8};
 	int _notifies[MAX_NOTIFIES];
 };
 

@@ -123,16 +123,16 @@ namespace oxygine
 			Resource *res = (*i);
 			delete res;
 		}
-		_owned.resize(0);
+		_owned.clear();
 		*/
-		_fastAccessResources.resize(0);
-		_resources.resize(0);
+		_fastAccessResources.clear();
+		_resources.clear();
 
 		for (size_t i = 0; i < _docs.size(); ++i)
 		{
 			delete _docs[i];
 		}
-		_docs.resize(0);
+		_docs.clear();
 
 		__freeName();		
 	}

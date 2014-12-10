@@ -22,13 +22,13 @@ def do(src, dest):
     files = []
 
     listdir(src, files)
-    print files
+    print(files)
     s = ""
     for f in files:
         s = s + " --embed " + f
         
     cmd = "python \"" + os.environ["EMSCRIPTEN"] + "/tools/file_packager.py\" test --compress 100 --js-output=\"%s\" %s" % (dest, s)
-    print cmd
+    print(cmd)
     os.system(cmd)
 
     

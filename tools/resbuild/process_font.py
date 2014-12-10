@@ -1,9 +1,13 @@
-import Image
+try:
+    import Image
+except ImportError:
+    from PIL import Image
+
 import os
 from xml.dom import minidom
 import tempfile
-import md5
-import process
+import hashlib
+from . import process
 
 class bmfc_font_Processor(process.Process):
     node_id = "bmfc_font"
@@ -70,7 +74,7 @@ def get_bmfc_fontSize(bm_config):
 def build_bmfont(need_md5, fnt, bm_config, ext_folder, scale, font_chars):
     #open config file and apply scale to size 
     if not os.path.exists(font_chars):
-        print "error! you didn't set to bmfont 'chars'"
+        print("error! you didn't set to bmfont 'chars'")
 
     bm_config_temp = tempfile.NamedTemporaryFile(prefix="oxygine", delete = False)
     bm_config_temp.close()
@@ -130,7 +134,7 @@ def build_bmfont(need_md5, fnt, bm_config, ext_folder, scale, font_chars):
 
     if need_md5:
     #if 0:
-        md = md5.new()
+        md = hashlib.md5()
         md.update(open(bm_config_temp).read())
         md.update(open(lang).read())
         

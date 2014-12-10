@@ -406,7 +406,7 @@ namespace oxygine
 
 	void MemoryTexture::cleanup()
 	{
-		_buffer.resize(0);
+		_buffer.clear();
 		_image = ImageData();
 	}
 

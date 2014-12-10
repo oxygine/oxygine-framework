@@ -34,7 +34,7 @@ def compare(g, p, x, y, offsetX, offsetY):
     
 class grid:
     def __init__(self, w, h):
-        self.data = [None for x in xrange(w) for y in xrange(h)]
+        self.data = [None for x in range(w) for y in range(h)]
         self.w = w
         self.h = h
 
@@ -49,7 +49,7 @@ class grid:
         return self.data[x + y * self.w].copy()
 
 def generateSD_pass(g):
-    print "generateSD_pass..."
+    print("generateSD_pass...")
     get = g.get
     put = g.put
     
@@ -105,8 +105,8 @@ def generateSD(image):
     pZero = point(0,0)
     pInf = point(9999,9999)
     
-    for y in xrange(h):
-        for x in xrange(w):
+    for y in range(h):
+        for x in range(w):
             alpha = getpixel((x, y))[3]
             if alpha < 128:
                 g1put(x, y, pZero)
@@ -125,8 +125,8 @@ def generateSD(image):
     
     putpixel = sd_image.im.putpixel
     
-    for y in xrange(h):
-        for x in xrange(w):    
+    for y in range(h):
+        for x in range(w):    
             dist1 = int(math.sqrt(grid1.get(x, y).distSq()))
             dist2 = int(math.sqrt(grid2.get(x, y).distSq()))
             dist = dist1 - dist2

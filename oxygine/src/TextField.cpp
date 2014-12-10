@@ -31,8 +31,6 @@ namespace oxygine
 				_style.font = fnt->getFont();
 			}
 		}
-
-		OX_ASSERT(_style.font != NULL);
 	}
 
 	TextField::~TextField()

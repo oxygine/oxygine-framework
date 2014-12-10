@@ -6,9 +6,9 @@ def gen(path, project = ""):
 		project = path
 
 	projs = ("win32", "android", "macosx", "ios", "cmake", "emscripten")
-	projs = ("android", )
-	projs = ("ios", "macosx")
-	projs = ("macosx", )
+	#projs = ("android", )
+	#projs = ("ios", "macosx")
+	#projs = ("macosx", )
 	#projs = ("emscripten", )
 
 	for platform in projs:
@@ -17,18 +17,21 @@ def gen(path, project = ""):
 		import shutil
 		shutil.rmtree(dest, True)
 		cmd = "python ../gen_template.py %s -d %s -s %s -t %s" % (project, dest, src, platform)
-		print cmd
+		print(cmd)
 		os.system(cmd)
 
 
 
 
-gen("Demo")
-gen("Game/part1", "GamePart1")
-gen("Game/part2", "GamePart2")
-gen("Game/part3", "GamePart3")
-gen("Game/part4", "GamePart4")
-gen("TutorialResources")
-gen("HelloWorld")
-gen("Match3")
+if 0:
+	gen("Demo")
+	gen("Game/part1", "GamePart1")
+	gen("Game/part2", "GamePart2")
+	gen("Game/part3", "GamePart3")
+	gen("Game/part4", "GamePart4")
+	gen("TutorialResources")
+	gen("HelloWorld")
+	gen("Match3")
+
+gen("Game/part5", "GamePart5")
 #gen("DemoBox2D")

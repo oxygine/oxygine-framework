@@ -1,10 +1,10 @@
 from xml.dom import minidom
 import os
 import shutil
-import process_atlas
-import process_font
-import process_starling_atlas
-import oxygine_helper
+from . import process_atlas
+from . import process_font
+from . import process_starling_atlas
+from . import oxygine_helper
 
 class XmlWalker:
     def __init__(self, src, folder, scale_factor, node, meta_node, scale_quality):
@@ -201,13 +201,13 @@ class XmlProcessor:
     
     
     def log(self, st):
-        print st
+        print(st)
         
     def warning(self, st):
         if self.args.warnings:        
-            print "warning: " + st
+            print("warning: " + st)
     def error(self, st):
-        print "error: " + st
+        print("error: " + st)
                 
     def process(self):
         #print self.path_data
@@ -218,7 +218,7 @@ class XmlProcessor:
             nm = self._get_src_path(self.path_xml)
             file = open(nm, "r")
         except IOError:
-            print "can't open file: " + nm
+            print("can't open file: " + nm)
             return 
         doc = minidom.parse(file)
         del file
@@ -282,7 +282,7 @@ class XmlProcessor:
         
         file = open(path_ox_dest, "w")
         if self.verbosity > 1:
-            print "saving ox file: \n" + os.path.normpath(path_ox_dest)
+            print("saving ox file: \n" + os.path.normpath(path_ox_dest))
             
         if self.args.debug:
             meta_element.writexml(file, "\t", "\t", "\n")
@@ -294,4 +294,4 @@ class XmlProcessor:
         #    print "created %d atlasses" % (totalAtlasses, )  
                 
         if self.warnings or self.errors:
-            print "warnings %d, errors %d" % (self.warnings, self.errors)
+            print("warnings %d, errors %d" % (self.warnings, self.errors))

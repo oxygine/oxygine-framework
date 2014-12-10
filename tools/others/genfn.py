@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import cStringIO
+import io
 lines = open("../../../SDL/include/SDL_opengl_glext.h").readlines()
 funcs = ["glShaderSource", 
          "glUseProgram", 
@@ -40,9 +40,9 @@ funcs = ["glShaderSource",
 #GLAPI void APIENTRY glDeleteProgram (GLuint program);
 #PFNGLDELETEPROGRAMPROC
 
-base = cStringIO.StringIO()
-defl = cStringIO.StringIO()
-init = cStringIO.StringIO()
+base = io.StringIO()
+defl = io.StringIO()
+init = io.StringIO()
 
 
 
@@ -119,8 +119,8 @@ base.write("""
 }
 """)
 	
-print defl.getvalue()
-print base.getvalue()
-print init.getvalue()
+print(defl.getvalue())
+print(base.getvalue())
+print(init.getvalue())
 
 open("res.cpp", "w").write(defl.getvalue() + base.getvalue() + init.getvalue())

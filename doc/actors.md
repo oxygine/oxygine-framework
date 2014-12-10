@@ -7,11 +7,11 @@ Oxygine isn't low level 2D framework and in addition to this it provides own sce
 You could create Sprite, set position and image, attach it to scene and "forget". Sprite would be displayed and updated each frame automatically. You could say to this sprite "rotate on 360 degrees for 2 seconds 5 times and then remove self".
 
 	spSrite sprite = new Sprite;
-	sprite->attachTo(getRoot()); 
+	sprite->attachTo(getStage()); 
 	sprite->addTween(Sprite::TweenRotation(2*PI), 2000, 5)->setDetachActor(true);
 
 > it is pseudocode, you also should set to sprite "image" resource or it would be empty and invisible  
-> getRoot() returns root node of the scene graph
+> getStage() returns root node of the scene graph
 
 You could create second *"child"* sprite attached to already created and they would be rotating both:
 
@@ -39,19 +39,32 @@ Actor has properties:
 You would widely use Sprites in your app.
 
 ##Sprite
-Sprite is inherited from Actor. Sprite = Actor + Image 
+Sprite is main Actor for displaying images and animations. Sprite = Actor + Image
+
+![Actor inheritance](img/sprite.png)
+
+##Polygon
+Sprite for rendering custom vertices array. Polygon = Sprite + Vertices 
+
+![Actor inheritance](img/polygon.png)
 
 ##TextField
 TextField is used for displaying text.
 
+![Actor inheritance](img/text.png)
+
 ##Progress Bar
 Progress Bar is used for displaying progress.
+
+![Actor inheritance](img/progressbar.png)
 
 ##ColorRectSprite
 It is rectangle filled with one color.
 
 ##ClipRectActor
-ClipRectActor is clipping outside childre.
+ClipRectActor is clipping outside children.
 
 ##MaskedSprite
 Sprite which is using other sprite for masking own children.
+
+![Actor inheritance](img/mask.png)

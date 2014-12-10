@@ -11,3 +11,8 @@ Work in progress...
 6. [Shaders](shaders)
 7. [Resources](resources)
 8. [Colors Table](colors)
+
+
+##Extensions:
+1. [oxygine-sound library](sounds)
+2. [oxygine-magicparticles library](magicparticles)

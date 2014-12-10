@@ -134,7 +134,7 @@ def run(args):
                         if ref[0] == file:
                             return ref[1]
                     obj = ""
-                    for i in xrange(24):
+                    for i in range(24):
                         obj += r.choice("0123456789ABCDEF")
                     self._refs.append((file, obj))
                     return obj
@@ -269,24 +269,28 @@ def run(args):
 
 
             from mimetypes import guess_type
-            print "src " + src_path
+            print("src " + src_path)
             tp = guess_type(src_path)
             if not tp[0]:
                 continue
 
-            print tp[0]
+            print(tp[0])
 
             q = tp[0].split("/")
 
             if q[0] == "text" or q[1] in ("xml", "x-msdos-program"):
-                print "creating file: " + dest_path
+                print("creating file: " + dest_path)
                 src_data = open(src_path, "r").read()
                 t = Template(src_data)
                 dest_data = t.safe_substitute(**values)                 
 
                 if args.type == "ios" or args.type == "macosx":
                     dest_file = io.open(dest_path, "w", newline="\n")
-                    dest_file.write(unicode(dest_data, encoding='utf-8')) 
+                    try:
+                        dest_file.write(str(dest_data, encoding='utf-8')) 
+                    except TypeError:
+                        dest_file.write(unicode(dest_data, encoding='utf-8')) 
+
                 else:
                     dest_file = open(dest_path, "w")
                     dest_file.write(dest_data)      
@@ -294,7 +298,7 @@ def run(args):
                 shutil.copystat(src_path, dest_path)
                 
             else:
-                print "copying file: " + dest_path                                
+                print("copying file: " + dest_path)                                
                 shutil.copyfile(src_path, dest_path)
 
 

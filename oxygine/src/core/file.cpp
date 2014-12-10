@@ -167,7 +167,7 @@ namespace oxygine
 
 		void read(const char *file, buffer &dest, error_policy ep)
 		{
-			dest.data.resize(0);
+			dest.data.clear();
 
 			autoClose ac(open(file, "rb", ep));
 			if (ac.getHandle())

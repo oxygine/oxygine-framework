@@ -146,7 +146,7 @@ def gen2(xml_res_file, dest_folder, mappings):
 
     
     
-    import StringIO
+    import io
 
     classes_node = root.getElementsByTagName("class")[0]
     
@@ -171,8 +171,8 @@ def gen2(xml_res_file, dest_folder, mappings):
         classes.add(custom_class)
         local_classes.add(custom_class)
     
-        header = StringIO.StringIO()
-        cpp = StringIO.StringIO()
+        header = io.StringIO()
+        cpp = io.StringIO()
         
         for node in res:
             name = node.getAttribute("name")
