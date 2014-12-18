@@ -1,3 +1,4 @@
+#include "GraphWalker.h"
 #include "Stage.h"
 #include "core/Renderer.h"
 #include "math/Rect.h"
@@ -9,7 +10,7 @@ namespace oxygine
 {
 	spStage Stage::instance;
 
-	Stage::Stage(bool autoReset) :_statUpdate(0), _statRender(0), _clipOuter(false), _viewport(0, 0, 0, 0)//, _active(true)
+	Stage::Stage( bool autoReset ) :_statUpdate( 0 ), _statRender( 0 ), _clipOuter( false ), _viewport( 0, 0, 0, 0 )//, _active(true)
 	{
 		spClock clock = new Clock();
 		setClock(clock);
@@ -118,7 +119,10 @@ namespace oxygine
 			clip = _viewport.cast<RectF>();
 		}
 		
+		updateOnlyPass = true;
 		Actor::render(rs);
+		updateOnlyPass = false;
+		Actor::render( rs );
 
 		_statRender = getTimeMS() - t;
 	}

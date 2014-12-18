@@ -18,6 +18,7 @@
 #include "Event.h"
 #include "EventDispatcher.h"
 #include "Font.h"
+#include "GraphWalker.h"
 #include "initActor.h"
 #include "Input.h"
 #include "InputText.h"
