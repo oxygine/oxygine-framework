@@ -292,10 +292,9 @@
     <ClCompile Include="..\..\src\Polygon.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\STDRenderer.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\MaskedRenderer.cpp">
+    <ClCompile Include="..\..\src\MaskedRenderer.cpp" />
+    <ClCompile Include="..\..\src\STDRenderer.cpp" />
+    <ClCompile Include="..\..\src\GraphWalker.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -634,10 +633,9 @@
     <ClInclude Include="..\..\src\Polygon.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\MaskedRenderer.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\STDRenderer.h">
+    <ClInclude Include="..\..\src\MaskedRenderer.h" />
+    <ClInclude Include="..\..\src\STDRenderer.h" />
+    <ClInclude Include="..\..\src\GraphWalker.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

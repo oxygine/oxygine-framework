@@ -62,6 +62,9 @@ namespace oxygine
 
 		static T dot(const VectorT2 &v1, const VectorT2 &v2);
 		static VectorT2 &normalize(VectorT2 &out, const VectorT2 &v);
+		static VectorT2 clamp( const VectorT2 &in, T maxLen );
+		static VectorT2 zero();
+		static VectorT2 lerp( const VectorT2 &in1, const VectorT2 &in2, float len );
 
 		struct  
 		{
@@ -156,6 +159,29 @@ namespace oxygine
 		return out;
 	}
 
+	template <class T>
+	inline VectorT2<T> VectorT2<T>::clamp(const VectorT2<T> &in, T maxLen)
+	{
+		VectorT2 out(in);
+		if(out.length() > maxLen)
+			out.normalizeTo(maxLen);
+
+		return out;
+	}
+
+	template <class T>
+	inline VectorT2<T> VectorT2<T>::zero()
+	{
+		return VectorT2<T>(static_cast<T>(0), static_cast<T>(0));
+	}
+
+	template <class T>
+	VectorT2<T> VectorT2<T>::lerp( const VectorT2<T> &in1, const VectorT2<T> &in2, float len )
+	{
+		VectorT2<T> delta = in2 - in1;
+		delta *= len;
+		return in1 + delta;
+	}
 
 	typedef VectorT2<float> Vector2;
 	typedef VectorT2<double> VectorD2;

@@ -48,6 +48,8 @@ namespace oxygine
 
 		std::string dump(const dumpOptions &opt) const;
 
+		void setGlobalPriority( bool val );
+
 	protected:
 		void onDeactivate(Event *);
 		void onActivate(Event *);

@@ -57,7 +57,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src\;..\..\third_party\win32\zlib;..\..\third_party\win32\libjpeg;..\..\third_party\win32\libpng;..\..\greenlets\src\;..\..\..\..\SDL\include\;..\..\third_party\win32\OGLES;..\..\third_party\win32\glew;../../third_party/win32/pthreads/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src\;..\..\third_party\win32\zlib;..\..\third_party\win32\libjpeg;..\..\third_party\win32\libpng;..\..\greenlets\src\;..\..\..\..\..\SDL\include\;..\..\third_party\win32\OGLES;..\..\third_party\win32\glew;../../third_party/win32/pthreads/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;OXYGINE_SDL;_WINDOWS;OX_HAVE_LIBPNG;OX_HAVE_LIBJPEG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -139,6 +139,7 @@
     <ClCompile Include="..\..\src\Draggable.cpp" />
     <ClCompile Include="..\..\src\EventDispatcher.cpp" />
     <ClCompile Include="..\..\src\Font.cpp" />
+    <ClCompile Include="..\..\src\GraphWalker.cpp" />
     <ClCompile Include="..\..\src\Input.cpp" />
     <ClCompile Include="..\..\src\InputText.cpp" />
     <ClCompile Include="..\..\src\MaskedRenderer.cpp" />
@@ -236,6 +237,7 @@
     <ClInclude Include="..\..\src\Event.h" />
     <ClInclude Include="..\..\src\EventDispatcher.h" />
     <ClInclude Include="..\..\src\Font.h" />
+    <ClInclude Include="..\..\src\GraphWalker.h" />
     <ClInclude Include="..\..\src\InitActor.h" />
     <ClInclude Include="..\..\src\Input.h" />
     <ClInclude Include="..\..\src\InputText.h" />

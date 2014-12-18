@@ -15,6 +15,7 @@
 #include "utils/intrusive_list.h"
 #include "Tweener.h"
 #include "Event.h"
+#include "RenderState.h"
 
 namespace oxygine
 {
@@ -278,6 +279,11 @@ namespace oxygine
 		void serialize(serializedata* data);
 		void deserialize(const deserializedata* data);
 
+		RenderState& getParentRenderState();
+
+		virtual bool asGlobalZordering();
+		virtual bool asLocalZordering( );
+
 	protected:
 		void _setSize(const Vector2 &);
 		
@@ -293,9 +299,11 @@ namespace oxygine
 
 		virtual void sizeChanged(const Vector2 &size);
 
-		bool prepareRender(RenderState &rs, const RenderState &parentRS);
 		void completeRender(const RenderState &rs);
-		bool internalRender(RenderState &rs, const RenderState &parentRS);
+		bool prepareRender( RenderState &rs, const RenderState &parentRS );
+		bool internalRender( RenderState &rs, const RenderState &parentRS );
+
+		friend class GlobalZordering;
 
 		void updateTransform() const;
 		void internalUpdate(const UpdateState &us);
@@ -308,6 +316,8 @@ namespace oxygine
 		pointer_index _pressed;
 		pointer_index _overed;
 
+		static bool updateOnlyPass;
+
 	private:
 		short	_zOrder;
 
@@ -316,7 +326,6 @@ namespace oxygine
 		Vector2 _scale;
 		Vector2 _size;
 		float	_rotation;
-
 
 	protected:	
 		mutable unsigned short _flags;
@@ -344,13 +353,13 @@ namespace oxygine
 		spClock _clock;	
 
 		Actor *_parent;
+		RenderState _parentRenderState;
 
 		typedef intrusive_list<spTween> tweens;
 		tweens _tweens;
 
 
 		static void setParent(Actor *actor, Actor *parent){actor->_parent = parent;}
-
 
 		void _onMouseEvent(Event *ev);
 		

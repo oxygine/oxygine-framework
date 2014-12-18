@@ -15,10 +15,10 @@
 #include <stdio.h>
 #include "Serialize.h"
 
-//#include ""
-
 namespace oxygine
 {
+	bool Actor::updateOnlyPass = false;
+
 	string div(const string &val, const Color &color)
 	{
 		char str[255];
@@ -1004,13 +1004,20 @@ namespace oxygine
 
 		//if (_cbDoRender)
 		//	_cbDoRender(rs);
-		doRender(rs);
-		completeRender(rs);
+
+		if( updateOnlyPass )
+			return true;
+
+		doRender( rs );
+		completeRender( rs );
+			
 		return true;
 	}
 
 	void Actor::render(const RenderState &parentRS)
 	{
+		_parentRenderState = parentRS;
+
 		RenderState rs;		
 		if (!internalRender(rs, parentRS))
 			return;
@@ -1231,6 +1238,11 @@ namespace oxygine
 		}
 	}
 
+	RenderState& Actor::getParentRenderState( )
+	{
+		return _parentRenderState;
+	}
+
 	Vector2 convert_global2local_(Actor *child, Actor *parent, Vector2 pos)
 	{
 		if (child->getParent() && child->getParent() != parent)
@@ -1307,4 +1319,15 @@ namespace oxygine
 		actor->setPosition(pos);
 		actor->attachTo(newParent);
 	}
+
+	bool Actor::asGlobalZordering()
+	{
+		return false;
+	}
+
+	bool Actor::asLocalZordering()
+	{
+		return false;
+	}
+
 }
