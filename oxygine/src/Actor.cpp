@@ -14,7 +14,6 @@
 #include "RenderState.h"
 #include <stdio.h>
 #include "Serialize.h"
-#include "GraphWalker.h"
 
 namespace oxygine
 {
