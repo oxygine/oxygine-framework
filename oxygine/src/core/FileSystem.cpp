@@ -1,5 +1,6 @@
 #include "FileSystem.h"
 #include <string.h>
+#include <algorithm>
 
 namespace oxygine
 {

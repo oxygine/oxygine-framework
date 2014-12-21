@@ -156,9 +156,6 @@
     <ClCompile Include="..\..\src\core\Mem2Native.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\memory_pool.cpp">
-      <Filter>src\core</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\core\Mutex.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
@@ -258,9 +255,6 @@
     <ClCompile Include="..\..\src\Sprite.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Tweener.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\VisualStyle.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -298,6 +292,15 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\STDRenderer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Serializable.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Tween.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\TweenQueue.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -462,9 +465,6 @@
       <Filter>src\core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\core\Mem2Native.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\core\memory_pool.h">
       <Filter>src\core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\core\Mutex.h">
@@ -645,6 +645,27 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\STDRenderer.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KeyEvent.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\oxygine_include.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Property.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Serializable.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\TouchEvent.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Tween.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\TweenQueue.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
