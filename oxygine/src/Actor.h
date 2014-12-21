@@ -1,26 +1,21 @@
 #pragma once
 #include "oxygine_include.h"
-#include "core/oxygine.h"
-#include "EventDispatcher.h"
 #include "core/Object.h"
-#include "math/Color.h"
-#include "Clock.h"
-#include "math/Rect.h"
-#include "Tweener.h"
-
-#include <vector>
-#include <list>
-#include "math/AffineTransform.h"
 #include "core/Renderer.h"
+#include "math/Rect.h"
+#include "math/AffineTransform.h"
 #include "utils/intrusive_list.h"
-#include "Tweener.h"
-#include "Event.h"
+#include "Serializable.h"
+#include "EventDispatcher.h"
+#include "TouchEvent.h"
+#include "Tween.h"
+
+
 
 namespace oxygine
 {
-	class Renderer;
-	class Color;
 	class Event;
+	typedef char pointer_index;
 
 	typedef unsigned int dumpOptions;
 
@@ -32,20 +27,6 @@ namespace oxygine
 	DECLARE_SMART(Actor, spActor);
 	DECLARE_SMART(Clock, spClock);
 
-	typedef std::vector<spActor> actors;
-
-	
-	/*
-	template<class T>
-	T *create(T *item, const Vector2 *pos, const char *name)
-	{
-		if (pos)
-			item->setPosition(pos);
-		if (name)
-			item->setName(name);
-		return item;
-	}
-	*/
 
 	typedef Closure<void (const UpdateState &us)> UpdateCallback;
 	typedef Closure<void (const RenderState &rs)> RenderCallback;
@@ -64,26 +45,19 @@ namespace oxygine
 	virtual type* clone(cloneOptions opt=0) const {type *tp = new type(); tp->copyFrom(*this, opt); return tp;}\
 	virtual void copyFrom(const type &src, cloneOptions opt = 0);
 
+#define DECLARE_COPYCLONE_NEW2(type)  type(const type &src, cloneOptions opt = 0);\
+	virtual type* clone(cloneOptions opt=0) const;\
+	virtual void copyFrom(const type &src, cloneOptions opt = 0);
 
-
-
-	struct serializedata;
-	struct deserializedata;
-
-
-	class Serializable
-	{
-	public:
-		virtual void serialize(serializedata*){}
-		virtual void deserialize(const deserializedata*){}
-	};
+#define CREATE_COPYCLONE_NEW(type) type::type(const type &src, cloneOptions opt){copyFrom(src, opt);}\
+	type* type::clone(cloneOptions opt) const {type *tp = new type(); tp->copyFrom(*this, opt); return tp;}
 	
 
 	class Actor : public EventDispatcher, public intrusive_list_item<spActor>, public Serializable
 	{
 		typedef intrusive_list_item<spActor> intr_list;
 	public:
-		DECLARE_COPYCLONE_NEW(Actor);
+		DECLARE_COPYCLONE_NEW2(Actor);
 
 		Actor();
 		virtual ~Actor();
@@ -99,18 +73,18 @@ namespace oxygine
 
 		
 		/**search child by name recursively, could return self*/
-		Actor*				getDescendant(const string &name, error_policy ep = ep_show_error);
+		Actor*				getDescendant(const std::string &name, error_policy ep = ep_show_error);
 		/**search child by name recursively and cast it to other class*/
 		template<class T>
-		T*					getDescendantT(const string &name, error_policy ep = ep_show_error) {return safeCast<T*> (getDescendant(name, ep));}
+		T*					getDescendantT(const std::string &name, error_policy ep = ep_show_error) { return safeCast<T*>(getDescendant(name, ep)); }
 		/**search child by name*/
-		spActor				getChild(const string &name, error_policy ep = ep_show_error) const;
+		spActor				getChild(const std::string &name, error_policy ep = ep_show_error) const;
 		/**search child by name and cast it to other class*/
 		template<class T>
-		T*					getChildT(const string &name, error_policy ep = ep_show_error) const {return safeCast<T*> (getChild(name, ep).get());}
+		T*					getChildT(const std::string &name, error_policy ep = ep_show_error) const { return safeCast<T*>(getChild(name, ep).get()); }
 
 		/**search tween by name*/
-		spTween				getTween(const string &name, error_policy ep = ep_show_error);
+		spTween				getTween(const std::string &name, error_policy ep = ep_show_error);
 		/**returns first tween in actor*/
 		spTween				getFirstTween() const {return _tweens._first;}
 		/**returns last tween in actor*/
@@ -136,6 +110,10 @@ namespace oxygine
 		unsigned char		getAlpha() const {return _alpha;}
 		const spClock&		getClock() const;
 		virtual RectF		getDestRect() const;
+		/**returns touch id if actor is pressed down*/
+		pointer_index		getPressed() const;
+		/**returns touch id if actor is moused overed*/
+		pointer_index		getOvered() const;
 		bool				getInputEnabled() const {return (_flags & flag_touchEnabled) != 0;}
 		bool				getInputChildrenEnabled() const {return (_flags & flag_touchChildrenEnabled) != 0;}
 		bool				getChildrenRelative() const {return (_flags & flag_childrenRelative) != 0;;}
@@ -197,9 +175,9 @@ namespace oxygine
 		/**Enables/Disables Touch events for children of Actor.*/
 		void setTouchChildrenEnabled(bool enabled) { _flags &= ~flag_touchChildrenEnabled; if (enabled) _flags |= flag_touchChildrenEnabled; }
 
-		/**Sets callback which would be called each Actor::update cycle before doUpdate. Use it if you don't want inherit from Actor and overload Actor::doUpdate.*/
-		/**Sets callback which would be called each Actor::render cycle before doRender. Use it if you don't want inherit from Actor and overload Actor::doRender.*/
+		/**Sets callback which would be called each Actor::update cycle before doUpdate. Use it if you don't want inherit from Actor and overload Actor::doUpdate.*/		
 		void setCallbackDoUpdate(UpdateCallback cb){_cbDoUpdate = cb;}
+		/**Sets callback which would be called each Actor::render cycle before doRender. Use it if you don't want inherit from Actor and overload Actor::doRender.*/
 		//void setCallbackDoRender(RenderCallback cb){_cbDoRender = cb;}
 
 		virtual bool isOn(const Vector2 &localPosition);
@@ -225,13 +203,7 @@ namespace oxygine
 
 		/**Dispatches an event into the event flow. The event target is the EventDispatcher object upon which the dispatchEvent() method is called.*/
 		void dispatchEvent(Event *event);
-
-
-		pointer_index getPressed() const;
-		pointer_index getOvered() const;
-		void setPressed(pointer_index v);
-		void setOvered(pointer_index v);
-
+		
 		virtual void updateState(){}
 		
 		spTween addTween(spTween);		
@@ -241,7 +213,7 @@ namespace oxygine
 		{return addTween(createTween(gs, duration, loops, twoSides, delay, ease));}
 
 		void removeTween(spTween);
-		void removeTweensByName(const string &name);
+		void removeTweensByName(const std::string &name);
 		/**remove all tweens and call completes them if callComplete == true*/
 		void removeTweens(bool callComplete = false);
 		
@@ -251,47 +223,49 @@ namespace oxygine
 		virtual void render(const RenderState &rs);
 		virtual void handleEvent(Event *event);		
 		virtual void doRender(const RenderState &rs){}
-
-		/**Returns detailed actor information. Used for debug purposes. */
-		virtual std::string dump(const dumpOptions &opt) const;
-
-
+		
 		//converts global position (position in parent space) to local space
 		Vector2 global2local(const Vector2 &pos) const;
 		//converts local position to parent space
 		Vector2 local2global(const Vector2 &pos) const;
 
 				
-		typedef GetSet2Args<float, Vector2, const Vector2 &, Actor, &Actor::getPosition, &Actor::setPosition>	TweenPosition;
-		typedef GetSet<float, float, Actor, &Actor::getX, &Actor::setX>											TweenX;
-		typedef GetSet<float, float, Actor, &Actor::getY, &Actor::setY>											TweenY;
-		typedef GetSet<float, float, Actor, &Actor::getWidth, &Actor::setWidth>									TweenWidth;
-		typedef GetSet<float, float, Actor, &Actor::getHeight, &Actor::setHeight>								TweenHeight;
-		typedef GetSet<float, float, Actor, &Actor::getRotation, &Actor::setRotation>							TweenRotation;
-		typedef GetSet<float, float, Actor, &Actor::getRotationDegrees, &Actor::setRotationDegrees>				TweenRotationDegrees;
-		typedef GetSet2Args1Arg<float, Vector2, const Vector2 &, Actor, &Actor::getScale, &Actor::setScale>		TweenScale;
-		typedef GetSet<float, float, Actor, &Actor::getScaleX, &Actor::setScaleX>								TweenScaleX;
-		typedef GetSet<float, float, Actor, &Actor::getScaleY, &Actor::setScaleY>								TweenScaleY;
-		typedef GetSet<unsigned char, unsigned char, Actor, &Actor::getAlpha, &Actor::setAlpha>					TweenAlpha;
+		typedef Property2Args<float, Vector2, const Vector2 &, Actor, &Actor::getPosition, &Actor::setPosition>	TweenPosition;
+		typedef Property<float, float, Actor, &Actor::getX, &Actor::setX>											TweenX;
+		typedef Property<float, float, Actor, &Actor::getY, &Actor::setY>											TweenY;
+		typedef Property<float, float, Actor, &Actor::getWidth, &Actor::setWidth>									TweenWidth;
+		typedef Property<float, float, Actor, &Actor::getHeight, &Actor::setHeight>								TweenHeight;
+		typedef Property<float, float, Actor, &Actor::getRotation, &Actor::setRotation>							TweenRotation;
+		typedef Property<float, float, Actor, &Actor::getRotationDegrees, &Actor::setRotationDegrees>				TweenRotationDegrees;
+		typedef Property2Args1Arg<float, Vector2, const Vector2 &, Actor, &Actor::getScale, &Actor::setScale>		TweenScale;
+		typedef Property<float, float, Actor, &Actor::getScaleX, &Actor::setScaleX>								TweenScaleX;
+		typedef Property<float, float, Actor, &Actor::getScaleY, &Actor::setScaleY>								TweenScaleY;
+		typedef Property<unsigned char, unsigned char, Actor, &Actor::getAlpha, &Actor::setAlpha>					TweenAlpha;
 		
 
 		void serialize(serializedata* data);
 		void deserialize(const deserializedata* data);
 
+		/**Returns detailed actor information. Used for debug purposes. */
+		virtual std::string dump(const dumpOptions &opt) const;
+
+		
+
 	protected:
+		typedef intrusive_list<spActor> children;
+		static void setParent(Actor *actor, Actor *parent){ actor->_parent = parent; }
+		static void setPressed(Actor *actor, pointer_index v){ actor->setPressed(v); }
+		static children &getChildren(spActor &actor){ return actor->_children; }
+
+		void setOverred(pointer_index v);
+		void setPressed(pointer_index v);
+		void _onMouseEvent(Event *ev);
+		RectF calcDestRectF(const RectF &destRect, const Vector2 &size) const;		
 		void _setSize(const Vector2 &);
-		
-
-		Actor*	_getDescendant(const string &name);
-		spTween _addTween(spTween tween, bool rel);
-
-		
-		/**doUpdate is virtual method for overloading in inherited classes. UpdateState struct has local time of Actor (relative to Clock) and delta time.*/
-		virtual void doUpdate(const UpdateState &us);
-		UpdateCallback _cbDoUpdate;
-		//RenderCallback _cbDoRender;
-
 		virtual void sizeChanged(const Vector2 &size);
+		RectF	getScreenSpaceDestRect(const Renderer::transform &) const;
+		Actor*	_getDescendant(const std::string &name);
+		spTween _addTween(spTween tween, bool rel);
 
 		bool prepareRender(RenderState &rs, const RenderState &parentRS);
 		void completeRender(const RenderState &rs);
@@ -300,28 +274,13 @@ namespace oxygine
 		void updateTransform() const;
 		void internalUpdate(const UpdateState &us);
 
-		RectF getScreenSpaceDestRect(const Renderer::transform &) const; 
-
-		//static void internalRemoveChild(spActor parent, spActor actor, bool fast = false);
-
-
-		pointer_index _pressed;
-		pointer_index _overed;
-
-	private:
-		short	_zOrder;
-
-		Vector2 _pos;		
-		Vector2 _anchor;		
-		Vector2 _scale;
-		Vector2 _size;
-		float	_rotation;
-
-
-	protected:	
-		mutable unsigned short _flags;
+		/**doUpdate is virtual method for overloading in inherited classes. UpdateState struct has local time of Actor (relative to Clock) and delta time.*/
+		virtual void doUpdate(const UpdateState &us);
+		UpdateCallback _cbDoUpdate;
+		
 		mutable Renderer::transform	_transform;
 		mutable Renderer::transform	_transformInvert;
+
 
 		enum flags
 		{
@@ -337,29 +296,29 @@ namespace oxygine
 			flag_last					= flag_fastTransform
 		};
 
-
+		mutable unsigned short _flags;
 		unsigned char	_alpha;
 		char	_extendedIsOn;
 
-		spClock _clock;	
-
+		spClock _clock;
 		Actor *_parent;
 
 		typedef intrusive_list<spTween> tweens;
 		tweens _tweens;
 
+		children _children;		
 
-		static void setParent(Actor *actor, Actor *parent){actor->_parent = parent;}
+		pointer_index _pressed;
+		pointer_index _overred;
 
+	private:
+		short	_zOrder;
 
-		void _onMouseEvent(Event *ev);
-		
-		typedef intrusive_list<spActor> children;
-		children _children;
-
-		static children &getChildren(spActor &actor){return actor->_children;}
-
-		RectF calcDestRectF(const RectF &destRect, const Vector2 &size) const;
+		Vector2 _pos;
+		Vector2 _anchor;
+		Vector2 _scale;
+		Vector2 _size;
+		float	_rotation;
 	};
 
 	Vector2 convert_global2local(spActor child, spActor parent, const Vector2 &pos);//deprecated, use convert_stage2local

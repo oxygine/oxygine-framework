@@ -300,12 +300,13 @@ namespace oxygine
 					spActor act = safeSpCast<Actor>(_holded);
 					while(act && act.get() != _content.get())
 					{
-						act->setPressed(0);
+						Actor::setPressed(act.get(), 0);
+						//act->setPressed(0);
 						//act->setOvered(0);
 						act = act->getParent();
 					}
 
-					_content->setPressed(te->index);
+					Actor::setPressed(_content.get(), te->index);
 					_holded = 0;
 				}
 			}			

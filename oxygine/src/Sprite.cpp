@@ -47,10 +47,10 @@ namespace oxygine
 
 	std::string Sprite::dump(const dumpOptions &options) const
 	{
-		stringstream stream;
+		std::stringstream stream;
 		stream << "{Sprite}\n";
 		stream << _vstyle.dump() << " ";
-		string tname = "null";
+		std::string tname = "null";
 		if (_frame.getDiffuse().base)
 			tname = _frame.getDiffuse().base->getName();
 		stream << "texture='" << tname << "' "; 
@@ -183,7 +183,7 @@ namespace oxygine
 					hint = r->getName().c_str();
 			}
 
-			if (rs->getName().find(':') == string::npos)
+			if (rs->getName().find(':') == std::string::npos)
 			{
 				char name[255];
 				safe_sprintf(name, "%s:%s", hint, rs->getName().c_str());

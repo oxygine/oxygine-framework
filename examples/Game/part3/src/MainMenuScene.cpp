@@ -5,6 +5,8 @@
 #include "MyButton.h"
 #include "GameScene.h"
 
+using namespace std;
+
 spMainMenuScene MainMenuScene::instance;
 
 MainMenuScene::MainMenuScene()

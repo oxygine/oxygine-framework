@@ -109,7 +109,7 @@ class XmlProcessor:
         self.errors = 0
         #self.scale_factor = 1.0
         #self.scale_quality = 1.0
-        self.scale = args.scale
+        self.scale = args.scale        
         self.debug = args.debug
         
         self.processors = {}
@@ -225,6 +225,7 @@ class XmlProcessor:
 
         self._meta_doc = minidom.Document()
         meta_element = self._meta_doc.createElement("resources")
+        meta_element.setAttribute("version", "1")
         self._meta_doc.appendChild(meta_element)
         
         totalAtlasses = 0

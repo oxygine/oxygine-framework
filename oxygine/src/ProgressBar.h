@@ -33,10 +33,10 @@ namespace oxygine
 		void setProgress(float value);
 		void setDirection(direction dir);
 
-		string dump(const dumpOptions &) const;
+		std::string dump(const dumpOptions &) const;
 		void serialize(serializedata* data);
 		
-		typedef GetSet<float, float, ProgressBar, &ProgressBar::getProgress, &ProgressBar::setProgress> TweenProgress;		
+		typedef Property<float, float, ProgressBar, &ProgressBar::getProgress, &ProgressBar::setProgress> TweenProgress;		
 
 	private:
 		void doRender(const RenderState &rs);

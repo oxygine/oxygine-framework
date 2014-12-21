@@ -1,6 +1,5 @@
 #include <string>
 #include "STDFileSystem.h"
-#include "oxygine.h"
 #include "log.h"
 #include "utils/stringUtils.h"
 #include "Object.h"
@@ -98,8 +97,6 @@ namespace oxygine
 {
 	namespace file
 	{
-		using namespace std;
-
 		int _openedFiles = 0;
 		oxHandle* oxFileOpen(const char* filename, const char* mode)
 		{
@@ -186,7 +183,7 @@ namespace oxygine
 			return buff;
 		}
 
-		string STDFileSystem::getFullPath(const char *path)
+		std::string STDFileSystem::getFullPath(const char *path)
 		{
 			char buff[512];
 			return _getFullPath(path, buff);
@@ -288,7 +285,7 @@ namespace oxygine
 			return res == S3E_TRUE;
 #else
 			//todo optimize
-			oxHandle *h = oxFileOpen(buff, "r");
+			oxHandle *h = oxFileOpen(buff, "rb");
 			if (h)
 				oxFileClose(h);
 			return h != 0;

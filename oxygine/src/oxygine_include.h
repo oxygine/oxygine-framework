@@ -89,4 +89,35 @@ namespace oxygine{namespace log{void error(const char *format, ...);}}
 #endif
 
 
+#ifndef __S3E__
+#if defined(_MSC_VER) || defined(__BORLANDC__)
+typedef unsigned __int64 uint64;
+typedef signed __int64 int64;
+#else
+typedef unsigned long long uint64;
+typedef signed long long int64;
+#endif
+#endif
+
+namespace oxygine
+{
+	enum error_policy
+	{
+		ep_show_error,//shows assert and prints error to log
+		ep_show_warning,//prints warning to log
+		ep_ignore_error//doesn't show any errors
+	};
+
+
+	void handleErrorPolicy(error_policy ep, const char *format, ...);
+
+	typedef int timeMS;
+
+	/** returns local app time in milliseconds (1sec = 1000ms). Counting starts from zero*/
+	timeMS			getTimeMS();
+
+	void *fastAlloc(size_t size);
+	void fastFree(void *data);
+}
+
 #endif //OXYGINE_INCLUDE

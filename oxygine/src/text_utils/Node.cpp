@@ -180,7 +180,7 @@ namespace oxygine
 
 		void TextNode::_finalPass(Aligner &rd)
 		{
-			float scaleFactor = rd.getScaleFactor();
+			float scaleFactor = rd.getScale();
 
 			int offsetY = rd.bounds.pos.y;
 

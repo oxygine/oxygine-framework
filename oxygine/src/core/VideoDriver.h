@@ -3,6 +3,8 @@
 #include "ref_counter.h"
 #include "vertex.h"
 #include "math/Rect.h"
+#include "math/vector4.h"
+#include "math/matrix.h"
 #include <vector>
 
 namespace oxygine

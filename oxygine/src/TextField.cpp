@@ -123,7 +123,7 @@ namespace oxygine
 		needRebuild();
 	}
 
-	void TextField::setText(const string &str)
+	void TextField::setText(const std::string &str)
 	{
 		_flags &= ~flag_html;
 		if (_text != str)
@@ -133,12 +133,12 @@ namespace oxygine
 		}
 	}
 
-	void TextField::setText(const wstring &str)
+	void TextField::setText(const std::wstring &str)
 	{
 		setText(ws2utf8(str.c_str()));
 	}
 
-	void TextField::setHtmlText(const string &str)
+	void TextField::setHtmlText(const std::string &str)
 	{
 		_flags |= flag_html;
 		if (_text != str)
@@ -148,7 +148,7 @@ namespace oxygine
 		}
 	}
 
-	void TextField::setHtmlText(const wstring &str)
+	void TextField::setHtmlText(const std::wstring &str)
 	{
 		setHtmlText(ws2utf8(str.c_str()));
 	}
@@ -212,7 +212,7 @@ namespace oxygine
 			rd.end();
 
 			_root->finalPass(rd);
-			rd.bounds = (rd.bounds.cast<RectF>() / rd.getScaleFactor()).cast<Rect>();
+			rd.bounds = (rd.bounds.cast<RectF>() / rd.getScale()).cast<Rect>();
 
 			_textRect = rd.bounds;
 		}
@@ -256,7 +256,7 @@ namespace oxygine
 	std::string dumpStyle(const TextStyle &s, bool onlydiff)
 	{
 		TextStyle def;
-		stringstream stream;
+		std::stringstream stream;
 		if (!onlydiff || def.hAlign != s.hAlign)
 			stream << "hAlign=" << get_halign(s.hAlign);
 		if (!onlydiff || def.vAlign != s.vAlign)
@@ -281,10 +281,10 @@ namespace oxygine
 
 	std::string TextField::dump(const dumpOptions &options) const
 	{
-		stringstream stream;
+		std::stringstream stream;
 		stream << "{TextField}\n";
 		stream << _vstyle.dump();
-		string text = _text;
+		std::string text = _text;
 		if (text.size() > 15)
 		{
 			text.resize(15);
@@ -292,7 +292,7 @@ namespace oxygine
 		}
 		stream << " text=<div c='2b1a94'>'<![CDATA[" << text << "']]></div>";
 
-		string st = dumpStyle(_style, true);
+		std::string st = dumpStyle(_style, true);
 		if (st.size())
 			stream << " textStyle={" << st << "}"; 
 		if (_flags & flag_html)

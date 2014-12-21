@@ -7,50 +7,20 @@
 namespace oxygine
 {
 	typedef int eventType;
-	DECLARE_SMART(EventDispatcher, spEventDispatcher);	
-	
-	class Event
-	{
-	public:
-		enum {COMPLETE = makefourcc('_', 'E', 'C', 'M')};
+	class Event;
 
-		enum Phase
-		{
-			phase_capturing = 1,
-			phase_target,
-			phase_bubbling
-		};
+#define makefourcc(a,b,c,d) ( ((unsigned int)a) | (((unsigned int)b)<< 8) | (((unsigned int)c)<<16) | (((unsigned int)d)<<24))
 
-		eventType type;
-		Phase phase;
-		bool bubbles;
-		bool stopsImmediatePropagation;
-		bool stopsPropagation;
+	//eventID('_', '_', '_', '_')
+#define eventID(a,b,c,d) makefourcc(a,b,c,d)
 
-		void *userData;
-		spObject userDataObject;
+	/*sysEventID is used for system Oxygine events, use 'eventID' for custom game events*/
+#define sysEventID(b,c,d) makefourcc(0xA,b,c,d)
 
-		spEventDispatcher target;
-		spEventDispatcher currentTarget;// = object with our listener
-
-		Event(eventType Type, bool Bubbles = false):userData(0), type(Type), phase(phase_target), bubbles(Bubbles), stopsImmediatePropagation(false), stopsPropagation(false){}
-
-		virtual ~Event(){}
-
-		void stopPropagation(){stopsPropagation = true;}
-		void stopImmediatePropagation(){stopsPropagation = stopsImmediatePropagation = true;}
-
-		virtual Event* clone(){return new Event(*this);}
-		virtual void dump()
-		{
-
-		}
-	};
-
-	
 
 	typedef Closure<void (Event *ev)> EventCallback;
 
+	DECLARE_SMART(EventDispatcher, spEventDispatcher);
 	class EventDispatcher: public Object
 	{
 	public:

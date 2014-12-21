@@ -150,14 +150,14 @@ namespace oxygine
 
 		void FileSystem::mount(FileSystem *fs)
 		{
-			filesystems::iterator i = find(_filesystems.begin(), _filesystems.end(), fs);
+			filesystems::iterator i = std::find(_filesystems.begin(), _filesystems.end(), fs);
 			OX_ASSERT(i == _filesystems.end());
 			_filesystems.push_back(fs);
 		}
 
 		void FileSystem::unmount(FileSystem *fs)
 		{
-			filesystems::iterator i = find(_filesystems.begin(), _filesystems.end(), fs);
+			filesystems::iterator i = std::find(_filesystems.begin(), _filesystems.end(), fs);
 			if (i != _filesystems.end())
 			{
 				_filesystems.erase(i);

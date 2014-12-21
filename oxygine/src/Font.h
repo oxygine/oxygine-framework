@@ -31,25 +31,26 @@ namespace oxygine
 		Font();
 		~Font();
 
-		float getScaleFactor() const {return _scaleFactor;}
-		void setScaleFactor(float scale){_scaleFactor = scale;}
-
 		void init(const char *name, int size, int baselineDistance, int lineHeight);
+
 		void addGlyph(const glyph &g);
 		void sortGlyphs();
+
+		void setScale(float scale){ _scale = scale; }
 
 		const glyph*	getGlyph(int code) const;
 		int				getBaselineDistance() const;
 		int				getSize() const;
+		float			getScale() const;
 		int				getLineHeight() const;
 
 	private:
-		typedef vector<glyph> glyphs;
+		typedef std::vector<glyph> glyphs;
 		glyphs _glyphs;		 
 
-		float _scaleFactor;
+		float _scale;
 
-		int _size;
+		int _size;		
 		int _baselineDistance;
 		int _lineHeight;
 	};

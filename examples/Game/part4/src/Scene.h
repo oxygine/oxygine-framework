@@ -2,6 +2,7 @@
 #include "oxygine-framework.h"
 #include <vector>
 using namespace oxygine;
+using namespace std;
 
 DECLARE_SMART(Scene, spScene);
 class Scene: public EventDispatcher

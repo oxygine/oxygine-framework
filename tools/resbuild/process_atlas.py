@@ -70,8 +70,8 @@ class ResAnim:
     def __init__(self):
         self.frames = []
         self.name = ""
-        self.frame_size = (1, 1)
-        self.frame_scale = 1.0
+        self.frame_size2 = (1, 1)#original size * scale_factor
+        self.frame_scale2 = 1.0
         self.columns = 0
         self.rows = 0
         self.walker = None
@@ -199,6 +199,179 @@ def pck(st, frames):
                     frames = not_packed   
                 else:
                     st.atlasses.pop()
+                    
+                    
+def processRS(context, walker):
+        
+    image_el = walker.root
+    
+    image_name = image_el.getAttribute("file")
+    if not image_name:
+        return None
+
+    file_path = walker.getPath("file")
+    
+    
+    #print image_path
+
+    image = None
+
+    #fn = self._getExistsFile(image_path)
+
+    #virtual_width = 1        
+    #virtual_height = 1
+    path = context.src_data + file_path
+    try:
+        image = Image.open(path)
+    except IOError:      
+        pass
+
+
+    if image:
+        #   virtual_width = int(image.size[0] * scale + 0.001)
+        #   virtual_height= int(image.size[1] * scale + 0.001)    
+        pass
+    else:
+        context.error("can't find image:\n%s\n" % (path, ))
+        image = Image.new("RGBA", (0, 0))        
+
+    resAnim = ResAnim()            
+    resAnim.walker = walker
+    resAnim.image = image
+    resAnim.name = image_name                        
+
+    
+
+    columns = as_int(image_el.getAttribute("cols"))
+    frame_width = as_int(image_el.getAttribute("frame_width"))
+    rows = as_int(image_el.getAttribute("rows"))
+    frame_height = as_int(image_el.getAttribute("frame_height"))
+    border = as_int(image_el.getAttribute("border"))
+    #sq = as_float(image_el.getAttribute("scale_quality"), 1)
+    #next.scale_quality *= sq
+    
+    if not columns:
+        columns = 1
+    if not rows:
+        rows = 1
+
+
+    if frame_width:
+        columns = image.size[0] / frame_width
+    else:
+        frame_width = image.size[0] / columns
+
+    if frame_height:
+        rows = image.size[1] / frame_height
+    else:
+        frame_height = image.size[1] / rows
+
+    size_warning = False
+
+    if frame_width * columns != image.size[0]:
+        size_warning = True
+        context.warning("image has width %d and %d columns:" % (image.size[0], columns))
+    if frame_height * rows != image.size[1]:
+        size_warning = True
+        context.warning("<image has height %d and %d rows:" % (image.size[1], rows))
+
+    if size_warning:
+        context.warnings += 1
+        
+    scale_factor = walker.scale_factor    
+    
+    resAnim.frame_scale2 = scale_factor        
+    finalScale = 1    
+    
+    upscale = False
+    
+    if context.args.resize:
+        max_scale = 1.0 / scale_factor
+        
+        finalScale = context.scale * walker.scale_quality
+        
+        if finalScale > max_scale:
+            if not context.args.upscale:
+                finalScale = max_scale
+            else:
+                upscale = True
+            
+        resAnim.frame_scale2 = 1.0 / finalScale
+        
+        finalScale = finalScale * scale_factor
+            
+
+    frame_size = (applyScale(frame_width, finalScale),
+                  applyScale(frame_height, finalScale))
+    
+    resAnim.frame_size2 = (applyScale(frame_width, scale_factor),
+                          applyScale(frame_height, scale_factor))            
+
+    resAnim.columns = columns
+    resAnim.rows = rows
+    
+    
+    for row in range(rows):
+        for col in range(columns):
+            rect = (int(col * frame_width), int(row * frame_height), int((col + 1) * frame_width), int((row + 1)* frame_height), )
+
+
+            frame_image = image.crop(rect)      
+
+
+            def resize():
+                ax = applyScale2(frame_width, finalScale);
+                ay = applyScale2(frame_height, finalScale);
+                bx = int(ax / finalScale)
+                by = int(ay / finalScale)
+                im = Image.new("RGBA", (bx, by))
+                im.paste(frame_image, (0, 0, frame_image.size[0], frame_image.size[1]))
+                frame_image = im.resize((ax, ay), Image.ANTIALIAS)
+                frame_image = frame_image.crop((0, 0, frame_size[0], frame_size[1]))                        
+                
+            resize_filter = Image.ANTIALIAS
+            if upscale:
+                resize_filter = Image.BICUBIC
+
+            if context.args.resize:
+                if as_bool(image_el.getAttribute("trueds")):
+                    frame_image = frame_image.resize((frame_size[0], frame_size[1]), resize_filter)
+                else:
+                    ax = applyScale2(frame_width, finalScale);
+                    ay = applyScale2(frame_height, finalScale);
+                    bx = int(ax / finalScale)
+                    by = int(ay / finalScale)
+                    im = Image.new("RGBA", (bx, by))
+                    im.paste(frame_image, (0, 0, frame_image.size[0], frame_image.size[1]))
+                    frame_image = im.resize((ax, ay), resize_filter)
+                    frame_image = frame_image.crop((0, 0, frame_size[0], frame_size[1]))
+
+            trim = True
+            if image_el.getAttribute("trim") == "0":
+                trim = False
+            if image.mode == "RGBA" and trim:
+                r,g,b,a = frame_image.split()
+                frame_bbox = a.getbbox()
+            else:
+                frame_bbox = frame_image.getbbox()
+
+            if not frame_bbox:
+                frame_bbox = (0,0,0,0)
+
+            w = frame_bbox[2] - frame_bbox[0]
+            h = frame_bbox[3] - frame_bbox[1]                    
+
+
+            frame_image = frame_image.crop(frame_bbox)
+
+            fr = frame(frame_image, frame_bbox, image_el, resAnim)
+            if border:
+                fr.border_left = fr.border_right = fr.border_top = fr.border_bottom = border
+            
+            resAnim.frames.append(fr)
+            
+    return resAnim                    
+
 
 class atlas_Processor(process.Process):
     node_id = "atlas"
@@ -206,171 +379,30 @@ class atlas_Processor(process.Process):
     def __init__(self):
         self.atlas_group_id = 0
 
-    def process(self, context, walker):
+
+    def process(self, context, walker):        
         self.atlas_group_id += 1
 
         #meta = context.add_meta()
 
         anims = []
-
         frames = []
         
         while True:
             next = walker.next()
+            if 0:
+                import xml_processor
+                next = xml_processor.XmlWalker()
+                
             if not next:
                 break
-
-            image_el = next.root
             
-
-            image_name = image_el.getAttribute("file")
-            if not image_name:
-                continue
+            anim = processRS(context, next)
             
-            file_path = next.getPath("file")
-
-
-            #print image_path
-
-            image = None
-
-            #fn = self._getExistsFile(image_path)
-
-            #virtual_width = 1        
-            #virtual_height = 1
-            path = context.src_data + file_path
-            try:
-                image = Image.open(path)
-            except IOError:      
-                pass
-
-
-            if image:
-                #   virtual_width = int(image.size[0] * scale + 0.001)
-                #   virtual_height= int(image.size[1] * scale + 0.001)    
-                pass
-            else:
-                context.error("can't find image:\n%s\n" % (path, ))
-                image = Image.new("RGBA", (0, 0))
-
-
-
-            resAnim = ResAnim()            
-            resAnim.walker = next
-            resAnim.image = image
-            resAnim.name = image_name                        
-
-            anims.append(resAnim)
-
-            columns = as_int(image_el.getAttribute("cols"))
-            frame_width = as_int(image_el.getAttribute("frame_width"))
-            rows = as_int(image_el.getAttribute("rows"))
-            frame_height = as_int(image_el.getAttribute("frame_height"))
-            border = as_int(image_el.getAttribute("border"))
-            #sq = as_float(image_el.getAttribute("scale_quality"), 1)
-            #next.scale_quality *= sq
+            if anim:
+                anims.append(anim)
+                frames.extend(anim.frames)            
             
-            if not columns:
-                columns = 1
-            if not rows:
-                rows = 1
-
-
-            if frame_width:
-                columns = image.size[0] / frame_width
-            else:
-                frame_width = image.size[0] / columns
-
-            if frame_height:
-                rows = image.size[1] / frame_height
-            else:
-                frame_height = image.size[1] / rows
-
-            size_warning = False
-            if frame_width * columns != image.size[0]:
-                size_warning = True
-                context.warning("image has width %d and %d columns:" % (image.size[0], columns))
-            if frame_height * rows != image.size[1]:
-                size_warning = True
-                context.warning("<image has height %d and %d rows:" % (image.size[1], rows))
-
-            if size_warning:
-                context.warnings += 1
-
-            finalScale = context.get_apply_scale(True, next)
-            upscale = False            
-            if finalScale > 1:
-                if not context.args.upscale:
-                    finalScale = 1
-                else:
-                    upscale = True
-
-            resAnim.frame_scale = context.get_apply_scale(False, next)
-            #todo, fix bug when frame_scale > 1 and finalScale = 1
-
-            resAnim.frame_size = (applyScale(frame_width, finalScale),
-                                  applyScale(frame_height, finalScale))
-
-            resAnim.columns = columns
-            resAnim.rows = rows
-
-
-            for row in range(rows):
-                for col in range(columns):
-                    rect = (int(col * frame_width), int(row * frame_height), int((col + 1) * frame_width), int((row + 1)* frame_height), )
- 
-
-                    frame_image = image.crop(rect)      
-
-
-                    def resize():
-                        ax = applyScale2(frame_width, finalScale);
-                        ay = applyScale2(frame_height, finalScale);
-                        bx = int(ax / finalScale)
-                        by = int(ay / finalScale)
-                        im = Image.new("RGBA", (bx, by))
-                        im.paste(frame_image, (0, 0, frame_image.size[0], frame_image.size[1]))
-                        frame_image = im.resize((ax, ay), Image.ANTIALIAS)
-                        frame_image = frame_image.crop((0, 0, resAnim.frame_size[0], resAnim.frame_size[1]))                        
-
-                    if context.args.resize:
-                        if as_bool(image_el.getAttribute("trueds")):
-                            frame_image = frame_image.resize((resAnim.frame_size[0], resAnim.frame_size[1]), Image.ANTIALIAS)
-                        else:
-                            ax = applyScale2(frame_width, finalScale);
-                            ay = applyScale2(frame_height, finalScale);
-                            bx = int(ax / finalScale)
-                            by = int(ay / finalScale)
-                            im = Image.new("RGBA", (bx, by))
-                            im.paste(frame_image, (0, 0, frame_image.size[0], frame_image.size[1]))
-                            frame_image = im.resize((ax, ay), Image.ANTIALIAS)
-                            frame_image = frame_image.crop((0,0,resAnim.frame_size[0], resAnim.frame_size[1]))
-
-                    trim = True
-                    if image_el.getAttribute("trim") == "0":
-                        trim = False
-                    if image.mode == "RGBA" and trim:
-                        r,g,b,a = frame_image.split()
-                        frame_bbox = a.getbbox()
-                    else:
-                        frame_bbox = frame_image.getbbox()
-
-                    if not frame_bbox:
-                        frame_bbox = (0,0,0,0)
-
-                    w = frame_bbox[2] - frame_bbox[0]
-                    h = frame_bbox[3] - frame_bbox[1]                    
-
-
-                    frame_image = frame_image.crop(frame_bbox)
-
-                    fr = frame(frame_image, frame_bbox, image_el, resAnim)
-                    if border:
-                        fr.border_left = fr.border_right = fr.border_top = fr.border_bottom = border
-                    
-
-                    frames.append(fr)
-                    resAnim.frames.append(fr)
         
         #sort frames by size
         #frames = sorted(frames, key = lambda fr: -fr.image.size[1])
@@ -451,7 +483,7 @@ class atlas_Processor(process.Process):
                 else:
                     cmd += " -q pvrtcfast"
                     
-                if upscale or context.args.dither:
+                if context.args.dither:
                     cmd += " -dither"                            
                 cmd += " -shh" #silent
                 os.system(cmd)
@@ -530,10 +562,10 @@ class atlas_Processor(process.Process):
 
             image_frames_el = anim.walker.root_meta
 
+            
             image_frames_el.setAttribute("fs", "%d,%d,%d,%d,%f" % (anim.columns, anim.rows, 
-                                                                   anim.frame_size[0], anim.frame_size[1], 
-                                                                   anim.frame_scale))
-            #meta.appendChild(image_frames_el)
+                                                                   anim.frame_size2[0], anim.frame_size2[1], 
+                                                                   anim.frame_scale2))        
 
             if context.debug:
                 image_frames_el.setAttribute("debug_image", anim.name)

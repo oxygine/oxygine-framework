@@ -60,6 +60,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>libjpeg.lib;libpng.lib;libzlib.lib;opengl32.lib;pthreadVCE2.lib;SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>../../..//oxygine/third_party/win32/libraries;../../..//libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>/ignore:4217 /ignore:4049 %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -80,38 +81,19 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>../../..//oxygine/third_party/win32/libraries;../../..//libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libjpeg.lib;libpng.lib;libzlib.lib;opengl32.lib;pthreadVCE2.lib;SDL2.lib;SDL2main.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/ignore:4217 /ignore:4049 %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
+  <ItemGroup>    
     <ProjectReference Include="../../../\oxygine\SDL\win32\oxygine_vs2013.vcxproj">
       <Project>{52411305-cfe1-4fa8-9885-5729bfc816cf}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="../src/entry_point.cpp" />
-    <ClCompile Include="../src/example.cpp" />
-    <ClCompile Include="../src/test.cpp" />
+    <ClCompile Include="../src/entry_point.cpp" /><ClCompile Include="../src/example.cpp" /><ClCompile Include="../src/test.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="../src/TestBox9Sprite.h" />
-    <ClInclude Include="../src/TestClipRect.h" />
-    <ClInclude Include="../src/TestDrag.h" />
-    <ClInclude Include="../src/TestInputText.h" />
-    <ClInclude Include="../src/TestManageRes.h" />
-    <ClInclude Include="../src/TestMask.h" />
-    <ClInclude Include="../src/TestPerf.h" />
-    <ClInclude Include="../src/TestProgressBar.h" />
-    <ClInclude Include="../src/TestRender2Texture.h" />
-    <ClInclude Include="../src/TestSliding.h" />
-    <ClInclude Include="../src/TestTexel2Pixel.h" />
-    <ClInclude Include="../src/TestText.h" />
-    <ClInclude Include="../src/TestTextureFormat.h" />
-    <ClInclude Include="../src/TestTweens.h" />
-    <ClInclude Include="../src/TestUserShader.h" />
-    <ClInclude Include="../src/example.h" />
-    <ClInclude Include="../src/test.h" />
-    <ClInclude Include="..\src\TestPolygon.h" />
-    <ClInclude Include="..\src\TestUserShader2.h" />
+    <ClInclude Include="../src/TestBox9Sprite.h" /><ClInclude Include="../src/TestClipRect.h" /><ClInclude Include="../src/TestDrag.h" /><ClInclude Include="../src/TestInputText.h" /><ClInclude Include="../src/TestManageRes.h" /><ClInclude Include="../src/TestMask.h" /><ClInclude Include="../src/TestPerf.h" /><ClInclude Include="../src/TestPolygon.h" /><ClInclude Include="../src/TestProgressBar.h" /><ClInclude Include="../src/TestRender2Texture.h" /><ClInclude Include="../src/TestSliding.h" /><ClInclude Include="../src/TestTexel2Pixel.h" /><ClInclude Include="../src/TestText.h" /><ClInclude Include="../src/TestTextureFormat.h" /><ClInclude Include="../src/TestTweens.h" /><ClInclude Include="../src/TestUserShader.h" /><ClInclude Include="../src/TestUserShader2.h" /><ClInclude Include="../src/example.h" /><ClInclude Include="../src/test.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

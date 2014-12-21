@@ -56,7 +56,7 @@ namespace oxygine
 			char _prefix[32];
 			bool _readonly;
 
-			typedef vector<FileSystem*> filesystems;
+			typedef std::vector<FileSystem*> filesystems;
 			filesystems _filesystems;
 		};
 

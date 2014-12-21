@@ -51,9 +51,9 @@ namespace oxygine
 			return tn;
 		}
 
-		text::Node *TextBuilder::parse(const string &st)
+		text::Node *TextBuilder::parse(const std::string &st)
 		{
-			string str = "<r>" + st + "</r>";
+			std::string str = "<r>" + st + "</r>";
 			pugi::xml_document doc;		
 
 			int flags = pugi::parse_default;

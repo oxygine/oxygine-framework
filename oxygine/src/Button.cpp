@@ -106,7 +106,7 @@ namespace oxygine
 
 				//if (isOn(me->localPosition))
 				//if (isDescendant(act))
-				if (_overed)
+				if (_overred)
 				{
 					//spMouseEvent e = new MouseEvent(et_Click);
 					//dispatchEvent(e.get());

@@ -62,6 +62,7 @@ public:
 		addButton("mask", "Mask");		
 		addButton("polygon", "Polygon");
 		addButton("inputtext", "Input Text");		
+		addButton("openbrowser", "Open Browser");
 		
 	}
 
@@ -151,6 +152,12 @@ public:
 		if (id == "inputtext")
 		{
 			getStage()->addChild(new TestInputText);
+		}
+
+		if (id == "openbrowser")
+		{
+			core::execute("http://oxygine.org/");
+			setVisible(true);
 		}
 	}
 };

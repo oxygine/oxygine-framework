@@ -230,7 +230,7 @@ namespace oxygine
 		_prepared = true;
 	}
 
-	string stretchMode2String(Box9Sprite::StretchMode s)
+	std::string stretchMode2String(Box9Sprite::StretchMode s)
 	{
 		switch (s)
 		{
@@ -247,7 +247,7 @@ namespace oxygine
 
 	std::string Box9Sprite::dump(const dumpOptions &options) const
 	{
-		stringstream stream;
+		std::stringstream stream;
 		stream << "{Box9Sprite}\n";
 		stream << "guideX1=" << _guideX[0] << " ";
 		stream << "guideX2=" << _guideX[1] << " ";

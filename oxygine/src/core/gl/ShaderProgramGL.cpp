@@ -41,7 +41,7 @@ namespace oxygine
 		glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &length);
 		if (length)
 		{
-			vector<char> bf;
+			std::vector<char> bf;
 			bf.resize(length);
 			glGetShaderInfoLog(shader, (int)bf.size(), NULL, &bf.front());
 			log::messageln("shader compiled: %s", &bf.front());

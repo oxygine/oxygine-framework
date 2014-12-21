@@ -12,9 +12,9 @@ namespace oxygine
 	public:
 		enum
 		{
-			ACTIVATE = makefourcc('_', 'R', 'A', 'c'),
-			DEACTIVATE = makefourcc('_', 'R', 'D', 'c'),
-			LOST_CONTEXT = makefourcc('_', 'R', 'L', 'C'),
+			ACTIVATE = sysEventID('S', 'A', 'c'),
+			DEACTIVATE = sysEventID('S', 'D', 'c'),
+			LOST_CONTEXT = sysEventID('S', 'L', 'C'),
 		};
 
 		static spStage instance;
@@ -29,6 +29,7 @@ namespace oxygine
 		*/
 		void init(const Point &displaySize, const Point &gameSize);
 				
+		/**use Scissor test for outer Stage area*/
 		void setClipOuterArea(bool clip){_clipOuter = clip;}
 		/**Render all actors*/
 		void render(Renderer &r);
@@ -44,7 +45,6 @@ namespace oxygine
 
 		RectF getDestRect() const;
 
-		//bool isActivte() const { return _active; }
 
 		std::string dump(const dumpOptions &opt) const;
 

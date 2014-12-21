@@ -7,7 +7,6 @@
 
 namespace oxygine
 {
-	void init_ext();
 
 	DECLARE_SMART(NativeTexture, spNativeTexture);
 	DECLARE_SMART(RenderTexture, spRenderTexture);
@@ -35,9 +34,10 @@ namespace oxygine
 		virtual void apply(const Rect *rect = 0) = 0;
 
 		/**returns handle (ptr) to HW texture ID*/
-		virtual nativeTextureHandle getHandle() const = 0;
-		
-		unsigned int getSizeVRAM() const {return _vram;}
+		virtual nativeTextureHandle getHandle() const = 0;		
+		unsigned int				getSizeVRAM() const {return _vram;}
+
+
 		//debug
 		static void dumpCreatedTextures();
 		static std::vector<spNativeTexture> getCreatedTextures();
@@ -70,8 +70,4 @@ namespace oxygine
 		int getHeight() const;
 		TextureFormat getFormat() const;
 	};
-
-
-	/**Returns View matrix where Left Top corner is (0,0), and right bottom is (w,h)*/
-	Matrix makeViewMatrix(int w, int h, bool flipU = false);
 }

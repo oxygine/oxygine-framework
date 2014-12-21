@@ -67,7 +67,7 @@ namespace oxygine
 	void ResFontBM::init(const char *path, const char *file, bool premultipliedAlpha, bool signedDistanceFont)
 	{
 		_premultipliedAlpha = premultipliedAlpha;
-		_file = string(path) + "/" + file;
+		_file = std::string(path) + "/" + file;
 		_createFont(0, signedDistanceFont, false);
 	}
 
@@ -177,7 +177,7 @@ namespace oxygine
 			
 		}		
 
-		string path = _file;
+		std::string path = _file;
 		file::buffer fb;
 		file::read(path.c_str(), fb);
 
@@ -241,8 +241,8 @@ namespace oxygine
 
 		if (context)
 		{
-			float scale_factor = context->walker.getMeta().attribute("sf").as_float(1);
-			_font->setScaleFactor(scale_factor);
+			float scale = context->walker.getMeta().attribute("sf").as_float(1.0f) / context->walker.getScaleFactor();
+			_font->setScale(scale);
 		}
 		
 

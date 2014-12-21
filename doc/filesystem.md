@@ -7,7 +7,7 @@ Read file, modify it and save back:
 
 	void test()
 	{
-		oxygine::file data;
+		oxygine::file::buffer data;
 	
 		//read entire file into buffer with stdio flags "rb"
 		oxygine::file::read("user", data);
@@ -29,10 +29,11 @@ Read file, modify it and save back:
 Namespace **oxygine::file** has also low level functions to working with files.
 	
 
-	oxygine::file::handle h = oxygine::file::open("user", "w");
-	oxygine::file::save(h, "Hello World", strlen("Hello World"));	
+	oxygine::file::handle h = oxygine::file::open("user", "wb");
+	oxygine::file::write(h, "Hello World", strlen("Hello World"));	
 	oxygine::file::close(h);
 
+> **Oxygine supports only binary file operations, you allways should use 'b' flag when opening file**
 
 ##Working with missing files
 
@@ -82,13 +83,13 @@ Or you could check it with **oxygine::file::exists** function. It is slower than
 
 
 
-##Mounting and zipped archieves to filesytem
+##Mounting zip archieves to filesytem
 
 First step is mount ZipFileSystem. More than one archive could be mounted at once:
 
 	#include "core/ZipFileSystem.h"
 
-	oxygine::ZipFileSystem zp;
+	oxygine::file::ZipFileSystem zp;
 
 	void mount()
 	{		

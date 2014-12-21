@@ -7,7 +7,6 @@ namespace oxygine
 	class UpdateState;
 
 
-
 	DECLARE_SMART(Clock, spClock);
 	class Clock: public Object
 	{
@@ -30,7 +29,8 @@ namespace oxygine
 		void	update(timeMS globalTime = -1);
 		timeMS  doTick();
 
-		string dump() const;
+		std::string dump() const;
+
 	private:
 		int		_counter;
 		double	_destTime;

@@ -63,8 +63,14 @@ namespace oxygine
 		{		
 			_x = 0;
 			_y = 0;
-			width = int(width * getScaleFactor());
-			height = int(height * getScaleFactor());
+
+			const TextStyle &st = getStyle();
+			_scale = st.font->getScale();
+			if (st.fontSize2Scale)
+				_scale = st.font->getSize() / float(st.fontSize2Scale);
+
+			width = int(width * _scale);
+			height = int(height * _scale);
 
 			bounds = Rect(_alignX(0), _alignY(0), 0, 0);		
 			nextLine();
@@ -107,7 +113,7 @@ namespace oxygine
 				for (size_t i = 0; i < ln.size(); ++i)
 				{
 					Symbol &s = *ln[i];
-					rx = max(s.x + s.gl->sw, rx);
+					rx = std::max(s.x + s.gl->sw, rx);
 				}
 
 				int tx = _alignX(rx);
@@ -120,8 +126,8 @@ namespace oxygine
 
 				_lineWidth = rx;
 
-				bounds.setX(min(tx, bounds.getX()));			
-				bounds.setWidth(max(_lineWidth, bounds.getWidth()));			
+				bounds.setX(std::min(tx, bounds.getX()));
+				bounds.setWidth(std::max(_lineWidth, bounds.getWidth()));
 			}
 		}
 
@@ -144,13 +150,9 @@ namespace oxygine
 			_line.clear();
 		}
 
-		float Aligner::getScaleFactor() const
+		float Aligner::getScale() const
 		{
-			float scaleFactor = getStyle().font->getScaleFactor();
-			if (getStyle().fontSize2Scale)
-				scaleFactor *= getStyle().font->getSize() / float(getStyle().fontSize2Scale);
-
-			return scaleFactor;
+			return _scale;
 		}
 
 		int Aligner::putSymbol(Symbol &s)
@@ -171,7 +173,7 @@ namespace oxygine
 			int rx = s.x + s.gl->sw;
 
 		
-			_lineWidth = max(rx, _lineWidth);
+			_lineWidth = std::max(rx, _lineWidth);
 
 			//
 			if (_lineWidth > width && getStyle().multiline && (width > 0) && _line.size() > 1)

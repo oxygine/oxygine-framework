@@ -81,7 +81,7 @@ namespace oxygine
 		//setTouchChildrenEnabled(false);
 	}
 
-	void getDescendants(spActor actor, vector<spActor> &actors)
+	void getDescendants(spActor actor, std::vector<spActor> &actors)
 	{
 		actors.push_back(actor);
 		spActor child = actor->getFirstChild();

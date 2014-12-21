@@ -74,7 +74,7 @@ public:
 		Vector2 size(420, 300);
 
 
-		tests.push_back(text_test( "It is html style tagged text. <div c='ffff00'>It could be colored.  It <div c='0000ff'>supports</div> <div c='00ff00AA'>nested tags</div> and  <br/> broken lines.</div><br/>It supports CDATA and xml escape sequences:\n<![CDATA[<div c='00ffff'>it is CDATA</div>]]>", 
+		tests.push_back(text_test( "It is html style tagged text. <div c='ffff00'>It could be colored.  It <div c='0000ff'>supports</div> <div c='00ff00AA'> nested tags</div> and  <br/> broken lines.</div><br/>It supports CDATA and xml escape sequences:\n<![CDATA[<div c='00ffff'>it is CDATA</div>]]>", 
 			TextStyle::HALIGN_CENTER, TextStyle::VALIGN_MIDDLE, size, true));
 
 		for (int h = TextStyle::HALIGN_LEFT; h <= TextStyle::HALIGN_RIGHT; ++h)

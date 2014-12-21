@@ -7,7 +7,7 @@ namespace oxygine
 	{
 		ResBuffer *rs = new ResBuffer();
 		pugi::xml_node node = context.walker.getNode();
-		string file = node.attribute("file").value();
+		std::string file = node.attribute("file").value();
 
 		rs->setName(Resource::extractID(node, file, ""));
 		rs->init(context.walker.getPath("file").c_str());

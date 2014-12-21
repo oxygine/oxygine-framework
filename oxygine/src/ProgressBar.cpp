@@ -305,9 +305,9 @@ namespace oxygine
 		}
 	}
 
-	string ProgressBar::dump(const dumpOptions &options) const
+	std::string ProgressBar::dump(const dumpOptions &options) const
 	{
-		stringstream stream;
+		std::stringstream stream;
 		stream << "{ProgressBar}\n";	
 
 		const char *dir = "dir_0";

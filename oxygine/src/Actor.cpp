@@ -4,7 +4,7 @@
 #include "res/ResAnim.h"
 #include "Stage.h"
 #include "Clock.h"
-#include "Tweener.h"
+#include "Tween.h"
 #include "math/AffineTransform.h"
 #include <sstream>
 #include <typeinfo>
@@ -19,10 +19,12 @@
 
 namespace oxygine
 {
-	string div(const string &val, const Color &color)
+	CREATE_COPYCLONE_NEW(Actor);
+
+	std::string div(const std::string &val, const Color &color)
 	{
 		char str[255];
-		sprintf(str, "<div c='%s'>%s</div>", color2hex(color).c_str(), val.c_str());
+		safe_sprintf(str, "<div c='%s'>%s</div>", color2hex(color).c_str(), val.c_str());
 		return str;
 	}
 
@@ -38,7 +40,7 @@ namespace oxygine
 			_parent(0),
 			_alpha(255),
 			_pressed(0),
-			_overed(0)
+			_overred(0)
 	{
 		_transform.identity();
 		_transformInvert.identity();
@@ -59,7 +61,7 @@ namespace oxygine
 		_flags = src._flags;
 		_parent = 0;
 		_alpha = src._alpha;
-		_overed = 0;
+		_overred = 0;
 		_pressed = 0;
 
 		_transform = src._transform;
@@ -101,7 +103,7 @@ namespace oxygine
 
 	std::string Actor::dump(const dumpOptions &opt) const
 	{
-		stringstream stream;
+		std::stringstream stream;
 		stream << "{" << typeid(*this).name() << "}";
 		//stream << this;
 
@@ -200,7 +202,7 @@ namespace oxygine
 
 	pointer_index Actor::getOvered() const
 	{
-		return _overed;
+		return _overred;
 	}
 
 	void Actor::setPressed(pointer_index v)
@@ -225,13 +227,13 @@ namespace oxygine
 			updateState();
 	}
 
-	void Actor::setOvered(pointer_index v)
+	void Actor::setOverred(pointer_index v)
 	{
-		if (_overed == v)
+		if (_overred == v)
 			return;
 
-		pointer_index old = _overed;
-		_overed = v;
+		pointer_index old = _overred;
+		_overred = v;
 		
 		if (v)
 		{
@@ -300,9 +302,9 @@ namespace oxygine
 			{
 				if (isDescendant(act))
 				{					
-					if (!_overed)
+					if (!_overred)
 					{
-						setOvered(me->index);
+						setOverred(me->index);
 
 						if (event->phase == Event::phase_target)
 							getStage()->addEventListener(TouchEvent::MOVE, CLOSURE(this, &Actor::_onMouseEvent));
@@ -310,8 +312,8 @@ namespace oxygine
 				}
 				else
 				{
-					if (_overed == me->index)
-						setOvered(0);
+					if (_overred == me->index)
+						setOverred(0);
 				}				
 			}
 			break;
@@ -336,9 +338,7 @@ namespace oxygine
 
 			if (_parent)
 			{
-				bool touchEvent = (event->type > (int)_et_TouchFirst) && (event->type < (int)_et_TouchLast);
-
-				if(touchEvent)
+				if (TouchEvent::isTouchEvent(event->type))
 				{	
 					TouchEvent *me = safeCast<TouchEvent *>(event);
 					me->localPosition = local2global(me->localPosition);
@@ -355,8 +355,8 @@ namespace oxygine
 
 	void Actor::handleEvent(Event *event)
 	{
-		bool touchEvent = (event->type > (int)_et_TouchFirst) && (event->type < (int)_et_TouchLast);
-		if (touchEvent)
+		bool touchEvent = TouchEvent::isTouchEvent(event->type);
+		if (TouchEvent::isTouchEvent(event->type))
 		{
 			if (!(_flags & flag_visible) || getAlpha() == 0)
 			{
@@ -366,7 +366,7 @@ namespace oxygine
 		
 		Vector2 originalLocalPos(0, 0);
 
-		if(touchEvent)
+		if (touchEvent)
 		{				
 			TouchEvent *me = safeCast<TouchEvent *>(event);
 			originalLocalPos = me->localPosition;
@@ -672,7 +672,7 @@ namespace oxygine
 		return false;
 	}
 
-	Actor* Actor::getDescendant(const string &name, error_policy ep)
+	Actor* Actor::getDescendant(const std::string &name, error_policy ep)
 	{
 		if (isName(name.c_str()))
 			return this;
@@ -685,7 +685,7 @@ namespace oxygine
 		return actor;
 	}
 
-	Actor* Actor::_getDescendant(const string &name)
+	Actor* Actor::_getDescendant(const std::string &name)
 	{
 		Actor *child = _children._first.get();
 		while (child)
@@ -709,7 +709,7 @@ namespace oxygine
 		return 0;
 	}
 
-	spActor	 Actor::getChild(const string &name, error_policy ep) const 
+	spActor	 Actor::getChild(const std::string &name, error_policy ep) const
 	{
 		spActor actor = _children._first;
 		while (actor)
@@ -1064,7 +1064,7 @@ namespace oxygine
 		return _addTween(tween, false);
 	}	
 
-	spTween Actor::getTween(const string &name, error_policy ep)
+	spTween Actor::getTween(const std::string &name, error_policy ep)
 	{
 		spTween tween = _tweens._first;
 		while (tween)
@@ -1106,7 +1106,7 @@ namespace oxygine
 		}
 	}
 
-	void Actor::removeTweensByName(const string &name)
+	void Actor::removeTweensByName(const std::string &name)
 	{
 		spTween t = _tweens._first;
 		while (t)

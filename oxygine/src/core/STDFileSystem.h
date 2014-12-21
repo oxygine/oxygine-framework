@@ -10,11 +10,11 @@ namespace oxygine
 		public:
 			STDFileSystem(bool readonly);
 
-			string getFullPath(const char *path);
+			std::string getFullPath(const char *path);
 			void setPath(const char *folder);
 
 		protected:
-			string _path;			
+			std::string _path;
 			char* _getFullPath(const char *path, char buff[512]);
 
 			status _open(const char *file_, const char *mode, error_policy ep, fileHandle*& fh);

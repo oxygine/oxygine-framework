@@ -88,7 +88,7 @@ namespace oxygine
 			return &_pointerMouse;
 		index -= 1;
 		OX_ASSERT(index >= 0 && index < MAX_TOUCHES);
-		index = min(max(index, 0), MAX_TOUCHES);
+		index = std::min(std::max(index, 0), MAX_TOUCHES);
 		return &_pointers[index];
 	}
 

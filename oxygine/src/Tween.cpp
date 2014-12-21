@@ -1,12 +1,13 @@
-#include "Tweener.h"
+#include "Tween.h"
 #include "Actor.h"
 #include "ColorRectSprite.h"
 #include <limits.h>
+
 namespace oxygine
 {
-	Tween::Tween():_duration(0), 
-		_loops(0), 
-		_percent(0), 
+	Tween::Tween() :_duration(0),
+		_loops(0),
+		_percent(0),
 		_status(status_not_started),
 		_elapsed(0), _twoSides(false), _ease(ease_linear), _detach(false), _delay(0), _client(0)
 	{
@@ -30,7 +31,7 @@ namespace oxygine
 		_loops = loops;
 		_twoSides = twoSides;
 		_delay = delay;
-				
+
 		if (_duration <= 0)
 		{
 			OX_ASSERT(!"Tweener duration should be more than ZERO");
@@ -91,7 +92,7 @@ namespace oxygine
 			DEF_EASY_FROM_IN(Quint, powf(t, 5));
 			DEF_EASY_FROM_IN(Sin, 1.0f - scalar::cos(t * (MATH_PI / 2.0f)));
 			DEF_EASY_FROM_IN(Expo, powf(2, 10 * (t - 1)));
-			DEF_EASY_FROM_IN(Circ, -1.0f * (sqrt(1 - t * t) - 1) );
+			DEF_EASY_FROM_IN(Circ, -1.0f * (sqrt(1 - t * t) - 1));
 			DEF_EASY_FROM_IN(Back, t * t * ((s + 1) * t - s));
 			DEF_EASY_FROM_IN(Bounce, 1 - outBounce(1 - t));
 
@@ -106,7 +107,7 @@ namespace oxygine
 	}
 
 
-	string ease2String(Tween::EASE ease)
+	std::string ease2String(Tween::EASE ease)
 	{
 #define STRINGIFY(x) #x
 #define S(x) STRINGIFY(x)
@@ -139,7 +140,7 @@ namespace oxygine
 
 		return "unknown";
 	}
-	
+
 	float Tween::_calcEase(float v)
 	{
 		if (_twoSides)
@@ -184,13 +185,13 @@ namespace oxygine
 		}
 
 		OX_ASSERT(_status == status_done);
-		
+
 		//_client->removeTween(this);		
 	}
 
 	void Tween::start(Actor &actor)
 	{
-		_client = &actor; 
+		_client = &actor;
 		_status = status_delayed;
 		if (_delay == 0)
 		{
@@ -202,52 +203,52 @@ namespace oxygine
 	void Tween::update(Actor &actor, const UpdateState &us)
 	{
 		_elapsed += us.dt;
-		switch(_status)
+		switch (_status)
 		{
 		case status_delayed:
+		{
+			if (_elapsed >= _delay)
 			{
-				if (_elapsed >= _delay)
-				{
-					_status = status_started;
-					_start(*_client);					
-				}
+				_status = status_started;
+				_start(*_client);
 			}
+		}
 			break;
 		case status_started:
+		{
+			if (_duration)
 			{
-				if (_duration)
-				{				
-					timeMS localElapsed = _elapsed - _delay;
+				timeMS localElapsed = _elapsed - _delay;
 
-					int loopsDone = localElapsed / _duration;
+				int loopsDone = localElapsed / _duration;
 
-					_percent = _calcEase(((float)(localElapsed - loopsDone * _duration)) / _duration);
+				_percent = _calcEase(((float)(localElapsed - loopsDone * _duration)) / _duration);
 
-					if (_loops > 0 && int(loopsDone) >= _loops)
-					{
-						if (_twoSides)
-							_percent = 0;
-						else
-							_percent = 1;
+				if (_loops > 0 && int(loopsDone) >= _loops)
+				{
+					if (_twoSides)
+						_percent = 0;
+					else
+						_percent = 1;
 
-						_status = status_done;
-					}
+					_status = status_done;
 				}
-				_update(*_client, us);
 			}
+			_update(*_client, us);
+		}
 			break;
 		case status_done:
-			{
-				done(*_client, us);
-			}
+		{
+			done(*_client, us);
+		}
 			break;
 		}
 	}
 
 	void Tween::done(Actor &actor, const UpdateState &us)
-	{		
+	{
 		_done(actor, us);
-		
+
 		if (_detach)
 		{
 			actor.detach();
@@ -257,57 +258,12 @@ namespace oxygine
 		ev.target = ev.currentTarget = &actor;
 		ev.tween = this;
 
-		if (_cbDone)		
+		if (_cbDone)
 			_cbDone(&ev);
 
 		dispatchEvent(&ev);
 
 		_status = status_remove;
-	}
-
-	
-	spTween TweenQueue::add(spTween t)
-	{
-		OX_ASSERT(t);
-		if (!t)
-			return 0;
-
-		_tweens.append(t);		
-		return t;
-	}
-
-	void TweenQueue::complete(timeMS deltaTime)
-	{
-		OX_ASSERT("Tween::complete is not supported for TweenQueue");
-	}
-
-	void TweenQueue::_start(Actor &actor)
-	{
-		_current = _tweens._first;
-		if (!_current)
-			return;
-
-		_current->start(actor);
-	}
-
-	void TweenQueue::_update(Actor &actor, const UpdateState &us)
-	{
-		_elapsed += us.dt;
-
-		if (_current)
-		{
-			spTween next = _current->getNextSibling();
-			_current->update(actor, us);
-			if (_current->isDone())
-			{
-				_current = next;
-				if (_current)				
-					_current->start(actor);				
-			}
-		}
-
-		if (!_current)
-			_status = status_done;
 	}
 
 	Actor* TweenEvent::getActor() const

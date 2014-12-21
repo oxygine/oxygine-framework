@@ -1,0 +1,61 @@
+<html>
+<head>
+<title>Bitmap Font Generator - Documentation</title>
+</head>
+<body>
+
+<h1>Bitmap Font Generator - Documentation</h1>
+
+<p><a href="../documentation.html">Back to main page</a></p>
+
+<p><img src="measures.png" align="right"></p>
+
+<h2>How to interpret the values in the font descriptor file</h2>
+
+<p>The image to the right illustrates some of the values found in the 
+<A href="file_format.html">font descriptor file</a>. The two dotted lines 
+shows the <tt>lineHeight</tt>, i.e. how far the cursor should be moved 
+vertically when moving to the next line.</p>
+
+<p>The <tt>base</tt> value is how far from the top of the cell height the
+base of the characters in the font should be placed. Characters can of course
+extend above or below this base line, which is entirely up to the font design.</p>
+
+<p>The filled red dot marks the current cursor position, and the hollow red dot
+marks the position of the cursor after drawing the character. You get to this 
+position by moving the cursor horizontally with the <tt>xadvance</tt> value. If 
+kerning pairs are used the cursor should also be moved accordingly.</p>
+
+<p>The <tt>yoffset</tt> gives the distance from the top of the cell height to
+the top of the character. A negative value here would mean that the character
+extends above the cell height. The <tt>xoffset</tt> gives the horizontal offset
+that should be added to the cursor position to find the left position where the 
+character should be drawn. A negative value here would mean that the character
+slightly overlaps the previous character. Observe that these values shouldn't 
+be used to move the cursor position.</p>
+
+<p>The green rectangle illustrates the quad that should be copied from the texture
+to the screen when rendering the character. The <tt>width</tt> and <tt>height</tt> 
+gives the size of this rectangle, and <tt>x</tt> and <tt>y</tt> gives the position 
+of the rectangle in the texture.</p>
+
+<h2>Rendering colored text with outline</h2>
+
+<p>When the bitmap font has been generated with a baked outline, i.e. the outline is 
+pre-generated in the font texture, the text is best rendered in two passes to avoid 
+the outline for a character to overlap the previous character.</p>
+
+<p>In the first pass the application should use only the alpha channel of the font 
+texture as the transparency value when rendering the border.</p>
+
+<p>In the second pass the application should use only the color channels of the font 
+texture as the transparency value to render the characters over the border.</p>
+
+<p>With a two-pass rendering like this it is also very easy to apply different colors
+to the border and the internal characters dynamically without the need to pre-color
+the font in the texture. The application simply needs to multiply the transparency value
+the desired color before blending it to the screen.</p>
+
+
+</body>
+</html>

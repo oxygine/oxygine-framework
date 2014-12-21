@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<resources>
+	<set path = "images" scale_factor="0.5" />
+	<atlas>
+		<image file="test.png" />
+	</atlas>
+</resources>

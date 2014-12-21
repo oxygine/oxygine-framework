@@ -1,10 +1,11 @@
 #pragma once
 #include "oxygine_include.h"
 #include "Actor.h"
-#include "Event.h"
+//#include "Event.h"
 
 namespace oxygine
 {
+	class TouchEvent;
 	Vector2 convertPosUp(Actor *src, Actor *dest, const Vector2 &pos, bool direction);
 	Vector2 convertPosDown(Actor *src, Actor *dest, const Vector2 &pos, bool direction);
 
@@ -22,11 +23,10 @@ namespace oxygine
 		Actor*			getDragClient() const {return _dragClient;}
 		const RectF&	getDragBounds() const {return _bounds;}
 		const Vector2&  getClientPos() const {return _clientPos;}
+		bool			getDragEnabled() const { return _dragEnabled; }
 		bool			isDragging() const {return _pressed;}
-
-		bool getDragEnabled() const {return _dragEnabled;}
+		
 		void setDragEnabled(bool en){_dragEnabled = en;}
-
 		/**sets bounds position for dragged actor*/
 		void setDragBounds(const RectF &bounds);	
 		/**sets destination drag client. Default value is Actor attached to DragHandler*/

@@ -40,6 +40,7 @@ Oxygine has some tools written in Python and you need to install them for advanc
 * [Download](https://www.python.org/downloads/) and install Python version 2.7.*
 * [Download](http://www.pythonware.com/products/pil/) and install PIL for Python
 
+[see details](https://bitbucket.org/oxygine/oxygine-framework/src/tip/tools/readme.txt?at=tip)
 
 ##Generate own project 
 You could generate own project outside of oxygine-framework folder by **gen_template.py** tool. It is located in

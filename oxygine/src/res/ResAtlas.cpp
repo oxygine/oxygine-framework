@@ -71,13 +71,13 @@ namespace oxygine
 		//ad.texture->init(ad.mt.getWidth(), ad.mt.getHeight(), ad.mt.getFormat());
 	}
 
-	void ResAtlas::init_resAnim(ResAnim *rs, const string &file, pugi::xml_node node)
+	void ResAtlas::init_resAnim(ResAnim *rs, const std::string &file, pugi::xml_node node)
 	{
 		rs->setName(Resource::extractID(node, file, ""));
 		setNode(rs, node);
 	}
 
-	void ResAtlas::addAtlas(TextureFormat tf, const string &base, const string &alpha, int w, int h)
+	void ResAtlas::addAtlas(TextureFormat tf, const std::string &base, const std::string &alpha, int w, int h)
 	{
 		atlas atl;
 		atl.base = IVideoDriver::instance->createTexture();
@@ -131,7 +131,7 @@ namespace oxygine
 				compressed = isCompressedFormat(ffmt);
 			}
 
-			string alpha_file = meta_image.attribute("alpha").as_string("");
+			std::string alpha_file = meta_image.attribute("alpha").as_string("");
 			if (!alpha_file.empty())
 			{
 				alpha_file = *context.prebuilt_folder + alpha_file;
@@ -145,7 +145,7 @@ namespace oxygine
 
 		//
 
-		vector<ResAnim*> anims;
+		std::vector<ResAnim*> anims;
 	
 		
 		while (true)
@@ -160,8 +160,8 @@ namespace oxygine
 			const char *name = child_node.name();
 			if (!strcmp(name, "image"))
 			{
-				string id = child_node.attribute("id").value();
-				string file = child_node.attribute("file").value();
+				std::string id = child_node.attribute("id").value();
+				std::string file = child_node.attribute("file").value();
 
 				if (file.empty())
 				{
@@ -199,7 +199,8 @@ namespace oxygine
 						&frame_width, &frame_height, 
 						&frame_scale);
 					loaded = true;
-					//frame_scale /= scaleFactor;//todo! fix
+					//frame_scale = 0.
+					//frame_scale /= walker.getScaleFactor();//todo! fix
 
 					//im.w = w;
 					//im.h = h;
@@ -286,7 +287,7 @@ namespace oxygine
 
 								RectF srcRect(x * iw, y * ih, bbox_w * iw, bbox_h * ih);
 
-								float fs = 1.0f / frame_scale;
+								float fs = frame_scale;
 								RectF destRect(
 									Vector2((float)bbox_x, (float)bbox_y) * fs,
 									Vector2((float)bbox_w, (float)bbox_h) * fs
@@ -304,7 +305,7 @@ namespace oxygine
 
 								frame.init(ra, df,
 									srcRect, destRect, 
-									Vector2((float)frame_width, (float)frame_height) * fs);
+									Vector2((float)frame_width, (float)frame_height));
 
 								frames.push_back(frame);
 								if((int)frames.size() >= frames_count)
@@ -332,7 +333,7 @@ namespace oxygine
 
 								if (!ad.texture)
 								{
-									string atlas_id = getName();
+									std::string atlas_id = getName();
 									next_atlas(w, h, tf, ad, atlas_id.c_str());
 								}
 
@@ -381,7 +382,7 @@ namespace oxygine
 
 		apply_atlas(ad);
 
-		for (vector<ResAnim*>::iterator i = anims.begin(); i != anims.end(); ++i)
+		for (std::vector<ResAnim*>::iterator i = anims.begin(); i != anims.end(); ++i)
 		{
 			ResAnim *rs = *i;
 			int num = rs->getTotalFrames();
@@ -407,7 +408,7 @@ namespace oxygine
 	{
 		context.walker.checkSetAttributes();
 		ResAtlas *ra = new ResAtlas();
-		ra->setName(Resource::extractID(context.walker.getNode(), "", string("!atlas:") + *context.xml_name));
+		ra->setName(Resource::extractID(context.walker.getNode(), "", std::string("!atlas:") + *context.xml_name));
 		ra->loadAtlas(context);
 		setNode(ra, context.walker.getNode());
 		//context.meta = context.meta.next_sibling();
@@ -438,7 +439,7 @@ namespace oxygine
 	}
 
 
-	void load_texture_internal(const string &file, spNativeTexture nt, LoadResourcesContext *load_context)
+	void load_texture_internal(const std::string &file, spNativeTexture nt, LoadResourcesContext *load_context)
 	{
 		ImageData im;
 		spMemoryTexture mt = new MemoryTexture;
@@ -456,7 +457,7 @@ namespace oxygine
 		load_context->createTexture(mt, nt);
 	}
 
-	void load_texture(const string &file, spNativeTexture nt, LoadResourcesContext *load_context)
+	void load_texture(const std::string &file, spNativeTexture nt, LoadResourcesContext *load_context)
 	{
 		if (_hook)
 		{

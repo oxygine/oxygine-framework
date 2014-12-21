@@ -13,7 +13,7 @@ namespace oxygine
 	Resource *ResStarlingAtlas::create(CreateResourceContext &context)
 	{
 		ResStarlingAtlas *ra = new ResStarlingAtlas();
-		ra->setName(string("!atlas:") + *context.xml_name);
+		ra->setName(std::string("!atlas:") + *context.xml_name);
 		ra->loadAtlas(context);
 		setNode(ra, context.walker.getNode());
 		return ra;
@@ -21,7 +21,7 @@ namespace oxygine
 	
 	void ResStarlingAtlas::loadAtlas(CreateResourceContext &context)
 	{
-		string xml_path = context.walker.getPath("file");
+		std::string xml_path = context.walker.getPath("file");
 
 		file::buffer fb;
 		file::read(xml_path.c_str(), fb);
@@ -131,7 +131,7 @@ namespace oxygine
 
 	}
 
-	void load_texture(const string &file, spNativeTexture nt, LoadResourcesContext *load_context);
+	void load_texture(const std::string &file, spNativeTexture nt, LoadResourcesContext *load_context);
 
 	void ResStarlingAtlas::_restore(Restorable *r, void *)
 	{

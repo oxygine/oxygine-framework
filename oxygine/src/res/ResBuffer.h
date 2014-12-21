@@ -26,6 +26,6 @@ namespace oxygine
 		void _unload();
 
 		file::buffer _buffer;
-		string _path;
+		std::string _path;
 	};
 }

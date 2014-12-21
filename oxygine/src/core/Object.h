@@ -1,13 +1,11 @@
 #pragma once
 #include "oxygine_include.h"
-#include "oxygine.h"
+#include "ref_counter.h"
 #include <string>
 #include <vector>
 
 namespace oxygine
 {
-	using namespace std;
-
 //#define OBJECT_POOL_ALLOCATOR 0
 
 	class PoolObject
@@ -30,12 +28,12 @@ namespace oxygine
 		const std::string&	getName() const;		
 		void*				getUserData() const {return __userData;}
 		int					getObjectID()const {return __id;}
-		bool				isName(const string &name) const;
+		bool				isName(const std::string &name) const;
 		bool				isName(const char *name) const;
 		
 		
 		
-		void setName(const string &name);		
+		void setName(const std::string &name);
 		void setUserData(void *data){__userData = data;}
 		
 		void dumpObject() const;
@@ -48,7 +46,7 @@ namespace oxygine
 		static void showAssertInDtor(int id);
 		
 		//debug functions
-		typedef vector<ObjectBase*> __createdObjects;
+		typedef std::vector<ObjectBase*> __createdObjects;
 		static __createdObjects&	__getCreatedObjects();
 
 		static void __startTracingLeaks();
@@ -63,11 +61,11 @@ namespace oxygine
 
 #if		DYNAMIC_OBJECT_NAME
 		//some objects dont need name
-		mutable string *__name;
+		mutable std::string *__name;
 #else
-		mutable string __name;
+		mutable std::string __name;
 #endif
-		string *__getName() const;
+		std::string *__getName() const;
 		void __freeName() const;
 
 		int __id;
@@ -92,11 +90,36 @@ namespace oxygine
 
 	protected:
 #ifdef OX_DEBUG
-		int __check;
+		unsigned int __check;
 		void __doCheck();
 #else
 		void __doCheck(){}
 #endif
 	};
-	
+
+
+	template <class dest, class src>
+	dest safeCast(src ptr)
+	{
+		if (!ptr)
+			return 0;
+#ifdef OXYGINE_DEBUG_SAFECAST
+		dest cast = dynamic_cast<dest>(ptr);
+		OX_ASSERT(cast && "can't cast pointer");
+		return cast;
+#endif
+		return static_cast<dest>(ptr);
+	}
+
+	template<class T, class U>
+	intrusive_ptr<T> safeSpCast(intrusive_ptr<U> const & p)
+	{
+		if (!p)
+			return 0;
+#ifdef OXYGINE_DEBUG_SAFECAST
+		intrusive_ptr<T> t = dynamic_cast<T *>(p.get());
+		OX_ASSERT(t && "can't cast pointer");
+#endif
+		return static_cast<T *>(p.get());
+	}	
 }

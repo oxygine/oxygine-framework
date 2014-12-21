@@ -29,7 +29,7 @@ namespace oxygine
 		/**Returns text bounds*/
 		const Rect&					getTextRect();
 		/**Returns current text*/
-		const string&				getText() const {return _text;}
+		const std::string&			getText() const { return _text; }
 		int							getFontSize2Scale() const;
 		TextStyle::VerticalAlign	getVAlign() const;
 		TextStyle::HorizontalAlign	getHAlign() const;
@@ -52,17 +52,17 @@ namespace oxygine
 		void setFont(Font *rs);
 
 		void setStyle(const TextStyle &st);
-		/**Changes text utf8*/
-		void setText(const string &str);
-
-		void setText(const wstring &str);
+		/**Changes text utf-8 string*/
+		void setText(const std::string &str);
+		/**Changes text widestring*/
+		void setText(const std::wstring &str);
 		/**Changes text. 
 		Supports html style tags:  <br/> - break line,  <div color='FFFFFF'/>colored text </div>, <div c='FFFFFF'/>colored text</div> 
 		example: 
 		This is <div c='ff0000'/> colored text <div/>supports  <div c='00ff00AA'/>nested tags</div><br/> with broken line.
 		*/
-		void setHtmlText(const string &str);
-		void setHtmlText(const wstring &str);
+		void setHtmlText(const std::string &str);
+		void setHtmlText(const std::wstring &str);
 
 		bool isOn(const Vector2 &localPosition);		
 
@@ -76,7 +76,7 @@ namespace oxygine
 			flag_html = flag_last << 1,
 			flag_rebuild = flag_last << 2,
 		};
-		string  _text;
+		std::string  _text;
 		TextStyle _style;
 
 		text::Node *_root;

@@ -26,7 +26,8 @@ To display custom text on DebugActor (image above) call it each frame:
 4. **Tree Inspector** show graph tree of actors with detailed info.
 
 #Logging
-**namespace log** has functions to print text to output. Include **log.h** 
+**namespace log** has functions to print text to output. Include **log.h**  by entering #include "core/log.h". 
+> If using Visual Studio 2013, make sure to open the Output window (View > Output) and set it to show output from Debug after compilation to view the messages.
 
 
     log::messageln("it is message");

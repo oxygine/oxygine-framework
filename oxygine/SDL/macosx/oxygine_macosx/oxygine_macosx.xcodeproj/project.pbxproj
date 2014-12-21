@@ -60,8 +60,6 @@
 		049B56931871F21E00EF3C66 /* logging.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B55C31871F21D00EF3C66 /* logging.h */; };
 		049B56941871F21E00EF3C66 /* Mem2Native.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B55C41871F21D00EF3C66 /* Mem2Native.cpp */; };
 		049B56951871F21E00EF3C66 /* Mem2Native.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B55C51871F21D00EF3C66 /* Mem2Native.h */; };
-		049B56961871F21E00EF3C66 /* memory_pool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B55C61871F21D00EF3C66 /* memory_pool.cpp */; };
-		049B56971871F21E00EF3C66 /* memory_pool.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B55C71871F21D00EF3C66 /* memory_pool.h */; };
 		049B56981871F21E00EF3C66 /* Mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B55C81871F21D00EF3C66 /* Mutex.cpp */; };
 		049B56991871F21E00EF3C66 /* Mutex.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B55C91871F21D00EF3C66 /* Mutex.h */; };
 		049B569A1871F21E00EF3C66 /* NativeTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B55CA1871F21D00EF3C66 /* NativeTexture.cpp */; };
@@ -180,7 +178,6 @@
 		049B57101871F21E00EF3C66 /* TextBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B564C1871F21E00EF3C66 /* TextBuilder.h */; };
 		049B57121871F21E00EF3C66 /* TextActor.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B564E1871F21E00EF3C66 /* TextActor.h */; };
 		049B57131871F21E00EF3C66 /* TextStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B564F1871F21E00EF3C66 /* TextStyle.h */; };
-		049B57141871F21E00EF3C66 /* Tweener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B56501871F21E00EF3C66 /* Tweener.cpp */; };
 		049B57151871F21E00EF3C66 /* Tweener.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B56511871F21E00EF3C66 /* Tweener.h */; };
 		049B57161871F21E00EF3C66 /* UpdateState.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B56521871F21E00EF3C66 /* UpdateState.h */; };
 		049B57171871F21E00EF3C66 /* AtlasTool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B56551871F21E00EF3C66 /* AtlasTool.cpp */; };
@@ -201,6 +198,13 @@
 		04B3A72018A6594D004C67E3 /* InputText.h in Headers */ = {isa = PBXBuildFile; fileRef = 04B3A71E18A6594D004C67E3 /* InputText.h */; };
 		92214D5E19F149BC00A4459A /* Polygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92214D5C19F149BC00A4459A /* Polygon.cpp */; };
 		92214D5F19F149BC00A4459A /* Polygon.h in Headers */ = {isa = PBXBuildFile; fileRef = 92214D5D19F149BC00A4459A /* Polygon.h */; };
+		923663581A47561500EB65B3 /* Serializable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 923663511A47561500EB65B3 /* Serializable.cpp */; };
+		923663591A47561500EB65B3 /* Serializable.h in Headers */ = {isa = PBXBuildFile; fileRef = 923663521A47561500EB65B3 /* Serializable.h */; };
+		9236635A1A47561500EB65B3 /* TouchEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 923663531A47561500EB65B3 /* TouchEvent.h */; };
+		9236635B1A47561500EB65B3 /* Tween.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 923663541A47561500EB65B3 /* Tween.cpp */; };
+		9236635C1A47561500EB65B3 /* Tween.h in Headers */ = {isa = PBXBuildFile; fileRef = 923663551A47561500EB65B3 /* Tween.h */; };
+		9236635D1A47561500EB65B3 /* TweenQueue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 923663561A47561500EB65B3 /* TweenQueue.cpp */; };
+		9236635E1A47561500EB65B3 /* TweenQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 923663571A47561500EB65B3 /* TweenQueue.h */; };
 		923A9E8B1A1FCA3500A6F08E /* STDRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 923A9E891A1FCA3500A6F08E /* STDRenderer.cpp */; };
 		923A9E8C1A1FCA3500A6F08E /* STDRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 923A9E8A1A1FCA3500A6F08E /* STDRenderer.h */; };
 		923A9E8F1A1FCA6600A6F08E /* MaskedRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 923A9E8D1A1FCA6600A6F08E /* MaskedRenderer.cpp */; };
@@ -233,7 +237,6 @@
 		049B55A11871F21D00EF3C66 /* closure_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = closure_impl.h; sourceTree = "<group>"; };
 		049B55A21871F21D00EF3C66 /* ColorRectSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ColorRectSprite.cpp; path = ../../../src/ColorRectSprite.cpp; sourceTree = "<group>"; };
 		049B55A31871F21D00EF3C66 /* ColorRectSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColorRectSprite.h; path = ../../../src/ColorRectSprite.h; sourceTree = "<group>"; };
-		049B55A51871F21D00EF3C66 /* .oxbuild */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .oxbuild; sourceTree = "<group>"; };
 		049B55A61871F21D00EF3C66 /* coroutines.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coroutines.cpp; sourceTree = "<group>"; };
 		049B55A71871F21D00EF3C66 /* coroutines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coroutines.h; sourceTree = "<group>"; };
 		049B55A81871F21D00EF3C66 /* file.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = file.cpp; sourceTree = "<group>"; };
@@ -263,8 +266,6 @@
 		049B55C31871F21D00EF3C66 /* logging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logging.h; sourceTree = "<group>"; };
 		049B55C41871F21D00EF3C66 /* Mem2Native.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mem2Native.cpp; sourceTree = "<group>"; };
 		049B55C51871F21D00EF3C66 /* Mem2Native.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mem2Native.h; sourceTree = "<group>"; };
-		049B55C61871F21D00EF3C66 /* memory_pool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = memory_pool.cpp; sourceTree = "<group>"; };
-		049B55C71871F21D00EF3C66 /* memory_pool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memory_pool.h; sourceTree = "<group>"; };
 		049B55C81871F21D00EF3C66 /* Mutex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mutex.cpp; sourceTree = "<group>"; };
 		049B55C91871F21D00EF3C66 /* Mutex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mutex.h; sourceTree = "<group>"; };
 		049B55CA1871F21D00EF3C66 /* NativeTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NativeTexture.cpp; sourceTree = "<group>"; };
@@ -388,7 +389,6 @@
 		049B564C1871F21E00EF3C66 /* TextBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextBuilder.h; sourceTree = "<group>"; };
 		049B564E1871F21E00EF3C66 /* TextActor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextActor.h; path = ../../../src/TextActor.h; sourceTree = "<group>"; };
 		049B564F1871F21E00EF3C66 /* TextStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextStyle.h; path = ../../../src/TextStyle.h; sourceTree = "<group>"; };
-		049B56501871F21E00EF3C66 /* Tweener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Tweener.cpp; path = ../../../src/Tweener.cpp; sourceTree = "<group>"; };
 		049B56511871F21E00EF3C66 /* Tweener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tweener.h; path = ../../../src/Tweener.h; sourceTree = "<group>"; };
 		049B56521871F21E00EF3C66 /* UpdateState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UpdateState.h; path = ../../../src/UpdateState.h; sourceTree = "<group>"; };
 		049B56541871F21E00EF3C66 /* .oxbuild */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .oxbuild; sourceTree = "<group>"; };
@@ -411,6 +411,13 @@
 		04B3A71E18A6594D004C67E3 /* InputText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InputText.h; path = ../../../src/InputText.h; sourceTree = "<group>"; };
 		92214D5C19F149BC00A4459A /* Polygon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Polygon.cpp; path = ../../../src/Polygon.cpp; sourceTree = "<group>"; };
 		92214D5D19F149BC00A4459A /* Polygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Polygon.h; path = ../../../src/Polygon.h; sourceTree = "<group>"; };
+		923663511A47561500EB65B3 /* Serializable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Serializable.cpp; path = ../../../src/Serializable.cpp; sourceTree = "<group>"; };
+		923663521A47561500EB65B3 /* Serializable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Serializable.h; path = ../../../src/Serializable.h; sourceTree = "<group>"; };
+		923663531A47561500EB65B3 /* TouchEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TouchEvent.h; path = ../../../src/TouchEvent.h; sourceTree = "<group>"; };
+		923663541A47561500EB65B3 /* Tween.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Tween.cpp; path = ../../../src/Tween.cpp; sourceTree = "<group>"; };
+		923663551A47561500EB65B3 /* Tween.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tween.h; path = ../../../src/Tween.h; sourceTree = "<group>"; };
+		923663561A47561500EB65B3 /* TweenQueue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TweenQueue.cpp; path = ../../../src/TweenQueue.cpp; sourceTree = "<group>"; };
+		923663571A47561500EB65B3 /* TweenQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweenQueue.h; path = ../../../src/TweenQueue.h; sourceTree = "<group>"; };
 		923A9E891A1FCA3500A6F08E /* STDRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = STDRenderer.cpp; path = ../../../src/STDRenderer.cpp; sourceTree = "<group>"; };
 		923A9E8A1A1FCA3500A6F08E /* STDRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STDRenderer.h; path = ../../../src/STDRenderer.h; sourceTree = "<group>"; };
 		923A9E8D1A1FCA6600A6F08E /* MaskedRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MaskedRenderer.cpp; path = ../../../src/MaskedRenderer.cpp; sourceTree = "<group>"; };
@@ -447,6 +454,13 @@
 		049B55901871F21000EF3C66 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				923663511A47561500EB65B3 /* Serializable.cpp */,
+				923663521A47561500EB65B3 /* Serializable.h */,
+				923663531A47561500EB65B3 /* TouchEvent.h */,
+				923663541A47561500EB65B3 /* Tween.cpp */,
+				923663551A47561500EB65B3 /* Tween.h */,
+				923663561A47561500EB65B3 /* TweenQueue.cpp */,
+				923663571A47561500EB65B3 /* TweenQueue.h */,
 				923A9E8D1A1FCA6600A6F08E /* MaskedRenderer.cpp */,
 				923A9E8E1A1FCA6600A6F08E /* MaskedRenderer.h */,
 				923A9E891A1FCA3500A6F08E /* STDRenderer.cpp */,
@@ -517,7 +531,6 @@
 				049B56461871F21E00EF3C66 /* text_utils */,
 				049B564E1871F21E00EF3C66 /* TextActor.h */,
 				049B564F1871F21E00EF3C66 /* TextStyle.h */,
-				049B56501871F21E00EF3C66 /* Tweener.cpp */,
 				049B56511871F21E00EF3C66 /* Tweener.h */,
 				049B56521871F21E00EF3C66 /* UpdateState.h */,
 				049B56531871F21E00EF3C66 /* utils */,
@@ -541,7 +554,6 @@
 		049B55A41871F21D00EF3C66 /* core */ = {
 			isa = PBXGroup;
 			children = (
-				049B55A51871F21D00EF3C66 /* .oxbuild */,
 				049B55A61871F21D00EF3C66 /* coroutines.cpp */,
 				049B55A71871F21D00EF3C66 /* coroutines.h */,
 				049B55A81871F21D00EF3C66 /* file.cpp */,
@@ -560,8 +572,6 @@
 				049B55C31871F21D00EF3C66 /* logging.h */,
 				049B55C41871F21D00EF3C66 /* Mem2Native.cpp */,
 				049B55C51871F21D00EF3C66 /* Mem2Native.h */,
-				049B55C61871F21D00EF3C66 /* memory_pool.cpp */,
-				049B55C71871F21D00EF3C66 /* memory_pool.h */,
 				049B55C81871F21D00EF3C66 /* Mutex.cpp */,
 				049B55C91871F21D00EF3C66 /* Mutex.h */,
 				049B55CA1871F21D00EF3C66 /* NativeTexture.cpp */,
@@ -768,7 +778,6 @@
 				049B56CE1871F21E00EF3C66 /* EventDispatcher.h in Headers */,
 				049B57241871F21E00EF3C66 /* winnie_alloc_config.h in Headers */,
 				049B56D91871F21E00EF3C66 /* matrix.h in Headers */,
-				049B56971871F21E00EF3C66 /* memory_pool.h in Headers */,
 				049B567B1871F21E00EF3C66 /* files_io.h in Headers */,
 				049B56A11871F21E00EF3C66 /* pixel.h in Headers */,
 				049B57121871F21E00EF3C66 /* TextActor.h in Headers */,
@@ -781,7 +790,9 @@
 				049B56EC1871F21E00EF3C66 /* PointerState.h in Headers */,
 				923A9E8C1A1FCA3500A6F08E /* STDRenderer.h in Headers */,
 				049B57061871F21E00EF3C66 /* RootActor.h in Headers */,
+				9236635A1A47561500EB65B3 /* TouchEvent.h in Headers */,
 				049B56B71871F21E00EF3C66 /* VertexDeclaration.h in Headers */,
+				9236635C1A47561500EB65B3 /* Tween.h in Headers */,
 				049B56B11871F21E00EF3C66 /* Texture.h in Headers */,
 				049B56991871F21E00EF3C66 /* Mutex.h in Headers */,
 				049B57131871F21E00EF3C66 /* TextStyle.h in Headers */,
@@ -847,6 +858,7 @@
 				049B56EA1871F21E00EF3C66 /* oxygine-framework.h in Headers */,
 				049B571F1871F21E00EF3C66 /* VisualStyle.h in Headers */,
 				049B566A1871F21E00EF3C66 /* blocking.h in Headers */,
+				923663591A47561500EB65B3 /* Serializable.h in Headers */,
 				049B56741871F21E00EF3C66 /* closure_impl.h in Headers */,
 				049B56931871F21E00EF3C66 /* logging.h in Headers */,
 				049B56E81871F21E00EF3C66 /* Multithreading.h in Headers */,
@@ -869,6 +881,7 @@
 				049B56DA1871F21E00EF3C66 /* Rect.h in Headers */,
 				049B56D81871F21E00EF3C66 /* Color.h in Headers */,
 				049B56DD1871F21E00EF3C66 /* vector3.h in Headers */,
+				9236635E1A47561500EB65B3 /* TweenQueue.h in Headers */,
 				049B567D1871F21E00EF3C66 /* FileSystem.h in Headers */,
 				049B56EF1871F21E00EF3C66 /* pugiconfig.hpp in Headers */,
 				049B56F41871F21E00EF3C66 /* CreateResourceContext.h in Headers */,
@@ -938,7 +951,6 @@
 				049B56E71871F21E00EF3C66 /* Multithreading.cpp in Sources */,
 				049B570B1871F21E00EF3C66 /* Aligner.cpp in Sources */,
 				049B570D1871F21E00EF3C66 /* Node.cpp in Sources */,
-				049B56961871F21E00EF3C66 /* memory_pool.cpp in Sources */,
 				049B57031871F21E00EF3C66 /* ResStarlingAtlas.cpp in Sources */,
 				049B568C1871F21E00EF3C66 /* ImageData.cpp in Sources */,
 				049B56751871F21E00EF3C66 /* ColorRectSprite.cpp in Sources */,
@@ -954,6 +966,7 @@
 				049B56D21871F21E00EF3C66 /* Input.cpp in Sources */,
 				049B56B01871F21E00EF3C66 /* Texture.cpp in Sources */,
 				049B56C61871F21E00EF3C66 /* TreeInspectorPage.cpp in Sources */,
+				923663581A47561500EB65B3 /* Serializable.cpp in Sources */,
 				049B56801871F21E00EF3C66 /* oxgl.cpp in Sources */,
 				049B566F1871F21E00EF3C66 /* ClipRectActor.cpp in Sources */,
 				049B57201871F21E00EF3C66 /* system_alloc.cpp in Sources */,
@@ -973,7 +986,6 @@
 				049B56671871F21E00EF3C66 /* AnimationFrame.cpp in Sources */,
 				049B57221871F21E00EF3C66 /* winnie_alloc.cpp in Sources */,
 				049B56E11871F21E00EF3C66 /* ioapi.c in Sources */,
-				049B57141871F21E00EF3C66 /* Tweener.cpp in Sources */,
 				049B56911871F21E00EF3C66 /* log.cpp in Sources */,
 				049B56BA1871F21E00EF3C66 /* ZipFileSystem.cpp in Sources */,
 				049B56B21871F21E00EF3C66 /* ThreadMessages.cpp in Sources */,
@@ -986,6 +998,8 @@
 				049B567C1871F21E00EF3C66 /* FileSystem.cpp in Sources */,
 				049B571E1871F21E00EF3C66 /* VisualStyle.cpp in Sources */,
 				049B57071871F21E00EF3C66 /* SlidingActor.cpp in Sources */,
+				9236635B1A47561500EB65B3 /* Tween.cpp in Sources */,
+				9236635D1A47561500EB65B3 /* TweenQueue.cpp in Sources */,
 				049B56E31871F21E00EF3C66 /* ioapi_mem.c in Sources */,
 				049B56C81871F21E00EF3C66 /* TreeInspectorPreview.cpp in Sources */,
 				049B569F1871F21E00EF3C66 /* oxygine.cpp in Sources */,

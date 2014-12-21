@@ -18,14 +18,14 @@ namespace oxygine
 		class SlidingEvent: public Event
 		{
 		public:
-			enum EV
+			enum SEvent
 			{
-				BEGIN = makefourcc('S', 'A', 'B', 'G'),
-				SLIDING = makefourcc('S', 'A', 'S', 'L'),
-				END = makefourcc('S', 'A', 'E', 'D')
+				BEGIN = sysEventID('S', 'B', 'G'),
+				SLIDING = sysEventID('S', 'S', 'L'),
+				END = sysEventID('S', 'E', 'N')
 			};
 
-			SlidingEvent(EV ev):Event(ev), speed(0, 0){}
+			SlidingEvent(SEvent ev) :Event(ev), speed(0, 0){}
 			Vector2 speed;
 		};
 
@@ -38,7 +38,7 @@ namespace oxygine
 
 		/**max allowed radius of touch move when content could be clicked*/
 		void setTouchThreshold(float rad);
-		/**sets actor vith scrollable data*/
+		/**sets actor with scrollable data*/
 		void setContent(spActor content);
 		/**lock for user scrolling*/
 		void setLocked(bool locked);

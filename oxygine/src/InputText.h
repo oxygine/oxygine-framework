@@ -9,8 +9,6 @@
 
 namespace oxygine
 {
-	using namespace std;
-
 	DECLARE_SMART(TextField, spTextField);
 	DECLARE_SMART(InputText, spInputText);
 
@@ -24,10 +22,10 @@ namespace oxygine
 		void start(spTextField textActor);
 		void stop();
 
-		void setAllowedSymbols(const string &utf8str);
-		void setAllowedSymbols(const wstring &str);
-		void setDisallowedSymbols(const string &utf8str);
-		void setDisallowedSymbols(const wstring &str);
+		void setAllowedSymbols(const std::string &utf8str);
+		void setAllowedSymbols(const std::wstring &str);
+		void setDisallowedSymbols(const std::string &utf8str);
+		void setDisallowedSymbols(const std::wstring &str);
 		void setMaxTextLength(int);
 
 		static void stopAnyInput();
@@ -35,9 +33,9 @@ namespace oxygine
 	private:
 		spTextField _textActor;
 
-		string _allowed;
-		string _disallowed;
-		string _txt;
+		std::string _allowed;
+		std::string _disallowed;
+		std::string _txt;
 		int	_maxLength;
 		void updateText();
 		static InputText *_active;		

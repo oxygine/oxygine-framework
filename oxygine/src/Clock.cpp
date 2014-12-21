@@ -115,9 +115,9 @@ namespace oxygine
 		return _counter;
 	}
 
-	string Clock::dump() const
+	std::string Clock::dump() const
 	{
-		stringstream stream;
+		std::stringstream stream;
 		stream << "clock={time=" << getTime() << "ms";
 		if (_counter)
 			stream << "paused=" << _counter;

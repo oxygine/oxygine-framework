@@ -1,10 +1,11 @@
 #include <sstream>
+#include "core/oxygine.h"
 
 #include "res/ResAnim.h"
+#include "res/ResFont.h"
 #include "res/Resources.h"
 
 #include "utils/stringUtils.h"
-
 #include "core/NativeTexture.h"
 #include "core/ZipFileSystem.h"
 #include "core/system_data.h"
@@ -14,6 +15,7 @@
 #include "dev_tools/TreeInspector.h"
 #include "dev_tools/TexturesInspector.h"
 
+#include "STDRenderer.h"
 #include "DebugActor.h"
 #include "Stage.h"
 #include "TextField.h"
@@ -22,9 +24,10 @@
 #include "Event.h"
 #include "RenderState.h"
 #include "initActor.h"
+#include "MaskedSprite.h"
+
 #include <stdio.h>
 #include <stdarg.h>
-#include "MaskedSprite.h"
 
 #ifdef __S3E__
 #include "s3eMemory.h"
@@ -178,7 +181,7 @@ namespace oxygine
 
 	void DebugActor::_btnClicked(Event *ev)
 	{
-		string name = ev->currentTarget->getName();
+		std::string name = ev->currentTarget->getName();
 		if (name == "finger")
 		{
 			showTouchedActor(!_showTouchedActor);
@@ -248,8 +251,8 @@ namespace oxygine
 			_frames = 0;
 		}
 
-		stringstream s;
-		s << "fps=" << fps << endl;
+		std::stringstream s;
+		s << "fps=" << fps << std::endl;
 
 		
 
@@ -260,16 +263,16 @@ namespace oxygine
 		mem_used = s3eMemoryGetInt(S3E_MEMORY_USED);
 		mem_free = s3eMemoryGetInt(S3E_MEMORY_FREE);
 
-		s << "mfree=" << mem_free << " mem=" << mem_used << endl;
+		s << "mfree=" << mem_free << " mem=" << mem_used << std::endl;
 #endif
 		
 		
 
 #ifdef OXYGINE_DEBUG_TRACE_LEAKS
-		s << "objects=" << (int)ObjectBase::__getCreatedObjects().size() << endl;
+		s << "objects=" << (int)ObjectBase::__getCreatedObjects().size() << std::endl;
 #endif
 #ifdef OXYGINE_TRACE_VIDEO_STATS
-		s << "batches="<< _videoStats.batches << " triangles=" << _videoStats.triangles << endl;
+		s << "batches=" << _videoStats.batches << " triangles=" << _videoStats.triangles << std::endl;
 #endif
 		s << "update=" << getStage()->_statUpdate << "ms ";
 		s << "render=" << getStage()->_statRender << "ms ";
@@ -317,6 +320,11 @@ namespace oxygine
 	{
 		parentRenderState.renderer->drawBatch();
 		parentRenderState.renderer->getDriver()->setDebugStats(false);
+
+		Rect vp(Point(0, 0), core::getDisplaySize());
+		parentRenderState.renderer->getDriver()->setViewport(vp);
+		parentRenderState.renderer->initCoordinateSystem(vp.getWidth(), vp.getHeight());
+		parentRenderState.renderer->resetSettings();
 		Actor::render(parentRenderState);
 		parentRenderState.renderer->drawBatch();
 		parentRenderState.renderer->getDriver()->setDebugStats(true);
@@ -326,7 +334,7 @@ namespace oxygine
 	{
 		_showTexel2PixelErrors = show;
 #ifdef OXYGINE_DEBUG_T2P
-		Renderer::showTexel2PixelErrors(_showTexel2PixelErrors);
+		STDRenderer::showTexel2PixelErrors(_showTexel2PixelErrors);
 		spActor btn = getChild("t2p");
 		btn->removeTweens(true);
 		if (show)
@@ -364,7 +372,7 @@ namespace oxygine
 		cr->setSize(actor->getSize());
 		cr->addTween(ColorRectSprite::TweenColor(Color(Color::White, 200)), 700, 1, true, 0, Tween::ease_inCubic)->setDetachActor(true);
 		actor->addChild(cr);
-		string dmp = actor->dump(0);
+		std::string dmp = actor->dump(0);
 		log::messageln("touched actor:\n%s", dmp.c_str());
 	}
 }

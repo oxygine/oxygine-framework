@@ -12,8 +12,6 @@ namespace oxygine
 
 	namespace text
 	{
-		using namespace std;
-
 		struct Symbol
 		{
 			Symbol():gl(0), x(0), y(0), code(0){}
@@ -32,7 +30,7 @@ namespace oxygine
 
 			
 			const TextStyle &getStyle() const {return style;}
-			float getScaleFactor() const;
+			float getScale() const;
 
 			void begin();
 			void end();		
@@ -50,13 +48,14 @@ namespace oxygine
 			int getLineWidth()const;
 			int getLineSkip()const;
 
-			typedef vector<Symbol*> line;
+			typedef std::vector<Symbol*> line;
 
 			void _alignLine(line &ln);
 			int _alignX(int rx);
 			int _alignY(int ry);
 			void _nextLine(line &ln);		
 
+			float _scale;
 			int _x, _y;		
 			line _line;
 			int _lineWidth;

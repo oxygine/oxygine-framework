@@ -4,6 +4,7 @@
 #include "core/ZipFileSystem.h"
 #include "core/Object.h"
 #include "utils/stringUtils.h"
+#include <algorithm>
 //#include "utils/utils.h"
 
 #ifdef __S3E__
@@ -11,7 +12,6 @@
 #endif
 
 using namespace oxygine;
-using namespace std;
 namespace oxygine
 {
 namespace file
@@ -94,7 +94,7 @@ namespace file
 		read(zp);
 	}
 
-	void Zips::add(vector<char> &data)
+	void Zips::add(std::vector<char> &data)
 	{
 		zlib_filefunc_def ff;
 		fill_memory_filefunc(&ff);
@@ -111,7 +111,7 @@ namespace file
 		_zps.push_back(zpitem());
 		zpitem& item = _zps.back();
 		item.handle = zp;
-		swap(item.data, data);
+		std::swap(item.data, data);
 
 		read(zp);
 	}
@@ -184,7 +184,7 @@ namespace file
 
 	void Zips::update()
 	{
-		sort(_files.begin(), _files.end(), sortFiles);
+		std::sort(_files.begin(), _files.end(), sortFiles);
 		log::messageln("ZipFS, total files: %d", _files.size());
 	}
 
@@ -222,7 +222,7 @@ namespace file
 			_sort = false;
 		}
 
-		files::const_iterator it = lower_bound(_files.begin(), _files.end(), name, findEntry);
+		files::const_iterator it = std::lower_bound(_files.begin(), _files.end(), name, findEntry);
 		if (it != _files.end())
 		{
 			const file_entry &g = *it;
@@ -298,7 +298,7 @@ namespace file
 		_zips.add(data, size);
 	}
 
-	void ZipFileSystem::add(vector<char> &data)
+	void ZipFileSystem::add(std::vector<char> &data)
 	{
 		_zips.add(data);
 	}

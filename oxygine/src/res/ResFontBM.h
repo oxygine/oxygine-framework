@@ -32,7 +32,7 @@ namespace oxygine
 	private:
 		struct page
 		{
-			string file;
+			std::string file;
 			spNativeTexture texture;
 		};
 
@@ -44,13 +44,13 @@ namespace oxygine
 
 		
 
-		typedef vector<page> pages;
+		typedef std::vector<page> pages;
 		pages _pages;
 		Font *_font;
 
 		TextureFormat _format;
 
-		string _file;
+		std::string _file;
 		bool _premultipliedAlpha;
 	};
 }

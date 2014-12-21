@@ -1,37 +1,12 @@
-#include <stdio.h>
-#include "oxygine.h"
 #include "NativeTexture.h"
 #include "MemoryTexture.h"
 #include "ImageDataOperations.h"
 #include "file.h"
 #include "log.h"
-
-/*
-#define DEC_FUNC(proc, name) proc name = 0;
-
-#define LOAD_FUNC(proc, name) name = (proc)eglGetProcAddress(#name);
-
-DEC_FUNC(PFNGLGENFRAMEBUFFERSOESPROC, glGenFramebuffersOES);
-DEC_FUNC(PFNGLBINDFRAMEBUFFEROESPROC, glBindFramebufferOES);
-DEC_FUNC(PFNGLFRAMEBUFFERTEXTURE2DOESPROC, glFramebufferTexture2DOES);
-DEC_FUNC(PFNGLCHECKFRAMEBUFFERSTATUSOESPROC, glCheckFramebufferStatusOES);
-DEC_FUNC(PFNGLDELETEFRAMEBUFFERSOESPROC, glDeleteFramebuffersOES);
-*/
+#include <stdio.h>
 
 namespace oxygine
 {
-	void init_ext()
-	{
-
-/*		glGenFramebuffersOES = (PFNGLGENFRAMEBUFFERSOESPROC)eglGetProcAddress("glGenFramebuffersOES");
-		LOAD_FUNC(PFNGLGENFRAMEBUFFERSOESPROC, glGenFramebuffersOES);
-		LOAD_FUNC(PFNGLBINDFRAMEBUFFEROESPROC, glBindFramebufferOES);
-		LOAD_FUNC(PFNGLFRAMEBUFFERTEXTURE2DOESPROC, glFramebufferTexture2DOES);
-		LOAD_FUNC(PFNGLCHECKFRAMEBUFFERSTATUSOESPROC, glCheckFramebufferStatusOES);
-		LOAD_FUNC(PFNGLDELETEFRAMEBUFFERSOESPROC, glDeleteFramebuffersOES);
-	*/};
-
-
 	volatile int NativeTexture::created = 0;
 
 	void NativeTexture::dumpCreatedTextures()
@@ -140,21 +115,5 @@ namespace oxygine
 	TextureFormat NativeTextureNull::getFormat() const
 	{
 		return TF_UNDEFINED;
-	}
-
-	Matrix makeViewMatrix(int w, int h, bool flipU)
-	{
-		//printf("s1\n");
-		Matrix view, scale, tr;
-		float offset = 0.5f;
-
-		offset = 0;
-
-		Matrix::translation(tr, Vector3(-(float)w / 2.0f - offset, (flipU ? -1.0f : 1.0f) * (float)h / 2.0f + offset, 0.0f));
-		Matrix::scaling(scale, Vector3(1.0f, flipU ? 1.0f : -1.0f, 1.0f));
-
-		view = scale * tr;
-
-		return view;
 	}
 }

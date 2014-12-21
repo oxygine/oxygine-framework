@@ -15,8 +15,6 @@ namespace pugi
 
 namespace oxygine
 {
-	using namespace std;
-	
 	class Resource;
 	class ResFont;
 	class ResAnim;
@@ -28,7 +26,7 @@ namespace oxygine
 	class Resources: public Resource
 	{
 	public:
-		typedef vector<spResource> resources;
+		typedef std::vector<spResource> resources;
 		typedef Resource* (*createResourceCallback)(CreateResourceContext &context);
 		typedef Closure<void (Resource *)> ResLoadedCallback;
 
@@ -50,9 +48,9 @@ namespace oxygine
 		@param use load counter internally
 		@param use not standard folder with prebuilt resources (atlasses, fonts, etc)
 		*/
-		void loadXML(const string &file, LoadResourcesContext *load_context = 0, 
+		void loadXML(const std::string &file, LoadResourcesContext *load_context = 0,
 			bool load_completely = true, bool use_load_counter = false,
-			const string &prebuilt_folder = "");
+			const std::string &prebuilt_folder = "");
 
         /**Adds your own Resource and becomes resource owner if Own is true. Owned resource will be deleted from destructor by calling 'delete'.*/
 		void add(Resource *r);
@@ -70,28 +68,28 @@ namespace oxygine
 		@param resource id
 		@param if showError is true and resource is missing warning/assert will appear
 		*/
-		Resource *get(const string &id, error_policy ep = ep_show_error) const;
+		Resource *get(const std::string &id, error_policy ep = ep_show_error) const;
 
 		/** returns resource by index */
 		Resource *get(int index) const {return _fastAccessResources[index].get();}
 		int		  getCount() const {return (int)_fastAccessResources.size();}
 
-		Resource * operator[](const string &id){return get(id);}
+		Resource * operator[](const std::string &id){ return get(id); }
 		
 		/** get resource by id
 		@param resource id
 		@param if safe is true and resource is missing warning/assert will appear
 		*/
-		ResAnim *getResAnim(const string &id, error_policy ep = ep_show_error) const;
+		ResAnim *getResAnim(const std::string &id, error_policy ep = ep_show_error) const;
 		 
 		/** get animation resource by id
 		@param resource id
 		@param if safe is true and resource is missing warning/assert will appear
 		*/
-		ResFont *getResFont(const string &id, error_policy ep = ep_show_error) const;
+		ResFont *getResFont(const std::string &id, error_policy ep = ep_show_error) const;
 
 		template<class T>
-		T *getT(const string &id, error_policy ep = ep_show_error) const {return safeCast<T*> (get(id, ep));}
+		T *getT(const std::string &id, error_policy ep = ep_show_error) const { return safeCast<T*>(get(id, ep)); }
 
 		/**sorting manually added resources*/
 		void sort();
@@ -102,7 +100,7 @@ namespace oxygine
 		resources& _getResources();
 
 	protected:
-        void updateName(const string &filename);
+		void updateName(const std::string &filename);
 		void _load(LoadResourcesContext *context);
 		void _unload();
 
@@ -134,10 +132,10 @@ namespace oxygine
 		//resources _owned;
 		resources _fastAccessResources;
 
-		typedef vector< registeredResource > registeredResources;
+		typedef std::vector< registeredResource > registeredResources;
 		static registeredResources _registeredResources;
 		
-		string _name;
+		std::string _name;
 		std::vector<pugi::xml_document*> _docs;
 	};
 }

@@ -12,7 +12,6 @@ namespace pugi
 
 namespace oxygine
 {
-	using namespace std;
 
 	class Resources;
 	class CreateResourceContext;
@@ -25,17 +24,17 @@ namespace oxygine
 		struct atlas
 		{
 			spNativeTexture base;
-			string base_path;
+			std::string base_path;
 
 			spNativeTexture alpha;
-			string alpha_path;
+			std::string alpha_path;
 		};
 
 
 		ResAtlas();
 		~ResAtlas();
 
-		void addAtlas(TextureFormat tf, const string &base, const string &alpha, int w, int h);
+		void addAtlas(TextureFormat tf, const std::string &base, const std::string &alpha, int w, int h);
 		const atlas& getAtlas(int i) const {return _atlasses[i];}
 		int getNum() const { return (int)_atlasses.size(); }
 
@@ -46,14 +45,14 @@ namespace oxygine
 		void _unload();
 
 		void loadAtlas(CreateResourceContext &context);
-		static void init_resAnim(ResAnim *rs, const string &file, pugi::xml_node node);
+		static void init_resAnim(ResAnim *rs, const std::string &file, pugi::xml_node node);
 
 	private:		
 
-		typedef vector<atlas> atlasses;
+		typedef std::vector<atlas> atlasses;
 		atlasses _atlasses;
 	};
 
-	typedef void (*load_texture_hook)(const string &file, spNativeTexture nt, LoadResourcesContext *load_context);
+	typedef void(*load_texture_hook)(const std::string &file, spNativeTexture nt, LoadResourcesContext *load_context);
 	void set_load_texture_hook(load_texture_hook);
 }

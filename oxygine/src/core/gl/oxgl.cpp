@@ -4,10 +4,15 @@
 #ifdef WIN32
 #include "SDL_video.h"
 
+#if defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable : 4273)
+#endif
+
 //fix compile time error with latest SDL
 #undef GLAPI
 #define GLAPI
-
+ 
 #define GETFUNC(var, df, tp, name) var = (tp)func(name); if (!var) {var = df; missing++;}
 
 extern "C"
@@ -301,4 +306,8 @@ int initGLExtensions(myGetProcAdress func)
 {
 	return 0;
 }
+#endif
+
+#if defined(_MSC_VER)
+#pragma warning(pop)
 #endif

@@ -18,7 +18,7 @@ namespace oxygine
 	}
 	*/
 
-	Font::Font():_size(0), _baselineDistance(0), _scaleFactor(1.0f)
+	Font::Font() :_size(0), _baselineDistance(0), _scale(1.0f)
 	{
 	}
 
@@ -26,10 +26,10 @@ namespace oxygine
 	{
 	}	
 	
-	void Font::init(const char *name, int size, int baselineDistance, int lineHeight)
+	void Font::init(const char *name, int realSize, int baselineDistance, int lineHeight)
 	{
 		setName(name);
-		_size = size;
+		_size = realSize;
 		_baselineDistance = baselineDistance;
 		_lineHeight = lineHeight;
 		_glyphs.reserve(200);
@@ -52,12 +52,12 @@ namespace oxygine
 
 	void Font::sortGlyphs()
 	{
-		sort(_glyphs.begin(), _glyphs.end(), glyphsComparePred);
+		std::sort(_glyphs.begin(), _glyphs.end(), glyphsComparePred);
 	}
 
 	const glyph *Font::getGlyph(int ch) const
 	{
-		glyphs::const_iterator it = lower_bound(_glyphs.begin(), _glyphs.end(), ch, glyphFindPred);
+		glyphs::const_iterator it = std::lower_bound(_glyphs.begin(), _glyphs.end(), ch, glyphFindPred);
 		if (it != _glyphs.end())
 		{
 			const glyph &g = *it;
@@ -76,6 +76,11 @@ namespace oxygine
 	int Font::getSize() const
 	{
 		return _size;
+	}
+
+	float Font::getScale() const
+	{
+		return _scale;
 	}
 
 	int Font::getLineHeight() const

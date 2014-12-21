@@ -45,7 +45,7 @@ namespace oxygine
 		
 
 		
-		string desc = item->dump(0);
+		std::string desc = item->dump(0);
 
 		tb->setHtmlText(desc);
 		Vector2 ts = tb->getTextRect().size.cast<Vector2>();

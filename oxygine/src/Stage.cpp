@@ -1,8 +1,10 @@
 #include "Stage.h"
+#include "core/oxygine.h"
 #include "core/Renderer.h"
 #include "math/Rect.h"
 #include "RenderState.h"
 #include "STDRenderer.h"
+#include "Clock.h"
 #include <sstream>
 
 namespace oxygine
@@ -43,7 +45,7 @@ namespace oxygine
 
 	std::string Stage::dump(const dumpOptions &opt) const
 	{
-		stringstream st;
+		std::stringstream st;
 
 		st << "{Stage}\n";
 		//st << " displaySize=(" << _realDisplaySize.x << "," << _realDisplaySize.y << ")";

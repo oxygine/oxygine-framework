@@ -7,11 +7,10 @@
 
 namespace oxygine
 {
-	using namespace std;
 	DECLARE_SMART(Texture, spTexture);
 
 
-	typedef vector<AnimationFrame> animationFrames;
+	typedef std::vector<AnimationFrame> animationFrames;
 	class MemoryTexture;
 
 	class ResAnim: public Resource

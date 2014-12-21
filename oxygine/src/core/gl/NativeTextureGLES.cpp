@@ -2,7 +2,6 @@
 #include "NativeTextureGLES.h"
 #include "oxgl.h"
 #include "MemoryTexture.h"
-#include "../oxygine.h"
 #include "../NativeTexture.h"
 #include "../ImageDataOperations.h"
 #include "../file.h"

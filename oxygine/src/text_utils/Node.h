@@ -1,6 +1,5 @@
 #pragma once
 #include "oxygine_include.h"
-#include "core/oxygine.h"
 #include "core/Object.h"
 #include "math/Color.h"
 #include "math/vector2.h"
@@ -25,7 +24,7 @@ namespace oxygine
 	
 	namespace text
 	{
-		typedef vector<Symbol> text_data;
+		typedef std::vector<Symbol> text_data;
 
 
 		class DrawContext
@@ -74,7 +73,7 @@ namespace oxygine
 			void draw(DrawContext &dc);
 
 #ifdef OX_DEBUG
-			string _text;//only for debug
+			std::string _text;//only for debug
 #endif
 		};
 

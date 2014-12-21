@@ -1,8 +1,7 @@
 #include "stringUtils.h"
 #include <string.h>
 #include <algorithm>
-#include "core/oxygine.h"
-#include "core/log.h"
+#include "core/Object.h"
 
 #ifdef __S3E__
 #include "IwUTF8.h"
@@ -215,21 +214,21 @@ namespace oxygine
 		return utfstr;
 	}
 
-	string lower(const string &str)
+	std::string lower(const std::string &str)
 	{
 		std::string data = str; 
 		std::transform(data.begin(), data.end(), data.begin(), ::tolower);//todo optimize
 		return data;
 	}
 
-	wstring debug_s2ws(const string &str)
+	std::wstring debug_s2ws(const std::string &str)
 	{
 		std::wstring wstr(str.length(), L' ');
 		std::copy(str.begin(), str.end(), wstr.begin());
 		return wstr;
 	}
 	
-	wstring utf8tows(const char *utf8str)
+	std::wstring utf8tows(const char *utf8str)
 	{
 		if (!utf8str)
 			return L"";
@@ -247,7 +246,7 @@ namespace oxygine
 		int len = IwUTF8ToWideChar(utf8str, n, (ucs2char*)s, n * 4);
 		s[len] = 0;
 
-		wstring str = s;
+		std::wstring str = s;
 		fastFree(s);
 		
 		return str;
@@ -259,7 +258,7 @@ namespace oxygine
 		else
 			s = (wchar_t*)SDL_iconv_string("UCS-4-INTERNAL", "UTF-8", utf8str, n);
 
-		wstring str = s;
+		std::wstring str = s;
 		SDL_free(s);
 		return str;
 #else
@@ -267,7 +266,7 @@ namespace oxygine
 #endif
 	}
 
-	string	ws2utf8(const wchar_t *wstr)
+	std::string	ws2utf8(const wchar_t *wstr)
 	{
 		if (!wstr)
 			return "";
@@ -284,7 +283,7 @@ namespace oxygine
 		int len = IwWideCharToUTF8((const ucs2char*)wstr, n, s, n * 4);
 		s[len] = 0;
 
-		string str = s;
+		std::string str = s;
 		fastFree(s);
 		return str;
 #elif OXYGINE_SDL
@@ -294,7 +293,7 @@ namespace oxygine
 		else
 			s = SDL_iconv_string("UTF-8", "UCS-4-INTERNAL", (const char*)wstr, n * sizeof(wchar_t));
 
-		string str = s;
+		std::string str = s;
 		SDL_free(s);
 		return str;
 #else
@@ -320,11 +319,11 @@ namespace oxygine
 		return Color(0xffffffff);
 	}
 
-	string	color2hex(const Color &c)
+	std::string	color2hex(const Color &c)
 	{
 		char str[255];
 		safe_sprintf(str, "%02x%02x%02x%02x", c.r, c.g, c.b, c.a);
-		return string(str);
+		return std::string(str);
 	}
 
 	int strcmp_cns(const char* fileName1, const char* fileName2)

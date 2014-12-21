@@ -17,7 +17,7 @@
 #include "Renderer.h"
 #include "DebugActor.h"
 #include "Stage.h"
-
+#include "KeyEvent.h"
 #include "res/ResStarlingAtlas.h"
 
 
@@ -47,6 +47,7 @@
 #include <emscripten.h>
 #include <SDL.h>
 #include <SDL_compat.h>
+#include <SDL_events.h>
 #endif
 
 #ifdef __ANDROID__
@@ -254,7 +255,7 @@ namespace oxygine
 	namespace core
 	{
 		void focusLost()
-		{			
+		{
 			if (!LOST_RESET_CONTEXT)
 				return;
 
@@ -263,7 +264,7 @@ namespace oxygine
 			SDL_GL_DeleteContext(_context);
 			_context = 0;
 #endif
-			
+
 		}
 
 		void focusAcquired()
@@ -272,8 +273,8 @@ namespace oxygine
 				return;
 
 #if OXYGINE_SDL			
-			log::messageln("lost context");			
-			if(!_context)
+			log::messageln("lost context");
+			if (!_context)
 			{
 				_context = SDL_GL_CreateContext(_window);
 				initGLExtensions(SDL_GL_GetProcAddress);
@@ -281,7 +282,15 @@ namespace oxygine
 #endif			
 		}
 
-		//int eventsFilter(void *, SDL_Event *e);
+#ifdef EMSCRIPTEN
+		void SDL_handleEvent(SDL_Event &event, bool &done);
+		int SDL_eventsHandler(void *, SDL_Event *e)
+		{
+			bool done = false;
+			SDL_handleEvent(*e, done);
+			return 0;
+		}
+#endif
 
 		void init(init_desc *desc_ptr)
 		{
@@ -344,8 +353,8 @@ namespace oxygine
 			SDL_Surface *screen;
 			screen = SDL_SetVideoMode(desc.w, desc.h, 32, SDL_OPENGL); 
 			_displaySize = Point(desc.w, desc.h);
-			
 
+			emscripten_SDL_SetEventHandler(SDL_eventsHandler, 0);
 	#endif
 		
 	#ifdef OXYGINE_SDL
@@ -404,6 +413,7 @@ namespace oxygine
             }
 
 			SDL_GL_SetSwapInterval(desc.vsync ? 1 : 0);
+
 
 			//SDL_SetEventFilter(eventsFilter, 0);
 			
@@ -476,6 +486,7 @@ namespace oxygine
 			init2();			
 		}
 
+		
 		/*
 		int eventsFilter(void *, SDL_Event *e)
 		{
@@ -633,6 +644,121 @@ namespace oxygine
 			//sleep(1000/50);
 		}
 
+#ifndef __S3E__
+		void SDL_handleEvent(SDL_Event &event, bool &done)
+		{
+			Input *input = &Input::instance;
+
+			Event ev(Input::event_platform);
+			ev.userData = &event;
+			Input::instance.dispatchEvent(&ev);
+
+			switch (event.type)
+			{
+			case SDL_QUIT:
+				done = true;
+				break;
+			case SDL_WINDOWEVENT:
+			{
+				/*
+				if (event.window.event == SDL_WINDOWEVENT_ENTER)
+				active = false;
+				if (event.window.event == SDL_WINDOWEVENT_LEAVE)
+				active = true;
+				*/
+
+				if (event.window.event == SDL_WINDOWEVENT_MINIMIZED)
+					active = false;
+				if (event.window.event == SDL_WINDOWEVENT_RESTORED)
+					active = true;
+
+				bool newFocus = focus;
+				if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST)
+					newFocus = false;
+				if (event.window.event == SDL_WINDOWEVENT_FOCUS_GAINED)
+					newFocus = true;
+				if (focus != newFocus)
+				{
+					focus = newFocus;
+#if HANDLE_FOCUS_LOST
+
+					if (focus)
+						focusAcquired();
+
+					log::messageln("focus: %d", (int)focus);
+					Event ev(focus ? Stage::ACTIVATE : Stage::DEACTIVATE);
+					if (getStage())
+						getStage()->dispatchEvent(&ev);
+
+					if (!focus)
+						focusLost();
+#endif							
+				}
+				//log::messageln("SDL_SYSWMEVENT %d", (int)event.window.event);
+				break;
+			}
+			case SDL_MOUSEWHEEL:
+				input->sendPointerWheelEvent(event.wheel.y, &input->_pointerMouse);
+				break;
+			case SDL_KEYDOWN:
+			{
+				KeyEvent ev(KeyEvent::KEY_DOWN, &event.key);
+				getStage()->dispatchEvent(&ev);
+			} break;
+			case SDL_KEYUP:
+			{
+				KeyEvent ev(KeyEvent::KEY_UP, &event.key);
+				getStage()->dispatchEvent(&ev);
+			} break;
+#if SDL_VIDEO_OPENGL
+			case SDL_MOUSEMOTION:
+				input->sendPointerMotionEvent((float)event.motion.x, (float)event.motion.y, 1.0f, &input->_pointerMouse);
+				break;
+			case SDL_MOUSEBUTTONDOWN:
+			case SDL_MOUSEBUTTONUP:
+			{
+				MouseButton b = MouseButton_Left;
+				switch (event.button.button)
+				{
+				case 1: b = MouseButton_Left; break;
+				case 2: b = MouseButton_Middle; break;
+				case 3: b = MouseButton_Right; break;
+				}
+
+				input->sendPointerButtonEvent(b, (float)event.button.x, (float)event.button.y, 1.0f,
+					event.type == SDL_MOUSEBUTTONDOWN ? TouchEvent::TOUCH_DOWN : TouchEvent::TOUCH_UP, &input->_pointerMouse);
+			}
+				break;
+#else
+
+			case SDL_FINGERMOTION:
+			{
+				//log::messageln("SDL_FINGERMOTION");
+				Vector2 pos = convertTouch(event);
+				input->sendPointerMotionEvent(
+					pos.x, pos.y, event.tfinger.pressure,
+					input->getTouchByID((int)event.tfinger.fingerId));
+			}
+
+				break;
+			case SDL_FINGERDOWN:
+			case SDL_FINGERUP:
+			{
+				//log::messageln("SDL_FINGER");
+				Vector2 pos = convertTouch(event);
+				input->sendPointerButtonEvent(
+					MouseButton_Touch,
+					pos.x, pos.y, event.tfinger.pressure,
+					event.type == SDL_FINGERDOWN ? TouchEvent::TOUCH_DOWN : TouchEvent::TOUCH_UP,
+					input->getTouchByID((int)event.tfinger.fingerId));
+			}
+				break;
+#endif
+			}
+
+		}
+#endif
+
 		bool update()
 		{
 			ThreadMessages::message msg;
@@ -661,125 +787,18 @@ namespace oxygine
 	#if OXYGINE_SDL || EMSCRIPTEN
 
 			//log::messageln("update");
-			Input *input = &Input::instance;
+			
 			bool done = false;
 			SDL_Event event;
 			while (SDL_PollEvent(&event)) 
 			{
-				Event ev(Input::event_platform);
-				ev.userData = &event;
-				Input::instance.dispatchEvent(&ev);
-
-				switch(event.type)
-				{
-				case SDL_QUIT:
-					done = true;
-					break;				
-				case SDL_WINDOWEVENT:
-					{					
-						/*
-						if (event.window.event == SDL_WINDOWEVENT_ENTER)
-							active = false;
-						if (event.window.event == SDL_WINDOWEVENT_LEAVE)
-							active = true;
-							*/
-
-						if (event.window.event == SDL_WINDOWEVENT_MINIMIZED)
-							active = false;
-						if (event.window.event == SDL_WINDOWEVENT_RESTORED)
-							active = true;
-
-						bool newFocus = focus;
-						if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST)
-							newFocus = false;
-						if (event.window.event == SDL_WINDOWEVENT_FOCUS_GAINED)
-							newFocus = true;
-						if (focus != newFocus)
-						{
-							focus = newFocus;
-#if HANDLE_FOCUS_LOST
-
-							if (focus)
-								focusAcquired();
-
-							log::messageln("focus: %d", (int)focus);
-							Event ev(focus ? Stage::ACTIVATE : Stage::DEACTIVATE);
-							if (getStage())
-								getStage()->dispatchEvent(&ev);
-
-							if (!focus)
-								focusLost();							
-#endif							
-						}
-						//log::messageln("SDL_SYSWMEVENT %d", (int)event.window.event);
-						break;
-					}
-				case SDL_MOUSEWHEEL:
-					input->sendPointerWheelEvent(event.wheel.y, &input->_pointerMouse);
-					break;
-				case SDL_KEYDOWN:
-				{
-					KeyEvent ev(KeyEvent::KEY_DOWN, &event.key);
-					getStage()->dispatchEvent(&ev);
-				} break;
-				case SDL_KEYUP:
-				{
-					KeyEvent ev(KeyEvent::KEY_UP, &event.key);
-					getStage()->dispatchEvent(&ev);
-				} break;
-#if SDL_VIDEO_OPENGL
-				case SDL_MOUSEMOTION:
-					input->sendPointerMotionEvent((float)event.motion.x, (float)event.motion.y, 1.0f, &input->_pointerMouse);
-					break;
-				case SDL_MOUSEBUTTONDOWN:
-				case SDL_MOUSEBUTTONUP:
-					{
-						MouseButton b = MouseButton_Left;
-						switch(event.button.button)
-						{
-							case 1: b = MouseButton_Left; break;
-							case 2: b = MouseButton_Middle; break;
-							case 3: b = MouseButton_Right; break;
-						}
-
-						input->sendPointerButtonEvent(b, (float)event.button.x, (float)event.button.y, 1.0f, 
-							event.type == SDL_MOUSEBUTTONDOWN ? TouchEvent::TOUCH_DOWN : TouchEvent::TOUCH_UP, &input->_pointerMouse);
-					}					
-					break;
-#else
-
-				case SDL_FINGERMOTION:
-					{
-						//log::messageln("SDL_FINGERMOTION");
-						Vector2 pos = convertTouch(event);
-						input->sendPointerMotionEvent(
-							pos.x, pos.y, event.tfinger.pressure,
-							input->getTouchByID((int)event.tfinger.fingerId));
-					}
-				
-					break;
-				case SDL_FINGERDOWN:
-				case SDL_FINGERUP:
-					{				
-						//log::messageln("SDL_FINGER");
-						Vector2 pos = convertTouch(event);
-						input->sendPointerButtonEvent(
-							MouseButton_Touch,
-							pos.x, pos.y, event.tfinger.pressure,
-							event.type == SDL_FINGERDOWN ? TouchEvent::TOUCH_DOWN : TouchEvent::TOUCH_UP,
-							input->getTouchByID((int)event.tfinger.fingerId));
-					}				
-					break;
+#if !EMSCRIPTEN //emscripten handled events from callback
+				SDL_handleEvent(event, done);				
 #endif
-				}
 			}
 
-
 			return done;
-	#elif EMSCRIPTEN
-			return false;
 	#endif
-
 
 			log::warning("update not implemented");
 			return true;
@@ -815,6 +834,11 @@ namespace oxygine
 			s3eOSExecExecute(str, false);
 #elif __ANDROID__
 			jniBrowse(str);
+#elif EMSCRIPTEN
+			EM_ASM_INT({
+				var url = Pointer_stringify($0);
+				window.open(url, '_blank');
+			}, str);
 #else
 			OX_ASSERT(!"execute not implemented");
 #endif
@@ -849,12 +873,12 @@ namespace oxygine
 			if (height > width)
 			{
 				if (orient == S3E_SURFACE_LANDSCAPE || orient == S3E_SURFACE_LANDSCAPE_FIXED)
-					swap(width, height);
+					std::swap(width, height);
 			}
 			else
 			{
 				if (orient == S3E_SURFACE_PORTRAIT || orient == S3E_SURFACE_PORTRAIT_FIXED)
-					swap(width, height);
+					std::swap(width, height);
 			}
 
 			return Point(width, height);

@@ -1,20 +1,17 @@
 #pragma once
 #include "oxygine_include.h"
-#include "Actor.h"
 #include "core/Texture.h"
 #include "math/Rect.h"
-#include "AnimationFrame.h"
 #include "res/ResAnim.h"
+#include "Actor.h"
+#include "AnimationFrame.h"
 #include "VisualStyle.h"
 
 namespace oxygine
 {
-	class ResAnim;
+	class ResAnim;			
 
 	DECLARE_SMART(Sprite, spSprite);
-		
-	
-
 	class Sprite : public VStyleActor
 	{
 	public:

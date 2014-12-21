@@ -82,7 +82,7 @@ namespace oxygine
 
 		float offsetY = 0;
 
-		vector<spNativeTexture> textures = NativeTexture::getCreatedTextures();
+		std::vector<spNativeTexture> textures = NativeTexture::getCreatedTextures();
 
 		
 		spTextField text = initActor(new TextField,
@@ -107,7 +107,7 @@ namespace oxygine
 
 		int n = 0;
 		int mem = 0;
-		for (vector<spNativeTexture>::iterator i = textures.begin(); i != textures.end(); ++i)
+		for (std::vector<spNativeTexture>::iterator i = textures.begin(); i != textures.end(); ++i)
 		{
 			spNativeTexture t = *i;
 			TextureLine *line = new TextureLine(t);

@@ -10,7 +10,6 @@
 
 namespace oxygine
 {
-	using namespace std;
 	DECLARE_SMART(MemoryTexture, spMemoryTexture);
 	DECLARE_SMART(NativeTexture, spNativeTexture);
 
@@ -37,7 +36,7 @@ namespace oxygine
 		MemoryTexture *_src;
 		NativeTexture *_dest;
 		
-		vector<unsigned char> _buffer;
+		std::vector<unsigned char> _buffer;
 		ThreadMessages _messages;//todo, use global messages
 	};
 }

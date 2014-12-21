@@ -156,9 +156,6 @@
     <ClCompile Include="..\..\src\core\Mem2Native.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\memory_pool.cpp">
-      <Filter>src\core</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\core\Mutex.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
@@ -258,9 +255,6 @@
     <ClCompile Include="..\..\src\Sprite.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Tweener.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\VisualStyle.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -282,7 +276,6 @@
     <ClCompile Include="..\..\src\InputText.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Serialize.cpp" />
     <ClCompile Include="..\..\src\TextField.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -296,6 +289,18 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\MaskedRenderer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\TweenQueue.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Tween.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Serializable.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Serialize.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -462,9 +467,6 @@
     <ClInclude Include="..\..\src\core\Mem2Native.h">
       <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\core\memory_pool.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\core\Mutex.h">
       <Filter>src\core</Filter>
     </ClInclude>
@@ -624,7 +626,6 @@
     <ClInclude Include="..\..\src\InputText.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Serialize.h" />
     <ClInclude Include="..\..\src\TextField.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -638,6 +639,27 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\STDRenderer.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\TweenQueue.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Tween.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Serializable.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Serialize.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\TouchEvent.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\KeyEvent.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Property.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

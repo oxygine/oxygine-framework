@@ -4,10 +4,10 @@
 #include "RenderState.h"
 #include "STDRenderer.h"
 using namespace oxygine;
+using namespace std;
 
 
-
-spButton createButtonHelper(spButton, string txt, EventCallback cb);
+spButton createButtonHelper(spButton, std::string txt, EventCallback cb);
 
 class Content: public Actor
 {

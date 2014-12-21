@@ -24,47 +24,63 @@ You could create second *"child"* sprite attached to already created and they wo
 ![Actor inheritance](img/actor.png)
  
  
-#Actors
-Actor is base class in scene graph. 
+
+#Actor
+[Actor](http://oxygine.org/doc/api/classoxygine_1_1_actor.html) is base class in scene graph. 
+It can be moved, rotated, scaled, animated. Actors can have other actors as children. When a parent is transformed, all its children are transformed as well.
+
 Actor has properties:
 
 - transformation (position, scale, rotation)
+- anchor point
 - size
 - name
+- transparency
 - list of children
 - list of added tweens 
-- etc.
+- etc. 
 
 
-You would widely use Sprites in your app.
 
 ##Sprite
-Sprite is main Actor for displaying images and animations. Sprite = Actor + Image
 
-![Actor inheritance](img/sprite.png)
+You would widely use [Sprites](http://oxygine.org/doc/api/classoxygine_1_1_sprite.html) in your app.
+Sprite is subclass of Actor. It is using for displaying images and animations.
+
+
+![](img/sprite.png)
 
 ##Polygon
-Sprite for rendering custom vertices array. Polygon = Sprite + Vertices 
+[Polygon](http://oxygine.org/doc/api/classoxygine_1_1_polygon.html) is subclass of Sprite. It is used for rendering custom vertices array.  
 
-![Actor inheritance](img/polygon.png)
+![](img/polygon.png)
 
 ##TextField
-TextField is used for displaying text.
+[TextField](http://oxygine.org/doc/api/classoxygine_1_1_text_field.html) is subclass of Actor. It is used for displaying text.
 
-![Actor inheritance](img/text.png)
+![](img/text.png)
 
 ##Progress Bar
-Progress Bar is used for displaying progress.
+[ProgressBar](http://oxygine.org/doc/api/classoxygine_1_1_progress_bar.html) is subclass of Sprite. It is used for displaying progress.
 
-![Actor inheritance](img/progressbar.png)
+![](img/progressbar.png)
 
 ##ColorRectSprite
-It is rectangle filled with one color.
+[ColorRectSprite](http://oxygine.org/doc/api/classoxygine_1_1_color_rect_sprite.html) is subclass of Sprite. It is rectangle filled with one color.
+
+![](img/colorrect.png)
 
 ##ClipRectActor
-ClipRectActor is clipping outside children.
+[ClipRectActor](http://oxygine.org/doc/api/classoxygine_1_1_clip_rect_actor.html) is sublcass of Actor. It is used to clip area with children outside of actor's bound.
+
+##Box9Sprite
+
+[Box9Sprite](http://oxygine.org/doc/api/classoxygine_1_1_box9_sprite.html) is sublcass of Sprite. It is used to scale the image in such a way that the 4 corners remain unscaled, but the four edges are scaled(or tiled) in one axis and the middle is scaled(or tiled) in both axis. So the graphical representation of this scenario will be something like this:
+
+![](img/box9sprite.jpg)
+
 
 ##MaskedSprite
-Sprite which is using other sprite for masking own children.
+[MaskedSprite](http://oxygine.org/doc/api/classoxygine_1_1_masked_sprite.html) is subclass of Sprite. It is using other sprite for masking own children.
 
-![Actor inheritance](img/mask.png)
+![](img/mask.png)

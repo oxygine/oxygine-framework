@@ -4,6 +4,7 @@
 #include "TextField.h"
 #include "DebugActor.h"
 #include "res/Resources.h"
+#include "res/ResFont.h"
 #include "initActor.h"
 
 namespace oxygine

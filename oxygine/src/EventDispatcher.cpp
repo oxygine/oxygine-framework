@@ -1,4 +1,5 @@
 #include "EventDispatcher.h"
+#include "Event.h"
 namespace oxygine
 {
 	EventDispatcher::EventDispatcher():_lastID(0), _listeners(0)

@@ -34,9 +34,9 @@ namespace oxygine
 		_loadCounter = _useLoadCounter ? _loadCounter - 1 : 0;
 	}
 
-	string Resource::extractID(const pugi::xml_node &node, const string &file, const string &def)
+	std::string Resource::extractID(const pugi::xml_node &node, const std::string &file, const std::string &def)
 	{	
-		string id = node.attribute("id").value();
+		std::string id = node.attribute("id").value();
 		if (id.empty())
 		{
 			if (file.empty())
@@ -47,7 +47,7 @@ namespace oxygine
 		return lower(id);
 	}
 
-	string Resource::extractID(const string &file)
+	std::string Resource::extractID(const std::string &file)
 	{	
 		char head[255];
 		char tail[255];

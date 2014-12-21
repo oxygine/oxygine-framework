@@ -4,7 +4,6 @@
 #include "FileSystem.h"
 #include "minizip/unzip.h"
 #include "core/file.h"
-using namespace std;
 using namespace oxygine;
 
 namespace oxygine
@@ -28,7 +27,7 @@ namespace file
 
 		void add(const char *name);
 		void add(const unsigned char* data, unsigned int size);
-		void add(vector<char> &data);
+		void add(std::vector<char> &data);
 		
 		void update();
 
@@ -41,16 +40,16 @@ namespace file
 
 		bool _sort;
 
-		typedef vector<file_entry> files;
+		typedef std::vector<file_entry> files;
 		files _files;
 
 		struct zpitem
 		{
 			unzFile handle;
-			vector<char> data;
+			std::vector<char> data;
 			zpitem():handle(0){}
 		};
-		typedef vector<zpitem> zips;
+		typedef std::vector<zpitem> zips;
 		zips _zps;
 	};
 
@@ -66,7 +65,7 @@ namespace file
 		//add zip from memory, data should not be deleted
 		void add(const unsigned char* data, unsigned int size);
 		//add zip from memory, vector would be swapped (emptied)
-		void add(vector<char> &data);
+		void add(std::vector<char> &data);
 		void reset();
 
 	protected:

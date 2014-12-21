@@ -51,7 +51,7 @@ namespace oxygine
 				dest->init(textureRect.getWidth(), textureRect.getHeight(), src->getFormat());		
 
 
-			Rect srcRect(prev.x, prev.y, min(SIZE, textureRect.getWidth()), min(SIZE, textureRect.getHeight()));
+			Rect srcRect(prev.x, prev.y, std::min(SIZE, textureRect.getWidth()), std::min(SIZE, textureRect.getHeight()));
 			srcRect.clip(textureRect);
 
 

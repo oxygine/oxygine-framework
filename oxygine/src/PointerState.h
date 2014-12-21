@@ -1,11 +1,10 @@
 #pragma once
 #include "oxygine_include.h"
-#include "core/oxygine.h"
+#include "math/vector2.h"
 #include <list>
 
 namespace oxygine
 {
-	DECLARE_SMART(EventHandler, spEventHandler);
 	class EventState;
 	class Actor;
 

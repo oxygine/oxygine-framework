@@ -1,7 +1,6 @@
 #include <string>
 #include "STDFileSystem.h"
 #include "file.h"
-//#include "oxygine.h"
 #include "log.h"
 #include "utils/stringUtils.h"
 #include "Object.h"
@@ -9,11 +8,12 @@
 #ifdef __S3E__
 #include <s3eFile.h>
 #else
-#if WIN32
- #include <direct.h>
- #else
- #include "SDL_system.h"
- #endif
+	#if WIN32
+		#include <direct.h>
+	#elif EMSCRIPTEN
+	#else
+		#include "SDL_system.h"
+	#endif
 #endif
 
 
@@ -34,7 +34,7 @@ namespace oxygine
 {
 	namespace file
 	{
-		string _additionalFolder;
+		std::string _additionalFolder;
 
 		STDFileSystem _nfs(true);
 		STDFileSystem _nfsWrite(false);
@@ -95,6 +95,10 @@ namespace oxygine
 
 		handle open(const char *file_, const char *mode, error_policy ep)
 		{
+#ifdef OX_DEBUG
+			if (!strstr(mode, "b"))
+				log::warning("file::open for file '%s' should be called with 'b' (means binary) flag", file_);
+#endif
 			//OX_ASSERT(_openedFiles == 0);
 			LOGD("open file: %s %s %d", file_, mode, _openedFiles);
 			char file[512];
@@ -203,7 +207,7 @@ namespace oxygine
 
 		void write(const char *file, const void *data, unsigned int size, error_policy ep)
 		{
-			autoClose ac(open(file, "w", ep));
+			autoClose ac(open(file, "wb", ep));
 			if (!ac.getHandle())
 				return;
 			write(ac.getHandle(), data, size);

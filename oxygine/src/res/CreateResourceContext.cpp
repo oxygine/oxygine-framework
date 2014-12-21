@@ -4,7 +4,7 @@
 
 namespace oxygine
 {	
-	XmlWalker::XmlWalker(const string &folder, float scaleFactor, bool load, pugi::xml_node xml , pugi::xml_node meta):_rootMeta(meta), 
+	XmlWalker::XmlWalker(const std::string &folder, float scaleFactor, bool load, pugi::xml_node xml, pugi::xml_node meta) :_rootMeta(meta),
 		_root(xml),
 		_notStarted(true), 
 		_notStartedMeta(true),
@@ -16,9 +16,9 @@ namespace oxygine
 		//_scaleFactor = _root.attribute("scale_factor").as_float(_scaleFactor);
 	}
 
-	string XmlWalker::connectPath(const char *currentPath, const char *str)
+	std::string XmlWalker::connectPath(const char *currentPath, const char *str)
 	{
-		string s;
+		std::string s;
 		if (str[0] == '.' && (str[1] == '/' || str[1] == '\\'))
 		{
 			s = currentPath;
@@ -29,7 +29,7 @@ namespace oxygine
 	}
 
 
-	string XmlWalker::getPath(const char *attrName) const
+	std::string XmlWalker::getPath(const char *attrName) const
 	{
 		const char *str = _root.attribute(attrName).as_string();
 		if (str[0] == '.' && (str[1] == '/' || str[1] == '\\'))

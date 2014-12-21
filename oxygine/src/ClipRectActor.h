@@ -1,7 +1,6 @@
 #pragma once
 #include "oxygine_include.h"
 #include "Actor.h"
-#include "math/Rect.h"
 
 namespace oxygine
 {

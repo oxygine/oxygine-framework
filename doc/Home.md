@@ -12,6 +12,8 @@ Work in progress...
 7. [Resources](resources)
 8. [Colors Table](colors)
 
+9. [Atlasses and HD Assets](atlasses) (not translated yet)
+
 
 ##Extensions:
 1. [oxygine-sound library](sounds)

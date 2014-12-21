@@ -11,10 +11,10 @@ public:
 
 	int _current;
 
-	vector<Test::toggle> _items;
+	std::vector<Test::toggle> _items;
 };
 
-spTextField createText(string txt)
+spTextField createText(std::string txt)
 {
 	spTextField text = new TextField();
 
@@ -77,7 +77,7 @@ Test::~Test()
 }
 
 
-spButton Test::addButton(string id, string txt)
+spButton Test::addButton(std::string id, std::string txt)
 {
 	spButton button = createButtonHelper(new Button, txt, CLOSURE(this, &Test::_clicked));
 	initActor(button.get(), 
@@ -97,7 +97,7 @@ spButton Test::addButton(string id, string txt)
 	return button;
 }
 
-void Test::addToggle(string id, const toggle *t, int num)
+void Test::addToggle(std::string id, const toggle *t, int num)
 {
 	spButton button = createButtonHelper(new Toggle(t, num), t[0].text, CLOSURE(this, &Test::_toggleClicked));
 	initActor(button.get(), 
@@ -115,7 +115,7 @@ void Test::addToggle(string id, const toggle *t, int num)
 	}
 }
 
-void Test::updateText(string id, string txt)
+void Test::updateText(std::string id, std::string txt)
 {
 	spActor child = ui->getChild(id);
 	if (!child)
@@ -153,7 +153,7 @@ void Test::back(Event *event)
 }
 
 
-void Test::notify(string txt, int time)
+void Test::notify(std::string txt, int time)
 {
 	size_t N = 0;
 	for (size_t i = 0; i < MAX_NOTIFIES; ++i)

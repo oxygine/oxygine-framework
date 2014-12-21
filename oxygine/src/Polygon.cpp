@@ -37,7 +37,7 @@ namespace oxygine
 
 	std::string Polygon::dump(const dumpOptions &options) const
 	{
-		stringstream stream;
+		std::stringstream stream;
 		stream << "{Polygon}\n";
 
 		if (_verticesSize)
@@ -63,7 +63,7 @@ namespace oxygine
 	}
 
 	template <class T>
-	void append(vector<unsigned char> &buff, const T &t)
+	void append(std::vector<unsigned char> &buff, const T &t)
 	{
 		const unsigned char *ptr = (const unsigned char *)&t;
 		buff.insert(buff.end(), ptr, ptr + sizeof(t));
@@ -81,7 +81,7 @@ namespace oxygine
 		//if (df.base)
 		{
 			rs.renderer->setTexture(df.base, df.alpha, df.premultiplied);
-			static vector<unsigned char> buff;
+			static std::vector<unsigned char> buff;
 			buff.reserve(_verticesSize);
 			buff.clear();
 			int num = _verticesSize / _vdecl->size;

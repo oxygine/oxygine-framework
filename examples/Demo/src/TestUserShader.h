@@ -29,7 +29,7 @@ public:
 		_val = v;
 	}
 
-	typedef GetSet<Vector4, const Vector4&, ShaderSprite, &ShaderSprite::getVal, &ShaderSprite::setVal>	TweenVal;
+	typedef Property<Vector4, const Vector4&, ShaderSprite, &ShaderSprite::getVal, &ShaderSprite::setVal>	TweenVal;
 
 private:
 	Vector4 _val;

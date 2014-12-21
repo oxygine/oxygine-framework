@@ -16,13 +16,8 @@ namespace oxygine
 		~Button();
 
 		int	getRow() const {return _row;}
-		//spEventHandler getHandler() {return _ph;}
 
 		void setResAnim(const ResAnim *r);
-		/**setAnimFrame is identical to setResAnim*/
-		//void setAnimFrame(const ResAnim *resanim, int col, int row);
-
-		//void setCallbackClick(EventCallback cb);		
 
 		/**Sets which row from ResAnim should be used. Default value is 0. Could be used for CheckBoxes*/
 		void setRow(int row);

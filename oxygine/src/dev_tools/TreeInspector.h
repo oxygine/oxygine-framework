@@ -22,7 +22,7 @@ namespace oxygine
 	class TreeInspector: public ClipRectActor
 	{
 	public:
-		static string getDefaultName(){return "tree_inspector";}
+		static std::string getDefaultName(){ return "tree_inspector"; }
 
 		TreeInspector();
 		~TreeInspector();

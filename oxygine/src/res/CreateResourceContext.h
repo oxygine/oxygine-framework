@@ -6,7 +6,6 @@
 
 namespace oxygine
 {
-	using namespace std;
 
 	class Resources;
 	/**internal class*/
@@ -15,17 +14,17 @@ namespace oxygine
 	class XmlWalker
 	{
 	public:
-		XmlWalker(const string &folder, float scaleFactor, bool load, pugi::xml_node xml, pugi::xml_node meta);
+		XmlWalker(const std::string &folder, float scaleFactor, bool load, pugi::xml_node xml, pugi::xml_node meta);
 				
 		bool empty() const {return _root.empty();}
 
-		const string&	getCurrentFolder() const {return _path;}
-		string			getPath(const char *attrName) const;
-		pugi::xml_node	getNode() const {return _root;}
-		pugi::xml_node	getMeta() const {return _rootMeta;}
-		float			getScaleFactor() const {return _scaleFactor;}
-		bool			getLoad() const {return _load;}
-		const char*		getType() const {return _root.name();}
+		const std::string&	getCurrentFolder() const { return _path; }
+		std::string			getPath(const char *attrName) const;
+		pugi::xml_node		getNode() const {return _root;}
+		pugi::xml_node		getMeta() const {return _rootMeta;}
+		float				getScaleFactor() const {return _scaleFactor;}
+		bool				getLoad() const {return _load;}
+		const char*			getType() const {return _root.name();}
 
 		void			checkSetAttributes();
 		
@@ -35,10 +34,10 @@ namespace oxygine
 
 	private:
 		void			_checkSetAttributes(pugi::xml_node node);
-		string connectPath(const char *currentPath, const char *str);
+		std::string connectPath(const char *currentPath, const char *str);
 
-		string _base;
-		string _path;
+		std::string _base;
+		std::string _path;
 
 		pugi::xml_node _root;
 		pugi::xml_node _last;
@@ -70,9 +69,9 @@ namespace oxygine
 		//pugi::xml_node node;
 		//pugi::xml_node meta;
 
-		const string *xml_name;
+		const std::string *xml_name;
 		//const string *folder;
-		const string *prebuilt_folder;
+		const std::string *prebuilt_folder;
 	};
 
 	DECLARE_SMART(MemoryTexture, spMemoryTexture);

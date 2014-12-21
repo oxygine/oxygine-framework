@@ -1,6 +1,6 @@
 #pragma once
 #include "oxygine_include.h"
-#include "EventDispatcher.h"
+#include "Event.h"
 #include "math/vector3.h"
 #include "math/vector2.h"
 #include "closure/closure.h"
@@ -25,7 +25,7 @@ namespace oxygine
 
 		enum
 		{
-			event_platform = makefourcc('_', 's', 'd', 'l')
+			event_platform = sysEventID('I', 'P', 'L')
 		};
 
 		void cleanup();

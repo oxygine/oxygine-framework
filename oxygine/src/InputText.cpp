@@ -59,22 +59,22 @@ namespace oxygine
 		updateText();
 	}
 
-	void InputText::setAllowedSymbols(const string &utf8str)
+	void InputText::setAllowedSymbols(const std::string &utf8str)
 	{
 		_allowed = utf8str;
 	}
 
-	void InputText::setAllowedSymbols(const wstring &str)
+	void InputText::setAllowedSymbols(const std::wstring &str)
 	{
 		_allowed = ws2utf8(str.c_str());
 	}
 
-	void InputText::setDisallowedSymbols(const string &utf8str)
+	void InputText::setDisallowedSymbols(const std::string &utf8str)
 	{
 		_disallowed = utf8str;
 	}
 
-	void InputText::setDisallowedSymbols(const wstring &str)
+	void InputText::setDisallowedSymbols(const std::wstring &str)
 	{
 		_disallowed = ws2utf8(str.c_str());
 	}

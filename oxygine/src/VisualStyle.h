@@ -1,8 +1,6 @@
 #pragma once
 #include "oxygine_include.h"
 #include "Actor.h"
-#include "core/Renderer.h"
-#include "Tweener.h"
 
 namespace oxygine
 {
@@ -21,7 +19,7 @@ namespace oxygine
 
 
 		void _apply(const RenderState &rs);
-		string dump() const;
+		std::string dump() const;
 
 	protected:
 		Color _color;
@@ -44,7 +42,7 @@ namespace oxygine
 		void					setColor(const Color &color){_vstyle.setColor(color);}
 		void					setBlendMode(blend_mode mode){_vstyle.setBlendMode(mode);}
 
-		typedef GetSet<Color, const Color &, VStyleActor, &VStyleActor::getColor, &VStyleActor::setColor>	TweenColor;
+		typedef Property<Color, const Color &, VStyleActor, &VStyleActor::getColor, &VStyleActor::setColor>	TweenColor;
 
 	protected:
 		VisualStyle _vstyle;

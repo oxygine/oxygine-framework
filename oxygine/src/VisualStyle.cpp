@@ -34,11 +34,11 @@ namespace oxygine
 		_blend = mode; 
 	}
 
-	string VisualStyle::dump() const
+	std::string VisualStyle::dump() const
 	{
 		VisualStyle def;
 
-		stringstream stream;
+		std::stringstream stream;
 		if (_color != def.getColor())
 		{
 			stream << "color=(" << (int)_color.r << ", " << (int)_color.g << ", " << (int)_color.b << ", " << (int)_color.a << ")";

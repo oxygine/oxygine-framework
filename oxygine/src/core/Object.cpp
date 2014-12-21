@@ -1,5 +1,4 @@
 #include "Object.h"
-#include "oxygine.h"
 #include <typeinfo>
 #include <stdio.h>
 #include "log.h"
@@ -46,13 +45,13 @@ namespace oxygine
 	}
 #endif
 
-	string *ObjectBase::__getName() const
+	std::string *ObjectBase::__getName() const
 	{
 #if DYNAMIC_OBJECT_NAME
 		if (!__name)
 		{
-			__name = (string*)fastAlloc(sizeof(string));
-			new (__name) string;			
+			__name = (std::string*)fastAlloc(sizeof(std::string));
+			new (__name)std::string;
 		}
 		return __name;
 #else
@@ -65,7 +64,7 @@ namespace oxygine
 		return *__getName();
 	}
 
-	bool ObjectBase::isName(const string &name) const
+	bool ObjectBase::isName(const std::string &name) const
 	{
 		return isName(name.c_str());
 	}
@@ -82,9 +81,9 @@ namespace oxygine
 		return false;
 	}
 
-	void ObjectBase::setName(const string &name)
+	void ObjectBase::setName(const std::string &name)
 	{
-		string *n = __getName();
+		std::string *n = __getName();
 		*n = name;
 	}
 
@@ -141,6 +140,8 @@ namespace oxygine
 #if DYNAMIC_OBJECT_NAME
 		if (__name)
 		{
+			using namespace std;
+
 			__name->~string();
 			fastFree(__name);		
 			__name = 0;
@@ -204,7 +205,7 @@ namespace oxygine
 	void ObjectBase::dumpObject() const
 	{
 		const Object *o = dynamic_cast<const Object*>(this);
-		string name;
+		std::string name;
 
 		char refs[16] = "-";
 		if (o)

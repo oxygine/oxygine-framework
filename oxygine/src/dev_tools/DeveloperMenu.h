@@ -12,7 +12,7 @@ namespace oxygine
 	class DeveloperMenu: public ColorRectSprite
 	{
 	public:
-		static string getDefaultName(){return "tree_inspector";}
+		static std::string getDefaultName(){ return "tree_inspector"; }
 
 		DeveloperMenu();
 		~DeveloperMenu();

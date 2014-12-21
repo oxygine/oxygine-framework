@@ -33,8 +33,8 @@ namespace oxygine
 
 			const VertexDeclaration *vdecl;
 			PRIMITIVE_TYPE pt;
-			vector<char> vertices;
-			vector<char> indices;			
+			std::vector<char> vertices;
+			std::vector<char> indices;
 			int numVertices;
 			int numIndices;
 			unsigned int states[STATE_NUM];
@@ -42,7 +42,7 @@ namespace oxygine
 			bool indicesShortType;
 		};
 
-		typedef vector<cached_batch> batches;
+		typedef std::vector<cached_batch> batches;
 		batches _batches;
 		RectF _bounds;
 		
@@ -150,7 +150,7 @@ namespace oxygine
 								
 				size_t num = b.vertices.size() / b.vdecl->size;
 
-				vector<char> modified = b.vertices;
+				std::vector<char> modified = b.vertices;
 				for (size_t i = 0; i != num; ++i)
 				{				
 					vertexPCT2* v = (vertexPCT2*)(&modified.front() + b.vdecl->size * i);

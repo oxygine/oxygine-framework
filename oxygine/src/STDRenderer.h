@@ -17,6 +17,12 @@ namespace oxygine
 		/**Sets texture. If texture is null White texture would be used.*/
 		void setTexture(spNativeTexture base, spNativeTexture alpha, bool basePremultiplied = true);
 
+
+		//debug utils
+#ifdef OXYGINE_DEBUG_T2P
+		static void showTexel2PixelErrors(bool show);
+#endif
+
 	protected:
 
 		void preDrawBatch();

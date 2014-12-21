@@ -230,11 +230,11 @@ namespace oxygine
 		Vector2 np = client->getPosition();
 		if (_bounds.getWidth() != -1 && _bounds.getHeight() != -1)
 		{
-			np.x = max(np.x, (float)_bounds.getX());
-			np.y = max(np.y, (float)_bounds.getY());
+			np.x = std::max(np.x, (float)_bounds.getX());
+			np.y = std::max(np.y, (float)_bounds.getY());
 
-			np.x = min(np.x, (float)_bounds.getRight());
-			np.y = min(np.y, (float)_bounds.getBottom());
+			np.x = std::min(np.x, (float)_bounds.getRight());
+			np.y = std::min(np.y, (float)_bounds.getBottom());
 		}
 		client->setPosition(np);
 	}

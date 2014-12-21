@@ -24,17 +24,19 @@ class bmfc_font_Processor(process.Process):
             
         path_font = context.src_data + walker.getPath("file")
         chars = walker.getPath("chars")
-        build_bmfont(context.args.md5, 
+        scale = context.scale * walker.scale_quality *  walker.scale_factor
+        build_bmfont(context.args.hash, 
                      context.get_inner_dest(id + ".fnt"), 
                      path_font, 
                      context.get_inner_dest(""), 
-                     context.get_apply_scale(True, walker), 
+                     scale, 
                      context.src_data + chars)
         
         meta = walker.root_meta
-        font_size = int(get_bmfc_fontSize(path_font) * walker.scale_factor)
-        meta.setAttribute("size", str(font_size))        
-        meta.setAttribute("sf", str(context.scale))
+        ns = get_bmfc_fontSize(path_font)
+        font_size = int(ns * walker.scale_factor)
+        meta.setAttribute("size", str(font_size))
+        meta.setAttribute("sf", str(scale))
         
 class font_Processor(process.Process):
     create_folder = False
@@ -53,7 +55,7 @@ class font_Processor(process.Process):
         font_info = font_doc.getElementsByTagName("info")[0]
         size = -int(int(font_info.getAttribute("size")) * walker.scale_factor)
         meta.setAttribute("size", str(size))        
-        meta.setAttribute("sf", str(context.scale))
+        meta.setAttribute("sf", str(1))
 
 
 def as_int(attr):

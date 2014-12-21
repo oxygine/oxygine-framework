@@ -1,7 +1,5 @@
 #pragma once
 #include "oxygine_include.h"
-#include "core/oxygine.h"
-#include "res/ResFontBM.h"
 #include "Actor.h"
 
 
@@ -25,7 +23,7 @@ namespace oxygine
 		static void initialize();
 		static void show();
 		static void release();
-		static string getDefaultName(){return "debug_actor";}
+		static std::string getDefaultName(){ return "debug_actor"; }
 
 		DebugActor();
 		~DebugActor();
@@ -51,7 +49,7 @@ namespace oxygine
 		
 		spColorRectSprite _bg;
 		spTextField _text;
-		string _debugText;
+		std::string _debugText;
 		int _frames;
 		timeMS _startTime;
 		int _corner;

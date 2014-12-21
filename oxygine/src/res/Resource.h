@@ -37,8 +37,8 @@ namespace oxygine
 		void setParent(Resource *p){_parent = p;}
 
 		/**returns id from xml node. Function is helper*/
-		static string extractID(const pugi::xml_node &node, const string &file, const string &def);
-		static string extractID(const string &file);
+		static std::string extractID(const pugi::xml_node &node, const std::string &file, const std::string &def);
+		static std::string extractID(const std::string &file);
 
 	protected:
 		static void setNode(Resource *res, const pugi::xml_node &node){res->_node = node;}

@@ -228,100 +228,7 @@ namespace oxygine
 			preDrawBatch();
 			_drawBatch();
 		}
-	}
-
-	bool checkT2P(const Rect &viewport, const Matrix &vp, const vertexPCT2 *v1, const vertexPCT2 *v2, int w, int h)
-	{
-		Vector3 p1(v1->x, v1->y, 0);
-		Vector3 p2(v2->x, v2->y, 0);
-
-		p1 = vp.transformVec3(p1);
-		p2 = vp.transformVec3(p2);
-
-		Vector2 half = viewport.getSize().cast<Vector2>() / 2;
-		p1.x = p1.x * half.x + half.x;
-		p1.y = p1.y * half.y + half.y;
-
-		p2.x = p2.x * half.x + half.x;
-		p2.y = p2.y * half.y + half.y;
-				
-		Vector2 tc1(v1->u, v1->v);
-		Vector2 tc2(v2->u, v2->v);
-		Vector3 dp_ = p1 - p2;
-		Vector2 dp(dp_.x, dp_.y);
-		dp.x = scalar::abs(dp.x);
-		dp.y = scalar::abs(dp.y);
-
-		Vector2 dtc = tc1 - tc2;
-		dtc.x = scalar::abs(dtc.x) * w;
-		dtc.y = scalar::abs(dtc.y) * h;
-
-		const float EPS = 0.05f;
-
-		Vector2 d = dp - dtc;
-		if (scalar::abs(d.x) >= EPS || scalar::abs(d.y) >= EPS)
-			return false;
-
-		p1.x = scalar::abs(p1.x);
-		p1.y = scalar::abs(p1.y);
-
-		if (scalar::abs(p1.x - int(p1.x + EPS)) > EPS ||
-			scalar::abs(p1.y - int(p1.y + EPS)) > EPS)
-			return false;
-
-		return true;
-	}
-	
-	bool _showTexel2PixelErrors = false;
-
-#ifdef OXYGINE_DEBUG_T2P
-	void Renderer::showTexel2PixelErrors(bool show)
-	{
-		_showTexel2PixelErrors = show;
-	}
-#endif	
-
-		
-
-	/*
-	void Renderer::draw(const void *data, int size, bvertex_format format, bool worldTransform)
-	{
-		if (_vdecl->bformat != format)
-		{
-			drawBatch();
-			_vdecl = _driver->getVertexDeclaration(format);
-		}
-
-		int num = size / _vdecl->size;
-		size_t currentNum = _vertices.size() / _vdecl->size;
-		if (currentNum + num >= maxVertices)
-		{
-			drawBatch();
-		}		
-
-		if (worldTransform)
-		{
-			const unsigned char *ptr = (const unsigned char *)data;
-			for (int i = 0; i < num; ++i)
-			{
-				const Vector2 *pos = (Vector2 *)ptr;
-				Vector2 t = _transform.transform(*pos);
-
-				append(_vertices, t);
-				_vertices.insert(_vertices.end(), ptr + sizeof(t), ptr + sizeof(t) + _vdecl->size - sizeof(t));
-
-				ptr += _vdecl->size;
-			}
-			
-		}
-		else
-			_vertices.insert(_vertices.end(), (unsigned char*)data, (unsigned char*)data + size);
-			
-	}
-	*/
-
-	
-
+	}	
 
 	void Renderer::setDefaultSettings()
 	{
@@ -417,4 +324,20 @@ namespace oxygine
 		if (_vertices.size() / sizeof(_vdecl->size) >= maxVertices)
 			drawBatch();
 	}
+
+	Matrix makeViewMatrix(int w, int h, bool flipU)
+	{
+		//printf("s1\n");
+		Matrix view, scale, tr;
+		float offset = 0.5f;
+
+		offset = 0;
+
+		Matrix::translation(tr, Vector3(-(float)w / 2.0f - offset, (flipU ? -1.0f : 1.0f) * (float)h / 2.0f + offset, 0.0f));
+		Matrix::scaling(scale, Vector3(1.0f, flipU ? 1.0f : -1.0f, 1.0f));
+
+		view = scale * tr;
+
+		return view;
+	}	
 }

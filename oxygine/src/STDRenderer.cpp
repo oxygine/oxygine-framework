@@ -47,11 +47,20 @@ namespace oxygine
 	}
 		
 	template <class T>
-	void append(vector<unsigned char> &buff, const T &t)
+	void append(std::vector<unsigned char> &buff, const T &t)
 	{
 		const unsigned char *ptr = (const unsigned char *)&t;
 		buff.insert(buff.end(), ptr, ptr + sizeof(t));
 	}
+
+	bool _showTexel2PixelErrors = false;
+
+#ifdef OXYGINE_DEBUG_T2P
+	void STDRenderer::showTexel2PixelErrors(bool show)
+	{
+		_showTexel2PixelErrors = show;
+	}
+#endif	
 
 	void STDRenderer::setTexture(spNativeTexture base, spNativeTexture alpha, bool basePremultiplied)
 	{
@@ -123,6 +132,52 @@ namespace oxygine
 		}
 	}
 
+
+	bool checkT2P(const Rect &viewport, const Matrix &vp, const vertexPCT2 *v1, const vertexPCT2 *v2, int w, int h)
+	{
+		Vector3 p1(v1->x, v1->y, 0);
+		Vector3 p2(v2->x, v2->y, 0);
+
+		p1 = vp.transformVec3(p1);
+		p2 = vp.transformVec3(p2);
+
+		Vector2 half = viewport.getSize().cast<Vector2>() / 2;
+		p1.x = p1.x * half.x + half.x;
+		p1.y = p1.y * half.y + half.y;
+
+		p2.x = p2.x * half.x + half.x;
+		p2.y = p2.y * half.y + half.y;
+
+		Vector2 tc1(v1->u, v1->v);
+		Vector2 tc2(v2->u, v2->v);
+		Vector3 dp_ = p1 - p2;
+		Vector2 dp(dp_.x, dp_.y);
+		dp.x = scalar::abs(dp.x);
+		dp.y = scalar::abs(dp.y);
+
+		Vector2 dtc = tc1 - tc2;
+		dtc.x = scalar::abs(dtc.x) * w;
+		dtc.y = scalar::abs(dtc.y) * h;
+
+		const float EPS = 0.05f;
+
+		Vector2 d = dp - dtc;
+		if (scalar::abs(d.x) >= EPS || scalar::abs(d.y) >= EPS)
+			return false;
+
+		p1.x = scalar::abs(p1.x);
+		p1.y = scalar::abs(p1.y);
+
+		if (scalar::abs(p1.x - int(p1.x + EPS)) > EPS ||
+			scalar::abs(p1.y - int(p1.y + EPS)) > EPS)
+			return false;
+
+		return true;
+	}
+
+
+	
+
 	void STDRenderer::draw(const RState *rs, const Color &clr, const RectF &srcRect, const RectF &destRect)
 	{
 		Color color = clr;
@@ -132,6 +187,23 @@ namespace oxygine
 
 		vertexPCT2 v[4];
 		fillQuadT(v, srcRect, destRect, rs->transform, color.rgba());
+
+
+#ifdef OXYGINE_DEBUG_T2P
+		if (_base != white && _showTexel2PixelErrors)
+		{
+			Rect viewport;
+			_driver->getViewport(viewport);
+
+			bool t = checkT2P(viewport, _vp, &v[0], &v[3], _base->getWidth(), _base->getHeight());
+			if (!t)
+			{
+				float c = (sinf((float)getTimeMS() / 200 + v[0].x * v[0].y) + 1) / 2.0f;
+				Color b = interpolate(Color(rand() % 255, rand() % 255, rand() % 255, 255), color, c);
+				fillQuadT(v, srcRect, destRect, rs->transform, b.rgba());
+			}
+		}
+#endif
 
 		addVertices(v, sizeof(v));
 	}
@@ -181,6 +253,22 @@ namespace oxygine
 
 		vertexPCT2 v[4];
 		fillQuadT(v, srcRect, destRect, tr, color);
+
+#ifdef OXYGINE_DEBUG_T2P
+		if (_showTexel2PixelErrors)
+		{
+			Rect viewport;
+			_renderer->getDriver()->getViewport(viewport);
+
+			bool t = checkT2P(viewport, _renderer->getViewProjection(), &v[0], &v[3], _texture->getWidth(), _texture->getHeight());
+			if (!t)
+			{
+				float c = (sinf((float)getTimeMS() / 200 + v[0].x * v[0].y) + 1) / 2.0f;
+				Color b = interpolate(Color(rand() % 255, rand() % 255, rand() % 255, 255), color, c);
+				fillQuadT(v, srcRect, destRect, tr, b.rgba());
+			}
+		}
+#endif
 
 		_renderer->addVertices(v, sizeof(v));
 	}

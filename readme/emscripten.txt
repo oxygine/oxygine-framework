@@ -7,6 +7,7 @@ how to build. Steps:
 - install JDK version 6/7
 - if you are Windows user you need also install Make tool:
   - install GnuMake (http://gnuwin32.sourceforge.net/packages/make.htm) or any other 
+  - add it to PATH environment variable
 
 
 - configure environment variables properly:

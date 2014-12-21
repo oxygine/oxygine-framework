@@ -2,9 +2,13 @@
 
 #include "oxygine-framework.h"
 
+using namespace std;
+using namespace oxygine;
+
+
 #define JEWEL_SIZE 50
 
-using namespace oxygine;
+
 
 DECLARE_SMART(Jewel, spJewel);
 

@@ -2,8 +2,6 @@
 #include "oxygine_include.h"
 #include <vector>
 
-#include "oxygine.h"
-#include "Texture.h"
 #include "math/Color.h"
 #include "math/Rect.h"
 #include "math/AffineTransform.h"
@@ -12,8 +10,6 @@
 
 namespace oxygine
 {
-	using namespace std;
-
 	enum blend_mode
 	{
 		blend_default,
@@ -320,12 +316,6 @@ namespace oxygine
 		/**Cleans existing accumulated batch.*/
 		void cleanup();
 		
-
-		//debug utils
-#ifdef OXYGINE_DEBUG_T2P
-		static void showTexel2PixelErrors(bool show);
-#endif
-
 		virtual void addVertices(const void *data, unsigned int size);
 
 	protected:			
@@ -356,4 +346,7 @@ namespace oxygine
 		Matrix _vp;
 		//transform _transform;
 	};
+
+	/**Returns View matrix where Left Top corner is (0,0), and right bottom is (w,h)*/
+	Matrix makeViewMatrix(int w, int h, bool flipU = false);
 }

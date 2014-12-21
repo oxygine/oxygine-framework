@@ -137,5 +137,6 @@ oxygine/SDL/win32/Debug_vs2015
 oxygine-framework-with-sdl.zip
 examples/Game/part2/proj.win32/Debug
 */proj.win32/Debug/
+.idea
 syntax: regexp
 ^build/

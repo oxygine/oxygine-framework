@@ -6,62 +6,73 @@ using namespace oxygine;
 //It is important on mobile devices with limited memory and you would load/unload them
 Resources gameResources;
 
-//DECLARE_SMART is helper, it does forward declaration and declares intrusive_ptr typedef for your class
-DECLARE_SMART(MainActor, spMainActor);
-
 class MainActor: public Actor
 {
 public:
 	spTextField _text;
+	spSprite	_button;
 
 	MainActor()
 	{	
-		//create Button actor
-		spButton button = new Button();
-		//add it as child to current actor
-		addChild(button);
+		//create simple Sprite
+		spSprite button = new Sprite();
 
-		//you will find 'button' resource definition in res.xml
-		//button has 3 columns for each state: Normal, Pressed, Overed
+		//setup it:
+		//set button.png image. Resource 'button' defined in 'res.xml'
 		button->setResAnim(gameResources.getResAnim("button"));
+
 		//centered button at screen	
 		Vector2 pos = getStage()->getSize()/2 - button->getSize()/2;
 		button->setPosition(pos);
-		button->setTouchChildrenEnabled(false);
 
 		//handle click to button
-		EventCallback cb = CLOSURE(this, &MainActor::displayClicked);
+		EventCallback cb = CLOSURE(this, &MainActor::buttonClicked);
 		button->addEventListener(TouchEvent::CLICK, cb);
+
+		//attach button as child to current actor
+		addChild(button);
+
+		_button = button;
+
 
 		//second part
 
-		//create Actor with Text and it to button as child
+		//create TextField Actor
 		spTextField text = new TextField();
+		//attach it as child to button
 		text->attachTo(button);
 		//centered in button
 		text->setPosition(button->getSize()/2);
 
 		//initialize text style
-		//it would be centered and colored
 		TextStyle style;
 		style.font = gameResources.getResFont("main")->getFont();
-		style.color = Color(72, 61, 139, 255);
+		style.color = Color::White;
 		style.vAlign = TextStyle::VALIGN_MIDDLE;
 		style.hAlign = TextStyle::HALIGN_CENTER;
 
 		text->setStyle(style);
-		text->setText("click\nme!");
+		text->setText("Click\nMe!");
 
-		//we will change text later
 		_text = text; 
 	}
 
-	void displayClicked(Event *event)
+	void buttonClicked(Event *event)
 	{
-		//user clicked to button
-		_text->setText("clicked!");
+		//user clicked to button		
+		
+		//animate button by chaning color
+		_button->setColor(Color::White);
+		_button->addTween(Sprite::TweenColor(Color::Green), 500, 1, true);
 
-		//lets create and run sprite with animation
+		//animate text by scaling
+		_text->setScale(1.0f);
+		_text->addTween(Actor::TweenScale(1.1f), 500, 1, true);
+
+		//and change text
+		_text->setText("Clicked!");
+
+		//lets create and run sprite with simple animation
 		runSprite();
 	}
 
@@ -73,7 +84,7 @@ public:
 		int duration = 500;//500 ms 
 		int loops = -1;//infinity loops
 
-		//animation has 7 columns, check res.xml
+		//animation has 7 columns, check 'res.xml'
 		ResAnim *animation = gameResources.getResAnim("anim");
 
 		//add animation tween to sprite
@@ -92,7 +103,7 @@ public:
 		//first, move sprite to dest position
 		tweenQueue->add(Sprite::TweenPosition(destPos), 1500, 1);
 		//then fade it out smoothly
-		tweenQueue->add(Sprite::TweenAlpha(0), 1000, 1);
+		tweenQueue->add(Sprite::TweenAlpha(0), 500, 1);
 		
 		sprite->addTween(tweenQueue);
 
@@ -101,31 +112,35 @@ public:
 		tweenQueue->setDetachActor(true);		
 	}
 };
+//declare spMainActor as intrusive_ptr holder of MainActor
+typedef oxygine::intrusive_ptr<MainActor> spMainActor;
 
-void example_preinit()
-{
-}
+void example_preinit(){}
 
+//called from entry_point.cpp
 void example_init()
 {
 	//load xml file with resources definition
 	gameResources.loadXML("res.xml");
-
+		
 
 	//lets create our client code simple actor
-	//prefix 'sp' here means it is intrusive Smart Pointer
-	//it would be deleted automatically when you lost ref to it	
+	//spMainActor was defined above as smart intrusive pointer (read more: http://www.boost.org/doc/libs/1_57_0/libs/smart_ptr/intrusive_ptr.html)
 	spMainActor actor = new MainActor;
+
 	//and add it to Stage as child
 	getStage()->addChild(actor);
 }
 
+
+//called each frame from entry_point.cpp	
 void example_update()
-{
-	
+{	
 }
 
+//called each frame from entry_point.cpp	
 void example_destroy()
 {
+	//free previously loaded resources
 	gameResources.free();
 }

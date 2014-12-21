@@ -2,7 +2,6 @@
 #include "oxygine_include.h"
 #include <vector>
 #include "Object.h"
-#include "oxygine.h"
 #include "FileSystem.h"
 
 namespace oxygine
@@ -47,7 +46,7 @@ namespace oxygine
 			buff data;
 		};
 
-		/**Opens file for reading (mode = "r") or writing (mode = "w"). If file is missing returns zero.*/
+		/**Opens file for binary reading (mode = "rb") or binary writing (mode = "wb"). If file is missing returns zero.*/
 		handle open(const char *file, const char *mode, error_policy ep = ep_show_error);
 
 		/**Closes opened file handle*/

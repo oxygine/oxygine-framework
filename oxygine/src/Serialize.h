@@ -8,13 +8,6 @@
 
 namespace oxygine
 {
-	struct serializedata
-	{		
-		serializedata():withChildren(true){}
-		pugi::xml_node node;
-		bool withChildren;
-	};
-
 	DECLARE_SMART(Actor, spActor);
 
 	class Resource;
@@ -28,6 +21,13 @@ namespace oxygine
 		virtual Resource*	getResource(const char *id) const {return 0;}
 		virtual ResAnim*	getResAnim(const char *id) const {return safeCast<ResAnim*>(getResource(id));}
 		virtual ResFont*	getResFont(const char *id) const {return safeCast<ResFont*>(getResource(id));}
+	};
+
+	struct serializedata
+	{
+		serializedata() :withChildren(true){}
+		pugi::xml_node node;
+		bool withChildren;
 	};
 
 	struct deserializedata

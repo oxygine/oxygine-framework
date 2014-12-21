@@ -19,7 +19,7 @@ namespace oxygine
 
 		enum
 		{
-			COMPLETE = _et_Complete,
+			COMPLETE = sysEventID('T','L','C'),
 		};
 
 		ThreadLoading();
@@ -55,10 +55,10 @@ namespace oxygine
 		//void *_thread;
 		volatile bool _threadDone;
 
-		typedef list<Resources*> resources;
+		typedef std::list<Resources*> resources;
 		resources _resources;
 
-		typedef list<Resource*> ress;
+		typedef std::list<Resource*> ress;
 		ress _ress;
 	};
 }

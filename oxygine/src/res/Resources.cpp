@@ -29,7 +29,7 @@ namespace oxygine
 		r.cb = creationCallback;
 		strcpy(r.id, resTypeID);
 				
-		registeredResources::iterator it = lower_bound(_registeredResources.begin(), _registeredResources.end(), r.id, registeredResource::comparePred2);
+		registeredResources::iterator it = std::lower_bound(_registeredResources.begin(), _registeredResources.end(), r.id, registeredResource::comparePred2);
 		if (it != _registeredResources.end())
 		{
 			if(!strcmp(it->id, resTypeID))
@@ -51,7 +51,7 @@ namespace oxygine
 
     void Resources::unregisterResourceType(const char *resTypeID)
     {
-        registeredResources::iterator it = lower_bound(_registeredResources.begin(), _registeredResources.end(), resTypeID, registeredResource::comparePred2);
+		registeredResources::iterator it = std::lower_bound(_registeredResources.begin(), _registeredResources.end(), resTypeID, registeredResource::comparePred2);
         if (it != _registeredResources.end())
         {
             if(!strcmp(it->id, resTypeID))
@@ -72,12 +72,12 @@ namespace oxygine
 		free();		
 	}
 
-	ResAnim *Resources::getResAnim(const string &id, error_policy ep) const
+	ResAnim *Resources::getResAnim(const std::string &id, error_policy ep) const
 	{
 		return getT<ResAnim>(id, ep);
 	}
 
-	ResFont *Resources::getResFont(const string &id, error_policy ep) const
+	ResFont *Resources::getResFont(const std::string &id, error_policy ep) const
 	{
 		return getT<ResFont>(id, ep);
 	}
@@ -137,7 +137,7 @@ namespace oxygine
 		__freeName();		
 	}
 	
-    void Resources::updateName(const string &filename)
+	void Resources::updateName(const std::string &filename)
     {
         char head[256];
         char tail[256];
@@ -177,10 +177,11 @@ namespace oxygine
 	};
 
 
-	void Resources::loadXML(const string &xml_name, 
+	void Resources::loadXML(
+		const std::string &xml_name,
 		LoadResourcesContext *load_context, 
 		bool load_completely, bool use_load_counter, 
-		const string &prebuilt_folder_)
+		const std::string &prebuilt_folder_)
 	{
 
 
@@ -201,7 +202,7 @@ namespace oxygine
         char destTail[255];
         path::split(xml_name.c_str(), destHead, destTail);
 
-        string prebuilt_folder = prebuilt_folder_ + "/" + destTail + ".ox/";
+		std::string prebuilt_folder = prebuilt_folder_ + "/" + destTail + ".ox/";
 		if (prebuilt_folder[0] == '/')
 		{
 			prebuilt_folder.erase(prebuilt_folder.begin());
@@ -209,7 +210,7 @@ namespace oxygine
 
 		file::buffer fb_meta;
 		pugi::xml_document doc_meta;
-		string ox = prebuilt_folder + "meta.xml";
+		std::string ox = prebuilt_folder + "meta.xml";
 		const char *ox_file = ox.c_str();
 
 		
@@ -236,11 +237,16 @@ namespace oxygine
 
 		pugi::xml_node resources = doc->first_child();
 		pugi::xml_node resources_meta = doc_meta.first_child();
+		if (!resources_meta.empty())
+		{
+			int metaVersion = resources_meta.attribute("version").as_int(0);
+			OX_ASSERT(metaVersion == 1  && "Please rebuild xmls with latest 'oxyresbuild' tool");
+		}
 
 
-		string id;
+		std::string id;
 		//string file;
-		string rect_str;
+		std::string rect_str;
 
 		FS_LOG("loading xml resources");
 
@@ -256,7 +262,7 @@ namespace oxygine
 
 			const char *type = context.walker.getType();
 
-			registeredResources::iterator i = lower_bound(_registeredResources.begin(), _registeredResources.end(), type);
+			registeredResources::iterator i = std::lower_bound(_registeredResources.begin(), _registeredResources.end(), type);
 			if (i == _registeredResources.end() || strcmp(i->id, type))
 			{
 				log::error("unknown resource. type: '%s' id: '%s'", type, Resource::extractID(context.walker.getNode(), "", "").c_str());
@@ -270,7 +276,7 @@ namespace oxygine
 			context.xml_name = &xml_name;
 			context.resources = this;
 
-			string prebuilt_xml_folder = prebuilt_folder + type + "/";
+			std::string prebuilt_xml_folder = prebuilt_folder + type + "/";
 			context.prebuilt_folder = &prebuilt_xml_folder;
 
 
@@ -337,11 +343,11 @@ namespace oxygine
 		return _resources; 
 	}
 
-	Resource *Resources::get(const string &id_, error_policy ep) const
+	Resource *Resources::get(const std::string &id_, error_policy ep) const
 	{	
-		string id = lower(id_);
+		std::string id = lower(id_);
 
-		resources::const_iterator it = lower_bound(_fastAccessResources.begin(), _fastAccessResources.end(), 
+		resources::const_iterator it = std::lower_bound(_fastAccessResources.begin(), _fastAccessResources.end(),
 			id.c_str(), ObjectBasePredicate());
 		
 		if (it != _fastAccessResources.end())

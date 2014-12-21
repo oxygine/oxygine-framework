@@ -3,8 +3,6 @@
 #include "Resource.h"
 namespace oxygine
 {
-	using namespace std;
-
 	class Resources;
 	class Restorable;
 	class CreateResourceContext;
@@ -30,6 +28,6 @@ namespace oxygine
 		void _restore(Restorable *r, void *);
 
 		spNativeTexture _texture;
-		string _imagePath;
+		std::string _imagePath;
 	};
 }

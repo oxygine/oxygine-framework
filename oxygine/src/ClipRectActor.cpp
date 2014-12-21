@@ -1,6 +1,7 @@
 #include "ClipRectActor.h"
 #include "Stage.h"
 #include "core/log.h"
+#include "core/oxygine.h"
 #include "RenderState.h"
 #include "Serialize.h"
 
@@ -38,8 +39,7 @@ namespace oxygine
 
 	void ClipRectActor::handleEvent(Event *event)
 	{
-		bool touchEvent = (event->type > (int)_et_TouchFirst && event->type < (int)_et_TouchLast);
-		if (touchEvent)
+		if (TouchEvent::isTouchEvent(event->type))
 		{
 			TouchEvent *te = safeCast<TouchEvent*>(event);
 			Vector2 localPosition = global2local(te->localPosition);		

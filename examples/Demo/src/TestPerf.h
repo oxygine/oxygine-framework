@@ -52,7 +52,7 @@ public:
 			}
 
 			char str[255];
-			sprintf(str, "add 500 (%d)", count);			
+			safe_sprintf(str, "add 500 (%d)", count);			
 			updateText(id, str);
 		}
 		if (id == "scale0.01")

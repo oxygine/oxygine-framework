@@ -143,7 +143,7 @@ namespace oxygine
 				Vector2 pageSize = page->updateSizesNew();
 				page->setY((float)y);
 				y += pageSize.y;
-				x = max(x + 50, pageSize.x);
+				x = std::max(x + 50, pageSize.x);
 				child = child->getNextSibling();
 			}
 			ns.y += y;
