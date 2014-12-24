@@ -1,4 +1,5 @@
 #include "FileSystem.h"
+#include "utils/stringUtils.h"
 #include <string.h>
 #include <algorithm>
 
@@ -120,7 +121,9 @@ namespace oxygine
 
 		bool FileSystem::isExistsHere(const char *file)
 		{
-			return _isExists(file);
+			char str[512];
+			path::normalize(file, str);
+			return _isExists(str);
 		}
 
 	

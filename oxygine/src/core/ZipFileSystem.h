@@ -32,8 +32,11 @@ namespace file
 		void update();
 
 		bool read(const char *name, file::buffer &bf);
+		bool read(const file_entry *entry, file::buffer &bf);
 
-		const file_entry *getEntry(const char *name);
+		const file_entry*	getEntryByName(const char *name);
+		const file_entry*	getEntry(int index);
+		size_t				getNumEntries() const;
 
 	private:
 		void read(unzFile zp);

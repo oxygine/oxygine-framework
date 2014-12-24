@@ -1,16 +1,12 @@
 #pragma once
 #include "oxygine_include.h"
-#include "Event.h"
-#include "math/vector3.h"
-#include "math/vector2.h"
+#include "EventDispatcher.h"
 #include "closure/closure.h"
 #include "PointerState.h"
-#include "math/Rect.h"
 
 namespace oxygine
 {
 	class Actor;
-	class PointerState;
 	class EventState;
 	
 	const int MAX_TOUCHES = 8;

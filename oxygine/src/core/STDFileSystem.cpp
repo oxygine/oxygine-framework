@@ -34,6 +34,7 @@
 #elif OXYGINE_SDL
 	#ifdef WIN32
 		#include <direct.h>
+		#include <Windows.h>
 	#endif
 
 	#include <sys/stat.h>
@@ -222,8 +223,9 @@ namespace oxygine
 
 #if __S3E__
 			return(s3eFileDelete(buff) == S3E_RESULT_SUCCESS ? status_ok : status_error);
-#else
-			LOGD("STDFileSystem::_deleteFile %s", buff);
+#elif WIN32
+			return DeleteFileA(buff) ? status_ok : status_error;
+#else			
 			return(::remove(buff) != -1 ? status_ok : status_error);
 #endif
 
@@ -270,6 +272,8 @@ namespace oxygine
 
 #if __S3E__
 			return (s3eFileRename(buffSrc, buffDest) == S3E_RESULT_SUCCESS ? status_ok : status_error);
+#elif WIN32
+			return MoveFileA(buffSrc, buffDest) ? status_ok : status_error;
 #else
 			return (::rename(buffSrc, buffDest) != -1 ? status_ok : status_error);
 #endif

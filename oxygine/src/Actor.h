@@ -208,9 +208,9 @@ namespace oxygine
 		
 		spTween addTween(spTween);		
 
-		template<class GS>
-		spTween addTween(const GS &gs, timeMS duration, int loops = 1, bool twoSides = false, timeMS delay = 0, Tween::EASE ease = Tween::ease_linear)
-		{return addTween(createTween(gs, duration, loops, twoSides, delay, ease));}
+		template<class Prop>
+		spTween addTween(const Prop &prop, timeMS duration, int loops = 1, bool twoSides = false, timeMS delay = 0, Tween::EASE ease = Tween::ease_linear)
+		{return addTween(createTween(prop, duration, loops, twoSides, delay, ease));}
 
 		void removeTween(spTween);
 		void removeTweensByName(const std::string &name);

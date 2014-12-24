@@ -102,12 +102,12 @@ class MyTest(unittest.TestCase):
         #
         
         self.assertEqual(anim.frame_size, (64, 64))
-        self.assertEqual(frame.src, (0, 0, 38, 38))
+        self.assertEqual(frame.src, (0, 0, 34, 34))
         self.assertEqual(anim.frame_scale, 1.0)
         
         anim, frame = self.process(xml, "-r -s 0.5")        
         self.assertEqual(anim.frame_size, (64, 64))
-        self.assertEqual(frame.src, (0, 0, 22, 22))
+        self.assertEqual(frame.src, (0, 0, 18, 18))
         self.assertEqual(anim.frame_scale, 2)
         
         

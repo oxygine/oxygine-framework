@@ -185,14 +185,25 @@ namespace file
 	void Zips::update()
 	{
 		std::sort(_files.begin(), _files.end(), sortFiles);
+#ifdef OX_DEBUG
+		for (size_t i = 0; i < _files.size() - 1; ++i)
+		{
+			OX_ASSERT(strcmp(_files[i].name, _files[i + 1].name) != 0);
+		}
+#endif
 		log::messageln("ZipFS, total files: %d", _files.size());
 	}
 
 	bool Zips::read(const char *name, file::buffer &bf)
 	{
-		const file_entry *entry = getEntry(name);
+		const file_entry *entry = getEntryByName(name);
 		if (!entry)
 			return false;
+		return readEntry(entry, bf);
+	}
+
+	bool Zips::read(const file_entry *entry, file::buffer &bf)
+	{
 		return readEntry(entry, bf);
 	}
 
@@ -214,7 +225,7 @@ namespace file
 		return strcmp_cns(g.name, name) < 0;
 	}
 
-	const file_entry *Zips::getEntry(const char *name)
+	const file_entry *Zips::getEntryByName(const char *name)
 	{
 		if (_sort)
 		{
@@ -231,6 +242,22 @@ namespace file
 		}
 
 		return 0;
+	}
+
+	const file_entry *Zips::getEntry(int index)
+	{
+		if (_sort)
+		{
+			update();
+			_sort = false;
+		}
+
+		return &_files[index];
+	}
+
+	size_t Zips::getNumEntries() const
+	{
+		return _files.size();
 	}
 	
 	class fileHandleZip: public fileHandle
@@ -310,7 +337,7 @@ namespace file
 
 	FileSystem::status ZipFileSystem::_open(const char *file, const char *mode, error_policy ep, file::fileHandle *&fh)
 	{
-		const file_entry *entry = _zips.getEntry(file);
+		const file_entry *entry = _zips.getEntryByName(file);
 		if (entry)
 		{
 			fh = new fileHandleZip(entry);

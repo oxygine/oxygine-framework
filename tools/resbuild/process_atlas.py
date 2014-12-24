@@ -351,6 +351,7 @@ def processRS(context, walker):
                 trim = False
             if image.mode == "RGBA" and trim:
                 r,g,b,a = frame_image.split()
+                a = a.point(lambda p: p - 2)
                 frame_bbox = a.getbbox()
             else:
                 frame_bbox = frame_image.getbbox()
