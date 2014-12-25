@@ -26,7 +26,10 @@
 #include "platform/switch_s390_unix.h"	/* Linux/S390 */
 #elif defined(__GNUC__) && defined(__s390x__) && defined(__linux__)
 #include "platform/switch_s390_unix.h"	/* Linux/S390 zSeries (64-bit) */
+#elif defined(__GNUC__) && defined(__aarch64__)
+#define STACK_MAGIC 0
 #elif defined(__GNUC__) && defined(__arm__)
+
 #ifdef __APPLE__
 #include <TargetConditionals.h>
 #endif

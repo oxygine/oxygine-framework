@@ -11,6 +11,7 @@ items = (
      examples + "Game/Part2",
      examples + "Game/Part3",
      examples + "Game/Part4",
+     examples + "Game/Part5",
      examples + "HelloWorld",
      examples + "Match3",
      examples + "TutorialResources",
