@@ -231,16 +231,16 @@ namespace oxygine
 
 				
 		typedef Property2Args<float, Vector2, const Vector2 &, Actor, &Actor::getPosition, &Actor::setPosition>	TweenPosition;
-		typedef Property<float, float, Actor, &Actor::getX, &Actor::setX>											TweenX;
-		typedef Property<float, float, Actor, &Actor::getY, &Actor::setY>											TweenY;
-		typedef Property<float, float, Actor, &Actor::getWidth, &Actor::setWidth>									TweenWidth;
+		typedef Property<float, float, Actor, &Actor::getX, &Actor::setX>										TweenX;
+		typedef Property<float, float, Actor, &Actor::getY, &Actor::setY>										TweenY;
+		typedef Property<float, float, Actor, &Actor::getWidth, &Actor::setWidth>								TweenWidth;
 		typedef Property<float, float, Actor, &Actor::getHeight, &Actor::setHeight>								TweenHeight;
 		typedef Property<float, float, Actor, &Actor::getRotation, &Actor::setRotation>							TweenRotation;
-		typedef Property<float, float, Actor, &Actor::getRotationDegrees, &Actor::setRotationDegrees>				TweenRotationDegrees;
-		typedef Property2Args1Arg<float, Vector2, const Vector2 &, Actor, &Actor::getScale, &Actor::setScale>		TweenScale;
+		typedef Property<float, float, Actor, &Actor::getRotationDegrees, &Actor::setRotationDegrees>			TweenRotationDegrees;
+		typedef Property2Args1Arg<float, Vector2, const Vector2 &, Actor, &Actor::getScale, &Actor::setScale>	TweenScale;
 		typedef Property<float, float, Actor, &Actor::getScaleX, &Actor::setScaleX>								TweenScaleX;
 		typedef Property<float, float, Actor, &Actor::getScaleY, &Actor::setScaleY>								TweenScaleY;
-		typedef Property<unsigned char, unsigned char, Actor, &Actor::getAlpha, &Actor::setAlpha>					TweenAlpha;
+		typedef Property<unsigned char, unsigned char, Actor, &Actor::getAlpha, &Actor::setAlpha>				TweenAlpha;
 		
 
 		void serialize(serializedata* data);

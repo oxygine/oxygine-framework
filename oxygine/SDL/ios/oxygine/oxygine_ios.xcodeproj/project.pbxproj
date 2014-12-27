@@ -51,6 +51,7 @@
 		04D6FB4D1851914000A5403A /* ThreadMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = 04D6FB4B1851914000A5403A /* ThreadMessages.h */; };
 		92214D6419F14A2F00A4459A /* Polygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92214D6219F14A2F00A4459A /* Polygon.cpp */; };
 		92214D6519F14A2F00A4459A /* Polygon.h in Headers */ = {isa = PBXBuildFile; fileRef = 92214D6319F14A2F00A4459A /* Polygon.h */; };
+		9223E2DD1A4DF6FC00B2770B /* slp_platformselect.h in Headers */ = {isa = PBXBuildFile; fileRef = 9223E2DC1A4DF6FC00B2770B /* slp_platformselect.h */; };
 		923663691A4756C500EB65B3 /* KeyEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 923663611A4756C500EB65B3 /* KeyEvent.h */; };
 		9236636A1A4756C500EB65B3 /* Serializable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 923663621A4756C500EB65B3 /* Serializable.cpp */; };
 		9236636B1A4756C500EB65B3 /* Serializable.h in Headers */ = {isa = PBXBuildFile; fileRef = 923663631A4756C500EB65B3 /* Serializable.h */; };
@@ -261,6 +262,8 @@
 		04D6FB4B1851914000A5403A /* ThreadMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadMessages.h; sourceTree = "<group>"; };
 		92214D6219F14A2F00A4459A /* Polygon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Polygon.cpp; path = ../../../src/Polygon.cpp; sourceTree = "<group>"; };
 		92214D6319F14A2F00A4459A /* Polygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Polygon.h; path = ../../../src/Polygon.h; sourceTree = "<group>"; };
+		9223E2DC1A4DF6FC00B2770B /* slp_platformselect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = slp_platformselect.h; path = ../../../greenlets/src/slp_platformselect.h; sourceTree = "<group>"; };
+		9223E2DE1A4DF72500B2770B /* platform */ = {isa = PBXFileReference; lastKnownFileType = folder; name = platform; path = ../../../greenlets/src/platform; sourceTree = "<group>"; };
 		923663611A4756C500EB65B3 /* KeyEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeyEvent.h; path = ../../../src/KeyEvent.h; sourceTree = "<group>"; };
 		923663621A4756C500EB65B3 /* Serializable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Serializable.cpp; path = ../../../src/Serializable.cpp; sourceTree = "<group>"; };
 		923663631A4756C500EB65B3 /* Serializable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Serializable.h; path = ../../../src/Serializable.h; sourceTree = "<group>"; };
@@ -462,6 +465,8 @@
 		92DC0A221A2F0EB700D2B55C /* greenlet */ = {
 			isa = PBXGroup;
 			children = (
+				9223E2DE1A4DF72500B2770B /* platform */,
+				9223E2DC1A4DF6FC00B2770B /* slp_platformselect.h */,
 				92DC0A231A2F0ED900D2B55C /* greenlet.c */,
 				92DC0A241A2F0ED900D2B55C /* greenlet.h */,
 			);
@@ -904,6 +909,7 @@
 				C38EC2721709649300568283 /* TexturesInspector.h in Headers */,
 				C38EC2741709649300568283 /* TreeInspector.h in Headers */,
 				C38EC2761709649300568283 /* TreeInspectorLine.h in Headers */,
+				9223E2DD1A4DF6FC00B2770B /* slp_platformselect.h in Headers */,
 				C38EC2781709649300568283 /* TreeInspectorPage.h in Headers */,
 				C38EC27A1709649300568283 /* TreeInspectorPreview.h in Headers */,
 				0472E35D17F8A1A80016A832 /* ShaderProgram.h in Headers */,
@@ -1151,6 +1157,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = oxygine_ios;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -1172,6 +1179,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = oxygine_ios;
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};

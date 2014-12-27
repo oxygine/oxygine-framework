@@ -4,9 +4,12 @@
 #define OXYGINE_COROUTINES
 #include "IwFibre.h"
 #elif OXYGINE_SDL
-#define OXYGINE_COROUTINES
-#define GREENLETS 1
-#include "greenlet.h"
+#ifndef __APPLE__
+    #define GREENLETS 1
+    #include "greenlet.h"
+#else
+    #define GREENLETS 0
+#endif
 #else
 #endif
 
