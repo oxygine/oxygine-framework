@@ -7,6 +7,17 @@ namespace oxygine
 {
 	namespace file
 	{
+		bool starts_with(const char *string, const char *prefix)
+		{
+			while (*prefix)
+			{
+				if (*prefix++ != *string++)
+					return false;
+			}
+
+			return true;
+		}
+
 		FileSystem::FileSystem(bool readonly):_readonly(readonly)
 		{
 			_prefix[0] = 0;
@@ -22,101 +33,43 @@ namespace oxygine
 			strcpy(_prefix, str);
 		}
 
-		bool starts_with(const char *string, const char *prefix)
-		{
-			while(*prefix)
-			{
-				if(*prefix++ != *string++)
-					return false;
-			}
+#define FUNC(func, _func, readOnlyCheck, startsWithCheck, args) \
+	for (filesystems::reverse_iterator i = _filesystems.rbegin(); i != _filesystems.rend(); ++i)\
+	{\
+			FileSystem *fs = *i;\
+			if (fs->func args)\
+				return status_ok;\
+	}\
+	if (!starts_with(startsWithCheck, _prefix))\
+		return status_error;\
+	if (readOnlyCheck && _readonly)\
+		return status_error;\
+	return _func args;
 
-			return true;
-		}
 
 		bool FileSystem::isExists(const char *file)
 		{
-			for (filesystems::reverse_iterator i = _filesystems.rbegin(); i != _filesystems.rend(); ++i)
-			{
-				FileSystem *fs = *i;
-				if (fs->_isExists(file))
-					return true;
-			}
-
-			if (!starts_with(file, _prefix))
-				return status_error;
-
-			return _isExists(file);
+			FUNC(isExists, _isExists, false, file, (file));
 		}
 
 		FileSystem::status FileSystem::deleteFile(const char* file)
 		{
-			for (filesystems::reverse_iterator i = _filesystems.rbegin(); i != _filesystems.rend(); ++i)
-			{
-				FileSystem *fs = *i;
-				if (fs->deleteFile(file) == status_ok)
-					return status_ok;
-			}
-			
-			if (_readonly)
-				return status_error;
-
-			if (!starts_with(file, _prefix))
-				return status_error;
-
-			return _deleteFile(file);
+			FUNC(deleteFile, _deleteFile, true, file, (file));
 		}
 
 		FileSystem::status FileSystem::renameFile(const char* src, const char *dest)
 		{
-			for (filesystems::reverse_iterator i = _filesystems.rbegin(); i != _filesystems.rend(); ++i)
-			{
-				FileSystem *fs = *i;
-				if (fs->renameFile(src, dest) == status_ok)
-					return status_ok;
-			}
-
-			if (_readonly)
-				return status_error;
-
-			if (!starts_with(src, _prefix))
-				return status_error;
-
-			return _renameFile(src, dest);
+			FUNC(renameFile, _renameFile, true, src, (src, dest));
 		}
 
 		FileSystem::status FileSystem::makeDirectory(const char *dest)
 		{
-			for (filesystems::reverse_iterator i = _filesystems.rbegin(); i != _filesystems.rend(); ++i)
-			{
-				FileSystem *fs = *i;
-				if (fs->makeDirectory(dest) == status_ok)
-					return status_ok;
-			}
-
-			if (_readonly)
-				return status_error;
-
-			if (!starts_with(dest, _prefix))
-				return status_error;
-
-			return _makeDirectory(dest);
+			FUNC(makeDirectory, _makeDirectory, true, dest, (dest));
 		}
 
 		FileSystem::status FileSystem::deleteDirectory(const char *dest)
 		{
-			for (filesystems::reverse_iterator i = _filesystems.rbegin(); i != _filesystems.rend(); ++i) {
-				FileSystem *fs = *i;
-				if (fs->deleteDirectory(dest) == status_ok)
-					return status_ok;
-			}
-
-			if (_readonly)
-				return status_error;
-
-			if (!starts_with(dest, _prefix))
-				return status_error;
-
-			return _deleteDirectory(dest);
+			FUNC(deleteDirectory, _deleteDirectory, true, dest, (dest));
 		}
 
 		bool FileSystem::isExistsHere(const char *file)
@@ -124,32 +77,12 @@ namespace oxygine
 			char str[512];
 			path::normalize(file, str);
 			return _isExists(str);
-		}
-
-	
+		}	
 
 		FileSystem::status FileSystem::open(const char *file, const char *mode, error_policy ep, fileHandle *&fh)
 		{
-			//file += strlen(_prefix);
-			for (filesystems::reverse_iterator i = _filesystems.rbegin(); i != _filesystems.rend(); ++i)
-			{
-				FileSystem *fs = *i;
-				status st = fs->open(file, mode, ep, fh);
-				if (st == status_ok)
-					return st;
-			}
-
-			if (_readonly)
-			{
-				bool write = mode[0] == 'W' || mode[0] == 'w' || mode[0] == 'A' || mode[0] == 'a';
-				if (write)
-					return status_error;
-			}
-
-			if (!starts_with(file, _prefix))
-				return status_error;			
-
-			return _open(file, mode, ep, fh);
+			bool write = mode[0] == 'W' || mode[0] == 'w' || mode[0] == 'A' || mode[0] == 'a';
+			FUNC(open, _open, write, file, (file, mode, ep, fh));
 		}
 
 		void FileSystem::mount(FileSystem *fs)

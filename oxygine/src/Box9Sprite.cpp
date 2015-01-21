@@ -10,7 +10,7 @@ namespace oxygine
 {
 	void Box9Sprite::copyFrom(const Box9Sprite &src, cloneOptions opt)
 	{
-		Sprite::copyFrom(src, opt);
+		_Sprite::copyFrom(src, opt);
 
 		_prepared = src._prepared;
 
@@ -260,7 +260,7 @@ namespace oxygine
 		stream << "\n";
 
 
-		stream << Sprite::dump(options);
+		stream << _Sprite::dump(options);
 		return stream.str();
 	}
 
@@ -321,13 +321,13 @@ namespace oxygine
 
 	void Box9Sprite::serialize(serializedata* data)
 	{
-		Sprite::serialize(data);
+		_Sprite::serialize(data);
 		setAttrV2(data->node, "size", getSize(), Vector2(0, 0));
 		data->node.set_name("Box9Sprite");
 	}
 
 	void Box9Sprite::deserialize(const deserializedata* data)
 	{
-		Sprite::deserialize(data);		
+		_Sprite::deserialize(data);		
 	}
 }

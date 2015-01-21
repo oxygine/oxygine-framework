@@ -2,7 +2,20 @@
 #include <sstream>
 
 #ifdef __S3E__
-#include "s3eTimer.h"
+#   include "s3eTimer.h"
+#elif WIN32
+#   include <windows.h>
+#elif __ANDROID__
+#   include "core/android/jniUtils.h"
+#elif EMSCRIPTEN
+#include <sys/time.h>
+#elif __APPLE__
+#   include <CoreFoundation/CFDate.h>
+#   include <sys/time.h>
+#endif
+
+#if OXYGINE_SDL
+#include "SDL.h"
 #endif
 
 namespace oxygine
@@ -127,5 +140,74 @@ namespace oxygine
 			stream << ", fixed_step=" << _fixedStep;
 		stream << "}";
 		return stream.str();
+	}
+
+
+	timeMS getTimeMS()
+	{
+#if __S3E__
+		return (timeMS)s3eTimerGetUST();
+#elif OXYGINE_SDL
+		return SDL_GetTicks();
+#elif EMSCRIPTEN
+		static bool init = false;
+		static struct timespec start_ts;
+		if (!init)
+		{
+			init = true;
+			clock_gettime(CLOCK_MONOTONIC, &start_ts);
+		}
+
+		struct timespec now;
+		clock_gettime(CLOCK_MONOTONIC, &now);
+		timeMS ticks = (now.tv_sec - start_ts.tv_sec) * 1000 + (now.tv_nsec -
+			start_ts.tv_nsec) / 1000000;
+
+		return ticks;
+#else
+#pragma error "getTimeMS not implemented"
+#endif		
+		return 0;
+	}
+
+	int64	getTimeUTCMS()
+	{
+#if __S3E__
+		return s3eTimerGetUTC();
+#elif WIN32
+		FILETIME tm;
+		GetSystemTimeAsFileTime(&tm);
+		int64 t = tm.dwLowDateTime + (int64(tm.dwHighDateTime) << 32);
+		int64 utc = (t - 116444736000000000LL) / 10000;
+		return utc;
+#elif __ANDROID__
+		return jniGetTimeUTCMS();
+#elif EMSCRIPTEN
+		struct timeval tv;
+		gettimeofday(&tv, NULL);
+		int64 tm =
+			(unsigned long long)(tv.tv_sec) * 1000 +
+			(unsigned long long)(tv.tv_usec) / 1000;
+		return tm;
+#elif __APPLE__
+        struct timeval tv;
+        gettimeofday(&tv, NULL);
+        int64 tm =
+        (unsigned long long)(tv.tv_sec) * 1000 +
+        (unsigned long long)(tv.tv_usec) / 1000;
+        return tm;
+
+        /*
+        CFAbsoluteTime tm = CFAbsoluteTimeGetCurrent();
+        int64 v = int64(tm * 1000.0);
+        return v;
+         */
+#endif
+		return getTimeMS();
+	}
+
+	int		getTimeUTC()
+	{
+		return (int)(getTimeUTCMS() / 1000);
 	}
 }

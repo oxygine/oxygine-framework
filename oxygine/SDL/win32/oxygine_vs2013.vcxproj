@@ -57,7 +57,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src\;..\..\third_party\win32\zlib;..\..\third_party\win32\libjpeg;..\..\third_party\win32\libpng;..\..\greenlets\src\;..\..\..\..\SDL\include\;..\..\third_party\win32\OGLES;..\..\third_party\win32\glew;../../third_party/win32/pthreads/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src\;..\..\third_party\win32\zlib;..\..\third_party\win32\libjpeg;..\..\third_party\win32\libpng;..\..\greenlets\src\;..\..\..\..\SDL\include\;..\..\third_party\win32\OGLES;..\..\third_party\win32\glew;../../third_party/win32/pthreads/include;..\..\third_party\win32\curl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;OXYGINE_SDL;_WINDOWS;OX_HAVE_LIBPNG;OX_HAVE_LIBJPEG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -79,7 +79,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\src\;..\..\third_party\win32\zlib;..\..\third_party\win32\libjpeg;..\..\third_party\win32\libpng;..\..\greenlets\src\;..\..\..\..\SDL\include\;..\..\third_party\win32\OGLES;..\..\third_party\win32\glew;../../third_party/win32/pthreads/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src\;..\..\third_party\win32\zlib;..\..\third_party\win32\libjpeg;..\..\third_party\win32\libpng;..\..\greenlets\src\;..\..\..\..\SDL\include\;..\..\third_party\win32\OGLES;..\..\third_party\win32\glew;../../third_party/win32/pthreads/include;..\..\third_party\win32\curl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;OXYGINE_SDL;_WINDOWS;_CRT_SECURE_NO_WARNINGS;OX_HAVE_LIBPNG;OX_HAVE_LIBJPEG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -96,6 +96,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\Actor.cpp" />
     <ClCompile Include="..\..\src\AnimationFrame.cpp" />
+    <ClCompile Include="..\..\src\AsyncTask.cpp" />
     <ClCompile Include="..\..\src\Blocking.cpp" />
     <ClCompile Include="..\..\src\Box9Sprite.cpp" />
     <ClCompile Include="..\..\src\Button.cpp" />
@@ -103,6 +104,7 @@
     <ClCompile Include="..\..\src\Clock.cpp" />
     <ClCompile Include="..\..\src\ColorRectSprite.cpp" />
     <ClCompile Include="..\..\src\core\coroutines.cpp" />
+    <ClCompile Include="..\..\src\core\curl\HttpRequestCurlTask.cpp" />
     <ClCompile Include="..\..\src\core\file.cpp" />
     <ClCompile Include="..\..\src\core\FileSystem.cpp" />
     <ClCompile Include="..\..\src\core\gl\NativeTextureGLES.cpp" />
@@ -138,6 +140,7 @@
     <ClCompile Include="..\..\src\Draggable.cpp" />
     <ClCompile Include="..\..\src\EventDispatcher.cpp" />
     <ClCompile Include="..\..\src\Font.cpp" />
+    <ClCompile Include="..\..\src\HttpRequestTask.cpp" />
     <ClCompile Include="..\..\src\Input.cpp" />
     <ClCompile Include="..\..\src\InputText.cpp" />
     <ClCompile Include="..\..\src\MaskedRenderer.cpp" />
@@ -177,6 +180,7 @@
     <ClCompile Include="..\..\src\utils\AtlasTool.cpp" />
     <ClCompile Include="..\..\src\utils\ImageUtils.cpp" />
     <ClCompile Include="..\..\src\VisualStyle.cpp" />
+    <ClCompile Include="..\..\src\WebImage.cpp" />
     <ClCompile Include="..\..\src\winnie_alloc\system_alloc.cpp" />
     <ClCompile Include="..\..\src\winnie_alloc\winnie_alloc.cpp" />
     <ClCompile Include="..\..\greenlets\src\greenlet.c" />
@@ -184,6 +188,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\src\Actor.h" />
     <ClInclude Include="..\..\src\AnimationFrame.h" />
+    <ClInclude Include="..\..\src\AsyncTask.h" />
     <ClInclude Include="..\..\src\Blocking.h" />
     <ClInclude Include="..\..\src\Box9Sprite.h" />
     <ClInclude Include="..\..\src\Button.h" />
@@ -191,6 +196,7 @@
     <ClInclude Include="..\..\src\Clock.h" />
     <ClInclude Include="..\..\src\ColorRectSprite.h" />
     <ClInclude Include="..\..\src\core\coroutines.h" />
+    <ClInclude Include="..\..\src\core\curl\HttpRequestCurlTask.h" />
     <ClInclude Include="..\..\src\core\file.h" />
     <ClInclude Include="..\..\src\core\FileSystem.h" />
     <ClInclude Include="..\..\src\core\files_io.h" />
@@ -236,6 +242,7 @@
     <ClInclude Include="..\..\src\Event.h" />
     <ClInclude Include="..\..\src\EventDispatcher.h" />
     <ClInclude Include="..\..\src\Font.h" />
+    <ClInclude Include="..\..\src\HttpRequestTask.h" />
     <ClInclude Include="..\..\src\InitActor.h" />
     <ClInclude Include="..\..\src\Input.h" />
     <ClInclude Include="..\..\src\InputText.h" />
@@ -296,6 +303,7 @@
     <ClInclude Include="..\..\src\utils\ImageUtils.h" />
     <ClInclude Include="..\..\src\utils\intrusive_list.h" />
     <ClInclude Include="..\..\src\VisualStyle.h" />
+    <ClInclude Include="..\..\src\WebImage.h" />
     <ClInclude Include="..\..\src\winnie_alloc\system_alloc.h" />
     <ClInclude Include="..\..\src\winnie_alloc\winnie_alloc.h" />
     <ClInclude Include="..\..\src\winnie_alloc\winnie_alloc_config.h" />

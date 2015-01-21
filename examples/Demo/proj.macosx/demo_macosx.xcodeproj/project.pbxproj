@@ -101,22 +101,23 @@
 		F196143B0370A9D348494ACC /* ../src/TestBox9Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestBox9Sprite.h; path = ../src/TestBox9Sprite.h; sourceTree = "<group>"; };
 		7746CA7A63049ED8F7D6BF42 /* ../src/TestClipRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestClipRect.h; path = ../src/TestClipRect.h; sourceTree = "<group>"; };
 		D954BD82D7708B65A08FB6B9 /* ../src/TestDrag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestDrag.h; path = ../src/TestDrag.h; sourceTree = "<group>"; };
-		BD0E956CC3A2F7EB94822B5C /* ../src/TestInputText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestInputText.h; path = ../src/TestInputText.h; sourceTree = "<group>"; };
-		7623D793B59EF0CD569E6EC2 /* ../src/TestManageRes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestManageRes.h; path = ../src/TestManageRes.h; sourceTree = "<group>"; };
-		AFA30E959880563E6ABBBC4F /* ../src/TestMask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestMask.h; path = ../src/TestMask.h; sourceTree = "<group>"; };
-		B52CCD463855CF91A7FBDB8E /* ../src/TestPerf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestPerf.h; path = ../src/TestPerf.h; sourceTree = "<group>"; };
-		7EEFDEEC289FCBB5FA67F822 /* ../src/TestPolygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestPolygon.h; path = ../src/TestPolygon.h; sourceTree = "<group>"; };
-		4E9DE6A8FCBDF43BC876EC90 /* ../src/TestProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestProgressBar.h; path = ../src/TestProgressBar.h; sourceTree = "<group>"; };
-		8F2AFB956EEAEED67C5B7571 /* ../src/TestRender2Texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestRender2Texture.h; path = ../src/TestRender2Texture.h; sourceTree = "<group>"; };
-		047F6BD19F885FF186A1447C /* ../src/TestSliding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestSliding.h; path = ../src/TestSliding.h; sourceTree = "<group>"; };
-		C570FAEF487CD34B62389F89 /* ../src/TestTexel2Pixel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestTexel2Pixel.h; path = ../src/TestTexel2Pixel.h; sourceTree = "<group>"; };
-		2418B9A339E6004913AF5980 /* ../src/TestText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestText.h; path = ../src/TestText.h; sourceTree = "<group>"; };
-		CAD9D6A98986EA8082368448 /* ../src/TestTextureFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestTextureFormat.h; path = ../src/TestTextureFormat.h; sourceTree = "<group>"; };
-		67194AC90FEA68E7C96E6907 /* ../src/TestTweens.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestTweens.h; path = ../src/TestTweens.h; sourceTree = "<group>"; };
-		5AFC0664D7BA80AE2A75BF0E /* ../src/TestUserShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestUserShader.h; path = ../src/TestUserShader.h; sourceTree = "<group>"; };
-		12CAC42FDF06ABE860CFEA53 /* ../src/TestUserShader2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestUserShader2.h; path = ../src/TestUserShader2.h; sourceTree = "<group>"; };
-		0F4469FB587862663D529DC9 /* ../src/example.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = example.h; path = ../src/example.h; sourceTree = "<group>"; };
-		B6A9281364AF5D3B581D374C /* ../src/test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = test.h; path = ../src/test.h; sourceTree = "<group>"; };
+		BD0E956CC3A2F7EB94822B5C /* ../src/TestHttp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestHttp.h; path = ../src/TestHttp.h; sourceTree = "<group>"; };
+		7623D793B59EF0CD569E6EC2 /* ../src/TestInputText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestInputText.h; path = ../src/TestInputText.h; sourceTree = "<group>"; };
+		AFA30E959880563E6ABBBC4F /* ../src/TestManageRes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestManageRes.h; path = ../src/TestManageRes.h; sourceTree = "<group>"; };
+		B52CCD463855CF91A7FBDB8E /* ../src/TestMask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestMask.h; path = ../src/TestMask.h; sourceTree = "<group>"; };
+		7EEFDEEC289FCBB5FA67F822 /* ../src/TestPerf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestPerf.h; path = ../src/TestPerf.h; sourceTree = "<group>"; };
+		4E9DE6A8FCBDF43BC876EC90 /* ../src/TestPolygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestPolygon.h; path = ../src/TestPolygon.h; sourceTree = "<group>"; };
+		8F2AFB956EEAEED67C5B7571 /* ../src/TestProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestProgressBar.h; path = ../src/TestProgressBar.h; sourceTree = "<group>"; };
+		047F6BD19F885FF186A1447C /* ../src/TestRender2Texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestRender2Texture.h; path = ../src/TestRender2Texture.h; sourceTree = "<group>"; };
+		C570FAEF487CD34B62389F89 /* ../src/TestSliding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestSliding.h; path = ../src/TestSliding.h; sourceTree = "<group>"; };
+		2418B9A339E6004913AF5980 /* ../src/TestTexel2Pixel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestTexel2Pixel.h; path = ../src/TestTexel2Pixel.h; sourceTree = "<group>"; };
+		CAD9D6A98986EA8082368448 /* ../src/TestText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestText.h; path = ../src/TestText.h; sourceTree = "<group>"; };
+		67194AC90FEA68E7C96E6907 /* ../src/TestTextureFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestTextureFormat.h; path = ../src/TestTextureFormat.h; sourceTree = "<group>"; };
+		5AFC0664D7BA80AE2A75BF0E /* ../src/TestTweens.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestTweens.h; path = ../src/TestTweens.h; sourceTree = "<group>"; };
+		12CAC42FDF06ABE860CFEA53 /* ../src/TestUserShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestUserShader.h; path = ../src/TestUserShader.h; sourceTree = "<group>"; };
+		0F4469FB587862663D529DC9 /* ../src/TestUserShader2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestUserShader2.h; path = ../src/TestUserShader2.h; sourceTree = "<group>"; };
+		B6A9281364AF5D3B581D374C /* ../src/example.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = example.h; path = ../src/example.h; sourceTree = "<group>"; };
+		4013C6794AAE8DFC641D2870 /* ../src/test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = test.h; path = ../src/test.h; sourceTree = "<group>"; };
 		04FE4D4FB640E0DF92DFB865 /* ../data/demo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = demo; path = ../data/demo; sourceTree = "<group>"; };
 		7F3B12E3C9D554D9FE28101D /* ../data/ext */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = ext; path = ../data/ext; sourceTree = "<group>"; };
 		F6123B1E6FE4471A00F49751 /* ../data/images */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = images; path = ../data/images; sourceTree = "<group>"; };
@@ -232,22 +233,23 @@
 				F196143B0370A9D348494ACC /* TestBox9Sprite.h */, 
 				7746CA7A63049ED8F7D6BF42 /* TestClipRect.h */, 
 				D954BD82D7708B65A08FB6B9 /* TestDrag.h */, 
-				BD0E956CC3A2F7EB94822B5C /* TestInputText.h */, 
-				7623D793B59EF0CD569E6EC2 /* TestManageRes.h */, 
-				AFA30E959880563E6ABBBC4F /* TestMask.h */, 
-				B52CCD463855CF91A7FBDB8E /* TestPerf.h */, 
-				7EEFDEEC289FCBB5FA67F822 /* TestPolygon.h */, 
-				4E9DE6A8FCBDF43BC876EC90 /* TestProgressBar.h */, 
-				8F2AFB956EEAEED67C5B7571 /* TestRender2Texture.h */, 
-				047F6BD19F885FF186A1447C /* TestSliding.h */, 
-				C570FAEF487CD34B62389F89 /* TestTexel2Pixel.h */, 
-				2418B9A339E6004913AF5980 /* TestText.h */, 
-				CAD9D6A98986EA8082368448 /* TestTextureFormat.h */, 
-				67194AC90FEA68E7C96E6907 /* TestTweens.h */, 
-				5AFC0664D7BA80AE2A75BF0E /* TestUserShader.h */, 
-				12CAC42FDF06ABE860CFEA53 /* TestUserShader2.h */, 
-				0F4469FB587862663D529DC9 /* example.h */, 
-				B6A9281364AF5D3B581D374C /* test.h */, 
+				BD0E956CC3A2F7EB94822B5C /* TestHttp.h */, 
+				7623D793B59EF0CD569E6EC2 /* TestInputText.h */, 
+				AFA30E959880563E6ABBBC4F /* TestManageRes.h */, 
+				B52CCD463855CF91A7FBDB8E /* TestMask.h */, 
+				7EEFDEEC289FCBB5FA67F822 /* TestPerf.h */, 
+				4E9DE6A8FCBDF43BC876EC90 /* TestPolygon.h */, 
+				8F2AFB956EEAEED67C5B7571 /* TestProgressBar.h */, 
+				047F6BD19F885FF186A1447C /* TestRender2Texture.h */, 
+				C570FAEF487CD34B62389F89 /* TestSliding.h */, 
+				2418B9A339E6004913AF5980 /* TestTexel2Pixel.h */, 
+				CAD9D6A98986EA8082368448 /* TestText.h */, 
+				67194AC90FEA68E7C96E6907 /* TestTextureFormat.h */, 
+				5AFC0664D7BA80AE2A75BF0E /* TestTweens.h */, 
+				12CAC42FDF06ABE860CFEA53 /* TestUserShader.h */, 
+				0F4469FB587862663D529DC9 /* TestUserShader2.h */, 
+				B6A9281364AF5D3B581D374C /* example.h */, 
+				4013C6794AAE8DFC641D2870 /* test.h */, 
 
 			);
 			name = src;
@@ -292,7 +294,7 @@
 		049B57261871FBE900EF3C66 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = oxygine;
 			};
 			buildConfigurationList = 049B57291871FBE900EF3C66 /* Build configuration list for PBXProject "Demo_macosx" */;
@@ -442,7 +444,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "../../..//oxygine/src ../../../..//SDL/include";
-				VALID_ARCHS = "i386 x86_64";
+				VALID_ARCHS = "x86_64";
 			};
 			name = Debug;
 		};
@@ -476,14 +478,13 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "../../..//oxygine/src ../../../..//SDL/include";
-				VALID_ARCHS = "i386 x86_64";
+				VALID_ARCHS = "x86_64";
 			};
 			name = Release;
 		};
 		049B57601871FBE900EF3C66 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -502,7 +503,6 @@
 		049B57611871FBE900EF3C66 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

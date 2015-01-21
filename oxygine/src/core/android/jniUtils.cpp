@@ -1,5 +1,6 @@
 #include "jniUtils.h"
 #include "jniHelper.h"
+#include "core/log.h"
 
 jobject _jmainActivity = 0;
 jclass _jmainActivityClass = 0;
@@ -124,6 +125,7 @@ namespace oxygine
 
 	void			jniMoveTaskToBack()
 	{
+		log::messageln("jniMoveTaskToBack");
 		try
 		{
 			JNIEnv *env = jniGetEnv();

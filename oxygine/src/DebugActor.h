@@ -38,6 +38,8 @@ namespace oxygine
 		void showTexel2PixelErrors(bool show);
 
 	protected:
+		void onAdded2Stage();
+		void onRemovedFromStage();
 		void showDevMenu(spActor data);
 		void _btnClicked(Event *ev);
 		

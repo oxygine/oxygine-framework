@@ -53,11 +53,11 @@ namespace oxygine
 		T length() const {return (T)scalar::sqrt(x * x + y * y);}
 		T sqlength() const {return dot(*this);}
 
-		void normalize() { normalize( *this, *this ); };
-		void normalizeTo( T len ) { normalize(); *this *= len; };
+                void normalize() { normalize( *this, *this ); }
+                void normalizeTo( T len ) { normalize(); *this *= len; }
 		VectorT2 normalized() const {VectorT2 t = *this; t.normalize(); return t;}
 
-		float distance( const VectorT2 & v ) const { return VectorT2( x - v.x, y - v.y ).length();	};
+                float distance( const VectorT2 & v ) const { return VectorT2( x - v.x, y - v.y ).length();}
 		T dot(const VectorT2 &vr) const	{return dot(*this, vr);}
 
 		static T dot(const VectorT2 &v1, const VectorT2 &v2);

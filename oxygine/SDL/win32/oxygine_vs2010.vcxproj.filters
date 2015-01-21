@@ -43,6 +43,9 @@
     <Filter Include="src\minizip">
       <UniqueIdentifier>{164d853c-2678-421b-982f-073d6b5ebb1d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\curl">
+      <UniqueIdentifier>{54e007da-0017-4cb0-9307-c80350cae8ad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\math\AffineTransform.cpp">
@@ -301,6 +304,18 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\TweenQueue.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\HttpRequestTask.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\curl\HttpRequestCurlTask.cpp">
+      <Filter>src\curl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\AsyncTask.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\WebImage.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -666,6 +681,18 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\TweenQueue.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\HttpRequestTask.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\core\curl\HttpRequestCurlTask.h">
+      <Filter>src\curl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\AsyncTask.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\WebImage.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

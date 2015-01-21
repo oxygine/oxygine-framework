@@ -227,7 +227,7 @@ ${PBXGroup_src}
 		049B57261871FBE900EF3C66 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = oxygine;
 			};
 			buildConfigurationList = 049B57291871FBE900EF3C66 /* Build configuration list for PBXProject "${PROJECT}_macosx" */;
@@ -368,7 +368,7 @@ ${PBXSourcesBuildPhase}
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "${OXYGINE}/oxygine/src ${ROOT}/SDL/include";
-				VALID_ARCHS = "i386 x86_64";
+				VALID_ARCHS = "x86_64";
 			};
 			name = Debug;
 		};
@@ -402,14 +402,13 @@ ${PBXSourcesBuildPhase}
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "${OXYGINE}/oxygine/src ${ROOT}/SDL/include";
-				VALID_ARCHS = "i386 x86_64";
+				VALID_ARCHS = "x86_64";
 			};
 			name = Release;
 		};
 		049B57601871FBE900EF3C66 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -428,7 +427,6 @@ ${PBXSourcesBuildPhase}
 		049B57611871FBE900EF3C66 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

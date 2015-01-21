@@ -162,7 +162,7 @@ namespace oxygine
 		white = IVideoDriver::instance->createTexture();
 		white->setName("!renderer. white");
 		white->init(im, false);
-		white->setLinearFiltration(false);
+		white->setLinearFilter(false);
 
 		setDefaultSettings();
 		_restored = true;

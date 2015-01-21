@@ -6,9 +6,32 @@
 #include "utils/stringUtils.h"
 #include <string.h>
 #include <algorithm>
+#include "winnie_alloc/winnie_alloc.h"
 
 namespace oxygine
 {
+	extern Mutex mutexAlloc;
+	void *fastAlloc(size_t size)
+	{
+#ifndef USE_MEMORY_POOL
+		void *data = malloc(size);
+#else
+		MutexAutoLock m(mutexAlloc);
+		void *data = Winnie::Alloc(size);
+#endif
+		return data;
+	}
+
+	void fastFree(void *data)
+	{
+#ifndef USE_MEMORY_POOL
+		free(data);
+#else
+		MutexAutoLock m(mutexAlloc);
+		Winnie::Free(data);
+#endif
+	}
+
 	ObjectBase::__createdObjects&	ObjectBase::__getCreatedObjects()
 	{
 		static __createdObjects __objects;
@@ -260,6 +283,7 @@ namespace oxygine
 #ifdef OX_DEBUG
 	void Object::__doCheck()
 	{
+		OX_ASSERT(this);
 		OX_ASSERT(__check == 0xABCDEFAB);
 	}
 	#endif

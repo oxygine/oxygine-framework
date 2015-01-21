@@ -17,6 +17,7 @@
 #include "Draggable.h"
 #include "Event.h"
 #include "EventDispatcher.h"
+#include "HttpRequestTask.h"
 #include "Font.h"
 #include "initActor.h"
 #include "Input.h"

@@ -40,6 +40,12 @@ namespace oxygine
 	#endif				
 		}
 
+		inline float sign(float s)
+		{return s < 0 ? -1.0f : 1.0f;}
+
+		inline double sign(double s)
+		{return s < 0 ? -1.0 : 1.0;}
+
 		inline double sin(double s)
 		{return ::sin(s);}
 

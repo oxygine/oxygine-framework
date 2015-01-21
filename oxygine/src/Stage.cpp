@@ -7,6 +7,10 @@
 #include "Clock.h"
 #include <sstream>
 
+#ifdef OXYGINE_SDL
+#include "SDL.h"
+#endif
+
 namespace oxygine
 {
 	spStage Stage::instance;
@@ -24,7 +28,28 @@ namespace oxygine
 			addEventListener(Stage::DEACTIVATE, CLOSURE(this, &Stage::onDeactivate));
 			addEventListener(Stage::ACTIVATE, CLOSURE(this, &Stage::onActivate));
 		}
+		_stage = this;
+
+#ifdef OXYGINE_SDL
+		_window = 0;
+#endif
 	}
+
+#if OXYGINE_SDL		
+	void Stage::associateWithWindow(SDL_Window *wnd)
+	{
+		_window = wnd;
+		SDL_SetWindowData(wnd, "_", this);
+		addRef();
+	}
+
+	SDL_Window* Stage::getAssociatedWindow() const
+	{
+		if (_window)
+			return _window;
+		return core::getWindow();
+	}
+#endif
 
 	Stage::~Stage()
 	{

@@ -23,6 +23,7 @@ namespace oxygine
 		public:
 			enum status
 			{
+				//don't add new items (isExists will be broken)
 				status_error,
 				status_ok,
 			};

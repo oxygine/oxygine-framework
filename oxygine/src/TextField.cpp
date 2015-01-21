@@ -41,7 +41,7 @@ namespace oxygine
 
 	void TextField::copyFrom(const TextField &src, cloneOptions opt)
 	{
-		VStyleActor::copyFrom(src, opt);
+		_VStyleActor::copyFrom(src, opt);
 		_text = src._text;
 		_style = src._style;
 		_root = 0;
@@ -180,11 +180,11 @@ namespace oxygine
 
 	const Rect &TextField::getTextRect()
 	{
-		getStageNode();
+		getRootNode();
 		return _textRect;
 	}
 
-	text::Node *TextField::getStageNode()
+	text::Node *TextField::getRootNode()
 	{
 		if ((_flags & flag_rebuild) && _style.font)
 		{
@@ -313,7 +313,7 @@ namespace oxygine
 
 	void TextField::doRender(RenderState const& rs)
 	{
-		text::Node *root = getStageNode();
+		text::Node *root = getRootNode();
 		if (!root)
 			return;
 
@@ -342,7 +342,7 @@ namespace oxygine
 
 	void TextField::serialize(serializedata* data)
 	{
-		VStyleActor::serialize(data);
+		_VStyleActor::serialize(data);
 		pugi::xml_node node = data->node;
 
 		TextStyle def;
@@ -359,7 +359,7 @@ namespace oxygine
 
 	void TextField::deserialize(const deserializedata* data)
 	{
-		VStyleActor::deserialize(data);
+		_VStyleActor::deserialize(data);
 		pugi::xml_node node = data->node;
 
 		TextStyle def;

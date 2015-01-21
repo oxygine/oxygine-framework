@@ -85,6 +85,26 @@ namespace oxygine
 		}
 	}
 
+	bool EventDispatcher::hasEventListeners(void *CallbackThis)
+	{
+		__doCheck();
+		//OX_ASSERT(_listeners);
+		if (!_listeners)
+			return false;
+
+		for (listeners::iterator i = _listeners->begin(); i != _listeners->end();)
+		{
+			listener ls = *i;
+			if (ls.cb.p_this == CallbackThis)
+			{
+				return true;
+			}
+			else
+				++i;
+		}
+		return false;
+	}
+
 	void EventDispatcher::removeEventListeners(void *CallbackThis)
 	{
 		__doCheck();

@@ -97,13 +97,14 @@ namespace oxygine
 		float				getY() const {return _pos.y;}		
 		const Vector2&		getScale() const {return _scale;}
 		float               getScaleX() const {return _scale.x;}
-		float               getScaleY() const {return _scale.y;}
+		float               getScaleY() const {return _scale.y;}		
 		/**Returns rotation angle in radians*/
 		float				getRotation() const {return _rotation;}		
 		float				getRotationDegrees() const {return _rotation / MATH_PI * 180.0f;}
 		int					getPriority() const {return _zOrder;}				
 		bool				getVisible() const {return (_flags & flag_visible) != 0;}
-		Actor*				getParent() const {return _parent;}
+		Actor*				getParent(){return _parent;}
+		const Actor*		getParent() const {return _parent;}
 		Vector2				getSize() const {return _size;}
 		float				getWidth() const {return getSize().x;}
 		float				getHeight() const {return getSize().y;}		
@@ -230,11 +231,12 @@ namespace oxygine
 		Vector2 local2global(const Vector2 &pos) const;
 
 				
-		typedef Property2Args<float, Vector2, const Vector2 &, Actor, &Actor::getPosition, &Actor::setPosition>	TweenPosition;
+		typedef Property2Args<float, Vector2, const Vector2 &, Actor, &Actor::getPosition, &Actor::setPosition>	TweenPosition;        
 		typedef Property<float, float, Actor, &Actor::getX, &Actor::setX>										TweenX;
 		typedef Property<float, float, Actor, &Actor::getY, &Actor::setY>										TweenY;
 		typedef Property<float, float, Actor, &Actor::getWidth, &Actor::setWidth>								TweenWidth;
 		typedef Property<float, float, Actor, &Actor::getHeight, &Actor::setHeight>								TweenHeight;
+        typedef Property2Args2<float, Vector2, Vector2, const Vector2&, Actor, &Actor::getSize, &Actor::setSize>TweenSize;
 		typedef Property<float, float, Actor, &Actor::getRotation, &Actor::setRotation>							TweenRotation;
 		typedef Property<float, float, Actor, &Actor::getRotationDegrees, &Actor::setRotationDegrees>			TweenRotationDegrees;
 		typedef Property2Args1Arg<float, Vector2, const Vector2 &, Actor, &Actor::getScale, &Actor::setScale>	TweenScale;
@@ -243,17 +245,25 @@ namespace oxygine
 		typedef Property<unsigned char, unsigned char, Actor, &Actor::getAlpha, &Actor::setAlpha>				TweenAlpha;
 		
 
-		void serialize(serializedata* data);
-		void deserialize(const deserializedata* data);
+		void serialize(serializedata*);
+		void deserialize(const deserializedata*);
 
 		/**Returns detailed actor information. Used for debug purposes. */
 		virtual std::string dump(const dumpOptions &opt) const;
 
-		
+		/**Returns Stage where Actor attached to. Use if for multi stage (window) mode*/
+		Stage*				_getStage();
 
 	protected:
+		Stage* _stage;
+		void added2stage(Stage*);
+		void removedFromStage();
+		virtual void onAdded2Stage(){};
+		virtual void onRemovedFromStage(){};
+		
+
 		typedef intrusive_list<spActor> children;
-		static void setParent(Actor *actor, Actor *parent){ actor->_parent = parent; }
+		static void setParent(Actor *actor, Actor *parent);
 		static void setPressed(Actor *actor, pointer_index v){ actor->setPressed(v); }
 		static children &getChildren(spActor &actor){ return actor->_children; }
 
@@ -330,7 +340,7 @@ namespace oxygine
 	/**Deprecated*/
 	inline Vector2 convert_local2root(spActor child, const Vector2 &pos, spActor root = 0){ return convert_local2stage(child, pos, root); }
 	/**Deprecated*/
-	inline Vector2 convert_root2local(spActor child, const Vector2 &pos, spActor root = 0){ return convert_root2local(child, pos, root); }
+    inline Vector2 convert_root2local(spActor child, const Vector2 &pos, spActor root = 0){ return convert_stage2local(child, pos, root); }
 
 
 
@@ -351,3 +361,13 @@ namespace oxygine
 		void update(Actor &, float p, const UpdateState &us){}
 	};
 }
+
+
+#ifdef OX_EDITOR
+#include "EditorActor.h"
+#else
+namespace oxygine
+{
+	typedef Actor _Actor;
+}
+#endif

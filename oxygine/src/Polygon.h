@@ -7,7 +7,7 @@ namespace oxygine
 	class ResAnim;
 
 	DECLARE_SMART(Polygon, spPolygon);
-	class Polygon : public Sprite
+    class Polygon : public _Sprite
 	{
 	public:		
 		DECLARE_COPYCLONE_NEW(Polygon);
@@ -31,3 +31,12 @@ namespace oxygine
 		int _verticesSize;
 	};
 }
+
+#ifdef OX_EDITOR
+#include "EditorPolygon.h"
+#else
+namespace oxygine
+{
+    typedef Polygon _Polygon;
+}
+#endif

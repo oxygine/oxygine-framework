@@ -1,10 +1,14 @@
 1. start from readme.txt
 2. How to build and run Oxygine on Windows with CMake and Visual Studio (tested with VS2010 and VS2012). Steps:
 =================================================================================================
-- build SDL with CMake or by VisualStudio (see oxygine-framework/readme/VisualStudio.txt)
+- build SDL2
+    - see oxygine-framework/readme/VisualStudio.txt 
 
-- build SDL2. It could be done with cmake or prebuild VC++ solution. Find SDL2.lib, SDL2main.lib and SDL2.dll
-- copy SDL2.lib and SDL2main.lib to oxygine-framework/libs
+- Find and copy compiled SDL2 libraries to oxygine-framework/libs:
+  - SDL2.lib
+  - SDL2main.lib
+  - SDL2.dll
+
 
 - select any example from examples folder. I chose Demo
 - go to folder oxygine-framework/examples/Demo/proj.cmake
@@ -20,20 +24,18 @@
 - ready! run!
 
 
-3. How to build and run Oxygine on Linux with CMake
+3. How to build and run Oxygine on Linux with CMake & make
 =================================================================================================
 make and install SDL2
 - also should be installed packages (apt-get install):
   - libjpeg8-dev zlib1g-dev libpng12-dev
   - freeglut3 (needed only opengl)
-- goto examples/Demo (or any other example)
-- goto folder proj.cmake/
-- run: cmake .
-- run: make
-- binary executable  should be created
-- copy required resources:
-  - copy all files from example/Demo/data to examples/Demo/proj.cmake
-  - run ./Demo   
+- goto oxygine-framework/examples/Demo (or any other example)
+- goto folder proj.cmake
+- exec shell script "run.sh":
+   ./run.sh   
+   
+
 =================================================================================================
 
 4. You could generate your own CMake configuration

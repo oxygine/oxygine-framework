@@ -18,6 +18,7 @@
 #include "TestMask.h"
 #include "TestPolygon.h"
 #include "TestInputText.h"
+#include "TestHttp.h"
 #include "core/STDFileSystem.h"
 
 #ifdef __S3E__
@@ -33,13 +34,15 @@ spActor _tests;
 Resources resources;
 Resources resourcesUI;
 
+//extern spStage stage2;
 
 class TestActor: public Test
 {
 public:		
 
 	TestActor()
-	{	
+	{
+
 		_x = 90;//getStage()->getWidth()/2.0f;
 		_y = 80;
 
@@ -63,101 +66,111 @@ public:
 		addButton("polygon", "Polygon");
 		addButton("inputtext", "Input Text");		
 		addButton("openbrowser", "Open Browser");
-		
+		addButton("http", "Http requests");
+    }
+
+	void showTest(spActor actor)
+	{
+		setVisible(false);
+		//spStage stage = stage2;
+		getStage()->addChild(actor);
 	}
 
 	void clicked(string id)
 	{
-		setVisible(false);
-
 		if (id == "perf")
 		{
-			getStage()->addChild(new PerfTest);
+			showTest(new PerfTest);
 		}
 		if (id == "tweens")
 		{
-			getStage()->addChild(new TweensTest);
+			showTest(new TweensTest);
 		}
 		if (id == "drag")
 		{
-			getStage()->addChild(new DragTest);
+			showTest(new DragTest);
 		}
 		if (id == "drag2")
 		{
-			getStage()->addChild(new Drag2Test);
+			showTest(new Drag2Test);
 		}
 		if (id == "manage_res")
 		{
-			getStage()->addChild(new ManageResTest);
+			showTest(new ManageResTest);
 		}
 		if (id == "r2t")
 		{
-			getStage()->addChild(new TestRender2Texture);
+			showTest(new TestRender2Texture);
 		}
 		if (id == "text")
 		{
-			getStage()->addChild(new TestText);
+			showTest(new TestText);
 		}
 
 		if (id == "progress_bar")
 		{
-			getStage()->addChild(new TestProgressBar);
+			showTest(new TestProgressBar);
 		}
 
 		if (id == "texture_format")
 		{
-			getStage()->addChild(new TestTextureFormat);
+			showTest(new TestTextureFormat);
 		}
 
 		if (id == "sliding")
 		{
-			getStage()->addChild(new TestSliding);
+			showTest(new TestSliding);
 		}
 
 		if (id == "t2p")
 		{
-			getStage()->addChild(new TestTexel2Pixel);
+			showTest(new TestTexel2Pixel);
 		}
 
 		if (id == "box9sprite")
 		{
-			getStage()->addChild(new TestBox9Sprite);
+			showTest(new TestBox9Sprite);
 		}
 
 		if (id == "cliprect")
 		{
-			getStage()->addChild(new TestClipRect);
+			showTest(new TestClipRect);
 		}
 
 		if (id == "usershader")
 		{
-			getStage()->addChild(new TestUserShader);
+			showTest(new TestUserShader);
 		}
 
 		if (id == "usershader2")
 		{
-			getStage()->addChild(new TestUserShader2);
+			showTest(new TestUserShader2);
 		}
 
 		if (id == "mask")
 		{
-			getStage()->addChild(new TestMask);
+			showTest(new TestMask);
 		}
 
 		if (id == "polygon")
 		{
-			getStage()->addChild(new TestPolygon);
+			showTest(new TestPolygon);
 		}
 
 		if (id == "inputtext")
 		{
-			getStage()->addChild(new TestInputText);
+			showTest(new TestInputText);
 		}
 
 		if (id == "openbrowser")
 		{
 			core::execute("http://oxygine.org/");
 			setVisible(true);
+		}
+
+		if (id == "http")
+		{
+			showTest(new TestHttp);
 		}
 	}
 };
@@ -204,6 +217,9 @@ void example_init()
 
 	_tests = new TestActor;
 	getStage()->addChild(_tests);
+    
+    //initialize http requests
+    HttpRequestTask::init();
 }
 
 void example_update()
@@ -217,4 +233,5 @@ void example_destroy()
 	_tests = 0;
 	resources.free();
 	resourcesUI.free();
+    HttpRequestTask::release();
 }

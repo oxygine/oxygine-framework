@@ -34,7 +34,16 @@ namespace oxygine
 	{
 		pugi::xml_node node;
 		const creator *factory;
+
 		static spActor deser(pugi::xml_node node, const creator* factory);
+	};
+
+	struct deserializeLinkData
+	{
+		pugi::xml_node node;
+		spActor root;
+
+        static void link(pugi::xml_node node, spActor root);
 	};
 	
 
@@ -43,7 +52,7 @@ namespace oxygine
 		if (v == def)
 			return;
 		char str[255];
-		safe_sprintf(str, "%g,%g", v.x, v.y);
+        safe_sprintf(str, "%g,%g", v.x, v.y);
 		node.append_attribute(name).set_value(str);
 	}
 

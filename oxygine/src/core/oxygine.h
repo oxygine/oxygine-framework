@@ -3,6 +3,14 @@
 #include "math/vector2.h"
 #include <string>
 
+#if OXYGINE_SDL
+typedef void *SDL_GLContext;
+typedef struct SDL_Window SDL_Window;
+typedef SDL_Window* window;
+#else
+typedef int window; 
+#endif
+
 /**main oxygine namespace*/
 namespace oxygine
 {
@@ -74,10 +82,10 @@ namespace oxygine
 		bool update();
 
 		/**returns True if device is ready for rendering*/
-		bool beginRendering();
+		bool beginRendering(window i = 0);
 
 		/** Swap Video buffers*/		
-		void swapDisplayBuffers();
+		void swapDisplayBuffers(window i = 0);
 
 		/**Opens browser*/
 		void execute(const char *url);
@@ -86,10 +94,14 @@ namespace oxygine
 		Point getDisplaySize();
 
 		ThreadMessages& getMainThreadMessages(); 
+		ThreadMessages& getUiThreadMessages();
 
-#ifdef OXYGINE_SDL
 		bool isActive();
 		bool hasFocus();
+
+#ifdef OXYGINE_SDL		
+		SDL_GLContext	getGLContext();
+		SDL_Window*		getWindow();
 #endif
 	}
 

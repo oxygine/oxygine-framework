@@ -3,7 +3,7 @@
 if you are using Oxygine All-In-One version with SDL included you could skip #2
 just go to any example and open it
 
-2. There are prebuilt example solutions for VS2010 and VS2013:
+2. There are prebuilt example solutions for VS2010 (with ServicePack1+) and VS2013:
 =================================================================================================
 - build SDL:
   - open SDL\include\SDL_config_windows.h in any text editor
@@ -12,7 +12,7 @@ just go to any example and open it
   - and comment it:
     //#define SDL_AUDIO_DRIVER_XAUDIO2    1
   - goto folder SDL\VisualC\ 
-  - open SDL_VS2010.sln (or any other) and build it as Release
+  - open SDL_VS2010.sln (or any other) and build it as Release configration
   - goto golder SDL\VisualC\Win32\Release\
   - and copy SDL2.lib, SDL2main.lib and SDL2.dll to oxygine-framework/libs
 

@@ -26,7 +26,7 @@ public:
 
 		//by default all textures has mode "clamp to edge"
 		//disable it and allow tiling
-		texture->setWrapMode(false);
+		texture->setClamp2Edge(false);
 
 		poly->setResAnim(rs);
 

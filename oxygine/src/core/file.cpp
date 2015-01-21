@@ -6,17 +6,17 @@
 #include "Object.h"
 
 #ifdef __S3E__
-#include <s3eFile.h>
+    #include <s3eFile.h>
+#elif WIN32
+    #include <direct.h>
+#elif __APPLE__
+    #include "ios/ios.h"
+#elif EMSCRIPTEN
 #else
-	#if WIN32
-		#include <direct.h>
-	#elif EMSCRIPTEN
-	#else
-		#include "SDL_system.h"
-	#endif
+	#include "SDL_system.h"
 #endif
 
-
+ 
 #ifdef OXYGINE_SDL
 #  include "SDL_filesystem.h"
 #elif WIN32
@@ -44,12 +44,17 @@ namespace oxygine
 #ifdef __S3E__
 			_nfs.setPath("rom://");
 			_nfsWrite.setPath("ram://");
-#elif OXYGINE_SDL
-#  ifdef __ANDROID__
+#elif EMSCRIPTEN
+			mkdir("data-ram/", S_IRWXU|S_IRWXG|S_IRWXO);
+			_nfsWrite.setPath("data-ram/");
+
+#elif __ANDROID__
 			log::messageln("internal %s", SDL_AndroidGetInternalStoragePath());
 			log::messageln("external %s", SDL_AndroidGetExternalStoragePath());
 			_nfsWrite.setPath(SDL_AndroidGetInternalStoragePath());
-#  else
+#elif __APPLE__
+            _nfsWrite.setPath(getSupportFolder().c_str());
+#else
 			if (company && app && *company && *app)
 			{
 				char *base_path = SDL_GetPrefPath(company, app);
@@ -61,23 +66,12 @@ namespace oxygine
 			}
 			else
 			{
-#ifdef WIN32
+#   ifdef WIN32
 				_mkdir("../data-ram/");
-#else
+#   else
                 mkdir("../data-ram/", ACCESSPERMS);
-#endif
+#   endif
 				_nfsWrite.setPath("../data-ram/");
-			}
-#  endif
-#elif WIN32
-			char szPath[MAX_PATH];
-			// Get path for each computer, non-user specific and non-roaming data.
-			if (SHGetFolderPathA(NULL, CSIDL_COMMON_APPDATA, NULL, 0, szPath) == ERROR_SUCCESS)
-			{
-				PathAppendA(szPath, (std::string("\\") + oxygine::core::desc.c + "\\" + oxygine::core::desc.fsAppName + "\\").c_str());
-				if (SHCreateDirectoryExA(NULL, szPath, NULL) == ERROR_SUCCESS) { 
-					_nfsWrite.setPath(szPath);
-				}
 			}
 #endif
 			_nfs.mount(&_nfsWrite);

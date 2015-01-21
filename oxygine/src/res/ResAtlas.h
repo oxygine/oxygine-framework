@@ -48,6 +48,12 @@ namespace oxygine
 		static void init_resAnim(ResAnim *rs, const std::string &file, pugi::xml_node node);
 
 	private:		
+		//void next_atlas(int w, int h, TextureFormat tf, atlas_data &ad, const char *name);
+		//void apply_atlas(atlas_data &ad);
+
+		//settings from xml
+		bool _linearFilter;
+		bool _clamp2edge;
 
 		typedef std::vector<atlas> atlasses;
 		atlasses _atlasses;

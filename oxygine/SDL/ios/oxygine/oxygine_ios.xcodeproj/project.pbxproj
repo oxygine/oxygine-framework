@@ -52,6 +52,13 @@
 		92214D6419F14A2F00A4459A /* Polygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92214D6219F14A2F00A4459A /* Polygon.cpp */; };
 		92214D6519F14A2F00A4459A /* Polygon.h in Headers */ = {isa = PBXBuildFile; fileRef = 92214D6319F14A2F00A4459A /* Polygon.h */; };
 		9223E2DD1A4DF6FC00B2770B /* slp_platformselect.h in Headers */ = {isa = PBXBuildFile; fileRef = 9223E2DC1A4DF6FC00B2770B /* slp_platformselect.h */; };
+		9223E30E1A518CC400B2770B /* HttpRequestCocoaTask.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9223E30D1A518CC400B2770B /* HttpRequestCocoaTask.mm */; };
+		9223E3121A5193E000B2770B /* AsyncTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9223E3101A5193E000B2770B /* AsyncTask.cpp */; };
+		9223E3131A5193E000B2770B /* AsyncTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 9223E3111A5193E000B2770B /* AsyncTask.h */; };
+		9223E3181A52D6B800B2770B /* HttpRequestTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 9223E3151A52D6B800B2770B /* HttpRequestTask.h */; };
+		9223E3191A52D6B800B2770B /* WebImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9223E3161A52D6B800B2770B /* WebImage.cpp */; };
+		9223E31A1A52D6B800B2770B /* WebImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 9223E3171A52D6B800B2770B /* WebImage.h */; };
+		9223E31C1A530E8A00B2770B /* HttpRequestTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9223E31B1A530E8A00B2770B /* HttpRequestTask.cpp */; };
 		923663691A4756C500EB65B3 /* KeyEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 923663611A4756C500EB65B3 /* KeyEvent.h */; };
 		9236636A1A4756C500EB65B3 /* Serializable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 923663621A4756C500EB65B3 /* Serializable.cpp */; };
 		9236636B1A4756C500EB65B3 /* Serializable.h in Headers */ = {isa = PBXBuildFile; fileRef = 923663631A4756C500EB65B3 /* Serializable.h */; };
@@ -64,6 +71,8 @@
 		923A9E981A1FCBB700A6F08E /* MaskedRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 923A9E941A1FCBB700A6F08E /* MaskedRenderer.h */; };
 		923A9E991A1FCBB700A6F08E /* STDRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 923A9E951A1FCBB700A6F08E /* STDRenderer.cpp */; };
 		923A9E9A1A1FCBB700A6F08E /* STDRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 923A9E961A1FCBB700A6F08E /* STDRenderer.h */; };
+		92CE26621A589401003901D6 /* ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 92CE26601A589401003901D6 /* ios.h */; };
+		92CE26631A589401003901D6 /* ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 92CE26611A589401003901D6 /* ios.mm */; };
 		92DC0A251A2F0ED900D2B55C /* greenlet.c in Sources */ = {isa = PBXBuildFile; fileRef = 92DC0A231A2F0ED900D2B55C /* greenlet.c */; };
 		92DC0A261A2F0ED900D2B55C /* greenlet.h in Headers */ = {isa = PBXBuildFile; fileRef = 92DC0A241A2F0ED900D2B55C /* greenlet.h */; };
 		C38704A617C0C71700015CA8 /* VideoDriverGLES20.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C38704A417C0C71700015CA8 /* VideoDriverGLES20.cpp */; };
@@ -264,6 +273,14 @@
 		92214D6319F14A2F00A4459A /* Polygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Polygon.h; path = ../../../src/Polygon.h; sourceTree = "<group>"; };
 		9223E2DC1A4DF6FC00B2770B /* slp_platformselect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = slp_platformselect.h; path = ../../../greenlets/src/slp_platformselect.h; sourceTree = "<group>"; };
 		9223E2DE1A4DF72500B2770B /* platform */ = {isa = PBXFileReference; lastKnownFileType = folder; name = platform; path = ../../../greenlets/src/platform; sourceTree = "<group>"; };
+		9223E30C1A518CA100B2770B /* HttpRequestCocoaTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HttpRequestCocoaTask.h; path = ../../../src/core/ios/HttpRequestCocoaTask.h; sourceTree = "<group>"; };
+		9223E30D1A518CC400B2770B /* HttpRequestCocoaTask.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = HttpRequestCocoaTask.mm; path = ../../../src/core/ios/HttpRequestCocoaTask.mm; sourceTree = "<group>"; };
+		9223E3101A5193E000B2770B /* AsyncTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AsyncTask.cpp; path = ../../../src/AsyncTask.cpp; sourceTree = "<group>"; };
+		9223E3111A5193E000B2770B /* AsyncTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AsyncTask.h; path = ../../../src/AsyncTask.h; sourceTree = "<group>"; };
+		9223E3151A52D6B800B2770B /* HttpRequestTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HttpRequestTask.h; path = ../../../src/HttpRequestTask.h; sourceTree = "<group>"; };
+		9223E3161A52D6B800B2770B /* WebImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WebImage.cpp; path = ../../../src/WebImage.cpp; sourceTree = "<group>"; };
+		9223E3171A52D6B800B2770B /* WebImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebImage.h; path = ../../../src/WebImage.h; sourceTree = "<group>"; };
+		9223E31B1A530E8A00B2770B /* HttpRequestTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HttpRequestTask.cpp; path = ../../../src/HttpRequestTask.cpp; sourceTree = "<group>"; };
 		923663611A4756C500EB65B3 /* KeyEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeyEvent.h; path = ../../../src/KeyEvent.h; sourceTree = "<group>"; };
 		923663621A4756C500EB65B3 /* Serializable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Serializable.cpp; path = ../../../src/Serializable.cpp; sourceTree = "<group>"; };
 		923663631A4756C500EB65B3 /* Serializable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Serializable.h; path = ../../../src/Serializable.h; sourceTree = "<group>"; };
@@ -276,6 +293,8 @@
 		923A9E941A1FCBB700A6F08E /* MaskedRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MaskedRenderer.h; path = ../../../src/MaskedRenderer.h; sourceTree = "<group>"; };
 		923A9E951A1FCBB700A6F08E /* STDRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = STDRenderer.cpp; path = ../../../src/STDRenderer.cpp; sourceTree = "<group>"; };
 		923A9E961A1FCBB700A6F08E /* STDRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STDRenderer.h; path = ../../../src/STDRenderer.h; sourceTree = "<group>"; };
+		92CE26601A589401003901D6 /* ios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ios.h; path = ../../../src/core/ios/ios.h; sourceTree = "<group>"; };
+		92CE26611A589401003901D6 /* ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ios.mm; path = ../../../src/core/ios/ios.mm; sourceTree = "<group>"; };
 		92DC0A231A2F0ED900D2B55C /* greenlet.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = greenlet.c; path = ../../../greenlets/src/greenlet.c; sourceTree = "<group>"; };
 		92DC0A241A2F0ED900D2B55C /* greenlet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = greenlet.h; path = ../../../greenlets/src/greenlet.h; sourceTree = "<group>"; };
 		C38704A417C0C71700015CA8 /* VideoDriverGLES20.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VideoDriverGLES20.cpp; path = gl/VideoDriverGLES20.cpp; sourceTree = "<group>"; };
@@ -462,6 +481,17 @@
 			path = ../../../src/minizip;
 			sourceTree = "<group>";
 		};
+		9223E30B1A518BCC00B2770B /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				92CE26601A589401003901D6 /* ios.h */,
+				92CE26611A589401003901D6 /* ios.mm */,
+				9223E30C1A518CA100B2770B /* HttpRequestCocoaTask.h */,
+				9223E30D1A518CC400B2770B /* HttpRequestCocoaTask.mm */,
+			);
+			name = ios;
+			sourceTree = "<group>";
+		};
 		92DC0A221A2F0EB700D2B55C /* greenlet */ = {
 			isa = PBXGroup;
 			children = (
@@ -515,6 +545,13 @@
 		C3E86F5316EBC8C200052915 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				9223E31B1A530E8A00B2770B /* HttpRequestTask.cpp */,
+				9223E3151A52D6B800B2770B /* HttpRequestTask.h */,
+				9223E3161A52D6B800B2770B /* WebImage.cpp */,
+				9223E3171A52D6B800B2770B /* WebImage.h */,
+				9223E3101A5193E000B2770B /* AsyncTask.cpp */,
+				9223E3111A5193E000B2770B /* AsyncTask.h */,
+				9223E30B1A518BCC00B2770B /* ios */,
 				923663611A4756C500EB65B3 /* KeyEvent.h */,
 				923663621A4756C500EB65B3 /* Serializable.cpp */,
 				923663631A4756C500EB65B3 /* Serializable.h */,
@@ -851,6 +888,7 @@
 				C3E8703C16EBC8EB00052915 /* EventDispatcher.h in Headers */,
 				C3E8703E16EBC8EB00052915 /* Font.h in Headers */,
 				C3E8703F16EBC8EB00052915 /* InitActor.h in Headers */,
+				9223E3181A52D6B800B2770B /* HttpRequestTask.h in Headers */,
 				C3E8704116EBC8EB00052915 /* Input.h in Headers */,
 				C3E8704316EBC8EB00052915 /* AffineTransform.h in Headers */,
 				0472E38117F8A2EC0016A832 /* oxygine_include.h in Headers */,
@@ -889,6 +927,7 @@
 				0472E36117F8A1A80016A832 /* system_data.h in Headers */,
 				04D6FB4D1851914000A5403A /* ThreadMessages.h in Headers */,
 				C3E8707516EBC8EB00052915 /* Node.h in Headers */,
+				92CE26621A589401003901D6 /* ios.h in Headers */,
 				C3E8707716EBC8EB00052915 /* TextBuilder.h in Headers */,
 				C3E8707916EBC8EB00052915 /* TextActor.h in Headers */,
 				C3E8707A16EBC8EB00052915 /* TextStyle.h in Headers */,
@@ -914,7 +953,9 @@
 				C38EC27A1709649300568283 /* TreeInspectorPreview.h in Headers */,
 				0472E35D17F8A1A80016A832 /* ShaderProgram.h in Headers */,
 				C3EE215E17BECD7200715678 /* NativeTextureGLES.h in Headers */,
+				9223E3131A5193E000B2770B /* AsyncTask.h in Headers */,
 				C3EE216017BECD7200715678 /* oxgl.h in Headers */,
+				9223E31A1A52D6B800B2770B /* WebImage.h in Headers */,
 				C3EE216217BECD7200715678 /* VertexDeclarationGL.h in Headers */,
 				0472E36217F8A1A80016A832 /* vertex.h in Headers */,
 				C3EE216417BECD7200715678 /* VideoDriverGL.h in Headers */,
@@ -981,6 +1022,7 @@
 				C3E8700416EBC8EB00052915 /* Box9Sprite.cpp in Sources */,
 				C3E8700616EBC8EB00052915 /* Button.cpp in Sources */,
 				0472E37717F8A2D30016A832 /* ioapi_mem.c in Sources */,
+				9223E3121A5193E000B2770B /* AsyncTask.cpp in Sources */,
 				C3E8700816EBC8EB00052915 /* ClipRectActor.cpp in Sources */,
 				C3E8700A16EBC8EB00052915 /* Clock.cpp in Sources */,
 				C3E8700E16EBC8EB00052915 /* ColorRectSprite.cpp in Sources */,
@@ -1011,12 +1053,14 @@
 				0472E37F17F8A2EC0016A832 /* MaskedSprite.cpp in Sources */,
 				04AEC313182BD98D006413A9 /* UberShaderProgram.cpp in Sources */,
 				C3E8705316EBC8EB00052915 /* PointerState.cpp in Sources */,
+				9223E31C1A530E8A00B2770B /* HttpRequestTask.cpp in Sources */,
 				0472E35717F8A1A80016A832 /* file.cpp in Sources */,
 				C3E8705516EBC8EB00052915 /* ProgressBar.cpp in Sources */,
 				923A9E991A1FCBB700A6F08E /* STDRenderer.cpp in Sources */,
 				C3E8705816EBC8EB00052915 /* pugixml.cpp in Sources */,
 				C3E8705C16EBC8EB00052915 /* ResAnim.cpp in Sources */,
 				C3E8705E16EBC8EB00052915 /* ResAtlas.cpp in Sources */,
+				9223E3191A52D6B800B2770B /* WebImage.cpp in Sources */,
 				C3E8706016EBC8EB00052915 /* ResBuffer.cpp in Sources */,
 				923A9E971A1FCBB700A6F08E /* MaskedRenderer.cpp in Sources */,
 				C3E8706216EBC8EB00052915 /* ResFont.cpp in Sources */,
@@ -1036,6 +1080,7 @@
 				04AEC30F182BD912006413A9 /* ShaderProgramGL.cpp in Sources */,
 				C3E8708616EBC8EB00052915 /* AtlasTool.cpp in Sources */,
 				0472E35E17F8A1A80016A832 /* STDFileSystem.cpp in Sources */,
+				92CE26631A589401003901D6 /* ios.mm in Sources */,
 				C3E8708816EBC8EB00052915 /* ImageUtils.cpp in Sources */,
 				C3E8708B16EBC8EB00052915 /* stringUtils.cpp in Sources */,
 				0472E37917F8A2D30016A832 /* unzip.c in Sources */,
@@ -1043,6 +1088,7 @@
 				048AD0CB19B1FD74001963EF /* Stage.cpp in Sources */,
 				C3E8708F16EBC8EB00052915 /* system_alloc.cpp in Sources */,
 				0472E35917F8A1A80016A832 /* FileSystem.cpp in Sources */,
+				9223E30E1A518CC400B2770B /* HttpRequestCocoaTask.mm in Sources */,
 				C3E8709116EBC8EB00052915 /* winnie_alloc.cpp in Sources */,
 				048AD0AA197D2444001963EF /* TextField.cpp in Sources */,
 				C38EC26F1709649300568283 /* DeveloperMenu.cpp in Sources */,

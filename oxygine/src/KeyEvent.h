@@ -1,6 +1,10 @@
 #pragma once
 #include "Event.h"
 
+#ifdef KEY_EVENT
+#undef KEY_EVENT
+#endif
+
 namespace oxygine
 {
 	/**supported only on SDL*/

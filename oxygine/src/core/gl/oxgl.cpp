@@ -1,5 +1,6 @@
 #include "oxgl.h"
 #include "../ox_debug.h"
+#include <stdlib.h>
 
 #ifdef WIN32
 #include "SDL_video.h"
@@ -311,3 +312,20 @@ int initGLExtensions(myGetProcAdress func)
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif
+
+
+namespace oxygine
+{
+	void checkGLError()
+	{
+		int gl_error = glGetError();
+		if (gl_error != GL_NO_ERROR)
+		{
+			log::error("OpenGL error: %#x\n", gl_error);
+			if (gl_error == GL_OUT_OF_MEMORY)
+			{
+				exit(0);
+			}
+		}
+	}
+}

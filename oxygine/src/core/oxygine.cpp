@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include "Renderer.h"
 #include "log.h"
-#include "winnie_alloc/winnie_alloc.h"
 #include "VideoDriver.h"
 #include "res/CreateResourceContext.h"
 #include "res/Resources.h"
@@ -42,15 +41,12 @@
 
 
 #ifdef EMSCRIPTEN
-//#include <EGL/egl.h>
 #include <sys/time.h>
 #include <emscripten.h>
 #include <SDL.h>
 #include <SDL_compat.h>
 #include <SDL_events.h>
-#endif
-
-#ifdef __ANDROID__
+#elif __ANDROID__
 #include "core/android/jniUtils.h"
 #endif
 
@@ -59,8 +55,8 @@
 
 extern "C"
 {
-	#include "SDL.h"
-	#include "SDL_video.h"
+#include "SDL.h"
+#include "SDL_video.h"
 };
 
 #include <stdio.h>
@@ -87,89 +83,27 @@ namespace oxygine
 	}
 
 
-
 	IVideoDriver::Stats _videoStats;
 
-	ThreadMessages _threadMessages;
-
-    void checkGLError()
-    {
-        int gl_error = glGetError();
-        if (gl_error != GL_NO_ERROR)
-        {
-            log::error("OpenGL error: %#x\n", gl_error);
-            if (gl_error == GL_OUT_OF_MEMORY)
-            {
-                exit(0);
-            }
-        }
-    }
-    
+	static ThreadMessages _threadMessages;
+	static ThreadMessages _uiMessages;
 	Mutex mutexAlloc;
 
-	void *fastAlloc(size_t size)
-	{		
-#ifndef USE_MEMORY_POOL
-		void *data = malloc(size);		
-#else
-		MutexAutoLock m(mutexAlloc);
-		void *data = Winnie::Alloc(size);
-#endif
-		//memset(data, 0xcdcdcdcd, size);
-		//memset(data, 0, size);
-
-		return data;
-	}
-
-	void fastFree(void *data)
-	{
-#ifndef USE_MEMORY_POOL
-		free(data);		
-#else
-		MutexAutoLock m(mutexAlloc);
-		Winnie::Free(data);
-#endif
-	}
-
-
-#if USE_EGL || EMSCRIPTEN
-	//EGLDisplay			eglDisplay	= 0;
-	//EGLSurface			eglSurface	= 0;
-
-	Point _displaySize(0,0);
+#if EMSCRIPTEN
+	static Point _displaySize(0, 0);
+	static void *_window = 0;
 #endif
 
 
-	timeMS getTimeMS()
-	{
-#if __S3E__
-		return (timeMS)s3eTimerGetUST();
-#elif OXYGINE_SDL
-		return SDL_GetTicks();
-#elif EMSCRIPTEN
-		static bool init = false;
-		static struct timespec start_ts;
-		if (!init)
-		{
-			init = true;
-			clock_gettime(CLOCK_MONOTONIC, &start_ts);
-		}
-		
-		struct timespec now;
-		clock_gettime(CLOCK_MONOTONIC, &now);
-		timeMS ticks = (now.tv_sec - start_ts.tv_sec) * 1000 + (now.tv_nsec -
-			start_ts.tv_nsec) / 1000000; 
+#ifdef OXYGINE_SDL
+	static SDL_Window *_window = 0;
+	static SDL_GLContext _context = 0;
+#endif
 
-		return ticks;
-#else
-		#pragma error "getTimeMS not implemented"
-#endif		
-		return 0;
-	}
-	
-	core::init_desc desc;
+	static core::init_desc desc;
+    Point _qtFixedSize(0, 0);
 
-	
+
 #ifdef __S3E__
 
 	int32 pointerEvent(void *sysData, void *u)
@@ -188,7 +122,7 @@ namespace oxygine
 			type = TouchEvent::WHEEL_DOWN;
 			break;
 		}
-				
+
 		MouseButton b = MouseButton_Left;
 		switch(ev->m_Button)
 		{
@@ -197,7 +131,7 @@ namespace oxygine
 		case S3E_POINTER_BUTTON_MIDDLEMOUSE: b = MouseButton_Middle; break;
 		}
 
-		Input::instance.sendPointerButtonEvent(b, (float)ev->m_x, (float)ev->m_y, 1.0f, type, &Input::instance._pointerMouse);
+		Input::instance.sendPointerButtonEvent(getStage(), b, (float)ev->m_x, (float)ev->m_y, 1.0f, type, &Input::instance._pointerMouse);
 
 		return 0;
 	}
@@ -206,7 +140,7 @@ namespace oxygine
 	{
 		s3ePointerMotionEvent *ev = (s3ePointerMotionEvent*)sysData;
 
-		Input::instance.sendPointerMotionEvent((float)ev->m_x, (float)ev->m_y, 1.0f, &Input::instance._pointerMouse);
+		Input::instance.sendPointerMotionEvent(getStage(), (float)ev->m_x, (float)ev->m_y, 1.0f, &Input::instance._pointerMouse);
 		return 0;
 	}
 
@@ -216,7 +150,7 @@ namespace oxygine
 		s3ePointerTouchEvent *ev = (s3ePointerTouchEvent*)sysData;
 		int id = ev->m_TouchID + 1;
 
-		Input::instance.sendPointerButtonEvent(MouseButton_Touch, (float)ev->m_x, (float)ev->m_y, 1.0f, ev->m_Pressed ? TouchEvent::TOUCH_DOWN : TouchEvent::TOUCH_UP, Input::instance.getTouchByIndex(id));
+		Input::instance.sendPointerButtonEvent(getStage(), MouseButton_Touch, (float)ev->m_x, (float)ev->m_y, 1.0f, ev->m_Pressed ? TouchEvent::TOUCH_DOWN : TouchEvent::TOUCH_UP, Input::instance.getTouchByIndex(id));
 
 		return 0;
 	}
@@ -227,7 +161,7 @@ namespace oxygine
 		s3ePointerTouchMotionEvent *ev = (s3ePointerTouchMotionEvent*)sysData;
 		int id = ev->m_TouchID + 1;
 
-		Input::instance.sendPointerMotionEvent((float)ev->m_x, (float)ev->m_y, 1.0f, Input::instance.getTouchByIndex(id));
+		Input::instance.sendPointerMotionEvent(getStage(), (float)ev->m_x, (float)ev->m_y, 1.0f, Input::instance.getTouchByIndex(id));
 
 		return 0;
 	}
@@ -245,11 +179,6 @@ namespace oxygine
 		getStage()->dispatchEvent(&ev);
 		return 0;
 	}
-#endif
-
-#ifdef OXYGINE_SDL
-	SDL_Window *_window = 0;
-	SDL_GLContext _context = 0;
 #endif
 
 	namespace core
@@ -292,6 +221,14 @@ namespace oxygine
 		}
 #endif
 
+
+		void updateUIMessages()
+		{
+			ThreadMessages::message msg;
+			while (_uiMessages.peek(msg, true))	{}
+		}
+
+
 		void init(init_desc *desc_ptr)
 		{
 			Input::instance.__removeFromDebugList();
@@ -300,8 +237,8 @@ namespace oxygine
 			if (desc_ptr)
 				desc = *desc_ptr;
 
-	#ifdef __S3E__
-            log::messageln("S3E build");
+#ifdef __S3E__
+			log::messageln("S3E build");
 			if (!IwGLInit())
 			{
 				s3eDebugErrorShow(S3E_MESSAGE_CONTINUE, "IwGLInit failed");
@@ -334,9 +271,7 @@ namespace oxygine
 
 			s3eDeviceRegister(S3E_DEVICE_UNPAUSE, applicationUnPause, 0);
 			s3eDeviceRegister(S3E_DEVICE_PAUSE, applicationPause, 0);
-	#endif
-	
-	#if EMSCRIPTEN
+#elif EMSCRIPTEN
 			log::messageln("EMSCRIPTEN build");
 
 			if (desc.w == -1 && desc.h == -1)
@@ -344,7 +279,7 @@ namespace oxygine
 				int fs = 0;
 				emscripten_get_canvas_size(&desc.w, &desc.h, &fs);
 			}
-			
+
 			if ( SDL_Init(SDL_INIT_VIDEO) != 0 ) 
 			{
 				log::error("Unable to initialize SDL: %s\n", SDL_GetError());				
@@ -355,14 +290,11 @@ namespace oxygine
 			_displaySize = Point(desc.w, desc.h);
 
 			emscripten_SDL_SetEventHandler(SDL_eventsHandler, 0);
-	#endif
-		
-	#ifdef OXYGINE_SDL
+#elif OXYGINE_SDL
 
 			log::messageln("SDL build");
-			int flags = SDL_WINDOW_SHOWN;
+			
 
-	#ifndef USE_EGL
 			SDL_Init(SDL_INIT_VIDEO);
 
 
@@ -371,142 +303,64 @@ namespace oxygine
 			SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
 			SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 0);
 			SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 0);
-			SDL_GL_SetAttribute(SDL_GL_RETAINED_BACKING, 0);			
+			SDL_GL_SetAttribute(SDL_GL_RETAINED_BACKING, 0);
 			//SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
 			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
-			flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
-            
+			SDL_GL_SetAttribute(SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 1);
+
+			int flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
+
 #if TARGET_OS_IPHONE
-            flags |= SDL_WINDOW_BORDERLESS;
-#endif            
-	#endif
-            
+			flags |= SDL_WINDOW_BORDERLESS;
+#endif                
 
 			SDL_DisplayMode mode;
 			SDL_GetCurrentDisplayMode(0, &mode);
 			log::messageln("display mode: %d %d", mode.w, mode.h);
 
-            if (desc.w == -1 && desc.h == -1)
-            {
-                desc.w = 960;
-                desc.h = 640;
-            }
+			if (desc.w == -1 && desc.h == -1)
+			{
+				desc.w = 960;
+				desc.h = 640;
+			}
 
 			if (desc.fullscreen)
 				flags |= SDL_WINDOW_FULLSCREEN;
 
-            log::messageln("creating window %d %d", desc.w, desc.h);
+			log::messageln("creating window %d %d", desc.w, desc.h);
 
 			_window = SDL_CreateWindow(desc.title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, desc.w, desc.h, flags);
-	#ifndef USE_EGL
+
 			if (!_window)
 			{
 				log::error("can't create window: %s", SDL_GetError());
-                return;	
+				return;
 			}
 			_context = SDL_GL_CreateContext(_window);
-            if (!_context)
-            {
-                log::error("can't create gl context: %s", SDL_GetError());
-                return;
-            }
+			if (!_context)
+			{
+				log::error("can't create gl context: %s", SDL_GetError());
+				return;
+			}
 
 			SDL_GL_SetSwapInterval(desc.vsync ? 1 : 0);
-
+			
 
 			//SDL_SetEventFilter(eventsFilter, 0);
-			
-	#else
 
-			HWND				hWnd	= 0;
-			HDC					hDC		= 0;
-
-			EGLConfig			eglConfig	= 0;
-		
-			EGLContext			eglContext	= 0;
-			NativeWindowType	eglWindow	= 0;
-			EGLint				pi32ConfigAttribs[128];
-
-	
-			SDL_SysWMinfo wmi;
-			SDL_VERSION(&wmi.version);
-			SDL_GetWindowWMInfo(_window, &wmi);
-	
-			hWnd = (HWND)wmi.info.win.window;
-
-			hDC = GetDC(hWnd);
-			eglDisplay = eglGetDisplay((NativeDisplayType) hDC);
-	
-
-			eglWindow = hWnd;
-			if(eglDisplay == EGL_NO_DISPLAY)
-				 eglDisplay = eglGetDisplay((NativeDisplayType) EGL_DEFAULT_DISPLAY);
-
-			EGLint iMajorVersion, iMinorVersion;
-			if (!eglInitialize(eglDisplay, &iMajorVersion, &iMinorVersion))
-			{
-				int q=0;
-			}
-
-			bool mode24bpp = desc.mode24bpp;
-			int i = 0;
-			pi32ConfigAttribs[i++] = EGL_RED_SIZE;
-			pi32ConfigAttribs[i++] = mode24bpp ? 8 : 5;
-			pi32ConfigAttribs[i++] = EGL_GREEN_SIZE;
-			pi32ConfigAttribs[i++] = mode24bpp ? 8 : 6;
-			pi32ConfigAttribs[i++] = EGL_BLUE_SIZE;
-			pi32ConfigAttribs[i++] = mode24bpp ? 8 : 5;
-			pi32ConfigAttribs[i++] = EGL_ALPHA_SIZE;
-			pi32ConfigAttribs[i++] = 0;
-			pi32ConfigAttribs[i++] = EGL_SURFACE_TYPE;
-			pi32ConfigAttribs[i++] = EGL_WINDOW_BIT;
-			pi32ConfigAttribs[i++] = EGL_NONE;
-
-			EGLint iConfigs;
-			if (!eglChooseConfig(eglDisplay, pi32ConfigAttribs, &eglConfig, 1, &iConfigs) || (iConfigs != 1))
-			{
-				int q=0;
-			}
-			eglSurface = eglCreateWindowSurface(eglDisplay, eglConfig, eglWindow, NULL);
-
-			if(eglSurface == EGL_NO_SURFACE)
-			{
-				eglGetError(); // Clear error
-				eglSurface = eglCreateWindowSurface(eglDisplay, eglConfig, NULL, NULL);
-			}
-			eglContext = eglCreateContext(eglDisplay, eglConfig, NULL, NULL);
-			eglMakeCurrent(eglDisplay, eglSurface, eglSurface, eglContext);
-	#endif
-
-	#endif
-
+#endif
 			file::init(desc.companyName, desc.appName);
-
-			init2();			
+			init2();
 		}
 
-		
-		/*
-		int eventsFilter(void *, SDL_Event *e)
-		{
-			log::messageln("%x", (int)(e->type));
-			switch (e->type)
-			{
-			case SDL_APP_WILLENTERBACKGROUND:
-			{
-				int q = 0;
-			}
-				break;
-			default:
-				break;
-			}
-			return 1;
-		}
-		*/
 
 		void init2()
 		{
+#ifdef OXYGINE_QT
+            setlocale(LC_ALL, "POSIX");
+#endif
+
 #ifdef OXYGINE_SDL
 			int missing = initGLExtensions(SDL_GL_GetProcAddress);
 #endif
@@ -518,24 +372,18 @@ namespace oxygine
 #if __S3E__
 			int glversion = s3eGLGetInt(S3E_GL_VERSION);
 			int major_gl = glversion >> 8;
-
-			if (major_gl == 2)
-				IVideoDriver::instance = new VideoDriverGLES20();
-			else
-			{
-				OX_ASSERT(!"gl version should be 2");
-				//IVideoDriver::instance = new VideoDriverGLES11();			
-			}
+			OX_ASSERT( major_gl == 2 && "gl version should be 2");			
+			IVideoDriver::instance = new VideoDriverGLES20();
 #endif
 
-			IVideoDriver::instance = new VideoDriverGLES20();			
+			IVideoDriver::instance = new VideoDriverGLES20();
 
 
-			checkGLError();
+			CHECKGL();
 
 			IVideoDriver::instance->setDefaultSettings();
 
-			checkGLError();
+			CHECKGL();
 
 			Renderer::initialize();
 
@@ -546,46 +394,45 @@ namespace oxygine
 			Resources::registerResourceType(ResFontBM::createSD, "sdfont");
 			Resources::registerResourceType(ResStarlingAtlas::create, "starling");
 
-			checkGLError();
+			CHECKGL();
 			log::messageln("oxygine initialized");
 		}
 
 #if OXYGINE_SDL || EMSCRIPTEN
 		Vector2 convertTouch(SDL_Event& ev)
 		{
-			//log::messageln("convert %.2f %.2f %.2f", ev.tfinger.x, ev.tfinger.y, ev.tfinger.pressure);
 			Point size = getDisplaySize();
 			return Vector2(ev.tfinger.x * size.x, ev.tfinger.y * size.y);
-			//SDL_Touch* inTouch = SDL_GetTouch(ev.tfinger.touchId);
-			//return Point(
-			//	(int(ev.tfinger.x) * size.x) / inTouch->xres, 
-			//	(int(ev.tfinger.y) * size.y) / inTouch->yres);
 		}
 #endif
 
-#if EMSCRIPTEN
-		void *_window = 0;
-#endif
-
-#if OXYGINE_SDL || EMSCRIPTEN
 		bool active = true;
+		bool focus = true;
+
+
 		bool isActive()
 		{
 			return active;
 		}
 
-		bool focus = true;
 		bool hasFocus()
 		{
 			return focus;
 		}
 
-		void* getWindow()
+
+#if OXYGINE_SDL
+		SDL_GLContext getGLContext()
+		{
+			return _context;
+		}
+
+		SDL_Window* getWindow()
 		{
 			return _window;
 		}
 #endif
-		
+
 		void reset()
 		{
 			log::messageln("core::reset()");
@@ -604,42 +451,52 @@ namespace oxygine
 			log::messageln("core::restore() done");
 		}
 
-		
-		bool beginRendering()
+
+		bool beginRendering(window w)
 		{
+#ifdef OXYGINE_SDL
+			SDL_Window *wnd = w;
+			if (!wnd)
+				wnd = _window;			
+			SDL_GL_MakeCurrent(wnd, _context);
+#endif			
+
+			CHECKGL();
+
 			return Renderer::isReady();
 		}
 
-		void swapDisplayBuffers()
+		void swapDisplayBuffers(window w)
 		{
 #if OXYGINE_SDL
 			if (!_context)
 				return;
 #endif
 
-            checkGLError();
+			CHECKGL();
 #if __S3E__
 			IwGLSwapBuffers();
-#elif USE_EGL || EMSCRIPTEN
+#elif EMSCRIPTEN
 			SDL_GL_SwapBuffers();
-			//eglSwapBuffers(eglDisplay, eglSurface);
 #elif OXYGINE_SDL
-			//if (isActive())
+			SDL_Window *wnd = w;
+			if (!wnd)
+				wnd = _window;
 			if (_context)
 			{
-				int status = SDL_GL_MakeCurrent(_window, _context);
+				int status = SDL_GL_MakeCurrent(wnd, _context);
 				if (status)
 				{
 					log::error("SDL_GL_MakeCurrent(): %s", SDL_GetError());
 				}
-				SDL_GL_SwapWindow(_window);
+				SDL_GL_SwapWindow(wnd);
 			}
 #endif
 
 			IVideoDriver::instance->getStats(_videoStats);
 			IVideoDriver::instance->swapped();
 
-			checkGLError();
+			CHECKGL();
 
 			//sleep(1000/50);
 		}
@@ -648,6 +505,17 @@ namespace oxygine
 		void SDL_handleEvent(SDL_Event &event, bool &done)
 		{
 			Input *input = &Input::instance;
+
+
+#ifndef EMSCRIPTEN
+			SDL_Window *wnd = SDL_GetWindowFromID(event.window.windowID);			
+			void *data = SDL_GetWindowData(wnd, "_");
+			spStage stage = (Stage*)data;
+#else
+			spStage stage = getStage();
+#endif
+			if (!stage)
+				stage = getStage();
 
 			Event ev(Input::event_platform);
 			ev.userData = &event;
@@ -687,8 +555,8 @@ namespace oxygine
 
 					log::messageln("focus: %d", (int)focus);
 					Event ev(focus ? Stage::ACTIVATE : Stage::DEACTIVATE);
-					if (getStage())
-						getStage()->dispatchEvent(&ev);
+					if (stage)
+						stage->dispatchEvent(&ev);
 
 					if (!focus)
 						focusLost();
@@ -698,21 +566,21 @@ namespace oxygine
 				break;
 			}
 			case SDL_MOUSEWHEEL:
-				input->sendPointerWheelEvent(event.wheel.y, &input->_pointerMouse);
+				input->sendPointerWheelEvent(stage, event.wheel.y, &input->_pointerMouse);
 				break;
 			case SDL_KEYDOWN:
 			{
 				KeyEvent ev(KeyEvent::KEY_DOWN, &event.key);
-				getStage()->dispatchEvent(&ev);
+				stage->dispatchEvent(&ev);
 			} break;
 			case SDL_KEYUP:
 			{
 				KeyEvent ev(KeyEvent::KEY_UP, &event.key);
-				getStage()->dispatchEvent(&ev);
+				stage->dispatchEvent(&ev);
 			} break;
 #if SDL_VIDEO_OPENGL
 			case SDL_MOUSEMOTION:
-				input->sendPointerMotionEvent((float)event.motion.x, (float)event.motion.y, 1.0f, &input->_pointerMouse);
+				input->sendPointerMotionEvent(stage, (float)event.motion.x, (float)event.motion.y, 1.0f, &input->_pointerMouse);
 				break;
 			case SDL_MOUSEBUTTONDOWN:
 			case SDL_MOUSEBUTTONUP:
@@ -725,7 +593,7 @@ namespace oxygine
 				case 3: b = MouseButton_Right; break;
 				}
 
-				input->sendPointerButtonEvent(b, (float)event.button.x, (float)event.button.y, 1.0f,
+				input->sendPointerButtonEvent(stage, b, (float)event.button.x, (float)event.button.y, 1.0f,
 					event.type == SDL_MOUSEBUTTONDOWN ? TouchEvent::TOUCH_DOWN : TouchEvent::TOUCH_UP, &input->_pointerMouse);
 			}
 				break;
@@ -735,7 +603,7 @@ namespace oxygine
 			{
 				//log::messageln("SDL_FINGERMOTION");
 				Vector2 pos = convertTouch(event);
-				input->sendPointerMotionEvent(
+				input->sendPointerMotionEvent(stage,
 					pos.x, pos.y, event.tfinger.pressure,
 					input->getTouchByID((int)event.tfinger.fingerId));
 			}
@@ -746,7 +614,7 @@ namespace oxygine
 			{
 				//log::messageln("SDL_FINGER");
 				Vector2 pos = convertTouch(event);
-				input->sendPointerButtonEvent(
+				input->sendPointerButtonEvent(stage, 
 					MouseButton_Touch,
 					pos.x, pos.y, event.tfinger.pressure,
 					event.type == SDL_FINGERDOWN ? TouchEvent::TOUCH_DOWN : TouchEvent::TOUCH_UP,
@@ -762,10 +630,8 @@ namespace oxygine
 		bool update()
 		{
 			ThreadMessages::message msg;
-			while (_threadMessages.peek(msg, true))
-			{
+			while (_threadMessages.peek(msg, true))	{}
 
-			}
 #ifdef __S3E__
 
 			s3eDeviceYield(0);
@@ -784,21 +650,21 @@ namespace oxygine
 #endif
 
 
-	#if OXYGINE_SDL || EMSCRIPTEN
+#if OXYGINE_SDL || EMSCRIPTEN
 
 			//log::messageln("update");
-			
+
 			bool done = false;
 			SDL_Event event;
-			while (SDL_PollEvent(&event)) 
+			while (SDL_PollEvent(&event))
 			{
 #if !EMSCRIPTEN //emscripten handled events from callback
-				SDL_handleEvent(event, done);				
+				SDL_handleEvent(event, done);
 #endif
 			}
 
 			return done;
-	#endif
+#endif
 
 			log::warning("update not implemented");
 			return true;
@@ -809,16 +675,16 @@ namespace oxygine
 			delete IVideoDriver::instance;
 			IVideoDriver::instance = 0;
 
-#ifdef OXYGINE_SDL
+#if OXYGINE_SDL
 			SDL_GL_DeleteContext(_context);
 			SDL_DestroyWindow(_window);
 			SDL_Quit();
 #endif
 
 			spActor temp = Stage::instance;
-            if (Stage::instance)
-                Stage::instance->cleanup();
-			Stage::instance = 0;	
+			if (Stage::instance)
+				Stage::instance->cleanup();
+			Stage::instance = 0;
 
 			Input::instance.cleanup();
 
@@ -848,9 +714,7 @@ namespace oxygine
 		{
 #ifdef __S3E__
 			s3eDeviceRequestQuit();
-
-#endif
-#ifdef OXYGINE_SDL
+#elif OXYGINE_SDL
 			SDL_Event ev;
 			ev.type = SDL_QUIT;
 			SDL_PushEvent(&ev);
@@ -862,10 +726,15 @@ namespace oxygine
 			return _threadMessages;
 		}
 
-		Point _qtFixedSize(0,0);
+		ThreadMessages& getUiThreadMessages()
+		{
+			return _uiMessages;
+		}
+
+		
 		Point getDisplaySize()
 		{
-	#if __S3E__
+#if __S3E__
 			int width = IwGLGetInt(IW_GL_WIDTH);
 			int height = IwGLGetInt(IW_GL_HEIGHT);
 
@@ -882,37 +751,31 @@ namespace oxygine
 			}
 
 			return Point(width, height);
-	#endif
-	
-	#ifdef OXYGINE_QT
+#elif OXYGINE_QT
 			if (!_window)
 			{
 				return _qtFixedSize;
 			}
-	#endif
-
-	#if OXYGINE_SDL
+#elif OXYGINE_SDL
 			int w = 0;
 			int h = 0;
 			SDL_GetWindowSize(_window, &w, &h);
 			return Point(w, h);
-	#endif
-
-	#if EMSCRIPTEN
+#elif EMSCRIPTEN
 			return _displaySize;
-	#endif
-
+#else
 			log::warning("getDisplaySize not implemented");
 			return Point(0, 0);
+#endif
 		}
-	}
+		}
 
 	void handleErrorPolicy(error_policy ep, const char *format, ...)
 	{
 		va_list args;
 		va_start(args, format);
-		
-		switch(ep)
+
+		switch (ep)
 		{
 		case ep_show_error:
 			log::error_va(format, args);
@@ -930,40 +793,11 @@ namespace oxygine
 		va_end(args);
 	}
 
-	int		getTimeUTC()
-	{
-		return (int)(getTimeUTCMS() / 1000);
-	}
-
-	int64	getTimeUTCMS()
-	{
-#ifdef __S3E__
-		return s3eTimerGetUTC();
-#elif WIN32
-		FILETIME tm;
-		GetSystemTimeAsFileTime(&tm);
-		int64 t = tm.dwLowDateTime + (int64(tm.dwHighDateTime) << 32);
-		int64 utc = (t - 116444736000000000LL)/10000;
-		return utc;		
-#elif __ANDROID__
-		return jniGetTimeUTCMS();
-#elif EMSCRIPTEN
-		struct timeval tv;
-		gettimeofday(&tv, NULL);
-		int64 tm = 
-			(unsigned long long)(tv.tv_sec) * 1000 +
-			(unsigned long long)(tv.tv_usec) / 1000;
-		return tm;
-#endif
-		return getTimeMS();
-	}
-
 	bool	isNetworkAvaible()
 	{
-#ifdef __S3E__
+#if __S3E__
 		return s3eSocketGetInt(S3E_SOCKET_NETWORK_AVAILABLE) == 1;
-#endif
-#ifdef __ANDROID__
+#elif __ANDROID__
 		return jniIsNetworkAvailable();
 #endif		
 		return true;

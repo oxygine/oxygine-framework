@@ -102,12 +102,6 @@ namespace oxygine
 		_startTime = getTimeMS();
 		setPriority(1000);
 
-		float scale = 1.0f;
-		if (getStage())
-			scale = 1.0f/getStage()->getScaleX();
-
-		setScale(scale);
-
 		setTouchEnabled(false);
 		
 		TextStyle st;
@@ -155,9 +149,18 @@ namespace oxygine
 		_text->setWidth(getWidth());
 		_text->setText("debug text");
 
-		getStage()->addEventListener(TouchEvent::MOVE, CLOSURE(this, &DebugActor::onDAEvent));
 
 		instance = this;
+	}
+
+	void DebugActor::onAdded2Stage()
+	{
+		_stage->addEventListener(TouchEvent::MOVE, CLOSURE(this, &DebugActor::onDAEvent));
+	}
+
+	void DebugActor::onRemovedFromStage()
+	{
+		_stage->removeEventListeners(this);
 	}
 
 	/*
@@ -194,14 +197,14 @@ namespace oxygine
 			return;
 		}
 
-		spActor inspector = getStage()->getChild(DeveloperMenu::getDefaultName(), ep_ignore_error);
+		spActor inspector = _getStage()->getChild(DeveloperMenu::getDefaultName(), ep_ignore_error);
 		if (inspector)
 			inspector->detach();
 		else
 		{		
 			spDeveloperMenu dm = new DeveloperMenu();
 			dm->setPriority(getPriority()  + 1); 
-			float scale = getStage()->getScaleX();
+			float scale = _getStage()->getScaleX();
 			Vector2 size = core::getDisplaySize();
 
 			Vector2 s = size;// * scale;
@@ -210,7 +213,7 @@ namespace oxygine
 			if (name == "tree")
 			{
 				spTreeInspector tree = new TreeInspector;
-				tree->init(s, getStage());
+				tree->init(s, _getStage());
 
 				dm->init(s, "Tree Inspector", tree, Color(230, 230, 230, 255));
 			}
@@ -222,16 +225,14 @@ namespace oxygine
 			}
 
 			dm->setScale(1.0f / scale);
-			Vector2 p = -getStage()->getPosition() / scale;
+			Vector2 p = -_getStage()->getPosition() / scale;
 			dm->setPosition(p);
-			getStage()->addChild(dm);
+			_getStage()->addChild(dm);
 		}
 	}
 
 	DebugActor::~DebugActor()
 	{
-		if (getStage())
-			getStage()->removeEventListeners(this);
 	}
 
 	extern IVideoDriver::Stats _videoStats;
@@ -344,10 +345,10 @@ namespace oxygine
 	
 	void DebugActor::showTouchedActor(bool show)
 	{
-		getStage()->removeEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &DebugActor::onEvent));
+		_getStage()->removeEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &DebugActor::onEvent));
 		_showTouchedActor = show;
 		if (show)
-			getStage()->addEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &DebugActor::onEvent));
+			_getStage()->addEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &DebugActor::onEvent));
 
 		spActor btn = getChild("finger");
 		btn->removeTweens(true);
@@ -358,7 +359,7 @@ namespace oxygine
 	void DebugActor::onDAEvent(Event *ev)
 	{
 		TouchEvent *t = safeCast<TouchEvent*>(ev);
-		Vector2 loc = convert_global2local(this, getStage(), t->localPosition);
+		Vector2 loc = convert_global2local(this, _getStage(), t->localPosition);
 		setAlpha(isOn(loc) ? 64 : 255);
 	}
 

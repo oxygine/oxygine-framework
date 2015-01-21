@@ -22,10 +22,12 @@ namespace oxygine
 	class AnimationFrame
 	{
 	public:
-		AnimationFrame():/* _flags(0), */_srcRect(0, 0, 1, 1), _destRect(0, 0, 1, 1), _frameSize(0, 0), _resAnim(0){}
+        AnimationFrame():_srcRect(0, 0, 1, 1), _destRect(0, 0, 1, 1), _frameSize(0, 0), _resAnim(0), _row(0), _column(0){}
 
 		void init(ResAnim *rs, const Diffuse &df, 
 			const RectF &srcRect, const RectF &destRect, const Vector2 &frame_size);
+        void init2(ResAnim *rs, short column, short row, const Diffuse &df,
+                   const RectF &srcRect, const RectF &destRect, const Vector2 &frame_size);
 		/**ResAnim should be valid!*/
 		AnimationFrame getClipped(const RectF &rect) const;
 		AnimationFrame getFlipped(bool vertical, bool horizontal) const;
@@ -38,6 +40,8 @@ namespace oxygine
 		const Vector2&	getFrameSize() const {return _frameSize;}
 
 		ResAnim*		getResAnim() const {return _resAnim;} 
+        short			getColumn() const {return _column;}
+        short			getRow() const {return _row;}
 		const RectF&	getSrcRect() const {return _srcRect;}
 		const RectF&	getDestRect() const {return _destRect;}
 		const Diffuse&	getDiffuse() const {return _diffuse;}
@@ -60,6 +64,8 @@ namespace oxygine
 		RectF			_destRect;
 		Vector2			_frameSize;//real size without clipping
 		ResAnim*		_resAnim;
+        short           _row;
+        short           _column;
 		//unsigned short	_flags;
 	};
 }

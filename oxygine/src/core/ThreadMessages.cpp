@@ -5,11 +5,21 @@ namespace oxygine
 #if 0
 #define  LOGDN(...)  log::messageln(__VA_ARGS__)
 #define  LOGD(...)  log::message(__VA_ARGS__)
-
 #else
 #define  LOGDN(...)  ((void)0)
 #define  LOGD(...)  ((void)0)
 #endif
+
+	MutexPthreadLock::MutexPthreadLock(pthread_mutex_t &m, bool lock) :_mutex(m), _locked(lock)
+	{
+		if (_locked)
+			pthread_mutex_lock(&_mutex);
+	}
+
+	MutexPthreadLock::~MutexPthreadLock()
+	{
+		pthread_mutex_unlock(&_mutex);
+	}
 
 	ThreadMessages::ThreadMessages():_id(0), _waitReplyID(0)
 	{			
@@ -77,19 +87,6 @@ namespace oxygine
 		_last = ev;
 		LOGDN("ThreadMessages::get received msgid=%d id=%d", _last.msgid, _last._id);
 	}
-	/*
-	ThreadMessages::messages &ThreadMessages::pause(pthread_mutex_t &mutex)
-	{
-		mutex = _mutex;
-		pthread_mutex_lock(&_mutex);
-		return _events;
-	}
-
-	void ThreadMessages::resume()
-	{
-		pthread_mutex_unlock(&_mutex);
-	}
-	*/
 
 	bool ThreadMessages::empty()
 	{
@@ -202,24 +199,7 @@ namespace oxygine
 
 		return _last._result;
 	}
-
-	/*
-	void ThreadMessages::sendCallback(int msgid, void *arg1, void *arg2, callback cb, void *cbData)
-	{
-		message ev;
-		ev.msgid = msgid;
-		ev.arg1 = arg1;
-		ev.arg2 = arg2;
-		ev.cb = cb;
-		ev.cbData = cbData;		
-
-		MutexPthreadLock lock(_mutex);
-		ev._id = ++_id;
-		_events.push_back(ev);
-		pthread_cond_signal(&_cond);
-	}
-	*/
-
+	
 	void ThreadMessages::post(int msgid, void *arg1, void *arg2)
 	{
 		message ev;

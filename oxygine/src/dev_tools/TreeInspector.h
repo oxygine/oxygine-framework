@@ -31,6 +31,9 @@ namespace oxygine
 
 	protected:		
 		static RectF calcBounds(Actor *);
+		void onAdded2Stage();
+		void onRemovedFromStage();
+
 		void render(const RenderState &rs);
 
 		void updateSizes();

@@ -14,7 +14,7 @@ namespace oxygine
 	}
 	
 
-	class TextField : public VStyleActor
+    class TextField : public _VStyleActor
 	{
 	public:
 		DECLARE_COPYCLONE_NEW(TextField);
@@ -82,8 +82,17 @@ namespace oxygine
 		text::Node *_root;
 		Rect _textRect;
 
-		text::Node *getStageNode();
+		text::Node *getRootNode();
 		void needRebuild();
 		void sizeChanged(const Vector2& size);
 	};
 }
+
+#ifdef OX_EDITOR
+#include "EditorTextField.h"
+#else
+namespace oxygine
+{
+	typedef TextField _TextField;
+}
+#endif

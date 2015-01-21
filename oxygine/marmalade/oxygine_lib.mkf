@@ -13,6 +13,7 @@ define OXYGINE_MARMALADE
 
 define OX_HAVE_LIBJPEG
 define OX_HAVE_LIBPNG
+define OX_NO_HTTP
 
 files
 {

@@ -8,6 +8,7 @@ namespace oxygine
 	{
 		void copy(const ImageData &src, ImageData &dest);
 		void blit(const ImageData &src, ImageData &dest);
+   		void blitPremultiply(const ImageData &src, ImageData &dest);
 		void flipY(const ImageData &src, ImageData &dest);
 
 		inline void blend_srcAlpha_invSrcAlpha(const Pixel &pS, Pixel &pD)

@@ -3,6 +3,8 @@
 import os
 from xml.dom import minidom
 from gen_view_code.class_type import class_type
+import sys
+PY3 = sys.version > '3'
 
 class class_member:
     def __init__(self, name, ct):
@@ -124,7 +126,6 @@ def gen2(xml_res_file, dest_folder, mappings):
     global user_mp
     user_mp = mappings
     import os
-    from sets import Set
     from jinja2 import Environment, FileSystemLoader    
 
     if not os.path.exists(dest_folder):
@@ -150,7 +151,7 @@ def gen2(xml_res_file, dest_folder, mappings):
 
     classes_node = root.getElementsByTagName("class")[0]
     
-    classes = Set()
+    classes = set()
     
     for class_node in classes_node.childNodes:        
         if class_node.nodeType == class_node.TEXT_NODE:
@@ -161,7 +162,7 @@ def gen2(xml_res_file, dest_folder, mappings):
         class_name = class_node.getAttribute("class")
         
     
-        local_classes = Set()    
+        local_classes = set()    
         
         parent = find_mapping(class_node.nodeName, classes)
         
@@ -183,7 +184,17 @@ def gen2(xml_res_file, dest_folder, mappings):
 
         cls = list(local_classes)
         q = 0
-        cls.sort(cmp = lambda a, b: cmp(b.ns, a.ns) or cmp(b.primary, a.primary) or cmp(a.className, b.className))
+        def ff(a, b):
+            def cmp(a, b):
+                if a < b:
+                    return -1
+                if a > b:
+                    return 1
+                return 0
+            return cmp(b.ns, a.ns) or cmp(b.primary, a.primary) or cmp(a.className, b.className)
+
+        import functools
+        cls.sort(key = functools.cmp_to_key(ff))
         
         includes = [inc for inc in cls if inc.header]    
         

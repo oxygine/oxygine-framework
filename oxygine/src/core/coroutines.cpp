@@ -3,6 +3,8 @@
 #if __S3E__
 #define OXYGINE_COROUTINES
 #include "IwFibre.h"
+#elif OXYGINE_QT
+    #define GREENLETS 0
 #elif OXYGINE_SDL
 #ifndef __APPLE__
     #define GREENLETS 1
@@ -102,6 +104,7 @@ namespace oxygine
 #elif GREENLETS
 			return greenlet_isdead((greenlet*) fiber) != 0;
 #else
+            return false;
 #endif
 		}
 	}

@@ -5,7 +5,7 @@ namespace oxygine
 {
 	void Button::copyFrom(const Button &src, cloneOptions opt)
 	{
-		Sprite::copyFrom(src, opt);
+		_Sprite::copyFrom(src, opt);
 
 		_state = src._state;
 		_resAnim = src._resAnim;
@@ -90,7 +90,8 @@ namespace oxygine
 					{
 						_btnPressed = me->index;
 						setState(statePressed);
-						getStage()->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Button::_mouseEvent));
+
+						_getStage()->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Button::_mouseEvent));
 					}					
 				}				
 			}
@@ -100,7 +101,8 @@ namespace oxygine
 				if (_btnPressed == me->index)
 				{				
 					setState(stateNormal);
-					getStage()->removeEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Button::_mouseEvent));
+					if (_getStage())
+						_getStage()->removeEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Button::_mouseEvent));
 					_btnPressed = 0;
 				}
 
@@ -156,9 +158,9 @@ namespace oxygine
 			return;
 		
 		if (_resAnim->getColumns() > s)
-			Sprite::setAnimFrame(_resAnim->getFrame(s, _row));
+			_Sprite::setAnimFrame(_resAnim->getFrame(s, _row));
 		else
-			Sprite::setAnimFrame(_resAnim->getFrame(0, _row));
+			_Sprite::setAnimFrame(_resAnim->getFrame(0, _row));
 		
 	}
 }

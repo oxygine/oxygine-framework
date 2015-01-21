@@ -72,6 +72,7 @@ namespace oxygine
 			"#define highp\n";
 
 #if SDL_VIDEO_OPENGL
+		log::messageln("not gles version");
 		*ptr = nonGLES;
 		ptr++;
 #endif

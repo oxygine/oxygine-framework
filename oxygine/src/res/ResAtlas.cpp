@@ -107,6 +107,9 @@ namespace oxygine
         int h = node.attribute("height").as_int(defaultAtlasHeight);
 		const char *format = node.attribute("format").as_string("8888");
 
+		_linearFilter = node.attribute("linearFilter").as_bool(true);
+		_clamp2edge = node.attribute("clamp2edge").as_bool(true);
+
 		atlas_data ad;
 
 
@@ -260,6 +263,7 @@ namespace oxygine
 
 						char *frames_data = (char*)meta_frames.first_child().value();
 
+
 						const char *begin = frames_data;
 						while(*frames_data)
 						{
@@ -303,7 +307,11 @@ namespace oxygine
 								else
 									df.premultiplied = true;//render should think that it is already premultiplied and don't worry about alpha
 
-								frame.init(ra, df,
+								size_t n = frames.size();
+								int column = n % columns;
+								int row = n / columns;
+
+								frame.init2(ra, column, row, df,
 									srcRect, destRect, 
 									Vector2((float)frame_width, (float)frame_height));
 
@@ -363,7 +371,7 @@ namespace oxygine
 								Diffuse df;
 								df.base = ad.texture;
 								df.premultiplied = true;//!Renderer::getPremultipliedAlphaRender();
-								frame.init(ra, df, srcRect, destRect, Vector2((float)frame_width, (float)frame_height) * walker.getScaleFactor());
+								frame.init2(ra, x, y, df, srcRect, destRect, Vector2((float)frame_width, (float)frame_height) * walker.getScaleFactor());
 								frames.push_back(frame);
 							}
 						}
@@ -415,7 +423,7 @@ namespace oxygine
 		return ra;
 	}
 
-	ResAtlas::ResAtlas()
+	ResAtlas::ResAtlas():_linearFilter(true), _clamp2edge(true)
 	{
 
 	}

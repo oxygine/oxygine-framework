@@ -4,7 +4,6 @@
 #include "core/UberShaderProgram.h"
 #include "core/gl/VideoDriverGLES20.h"
 #include "core/gl/oxgl.h"
-
 #include "core/gl/ShaderProgramGL.h"
 
 
@@ -28,13 +27,13 @@ public:
 		//load vertex shader
 		file::buffer vsdata;
 		file::read("light_vs.glsl", vsdata);
-		vsdata.push_back(0);
+		vsdata.push_back(0);///null terminating string
 		unsigned int vs = ShaderProgramGL::createShader(GL_VERTEX_SHADER, (const char*)&vsdata.front(), "", "");
 
 		//load fragment shader
 		file::buffer fsdata;
 		file::read("light_fs.glsl", fsdata);
-		fsdata.push_back(0);
+		fsdata.push_back(0);///null terminating string
 		unsigned int ps = ShaderProgramGL::createShader(GL_FRAGMENT_SHADER, (const char*)&fsdata.front(), "", "");
 
 		//link into 1 shader program
@@ -62,7 +61,6 @@ public:
 		_base = 0;
 		_normal = 0;
 
-		_light = getStage()->getDescendant("light")->getPosition();
 		_driver->setUniform("light", &_light, 1);
 
 		_driver->setState(IVideoDriver::STATE_BLEND, 1);
@@ -136,6 +134,8 @@ public:
 	LightningRenderer _renderer;
 	void render(const RenderState &parent)
 	{
+		_renderer.setLightPosition(_getStage()->getDescendant("light")->getPosition());
+
 		RenderState rs = parent;
 		rs.renderer = &_renderer;
 		_renderer.begin(parent.renderer);
@@ -151,8 +151,7 @@ public:
 	Draggable drag;
 
 	TestUserShader2() :_shader(0)
-	{
-		
+	{		
 		spActor lightning = new LightningActor;
 		this->content->addChild(lightning);
 		lightning->setSize(this->content->getSize());
@@ -164,7 +163,6 @@ public:
 		spr->attachTo(lightning);
 		
 
-		//spSprite light = new Sprite2(resources.getResAnim("defnormal")->getFrame(0));
 		spSprite light = new Sprite;
 		light->setName("light");
 		light->setResAnim(resources.getResAnim("light"));

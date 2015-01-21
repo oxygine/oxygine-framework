@@ -186,7 +186,7 @@ namespace oxygine
         CHECKGL();
 	}
 
-	void NativeTextureGLES::setLinearFiltration(bool enable)
+	void NativeTextureGLES::setLinearFilter(bool enable)
 	{
 		glBindTexture(GL_TEXTURE_2D, _id);
 
@@ -196,7 +196,7 @@ namespace oxygine
         CHECKGL();
 	}
 
-	void NativeTextureGLES::setWrapMode(bool clamp2edge)
+	void NativeTextureGLES::setClamp2Edge(bool clamp2edge)
 	{
 		glBindTexture(GL_TEXTURE_2D, _id);
 

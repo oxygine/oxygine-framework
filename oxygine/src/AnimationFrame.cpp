@@ -11,6 +11,17 @@ namespace oxygine
 		_frameSize = frame_size.cast<PointS>();
 	}
 
+    void AnimationFrame::init2(ResAnim *rs, short col, short row, const Diffuse &df, const RectF &srcRect, const RectF &destRect, const Vector2 &frame_size)
+    {
+        _column = col;
+        _row = row;
+        _resAnim = rs;
+        _diffuse = df;
+        _srcRect = srcRect;
+        _destRect = destRect;
+        _frameSize = frame_size.cast<PointS>();
+    }
+
 	AnimationFrame AnimationFrame::getClipped(const RectF &rect) const
 	{
 		AnimationFrame f = *this;

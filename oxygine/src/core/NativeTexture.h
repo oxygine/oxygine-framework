@@ -27,9 +27,10 @@ namespace oxygine
 		virtual void unlock() = 0;
 		virtual void swap(NativeTexture *) = 0;
 
-		virtual void setLinearFiltration(bool enable) = 0;
+		/**Disabled/Enables bilinear texture filter*/
+		virtual void setLinearFilter(bool enable) = 0;
 		/**set wrap mode as clamp2edge or repeat (tiling)*/
-		virtual void setWrapMode(bool clamp2edge) = 0;
+		virtual void setClamp2Edge(bool clamp2edge) = 0;
 		virtual void updateRegion(int x, int y, const ImageData &data) = 0;
 		virtual void apply(const Rect *rect = 0) = 0;
 
@@ -60,7 +61,7 @@ namespace oxygine
 		void unlock();
 		void swap(NativeTexture *);
 
-		void setLinearFiltration(bool enable);
+		void setLinearFilter(bool enable);
 		void updateRegion(int x, int y, const ImageData &data);
 		void apply(const Rect *rect = 0);
 

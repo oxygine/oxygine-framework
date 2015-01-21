@@ -51,7 +51,7 @@ namespace oxygine
 	
 	void ProgressBar::copyFrom(const ProgressBar &src, cloneOptions opt)
 	{
-		Sprite::copyFrom(src, opt);
+		_Sprite::copyFrom(src, opt);
 		_progress = src._progress;
 		_direction = src._direction;
 		_originalFrame = src._originalFrame;
@@ -103,7 +103,7 @@ namespace oxygine
 			return;
 		if (((_direction != __dir_radial_ccw) && (_direction != dir_radial_cw)) || (_progress == 1.0f))
 		{
-			Sprite::doRender(rs);
+			_Sprite::doRender(rs);
 			return;
 		}
 
@@ -115,7 +115,7 @@ namespace oxygine
 		{
 			renderer->setTexture(df.base, df.alpha, df.premultiplied);			
 
-			RectF destRect = Sprite::getDestRect();
+			RectF destRect = _Sprite::getDestRect();
 
 			RectF srcRect = _frame.getSrcRect();
 			float u = srcRect.pos.x;
@@ -331,7 +331,7 @@ namespace oxygine
 		}
 		stream << " direction=" << dir << ""; 
 
-		stream << "\n" << Sprite::dump(options);
+		stream << "\n" << _Sprite::dump(options);
 
 		return stream.str();
 	}
@@ -372,8 +372,17 @@ namespace oxygine
 
 	void ProgressBar::serialize(serializedata* data)
 	{
-		Sprite::serialize(data);
+		_Sprite::serialize(data);
 		pugi::xml_node node = data->node;
 		data->node.set_name("ProgressBar");
+        data->node.append_attribute("progress").set_value(_progress);
+        data->node.append_attribute("direction").set_value((int)_direction);
 	}
+
+    void ProgressBar::deserialize(const deserializedata *data)
+    {
+        _Sprite::deserialize(data);
+        _direction = (direction)data->node.attribute("direction").as_int();
+        _progress = data->node.attribute("progress").as_float(1.0f);
+    }
 }

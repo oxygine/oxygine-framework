@@ -26,10 +26,12 @@ namespace oxygine
 
 	void Sprite::copyFrom(const Sprite &src, cloneOptions opt)
 	{
-		VStyleActor::copyFrom(src, opt);
+		_VStyleActor::copyFrom(src, opt);
 
-		_frame = src._frame;
-		_vstyle= src._vstyle;
+        _frame = src._frame;
+        animFrameChanged(_frame);
+
+        _vstyle= src._vstyle;
 		if (getManageResAnim())
 		{
 			ResAnim *rs = _frame.getResAnim();
@@ -64,6 +66,23 @@ namespace oxygine
 	void Sprite::setAnimFrame(const AnimationFrame &f)
 	{
 		changeAnimFrame(f);
+	}
+
+	void Sprite::setRow(int row, int column)
+	{
+		const ResAnim *rs = getResAnim();
+		if (column == -1)
+			column = getColumn();
+		setAnimFrame(rs, column, row);
+
+	}
+
+	void Sprite::setColumn(int column, int row)
+	{
+		const ResAnim *rs = getResAnim();
+		if (row == -1)
+			row = getRow();
+		setAnimFrame(rs, column, row);
 	}
 
 	void Sprite::setResAnim(const ResAnim *resanim)
@@ -166,7 +185,7 @@ namespace oxygine
 
 	void Sprite::serialize(serializedata* data)
 	{
-		VStyleActor::serialize(data);		
+		_VStyleActor::serialize(data);
 
 		pugi::xml_node node = data->node;		
 		node.remove_attribute("size");
@@ -193,6 +212,11 @@ namespace oxygine
 			{
 				node.append_attribute("resanim").set_value(rs->getName().c_str());
 			}
+
+			if (_frame.getColumn() != 0)
+				node.append_attribute("column").set_value(_frame.getColumn());
+			if (_frame.getRow() != 0)
+				node.append_attribute("row").set_value(_frame.getRow());
 		}
 
 		node.set_name("Sprite");
@@ -200,13 +224,14 @@ namespace oxygine
 
 	void Sprite::deserialize(const deserializedata* data)
 	{
-        VStyleActor::deserialize(data);
+		_VStyleActor::deserialize(data);
 
 		pugi::xml_node node = data->node;
 		const char *res = node.attribute("resanim").as_string(0);
 		if (res)
 		{
 			ResAnim *rs = safeCast<ResAnim*>(data->factory->getResAnim(res));
+
 			setResAnim(rs);
 		}
 	}

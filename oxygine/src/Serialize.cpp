@@ -24,6 +24,28 @@ namespace oxygine
 		return 0;
 	}
 
+    static void link(pugi::xml_node node, spActor actor, spActor root)
+    {
+        deserializeLinkData data;
+        data.node = node;
+        data.root = root;
+        actor->deserializeLink(&data);
+
+        spActor child = actor->getFirstChild();
+        node = node.first_child();
+        while (child)
+        {
+            link(node, child, root);
+            node = node.next_sibling();
+            child = child->getNextSibling();
+        }
+    }
+
+    void deserializeLinkData::link(pugi::xml_node node, spActor actor)
+	{
+        oxygine::link(node, actor, actor);
+	}
+
 	spActor deserializedata::deser(pugi::xml_node node, const creator* factory)
 	{
 		deserializedata d;
@@ -32,6 +54,7 @@ namespace oxygine
 		const char *name = node.name();
 		spActor actor = factory->create(name);
 		actor->deserialize(&d);
+
 		return actor;
 	}
 }

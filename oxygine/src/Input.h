@@ -6,6 +6,7 @@
 
 namespace oxygine
 {
+	DECLARE_SMART(Stage, spStage);
 	class Actor;
 	class EventState;
 	
@@ -42,8 +43,8 @@ namespace oxygine
 		int _ids[MAX_TOUCHES + 1];
 
 
-		void sendPointerButtonEvent(MouseButton button, float x, float y, float pressure, int type, PointerState *);
-		void sendPointerMotionEvent(float x, float y, float pressure, PointerState *);
-		void sendPointerWheelEvent(int scroll, PointerState *);
+		void sendPointerButtonEvent(spStage, MouseButton button, float x, float y, float pressure, int type, PointerState *);
+		void sendPointerMotionEvent(spStage, float x, float y, float pressure, PointerState *);
+		void sendPointerWheelEvent(spStage, int scroll, PointerState *);
 	};
 }

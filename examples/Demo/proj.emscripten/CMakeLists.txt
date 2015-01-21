@@ -22,4 +22,4 @@ set(linkFlags "${linkFlags} -s NO_EXIT_RUNTIME=1 -s FULL_ES2=1 -s WARN_ON_UNDEFI
 set_target_properties(Demo PROPERTIES LINK_FLAGS "${linkFlags}")
 
 target_link_libraries(Demo ${OXYGINE_CORE_LIBS})
-em_link_pre_js(Demo ${CMAKE_CURRENT_SOURCE_DIR}/data.js)
+em_link_pre_js(Demo ${OXYGINE_JS_LIBRARIES} ${CMAKE_CURRENT_SOURCE_DIR}/data.js)

@@ -9,7 +9,7 @@ namespace oxygine
 {
 	void ClipRectActor::copyFrom(const ClipRectActor &src, cloneOptions opt)
 	{
-		Actor::copyFrom(src, opt);
+		_Actor::copyFrom(src, opt);
 		_culling = src._culling;
 		_clipping = src._clipping;
 	}
@@ -33,7 +33,7 @@ namespace oxygine
 			if (!isOn(localPosition))
 				return false;
 		}
-		return Actor::handleEvent(es);
+		return _Actor::handleEvent(es);
 	}
 	*/
 
@@ -47,7 +47,7 @@ namespace oxygine
 				return;
 		}
 		
-		Actor::handleEvent(event);
+		_Actor::handleEvent(event);
 	}
 
 	void ClipRectActor::render(const RenderState &parentRS)
@@ -91,7 +91,7 @@ namespace oxygine
 		}
 
 		if (vis)
-			Actor::render(rs);
+			_Actor::render(rs);
 
 		
 		if (_clipping)
@@ -104,13 +104,13 @@ namespace oxygine
 
 	void ClipRectActor::serialize(serializedata* data)
 	{
-		Actor::serialize(data);
+		_Actor::serialize(data);
 		pugi::xml_node node = data->node;
 		node.set_name("Sprite");
 	}
 
 	void ClipRectActor::deserialize(const deserializedata* data)
 	{
-		Actor::deserialize(data);
+		_Actor::deserialize(data);
 	}
 }

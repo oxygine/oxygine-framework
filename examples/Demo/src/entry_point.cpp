@@ -125,15 +125,7 @@ int main(int argc, char* argv[])
 
 
 #ifdef OXYGINE_SDL
-#ifdef __MINGW32__
-int WinMain(HINSTANCE hInstance,
-	HINSTANCE hPrevInstance,
-	LPSTR lpCmdLine, int nCmdShow)
-{
-	run();
-	return 0;
-}
-#else
+
 #include "SDL_main.h"
 extern "C"
 {
@@ -143,7 +135,6 @@ extern "C"
 		return 0;
 	}
 };
-#endif
 #endif
 
 #ifdef EMSCRIPTEN

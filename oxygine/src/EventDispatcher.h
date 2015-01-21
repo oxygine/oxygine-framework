@@ -31,6 +31,7 @@ namespace oxygine
 		int addEventListener(eventType, EventCallback);
 		void removeEventListener(eventType, EventCallback);
 		void removeEventListener(int id);
+		bool hasEventListeners(void *CallbackThis);
 		void removeEventListeners(void *CallbackThis);
 		void removeAllEventListeners();
 

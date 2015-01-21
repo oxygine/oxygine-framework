@@ -8,7 +8,7 @@ namespace oxygine
 	/**
 	ClipRectActor clips all out of bound children. Rotation is not supported
 	*/
-	class ClipRectActor : public Actor
+	class ClipRectActor : public _Actor
 	{
 	public:
 		DECLARE_COPYCLONE_NEW(ClipRectActor);
@@ -35,3 +35,9 @@ namespace oxygine
 		bool _clipping;
 	};
 }
+
+#ifdef OX_EDITOR
+#include "EditorClipRectActor.h"
+#else
+typedef oxygine::ClipRectActor BaseClipRectActor;
+#endif

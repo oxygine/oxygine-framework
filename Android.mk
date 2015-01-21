@@ -45,6 +45,7 @@ LOCAL_SRC_FILES += \
 LOCAL_SRC_FILES += \
 				$(SRC)/core/android/jniUtils.cpp \
 				$(SRC)/core/android/jniHelper.cpp \
+				$(SRC)/core/android/HttpRequestJavaTask.cpp
 
 LOCAL_SRC_FILES += \
 				$(SRC)/core/gl/NativeTextureGLES.cpp \

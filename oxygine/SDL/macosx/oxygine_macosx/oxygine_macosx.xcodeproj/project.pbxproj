@@ -209,6 +209,19 @@
 		923A9E8C1A1FCA3500A6F08E /* STDRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 923A9E8A1A1FCA3500A6F08E /* STDRenderer.h */; };
 		923A9E8F1A1FCA6600A6F08E /* MaskedRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 923A9E8D1A1FCA6600A6F08E /* MaskedRenderer.cpp */; };
 		923A9E901A1FCA6600A6F08E /* MaskedRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 923A9E8E1A1FCA6600A6F08E /* MaskedRenderer.h */; };
+		92AA951E1A5CB260000B50A0 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92AA951D1A5CB260000B50A0 /* AppKit.framework */; };
+		92CE266B1A58AADB003901D6 /* HttpRequestCocoaTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 92CE26671A58AADB003901D6 /* HttpRequestCocoaTask.h */; };
+		92CE266C1A58AADB003901D6 /* HttpRequestCocoaTask.mm in Sources */ = {isa = PBXBuildFile; fileRef = 92CE26681A58AADB003901D6 /* HttpRequestCocoaTask.mm */; };
+		92CE266D1A58AADB003901D6 /* ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 92CE26691A58AADB003901D6 /* ios.h */; };
+		92CE266E1A58AADB003901D6 /* ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 92CE266A1A58AADB003901D6 /* ios.mm */; };
+		92CE26791A58ABDC003901D6 /* AsyncTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92CE26711A58ABDC003901D6 /* AsyncTask.cpp */; };
+		92CE267A1A58ABDC003901D6 /* AsyncTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 92CE26721A58ABDC003901D6 /* AsyncTask.h */; };
+		92CE267B1A58ABDC003901D6 /* HttpRequestTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92CE26731A58ABDC003901D6 /* HttpRequestTask.cpp */; };
+		92CE267C1A58ABDC003901D6 /* HttpRequestTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 92CE26741A58ABDC003901D6 /* HttpRequestTask.h */; };
+		92CE267D1A58ABDC003901D6 /* KeyEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 92CE26751A58ABDC003901D6 /* KeyEvent.h */; };
+		92CE267E1A58ABDC003901D6 /* Property.h in Headers */ = {isa = PBXBuildFile; fileRef = 92CE26761A58ABDC003901D6 /* Property.h */; };
+		92CE267F1A58ABDC003901D6 /* WebImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92CE26771A58ABDC003901D6 /* WebImage.cpp */; };
+		92CE26801A58ABDC003901D6 /* WebImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 92CE26781A58ABDC003901D6 /* WebImage.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -422,6 +435,19 @@
 		923A9E8A1A1FCA3500A6F08E /* STDRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STDRenderer.h; path = ../../../src/STDRenderer.h; sourceTree = "<group>"; };
 		923A9E8D1A1FCA6600A6F08E /* MaskedRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MaskedRenderer.cpp; path = ../../../src/MaskedRenderer.cpp; sourceTree = "<group>"; };
 		923A9E8E1A1FCA6600A6F08E /* MaskedRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MaskedRenderer.h; path = ../../../src/MaskedRenderer.h; sourceTree = "<group>"; };
+		92AA951D1A5CB260000B50A0 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		92CE26671A58AADB003901D6 /* HttpRequestCocoaTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequestCocoaTask.h; sourceTree = "<group>"; };
+		92CE26681A58AADB003901D6 /* HttpRequestCocoaTask.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HttpRequestCocoaTask.mm; sourceTree = "<group>"; };
+		92CE26691A58AADB003901D6 /* ios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ios.h; sourceTree = "<group>"; };
+		92CE266A1A58AADB003901D6 /* ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ios.mm; sourceTree = "<group>"; };
+		92CE26711A58ABDC003901D6 /* AsyncTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AsyncTask.cpp; path = ../../../src/AsyncTask.cpp; sourceTree = "<group>"; };
+		92CE26721A58ABDC003901D6 /* AsyncTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AsyncTask.h; path = ../../../src/AsyncTask.h; sourceTree = "<group>"; };
+		92CE26731A58ABDC003901D6 /* HttpRequestTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = HttpRequestTask.cpp; path = ../../../src/HttpRequestTask.cpp; sourceTree = "<group>"; };
+		92CE26741A58ABDC003901D6 /* HttpRequestTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HttpRequestTask.h; path = ../../../src/HttpRequestTask.h; sourceTree = "<group>"; };
+		92CE26751A58ABDC003901D6 /* KeyEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KeyEvent.h; path = ../../../src/KeyEvent.h; sourceTree = "<group>"; };
+		92CE26761A58ABDC003901D6 /* Property.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Property.h; path = ../../../src/Property.h; sourceTree = "<group>"; };
+		92CE26771A58ABDC003901D6 /* WebImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WebImage.cpp; path = ../../../src/WebImage.cpp; sourceTree = "<group>"; };
+		92CE26781A58ABDC003901D6 /* WebImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebImage.h; path = ../../../src/WebImage.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -429,6 +455,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92AA951E1A5CB260000B50A0 /* AppKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -438,6 +465,7 @@
 		049B52B21871EDE900EF3C66 = {
 			isa = PBXGroup;
 			children = (
+				92AA951D1A5CB260000B50A0 /* AppKit.framework */,
 				049B55901871F21000EF3C66 /* src */,
 				049B52BC1871EDE900EF3C66 /* Products */,
 			);
@@ -454,6 +482,14 @@
 		049B55901871F21000EF3C66 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				92CE26711A58ABDC003901D6 /* AsyncTask.cpp */,
+				92CE26721A58ABDC003901D6 /* AsyncTask.h */,
+				92CE26731A58ABDC003901D6 /* HttpRequestTask.cpp */,
+				92CE26741A58ABDC003901D6 /* HttpRequestTask.h */,
+				92CE26751A58ABDC003901D6 /* KeyEvent.h */,
+				92CE26761A58ABDC003901D6 /* Property.h */,
+				92CE26771A58ABDC003901D6 /* WebImage.cpp */,
+				92CE26781A58ABDC003901D6 /* WebImage.h */,
 				923663511A47561500EB65B3 /* Serializable.cpp */,
 				923663521A47561500EB65B3 /* Serializable.h */,
 				923663531A47561500EB65B3 /* TouchEvent.h */,
@@ -554,6 +590,7 @@
 		049B55A41871F21D00EF3C66 /* core */ = {
 			isa = PBXGroup;
 			children = (
+				92CE26661A58AADB003901D6 /* ios */,
 				049B55A61871F21D00EF3C66 /* coroutines.cpp */,
 				049B55A71871F21D00EF3C66 /* coroutines.h */,
 				049B55A81871F21D00EF3C66 /* file.cpp */,
@@ -765,6 +802,17 @@
 			path = ../../../src/winnie_alloc;
 			sourceTree = "<group>";
 		};
+		92CE26661A58AADB003901D6 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				92CE26671A58AADB003901D6 /* HttpRequestCocoaTask.h */,
+				92CE26681A58AADB003901D6 /* HttpRequestCocoaTask.mm */,
+				92CE26691A58AADB003901D6 /* ios.h */,
+				92CE266A1A58AADB003901D6 /* ios.mm */,
+			);
+			path = ios;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -815,12 +863,14 @@
 				049B569B1871F21E00EF3C66 /* NativeTexture.h in Headers */,
 				049B56F61871F21E00EF3C66 /* ResAnim.h in Headers */,
 				049B570C1871F21E00EF3C66 /* Aligner.h in Headers */,
+				92CE266D1A58AADB003901D6 /* ios.h in Headers */,
 				049B56F21871F21E00EF3C66 /* RenderState.h in Headers */,
 				049B56EE1871F21E00EF3C66 /* ProgressBar.h in Headers */,
 				049B56CC1871F21E00EF3C66 /* Event.h in Headers */,
 				049B570E1871F21E00EF3C66 /* Node.h in Headers */,
 				049B57161871F21E00EF3C66 /* UpdateState.h in Headers */,
 				049B57041871F21E00EF3C66 /* ResStarlingAtlas.h in Headers */,
+				92CE266B1A58AADB003901D6 /* HttpRequestCocoaTask.h in Headers */,
 				923A9E901A1FCA6600A6F08E /* MaskedRenderer.h in Headers */,
 				049B56DB1871F21E00EF3C66 /* ScalarMath.h in Headers */,
 				049B56A01871F21E00EF3C66 /* oxygine.h in Headers */,
@@ -828,6 +878,7 @@
 				049B56C51871F21E00EF3C66 /* TreeInspectorLine.h in Headers */,
 				049B56E41871F21E00EF3C66 /* ioapi_mem.h in Headers */,
 				049B56D51871F21E00EF3C66 /* MaskedSprite.h in Headers */,
+				92CE267A1A58ABDC003901D6 /* AsyncTask.h in Headers */,
 				049B570A1871F21E00EF3C66 /* Sprite.h in Headers */,
 				049B56E61871F21E00EF3C66 /* unzip.h in Headers */,
 				049B56781871F21E00EF3C66 /* coroutines.h in Headers */,
@@ -848,8 +899,10 @@
 				049B56871871F21E00EF3C66 /* VideoDriverGL.h in Headers */,
 				049B56D71871F21E00EF3C66 /* AffineTransform.h in Headers */,
 				049B56731871F21E00EF3C66 /* closure.h in Headers */,
+				92CE267D1A58ABDC003901D6 /* KeyEvent.h in Headers */,
 				049B569D1871F21E00EF3C66 /* Object.h in Headers */,
 				049B56DC1871F21E00EF3C66 /* vector2.h in Headers */,
+				92CE267C1A58ABDC003901D6 /* HttpRequestTask.h in Headers */,
 				049B57081871F21E00EF3C66 /* SlidingActor.h in Headers */,
 				049B57101871F21E00EF3C66 /* TextBuilder.h in Headers */,
 				049B56C11871F21E00EF3C66 /* TexturesInspector.h in Headers */,
@@ -868,6 +921,7 @@
 				049B568D1871F21E00EF3C66 /* ImageData.h in Headers */,
 				049B57211871F21E00EF3C66 /* system_alloc.h in Headers */,
 				049B566C1871F21E00EF3C66 /* Box9Sprite.h in Headers */,
+				92CE26801A58ABDC003901D6 /* WebImage.h in Headers */,
 				049B56FC1871F21E00EF3C66 /* ResFont.h in Headers */,
 				049B567F1871F21E00EF3C66 /* NativeTextureGLES.h in Headers */,
 				049B56721871F21E00EF3C66 /* Clock.h in Headers */,
@@ -888,6 +942,7 @@
 				049B571D1871F21E00EF3C66 /* stringUtils.h in Headers */,
 				049B56AF1871F21E00EF3C66 /* system_data.h in Headers */,
 				04B3A72018A6594D004C67E3 /* InputText.h in Headers */,
+				92CE267E1A58ABDC003901D6 /* Property.h in Headers */,
 				049B571B1871F21E00EF3C66 /* intrusive_list.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -918,7 +973,7 @@
 		049B52B31871EDE900EF3C66 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = oxygine;
 			};
 			buildConfigurationList = 049B52B61871EDE900EF3C66 /* Build configuration list for PBXProject "oxygine_macosx" */;
@@ -950,6 +1005,7 @@
 				049B56BC1871F21E00EF3C66 /* DebugActor.cpp in Sources */,
 				049B56E71871F21E00EF3C66 /* Multithreading.cpp in Sources */,
 				049B570B1871F21E00EF3C66 /* Aligner.cpp in Sources */,
+				92CE26791A58ABDC003901D6 /* AsyncTask.cpp in Sources */,
 				049B570D1871F21E00EF3C66 /* Node.cpp in Sources */,
 				049B57031871F21E00EF3C66 /* ResStarlingAtlas.cpp in Sources */,
 				049B568C1871F21E00EF3C66 /* ImageData.cpp in Sources */,
@@ -968,6 +1024,7 @@
 				049B56C61871F21E00EF3C66 /* TreeInspectorPage.cpp in Sources */,
 				923663581A47561500EB65B3 /* Serializable.cpp in Sources */,
 				049B56801871F21E00EF3C66 /* oxgl.cpp in Sources */,
+				92CE267F1A58ABDC003901D6 /* WebImage.cpp in Sources */,
 				049B566F1871F21E00EF3C66 /* ClipRectActor.cpp in Sources */,
 				049B57201871F21E00EF3C66 /* system_alloc.cpp in Sources */,
 				049B56FD1871F21E00EF3C66 /* ResFontBM.cpp in Sources */,
@@ -993,10 +1050,12 @@
 				049B56691871F21E00EF3C66 /* blocking.cpp in Sources */,
 				049B56AC1871F21E00EF3C66 /* STDFileSystem.cpp in Sources */,
 				049B56C21871F21E00EF3C66 /* TreeInspector.cpp in Sources */,
+				92CE266C1A58AADB003901D6 /* HttpRequestCocoaTask.mm in Sources */,
 				049B56D41871F21E00EF3C66 /* MaskedSprite.cpp in Sources */,
 				049B56F31871F21E00EF3C66 /* CreateResourceContext.cpp in Sources */,
 				049B567C1871F21E00EF3C66 /* FileSystem.cpp in Sources */,
 				049B571E1871F21E00EF3C66 /* VisualStyle.cpp in Sources */,
+				92CE267B1A58ABDC003901D6 /* HttpRequestTask.cpp in Sources */,
 				049B57071871F21E00EF3C66 /* SlidingActor.cpp in Sources */,
 				9236635B1A47561500EB65B3 /* Tween.cpp in Sources */,
 				9236635D1A47561500EB65B3 /* TweenQueue.cpp in Sources */,
@@ -1014,6 +1073,7 @@
 				049B569A1871F21E00EF3C66 /* NativeTexture.cpp in Sources */,
 				049B56FF1871F21E00EF3C66 /* Resource.cpp in Sources */,
 				049B56D61871F21E00EF3C66 /* AffineTransform.cpp in Sources */,
+				92CE266E1A58AADB003901D6 /* ios.mm in Sources */,
 				92214D5E19F149BC00A4459A /* Polygon.cpp in Sources */,
 				049B568A1871F21E00EF3C66 /* VideoDriverGLES20.cpp in Sources */,
 				04670867192795E700D71824 /* Serialize.cpp in Sources */,
@@ -1075,7 +1135,7 @@
 				SDL = ../../../../../SDL/;
 				THIRD_PARTY = ../../../third_party/macosx/;
 				USER_HEADER_SEARCH_PATHS = "../../../greenlets/src $(SDL)/include/ ../../../src $(THIRD_PARTY)/libpng $(THIRD_PARTY)/libjpeg";
-				VALID_ARCHS = i386;
+				VALID_ARCHS = x86_64;
 			};
 			name = Debug;
 		};
@@ -1117,27 +1177,27 @@
 				SDL = ../../../../../SDL/;
 				THIRD_PARTY = ../../../third_party/macosx/;
 				USER_HEADER_SEARCH_PATHS = "../../../greenlets/src $(SDL)/include/ ../../../src $(THIRD_PARTY)/libpng $(THIRD_PARTY)/libjpeg";
-				VALID_ARCHS = i386;
+				VALID_ARCHS = x86_64;
 			};
 			name = Release;
 		};
 		049B52C01871EDE900EF3C66 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_PREFIX = lib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				VALID_ARCHS = "i386 x86_64";
+				VALID_ARCHS = x86_64;
 			};
 			name = Debug;
 		};
 		049B52C11871EDE900EF3C66 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				EXECUTABLE_PREFIX = lib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				VALID_ARCHS = "i386 x86_64";
+				VALID_ARCHS = x86_64;
 			};
 			name = Release;
 		};

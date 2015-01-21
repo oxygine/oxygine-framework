@@ -15,7 +15,7 @@ namespace oxygine
 		return Input::instance.getTouchByIndex(index);
 	}
 
-	void Input::sendPointerButtonEvent(MouseButton button, float x, float y, float pressure, int type, PointerState *ps)
+	void Input::sendPointerButtonEvent(spStage stage, MouseButton button, float x, float y, float pressure, int type, PointerState *ps)
 	{
 		Vector2 p(x, y);
 
@@ -34,7 +34,7 @@ namespace oxygine
 
 		LOGD("sendPointerButtonEvent %d - (%.2f, %.2f), %d", me.index, p.x, p.y, type);
 
-		getStage()->handleEvent(&me);
+		stage->handleEvent(&me);
         
         if (type == TouchEvent::TOUCH_UP)
         {
@@ -42,7 +42,7 @@ namespace oxygine
         }
 	}
 
-	void Input::sendPointerMotionEvent(float x, float y, float pressure, PointerState *ps)
+	void Input::sendPointerMotionEvent(spStage stage, float x, float y, float pressure, PointerState *ps)
 	{
 		TouchEvent me(TouchEvent::MOVE, true, Vector2(x, y));
 		me.index = ps->getIndex();
@@ -50,17 +50,17 @@ namespace oxygine
 		ps->_position = Vector2(x, y);
 
 		LOGD("sendPointerMotionEvent %d - (%.2f, %.2f)", me.index, x, y);
-		getStage()->handleEvent(&me);
+		stage->handleEvent(&me);
 	}
 
-	void Input::sendPointerWheelEvent(int scroll, PointerState *ps)
+	void Input::sendPointerWheelEvent(spStage stage, int scroll, PointerState *ps)
 	{
 		TouchEvent me(scroll > 0 ? TouchEvent::WHEEL_UP : TouchEvent::WHEEL_DOWN, true);
 		me.index = ps->getIndex();
 
 		ps->_position = Vector2(0, 0);
 
-		getStage()->handleEvent(&me);
+		stage->handleEvent(&me);
 	}
 
 

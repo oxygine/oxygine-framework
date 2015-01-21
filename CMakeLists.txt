@@ -18,6 +18,9 @@ else(WIN32)
 		message(STATUS "SDL notfound")
 		set(SDL2_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../SDL/include)					
 	endif()
+
+	find_package(CURL)
+
 endif(WIN32)
 
 
@@ -43,9 +46,12 @@ elseif(MINGW)
 	set(THIRD_PARTY ${CMAKE_CURRENT_SOURCE_DIR}/oxygine/third_party/win32_mingw)
 	set(libprefix lib)
 	set(OX_HAVE_LIBJPEG 0)
+	file(GLOB OXYGINE_JS_LIBRARIES ${CMAKE_CURRENT_SOURCE_DIR}/oxygine/src/core/emscripten/*.js)
 endif()
+ 
 
 if (EMSCRIPTEN)
+	set(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/oxygine/src/core/emscripten/HttpRequestEmscriptenTask.cpp)
 else(EMSCRIPTEN)
 	set(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/oxygine/greenlets/src/greenlet.c)
 endif(EMSCRIPTEN)
@@ -53,6 +59,19 @@ endif(EMSCRIPTEN)
 
 set(OXYGINE_ROOT_SRC ${CMAKE_CURRENT_SOURCE_DIR}/oxygine/src)
 set(FOLDERS . closure minizip core core/gl dev_tools minizip math pugixml res text_utils utils winnie_alloc)
+if (WIN32)
+	set(FOLDERS ${FOLDERS} core/curl)
+	include_directories(${THIRD_PARTY}/curl/)
+	set(OX_HAVE_LIBCURL 1)
+else(WIN32)
+	include_directories(${CURL_INCLUDE_DIRS})
+	set(CORE_LIBS ${CORE_LIBS} ${CURL_LIBRARIES})
+	#set(FOLDERS ${FOLDERS} core/curl)
+	set(OX_HAVE_LIBCURL 0)
+	set(OX_NO_HTTP 1)
+	set(OX_DEFINITIONS ${OX_DEFINITIONS} -DOX_NO_HTTP)
+endif(WIN32)
+
 foreach(F ${FOLDERS})
 	file(GLOB FLS #RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/
 		${OXYGINE_ROOT_SRC}/${F}/*.cpp
@@ -86,6 +105,12 @@ set(OXYGINE_LIBRARY_DIRS
 	${OXYGINE_SOURCE_DIR}/libs
 	${THIRD_PARTY}/libraries)
 
+
+if (MINGW) 
+	set(CORE_LIBS ${CORE_LIBS}	mingw32)
+endif(MINGW)
+ 
+
 set(CORE_LIBS 
 	${CORE_LIBS}
 	oxygine-framework
@@ -94,12 +119,14 @@ set(CORE_LIBS
 	${OPENGL_LIBRARIES}		
 )
 
-
 if (WIN32)
-	set(CORE_LIBS
+	set(CORE_LIBS		
 		${CORE_LIBS}
 		pthreadVCE2
+		libcurl_imp
+		ws2_32
 		)
+
 elseif(EMSCRIPTEN)
 
 else(WIN32)
@@ -108,6 +135,7 @@ else(WIN32)
 		pthread	
 	)
 endif(WIN32)
+
 
 #add png library
 if (OX_HAVE_LIBPNG)
@@ -131,6 +159,9 @@ else(EMSCRIPTEN)
 		${libprefix}z${libprefix})
 endif(EMSCRIPTEN)
 
+
+message(STATUS ${CORE_LIBS})
+
 #add jpeg library
 if (OX_HAVE_LIBJPEG)
 	set(OX_DEFINITIONS	${OX_DEFINITIONS}
@@ -140,6 +171,11 @@ if (OX_HAVE_LIBJPEG)
 		${libprefix}jpeg)
 endif(OX_HAVE_LIBJPEG)
 
+
+if (OX_HAVE_LIBCURL)
+	set(OX_DEFINITIONS ${OX_DEFINITIONS}
+		-DOX_HAVE_LIBCURL)
+endif(OX_HAVE_LIBCURL)
 
 add_definitions(${OX_DEFINITIONS})
 add_library(oxygine-framework STATIC ${SOURCES})
@@ -160,6 +196,12 @@ set(OXYGINE_DEFINITIONS
 set(OXYGINE_INCLUDE_DIRS
 	${OXYGINE_INCLUDE_DIRS}
 	PARENT_SCOPE)
+
+set(OXYGINE_JS_LIBRARIES
+	${OXYGINE_JS_LIBRARIES}
+	PARENT_SCOPE)
+
+
 
 set(CMAKE_INSTALL_PREFIX ../libs)
 install(TARGETS oxygine-framework CONFIGURATIONS Debug DESTINATION ./debug)

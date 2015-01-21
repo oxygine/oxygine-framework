@@ -6,7 +6,7 @@ namespace oxygine
 {
 	DECLARE_SMART(ProgressBar, spProgressBar);
 
-	class ProgressBar:public Sprite
+    class ProgressBar:public _Sprite
 	{
 	public:
 		enum direction
@@ -34,9 +34,11 @@ namespace oxygine
 		void setDirection(direction dir);
 
 		std::string dump(const dumpOptions &) const;
+
 		void serialize(serializedata* data);
+        void deserialize(const deserializedata *data);
 		
-		typedef Property<float, float, ProgressBar, &ProgressBar::getProgress, &ProgressBar::setProgress> TweenProgress;		
+        typedef Property<float, float, ProgressBar, &ProgressBar::getProgress, &ProgressBar::setProgress> TweenProgress;
 
 	private:
 		void doRender(const RenderState &rs);
@@ -51,3 +53,9 @@ namespace oxygine
 		AnimationFrame _originalFrame;
 	};
 }
+
+#ifdef OX_EDITOR
+#include "EditorProgressBar.h"
+#else
+typedef oxygine::ProgressBar BaseProgressBar;
+#endif

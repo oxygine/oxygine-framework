@@ -82,7 +82,7 @@ namespace oxygine
 
 	}
 
-	void NativeTextureNull::setLinearFiltration(bool enable)
+	void NativeTextureNull::setLinearFilter(bool enable)
 	{
 
 	}

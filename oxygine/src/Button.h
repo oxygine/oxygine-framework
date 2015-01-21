@@ -7,7 +7,7 @@ namespace oxygine
 
 	class ResAnim;
 
-	class Button: public Sprite
+	class Button: public _Sprite
 	{
 	public:
 		DECLARE_COPYCLONE_NEW(Button);
@@ -45,3 +45,12 @@ namespace oxygine
 		void setState(state s);	
 	};
 }
+
+#ifdef OX_EDITOR
+#include "EditorButton.h"
+#else
+namespace oxygine
+{
+	typedef Button _Button;
+}
+#endif

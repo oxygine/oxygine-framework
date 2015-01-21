@@ -40,13 +40,11 @@ namespace oxygine
 			_parent(0),
 			_alpha(255),
 			_pressed(0),
-			_overred(0)
+			_overred(0),
+			_stage(0)
 	{
 		_transform.identity();
 		_transformInvert.identity();
-
-		//addEventListener(et_MouseDown, CLOSURE(this, &Actor::_onMouseEvent));
-		//addEventListener(et_MouseMove, CLOSURE(this, &Actor::_onMouseEvent));
 	}
 
 	void Actor::copyFrom(const Actor &src, cloneOptions opt)
@@ -95,11 +93,50 @@ namespace oxygine
 	{
 		//printf("Actor::~Actor %s\n", getName().c_str());
 		removeTweens();
-		//removeEventHandlers();
 		removeChildren();
-		if (getStage())
-			getStage()->removeEventListeners(this);
+		if (_getStage())
+		{
+            //OX_ASSERT(_getStage()->hasEventListeners(this) == false);
+			//_getStage()->removeEventListeners(this);
+		}
 	}	
+
+	Stage* Actor::_getStage()
+	{
+		return _stage;
+	}
+
+	void Actor::added2stage(Stage* stage)
+	{
+		OX_ASSERT(_stage == 0);
+		_stage = stage;
+
+		onAdded2Stage();
+
+		spActor actor = _children._first;
+		while (actor)
+		{
+			spActor next = actor->_next;
+			actor->added2stage(stage);
+			actor = next;
+		}
+	}
+
+	void Actor::removedFromStage()
+	{
+		OX_ASSERT(_stage);
+		onRemovedFromStage();
+		_stage->removeEventListeners(this);
+		_stage = 0;		
+
+		spActor actor = _children._first;
+		while (actor)
+		{
+			spActor next = actor->_next;
+			actor->removedFromStage();
+			actor = next;
+		}
+	}
 
 	std::string Actor::dump(const dumpOptions &opt) const
 	{
@@ -217,11 +254,11 @@ namespace oxygine
 
 		if (v)
 		{
-			getStage()->addEventListener( TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onMouseEvent));
+			_getStage()->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onMouseEvent));
 			//printf("added\n");
 		}
 		else
-			getStage()->removeEventListener( TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onMouseEvent));
+			_getStage()->removeEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onMouseEvent));
 
 		if (!old)
 			updateState();
@@ -241,11 +278,11 @@ namespace oxygine
 			e.index = v;
 			dispatchEvent(&e);
 
-			getStage()->addEventListener( TouchEvent::MOVE, CLOSURE(this, &Actor::_onMouseEvent));
+			_getStage()->addEventListener( TouchEvent::MOVE, CLOSURE(this, &Actor::_onMouseEvent));
 		}
 		else
 		{
-			getStage()->removeEventListener( TouchEvent::MOVE, CLOSURE(this, &Actor::_onMouseEvent));
+			_getStage()->removeEventListener( TouchEvent::MOVE, CLOSURE(this, &Actor::_onMouseEvent));
 			//if (!_overed)
 			{
 				TouchEvent e(TouchEvent::OUT);
@@ -269,7 +306,7 @@ namespace oxygine
 			if (isDescendant(act))
 			{
 				if (event->phase == Event::phase_target)
-					getStage()->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onMouseEvent));					
+					_getStage()->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onMouseEvent));					
 				setPressed(me->index);
 				//_pressed = me->id;
 				//setPressed(true);
@@ -283,7 +320,7 @@ namespace oxygine
 					{
 						setPressed(0);			
 						//it is event from ROOT, convert to local space
-						Vector2 lp = convert_global2local(this, getStage(), me->localPosition);
+						Vector2 lp = convert_global2local(this, _getStage(), me->localPosition);
 						if (isDescendant(act))
 						{
 							TouchEvent e(TouchEvent::CLICK, true, lp);
@@ -307,7 +344,7 @@ namespace oxygine
 						setOverred(me->index);
 
 						if (event->phase == Event::phase_target)
-							getStage()->addEventListener(TouchEvent::MOVE, CLOSURE(this, &Actor::_onMouseEvent));
+							_getStage()->addEventListener(TouchEvent::MOVE, CLOSURE(this, &Actor::_onMouseEvent));
 					}
 				}
 				else
@@ -722,6 +759,18 @@ namespace oxygine
 		handleErrorPolicy(ep, "can't find child: %s", name.c_str());
 
 		return 0;
+	}
+
+	void Actor::setParent(Actor *actor, Actor *parent)
+	{
+		actor->_parent = parent; 
+		if (parent && parent->_getStage())
+			actor->added2stage(parent->_getStage());
+		else
+		{
+			if (actor->_getStage())
+				actor->removedFromStage();
+		}
 	}
 
 	void Actor::insertChildAfter(spActor actor, spActor insertAfter)

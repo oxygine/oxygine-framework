@@ -5,7 +5,7 @@ namespace oxygine
 {
 	DECLARE_SMART(Box9Sprite, spBox9Sprite);
 
-	class Box9Sprite: public Sprite
+    class Box9Sprite: public _Sprite
 	{
 	public:
 		DECLARE_COPYCLONE_NEW(Box9Sprite);
@@ -59,5 +59,11 @@ namespace oxygine
 
 		virtual void doRender(const RenderState &rs);
 	};
-
 }
+
+#ifdef OX_EDITOR
+#include "EditorBox9Sprite.h"
+#else
+typedef oxygine::Box9Sprite BaseBox9Sprite;
+#endif
+

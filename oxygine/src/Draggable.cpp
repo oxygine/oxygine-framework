@@ -73,8 +73,8 @@ namespace oxygine
 	{
 		if (_actor && !_singleDrag)
 		{
-			if (getStage())
-				getStage()->removeEventListeners(this);
+			if (_actor->_getStage())
+				_actor->_getStage()->removeEventListeners(this);
 			_actor->removeEventListeners(this);
 			_actor = 0;
 		}
@@ -100,7 +100,7 @@ namespace oxygine
 		_actor = actor;
 		_dragClient = actor;
 
-		getStage()->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Draggable::onEvent));
+		_actor->_getStage()->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Draggable::onEvent));
 		
 		Vector2 src = pointer->getPosition().cast<Vector2>();
 		Vector2 pos = convert_stage2local(actor->getParent(), src);
@@ -118,7 +118,7 @@ namespace oxygine
 		//why I did add it?
 		//event->stopPropagation();
 
-		getStage()->addEventListener(TouchEvent::MOVE, CLOSURE(this, &Draggable::onEvent));
+		_actor->_getStage()->addEventListener(TouchEvent::MOVE, CLOSURE(this, &Draggable::onEvent));
 	}
 
 	void Draggable::onMove(const Vector2 &position)
@@ -165,7 +165,7 @@ namespace oxygine
 		case TouchEvent::TOUCH_UP:
 			{
 				_pressed = false;
-				getStage()->removeEventListeners(this);
+				_actor->_getStage()->removeEventListeners(this);
 			}
 			break;
 

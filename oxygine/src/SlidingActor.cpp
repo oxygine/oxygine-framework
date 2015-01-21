@@ -184,7 +184,7 @@ namespace oxygine
 
 	void SlidingActor::handleEvent(Event *event)
 	{		
-		Actor::handleEvent(event);
+		_Actor::handleEvent(event);
 	}
 
 	void SlidingActor::_newEvent(Event *event)
@@ -300,13 +300,13 @@ namespace oxygine
 					spActor act = safeSpCast<Actor>(_holded);
 					while(act && act.get() != _content.get())
 					{
-						Actor::setPressed(act.get(), 0);
+						_Actor::setPressed(act.get(), 0);
 						//act->setPressed(0);
 						//act->setOvered(0);
 						act = act->getParent();
 					}
 
-					Actor::setPressed(_content.get(), te->index);
+					_Actor::setPressed(_content.get(), te->index);
 					_holded = 0;
 				}
 			}			
@@ -316,13 +316,13 @@ namespace oxygine
 
 	void SlidingActor::serialize(serializedata* data)
 	{
-		Actor::serialize(data);
+		_Actor::serialize(data);
 
 		data->node.set_name("SlidingActor");
 	}
 
 	void SlidingActor::deserialize(const deserializedata* data)
 	{
-		Actor::deserialize(data);
+		_Actor::deserialize(data);
 	}
 }

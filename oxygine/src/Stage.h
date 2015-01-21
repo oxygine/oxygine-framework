@@ -2,12 +2,17 @@
 #include "oxygine_include.h"
 #include "Actor.h"
 
+#ifdef OXYGINE_SDL
+typedef struct SDL_Window SDL_Window;
+#endif
+
+
 namespace oxygine
 {
 	DECLARE_SMART(Stage, spStage);
 
 	class DebugActor;
-	class Stage : public Actor
+        class Stage : public _Actor
 	{
 	public:
 		enum
@@ -48,6 +53,11 @@ namespace oxygine
 
 		std::string dump(const dumpOptions &opt) const;
 
+#if OXYGINE_SDL		
+		void associateWithWindow(SDL_Window *wnd);
+		SDL_Window* getAssociatedWindow() const;
+#endif
+
 	protected:
 		void onDeactivate(Event *);
 		void onActivate(Event *);
@@ -62,6 +72,11 @@ namespace oxygine
 		timeMS _statRender;
 		bool	_clipOuter;
 		Rect	_viewport;
+
+#if OXYGINE_SDL		
+		SDL_Window* _window;
+#endif // OXYGINE_SDL
+
 
 		friend class DebugActor;
 	};

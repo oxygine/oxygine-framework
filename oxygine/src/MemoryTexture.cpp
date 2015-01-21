@@ -3,8 +3,12 @@
 #include "core/ImageDataOperations.h"
 #include "core/file.h"
 #include "core/log.h"
-
 #include "utils/ImageUtils.h"
+
+#ifdef __APPLE__
+#include "core/ios/ios.h"
+#endif
+
 
 extern "C"
 {
@@ -31,6 +35,13 @@ namespace oxygine
 		IT_TGA,
 		IT_JPEG
 	};
+
+	typedef bool (*cbLoadImageFromBuffer)(MemoryTexture &mt, void * data, int nSize, bool premultiplied, TextureFormat format);
+
+	bool loadImageNotSupported(MemoryTexture &mt, void * data, int nSize, bool premultiplied, TextureFormat format)
+	{
+		return false;
+	}
 
 #ifdef OX_HAVE_LIBJPEG
 	class CCImageHelper
@@ -230,16 +241,16 @@ namespace oxygine
 
 
 #ifdef OX_HAVE_LIBPNG
-	typedef struct
+	struct imageSource
 	{
 		unsigned char* data;
 		int size;
 		int offset;
-	}tImageSource;
+	};
 
 	static void pngReadCallback(png_structp png_ptr, png_bytep data, png_size_t length)
 	{
-		tImageSource* isource = (tImageSource*)png_get_io_ptr(png_ptr);
+		imageSource* isource = (imageSource*)png_get_io_ptr(png_ptr);
 
 		LOGD("png read l: %d, %d", length, isource->offset);
 
@@ -261,37 +272,32 @@ namespace oxygine
 	{
 		LOGD("reading png...");
 		bool bRet = false;
-		png_byte        header[8]   = {0};
 		png_structp     png_ptr     =   0;
 		png_infop       info_ptr    = 0;
 
 		do
 		{
-			// png header len is 8 bytes
-			//CC_BREAK_IF(nDatalen < 8);
-
-			// check the data is png or not
-			memcpy(header, pData, 8);
-			//CC_BREAK_IF(png_sig_cmp(header, 0, 8));
 
 			// init png_struct
 			png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, 0, 0, 0);
-			//CC_BREAK_IF(! png_ptr);
 			LOGD("reading png...1");
+
 			// init png_info
 			info_ptr = png_create_info_struct(png_ptr);
-			//CC_BREAK_IF(!info_ptr);
+			
+
 //#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA)
-			//CC_BREAK_IF(setjmp(png_jmpbuf(png_ptr)));
 			setjmp(png_jmpbuf(png_ptr));
 //#endif
 			// set the read call back function
-			tImageSource imageSource;
+			imageSource imageSource;
 			imageSource.data    = (unsigned char*)pData;
 			imageSource.size    = nDatalen;
 			imageSource.offset  = 0;
+
 			png_set_read_fn(png_ptr, &imageSource, pngReadCallback);
 			LOGD("reading png...2");
+
 			// read png
 			// PNG_TRANSFORM_EXPAND: perform set_expand()
 			// PNG_TRANSFORM_PACKING: expand 1, 2 and 4-bit samples to bytes
@@ -301,6 +307,7 @@ namespace oxygine
 				| PNG_TRANSFORM_STRIP_16 /*| PNG_TRANSFORM_GRAY_TO_RGB*/, 0);
 
 			LOGD("reading png...2a");
+
 			int         color_type  = 0;
 			png_uint_32 nWidth = 0;
 			png_uint_32 nHeight = 0;
@@ -327,30 +334,21 @@ namespace oxygine
 			if (destFormat == TF_UNDEFINED)
 				destFormat = srcFormat;
 
-			if (destFormat == TF_L8 || destFormat == TF_A8L8 || destFormat == TF_R8G8B8)//don't support it
-			{
+			if (destFormat == TF_L8 || destFormat == TF_A8L8 || destFormat == TF_R8G8B8)//don't support it			
 				destFormat = TF_R8G8B8A8;
-			}
 
 			LOGD("reading png...4, %d %d", nWidth, nHeight);
 			mt.init(nWidth, nHeight, destFormat);
 
 			ImageData dest = mt.lock();
 
-
 			png_bytep * rowPointers = png_get_rows(png_ptr, info_ptr);
 
 			LOGD("reading png...5");
-			ImageData src(nWidth, 1, (int)png_get_rowbytes(png_ptr, info_ptr), srcFormat,  0);
-			if (color_type == 4)
-			{
-				//src.data += 1;
-				//src.bytespp = 2;
-			}
-
+			int pitch = (int)png_get_rowbytes(png_ptr, info_ptr);
+			ImageData src(nWidth, 1, pitch, srcFormat,  0);
 
 			dest.h = 1;
-
 
 			if (premultiplied)
 			{
@@ -380,11 +378,11 @@ namespace oxygine
 			bRet        = true;
 		} while (0);
 
-		//CC_SAFE_DELETE_ARRAY(pImateData);
 
 		if (png_ptr)
 		{
 			png_destroy_read_struct(&png_ptr, (info_ptr) ? &info_ptr : 0, 0);
+
 		}
 		LOGD("reading png...7");
 		return bRet;
@@ -392,6 +390,38 @@ namespace oxygine
 
 #endif
 
+#if __APPLE__
+#define USE_NSIMAGE  0
+#endif
+
+#if USE_NSIMAGE
+    cbLoadImageFromBuffer _loadPngImage = nsImageLoad;
+#elif OX_HAVE_LIBPNG
+	cbLoadImageFromBuffer _loadPngImage = _initWithPngData;
+#else
+	cbLoadImageFromBuffer _loadPngImage = loadImageNotSupported;	
+#endif
+
+#if USE_NSIMAGE
+	cbLoadImageFromBuffer _loadJpegImage = nsImageLoad;
+#elif OX_HAVE_LIBJPEG
+	cbLoadImageFromBuffer _loadJpegImage = _initWithJpgData;
+#else
+	cbLoadImageFromBuffer _loadJpegImage = loadImageNotSupported;
+#endif
+
+
+	bool loadPngImage(MemoryTexture &mt, void * pData, int nDatalen, bool premultiplied, TextureFormat format)
+	{
+		bool s = _loadPngImage(mt, pData, nDatalen, premultiplied, format);
+		return s;
+	}
+
+	bool loadJpegImage(MemoryTexture &mt, void * pData, int nDatalen, bool premultiplied, TextureFormat format)
+	{
+		bool s = _loadJpegImage(mt, pData, nDatalen, premultiplied, format);
+		return s;
+	}
 
 
 	MemoryTexture::MemoryTexture():_offset(0)
@@ -430,22 +460,19 @@ namespace oxygine
 	{
 		cleanup();
 
-
 		if (buffer.getSize())
 		{
 			ImageType type = getImageType(buffer.getData(), buffer.getSize());
 			switch(type)
 			{
-#ifdef OX_HAVE_LIBPNG
 			case IT_PNG:
-				_initWithPngData(*this, (void*)buffer.getData(), buffer.getSize(), premultiplied, format);
-				return true;
-#endif
-#ifdef OX_HAVE_LIBJPEG
+				if (loadPngImage(*this, (void*)buffer.getData(), buffer.getSize(), premultiplied, format))
+					return true;
+				break;
 			case IT_JPEG:
-				_initWithJpgData(*this, (void*)buffer.getData(), buffer.getSize(), premultiplied, format);
-				return true;
-#endif
+				if (loadJpegImage(*this, (void*)buffer.getData(), buffer.getSize(), premultiplied, format))
+					return true;
+				break;
 			case IT_PKM:
 				{
 					const pkm_header *header = (const pkm_header *)buffer.getData();
@@ -529,9 +556,7 @@ namespace oxygine
 						else
 						{
 							updateRegion(0, 0, src);
-						}
-
-						
+						}						
 
 						return true;
 //						saveImage(lock(), "test.png", "png");
@@ -543,11 +568,12 @@ namespace oxygine
 					break;
 				}
 				break;
-			default:
-				log::warning("MemoryTexture. can't unpack data unknown file format");
+			default:				
 				break;
 			}
 		}
+
+		log::warning("MemoryTexture. can't unpack data unknown file format");
 
 		init(16, 16, TF_R8G8B8A8);
 		fill_zero();

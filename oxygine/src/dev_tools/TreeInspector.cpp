@@ -139,12 +139,18 @@ namespace oxygine
 		style.font = _resSystem->getResFont("system")->getFont();
 		style.vAlign = TextStyle::VALIGN_TOP;
 
-		
-
-		getStage()->addEventListener(TouchEvent::WHEEL_DOWN, CLOSURE(this, &TreeInspector::wheel));
-		getStage()->addEventListener(TouchEvent::WHEEL_UP, CLOSURE(this, &TreeInspector::wheel));
-
 		updateSizes();
+	}
+
+	void TreeInspector::onAdded2Stage()
+	{
+		_getStage()->addEventListener(TouchEvent::WHEEL_DOWN, CLOSURE(this, &TreeInspector::wheel));
+		_getStage()->addEventListener(TouchEvent::WHEEL_UP, CLOSURE(this, &TreeInspector::wheel));
+	}
+
+	void TreeInspector::onRemovedFromStage()
+	{
+		_getStage()->removeEventListeners(this);
 	}
 
 	void TreeInspector::updateSizes()
@@ -161,7 +167,7 @@ namespace oxygine
 	void TreeInspector::close(Event *ev)
 	{
 		detach();
-		getStage()->removeEventListeners(this);
+		_getStage()->removeEventListeners(this);
 		//return true;
 	}
 
