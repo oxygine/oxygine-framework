@@ -5,7 +5,8 @@ namespace oxygine
 {
 	class Font;
 
-	class ResFont: public Resource
+	DECLARE_SMART(ResFont, spResFont);
+	class ResFont: public _Resource
 	{
 	public:
 		virtual Font *getFont(const char *name = 0, int size = 0) const = 0;

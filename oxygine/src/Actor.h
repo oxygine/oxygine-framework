@@ -91,6 +91,8 @@ namespace oxygine
 		spTween				getLastTween() const {return _tweens._last;}
 
 		const Vector2&		getAnchor() const {return _anchor;}
+		float				getAnchorX() const {return _anchor.x;}
+		float				getAnchorY() const {return _anchor.y;}
 		bool				getIsAnchorInPixels() {return (_flags & flag_anchorInPixels) != 0;}
 		const Vector2&		getPosition() const {return _pos;}
 		float				getX() const {return _pos.x;}
@@ -133,6 +135,8 @@ namespace oxygine
 		void setPosition(float x, float y);
 		void setX(float x);
 		void setY(float y);
+		void setAnchorX(float x);
+		void setAnchorY(float y);
 		/**Overwrites transformation matrix. position/scale/rotation would be ignored until you change them*/
 		void setTransform(const AffineTransform &tr);
 		/** set z order draw priority, from back (low value) to front (high value). Max value is 32000, Min value -32000*/

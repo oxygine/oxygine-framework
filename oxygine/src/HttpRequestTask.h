@@ -27,8 +27,9 @@ namespace oxygine
 		{
 		public:
 			enum {EVENT=PROGRESS};
-			ProgressEvent(int Loaded, int Total) :Event(PROGRESS), loaded(Loaded), total(Total){};
+			ProgressEvent(int Delta, int Loaded, int Total) :Event(PROGRESS), delta(Delta), loaded(Loaded), total(Total){};
 
+			int delta;
 			int loaded;
 			int total;
 		};
@@ -59,6 +60,7 @@ namespace oxygine
         virtual void _setUrl(const std::string &url){}
         virtual void _setPostData(const std::vector<unsigned char> &data){}
 
+		int _loaded;
 		std::string _url;
 		std::string _fname;
 		std::vector<unsigned char> _response;

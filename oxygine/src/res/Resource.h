@@ -13,7 +13,7 @@ namespace oxygine
 	class LoadResourcesContext;
 
 	DECLARE_SMART(Resource, spResource);
-	class Resource: public Object//Base
+	class Resource: public _Object//Base
 	{
 	public:
 		Resource();
@@ -59,3 +59,14 @@ namespace oxygine
 		const Resource& operator=(const Resource&);	
 	};
 }
+
+
+#ifdef OX_EDITOR
+#include "EditorResource.h"
+#else
+namespace oxygine
+{
+	typedef Resource _Resource;
+}
+#endif
+

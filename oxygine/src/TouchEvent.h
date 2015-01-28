@@ -25,7 +25,7 @@ namespace oxygine
 		};
 
 
-		TouchEvent(eventType type, bool Bubbles = true, const Vector2 &locPosition = Vector2(0, 0)) :Event(type, Bubbles), localPosition(locPosition), position(locPosition), mouseButton(MouseButton_Touch), pressure(1.0f){}
+		TouchEvent(eventType type, bool Bubbles = true, const Vector2 &locPosition = Vector2(0, 0)) :Event(type, Bubbles), localPosition(locPosition), position(locPosition), mouseButton(MouseButton_Touch), pressure(1.0f), index(0){}
 
 		Vector2 localPosition;
 		Vector2 position;

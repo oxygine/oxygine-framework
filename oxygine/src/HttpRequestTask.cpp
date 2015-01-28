@@ -12,7 +12,7 @@ namespace oxygine
 	void HttpRequestTask::init(){}
 	void HttpRequestTask::release(){}
 #endif
-	HttpRequestTask::HttpRequestTask()
+	HttpRequestTask::HttpRequestTask() :_loaded(0)
 	{
 
 	}
@@ -57,6 +57,7 @@ namespace oxygine
 
 	void HttpRequestTask::_prerun()
 	{
+		_loaded = 0;
 		_response.clear(); 
 		if (!_fname.empty())
 		{
@@ -66,7 +67,9 @@ namespace oxygine
 
 	void HttpRequestTask::dispatchProgress(int loaded, int total)
 	{
-		ProgressEvent event(loaded, total);
+		int delta = loaded - _loaded;
+		_loaded = loaded;
+		ProgressEvent event(delta, loaded, total);
 		dispatchEvent(&event);
 	}
 

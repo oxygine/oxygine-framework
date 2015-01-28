@@ -52,6 +52,10 @@ def copy(path):
     items = (win32 + "zlib1.dll", 
              win32 + "pthreadVCE2.dll",
              "../../libs/SDL2.dll")
+
+    if "Demo/" in path:
+        items = items + (win32 + "libcurl.dll", )
+
     for item in items:
         name = os.path.split(item)[1]
         shutil.copy(item, path + "/" + name)

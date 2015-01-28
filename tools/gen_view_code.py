@@ -41,6 +41,8 @@ mp_sprite = class_type("spSprite", "Sprite", "Sprite.h")
 mp_sliding = class_type("spSlidingActor", "SlidingActor", "SlidingActor.h")
 mp_color = class_type("spColorRectSprite", "ColorRectSprite", "ColorRectSprite.h")
 mp_box9sprite = class_type("spBox9Sprite", "Box9Sprite", "Box9Sprite.h")    
+mp_polygon = class_type("spPolygon", "Polygon", "Polygon.h")    
+mp_msprite = class_type("spMaskedSprite", "MaskedSprite", "MaskedSprite.h")    
 mp_view = class_type("spView", "View", "View.h")    
 
 def_mappings = (mp_bar,
@@ -51,7 +53,9 @@ def_mappings = (mp_bar,
                 mp_sprite, 
                 mp_sliding,
                 mp_color,
-                mp_box9sprite)
+                mp_box9sprite,
+                mp_polygon,
+                mp_msprite)
 
 def get_mapping(lst, name):
     for m in lst:

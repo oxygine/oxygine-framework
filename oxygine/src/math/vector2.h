@@ -32,6 +32,8 @@ namespace oxygine
 		template <class R>
 		VectorT2 operator /= (R s) {x /= s; y /= s; return (*this);}
 
+                VectorT2 mult (const VectorT2& r) const {return VectorT2(x * r.x, y * r.y);}
+                VectorT2 div (const VectorT2& r) const {return VectorT2(x / r.x, y / r.y);}
 		
 		operator VectorT2<float> () const {return this->cast< VectorT2<float> >();}
 

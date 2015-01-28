@@ -17,7 +17,7 @@ namespace oxygine
 	class CreateResourceContext;
 	DECLARE_SMART(NativeTexture, spNativeTexture);
 
-	class ResAtlas: public Resource
+	class ResAtlas: public _Resource
 	{
 	public:
 		static Resource *create(CreateResourceContext &context);

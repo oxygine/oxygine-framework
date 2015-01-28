@@ -13,7 +13,8 @@ namespace oxygine
 	typedef std::vector<AnimationFrame> animationFrames;
 	class MemoryTexture;
 
-	class ResAnim: public Resource
+	DECLARE_SMART(ResAnim, spResAnim);
+	class ResAnim: public _Resource
 	{
 	public:
 		ResAnim(Resource *atlas = 0);

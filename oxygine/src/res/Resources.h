@@ -23,7 +23,7 @@ namespace oxygine
 	class LoadResourcesContext; 
 
 
-	class Resources: public Resource
+	class Resources: public _Resource
 	{
 	public:
 		typedef std::vector<spResource> resources;

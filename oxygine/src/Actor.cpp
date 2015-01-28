@@ -49,6 +49,8 @@ namespace oxygine
 
 	void Actor::copyFrom(const Actor &src, cloneOptions opt)
 	{
+		_stage = 0;
+
 		_pos = src._pos;
 		_extendedIsOn = src._extendedIsOn;
 		_size = src._size;
@@ -496,6 +498,20 @@ namespace oxygine
 	void Actor::setY(float y)
 	{
 		_pos.y = y;
+		_flags |= flag_transformDirty | flag_transformInvertDirty;
+	}
+
+	void Actor::setAnchorX(float x)
+	{
+		_anchor.x = x;
+		_flags &= ~flag_anchorInPixels;
+		_flags |= flag_transformDirty | flag_transformInvertDirty;
+	}
+
+	void Actor::setAnchorY(float y)
+	{
+		_anchor.y = y;
+		_flags &= ~flag_anchorInPixels;
 		_flags |= flag_transformDirty | flag_transformInvertDirty;
 	}
 
@@ -1187,6 +1203,7 @@ namespace oxygine
 		setAttr(node, "input", getInputEnabled(), true);
 		setAttr(node, "inputch", getInputChildrenEnabled(), true);
 		setAttr(node, "alpha", getAlpha(), (unsigned char)255);		
+        setAttrV2(node, "anchor", getAnchor(), Vector2(0, 0));
 
 		if (data->withChildren)
 		{
@@ -1230,6 +1247,11 @@ namespace oxygine
 					setPosition(attr2Vector2(attr.as_string()));
 					break;
 				}
+                if (!strcmp(name, "anchor"))
+                {
+                    setAnchor(attr2Vector2(attr.as_string()));
+                    break;
+                }
 				if (!strcmp(name, "scale"))
 				{
 					setScale(attr2Vector2(attr.as_string()));

@@ -9,7 +9,7 @@ namespace oxygine
 		pugi::xml_node node = context.walker.getNode();
 		std::string file = node.attribute("file").value();
 
-		rs->setName(Resource::extractID(node, file, ""));
+		rs->setName(_Resource::extractID(node, file, ""));
 		rs->init(context.walker.getPath("file").c_str());
 		setNode(rs, node);
 

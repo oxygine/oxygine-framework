@@ -9,7 +9,7 @@ namespace oxygine
 	class Resources;
 	class CreateResourceContext;
 
-	class ResBuffer: public Resource
+	class ResBuffer: public _Resource
 	{
 	public:
 		static Resource *create(CreateResourceContext &);

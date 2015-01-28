@@ -10,6 +10,10 @@ namespace oxygine
 #define  LOGD(...)  ((void)0)
 #endif
 
+#if EMSCRIPTEN || __APPLE__ || __S3E__
+#define PTHREAD_MUTEX_RECURSIVE_NP PTHREAD_MUTEX_RECURSIVE
+#endif
+
 	MutexPthreadLock::MutexPthreadLock(pthread_mutex_t &m, bool lock) :_mutex(m), _locked(lock)
 	{
 		if (_locked)
@@ -23,8 +27,13 @@ namespace oxygine
 
 	ThreadMessages::ThreadMessages():_id(0), _waitReplyID(0)
 	{			
-		pthread_cond_init(&_cond, 0);
-		pthread_mutex_init(&_mutex, 0);	
+		pthread_cond_init(&_cond, 0);		
+
+		pthread_mutexattr_t attr;
+		pthread_mutexattr_init(&attr);		
+		pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE_NP);
+
+		pthread_mutex_init(&_mutex, &attr);
 	}
 
 	ThreadMessages::~ThreadMessages()

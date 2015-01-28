@@ -22,7 +22,7 @@ namespace oxygine
 		{
 			setVerticalMode(Box9Sprite::TILING_FULL);
 			setHorizontalMode(Box9Sprite::TILING_FULL);
-			setResAnim(DebugActor::resSystem->getResAnim("checker"));
+			Sprite::setResAnim(DebugActor::resSystem->getResAnim("checker"));
 
 			AnimationFrame f;
 			Vector2 s = fitSize(itemSize, Vector2((float)t->getWidth(), (float)t->getHeight()));

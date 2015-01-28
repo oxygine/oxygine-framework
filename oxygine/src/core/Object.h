@@ -80,7 +80,7 @@ namespace oxygine
 		static int _assertCtorID;
 		static int _assertDtorID;
 	};
-	
+
 	DECLARE_SMART(Object, spObject);
 	class Object: public ref_counter, public ObjectBase
 	{
@@ -121,5 +121,14 @@ namespace oxygine
 		OX_ASSERT(t && "can't cast pointer");
 #endif
 		return static_cast<T *>(p.get());
-	}	
+	}
 }
+
+#ifdef OX_EDITOR
+#include "EditorObject.h"
+#else
+namespace oxygine
+{
+	typedef Object _Object;
+}
+#endif
