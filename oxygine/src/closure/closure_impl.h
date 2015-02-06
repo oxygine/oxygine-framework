@@ -51,8 +51,16 @@ struct ClosureBase
   typedef R (*p_proxy_type)(void * PARAM_FORM_ARG_LIST_COMMA);
   void *p_this;
   p_proxy_type p_proxy;
+ 
+#if CLOSURE_FUNCTION
+  std::shared_ptr< std::function< R(PARAM_TYPE_LIST)> > p_function;
+#endif
 
-  R operator()(PARAM_FORM_ARG_LIST) { return p_proxy(p_this PARAM_ARG_LIST_COMMA); }
+  R operator()(PARAM_FORM_ARG_LIST)
+  { 
+	  return p_proxy(p_this PARAM_ARG_LIST_COMMA); 
+  }
+
 };
 
 } //namespace CLOSURE_NUM
@@ -71,7 +79,7 @@ struct Closure<R(PARAM_TYPE_LIST)>: public detail::CLOSURE_NUM::ClosureBase<R PA
   }
 
 
-  //initialization whith proxy function "p_proxy_function" and context "p_this".
+  //initialization with proxy function "p_proxy_function" and context "p_this".
   //signature of p_proxy_function should match template parameters of Closure<...>
   //and take additional parameter void *
   Closure(
@@ -81,6 +89,29 @@ struct Closure<R(PARAM_TYPE_LIST)>: public detail::CLOSURE_NUM::ClosureBase<R PA
     this->p_this= p_this;
     this->p_proxy= p_proxy_function;
   }
+
+ #if CLOSURE_FUNCTION
+  Closure( const std::function< R(PARAM_TYPE_LIST)>& f)
+  {
+	  this->p_function = std::make_shared< std::function<R(PARAM_TYPE_LIST)> >(f);
+	  this->p_this = this->p_function.get();
+	  this->p_proxy = callfunction;
+  }
+
+  template<class T>
+  Closure(T f)//lambda support
+  {
+	  this->p_function = std::make_shared< std::function<R(PARAM_TYPE_LIST)> >(f);
+	  this->p_this = this->p_function.get();
+	  this->p_proxy = callfunction;
+  }
+
+  static R callfunction(void* ptr PARAM_FORM_ARG_LIST_COMMA)
+  {
+	  std::function< R(PARAM_TYPE_LIST) > *f = (std::function< R(PARAM_TYPE_LIST) > *)ptr;
+	  return (*f)(PARAM_ARG_LIST);
+  }
+#endif
 
   private:
     struct dummy { void nonnull() {} };
@@ -92,7 +123,7 @@ struct Closure<R(PARAM_TYPE_LIST)>: public detail::CLOSURE_NUM::ClosureBase<R PA
     //false, otherwise
     operator safe_bool() const
     { 
-        if(this->p_proxy) 
+        if(this->p_proxy)
           return &dummy::nonnull;
         else        
           return 0;
@@ -150,7 +181,25 @@ namespace detail
     return CLOSURE_NUM::CreateClosureHelper<T, R PARAM_TYPE_LIST_COMMA>();
   }
 
+#if CLOSURE_FUNCTION
+  template <TEMPLATE_PARAM_LIST> 
+  Closure<R (PARAM_TYPE_LIST)> CreateClosureF(const std::function< R (PARAM_TYPE_LIST) > & f )
+  {
+	  return Closure<R(PARAM_TYPE_LIST)>(f);
+  }
+  
+  /*
 
+  template <TEMPLATE_PARAM_LIST>
+  Closure<R(PARAM_TYPE_LIST)> CreateClosureF( R (*f) (PARAM_TYPE_LIST) )
+  {
+	  std::function<R(PARAM_TYPE_LIST)> fn = f;
+	  return Closure<R(PARAM_TYPE_LIST)>(fn);
+  }
+  */
+#endif
+
+  
   //helper function, to deduce return and parameters types of given pointer to member const function
   template <class T, TEMPLATE_PARAM_LIST> 
   CLOSURE_NUM::CreateClosureHelperConst<T, R PARAM_TYPE_LIST_COMMA> CreateClosure(R (T::*)(PARAM_TYPE_LIST)const)

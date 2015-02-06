@@ -10,9 +10,7 @@ namespace oxygine
 #define  LOGD(...)  ((void)0)
 #endif
 
-#if EMSCRIPTEN || __APPLE__ || __S3E__
-#define PTHREAD_MUTEX_RECURSIVE_NP PTHREAD_MUTEX_RECURSIVE
-#endif
+
 
 	MutexPthreadLock::MutexPthreadLock(pthread_mutex_t &m, bool lock) :_mutex(m), _locked(lock)
 	{
@@ -31,7 +29,7 @@ namespace oxygine
 
 		pthread_mutexattr_t attr;
 		pthread_mutexattr_init(&attr);		
-		pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE_NP);
+		pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
 
 		pthread_mutex_init(&_mutex, &attr);
 	}

@@ -5,13 +5,14 @@ def gen(path, project = ""):
 	if not project:
 		project = path
 
-	projs = ("win32", "android", "macosx", "ios", "cmake", "emscripten")
+	#projs = ("win32", "android", "macosx", "ios", "cmake", "emscripten")
+	
+	#projs = ("ios", "macosx")
+	#projs = ("macosx", )	
+	#projs = ("win32", )
+	projs = ("cmake", )	
 	#projs = ("android", )
-	projs = ("ios", "macosx")
-	projs = ("macosx", )	
-	projs = ("win32", )
-	projs = ("cmake", )
-	projs = ("emscripten", )
+	#projs = ("emscripten", )
 
 	for platform in projs:
 		dest = "../../examples/" + path + "/proj." + platform
@@ -37,4 +38,4 @@ if 1:
 	gen("Match3")
 
 
-#gen("DemoBox2D")
+gen("DemoBox2D")

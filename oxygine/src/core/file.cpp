@@ -45,8 +45,8 @@ namespace oxygine
 			_nfs.setPath("rom://");
 			_nfsWrite.setPath("ram://");
 #elif EMSCRIPTEN
-			mkdir("data-ram/", S_IRWXU|S_IRWXG|S_IRWXO);
-			_nfsWrite.setPath("data-ram/");
+			//mkdir("data-ram/", S_IRWXU|S_IRWXG|S_IRWXO);
+			//_nfsWrite.setPath("data-ram/");
 
 #elif __ANDROID__
 			log::messageln("internal %s", SDL_AndroidGetInternalStoragePath());

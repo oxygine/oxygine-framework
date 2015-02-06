@@ -674,24 +674,21 @@ namespace oxygine
 		{
 			delete IVideoDriver::instance;
 			IVideoDriver::instance = 0;
+			
+			Input::instance.cleanup();
 
+			Renderer::release();
+
+			DebugActor::release();
+
+			if (Stage::instance)
+				Stage::instance->cleanup();
+			Stage::instance = 0;
 #if OXYGINE_SDL
 			SDL_GL_DeleteContext(_context);
 			SDL_DestroyWindow(_window);
 			SDL_Quit();
 #endif
-
-			spActor temp = Stage::instance;
-			if (Stage::instance)
-				Stage::instance->cleanup();
-			Stage::instance = 0;
-
-			Input::instance.cleanup();
-
-			Renderer::release();
-			DebugActor::release();
-
-			//Winnie::DesroyHeap();
 		}
 
 		void execute(const char *str)

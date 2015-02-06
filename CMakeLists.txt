@@ -2,12 +2,13 @@ cmake_minimum_required (VERSION 2.6)
 project (OXYGINE)
 
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 ")
+
 if (WIN32)
 	set(OX_DEFINITIONS	${OX_DEFINITIONS}
 		-D_CRT_SECURE_NO_WARNINGS)
 	set(SDL2_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../SDL/include)
 else(WIN32)
-
 	find_path(SDL2_INCLUDE_DIRS NAMES SDL2/SDL.h)
 	message(STATUS ${SDL2_INCLUDE_DIRS_FOUND})
 
@@ -30,13 +31,13 @@ set(OX_HAVE_LIBJPEG 1)
 set(OX_HAVE_LIBPNG 1)
 
 if (EMSCRIPTEN)
-	set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-Wno-warn-absolute-paths")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-warn-absolute-paths")
 	set(OX_HAVE_LIBJPEG 0)
 	set(OX_HAVE_LIBPNG 1)
 	set(THIRD_PARTY ${CMAKE_CURRENT_SOURCE_DIR}/oxygine/third_party/emscripten)
 	set(SDL2_INCLUDE_DIRS "")
 	file(GLOB OXYGINE_JS_LIBRARIES ${CMAKE_CURRENT_SOURCE_DIR}/oxygine/src/core/emscripten/*.js)
-elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
+elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux") 	
 	set(THIRD_PARTY ${CMAKE_CURRENT_SOURCE_DIR}/oxygine/third_party/linux)
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 	set(THIRD_PARTY ${CMAKE_CURRENT_SOURCE_DIR}/oxygine/third_party/ios)

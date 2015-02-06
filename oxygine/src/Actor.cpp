@@ -395,12 +395,10 @@ namespace oxygine
 	void Actor::handleEvent(Event *event)
 	{
 		bool touchEvent = TouchEvent::isTouchEvent(event->type);
-		if (TouchEvent::isTouchEvent(event->type))
+		if (touchEvent)
 		{
-			if (!(_flags & flag_visible) || getAlpha() == 0)
-			{
+			if (!(_flags & flag_visible) || getAlpha() == 0)			
 				return;
-			}
 		}
 		
 		Vector2 originalLocalPos(0, 0);

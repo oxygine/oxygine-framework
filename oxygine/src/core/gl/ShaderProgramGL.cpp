@@ -12,7 +12,7 @@ namespace oxygine
 	ShaderProgramGL::~ShaderProgramGL()
 	{
 		if (_program)
-			glDeleteProgram(_program);
+			oxglDeleteProgram(_program);
         CHECKGL();
 	}
 
@@ -29,7 +29,7 @@ namespace oxygine
 
 	int ShaderProgramGL::getUniformLocation(const char *id) const
 	{
-		int i = glGetUniformLocation(_program, id);
+		int i = oxglGetUniformLocation(_program, id);
 		//if (i == -1)
 		CHECKGL();
 		return i;
@@ -38,16 +38,16 @@ namespace oxygine
 	void printShaderInfoLog(GLuint shader)
 	{
 		GLint length = 0;
-		glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &length);
+		oxglGetShaderiv(shader, GL_INFO_LOG_LENGTH, &length);
 		if (length)
 		{
 			std::vector<char> bf;
 			bf.resize(length);
-			glGetShaderInfoLog(shader, (int)bf.size(), NULL, &bf.front());
+			oxglGetShaderInfoLog(shader, (int)bf.size(), NULL, &bf.front());
 			log::messageln("shader compiled: %s", &bf.front());
 
 			GLint success;
-			glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+			oxglGetShaderiv(shader, GL_COMPILE_STATUS, &success);
 			if (success != GL_TRUE) 
 			{
 				OX_ASSERT(!"shader build error");
@@ -61,7 +61,7 @@ namespace oxygine
 
 	unsigned int ShaderProgramGL::createShader(unsigned int type, const char* data, const char *prepend, const char *append)
 	{
-		GLuint shader = glCreateShader(type);
+		GLuint shader = oxglCreateShader(type);
 
 		const char *sources[16];
 		const char **ptr = &sources[0];
@@ -98,8 +98,8 @@ namespace oxygine
 		}
 
 		int num = (int)(ptr - sources);
-		glShaderSource(shader, num, sources, 0);
-		glCompileShader(shader);
+		oxglShaderSource(shader, num, sources, 0);
+		oxglCompileShader(shader);
 		printShaderInfoLog(shader);
         
         CHECKGL();
@@ -110,14 +110,14 @@ namespace oxygine
 
 	unsigned int ShaderProgramGL::createProgram(int vs, int fs, const VertexDeclarationGL *decl)
 	{
-		int p = glCreateProgram();
-		glAttachShader(p, vs);
-		glAttachShader(p, fs);
+		int p = oxglCreateProgram();
+		oxglAttachShader(p, vs);
+		oxglAttachShader(p, fs);
 
 		for (int i = 0; i < decl->numElements; ++i)		
-			glBindAttribLocation(p, decl->elements[i].index, decl->elements[i].name);
+			oxglBindAttribLocation(p, decl->elements[i].index, decl->elements[i].name);
 
-		glLinkProgram(p);
+		oxglLinkProgram(p);
         
         CHECKGL();
 

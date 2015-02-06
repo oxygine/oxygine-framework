@@ -25,7 +25,7 @@ else() # Either MinSizeRel, RelWithDebInfo or Release, all which run with optimi
 	SET(linkFlags "-O2 ")
 endif()
 
-set(linkFlags "${linkFlags} -s NO_EXIT_RUNTIME=1 -s FULL_ES2=1 -s WARN_ON_UNDEFINED_SYMBOLS=1 --memory-init-file 0 -Wno-warn-absolute-paths -s TOTAL_MEMORY=64435456")
+set(linkFlags "${linkFlags} -s NO_EXIT_RUNTIME=1 -s FULL_ES2=1 -s WARN_ON_UNDEFINED_SYMBOLS=1 --memory-init-file 0 -Wno-warn-absolute-paths -s TOTAL_MEMORY=50331648")
 
 set_target_properties(DemoBox2D PROPERTIES LINK_FLAGS "${linkFlags}")
 

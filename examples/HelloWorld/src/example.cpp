@@ -1,10 +1,12 @@
 #include "oxygine-framework.h"
+#include <functional>
 using namespace oxygine;
 
 //it is our resources
 //in real project you would have more than one Resources declarations. 
 //It is important on mobile devices with limited memory and you would load/unload them
 Resources gameResources;
+
 
 class MainActor: public Actor
 {
@@ -28,6 +30,11 @@ public:
 		//handle click to button
 		EventCallback cb = CLOSURE(this, &MainActor::buttonClicked);
 		button->addEventListener(TouchEvent::CLICK, cb);
+
+
+		button->addEventListener(TouchEvent::CLICK, [](Event* e)->void{
+			log::messageln("button clicked");
+		});
 
 		//attach button as child to current actor
 		addChild(button);

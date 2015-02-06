@@ -124,13 +124,13 @@ namespace oxygine
 			glBindTexture(GL_TEXTURE_2D, 0);
 
 			unsigned int fbo = 0;
-			glGenFramebuffers(1, &fbo);
-			glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, (GLuint)id, 0);
+			oxglGenFramebuffers(1, &fbo);
+			oxglBindFramebuffer(GL_FRAMEBUFFER, fbo);
+			oxglFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, (GLuint)id, 0);
 
 			//printf("created fbo: %d\n", fbo);
 
-			unsigned int status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+			unsigned int status = oxglCheckFramebufferStatus(GL_FRAMEBUFFER);
 			//log::message("fbo status %d\n", status);
 			//GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_OES
 			if (status != GL_FRAMEBUFFER_COMPLETE)
@@ -142,7 +142,7 @@ namespace oxygine
 			glClearColor(0,0,0,0);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-			glBindFramebuffer(GL_FRAMEBUFFER, prevFBO);
+			oxglBindFramebuffer(GL_FRAMEBUFFER, prevFBO);
 			//log::message("fbo bind\n");
 
 			glBindTexture(GL_TEXTURE_2D, 0);
@@ -172,7 +172,7 @@ namespace oxygine
 
 		glPixel p = SurfaceFormat2GL(src.format);
 		if (p.compressed)		
-			glCompressedTexImage2D(GL_TEXTURE_2D, 0, p.format, src.w, src.h, 0, src.h * src.pitch, src.data);
+			oxglCompressedTexImage2D(GL_TEXTURE_2D, 0, p.format, src.w, src.h, 0, src.h * src.pitch, src.data);
 		else
 		{
 			glTexImage2D(GL_TEXTURE_2D, 0, p.format, src.w, src.h, 0, p.format, p.type, src.data);			
@@ -220,7 +220,7 @@ namespace oxygine
 
 		if (_fbo)
 		{
-			glDeleteFramebuffers(1, (GLuint*)&_fbo);		
+			oxglDeleteFramebuffers(1, (GLuint*)&_fbo);
 			_fbo = 0;
 		}
 

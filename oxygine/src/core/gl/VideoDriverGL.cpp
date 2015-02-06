@@ -128,7 +128,7 @@ namespace oxygine
 	{
 		if (!rt)
 		{
-			glBindFramebuffer(GL_FRAMEBUFFER, _prevFBO);
+			oxglBindFramebuffer(GL_FRAMEBUFFER, _prevFBO);
             CHECKGL();
 			return;
 		}
@@ -136,7 +136,7 @@ namespace oxygine
 		glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_prevFBO);
 
 		NativeTextureGLES *gl = safeCast<NativeTextureGLES*>(rt.get());		
-		glBindFramebuffer(GL_FRAMEBUFFER, gl->getFboID());
+		oxglBindFramebuffer(GL_FRAMEBUFFER, gl->getFboID());
         CHECKGL();
 	}
 

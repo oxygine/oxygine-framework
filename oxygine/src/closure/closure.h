@@ -18,6 +18,15 @@ Many thanks to Wolfhound
 #  pragma once
 #endif
 
+#ifndef __S3E__
+#define CLOSURE_FUNCTION 1
+#endif
+
+#ifdef CLOSURE_FUNCTION
+#	include <functional>
+#	include <memory>
+#endif
+
 #define TEMPLATE_PARAM_LIST class R
 #define PARAM_TYPE_LIST 
 #define PARAM_TYPE_LIST_COMMA 
@@ -69,6 +78,10 @@ Many thanks to Wolfhound
 #include "closure_impl.h"
 
 #define CLOSURE(PTR, MEM_PTR) (detail::CreateClosure(MEM_PTR).Init<MEM_PTR>(PTR))
+
+#if CLOSURE_FUNCTION
+#	define CLOSUREF(F) (detail::CreateClosureF(F))
+#endif
 
 #endif
 

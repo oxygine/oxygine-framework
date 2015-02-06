@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import io
+import cStringIO
 lines = open("../../../SDL/include/SDL_opengl_glext.h").readlines()
 funcs = ["glShaderSource", 
          "glUseProgram", 
@@ -40,9 +40,11 @@ funcs = ["glShaderSource",
 #GLAPI void APIENTRY glDeleteProgram (GLuint program);
 #PFNGLDELETEPROGRAMPROC
 
-base = io.StringIO()
-defl = io.StringIO()
-init = io.StringIO()
+base = cStringIO.StringIO()
+defl = cStringIO.StringIO()
+init = cStringIO.StringIO()
+extern = cStringIO.StringIO()
+define = cStringIO.StringIO()
 
 
 
@@ -72,12 +74,19 @@ def get(name):
 				
 			st = st[0:-2]
 
-			
-			base.write("%s _%s = def_%s;\n" % (proc, name, name))
-			base.write(st + "\n")
+
+			#PFNGLSHADERSOURCEPROC _glShaderSource = 0;			
+			base.write("%s _%s = 0;\n" % (proc, name))
+			#base.write(st + "\n")
+
+			extern.write("extern %s _%s;\n" % (proc, name))
+			define.write("#define ox%s DECLARE_GLEXT(%s)\n" % (name, name))
+			#extern.write(st + "\n")
+
 			stf = st.replace(name, "def_" + name)
+			
 			defl.write(stf + "\n")
-			base.write("{\n")
+			#base.write("{\n")
 			defl.write("{")
 			
 			args = st[st.find("(") + 1:st.find(")")]
@@ -91,6 +100,7 @@ def get(name):
 					continue
 				allargs.append(q)
 			
+			"""
 			base.write("\t")
 			if not st.startswith("GLAPI void"):
 				base.write("return ");				
@@ -106,6 +116,7 @@ def get(name):
 			base.write(d)				
 
 			base.write("}\n")			
+			"""
 			defl.write("}\n")			
 
 			init.write("GETFUNC(_%s, def_%s, %s, \"%s\");\n" % (name, name, proc, name))
@@ -119,8 +130,9 @@ base.write("""
 }
 """)
 	
-print(defl.getvalue())
-print(base.getvalue())
-print(init.getvalue())
+print defl.getvalue()
+print base.getvalue()
+print init.getvalue()
 
 open("res.cpp", "w").write(defl.getvalue() + base.getvalue() + init.getvalue())
+open("res.h", "w").write(extern.getvalue() + define.getvalue())

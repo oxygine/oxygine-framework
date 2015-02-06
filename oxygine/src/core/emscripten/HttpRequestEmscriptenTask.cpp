@@ -43,6 +43,7 @@ namespace oxygine
 		addRef();
 
 		log::messageln("HttpRequestEmscriptenTask::_run %s", _url.c_str());
+		_postData.push_back(0);
 
 		emscripten_async_wget2_data(_url.c_str(), _postData.empty() ? "GET" : "POST", (char*)&_postData.front(), this, false, onload, onerror, onprogress);
 	}

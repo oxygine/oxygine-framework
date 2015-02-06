@@ -11,8 +11,32 @@ import com.android.volley.toolbox.Volley;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.Proxy;
+import java.net.InetSocketAddress;
 import java.util.Map;
 import android.util.Log;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.URL;
+import java.util.ArrayList;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLSession;
+
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.message.BasicNameValuePair;
+
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 /**
  * Created by Denis on 31.12.2014.
  */
@@ -38,15 +62,45 @@ class HttpRequest extends AsyncTask<RequestDetails, Integer, String> {
     public static native void nativeHttpRequestResponseProgress(long handle, int loaded, int total);
     public static native void nativeHttpRequestResponseError(long handle);
 
+    private Proxy detectProxy() 
+    {
+        return null;
+        //experimental
+        /*
+        try {
+            ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo ni = cm.getActiveNetworkInfo();
+            if (ni != null && ni.isAvailable() && ni.getType() == ConnectivityManager.TYPE_MOBILE) {
+                String proxyHost = android.net.Proxy.getDefaultHost();
+                int port = android.net.Proxy.getDefaultPort();
+                if (proxyHost != null) {
+                    final InetSocketAddress sa = new InetSocketAddress(proxyHost, port);
+                    return new Proxy(Proxy.Type.HTTP, sa);
+                }
+            }
+        }
+        catch (SecurityException ex)
+        {
+        }
+        return null;
+        */
+    }
+
     @Override
     protected String doInBackground(RequestDetails... details_) {
         InputStream input = null;
         OutputStream output = null;
         HttpURLConnection connection = null;
         RequestDetails  details = details_[0];
+
+
         try {
             URL url = new URL(details.url);
-            connection = (HttpURLConnection) url.openConnection();
+            Proxy proxy = detectProxy();
+            if (proxy != null)
+                connection = (HttpURLConnection) url.openConnection(proxy);
+            else
+                connection = (HttpURLConnection) url.openConnection();
 
 
             if (details.postData != null) {
