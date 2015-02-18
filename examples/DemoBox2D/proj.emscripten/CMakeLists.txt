@@ -7,7 +7,7 @@ include_directories(${OXYGINE_INCLUDE_DIRS})
 link_directories(${OXYGINE_LIBRARY_DIRS})
 
 SET(CMAKE_EXECUTABLE_SUFFIX ".html")
-set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-Wno-warn-absolute-paths")
+set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-Wno-warn-absolute-paths -std=c++11")
 
 file(GLOB_RECURSE BOX2DSRC
 		../box2d/*.cpp

@@ -32,6 +32,8 @@ namespace oxygine
 		pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
 
 		pthread_mutex_init(&_mutex, &attr);
+
+		_events.reserve(10);
 	}
 
 	ThreadMessages::~ThreadMessages()

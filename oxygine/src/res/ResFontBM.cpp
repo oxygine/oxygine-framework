@@ -211,8 +211,11 @@ namespace oxygine
 			char tail[255];
 			char head[255];
 			path::split(path.c_str(), head, tail);
-			p.file = head;
-			p.file += "//";
+			if (*head)
+			{
+				p.file = head;
+				p.file += "//";
+			}
 			p.file += textureFile;
 
 			p.texture = IVideoDriver::instance->createTexture();

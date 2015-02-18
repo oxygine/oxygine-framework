@@ -7,7 +7,7 @@ include_directories(${OXYGINE_INCLUDE_DIRS})
 link_directories(${OXYGINE_LIBRARY_DIRS})
 
 SET(CMAKE_EXECUTABLE_SUFFIX ".html")
-set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-Wno-warn-absolute-paths")
+set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-Wno-warn-absolute-paths -std=c++11")
 
 add_executable(GamePart2 ../src/Enemy.cpp ../src/Game.cpp ../src/Joystick.cpp ../src/Player.cpp ../src/Rocket.cpp ../src/Unit.cpp ../src/entry_point.cpp ../src/example.cpp ../src/res.cpp  ../src/Enemy.h ../src/Game.h ../src/Joystick.h ../src/Player.h ../src/Rocket.h ../src/Unit.h ../src/example.h ../src/res.h )
 

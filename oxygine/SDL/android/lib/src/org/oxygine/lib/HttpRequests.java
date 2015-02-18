@@ -64,9 +64,6 @@ class HttpRequest extends AsyncTask<RequestDetails, Integer, String> {
 
     private Proxy detectProxy() 
     {
-        return null;
-        //experimental
-        /*
         try {
             ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo ni = cm.getActiveNetworkInfo();
@@ -83,7 +80,6 @@ class HttpRequest extends AsyncTask<RequestDetails, Integer, String> {
         {
         }
         return null;
-        */
     }
 
     @Override

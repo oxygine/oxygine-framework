@@ -262,8 +262,8 @@ namespace oxygine
 		Stage* _stage;
 		void added2stage(Stage*);
 		void removedFromStage();
-		virtual void onAdded2Stage(){};
-		virtual void onRemovedFromStage(){};
+		virtual void onAdded2Stage(){}
+		virtual void onRemovedFromStage(){}
 		
 
 		typedef intrusive_list<spActor> children;
@@ -348,7 +348,7 @@ namespace oxygine
 
 
 
-	Renderer::transform getGlobalTransform(spActor child);
+	Renderer::transform getGlobalTransform(spActor child, spActor parent = 0);
 
 	void	changeParentAndSavePosition(spActor mutualParent, spActor actor, spActor newParent);
 	

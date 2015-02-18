@@ -129,4 +129,19 @@ namespace oxygine
 		if (i < (int)_frames.size())
 			_frames[i] = frame;
 	}
+
+	const Vector2&	ResAnim::getSize() const
+	{
+		OX_ASSERT(!_frames.empty());
+		return _frames[0].getSize();
+	}
+	float	ResAnim::getWidth() const
+	{
+		return getSize().x;
+	}
+
+	float	ResAnim::getHeight() const
+	{
+		return getSize().y;
+	}
 }

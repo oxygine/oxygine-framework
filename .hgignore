@@ -41,3 +41,4 @@ examples/Demo/data/ext/res.xml.ox
 examples/*/proj.cmake/build/
 temp/
 examples/Game/*/proj.cmake/build/
+examples/HelloWorld/build_helloworld_*

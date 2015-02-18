@@ -37,6 +37,10 @@ namespace oxygine
 		const AnimationFrame&	getFrame(int index) const;
 		/**Returns atlas where this ResAnim was created*/
 		Resource*				getAtlas(){return _atlas;}
+		/**Returns size of frame*/
+		const Vector2&			getSize() const;
+		float					getWidth() const;
+		float					getHeight() const;
 
 		void setFrame(int col, int row, const AnimationFrame &frame);
 

@@ -1348,11 +1348,11 @@ namespace oxygine
 		return convert_global2local(actor, root, pos);
 	}
 
-	Renderer::transform getGlobalTransform(spActor child)
+	Renderer::transform getGlobalTransform(spActor child, spActor parent)
 	{
 		Renderer::transform t;
 		t.identity();
-		while (child)
+		while (child != parent)
 		{
 			t = t * child->getTransform();
 			child = child->getParent();

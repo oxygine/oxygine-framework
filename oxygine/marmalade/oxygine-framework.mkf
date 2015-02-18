@@ -7,13 +7,13 @@ options
 
 subproject iwutil
 subproject iwgl
+subproject iwhttp
 
 debug_define MARMALADE
 define MARMALADE
 
 define OX_HAVE_LIBJPEG
 define OX_HAVE_LIBPNG
-define OX_NO_HTTP
 
 files
 {
@@ -54,6 +54,11 @@ files
 	
 	[src/core]
 	(../src/core)
+	"*.h"
+	"*.cpp"	
+
+	[src/core/s3e]
+	(../src/core/s3e)
 	"*.h"
 	"*.cpp"	
 

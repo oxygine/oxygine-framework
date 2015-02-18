@@ -40,7 +40,8 @@ public:
 		task->addEventListener(HttpRequestTask::PROGRESS, CLOSURE(this, &TestHttp::progress));
 		task->run();
 		
-		OX_ASSERT(!file::exists("somefile.abc"));
+		//OX_ASSERT(!file::exists("somefile.abc"));
+		file::deleteFile("somefile.abc", ep_ignore_error);
 
 		_bar = new ProgressBar;
 		_bar->setResAnim(resources.getResAnim("slide"));

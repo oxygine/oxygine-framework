@@ -31,10 +31,13 @@ public:
 		EventCallback cb = CLOSURE(this, &MainActor::buttonClicked);
 		button->addEventListener(TouchEvent::CLICK, cb);
 
+#ifdef CLOSURE_FUNCTION //if your compiler supports lambda
 
 		button->addEventListener(TouchEvent::CLICK, [](Event* e)->void{
 			log::messageln("button clicked");
 		});
+
+#endif
 
 		//attach button as child to current actor
 		addChild(button);
