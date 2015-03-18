@@ -1,6 +1,6 @@
 #include "AsyncTask.h"
 #include "core/oxygine.h"
-
+#include <typeinfo>
 namespace oxygine
 {
 	const int successID = sysEventID('s', 'c', 'm');	
@@ -21,6 +21,7 @@ namespace oxygine
 	void AsyncTask::run()
 	{
 		_prerun();
+		log::messageln("AsyncTask::run %d - %s", getObjectID(), typeid(*this).name());
 
 		OX_ASSERT(_status == status_not_started);
 		_status = status_inprogress;
@@ -58,6 +59,8 @@ namespace oxygine
 
 	void AsyncTask::_complete()
 	{
+		log::messageln("AsyncTask::_complete %d - %s", getObjectID(), typeid(*this).name());
+
 		_status = status_completed;
 		_onFinal(false);
 		_finalize(false);
@@ -69,6 +72,8 @@ namespace oxygine
 
 	void AsyncTask::_error()
 	{
+		log::messageln("AsyncTask::_error %d - %s", getObjectID(), typeid(*this).name());
+
 		_status = status_failed;
 		_onFinal(true);
 		_finalize(true);

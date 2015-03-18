@@ -32,6 +32,7 @@ namespace oxygine
 		void removeEventListener(eventType, EventCallback);
 		void removeEventListener(int id);
 		bool hasEventListeners(void *CallbackThis);
+		bool hasEventListeners(eventType, EventCallback);
 		void removeEventListeners(void *CallbackThis);
 		void removeAllEventListeners();
 
@@ -41,16 +42,20 @@ namespace oxygine
 
 	protected:
 
-		struct listener
+		struct listenerbase
 		{
-			EventCallback cb;
+			EventCallback cb;			
+		};
+
+		struct listener : public listenerbase
+		{
 			eventType type;
 			int id;
 		};
 
 		int _lastID;
 		
-		typedef std::list<listener> listeners;
+		typedef std::vector<listener> listeners;
 		listeners *_listeners;
 	};
 }

@@ -220,14 +220,7 @@ namespace oxygine
 		std::transform(data.begin(), data.end(), data.begin(), ::tolower);//todo optimize
 		return data;
 	}
-
-	std::wstring debug_s2ws(const std::string &str)
-	{
-		std::wstring wstr(str.length(), L' ');
-		std::copy(str.begin(), str.end(), wstr.begin());
-		return wstr;
-	}
-	
+		
 	std::wstring utf8tows(const char *utf8str)
 	{
 		if (!utf8str)
@@ -243,7 +236,7 @@ namespace oxygine
 		wchar_t *s = (wchar_t *)fastAlloc(4 * n);
 		s[0] = 0;
 
-		int len = IwUTF8ToWideChar(utf8str, n, (ucs2char*)s, n * 4);
+		int len = IwUTF8ToWideChar(utf8str, n, s, n * 4);
 		s[len] = 0;
 
 		std::wstring str = s;
@@ -280,7 +273,7 @@ namespace oxygine
 		char *s = (char *)fastAlloc(4 * n);
 		s[0] = 0;
 
-		int len = IwWideCharToUTF8((const ucs2char*)wstr, n, s, n * 4);
+		int len = IwWideCharToUTF8(wstr, n, s, n * 4);
 		s[len] = 0;
 
 		std::string str = s;

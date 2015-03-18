@@ -2,6 +2,8 @@
 #include "oxygine_include.h"
 #include <vector>
 #include "pthread.h"
+#include <functional>
+
 namespace oxygine
 {
 	class MutexPthreadLock
@@ -30,6 +32,9 @@ namespace oxygine
 
 			callback	cb;
 			void*		cbData;
+#ifndef __S3E__
+			std::function< void() >		cbFunction;
+#endif
 
 			unsigned int _id;
 			void*	_result;
@@ -51,6 +56,9 @@ namespace oxygine
 		void*send(int msgid, void *arg1, void *arg2);
 		void post(int msgid, void *arg1, void *arg2);
 		void postCallback(int msgid, void *arg1, void *arg2, callback cb, void *cbData);
+#ifndef __S3E__
+		void postCallback(const std::function<void()> &);
+#endif
 
 		void reply(void *val);
 

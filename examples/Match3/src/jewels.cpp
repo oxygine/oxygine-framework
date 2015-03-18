@@ -4,6 +4,8 @@
 
 Jewel::Jewel(int jewel_id)
 {
+	locked = false;
+
 	state = jsNormal;
 	Set(jewel_id);
 	setTouchEnabled(false);

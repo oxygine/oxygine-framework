@@ -40,6 +40,11 @@ namespace oxygine
 	}
 
 
+	const std::vector<unsigned char>&	HttpRequestTask::getPostData() const
+	{
+		return _postData;
+	}
+
 	const std::vector<unsigned char> &HttpRequestTask::getResponse() const 
 	{
 		return _response; 

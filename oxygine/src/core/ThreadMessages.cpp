@@ -151,6 +151,14 @@ namespace oxygine
 				_last.cb(_last);
 			}
 
+#ifndef __S3E__
+			if (_last.cbFunction)
+			{
+				LOGDN("ThreadMessages::running callback function");
+				_last.cbFunction();
+			}
+#endif
+
 			LOGDN("ThreadMessages::_replyLast pre _waitReplyID = %d, _last._id = %d, _last.msgid=%d", _waitReplyID, _last._id, _last.msgid);
 
 			if (_waitReplyID && _last._id == _waitReplyID)
@@ -236,4 +244,22 @@ namespace oxygine
 		_events.push_back(ev);
 		pthread_cond_signal(&_cond);
 	}
+
+#ifndef __S3E__
+	void ThreadMessages::postCallback(const std::function<void()> &f)
+	{
+		message ev;
+		ev.msgid = 0;
+		ev.arg1 = 0;
+		ev.arg2 = 0;
+		ev.cb = 0;
+		ev.cbData = 0;
+		ev.cbFunction = f;
+
+		MutexPthreadLock lock(_mutex);
+		ev._id = ++_id;
+		_events.push_back(ev);
+		pthread_cond_signal(&_cond);
+	}
+#endif
 }

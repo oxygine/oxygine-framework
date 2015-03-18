@@ -17,3 +17,7 @@ source_group(box2d FILES ${BOX2DSRC})
 include_directories(../box2d)
 
 target_link_libraries(DemoBox2D ${OXYGINE_CORE_LIBS})
+
+if (WIN32) #disable console mode for VC++
+	set_target_properties(DemoBox2D PROPERTIES WIN32_EXECUTABLE TRUE)
+endif(WIN32)

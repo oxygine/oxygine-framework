@@ -23,10 +23,6 @@ namespace oxygine
 
 	std::string lower(const std::string &str);
 
-	/**ONLY FOR DEBUGGING!!! converts wstring to string. it supports ONLY ANSI*/
-	std::wstring debug_s2ws(const std::string &str);
-
-
 	std::wstring	utf8tows(const char *utf8str);
 	std::string		ws2utf8(const wchar_t *wstr);
 

@@ -34,7 +34,11 @@ spActor _tests;
 Resources resources;
 Resources resourcesUI;
 
-//extern spStage stage2;
+//#define MULTIWINDOW 1
+
+#if MULTIWINDOW
+spStage stage2;
+#endif
 
 class TestActor: public Test
 {
@@ -71,9 +75,13 @@ public:
 
 	void showTest(spActor actor)
 	{
+		spStage stage = getStage();
+#if MULTIWINDOW
+		stage = stage2;
+#else
 		setVisible(false);
-		//spStage stage = stage2;
-		getStage()->addChild(actor);
+#endif
+		stage->addChild(actor);
 	}
 
 	void clicked(string id)
@@ -220,11 +228,32 @@ void example_init()
     
     //initialize http requests
     HttpRequestTask::init();
+
+
+#if MULTIWINDOW
+	SDL_Window *window2 = SDL_CreateWindow("Second Oxygine Window", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, getStage()->getWidth(), getStage()->getHeight(), SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);	
+	stage2 = new Stage(false);
+	stage2->setSize(getStage()->getSize());
+	stage2->associateWithWindow(window2);
+#endif
+
 }
 
 void example_update()
 {
-
+#if MULTIWINDOW
+	stage2->update();
+	SDL_Window *wnd = stage2->getAssociatedWindow();
+	if (core::beginRendering(wnd))
+	{
+		Color clearColor(32, 32, 32, 255);
+		Rect viewport(Point(0, 0), core::getDisplaySize());
+		//render all actors. Actor::render would be called also for all children
+		stage2->render(clearColor, viewport);
+	
+		core::swapDisplayBuffers(wnd);
+	}
+#endif
 }
 
 void example_destroy()

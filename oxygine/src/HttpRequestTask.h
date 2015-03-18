@@ -38,8 +38,10 @@ namespace oxygine
 		~HttpRequestTask();
 
 		const std::vector<unsigned char>&	getResponse() const;
+		const std::vector<unsigned char>&	getPostData() const;
 		const std::string&					getFileName() const;
 
+		/**swap version of getResponse if you want to modify result buffer inplace*/
 		void getResponseSwap(std::vector<unsigned char> &);
 
 		void setPostData(const std::vector<unsigned char> &data);

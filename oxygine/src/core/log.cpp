@@ -51,6 +51,13 @@ namespace oxygine
 			_enabled = false;
 		}
 
+		error_handler _eh = 0;
+
+		void setErrorHandler(error_handler eh)
+		{
+			_eh = eh;
+		}
+
 		void out(const char *str)
 		{
 			if (!_enabled)
@@ -66,10 +73,13 @@ namespace oxygine
 		void out_line(char *str, int i)
 		{
 			out(str);
+#if __ANDROID__ || EMSCRIPTEN
+#else
 			out("\n");
+#endif
 		}
 
-		void out_line_prefix(const char *pref, const char* format, va_list args)
+		void out_line_prefix(error_handler eh, const char *pref, const char* format, va_list args)
 		{
 			char buff[SIZE] = {0};
 			strcpy(buff, pref);
@@ -79,9 +89,12 @@ namespace oxygine
 			if (i == -1)
 				buff[SIZE - 1] = 0;
 			out_line(buff, i + len);
+
+			if (eh)
+				eh(buff);
 		}
 
-		void out_prefix(const char *pref, const char* format, va_list args)
+		void out_prefix(error_handler eh, const char *pref, const char* format, va_list args)
 		{
 			char buff[SIZE] = {0};
 			strcpy(buff, pref);
@@ -91,6 +104,9 @@ namespace oxygine
 			if (i == -1)
 				buff[SIZE - 1] = 0;
 			out(buff);
+
+			if (eh)
+				eh(buff);
 		}
 
 		void message(const char *format, ...)
@@ -103,7 +119,7 @@ namespace oxygine
 
 		void message_va(const char *format, va_list args)
 		{
-			out_prefix("", format, args);
+			out_prefix(0, "", format, args);
 		}
 
 		void warning(const char *format, ...)
@@ -116,7 +132,7 @@ namespace oxygine
 
 		void warning_va(const char *format, va_list args)
 		{
-			out_line_prefix("warning: ", format, args);
+			out_line_prefix(0, "warning: ", format, args);
 		}
 
 		void error(const char *format, ...)
@@ -129,7 +145,7 @@ namespace oxygine
 
 		void error_va(const char *format, va_list args)
 		{
-			out_line_prefix("error: ", format, args);
+			out_line_prefix(_eh, "error: ", format, args);
 		}
 
 		void messageln(const char *format, ...)
@@ -142,7 +158,7 @@ namespace oxygine
 
 		void messageln_va(const char *format, va_list args)
 		{
-			out_line_prefix("", format, args);
+			out_line_prefix(0, "", format, args);
 		}
 	}
 }

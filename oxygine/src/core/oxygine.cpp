@@ -778,7 +778,7 @@ namespace oxygine
 		{
 		case ep_show_error:
 			log::error_va(format, args);
-			OX_ASSERT(!"handleErrorPolicy error.");
+			OX_ASSERT_NL(!"handleErrorPolicy error.");
 			break;
 		case ep_show_warning:
 			log::warning_va(format, args);

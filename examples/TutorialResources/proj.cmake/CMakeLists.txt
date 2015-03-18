@@ -9,4 +9,8 @@ link_directories(${OXYGINE_LIBRARY_DIRS})
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 add_executable(TutorialResources ../src/entry_point.cpp ../src/example.cpp  ../src/example.h )
 
+if (WIN32) #disable console mode for VC++
+	set_target_properties(TutorialResources PROPERTIES WIN32_EXECUTABLE TRUE)
+endif(WIN32)
+
 target_link_libraries(TutorialResources ${OXYGINE_CORE_LIBS})

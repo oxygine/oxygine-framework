@@ -126,10 +126,14 @@ namespace oxygine
 
 	void Actor::removedFromStage()
 	{
-		OX_ASSERT(_stage);
+		OX_ASSERT(_stage);		
+
 		onRemovedFromStage();
 		_stage->removeEventListeners(this);
-		_stage = 0;		
+		_stage = 0;	
+
+		_pressed = 0;
+		_overred = 0;
 
 		spActor actor = _children._first;
 		while (actor)
@@ -307,8 +311,6 @@ namespace oxygine
 		case  TouchEvent::TOUCH_DOWN:
 			if (isDescendant(act))
 			{
-				if (event->phase == Event::phase_target)
-					_getStage()->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onMouseEvent));					
 				setPressed(me->index);
 				//_pressed = me->id;
 				//setPressed(true);
@@ -345,8 +347,13 @@ namespace oxygine
 					{
 						setOverred(me->index);
 
+						/*
 						if (event->phase == Event::phase_target)
+						{
+							_getStage()->removeEventListener(TouchEvent::MOVE, CLOSURE(this, &Actor::_onMouseEvent));
 							_getStage()->addEventListener(TouchEvent::MOVE, CLOSURE(this, &Actor::_onMouseEvent));
+						}
+						*/
 					}
 				}
 				else

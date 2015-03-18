@@ -98,9 +98,10 @@ public:
 	void dateTimeLoaded(Event* event)
 	{
 		HttpRequestTask* task = safeCast<HttpRequestTask*>(event->currentTarget.get());
-		const std::vector<unsigned char> &bf = task->getResponse();
+		const std::vector<unsigned char> &response = task->getResponse();
+
 		pugi::xml_document doc;
-		doc.load_buffer(&bf.front(), bf.size());
+		doc.load_buffer(&response.front(), response.size());
 		string time = doc.root().first_child().attribute("time").as_string();
 		notify("internet time:\n" + time, 2000);
 

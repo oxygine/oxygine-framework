@@ -52,16 +52,14 @@ namespace oxygine
 		if (!_listeners)
 			return;
 
-		for (listeners::iterator i = _listeners->begin(); i != _listeners->end(); )
+		for (size_t size = _listeners->size(), i = 0; i != size; ++i)
 		{
-			const listener &ls = *i;
+			const listener &ls = _listeners->at(i);
 			if (ls.id == id)
 			{
-				i = _listeners->erase(i);
+				_listeners->erase(_listeners->begin() + i);
 				break;
 			}
-			else
-				++i;
 		}
 	}
 
@@ -73,34 +71,45 @@ namespace oxygine
 		if (!_listeners)
 			return;
 
-		for (listeners::iterator i = _listeners->begin(); i != _listeners->end(); )
+		for (size_t size = _listeners->size(), i = 0; i != size; ++i)
 		{
-			listener ls = *i;
+			const listener& ls = _listeners->at(i);
 			if (ls.type == et && cb == ls.cb)
 			{
-				i = _listeners->erase(i);
+				_listeners->erase(_listeners->begin() + i);
+				break;
+				//OX_ASSERT(hasEventListeners(et, cb) == false);
+				//--i;
 			}
-			else
-				++i;
 		}
 	}
 
 	bool EventDispatcher::hasEventListeners(void *CallbackThis)
 	{
 		__doCheck();
-		//OX_ASSERT(_listeners);
 		if (!_listeners)
 			return false;
 
-		for (listeners::iterator i = _listeners->begin(); i != _listeners->end();)
+		for (size_t size = _listeners->size(), i = 0; i != size; ++i)
 		{
-			listener ls = *i;
-			if (ls.cb.p_this == CallbackThis)
-			{
+			const listener& ls = _listeners->at(i);
+			if (ls.cb.p_this == CallbackThis)			
+				return true;			
+		}
+		return false;
+	}
+
+	bool EventDispatcher::hasEventListeners(eventType et, EventCallback cb)
+	{
+		__doCheck();
+		if (!_listeners)
+			return false;
+
+		for (size_t size = _listeners->size(), i = 0; i != size; ++i)
+		{
+			const listener& ls = _listeners->at(i);
+			if (ls.type == et && cb == ls.cb)
 				return true;
-			}
-			else
-				++i;
 		}
 		return false;
 	}
@@ -108,19 +117,18 @@ namespace oxygine
 	void EventDispatcher::removeEventListeners(void *CallbackThis)
 	{
 		__doCheck();
-		//OX_ASSERT(_listeners);
 		if (!_listeners)
 			return;
 
-		for (listeners::iterator i = _listeners->begin(); i != _listeners->end(); )
+		for (size_t i = 0; i < _listeners->size(); ++i)
 		{
-			listener ls = *i;
+			const listener& ls = _listeners->at(i);
 			if (ls.cb.p_this == CallbackThis)
 			{
-				i = _listeners->erase(i);
+				_listeners->erase(_listeners->begin() + i);
+				//OX_ASSERT(hasEventListeners(CallbackThis) == false);
+				--i;
 			}
-			else
-				++i;
 		}
 	}
 
@@ -131,47 +139,40 @@ namespace oxygine
 	}
 
 	
-	void EventDispatcher::dispatchEvent(Event *event_)
+	void EventDispatcher::dispatchEvent(Event *event)
 	{
 		__doCheck();
 		if (!_listeners)
 			return;
+		
+		
+		size_t size = _listeners->size();
+		listenerbase* copy = (listenerbase*)alloca(sizeof(listenerbase) * size);
 
-		Event *ev = event_;
-		ev->currentTarget = this;
-
-		listeners copy = *_listeners;//todo, do something!
-		for (listeners::iterator i = copy.begin(); i != copy.end(); ++i)
+		size_t num = 0;
+		for (size_t i = 0; i != size; ++i)
 		{
-			listener ls = *i;
-			if (ls.type != ev->type)
-				continue;
-			//todo!
-
-			/*
-			bool found = false;
-			for (listeners::iterator n = _listeners->begin(); n != _listeners->end(); ++n)
-			{
-				const listener &ols= *n;
-				if (ols.type == ls.type && ols.id == ls.id && ols.cb == ls.cb)
-				{
-					found = true;
-					break;
-				}
-			}
-
-			if (!found)
+			listener& ls = _listeners->at(i);
+			if (ls.type != event->type)
 				continue;
 
-			*/
-
-			//OX_ASSERT(ls.type < 20);
-			//log::messageln("cb: %d %x", ls.type, ls.cb.p_this);
-			ls.cb(ev);
-			if (ev->stopsImmediatePropagation)
-			{
+			new(copy + num) listenerbase(ls);
+			++num;
+		}
+		
+		for (size_t i = 0; i != num; ++i)
+		{
+			listenerbase& ls = copy[i];
+			event->currentTarget = this;
+			ls.cb(event);
+			if (event->stopsImmediatePropagation)
 				break;
-			}
+		}
+
+		for (size_t i = 0; i != num; ++i)
+		{
+			listenerbase& ls = copy[i];
+			ls.~listenerbase();
 		}
 	}
 }

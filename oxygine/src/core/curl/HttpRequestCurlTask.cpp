@@ -1,6 +1,7 @@
 #include "HttpRequestCurlTask.h"
 #include "core/oxygine.h"
 #include "core/ThreadMessages.h"
+#include "SDL.h"
 
 
 namespace oxygine
@@ -38,6 +39,18 @@ namespace oxygine
 				ok = response == 200;
 			}
 
+#if 0
+			const Uint8* data = SDL_GetKeyboardState(0);
+			static bool fail = false;
+
+			if (data[SDL_SCANCODE_N])
+				fail = true;
+			if (data[SDL_SCANCODE_M])
+				fail = false;
+
+			if (fail)
+				ok = false;
+#endif
 
 			if (ok)
 				task->onComplete();

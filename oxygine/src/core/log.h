@@ -11,6 +11,11 @@ namespace oxygine
 		/**Display logging*/
 		void disable();
 
+		typedef void (*error_handler)(const char *txt);
+
+		/*run your callback if log::error was called*/
+		void setErrorHandler(error_handler);
+
 		/**pure out to log*/
 		void out(const char *str);
 

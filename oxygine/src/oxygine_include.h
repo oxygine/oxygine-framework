@@ -10,29 +10,29 @@
 //#define OXYGINE_NO_YEILD 1
 
 #if __S3E__
-	#define OXYGINE_MARMALADE 1
-	#ifdef IW_DEBUG
-		#define OX_DEBUG 1
-	#endif
+#	define OXYGINE_MARMALADE 1
+#	ifdef IW_DEBUG
+#		define OX_DEBUG 1
+#	endif
 #elif EMSCRIPTEN
-	#define OXYGINE_EMSCRIPTEN 1
-	#ifndef NDEBUG
-		#define OX_DEBUG 1
-	#endif // DEBUG	
+#	define OXYGINE_EMSCRIPTEN 1
+#	ifndef NDEBUG
+#		define OX_DEBUG 1
+#	endif // DEBUG	
 #else
-	#define OXYGINE_SDL 1
-	#ifdef WIN32
-		#ifndef _CRT_SECURE_NO_WARNINGS
-			#define _CRT_SECURE_NO_WARNINGS
-		#endif
-	#endif
+#	define OXYGINE_SDL 1
+#	ifdef WIN32
+#		ifndef _CRT_SECURE_NO_WARNINGS
+#			define _CRT_SECURE_NO_WARNINGS
+#		endif
+#	endif
 #endif
 
 
 #if _DEBUG || DEBUG
-	#ifndef OX_DEBUG
-		#define OX_DEBUG 1
-	#endif
+#	ifndef OX_DEBUG
+#		define OX_DEBUG 1
+#	endif
 #endif
 
 
@@ -40,32 +40,40 @@
 
 
 #ifndef OX_DEBUG
-	#ifndef EMSCRIPTEN
-		#define USE_MEMORY_POOL 1
-		#define OBJECT_POOL_ALLOCATOR 1
-	#endif
+#	ifndef EMSCRIPTEN
+#		define USE_MEMORY_POOL 1
+#		define OBJECT_POOL_ALLOCATOR 1
+#	endif
 #endif
 
 #if OX_DEBUG
-	#define OXYGINE_DEBUG_TRACE_LEAKS 1
-	#define OXYGINE_DEBUG_T2P 1
-	#define OXYGINE_DEBUG_SAFECAST 1
-	#define OXYGINE_TRACE_VIDEO_STATS 1
+#	define OXYGINE_DEBUG_TRACE_LEAKS 1
+#	define OXYGINE_DEBUG_T2P 1
+#	define OXYGINE_DEBUG_SAFECAST 1
+#	define OXYGINE_TRACE_VIDEO_STATS 1
 #endif
 
 #define OXYGINE_ASSERT2LOG 1
 
-#if OXYGINE_ASSERT2LOG
-namespace oxygine{namespace log{void error(const char *format, ...);}}
+namespace oxygine{ namespace log{ void error(const char *format, ...); } }
+
+#define OX_LOG_ERROR(x)		if (!(x)) {oxygine::log::error("Assert! %s in %s:%d", #x, __FILE__, __LINE__);}
+
+
+//assert without log::error
 #ifdef OXYGINE_QT
-#define OX_ASSERT(x) if (!(x)) {__asm("int3");oxygine::log::error("Assert! %d %s", __LINE__, __FILE__); }(assert(x))
+#	define OX_ASSERT_NL(x) {assert(x);}
 #elif EMSCRIPTEN
-#define OX_ASSERT(x) if (!(x)) {oxygine::log::error("Assert! %d %s", __LINE__, __FILE__);}
+#	define OX_ASSERT_NL(x) 
 #else
-#define OX_ASSERT(x) if (!(x)) {oxygine::log::error("Assert! %d %s", __LINE__, __FILE__);}(assert(x))
+#	define OX_ASSERT_NL(x) {assert(x);}
 #endif
+
+
+#if OXYGINE_ASSERT2LOG
+#	define OX_ASSERT(x) {OX_LOG_ERROR(x); OX_ASSERT_NL(x);}
 #else
-#define OX_ASSERT(x) (if (!(x)) oxygine::log::error("Assert! %d %s", __LINE__, __FILE__))
+#	define OX_ASSERT(x) {OX_ASSERT_NL(x);}
 #endif
 
 #define OXYGINE_HAS_RESTORE
@@ -73,30 +81,30 @@ namespace oxygine{namespace log{void error(const char *format, ...);}}
 #define OXYGINE_RENDERER 2
 
 #ifdef __GNUC__
-#define OXYGINE_DEPRECATED __attribute__((deprecated))
+#	define OXYGINE_DEPRECATED __attribute__((deprecated))
 #elif defined(_MSC_VER)
-#define OXYGINE_DEPRECATED __declspec(deprecated)
+#	define OXYGINE_DEPRECATED __declspec(deprecated)
 #else
-#pragma message("WARNING: You need to implement DEPRECATED for this compiler")
-#define OXYGINE_DEPRECATED
+#	pragma message("WARNING: You need to implement DEPRECATED for this compiler")
+#	define OXYGINE_DEPRECATED
 #endif
 
 
 #ifdef _MSC_VER
-#define OVERRIDE override
+#	define OVERRIDE override
 #else
-#define OVERRIDE 
+#	define OVERRIDE 
 #endif
 
 
 #ifndef __S3E__
-#if defined(_MSC_VER) || defined(__BORLANDC__)
-typedef unsigned __int64 uint64;
-typedef signed __int64 int64;
-#else
-typedef unsigned long long uint64;
-typedef signed long long int64;
-#endif
+#	if defined(_MSC_VER) || defined(__BORLANDC__)
+	typedef unsigned __int64 uint64;
+	typedef signed __int64 int64;
+#	else
+	typedef unsigned long long uint64;
+	typedef signed long long int64;
+#	endif
 #endif
 
 namespace oxygine

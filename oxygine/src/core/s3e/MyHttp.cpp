@@ -258,7 +258,7 @@ void MyHttp::gotData(int size)
 int MyHttp::_gotData (void* systemData, void* userData)
 {
 	MyHttp *http = (MyHttp *)userData;
-	http->gotData((int)systemData);
+	http->gotData((size_t)systemData);
 	return 0;
 }
 
