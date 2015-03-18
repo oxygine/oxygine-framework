@@ -11,7 +11,6 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include "utils/stringUtils.h"
-#include "RenderState.h"
 #include <stdio.h>
 #include "Serialize.h"
 
@@ -20,6 +19,8 @@
 namespace oxygine
 {
 	CREATE_COPYCLONE_NEW(Actor);
+
+	bool Actor::_updateOnlyPass = false;
 
 	std::string div(const std::string &val, const Color &color)
 	{
@@ -1072,6 +1073,9 @@ namespace oxygine
 		if (!prepareRender(rs, parentRS))
 			return false;
 
+		if(_updateOnlyPass)
+			return true;
+
 		//if (_cbDoRender)
 		//	_cbDoRender(rs);
 		doRender(rs);
@@ -1081,6 +1085,8 @@ namespace oxygine
 
 	void Actor::render(const RenderState &parentRS)
 	{
+		_parentRS = parentRS;
+
 		RenderState rs;		
 		if (!internalRender(rs, parentRS))
 			return;
@@ -1127,6 +1133,21 @@ namespace oxygine
 		_tweens.append(tween);
 
 		return tween;
+	}
+
+	bool Actor::asGlobalZordering()
+	{
+		return false;
+	}
+
+	bool Actor::asLocalZordering()
+	{
+		return false;
+	}
+
+	const RenderState& Actor::getParentRS() const
+	{
+		return _parentRS;
 	}
 
 	spTween Actor::addTween(spTween tween)

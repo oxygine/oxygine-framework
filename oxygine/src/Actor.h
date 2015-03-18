@@ -5,6 +5,7 @@
 #include "math/Rect.h"
 #include "math/AffineTransform.h"
 #include "utils/intrusive_list.h"
+#include "RenderState.h"
 #include "Serializable.h"
 #include "EventDispatcher.h"
 #include "TouchEvent.h"
@@ -19,7 +20,6 @@ namespace oxygine
 
 	typedef unsigned int dumpOptions;
 
-	class RenderState;
 	class UpdateState;
 
 			
@@ -233,7 +233,6 @@ namespace oxygine
 		Vector2 global2local(const Vector2 &pos) const;
 		//converts local position to parent space
 		Vector2 local2global(const Vector2 &pos) const;
-
 				
 		typedef Property2Args<float, Vector2, const Vector2 &, Actor, &Actor::getPosition, &Actor::setPosition>	TweenPosition;        
 		typedef Property<float, float, Actor, &Actor::getX, &Actor::setX>										TweenX;
@@ -295,6 +294,17 @@ namespace oxygine
 		mutable Renderer::transform	_transform;
 		mutable Renderer::transform	_transformInvert;
 
+		friend class GlobalZordering;
+		friend class LocalZordering;
+		/**Checks if actor is a global Z ordering tool*/
+		virtual bool asGlobalZordering();
+		/**Checks if actor is a local Z ordering tool*/
+		virtual bool asLocalZordering();
+
+		const RenderState& getParentRS() const;
+		RenderState _parentRS;
+
+		static bool _updateOnlyPass;
 
 		enum flags
 		{
