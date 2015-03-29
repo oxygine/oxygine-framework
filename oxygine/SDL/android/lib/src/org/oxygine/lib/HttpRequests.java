@@ -3,37 +3,20 @@ package org.oxygine.lib;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.PowerManager;
-import com.android.volley.*;
-import com.android.volley.toolbox.HttpHeaderParser;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.Proxy;
 import java.net.InetSocketAddress;
-import java.util.Map;
+
 import android.util.Log;
-import java.io.File;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.InetSocketAddress;
-import java.net.Proxy;
-import java.net.URL;
-import java.util.ArrayList;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLSession;
-
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.message.BasicNameValuePair;
-
-import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
@@ -47,15 +30,35 @@ class RequestDetails{
     public byte[] postData;
     public long handle;
 };
+
+
+class HttpRequestHolder {
+
+    private HttpRequest task;
+
+    public HttpRequestHolder()
+    {
+    }
+
+    public  void run(final  RequestDetails details)
+    {
+        OxygineActivity.instance.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                HttpRequest task = new HttpRequest();
+                task.execute(details);
+            }
+        });
+    }
+}
+
 // usually, subclasses of AsyncTask are declared inside the activity class.
 // that way, you can easily modify the UI thread from here
 class HttpRequest extends AsyncTask<RequestDetails, Integer, String> {
 
-    private Context context;
     private PowerManager.WakeLock mWakeLock;
 
-    public HttpRequest(Context context) {
-        this.context = context;
+    public HttpRequest() {
     }
 
     public static native void nativeHttpRequestResponseSuccess(long handle, byte[] data);
@@ -65,7 +68,7 @@ class HttpRequest extends AsyncTask<RequestDetails, Integer, String> {
     private Proxy detectProxy() 
     {
         try {
-            ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            ConnectivityManager cm = (ConnectivityManager) OxygineActivity.instance.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo ni = cm.getActiveNetworkInfo();
             if (ni != null && ni.isAvailable() && ni.getType() == ConnectivityManager.TYPE_MOBILE) {
                 String proxyHost = android.net.Proxy.getDefaultHost();
@@ -182,7 +185,7 @@ class HttpRequest extends AsyncTask<RequestDetails, Integer, String> {
         super.onPreExecute();
         // take CPU lock to prevent CPU from going off if the user
         // presses the power button during download
-        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        PowerManager pm = (PowerManager) OxygineActivity.instance.getSystemService(Context.POWER_SERVICE);
         mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
                 getClass().getName());
         mWakeLock.acquire();
@@ -220,23 +223,13 @@ class HttpHandler
         //_queue = Volley.newRequestQueue(OxygineActivity.instance);
     }
 
-    public HttpRequest createRequest(RequestDetails details){
+    public HttpRequestHolder createRequest(final RequestDetails details){
 
         //HttpRequest r = new HttpRequest(url, fname, post, handle);
         //_queue.add(r);
 
-        final HttpRequest downloadTask = new HttpRequest(OxygineActivity.instance);
-        downloadTask.execute(details);
-        /*
-
-        mProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                downloadTask.cancel(true);
-            }
-        })
-        ;
-        */
+        HttpRequestHolder downloadTask = new HttpRequestHolder();
+        downloadTask.run(details);
 
         return downloadTask;
     }
@@ -254,7 +247,8 @@ public class HttpRequests
 
     }
 
-    static public HttpRequest createRequest(String url, String fname, byte[] post, long handle){
+    static public HttpRequestHolder createRequest(String url, String fname, byte[] post, long handle){
+
         RequestDetails details = new RequestDetails();
         details.fileName = fname;
         details.url = url;

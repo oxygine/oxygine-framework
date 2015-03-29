@@ -146,8 +146,8 @@ void Box2DDraw::createPolygonVertices(const b2Vec2* vertices, int32 vertexCount)
 //------------------------------------------------------------------------
 void Box2DDraw::drawPrimitives(bool drawTriangles, bool drawLines, int count, const b2Color& color)
 {
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, (GLfloat*) mVertices);
+	oxglEnableVertexAttribArray(0);
+	oxglVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, (GLfloat*)mVertices);
 
 	if (drawTriangles)
 	{
@@ -163,5 +163,5 @@ void Box2DDraw::drawPrimitives(bool drawTriangles, bool drawLines, int count, co
 		glDrawArrays(GL_LINE_LOOP, 0, count);
 	}
 	 
-	glDisableVertexAttribArray(0);
+	oxglDisableVertexAttribArray(0);
 }

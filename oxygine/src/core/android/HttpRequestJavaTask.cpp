@@ -14,7 +14,7 @@ namespace oxygine
         _jHttpRequestsClass = (jclass) env->NewGlobalRef(env->FindClass("org/oxygine/lib/HttpRequests"));
         JNI_NOT_NULL(_jHttpRequestsClass);    	
 
-        _jCreateRequestMethod = env->GetStaticMethodID(_jHttpRequestsClass, "createRequest", "(Ljava/lang/String;Ljava/lang/String;[BJ)Lorg/oxygine/lib/HttpRequest;"); 
+        _jCreateRequestMethod = env->GetStaticMethodID(_jHttpRequestsClass, "createRequest", "(Ljava/lang/String;Ljava/lang/String;[BJ)Lorg/oxygine/lib/HttpRequestHolder;"); 
         JNI_NOT_NULL(_jCreateRequestMethod);
 
         jmethodID jInit = env->GetStaticMethodID(_jHttpRequestsClass, "init", "()V"); 

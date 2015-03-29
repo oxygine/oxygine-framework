@@ -42,3 +42,7 @@ examples/*/proj.cmake/build/
 temp/
 examples/Game/*/proj.cmake/build/
 examples/HelloWorld/build_helloworld_*
+examples/Game/*/proj.android/bin/
+examples/Game/*/proj.android/libs/
+examples/Game/*/proj.android/gen/
+examples/Match3/build_match3_*
