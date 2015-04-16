@@ -7,12 +7,12 @@ DECLARE_SMART(MyButton, spMyButton);
 class MyButton: public Sprite
 {
 public:
-	MyButton();
+    MyButton();
 
-	void setText(const string &txt);
+    void setText(const string& txt);
 
 private:
-	void onEvent(Event *);
+    void onEvent(Event*);
 
-	spTextField _text;
+    spTextField _text;
 };

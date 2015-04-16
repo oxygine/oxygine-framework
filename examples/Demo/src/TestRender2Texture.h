@@ -4,74 +4,74 @@
 class TestRender2Texture: public Test
 {
 public:
-	spNativeTexture texture;
-	Color color;
-	spSprite preview;
+    spNativeTexture texture;
+    Color color;
+    spSprite preview;
 
-	TestRender2Texture()
-	{
-		notify("touch to draw", 100000);
+    TestRender2Texture()
+    {
+        notify("touch to draw", 100000);
 
-		color = Color(255,255,255,32);
+        color = Color(255, 255, 255, 32);
 
-		Vector2 size = content->getSize();
+        Vector2 size = content->getSize();
 
-		texture = IVideoDriver::instance->createTexture();
-		texture->init((int)size.x, (int)size.y, TF_R8G8B8A8, true);
+        texture = IVideoDriver::instance->createTexture();
+        texture->init((int)size.x, (int)size.y, TF_R8G8B8A8, true);
 
-		preview = new Sprite;
-		preview->attachTo(content);
-		
+        preview = new Sprite;
+        preview->attachTo(content);
 
-		AnimationFrame frame;
-		Diffuse df;
-		df.base = texture;
-		frame.init(0, df,
-			RectF(0, 0, size.x/texture->getWidth(), size.y/texture->getHeight()), 
-			RectF(Vector2(0,0), size), size);
-		preview->setAnimFrame(frame);		
-		preview->setBlendMode(blend_disabled);
 
-		content->addEventListener(TouchEvent::MOVE, CLOSURE(this, &TestRender2Texture::onMove));
-		content->addEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &TestRender2Texture::onDown));
-	}
+        AnimationFrame frame;
+        Diffuse df;
+        df.base = texture;
+        frame.init(0, df,
+                   RectF(0, 0, size.x / texture->getWidth(), size.y / texture->getHeight()),
+                   RectF(Vector2(0, 0), size), size);
+        preview->setAnimFrame(frame);
+        preview->setBlendMode(blend_disabled);
 
-	void onDown(Event *ev)
-	{
-		color = Color(rand() % 255, rand() % 255, rand() % 255, 32);
-		onMove(ev);
-	}
+        content->addEventListener(TouchEvent::MOVE, CLOSURE(this, &TestRender2Texture::onMove));
+        content->addEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &TestRender2Texture::onDown));
+    }
 
-	void onMove(Event *ev)
-	{
-		TouchEvent *te = (TouchEvent *)ev;
-		if (!te->getPointer()->isPressed())
-			return;
+    void onDown(Event* ev)
+    {
+        color = Color(rand() % 255, rand() % 255, rand() % 255, 32);
+        onMove(ev);
+    }
 
-		STDRenderer renderer(0);
-		RenderState rs;
-		rs.renderer = &renderer;
-	
+    void onMove(Event* ev)
+    {
+        TouchEvent* te = (TouchEvent*)ev;
+        if (!te->getPointer()->isPressed())
+            return;
 
-		Rect viewport(Point(0, 0), content->getSize().cast<Point>());
-		renderer.initCoordinateSystem(viewport.getWidth(), viewport.getHeight(), true);
+        STDRenderer renderer(0);
+        RenderState rs;
+        rs.renderer = &renderer;
 
-		IVideoDriver::instance->setRenderTarget(texture);
-		IVideoDriver::instance->setViewport(viewport);
 
-		//begin rendering
-		renderer.begin(0);
+        Rect viewport(Point(0, 0), content->getSize().cast<Point>());
+        renderer.initCoordinateSystem(viewport.getWidth(), viewport.getHeight(), true);
 
-		ResAnim *brush = resources.getResAnim("brush");
-		AnimationFrame frame = brush->getFrame(0,0);
-		const Diffuse &df = frame.getDiffuse();
-		renderer.setTexture(df.base, 0);
-		renderer.setBlendMode(blend_alpha);
-		RectF destRect(te->localPosition - Vector2(16, 16), Vector2(32, 32));
-		renderer.draw(&rs, color, frame.getSrcRect(), destRect);		
-		renderer.end();
+        IVideoDriver::instance->setRenderTarget(texture);
+        IVideoDriver::instance->setViewport(viewport);
 
-		//restore to default render target
-		IVideoDriver::instance->setRenderTarget(0);
-	}
+        //begin rendering
+        renderer.begin(0);
+
+        ResAnim* brush = resources.getResAnim("brush");
+        AnimationFrame frame = brush->getFrame(0, 0);
+        const Diffuse& df = frame.getDiffuse();
+        renderer.setTexture(df.base, 0);
+        renderer.setBlendMode(blend_alpha);
+        RectF destRect(te->localPosition - Vector2(16, 16), Vector2(32, 32));
+        renderer.draw(&rs, color, frame.getSrcRect(), destRect);
+        renderer.end();
+
+        //restore to default render target
+        IVideoDriver::instance->setRenderTarget(0);
+    }
 };

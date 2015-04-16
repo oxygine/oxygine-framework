@@ -4,54 +4,54 @@
 
 namespace oxygine
 {
-	DECLARE_SMART(ProgressBar, spProgressBar);
+    DECLARE_SMART(ProgressBar, spProgressBar);
 
-    class ProgressBar:public _Sprite
-	{
-	public:
-		enum direction
-		{
-			dir_0,//moveable right edge
-			dir_90,//moveable top edge
-			dir_180,//moveable left edge
-			dir_270,//moveable bottom edge
-			dir_radial_cw,
-			__dir_radial_ccw//not implemented!!
-		};
+    class ProgressBar: public _Sprite
+    {
+    public:
+        enum direction
+        {
+            dir_0,//moveable right edge
+            dir_90,//moveable top edge
+            dir_180,//moveable left edge
+            dir_270,//moveable bottom edge
+            dir_radial_cw,
+            __dir_radial_ccw//not implemented!!
+        };
 
-		DECLARE_COPYCLONE_NEW(ProgressBar);
+        DECLARE_COPYCLONE_NEW(ProgressBar);
 
-		ProgressBar();
-		~ProgressBar();
+        ProgressBar();
+        ~ProgressBar();
 
-		float		getProgress() const;
-		direction	getDirection() const;
+        float       getProgress() const;
+        direction   getDirection() const;
 
-		/** setProgress
-		@param value range [0.0f, 1.0f]
-		*/
-		void setProgress(float value);
-		void setDirection(direction dir);
+        /** setProgress
+        @param value range [0.0f, 1.0f]
+        */
+        void setProgress(float value);
+        void setDirection(direction dir);
 
-		std::string dump(const dumpOptions &) const;
+        std::string dump(const dumpOptions&) const;
 
-		void serialize(serializedata* data);
-        void deserialize(const deserializedata *data);
-		
+        void serialize(serializedata* data);
+        void deserialize(const deserializedata* data);
+
         typedef Property<float, float, ProgressBar, &ProgressBar::getProgress, &ProgressBar::setProgress> TweenProgress;
 
-	private:
-		void doRender(const RenderState &rs);
+    private:
+        void doRender(const RenderState& rs);
 
-		RectF getDestRect() const;
-		virtual void _update();
+        RectF getDestRect() const OVERRIDE;
+        virtual void _update();
 
-		void animFrameChanged(const AnimationFrame &f);
+        void animFrameChanged(const AnimationFrame& f);
 
-		float _progress;
-		direction _direction;
-		AnimationFrame _originalFrame;
-	};
+        float _progress;
+        direction _direction;
+        AnimationFrame _originalFrame;
+    };
 }
 
 #ifdef OX_EDITOR

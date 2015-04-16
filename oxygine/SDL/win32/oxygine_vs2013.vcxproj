@@ -173,6 +173,7 @@
     <ClCompile Include="..\..\src\text_utils\Node.cpp" />
     <ClCompile Include="..\..\src\text_utils\TextBuilder.cpp" />
     <ClCompile Include="..\..\src\Tween.cpp" />
+    <ClCompile Include="..\..\src\TweenAnim.cpp" />
     <ClCompile Include="..\..\src\TweenQueue.cpp" />
     <ClCompile Include="..\..\src\utils\stringUtils.cpp" />
     <ClCompile Include="..\..\src\math\AffineTransform.cpp" />
@@ -199,7 +200,6 @@
     <ClInclude Include="..\..\src\core\curl\HttpRequestCurlTask.h" />
     <ClInclude Include="..\..\src\core\file.h" />
     <ClInclude Include="..\..\src\core\FileSystem.h" />
-    <ClInclude Include="..\..\src\core\files_io.h" />
     <ClInclude Include="..\..\src\core\gl\NativeTextureGLES.h" />
     <ClInclude Include="..\..\src\core\gl\oxgl.h" />
     <ClInclude Include="..\..\src\core\gl\ShaderProgramGL.h" />
@@ -210,7 +210,6 @@
     <ClInclude Include="..\..\src\core\ImageDataOperations.h" />
     <ClInclude Include="..\..\src\core\intrusive_ptr.h" />
     <ClInclude Include="..\..\src\core\log.h" />
-    <ClInclude Include="..\..\src\core\logging.h" />
     <ClInclude Include="..\..\src\core\Mem2Native.h" />
     <ClInclude Include="..\..\src\core\Mutex.h" />
     <ClInclude Include="..\..\src\core\NativeTexture.h" />
@@ -255,6 +254,7 @@
     <ClInclude Include="..\..\src\minizip\unzip.h" />
     <ClInclude Include="..\..\src\Multithreading.h" />
     <ClInclude Include="..\..\src\oxygine-framework.h" />
+    <ClInclude Include="..\..\src\oxygine_include.h" />
     <ClInclude Include="..\..\src\PointerState.h" />
     <ClInclude Include="..\..\src\Polygon.h" />
     <ClInclude Include="..\..\src\ProgressBar.h" />
@@ -269,6 +269,7 @@
     <ClInclude Include="..\..\src\res\Resource.h" />
     <ClInclude Include="..\..\src\res\Resources.h" />
     <ClInclude Include="..\..\src\res\ResStarlingAtlas.h" />
+    <ClInclude Include="..\..\src\RootActor.h" />
     <ClInclude Include="..\..\src\Serializable.h" />
     <ClInclude Include="..\..\src\Stage.h" />
     <ClInclude Include="..\..\src\Serialize.h" />
@@ -283,6 +284,7 @@
     <ClInclude Include="..\..\src\text_utils\TextBuilder.h" />
     <ClInclude Include="..\..\src\TouchEvent.h" />
     <ClInclude Include="..\..\src\Tween.h" />
+    <ClInclude Include="..\..\src\TweenAnim.h" />
     <ClInclude Include="..\..\src\Tweener.h" />
     <ClInclude Include="..\..\src\TweenQueue.h" />
     <ClInclude Include="..\..\src\UpdateState.h" />

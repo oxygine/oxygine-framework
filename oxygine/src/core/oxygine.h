@@ -4,110 +4,104 @@
 #include <string>
 
 #if OXYGINE_SDL
-typedef void *SDL_GLContext;
+typedef void* SDL_GLContext;
 typedef struct SDL_Window SDL_Window;
 typedef SDL_Window* window;
 #else
-typedef int window; 
+typedef int window;
 #endif
 
 /**main oxygine namespace*/
 namespace oxygine
 {
-	class ThreadMessages;
+    class ThreadMessages;
 
-	void *fastAlloc(size_t size);
-	void fastFree(void *data);
+    void* fastAlloc(size_t size);
+    void fastFree(void* data);
 
-	typedef int timeMS;
-	
-	/** returns local app time in milliseconds (1sec = 1000ms). Counting starts from zero*/	
-	timeMS			getTimeMS();
+    typedef int timeMS;
 
-	/** returns UTC time in milliseconds */
-	int64			getTimeUTCMS();
+    /** returns local app time in milliseconds (1sec = 1000ms). Counting starts from zero*/
+    timeMS          getTimeMS();
 
-	/** is any network connection available?*/
-	bool			isNetworkAvaible();
+    /** returns UTC time in milliseconds */
+    int64           getTimeUTCMS();
 
-	/**returns locale. ISO 639-1 */
-	std::string		getLanguage();
+    /** is any network connection available?*/
+    bool            isNetworkAvaible();
+
+    /**returns locale. ISO 639-1 */
+    std::string     getLanguage();
 
 
-	/**sleep for milliseconds*/
-	void	sleep(timeMS);
-	
-		
-	namespace core
-	{
-		struct init_desc
-		{
-			init_desc() : mode24bpp(true), w(-1), h(-1), fullscreen(false), title("Oxygine"), vsync(true), appName(0), companyName(0){}
+    /**sleep for milliseconds*/
+    void    sleep(timeMS);
 
-			/**sets 24 bits per pixel, otherwise sets 16 bits per pixel?*/
-			bool mode24bpp;
-			/**display width*/
-			int w;
-			/**display height*/
-			int h;
-			/**vertical sync*/
-			bool vsync;
-			/**fullscreen mode*/
-			bool fullscreen;
-			/**window title*/
-			const char *title;
 
-			/** Application name to be used as part of the file system directory for writable storage. If appName is empty files would be written next to working directory*/
-			const char *appName;
-			/** Company name to be used as part of the file system directory for writable storage*/
-			const char *companyName;
-		};
+    namespace core
+    {
+        struct init_desc
+        {
+            init_desc() : mode24bpp(true), w(-1), h(-1), fullscreen(false), title("Oxygine"), vsync(true), appName(0), companyName(0) {}
 
-		/** Initializes Oxygine*/
-		void init(init_desc *desc = 0);
-			
-		/** Releases all internal components*/
-		void release();
+            /**sets 24 bits per pixel, otherwise sets 16 bits per pixel?*/
+            bool mode24bpp;
+            /**display width*/
+            int w;
+            /**display height*/
+            int h;
+            /**vertical sync*/
+            bool vsync;
+            /**fullscreen mode*/
+            bool fullscreen;
+            /**window title*/
+            const char* title;
 
-		/**sends QUIT event to queue*/
-		void requestQuit();
+            /** Application name to be used as part of the file system directory for writable storage. If appName is empty files would be written next to working directory*/
+            const char* appName;
+            /** Company name to be used as part of the file system directory for writable storage*/
+            const char* companyName;
+        };
 
-		/**destroy and reset any GPU allocated memory and handles. Call it to free memory if app was minimized (lost focus)*/
-		void reset();
+        /** Initializes Oxygine*/
+        void init(init_desc* desc = 0);
 
-		/**restores GPU memory state after reset*/
-		void restore();
+        /** Releases all internal components*/
+        void release();
 
-		/** Update engine*/
-		bool update();
+        /**sends QUIT event to queue*/
+        void requestQuit();
 
-		/**returns True if device is ready for rendering*/
-		bool beginRendering(window i = 0);
+        /**destroy and reset any GPU allocated memory and handles. Call it to free memory if app was minimized (lost focus)*/
+        void reset();
 
-		/** Swap Video buffers*/		
-		void swapDisplayBuffers(window i = 0);
+        /**restores GPU memory state after reset*/
+        void restore();
 
-		/**Opens browser*/
-		void execute(const char *url);
+        /** Update engine*/
+        bool update();
 
-		/** Returns display size in pixels*/
-		Point getDisplaySize();
+        /**returns True if device is ready for rendering*/
+        bool beginRendering(window i = 0);
 
-		ThreadMessages& getMainThreadMessages(); 
-		ThreadMessages& getUiThreadMessages();
+        /** Swap Video buffers*/
+        void swapDisplayBuffers(window i = 0);
 
-		bool isActive();
-		bool hasFocus();
+        /**Opens browser*/
+        void execute(const char* url);
 
-#ifdef OXYGINE_SDL		
-		SDL_GLContext	getGLContext();
-		SDL_Window*		getWindow();
+        /** Returns display size in pixels*/
+        Point getDisplaySize();
+
+        ThreadMessages& getMainThreadMessages();
+        ThreadMessages& getUiThreadMessages();
+
+        bool isActive();
+        bool hasFocus();
+
+#ifdef OXYGINE_SDL
+        SDL_GLContext   getGLContext();
+        SDL_Window*     getWindow();
 #endif
-	}
-
-	namespace core
-	{
-		/**internal usage*/
-		void init2();
-	}
+    }
 }

@@ -6,10 +6,10 @@ class Enemy: public Unit
 {
 public:
 
-	void explode();
+    void explode();
 
 private:
-	void _init();
-	void _update(const UpdateState &us);
-	int _hp;
+    void _init();
+    void _update(const UpdateState& us);
+    int _hp;
 };

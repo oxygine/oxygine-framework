@@ -6,11 +6,11 @@ class Player: public Unit
 {
 public:
 
-	
-protected:
-	void _init();
-	void _update(const UpdateState &us);
 
-	spSprite _engine;	
-	spSprite _ship;	
+protected:
+    void _init();
+    void _update(const UpdateState& us);
+
+    spSprite _engine;
+    spSprite _ship;
 };

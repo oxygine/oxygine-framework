@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <resources>
+	<font file="demo/font.fnt" />
 	<set path = "./../images" />
 	<atlas id = "primary" format="8888">
 		<image file="gray.png"/>

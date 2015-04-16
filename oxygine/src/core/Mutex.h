@@ -3,30 +3,30 @@
 #include "pthread.h"
 namespace oxygine
 {
-	class Mutex
-	{
-	public:
-		Mutex();
-		~Mutex();
+    class Mutex
+    {
+    public:
+        Mutex();
+        ~Mutex();
 
-		void lock();
-		void unlock();
+        void lock();
+        void unlock();
 
-	private:
-		Mutex(const Mutex &){}
-		void operator = (const Mutex &){}
+    private:
+        Mutex(const Mutex&) {}
+        void operator = (const Mutex&) {}
 
-		pthread_mutex_t _handle;
-		//void *_handle;
-	};
+        pthread_mutex_t _handle;
+        //void *_handle;
+    };
 
-	class MutexAutoLock
-	{
-	public:
-		MutexAutoLock(Mutex &m):_m(m){_m.lock();}
-		~MutexAutoLock(){_m.unlock();}
+    class MutexAutoLock
+    {
+    public:
+        MutexAutoLock(Mutex& m): _m(m) {_m.lock();}
+        ~MutexAutoLock() {_m.unlock();}
 
-	private:
-		Mutex& _m;
-	};
+    private:
+        Mutex& _m;
+    };
 }

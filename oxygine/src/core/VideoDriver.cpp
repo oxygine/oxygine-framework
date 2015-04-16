@@ -6,59 +6,59 @@
 
 namespace oxygine
 {
-	IVideoDriver* IVideoDriver::instance = 0;
+    IVideoDriver* IVideoDriver::instance = 0;
 
-	spNativeTexture VideoDriverNull::createTexture()
-	{
-		//return new NativeTextureNull;
-		return 0;
-	}
+    spNativeTexture VideoDriverNull::createTexture()
+    {
+        //return new NativeTextureNull;
+        return 0;
+    }
 
-	void VideoDriverNull::begin(const Rect &viewport, const Color *clearColor)
-	{
+    void VideoDriverNull::begin(const Rect& viewport, const Color* clearColor)
+    {
 
-	}
+    }
 
-	void VideoDriverNull::getStats(Stats &s) const
-	{
-		s.batches = 0;
-		s.triangles = 0;
-	}
+    void VideoDriverNull::getStats(Stats& s) const
+    {
+        s.batches = 0;
+        s.triangles = 0;
+    }
 
-	void VideoDriverNull::getViewport(Rect &r) const
-	{
-		
-	}
-	
-	bool VideoDriverNull::getScissorRect(Rect &) const
-	{
-		return false;
-	}
+    void VideoDriverNull::getViewport(Rect& r) const
+    {
 
-	const VertexDeclaration*	VideoDriverNull::getVertexDeclaration(bvertex_format bf) const
-	{
-		return IVideoDriver::instance->getVertexDeclaration(bf);
-	}
+    }
 
-	void VideoDriverNull::setScissorRect(const Rect *)
-	{
+    bool VideoDriverNull::getScissorRect(Rect&) const
+    {
+        return false;
+    }
 
-	}
+    const VertexDeclaration*    VideoDriverNull::getVertexDeclaration(bvertex_format bf) const
+    {
+        return IVideoDriver::instance->getVertexDeclaration(bf);
+    }
 
-	void VideoDriverNull::setDefaultSettings()
-	{
+    void VideoDriverNull::setScissorRect(const Rect*)
+    {
 
-	}
-	void VideoDriverNull::setRenderTarget(spNativeTexture)
-	{
+    }
 
-	}
-	void VideoDriverNull::setShaderProgram(ShaderProgram*)
-	{
+    void VideoDriverNull::setDefaultSettings()
+    {
 
-	}
-	void VideoDriverNull::setTexture(int sampler, spNativeTexture)
-	{
+    }
+    void VideoDriverNull::setRenderTarget(spNativeTexture)
+    {
 
-	}
+    }
+    void VideoDriverNull::setShaderProgram(ShaderProgram*)
+    {
+
+    }
+    void VideoDriverNull::setTexture(int sampler, spNativeTexture)
+    {
+
+    }
 }

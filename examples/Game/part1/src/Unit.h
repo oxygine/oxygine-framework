@@ -6,16 +6,16 @@ class Game;
 class Unit: public Object
 {
 public:
-	Unit();
+    Unit();
 
-	void init(Game *game);
+    void init(Game* game);
 
-	void update(const UpdateState &us);
+    void update(const UpdateState& us);
 
 protected:
-	virtual void _init(){}
-	virtual void _update(const UpdateState &us){}
+    virtual void _init() {}
+    virtual void _update(const UpdateState& us) {}
 
-	spActor _view;
-	Game *_game;
+    spActor _view;
+    Game* _game;
 };

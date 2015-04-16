@@ -4,17 +4,17 @@
 
 namespace oxygine
 {
-	namespace text
-	{
-		class Node;	
+    namespace text
+    {
+        class Node;
 
-		class TextBuilder
-		{
-		public:
-			TextBuilder();
-			virtual ~TextBuilder();
+        class TextBuilder
+        {
+        public:
+            TextBuilder();
+            virtual ~TextBuilder();
 
-			text::Node *parse(const std::string &str);
-		};
-	}
+            text::Node* parse(const std::string& str);
+        };
+    }
 }

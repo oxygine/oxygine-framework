@@ -7,89 +7,89 @@
 
 namespace oxygine
 {
-	DECLARE_SMART(SlidingActor, spSlidingActor);
-	DECLARE_SMART(DragHandler, spDragHandler);
+    DECLARE_SMART(SlidingActor, spSlidingActor);
+    DECLARE_SMART(DragHandler, spDragHandler);
 
-	class SlidingActor: public _Actor
-	{
-	public:
-		static void setDefaultTouchThreshold(float val);
-		
-		class SlidingEvent: public Event
-		{
-		public:
-			enum SEvent
-			{
-				BEGIN = sysEventID('S', 'B', 'G'),
-				SLIDING = sysEventID('S', 'S', 'L'),
-				END = sysEventID('S', 'E', 'N')
-			};
+    class SlidingActor: public _Actor
+    {
+    public:
+        static void setDefaultTouchThreshold(float val);
 
-			SlidingEvent(SEvent ev) :Event(ev), speed(0, 0){}
-			Vector2 speed;
-		};
+        class SlidingEvent: public Event
+        {
+        public:
+            enum SEvent
+            {
+                BEGIN = sysEventID('S', 'B', 'G'),
+                SLIDING = sysEventID('S', 'S', 'L'),
+                END = sysEventID('S', 'E', 'N')
+            };
+
+            SlidingEvent(SEvent ev) : Event(ev), speed(0, 0) {}
+            Vector2 speed;
+        };
 
 
-		SlidingActor();
-		~SlidingActor();
-	
-		spActor			getContent() const {return _content;}
-		const RectF&	getDragBounds() const {return _drag.getDragBounds();}
+        SlidingActor();
+        ~SlidingActor();
 
-		/**max allowed radius of touch move when content could be clicked*/
-		void setTouchThreshold(float rad);
-		/**sets actor with scrollable data*/
-		void setContent(spActor content);
-		/**lock for user scrolling*/
-		void setLocked(bool locked);
-		/**snaps content*/
-		void snap();
-		/**stop if sliding*/
-		void stop();
+        spActor         getContent() const {return _content;}
+        const RectF&    getDragBounds() const {return _drag.getDragBounds();}
 
-		void serialize(serializedata* data);
-		void deserialize(const deserializedata* data);		
+        /**max allowed radius of touch move when content could be clicked*/
+        void setTouchThreshold(float rad);
+        /**sets actor with scrollable data*/
+        void setContent(spActor content);
+        /**lock for user scrolling*/
+        void setLocked(bool locked);
+        /**snaps content*/
+        void snap();
+        /**stop if sliding*/
+        void stop();
 
-	protected:
-		void destroy();
+        void serialize(serializedata* data);
+        void deserialize(const deserializedata* data);
 
-		void handleEvent(Event *event);
+    protected:
+        void destroy();
 
-		void sizeChanged(const Vector2 &size);
-		void doUpdate(const UpdateState &us);
-		void updateDragBounds();
-		
+        void handleEvent(Event* event);
 
-		void _newEvent(Event *event);
+        void sizeChanged(const Vector2& size);
+        void doUpdate(const UpdateState& us);
+        void updateDragBounds();
 
-		bool _sliding;
-		float _rad;
-		float _maxSpeed;
-		timeMS _downTime;
 
-		Vector2 _downPos;
-		Vector2 _speed;
+        void _newEvent(Event* event);
 
-		Draggable _drag;
+        bool _sliding;
+        float _rad;
+        float _maxSpeed;
+        timeMS _downTime;
 
-		spActor _content;
-		spClipRectActor _clip;
+        Vector2 _downPos;
+        Vector2 _speed;
 
-		spEventDispatcher _holded;
+        Draggable _drag;
 
-		struct  iter
-		{
-			Vector2 pos;
-			timeMS tm;
-		};
+        spActor _content;
+        spClipRectActor _clip;
 
-		timeMS _lastTime;
-		enum {NUM = 11};
-		iter _prev[NUM];
-		int _current;
+        spEventDispatcher _holded;
 
-		timeMS _lastIterTime;
-	};
+        struct  iter
+        {
+            Vector2 pos;
+            timeMS tm;
+        };
+
+        timeMS _lastTime;
+        enum {NUM = 11};
+        iter _prev[NUM];
+        int _current;
+
+        timeMS _lastIterTime;
+    };
 }
 
 #ifdef OX_EDITOR

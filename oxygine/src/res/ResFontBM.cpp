@@ -13,330 +13,325 @@
 #include "Resources.h"
 namespace oxygine
 {
-	Resource *ResFontBM::create(CreateResourceContext &context)
-	{
-		ResFontBM *font = 0;
-		
-		font = new ResFontBM();		
-		font->_createFont(&context, false, false);
-		setNode(font, context.walker.getNode());
-		context.resources->add(font);
-		
-		//context.meta = context.meta.next_sibling();
+    Resource* ResFontBM::create(CreateResourceContext& context)
+    {
+        ResFontBM* font = 0;
 
-		return font;
-	}
+        font = new ResFontBM();
+        font->_createFont(&context, false, false);
+        setNode(font, context.walker.getNode());
+        context.resources->add(font);
 
-	Resource *ResFontBM::createBM(CreateResourceContext &context)
-	{
-		ResFontBM *font = 0;
+        //context.meta = context.meta.next_sibling();
 
-		font = new ResFontBM();		
-		font->_createFont(&context, false, true);
-		setNode(font, context.walker.getNode());
-		context.resources->add(font);
+        return font;
+    }
 
-		//context.meta = context.meta.next_sibling();
+    Resource* ResFontBM::createBM(CreateResourceContext& context)
+    {
+        ResFontBM* font = 0;
 
-		return font;
-	}
+        font = new ResFontBM();
+        font->_createFont(&context, false, true);
+        setNode(font, context.walker.getNode());
+        context.resources->add(font);
 
-	Resource *ResFontBM::createSD(CreateResourceContext &context)
-	{
-		ResFontBM *font = 0;
+        //context.meta = context.meta.next_sibling();
 
-		font = new ResFontBM();		
-		font->_createFont(&context, true, false);
-		setNode(font, context.walker.getNode());
+        return font;
+    }
 
-		//context.meta = context.meta.next_sibling();
+    Resource* ResFontBM::createSD(CreateResourceContext& context)
+    {
+        ResFontBM* font = 0;
 
-		return font;
-	}
+        font = new ResFontBM();
+        font->_createFont(&context, true, false);
+        setNode(font, context.walker.getNode());
 
-	ResFontBM::ResFontBM():_font(0), _format(TF_R8G8B8A8), _premultipliedAlpha(false)
-	{
+        //context.meta = context.meta.next_sibling();
 
-	}
+        return font;
+    }
 
-	ResFontBM::~ResFontBM()
-	{
-		cleanup();
-	}
-		
-	void ResFontBM::init(const char *path, const char *file, bool premultipliedAlpha, bool signedDistanceFont)
-	{
-		_premultipliedAlpha = premultipliedAlpha;
-		_file = std::string(path) + "/" + file;
-		_createFont(0, signedDistanceFont, false);
-	}
+    ResFontBM::ResFontBM(): _font(0), _format(TF_R8G8B8A8), _premultipliedAlpha(false)
+    {
 
-	void ResFontBM::cleanup()
-	{
-		for (pages::iterator i = _pages.begin(); i != _pages.end(); ++i)
-		{
-			const page &p = *i;
-			p.texture->release();
-		}
-		_pages.clear();
-		delete _font;
-		_font = 0;
-	}
+    }
 
-	void ResFontBM::_restore(Restorable *r, void*)
-	{
-		void *object = r->_getRestorableObject();
-		for (pages::iterator i = _pages.begin(); i != _pages.end(); ++i)
-		{
-			const page &p = *i;
-			if (p.texture.get() == object)
-			{
-				_loadPage(p, &RestoreResourcesContext::instance);
-			}
-		}
-	}
+    ResFontBM::~ResFontBM()
+    {
+        cleanup();
+    }
 
-	void ResFontBM::_loadPage(const page &p, LoadResourcesContext *load_context)
-	{
-		if (!load_context->isNeedProceed(p.texture))
-			return;
+    void ResFontBM::init(const char* path, const char* file, bool premultipliedAlpha, bool signedDistanceFont)
+    {
+        _premultipliedAlpha = premultipliedAlpha;
+        _file = std::string(path) + "/" + file;
+        _createFont(0, signedDistanceFont, false);
+    }
 
-		spMemoryTexture mt = new MemoryTexture;
+    void ResFontBM::cleanup()
+    {
+        for (pages::iterator i = _pages.begin(); i != _pages.end(); ++i)
+        {
+            const page& p = *i;
+            p.texture->release();
+        }
+        _pages.clear();
+        delete _font;
+        _font = 0;
+    }
 
-		file::buffer bf;
-		file::read(p.file.c_str(), bf);
+    void ResFontBM::_restore(Restorable* r, void*)
+    {
+        void* object = r->_getRestorableObject();
+        for (pages::iterator i = _pages.begin(); i != _pages.end(); ++i)
+        {
+            const page& p = *i;
+            if (p.texture.get() == object)
+            {
+                _loadPage(p, &RestoreResourcesContext::instance);
+            }
+        }
+    }
 
-		bool premultAlpha = !_premultipliedAlpha;
-		if (!Renderer::getPremultipliedAlphaRender())
-			premultAlpha = false;
+    void ResFontBM::_loadPage(const page& p, LoadResourcesContext* load_context)
+    {
+        if (!load_context->isNeedProceed(p.texture))
+            return;
 
-		mt->init(bf, premultAlpha, _format);		
-		load_context->createTexture(mt, p.texture);
-		p.texture->reg(CLOSURE(this, &ResFontBM::_restore), 0);
-	}
+        spMemoryTexture mt = new MemoryTexture;
 
-	void ResFontBM::_load(LoadResourcesContext *load_context)
-	{
-		OX_ASSERT(!_pages.empty());
-		if (_pages.empty())
-			return;
+        file::buffer bf;
+        file::read(p.file.c_str(), bf);
 
-		for (pages::iterator i = _pages.begin(); i != _pages.end(); ++i)
-		{
-			const page &p = *i;
-			_loadPage(p, load_context);			
-			
-		}		
-	}
+        bool premultAlpha = !_premultipliedAlpha;
+        if (!Renderer::getPremultipliedAlphaRender())
+            premultAlpha = false;
 
-	int ucs2_to_utf8 (int ucs2, unsigned char * utf8)
-	{
-		if (ucs2 < 0x80) {
-			utf8[0] = ucs2;
-			utf8[1] = '\0';
-			return 1;
-		}
-		if (ucs2 >= 0x80  && ucs2 < 0x800) {
-			utf8[0] = (ucs2 >> 6)   | 0xC0;
-			utf8[1] = (ucs2 & 0x3F) | 0x80;
-			utf8[2] = '\0';
-			return 2;
-		}
-		if (ucs2 >= 0x800 && ucs2 < 0xFFFF) {
-			utf8[0] = ((ucs2 >> 12)       ) | 0xE0;
-			utf8[1] = ((ucs2 >> 6 ) & 0x3F) | 0x80;
-			utf8[2] = ((ucs2      ) & 0x3F) | 0x80;
-			utf8[3] = '\0';
-			return 3;
-		}
-		return -1;
-	}
+        mt->init(bf, premultAlpha, _format);
+        load_context->createTexture(mt, p.texture);
+        p.texture->reg(CLOSURE(this, &ResFontBM::_restore), 0);
+    }
 
-	void ResFontBM::_createFont(CreateResourceContext *context, bool sd, bool bmc)
-	{	
-		if (sd)
-			_format = TF_L8;
+    void ResFontBM::_load(LoadResourcesContext* load_context)
+    {
+        OX_ASSERT(!_pages.empty());
+        if (_pages.empty())
+            return;
 
-		if (context)
-		{
-			pugi::xml_node node = context->walker.getNode();
-			_premultipliedAlpha = node.attribute("premultiplied_alpha").as_bool(_premultipliedAlpha);
-			
-			_file = context->walker.getPath("file");
-			setName(_Resource::extractID(node, _file, ""));
+        for (pages::iterator i = _pages.begin(); i != _pages.end(); ++i)
+        {
+            const page& p = *i;
+            _loadPage(p, load_context);
 
-			if (bmc)
-			{
-				_file = *context->prebuilt_folder + getName() + ".fnt";
-			}
-			else
-			{
-				
-			}			
+        }
+    }
 
-			
-		}		
+    int ucs2_to_utf8(int ucs2, unsigned char* utf8)
+    {
+        if (ucs2 < 0x80)
+        {
+            utf8[0] = ucs2;
+            utf8[1] = '\0';
+            return 1;
+        }
+        if (ucs2 >= 0x80  && ucs2 < 0x800)
+        {
+            utf8[0] = (ucs2 >> 6)   | 0xC0;
+            utf8[1] = (ucs2 & 0x3F) | 0x80;
+            utf8[2] = '\0';
+            return 2;
+        }
+        if (ucs2 >= 0x800 && ucs2 < 0xFFFF)
+        {
+            utf8[0] = ((ucs2 >> 12)) | 0xE0;
+            utf8[1] = ((ucs2 >> 6) & 0x3F) | 0x80;
+            utf8[2] = ((ucs2) & 0x3F) | 0x80;
+            utf8[3] = '\0';
+            return 3;
+        }
+        return -1;
+    }
 
-		std::string path = _file;
-		file::buffer fb;
-		file::read(path.c_str(), fb);
+    void ResFontBM::_createFont(CreateResourceContext* context, bool sd, bool bmc)
+    {
+        if (sd)
+            _format = TF_L8;
 
-		pugi::xml_document doc;
-		doc.load_buffer_inplace(&fb.data[0], fb.data.size());
+        if (context)
+        {
+            pugi::xml_node node = context->walker.getNode();
+            _premultipliedAlpha = node.attribute("premultiplied_alpha").as_bool(_premultipliedAlpha);
 
-		
-		pugi::xml_node root = doc.first_child();
-		pugi::xml_node info = root.child("info");
+            _file = context->walker.getPath("file");
+            setName(_Resource::extractID(node, _file, ""));
 
-		//<info face="Century Gothic" size="-24" bold="0" italic="0" charset="" unicode="1" stretchH="100" smooth="1" aa="1" padding="0,0,0,0" spacing="1,1" outline="0"/>
-		int fontSize = info.attribute("size").as_int();
-		
+            if (bmc)
+            {
+                _file = *context->prebuilt_folder + getName() + ".fnt";
+            }
+            else
+            {
 
-		pugi::xml_node common = info.next_sibling("common");
-		int lineHeight = common.attribute("lineHeight").as_int();
-		int base = common.attribute("base").as_int();
+            }
 
-		pugi::xml_node pages = common.next_sibling("pages");
 
-		int tw = common.attribute("scaleW").as_int();
-		int th = common.attribute("scaleH").as_int();
-		
+        }
 
-		for (pugi::xml_node page_node = pages.child("page"); page_node; page_node = page_node.next_sibling("page"))
-		{
-			page p;
+        std::string path = _file;
+        file::buffer fb;
+        file::read(path.c_str(), fb);
 
-			const char *textureFile = page_node.attribute("file").value();
+        pugi::xml_document doc;
+        doc.load_buffer_inplace(&fb.data[0], fb.data.size());
 
-			char tail[255];
-			char head[255];
-			path::split(path.c_str(), head, tail);
-			if (*head)
-			{
-				p.file = head;
-				p.file += "//";
-			}
-			p.file += textureFile;
 
-			p.texture = IVideoDriver::instance->createTexture();
-			p.texture->setName(p.file);
+        pugi::xml_node root = doc.first_child();
+        pugi::xml_node info = root.child("info");
 
-			if (tw)
-			{
-				p.texture->init(0, tw, th, TF_UNDEFINED);
-			}
+        //<info face="Century Gothic" size="-24" bold="0" italic="0" charset="" unicode="1" stretchH="100" smooth="1" aa="1" padding="0,0,0,0" spacing="1,1" outline="0"/>
+        int fontSize = info.attribute("size").as_int();
 
-			_pages.push_back(p);
-		}
-		
 
-		if (!tw)
-		{
-			load(0);
-		}
+        pugi::xml_node common = info.next_sibling("common");
+        int lineHeight = common.attribute("lineHeight").as_int();
+        int base = common.attribute("base").as_int();
 
-				
+        pugi::xml_node pages = common.next_sibling("pages");
 
-		fontSize = abs(fontSize);
-		Font *font = new Font();
-		font->init(getName().c_str(), fontSize, fontSize, lineHeight + fontSize - base);
-		_font = font;
+        int tw = common.attribute("scaleW").as_int();
+        int th = common.attribute("scaleH").as_int();
 
-		if (context)
-		{
-			float scale = context->walker.getMeta().attribute("sf").as_float(1.0f) / context->walker.getScaleFactor();
-			_font->setScale(scale);
-		}
-		
 
-		pugi::xml_node chars = pages.next_sibling("chars");
-		pugi::xml_node child = chars.first_child();
-		while (!child.empty())
-		{	
-			int charID = 0;
-			int xpos = 0;
-			int ypos = 0;
-			int width = 0;
-			int height = 0;
-			int xoffset = 0;
-			int yoffset = 0;
-			int xadvance = 0;
-			int page = 0;
-			
-			pugi::xml_attribute attr = child.first_attribute();
-			while(!attr.empty())
-			{
-				const char *attr_name = attr.name();
-				int value = attr.as_int();
+        for (pugi::xml_node page_node = pages.child("page"); page_node; page_node = page_node.next_sibling("page"))
+        {
+            page p;
 
-				if (!strcmp(attr_name, "id"))
-					charID = value;
-				else
-					if (!strcmp(attr_name, "x"))
-						xpos = value;
-					else
-						if (!strcmp(attr_name, "y"))
-							ypos = value;
-						else
-							if (!strcmp(attr_name, "width"))
-								width = value;
-							else
-								if (!strcmp(attr_name, "height"))
-									height = value;
-								else
-									if (!strcmp(attr_name, "xoffset"))
-										xoffset = value;
-									else
-										if (!strcmp(attr_name, "yoffset"))
-											yoffset = value;
-										else
-											if (!strcmp(attr_name, "xadvance"))
-												xadvance = value;
-											else
-												if (!strcmp(attr_name, "page"))
-													page = value;
+            const char* textureFile = page_node.attribute("file").value();
 
-				attr = attr.next_attribute();
-			}
+            char tail[255];
+            char head[255];
+            path::split(path.c_str(), head, tail);
+            if (*head)
+            {
+                p.file = head;
+                p.file += "//";
+            }
+            p.file += textureFile;
 
-			spTexture t = _pages[page].texture;
-			float iw = 1.0f / t->getWidth();
-			float ih = 1.0f / t->getHeight();
+            p.texture = IVideoDriver::instance->createTexture();
+            p.texture->setName(p.file);
 
-			glyph gl;
-			gl.src = RectF(xpos * iw, ypos * ih, width * iw, height * ih);
-			gl.sw = width;
-			gl.sh = height;
-			gl.offset_x = xoffset;				
-			gl.offset_y = yoffset - base;
-			gl.advance_x = xadvance;
-			gl.advance_y = 0;
+            if (tw)
+            {
+                p.texture->init(0, tw, th, TF_UNDEFINED);
+            }
 
-			int code = 0;
-			ucs2_to_utf8(charID, (unsigned char*)&code);
-			gl.ch = code;
-			gl.texture = _pages[page].texture;
+            _pages.push_back(p);
+        }
 
-			font->addGlyph(gl);
 
-			child = child.next_sibling();
-		}
+        if (!tw)
+        {
+            load(0);
+        }
 
-		font->sortGlyphs();
-	}
 
-	void ResFontBM::_unload()
-	{
-		OX_ASSERT(!_pages.empty());
-		for (pages::iterator i = _pages.begin(); i != _pages.end(); ++i)
-		{
-			const page &p = *i;
-			p.texture->release();
-		}
-	}
 
-	Font *ResFontBM::getFont(const char *name, int size) const
-	{
-		return _font;
-	}
+        fontSize = abs(fontSize);
+        Font* font = new Font();
+        font->init(getName().c_str(), fontSize, fontSize, lineHeight + fontSize - base);
+        _font = font;
+
+        if (context)
+        {
+            float scale = context->walker.getMeta().attribute("sf").as_float(1.0f) / context->walker.getScaleFactor();
+            _font->setScale(scale);
+        }
+
+
+        pugi::xml_node chars = pages.next_sibling("chars");
+        pugi::xml_node child = chars.first_child();
+        while (!child.empty())
+        {
+            int charID = 0;
+            int xpos = 0;
+            int ypos = 0;
+            int width = 0;
+            int height = 0;
+            int xoffset = 0;
+            int yoffset = 0;
+            int xadvance = 0;
+            int page = 0;
+
+            pugi::xml_attribute attr = child.first_attribute();
+            while (!attr.empty())
+            {
+                const char* attr_name = attr.name();
+                int value = attr.as_int();
+
+                if (!strcmp(attr_name, "id"))
+                    charID = value;
+                else if (!strcmp(attr_name, "x"))
+                    xpos = value;
+                else if (!strcmp(attr_name, "y"))
+                    ypos = value;
+                else if (!strcmp(attr_name, "width"))
+                    width = value;
+                else if (!strcmp(attr_name, "height"))
+                    height = value;
+                else if (!strcmp(attr_name, "xoffset"))
+                    xoffset = value;
+                else if (!strcmp(attr_name, "yoffset"))
+                    yoffset = value;
+                else if (!strcmp(attr_name, "xadvance"))
+                    xadvance = value;
+                else if (!strcmp(attr_name, "page"))
+                    page = value;
+
+                attr = attr.next_attribute();
+            }
+
+            spTexture t = _pages[page].texture;
+            float iw = 1.0f / t->getWidth();
+            float ih = 1.0f / t->getHeight();
+
+            glyph gl;
+            gl.src = RectF(xpos * iw, ypos * ih, width * iw, height * ih);
+            gl.sw = width;
+            gl.sh = height;
+            gl.offset_x = xoffset;
+            gl.offset_y = yoffset - base;
+            gl.advance_x = xadvance;
+            gl.advance_y = 0;
+
+            int code = 0;
+            ucs2_to_utf8(charID, (unsigned char*)&code);
+            gl.ch = code;
+            gl.texture = _pages[page].texture;
+
+            font->addGlyph(gl);
+
+            child = child.next_sibling();
+        }
+
+        font->sortGlyphs();
+    }
+
+    void ResFontBM::_unload()
+    {
+        OX_ASSERT(!_pages.empty());
+        for (pages::iterator i = _pages.begin(); i != _pages.end(); ++i)
+        {
+            const page& p = *i;
+            p.texture->release();
+        }
+    }
+
+    Font* ResFontBM::getFont(const char* name, int size) const
+    {
+        return _font;
+    }
 }

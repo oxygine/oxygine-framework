@@ -9,87 +9,88 @@ DECLARE_SMART(TextWithBackground, spTextWithBackground);
 class TextWithBackground: public ColorRectSprite
 {
 public:
-	TextWithBackground(const string &defText)
-	{
-		text = new TextField;
-		//text won't handle any touch event
-		text->setInputEnabled(false);
+    TextWithBackground(const string& defText)
+    {
+        text = new TextField;
+        //text won't handle any touch event
+        text->setInputEnabled(false);
 
-		TextStyle style;
-		style.color = Color::Black;
-		style.hAlign = TextStyle::HALIGN_CENTER;
-		style.vAlign = TextStyle::VALIGN_MIDDLE;
-		style.multiline = true;
-		style.font = resourcesUI.getResFont("big")->getFont();
-		text->setStyle(style);
-		text->setText(defText);
+        TextStyle style;
+        style.color = Color::Black;
+        style.hAlign = TextStyle::HALIGN_CENTER;
+        style.vAlign = TextStyle::VALIGN_MIDDLE;
+        style.multiline = true;
+        style.font = resourcesUI.getResFont("big")->getFont();
+        text->setStyle(style);
+        text->setText(defText);
 
-		addChild(text);		
-	}
+        addChild(text);
+    }
 
-	spTextField text;
+    spTextField text;
 
-	void sizeChanged(const Vector2 &size)
-	{
-		text->setSize(size);
-	}
+    void sizeChanged(const Vector2& size)
+    {
+        text->setSize(size);
+    }
 };
 
 class TestInputText: public Test
 {
 public:
-	spInputText _input;
-	spTextWithBackground _current;
+    spInputText _input;
+    spTextWithBackground _current;
 
-	TestInputText()	
-	{
-		_input = new InputText;
-		//_input->setAllowedSymbols("1234567890");
-		//_input->setDisallowedSymbols("0");
-		_input->addEventListener(Event::COMPLETE, CLOSURE(this, &TestInputText::onComplete));
+    TestInputText()
+    {
+        _input = new InputText;
+        //_input->setAllowedSymbols("1234567890");
+        //_input->setDisallowedSymbols("0");
+        _input->addEventListener(Event::COMPLETE, CLOSURE(this, &TestInputText::onComplete));
 
-		spTextWithBackground t = new TextWithBackground("click and edit me 1");
-		t->setSize(200, 60);
-		t->setPosition(content->getWidth()/2 - t->getWidth()/2, 100);
-		t->attachTo(this);
-		t->addEventListener(TouchEvent::CLICK, CLOSURE(this, &TestInputText::onClick));
+        spTextWithBackground t = new TextWithBackground("click and edit me 1");
+        t->setSize(200, 60);
+        t->setPosition(content->getWidth() / 2 - t->getWidth() / 2, 100);
+        t->attachTo(this);
+        t->addEventListener(TouchEvent::CLICK, CLOSURE(this, &TestInputText::onClick));
 
-		t = new TextWithBackground("click and edit me 2");		
-		t->setSize(200, 60);
-		t->setPosition(content->getWidth()/2 - t->getWidth()/2, 170);
-		t->attachTo(this);
-		t->addEventListener(TouchEvent::CLICK, CLOSURE(this, &TestInputText::onClick));
-	}
+        t = new TextWithBackground("click and edit me 2");
+        t->setSize(200, 60);
+        t->setPosition(content->getWidth() / 2 - t->getWidth() / 2, 170);
+        t->attachTo(this);
+        t->addEventListener(TouchEvent::CLICK, CLOSURE(this, &TestInputText::onClick));
+    }
 
-	void onClick(Event *ev)
-	{
-		if (_current)
-		{
-			_current->setColor(Color::White);
-		}
+    void onClick(Event* ev)
+    {
+        if (_current)
+        {
+            _current->setColor(Color::White);
+        }
 
-		_current = safeSpCast<TextWithBackground>(ev->currentTarget);
-		_input->start(_current->text);
-		_current->setColor(Color::Red);
-	}
+        _current = safeSpCast<TextWithBackground>(ev->currentTarget);
+        _input->start(_current->text);
+        _current->setColor(Color::Red);
+    }
 
-	void onComplete(Event *ev)
-	{
-		if (_current)
-		{
-			_current->setColor(Color::White);
-		}
-		_current = 0;
-		InputText::stopAnyInput();
-	}
+    void onComplete(Event* ev)
+    {
+        if (_current)
+        {
+            _current->setColor(Color::White);
+            notify(_current->text->getText());
+        }
+        _current = 0;
+        InputText::stopAnyInput();
+    }
 
-	~TestInputText()
-	{
-		InputText::stopAnyInput();
-	}
+    ~TestInputText()
+    {
+        InputText::stopAnyInput();
+    }
 
-	void clicked(string id)
-	{		
-		
-	}
+    void clicked(string id)
+    {
+
+    }
 };

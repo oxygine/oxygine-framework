@@ -4,49 +4,49 @@
 
 namespace oxygine
 {
-	class RenderState;
-	class VisualStyle
-	{
-	public:	
+    class RenderState;
+    class VisualStyle
+    {
+    public:
 
-		VisualStyle();
+        VisualStyle();
 
-		const Color&		getColor() const {return _color;}
-		blend_mode			getBlendMode() const {return _blend;}
+        const Color&        getColor() const {return _color;}
+        blend_mode          getBlendMode() const {return _blend;}
 
-		void setColor(const Color &color);
-		void setBlendMode(blend_mode mode);
+        void setColor(const Color& color);
+        void setBlendMode(blend_mode mode);
 
 
-		void _apply(const RenderState &rs);
-		std::string dump() const;
+        void _apply(const RenderState& rs);
+        std::string dump() const;
 
-	protected:
-		Color _color;
-		blend_mode _blend;
-	};
+    protected:
+        Color _color;
+        blend_mode _blend;
+    };
 
     DECLARE_SMART(VStyleActor, spVStyleActor);
-	class VStyleActor : public _Actor
-	{
-	public:
-		DECLARE_COPYCLONE_NEW(VStyleActor);
-		VStyleActor(){}
+    class VStyleActor : public _Actor
+    {
+    public:
+        DECLARE_COPYCLONE_NEW(VStyleActor);
+        VStyleActor() {}
 
-		void serialize(serializedata* data);
-		void deserialize(const deserializedata* data);
+        void serialize(serializedata* data);
+        void deserialize(const deserializedata* data);
 
-		blend_mode				getBlendMode() const {return _vstyle.getBlendMode();}
-		const Color&			getColor() const {return _vstyle.getColor();}
+        blend_mode              getBlendMode() const {return _vstyle.getBlendMode();}
+        const Color&            getColor() const {return _vstyle.getColor();}
 
-		void					setColor(const Color &color){_vstyle.setColor(color);}
-		void					setBlendMode(blend_mode mode){_vstyle.setBlendMode(mode);}
+        void                    setColor(const Color& color) {_vstyle.setColor(color);}
+        void                    setBlendMode(blend_mode mode) {_vstyle.setBlendMode(mode);}
 
-		typedef Property<Color, const Color &, VStyleActor, &VStyleActor::getColor, &VStyleActor::setColor>	TweenColor;
+        typedef Property<Color, const Color&, VStyleActor, &VStyleActor::getColor, &VStyleActor::setColor> TweenColor;
 
-	protected:
-		VisualStyle _vstyle;
-	};
+    protected:
+        VisualStyle _vstyle;
+    };
 
 }
 
@@ -55,6 +55,6 @@ namespace oxygine
 #else
 namespace oxygine
 {
-	typedef VStyleActor _VStyleActor;
+    typedef VStyleActor _VStyleActor;
 }
 #endif

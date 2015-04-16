@@ -5,53 +5,53 @@
 
 namespace oxygine
 {
-	DECLARE_SMART(NativeTexture, spNativeTexture);
+    DECLARE_SMART(NativeTexture, spNativeTexture);
 
-	struct glyph
-	{
-		RectF src;
+    struct glyph
+    {
+        RectF src;
 
-		int ch;
-		
-		short sw;
-		short sh;
+        int ch;
 
-		short offset_x;
-		short offset_y;	
+        short sw;
+        short sh;
 
-		short advance_x;
-		short advance_y;
+        short offset_x;
+        short offset_y;
 
-		spNativeTexture texture;
-	};
+        short advance_x;
+        short advance_y;
 
-	class Font: public ObjectBase
-	{
-	public:
-		Font();
-		~Font();
+        spNativeTexture texture;
+    };
 
-		void init(const char *name, int size, int baselineDistance, int lineHeight);
+    class Font: public ObjectBase
+    {
+    public:
+        Font();
+        ~Font();
 
-		void addGlyph(const glyph &g);
-		void sortGlyphs();
+        void init(const char* name, int size, int baselineDistance, int lineHeight);
 
-		void setScale(float scale){ _scale = scale; }
+        void addGlyph(const glyph& g);
+        void sortGlyphs();
 
-		const glyph*	getGlyph(int code) const;
-		int				getBaselineDistance() const;
-		int				getSize() const;
-		float			getScale() const;
-		int				getLineHeight() const;
+        void setScale(float scale) { _scale = scale; }
 
-	private:
-		typedef std::vector<glyph> glyphs;
-		glyphs _glyphs;		 
+        const glyph*    getGlyph(int code) const;
+        int             getBaselineDistance() const;
+        int             getSize() const;
+        float           getScale() const;
+        int             getLineHeight() const;
 
-		float _scale;
+    private:
+        typedef std::vector<glyph> glyphs;
+        glyphs _glyphs;
 
-		int _size;		
-		int _baselineDistance;
-		int _lineHeight;
-	};
+        float _scale;
+
+        int _size;
+        int _baselineDistance;
+        int _lineHeight;
+    };
 }

@@ -7,9 +7,9 @@ from . import process_starling_atlas
 from . import oxygine_helper
 
 class XmlWalker:
-    def __init__(self, src, folder, scale_factor, node, meta_node, scale_quality):
-        self.base = folder
-        self.path = folder
+    def __init__(self, src, base, path, scale_factor, node, meta_node, scale_quality):
+        self.base = base
+        self.path = path
         self.scale_factor = scale_factor
         self.root = node        
         self.last = None
@@ -84,7 +84,7 @@ class XmlWalker:
                 
             break
             
-        return XmlWalker(self.src, self.path, self.scale_factor, self.last, self.last_meta, self.scale_quality)
+        return XmlWalker(self.src, self.base, self.path, self.scale_factor, self.last, self.last_meta, self.scale_quality)
                 
             
         
@@ -240,7 +240,7 @@ class XmlProcessor:
         
         xml_folder = os.path.split(self.path_xml)[0] + "/"
         
-        walker = XmlWalker(self.src_data, xml_folder, 1.0, doc.documentElement, meta_element, 1.0)
+        walker = XmlWalker(self.src_data, xml_folder, "", 1.0, doc.documentElement, meta_element, 1.0)
         
         while True:
             next = walker.next();

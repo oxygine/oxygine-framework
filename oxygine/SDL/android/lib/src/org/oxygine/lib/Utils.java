@@ -7,6 +7,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Locale;
 
 public class Utils
@@ -45,5 +48,25 @@ public class Utils
     {
         Intent browseIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         _context.startActivity(browseIntent);
+    }
+
+    public static void writeBuffer2InternalStorage(String path, byte[] data)
+    {
+        File file = new File(_context.getFilesDir() + File.separator + path);
+
+        try{
+            FileOutputStream outstream;
+
+            if(!file.exists()){
+                file.createNewFile();
+            }
+
+            outstream = new FileOutputStream(file);
+            outstream.write(data);
+            outstream.close();
+
+        }catch(IOException e){
+            e.printStackTrace();
+        }
     }
 }

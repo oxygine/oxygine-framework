@@ -6,69 +6,69 @@
 
 namespace oxygine
 {
-	DECLARE_SMART(HttpRequestTask, spHttpRequestTask);
-	class HttpRequestTask: public AsyncTask
-	{
-	public:
-		static spHttpRequestTask create();
+    DECLARE_SMART(HttpRequestTask, spHttpRequestTask);
+    class HttpRequestTask: public AsyncTask
+    {
+    public:
+        static spHttpRequestTask create();
 
-		static void init();
-		static void release();	
-		
-		/**dispatching AsyncTask events*/
-		enum
-		{
-			ERROR = AsyncTask::ERROR,
-			PROGRESS = AsyncTask::PROGRESS,
-			COMPLETE = AsyncTask::COMPLETE
-		};
+        static void init();
+        static void release();
 
-		class ProgressEvent : public Event
-		{
-		public:
-			enum {EVENT=PROGRESS};
-			ProgressEvent(int Delta, int Loaded, int Total) :Event(PROGRESS), delta(Delta), loaded(Loaded), total(Total){};
+        /**dispatching AsyncTask events*/
+        enum
+        {
+            ERROR = AsyncTask::ERROR,
+            PROGRESS = AsyncTask::PROGRESS,
+            COMPLETE = AsyncTask::COMPLETE
+        };
 
-			int delta;
-			int loaded;
-			int total;
-		};
+        class ProgressEvent : public Event
+        {
+        public:
+            enum {EVENT = PROGRESS};
+            ProgressEvent(int Delta, int Loaded, int Total) : Event(PROGRESS), delta(Delta), loaded(Loaded), total(Total) {};
 
-		HttpRequestTask();
-		~HttpRequestTask();
+            int delta;
+            int loaded;
+            int total;
+        };
 
-		const std::vector<unsigned char>&	getResponse() const;
-		const std::vector<unsigned char>&	getPostData() const;
-		const std::string&					getFileName() const;
+        HttpRequestTask();
+        ~HttpRequestTask();
 
-		/**swap version of getResponse if you want to modify result buffer inplace*/
-		void getResponseSwap(std::vector<unsigned char> &);
+        const std::vector<unsigned char>&   getResponse() const;
+        const std::vector<unsigned char>&   getPostData() const;
+        const std::string&                  getFileName() const;
 
-		void setPostData(const std::vector<unsigned char> &data);
-		void setUrl(const std::string &url);
-		void setFileName(const std::string &name);
+        /**swap version of getResponse if you want to modify result buffer inplace*/
+        void getResponseSwap(std::vector<unsigned char>&);
+
+        void setPostData(const std::vector<unsigned char>& data);
+        void setUrl(const std::string& url);
+        void setFileName(const std::string& name);
 
 
-	protected:
-		void _prerun();
+    protected:
+        void _prerun();
 
-		//async
-		void progress(int loaded, int total);		
+        //async
+        void progress(int loaded, int total);
 
-		void _onCustom(const ThreadMessages::message &msg);
-		void dispatchProgress(int loaded, int total);
+        void _onCustom(const ThreadMessages::message& msg);
+        void dispatchProgress(int loaded, int total);
 
-        virtual void _setFileName(const std::string &name){}
-        virtual void _setUrl(const std::string &url){}
-        virtual void _setPostData(const std::vector<unsigned char> &data){}
+        virtual void _setFileName(const std::string& name) {}
+        virtual void _setUrl(const std::string& url) {}
+        virtual void _setPostData(const std::vector<unsigned char>& data) {}
 
-		int _loaded;
-		std::string _url;
-		std::string _fname;
-		std::vector<unsigned char> _response;
-		std::vector<unsigned char> _postData;
+        int _loaded;
+        std::string _url;
+        std::string _fname;
+        std::vector<unsigned char> _response;
+        std::vector<unsigned char> _postData;
 
-		//size_t _loaded;
-		//size_t _total;
-	};
+        //size_t _loaded;
+        //size_t _total;
+    };
 }

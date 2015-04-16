@@ -6,20 +6,20 @@
 #include "Object.h"
 
 #ifdef __S3E__
-    #include <s3eFile.h>
-#elif WIN32
-    #include <direct.h>
+#include <s3eFile.h>
+#elif _WIN32
+#include <direct.h>
 #elif __APPLE__
-    #include "ios/ios.h"
+#include "ios/ios.h"
 #elif EMSCRIPTEN
 #else
-	#include "SDL_system.h"
+#include "SDL_system.h"
 #endif
 
- 
+
 #ifdef OXYGINE_SDL
 #  include "SDL_filesystem.h"
-#elif WIN32
+#elif _WIN32
 #  include <shlwapi.h>
 #  include <shlobj.h>
 #endif
@@ -27,214 +27,214 @@
 #include <sys/stat.h>
 
 //#define LOGD(...) oxygine::log::messageln(__VA_ARGS__)
-#define LOGD(...) 
+#define LOGD(...)
 
 
 namespace oxygine
 {
-	namespace file
-	{
-		std::string _additionalFolder;
+    namespace file
+    {
+        std::string _additionalFolder;
 
-		STDFileSystem _nfs(true);
-		STDFileSystem _nfsWrite(false);
+        STDFileSystem _nfs(true);
+        STDFileSystem _nfsWrite(false);
 
-		void init(const char *company, const char *app)
-		{
+        void init(const char* company, const char* app)
+        {
 #ifdef __S3E__
-			_nfs.setPath("rom://");
-			_nfsWrite.setPath("ram://");
+            _nfs.setPath("rom://");
+            _nfsWrite.setPath("ram://");
 #elif EMSCRIPTEN
-			//mkdir("data-ram/", S_IRWXU|S_IRWXG|S_IRWXO);
-			//_nfsWrite.setPath("data-ram/");
+            //mkdir("data-ram/", S_IRWXU|S_IRWXG|S_IRWXO);
+            //_nfsWrite.setPath("data-ram/");
 
 #elif __ANDROID__
-			log::messageln("internal %s", SDL_AndroidGetInternalStoragePath());
-			log::messageln("external %s", SDL_AndroidGetExternalStoragePath());
-			_nfsWrite.setPath(SDL_AndroidGetInternalStoragePath());
+            log::messageln("internal %s", SDL_AndroidGetInternalStoragePath());
+            log::messageln("external %s", SDL_AndroidGetExternalStoragePath());
+            _nfsWrite.setPath(SDL_AndroidGetInternalStoragePath());
 #elif __APPLE__
             _nfsWrite.setPath(getSupportFolder().c_str());
 #else
-			if (company && app && *company && *app)
-			{
-				char *base_path = SDL_GetPrefPath(company, app);
-				if (base_path)
-				{
-					_nfsWrite.setPath(base_path);
-					SDL_free(base_path);
-				}
-			}
-			else
-			{
-#   ifdef WIN32
-				_mkdir("../data-ram/");
+            if (company && app && *company && *app)
+            {
+                char* base_path = SDL_GetPrefPath(company, app);
+                if (base_path)
+                {
+                    _nfsWrite.setPath(base_path);
+                    SDL_free(base_path);
+                }
+            }
+            else
+            {
+#   ifdef _WIN32
+                _mkdir("../data-ram/");
 #   else
                 mkdir("../data-ram/", ACCESSPERMS);
 #   endif
-				_nfsWrite.setPath("../data-ram/");
-			}
+                _nfsWrite.setPath("../data-ram/");
+            }
 #endif
-			_nfs.mount(&_nfsWrite);
-		}
+            _nfs.mount(&_nfsWrite);
+        }
 
-		void mount(FileSystem *fs)
-		{
-			_nfs.mount(fs);
-		}
+        void mount(FileSystem* fs)
+        {
+            _nfs.mount(fs);
+        }
 
-		void unmount(FileSystem *fs)
-		{
-			_nfs.unmount(fs);
-		}
+        void unmount(FileSystem* fs)
+        {
+            _nfs.unmount(fs);
+        }
 
-		handle open(const char *file_, const char *mode, error_policy ep)
-		{
+        handle open(const char* file_, const char* mode, error_policy ep)
+        {
 #ifdef OX_DEBUG
-			if (!strstr(mode, "b"))
-				log::warning("file::open for file '%s' should be called with 'b' (means binary) flag", file_);
+            if (!strstr(mode, "b"))
+                log::warning("file::open for file '%s' should be called with 'b' (means binary) flag", file_);
 #endif
-			//OX_ASSERT(_openedFiles == 0);
-			LOGD("open file: %s %s %d", file_, mode, _openedFiles);
-			char file[512];
-			path::normalize(file_, file);
-			LOGD("q1");
+            //OX_ASSERT(_openedFiles == 0);
+            LOGD("open file: %s %s %d", file_, mode, _openedFiles);
+            char file[512];
+            path::normalize(file_, file);
+            LOGD("q1");
 
 
-			fileHandle *fh = 0;
-			_nfs.open(file, mode, ep_ignore_error, fh);
+            fileHandle* fh = 0;
+            _nfs.open(file, mode, ep_ignore_error, fh);
 
-			LOGD("q3");
+            LOGD("q3");
 
-			if (!fh)
-			{
-				handleErrorPolicy(ep, "can't open file: %s", file);
-			}
+            if (!fh)
+            {
+                handleErrorPolicy(ep, "can't open file: %s", file);
+            }
 
-			return (handle)fh;
-		}
+            return (handle)fh;
+        }
 
-		void close(handle h)
-		{
-			LOGD("close file %x", fh);
-			fileHandle *fh = (fileHandle *)h;
-			fh->release();
-		}
+        void close(handle h)
+        {
+            LOGD("close file %x", fh);
+            fileHandle* fh = (fileHandle*)h;
+            fh->release();
+        }
 
-		int seek(handle h, unsigned int offset, int whence)
-		{
-			fileHandle *fh = (fileHandle *)h;
-			return fh->seek(offset, whence);
-		}
+        int seek(handle h, unsigned int offset, int whence)
+        {
+            fileHandle* fh = (fileHandle*)h;
+            return fh->seek(offset, whence);
+        }
 
-		unsigned int tell(handle h)
-		{
-			fileHandle *fh = (fileHandle *)h;
-			return fh->tell();
-		}
+        unsigned int tell(handle h)
+        {
+            fileHandle* fh = (fileHandle*)h;
+            return fh->tell();
+        }
 
-		bool deleteFile(const char *path, error_policy ep)
-		{
-			bool ok = _nfs.deleteFile(path) == FileSystem::status_ok;
-			if (!ok)
-			{
-				handleErrorPolicy(ep, "can't delete file: %s", path);
-			}
+        bool deleteFile(const char* path, error_policy ep)
+        {
+            bool ok = _nfs.deleteFile(path) == FileSystem::status_ok;
+            if (!ok)
+            {
+                handleErrorPolicy(ep, "can't delete file: %s", path);
+            }
 
-			return ok;
-		}
+            return ok;
+        }
 
-		bool rename(const char *src, const char *dest, error_policy ep)
-		{
-			bool ok = _nfs.renameFile(src, dest) == FileSystem::status_ok;
-			if (!ok)
-			{
-				handleErrorPolicy(ep, "can't rename file: %s to %s", src, dest);
-			}
+        bool rename(const char* src, const char* dest, error_policy ep)
+        {
+            bool ok = _nfs.renameFile(src, dest) == FileSystem::status_ok;
+            if (!ok)
+            {
+                handleErrorPolicy(ep, "can't rename file: %s to %s", src, dest);
+            }
 
-			return ok;
-		}
+            return ok;
+        }
 
-		unsigned int read(handle h, void *dest, unsigned int destSize)
-		{			
-			fileHandle *fh = (fileHandle *)h;
-			OX_ASSERT(fh && dest);
-			LOGD("read file %x %d", fh, destSize);
+        unsigned int read(handle h, void* dest, unsigned int destSize)
+        {
+            fileHandle* fh = (fileHandle*)h;
+            OX_ASSERT(fh && dest);
+            LOGD("read file %x %d", fh, destSize);
 
-			return fh->read(dest, destSize);
-		}
+            return fh->read(dest, destSize);
+        }
 
-		void read(const char *file, buffer &dest, error_policy ep)
-		{
-			dest.data.clear();
+        void read(const char* file, buffer& dest, error_policy ep)
+        {
+            dest.data.clear();
 
-			autoClose ac(open(file, "rb", ep));
-			if (ac.getHandle())
-			{
-				read(ac.getHandle(), dest);
-			}
-		}
+            autoClose ac(open(file, "rb", ep));
+            if (ac.getHandle())
+            {
+                read(ac.getHandle(), dest);
+            }
+        }
 
-		unsigned int read(handle fh_, buffer &dest)
-		{
-			fileHandle *fh = (fileHandle*)fh_;
+        unsigned int read(handle fh_, buffer& dest)
+        {
+            fileHandle* fh = (fileHandle*)fh_;
 
-			unsigned int size  = fh->getSize();
-			if (!size)
-				return 0;
+            unsigned int size  = fh->getSize();
+            if (!size)
+                return 0;
 
-			dest.data.resize(size);
-			unsigned int t = fh->read(&dest.data[0], size);
-			LOGD("read file %x %d", fh, t);
-			return t;
-		}
+            dest.data.resize(size);
+            unsigned int t = fh->read(&dest.data[0], size);
+            LOGD("read file %x %d", fh, t);
+            return t;
+        }
 
-		void write(handle fh_, const void *data, unsigned int size)
-		{
-			fileHandle *fh = (fileHandle*)fh_;
-			fh->write(data, size);
-		}
+        void write(handle fh_, const void* data, unsigned int size)
+        {
+            fileHandle* fh = (fileHandle*)fh_;
+            fh->write(data, size);
+        }
 
-		void write(const char *file, const buffer &data, error_policy ep)
-		{
-			write(file, data.getData(), data.getSize(), ep);
-		}
+        void write(const char* file, const buffer& data, error_policy ep)
+        {
+            write(file, data.getData(), data.getSize(), ep);
+        }
 
-		void write(const char *file, const void *data, unsigned int size, error_policy ep)
-		{
-			autoClose ac(open(file, "wb", ep));
-			if (!ac.getHandle())
-				return;
-			write(ac.getHandle(), data, size);
-		}
+        void write(const char* file, const void* data, unsigned int size, error_policy ep)
+        {
+            autoClose ac(open(file, "wb", ep));
+            if (!ac.getHandle())
+                return;
+            write(ac.getHandle(), data, size);
+        }
 
-		
 
-		bool exists(const char *file_)
-		{
-			char file[512];
-			path::normalize(file_, file);
 
-			return _nfs.isExists(file);
-		}
+        bool exists(const char* file_)
+        {
+            char file[512];
+            path::normalize(file_, file);
 
-		bool makeDirectory(const char *path)
-		{
-			return _nfs.makeDirectory(path) == FileSystem::status_ok;
-		}
+            return _nfs.isExists(file);
+        }
 
-		void deleteDirectory(const char *path)
-		{
-			_nfs.deleteDirectory(path);
-		}
+        bool makeDirectory(const char* path)
+        {
+            return _nfs.makeDirectory(path) == FileSystem::status_ok;
+        }
 
-		file::STDFileSystem &fs()
-		{
-			return _nfs;
-		}
+        void deleteDirectory(const char* path)
+        {
+            _nfs.deleteDirectory(path);
+        }
 
-		file::STDFileSystem &wfs()
-		{
-			return _nfsWrite;
-		}
-	}
+        file::STDFileSystem& fs()
+        {
+            return _nfs;
+        }
+
+        file::STDFileSystem& wfs()
+        {
+            return _nfsWrite;
+        }
+    }
 }

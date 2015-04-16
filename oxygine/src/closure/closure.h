@@ -18,7 +18,7 @@ Many thanks to Wolfhound
 #  pragma once
 #endif
 
-#ifndef __S3E__
+#ifndef __S3E__d
 #define CLOSURE_FUNCTION 1
 #endif
 

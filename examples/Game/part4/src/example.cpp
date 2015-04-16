@@ -13,16 +13,16 @@ void example_preinit()
 
 void example_init()
 {
-	//load resources
-	res::load();
+    //load resources
+    res::load();
 
-	//create all scenes
-	GameMenu::instance = new GameMenu;
-	GameScene::instance = new GameScene;
-	MainMenuScene::instance = new MainMenuScene;
+    //create all scenes
+    GameMenu::instance = new GameMenu;
+    GameScene::instance = new GameScene;
+    MainMenuScene::instance = new MainMenuScene;
 
-	//show main menu
-	MainMenuScene::instance->show();
+    //show main menu
+    MainMenuScene::instance->show();
 }
 
 void example_update()
@@ -32,9 +32,9 @@ void example_update()
 
 void example_destroy()
 {
-	MainMenuScene::instance = 0;
-	GameScene::instance = 0;
-	GameMenu::instance = 0;
+    MainMenuScene::instance = 0;
+    GameScene::instance = 0;
+    GameMenu::instance = 0;
 
-	res::free();
+    res::free();
 }

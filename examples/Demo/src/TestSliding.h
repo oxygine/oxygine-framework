@@ -7,118 +7,118 @@
 class TestSliding: public Test
 {
 public:
-	spSlidingActor _sliding;
-	bool _snapEnabled;
-	TestSliding()
-	{	
-		_snapEnabled = false;
+    spSlidingActor _sliding;
+    bool _snapEnabled;
+    TestSliding()
+    {
+        _snapEnabled = false;
 
-		spSlidingActor sliding = new SlidingActor();
-		sliding->addEventListener(SlidingActor::SlidingEvent::BEGIN, CLOSURE(this,  &TestSliding::slideBegin));
-		sliding->addEventListener(SlidingActor::SlidingEvent::SLIDING, CLOSURE(this,  &TestSliding::sliding));
-		sliding->addEventListener(SlidingActor::SlidingEvent::END, CLOSURE(this,  &TestSliding::slideEnd));
-		
-
-		sliding->setSize(getWidth()/3 * 2, getHeight()/3 * 2);
+        spSlidingActor sliding = new SlidingActor();
+        sliding->addEventListener(SlidingActor::SlidingEvent::BEGIN, CLOSURE(this,  &TestSliding::slideBegin));
+        sliding->addEventListener(SlidingActor::SlidingEvent::SLIDING, CLOSURE(this,  &TestSliding::sliding));
+        sliding->addEventListener(SlidingActor::SlidingEvent::END, CLOSURE(this,  &TestSliding::slideEnd));
 
 
-		spColorRectSprite content = new ColorRectSprite();
-		content->setSize(sliding->getWidth(), 2000);
-		content->setColor(Color(200,200,200,255));
-		for (int i = 0; i < 20; i+=2)
-		{
-			spColorRectSprite c = initActor(new ColorRectSprite,
-				arg_size = Vector2(content->getWidth(), 100),
-				arg_color = Color(164,164,164,255),
-				arg_y = i * 100.0f,
-				arg_attachTo = content);
+        sliding->setSize(getWidth() / 3 * 2, getHeight() / 3 * 2);
 
-			c->setCull(true);//cull invisible parts
 
-			spButton button = initActor(new Button, 
-				arg_resAnim = resourcesUI.getResAnim("button"),
-				arg_attachTo = c);
-			button->addEventListener(TouchEvent::CLICK, CLOSURE(this, &TestSliding::testClick));
-		}
+        spColorRectSprite content = new ColorRectSprite();
+        content->setSize(sliding->getWidth(), 2000);
+        content->setColor(Color(200, 200, 200, 255));
+        for (int i = 0; i < 20; i += 2)
+        {
+            spColorRectSprite c = initActor(new ColorRectSprite,
+                                            arg_size = Vector2(content->getWidth(), 100),
+                                            arg_color = Color(164, 164, 164, 255),
+                                            arg_y = i * 100.0f,
+                                            arg_attachTo = content);
 
-		spTextField title = initActor(new TextField, 
-			arg_text = "Sliding demo", 
-			arg_w = content->getWidth(),
-			arg_vAlign = TextStyle::VALIGN_TOP,
-			arg_hAlign = TextStyle::HALIGN_CENTER,
-			arg_font = resourcesUI.getResFont("big")->getFont(),
-			arg_color = Color(0xFF0000ff),
-			arg_attachTo = content);
-		
-		sliding->setContent(content);
-		sliding->setPosition(getSize()/2 - sliding->getSize()/2);
-		sliding->attachTo(this->content);
+            c->setCull(true);//cull invisible parts
 
-		_sliding = sliding;
+            spButton button = initActor(new Button,
+                                        arg_resAnim = resourcesUI.getResAnim("button"),
+                                        arg_attachTo = c);
+            button->addEventListener(TouchEvent::CLICK, CLOSURE(this, &TestSliding::testClick));
+        }
 
-		toggle tl[] = {toggle("lock", 0), toggle("unlock", 1)};
-		addToggle("lock", tl, 2);
+        spTextField title = initActor(new TextField,
+                                      arg_text = "Sliding demo",
+                                      arg_w = content->getWidth(),
+                                      arg_vAlign = TextStyle::VALIGN_TOP,
+                                      arg_hAlign = TextStyle::HALIGN_CENTER,
+                                      arg_font = resourcesUI.getResFont("big")->getFont(),
+                                      arg_color = Color(0xFF0000ff),
+                                      arg_attachTo = content);
 
-		toggle ts[] = {toggle("enable snap", 0), toggle("disable snap", 1)};
-		addToggle("snap", ts, 2);
+        sliding->setContent(content);
+        sliding->setPosition(getSize() / 2 - sliding->getSize() / 2);
+        sliding->attachTo(this->content);
 
-		addButton("stop", "stop");
-	}
+        _sliding = sliding;
 
-	void clicked(string id)
-	{
-		if (id == "stop")
-		{
-			_sliding->stop();
-		}
-	}
+        toggle tl[] = {toggle("lock", 0), toggle("unlock", 1)};
+        addToggle("lock", tl, 2);
 
-	void toggleClicked(string id, const toggle *data)
-	{
-		if (id == "lock")
-			_sliding->setLocked(data->value == 0);
-		if (id == "snap")
-		{
-			_snapEnabled = data->value == 0;
-		}
-	}
+        toggle ts[] = {toggle("enable snap", 0), toggle("disable snap", 1)};
+        addToggle("snap", ts, 2);
 
-	void slideBegin(Event *event)
-	{
-		notify("slideBegin");
-		SlidingActor::SlidingEvent *sd = safeCast<SlidingActor::SlidingEvent *>(event);
-	}
+        addButton("stop", "stop");
+    }
 
-	void slideEnd(Event *event)
-	{
-		notify("slideEnd");
+    void clicked(string id)
+    {
+        if (id == "stop")
+        {
+            _sliding->stop();
+        }
+    }
 
-		if (!_snapEnabled)
-			return;
+    void toggleClicked(string id, const toggle* data)
+    {
+        if (id == "lock")
+            _sliding->setLocked(data->value == 0);
+        if (id == "snap")
+        {
+            _snapEnabled = data->value == 0;
+        }
+    }
 
-		//snap to  grid
-		SlidingActor::SlidingEvent *sd = safeCast<SlidingActor::SlidingEvent *>(event);
-		spActor content = _sliding->getContent();
-		float y = content->getY();
-		y = int(y / 100) * 100.0f;
-		Vector2 dest(content->getX(), y);
-		content->addTween(Actor::TweenPosition(dest), 100);
-	}
+    void slideBegin(Event* event)
+    {
+        notify("slideBegin");
+        SlidingActor::SlidingEvent* sd = safeCast<SlidingActor::SlidingEvent*>(event);
+    }
 
-	void sliding(Event *event)
-	{
-		/*
-		//snap
-		SlidingActor::SlidingEvent* sd = safeCast<SlidingActor::SlidingEvent *>(event);
-		if (sd->speed.sqlength() < 2500)
-		{
-			sd->speed = Vector2(0,0);
-		}
-		*/
-	}
+    void slideEnd(Event* event)
+    {
+        notify("slideEnd");
 
-	void testClick(Event *event)
-	{
-		notify("clicked");
-	}
+        if (!_snapEnabled)
+            return;
+
+        //snap to  grid
+        SlidingActor::SlidingEvent* sd = safeCast<SlidingActor::SlidingEvent*>(event);
+        spActor content = _sliding->getContent();
+        float y = content->getY();
+        y = int(y / 100) * 100.0f;
+        Vector2 dest(content->getX(), y);
+        content->addTween(Actor::TweenPosition(dest), 100);
+    }
+
+    void sliding(Event* event)
+    {
+        /*
+        //snap
+        SlidingActor::SlidingEvent* sd = safeCast<SlidingActor::SlidingEvent *>(event);
+        if (sd->speed.sqlength() < 2500)
+        {
+            sd->speed = Vector2(0,0);
+        }
+        */
+    }
+
+    void testClick(Event* event)
+    {
+        notify("clicked");
+    }
 };

@@ -7,58 +7,58 @@
 
 namespace pugi
 {
-	class xml_node;
+    class xml_node;
 }
 
 namespace oxygine
 {
 
-	class Resources;
-	class CreateResourceContext;
-	DECLARE_SMART(NativeTexture, spNativeTexture);
+    class Resources;
+    class CreateResourceContext;
+    DECLARE_SMART(NativeTexture, spNativeTexture);
 
-	class ResAtlas: public _Resource
-	{
-	public:
-		static Resource *create(CreateResourceContext &context);
-		struct atlas
-		{
-			spNativeTexture base;
-			std::string base_path;
+    class ResAtlas: public _Resource
+    {
+    public:
+        static Resource* create(CreateResourceContext& context);
+        struct atlas
+        {
+            spNativeTexture base;
+            std::string base_path;
 
-			spNativeTexture alpha;
-			std::string alpha_path;
-		};
+            spNativeTexture alpha;
+            std::string alpha_path;
+        };
 
 
-		ResAtlas();
-		~ResAtlas();
+        ResAtlas();
+        ~ResAtlas();
 
-		void addAtlas(TextureFormat tf, const std::string &base, const std::string &alpha, int w, int h);
-		const atlas& getAtlas(int i) const {return _atlasses[i];}
-		int getNum() const { return (int)_atlasses.size(); }
+        void addAtlas(TextureFormat tf, const std::string& base, const std::string& alpha, int w, int h);
+        const atlas& getAtlas(int i) const {return _atlasses[i];}
+        int getNum() const { return (int)_atlasses.size(); }
 
-	protected:
-		void _restore(Restorable *r, void *user);
+    protected:
+        void _restore(Restorable* r, void* user);
 
-		void _load(LoadResourcesContext *);
-		void _unload();
+        void _load(LoadResourcesContext*);
+        void _unload();
 
-		void loadAtlas(CreateResourceContext &context);
-		static void init_resAnim(ResAnim *rs, const std::string &file, pugi::xml_node node);
+        void loadAtlas(CreateResourceContext& context);
+        static void init_resAnim(ResAnim* rs, const std::string& file, pugi::xml_node node);
 
-	private:		
-		//void next_atlas(int w, int h, TextureFormat tf, atlas_data &ad, const char *name);
-		//void apply_atlas(atlas_data &ad);
+    private:
+        //void next_atlas(int w, int h, TextureFormat tf, atlas_data &ad, const char *name);
+        //void apply_atlas(atlas_data &ad);
 
-		//settings from xml
-		bool _linearFilter;
-		bool _clamp2edge;
+        //settings from xml
+        bool _linearFilter;
+        bool _clamp2edge;
 
-		typedef std::vector<atlas> atlasses;
-		atlasses _atlasses;
-	};
+        typedef std::vector<atlas> atlasses;
+        atlasses _atlasses;
+    };
 
-	typedef void(*load_texture_hook)(const std::string &file, spNativeTexture nt, LoadResourcesContext *load_context);
-	void set_load_texture_hook(load_texture_hook);
+    typedef void(*load_texture_hook)(const std::string& file, spNativeTexture nt, LoadResourcesContext* load_context);
+    void set_load_texture_hook(load_texture_hook);
 }

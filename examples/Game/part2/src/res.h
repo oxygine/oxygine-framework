@@ -4,7 +4,7 @@ using namespace oxygine;
 
 namespace res
 {
-	extern Resources ui;
-	void load();
-	void free();
+    extern Resources ui;
+    void load();
+    void free();
 }

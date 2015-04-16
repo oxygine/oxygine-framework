@@ -10,132 +10,132 @@
 
 namespace pugi
 {
-	class xml_node;
+    class xml_node;
 }
 
 namespace oxygine
 {
-	class Resource;
-	class ResFont;
-	class ResAnim;
+    class Resource;
+    class ResFont;
+    class ResAnim;
 
-	class CreateResourceContext;
-	class LoadResourcesContext; 
+    class CreateResourceContext;
+    class LoadResourcesContext;
 
 
-	class Resources: public _Resource
-	{
-	public:
-		typedef std::vector<spResource> resources;
-		typedef Resource* (*createResourceCallback)(CreateResourceContext &context);
-		typedef Closure<void (Resource *)> ResLoadedCallback;
+    class Resources: public _Resource
+    {
+    public:
+        typedef std::vector<spResource> resources;
+        typedef Resource* (*createResourceCallback)(CreateResourceContext& context);
+        typedef Closure<void (Resource*)> ResLoadedCallback;
 
-		/**Registers your own resource type. 
-		@param creation callback
-		@param resource type string identifier. Max id length is 15 chars. These IDs are already occupied: 'set', 'atlas', ' image', 'font', 'buffer'
-		*/
-		static void registerResourceType(createResourceCallback creationCallback, const char *resTypeID);
-		static void unregisterResourceType(const char *resTypeID);
+        /**Registers your own resource type.
+        @param creation callback
+        @param resource type string identifier. Max id length is 15 chars. These IDs are already occupied: 'set', 'atlas', ' image', 'font', 'buffer'
+        */
+        static void registerResourceType(createResourceCallback creationCallback, const char* resTypeID);
+        static void unregisterResourceType(const char* resTypeID);
 
-		
-		Resources();
-		~Resources();
 
-		/**Loads resources from xml file.
-		@param xml file path
-		@param used for multithreading loading
-		@param should be each resource loaded completely includes internal heavy data (atlasses/textures/buffers) or load only their definition. Could be overloaded in xml: <your_res_type ... load = "false"/>
-		@param use load counter internally
-		@param use not standard folder with prebuilt resources (atlasses, fonts, etc)
-		*/
-		void loadXML(const std::string &file, LoadResourcesContext *load_context = 0,
-			bool load_completely = true, bool use_load_counter = false,
-			const std::string &prebuilt_folder = "");
+        Resources();
+        ~Resources();
+
+        /**Loads resources from xml file.
+        @param xml file path
+        @param used for multithreading loading
+        @param should be each resource loaded completely includes internal heavy data (atlasses/textures/buffers) or load only their definition. Could be overloaded in xml: <your_res_type ... load = "false"/>
+        @param use load counter internally
+        @param use not standard folder with prebuilt resources (atlasses, fonts, etc)
+        */
+        void loadXML(const std::string& file, LoadResourcesContext* load_context = 0,
+                     bool load_completely = true, bool use_load_counter = false,
+                     const std::string& prebuilt_folder = "");
 
         /**Adds your own Resource and becomes resource owner if Own is true. Owned resource will be deleted from destructor by calling 'delete'.*/
-		void add(Resource *r);
-		
-		/**Calls Resource::load for each resoure in the list*/
-		void load(LoadResourcesContext *context = 0, ResLoadedCallback cb = ResLoadedCallback());
+        void add(Resource* r);
 
-		/**Unloads data from memory, all resources handles remain valid*/
-		void unload();			
+        /**Calls Resource::load for each resoure in the list*/
+        void load(LoadResourcesContext* context = 0, ResLoadedCallback cb = ResLoadedCallback());
 
-		/**Completely deletes all resources*/
-		void free();
+        /**Unloads data from memory, all resources handles remain valid*/
+        void unload();
 
-		/** get resource by id, no case sensitive   
-		@param resource id
-		@param if showError is true and resource is missing warning/assert will appear
-		*/
-		Resource *get(const std::string &id, error_policy ep = ep_show_error) const;
+        /**Completely deletes all resources*/
+        void free();
 
-		/** returns resource by index */
-		Resource *get(int index) const {return _fastAccessResources[index].get();}
-		int		  getCount() const {return (int)_fastAccessResources.size();}
+        /** get resource by id, no case sensitive
+        @param resource id
+        @param if showError is true and resource is missing warning/assert will appear
+        */
+        Resource* get(const std::string& id, error_policy ep = ep_show_error) const;
 
-		Resource * operator[](const std::string &id){ return get(id); }
-		
-		/** get resource by id
-		@param resource id
-		@param if safe is true and resource is missing warning/assert will appear
-		*/
-		ResAnim *getResAnim(const std::string &id, error_policy ep = ep_show_error) const;
-		 
-		/** get animation resource by id
-		@param resource id
-		@param if safe is true and resource is missing warning/assert will appear
-		*/
-		ResFont *getResFont(const std::string &id, error_policy ep = ep_show_error) const;
+        /** returns resource by index */
+        Resource* get(int index) const {return _fastAccessResources[index].get();}
+        int       getCount() const {return (int)_fastAccessResources.size();}
 
-		template<class T>
-		T *getT(const std::string &id, error_policy ep = ep_show_error) const { return safeCast<T*>(get(id, ep)); }
+        Resource* operator[](const std::string& id) { return get(id); }
 
-		/**sorting manually added resources*/
-		void sort();
-		/**debug function. prints all loaded resources*/
-		void print();		
+        /** get resource by id
+        @param resource id
+        @param if safe is true and resource is missing warning/assert will appear
+        */
+        ResAnim* getResAnim(const std::string& id, error_policy ep = ep_show_error) const;
 
+        /** get animation resource by id
+        @param resource id
+        @param if safe is true and resource is missing warning/assert will appear
+        */
+        ResFont* getResFont(const std::string& id, error_policy ep = ep_show_error) const;
 
-		resources& _getResources();
+        template<class T>
+        T* getT(const std::string& id, error_policy ep = ep_show_error) const { return safeCast<T*>(get(id, ep)); }
 
-	protected:
-		void updateName(const std::string &filename);
-		void _load(LoadResourcesContext *context);
-		void _unload();
+        /**sorting manually added resources*/
+        void sort();
+        /**debug function. prints all loaded resources*/
+        void print();
 
 
-		struct registeredResource
-		{
-			registeredResource(){id[0]=0;}
-			char id[16];
-			createResourceCallback cb;
+        resources& _getResources();
 
-			static bool comparePred2(const registeredResource &ob1, const char *ob)
-			{
-				return strcmp(ob1.id, ob) > 0;
-			}
+    protected:
+        void updateName(const std::string& filename);
+        void _load(LoadResourcesContext* context);
+        void _unload();
 
-			static bool comparePred (const registeredResource &ob1, const registeredResource &ob2)
-			{
-				return strcmp(ob1.id, ob2.id) > 0;
-			}
 
-			bool operator < (const char *ob2) const
-			{
-				return strcmp(this->id, ob2) > 0;
-			}
-		};
+        struct registeredResource
+        {
+            registeredResource() {id[0] = 0;}
+            char id[16];
+            createResourceCallback cb;
 
-		
-		resources _resources;
-		//resources _owned;
-		resources _fastAccessResources;
+            static bool comparePred2(const registeredResource& ob1, const char* ob)
+            {
+                return strcmp(ob1.id, ob) > 0;
+            }
 
-		typedef std::vector< registeredResource > registeredResources;
-		static registeredResources _registeredResources;
-		
-		std::string _name;
-		std::vector<pugi::xml_document*> _docs;
-	};
+            static bool comparePred(const registeredResource& ob1, const registeredResource& ob2)
+            {
+                return strcmp(ob1.id, ob2.id) > 0;
+            }
+
+            bool operator < (const char* ob2) const
+            {
+                return strcmp(this->id, ob2) > 0;
+            }
+        };
+
+
+        resources _resources;
+        //resources _owned;
+        resources _fastAccessResources;
+
+        typedef std::vector< registeredResource > registeredResources;
+        static registeredResources _registeredResources;
+
+        std::string _name;
+        std::vector<pugi::xml_document*> _docs;
+    };
 }

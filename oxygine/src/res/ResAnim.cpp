@@ -5,20 +5,20 @@
 
 namespace oxygine
 {
-	static AnimationFrame emptyFrame;
-	ResAnim::ResAnim(Resource *atlas):_columns(1), _atlas(atlas), _scaleFactor(1.0f)
-	{
-	}
-
-	ResAnim::~ResAnim()
-	{
-	}
-
-    void ResAnim::init(spNativeTexture texture, const Point &originalSize, int columns, int rows, float scaleFactor)
+    static AnimationFrame emptyFrame;
+    ResAnim::ResAnim(Resource* atlas): _columns(1), _atlas(atlas), _scaleFactor(1.0f)
     {
-		_scaleFactor = scaleFactor;
-		if (!texture)
-			return;
+    }
+
+    ResAnim::~ResAnim()
+    {
+    }
+
+    void ResAnim::init(spNativeTexture texture, const Point& originalSize, int columns, int rows, float scaleFactor)
+    {
+        _scaleFactor = scaleFactor;
+        if (!texture)
+            return;
 
         int frame_width = originalSize.x / columns;
         int frame_height = originalSize.y / rows;
@@ -52,96 +52,96 @@ namespace oxygine
         init(frames, columns, scaleFactor);
     }
 
-	void ResAnim::init(MemoryTexture *original, int columns, int rows, float scaleFactor)
+    void ResAnim::init(MemoryTexture* original, int columns, int rows, float scaleFactor)
     {
-		_scaleFactor = scaleFactor;
-		if (!original)
-			return;
+        _scaleFactor = scaleFactor;
+        if (!original)
+            return;
 
-		spNativeTexture texture = IVideoDriver::instance->createTexture();
-		int w2 = nextPOT(original->getWidth());
-		int h2 = nextPOT(original->getHeight());
-		if (w2 != original->getWidth() || h2 != original->getHeight())
-		{
-			texture->init(w2, h2, original->getFormat());
-			texture->updateRegion(0, 0, original->lock());
-		}
-		else
-		{
-			texture->init(original->lock(), false);
-		}
-		
+        spNativeTexture texture = IVideoDriver::instance->createTexture();
+        int w2 = nextPOT(original->getWidth());
+        int h2 = nextPOT(original->getHeight());
+        if (w2 != original->getWidth() || h2 != original->getHeight())
+        {
+            texture->init(w2, h2, original->getFormat());
+            texture->updateRegion(0, 0, original->lock());
+        }
+        else
+        {
+            texture->init(original->lock(), false);
+        }
+
         texture->apply();
 
-		init(texture, original->getSize(), columns, rows, scaleFactor);
-	}
+        init(texture, original->getSize(), columns, rows, scaleFactor);
+    }
 
-	void ResAnim::init(animationFrames &frames, int columns, float scaleFactor)
-	{
-		_columns = columns;
-		_frames.swap(frames);
-		_scaleFactor = scaleFactor;
-	}
-	
-	void ResAnim::_load(LoadResourcesContext *c)
-	{
-		if (!_atlas)
-			return;
-		_atlas->load(c);
-	}
+    void ResAnim::init(animationFrames& frames, int columns, float scaleFactor)
+    {
+        _columns = columns;
+        _frames.swap(frames);
+        _scaleFactor = scaleFactor;
+    }
 
-	void ResAnim::_unload()
-	{
-		//OX_ASSERT(!"can't unload resanim");
-	}
+    void ResAnim::_load(LoadResourcesContext* c)
+    {
+        if (!_atlas)
+            return;
+        _atlas->load(c);
+    }
 
-	/*
-	void ResAnim::addFrame(const AnimationFrame &frame)
-	{
-		_frames.push_back(frame);
-	}
-	*/
+    void ResAnim::_unload()
+    {
+        //OX_ASSERT(!"can't unload resanim");
+    }
 
-	ResAnim::operator const AnimationFrame &() 
-	{
-		return getFrame(0,0);
-	}
+    /*
+    void ResAnim::addFrame(const AnimationFrame &frame)
+    {
+        _frames.push_back(frame);
+    }
+    */
 
-	
-	const AnimationFrame &ResAnim::getFrame(int col, int row) const
-	{
-		int i = row * _columns + col;
-		return getFrame(i);
-	}
+    ResAnim::operator const AnimationFrame& ()
+    {
+        return getFrame(0, 0);
+    }
 
-	const AnimationFrame&	ResAnim::getFrame(int index) const
-	{
-		OX_ASSERT(index < (int)_frames.size());
-		if (index < (int)_frames.size())
-			return _frames[index];
-		return emptyFrame;
-	}
 
-	void ResAnim::setFrame(int col, int row, const AnimationFrame &frame)
-	{		
-		int i = row * _columns + col;
-		OX_ASSERT(i < (int)_frames.size());
-		if (i < (int)_frames.size())
-			_frames[i] = frame;
-	}
+    const AnimationFrame& ResAnim::getFrame(int col, int row) const
+    {
+        int i = row * _columns + col;
+        return getFrame(i);
+    }
 
-	const Vector2&	ResAnim::getSize() const
-	{
-		OX_ASSERT(!_frames.empty());
-		return _frames[0].getSize();
-	}
-	float	ResAnim::getWidth() const
-	{
-		return getSize().x;
-	}
+    const AnimationFrame&   ResAnim::getFrame(int index) const
+    {
+        OX_ASSERT(index < (int)_frames.size());
+        if (index < (int)_frames.size())
+            return _frames[index];
+        return emptyFrame;
+    }
 
-	float	ResAnim::getHeight() const
-	{
-		return getSize().y;
-	}
+    void ResAnim::setFrame(int col, int row, const AnimationFrame& frame)
+    {
+        int i = row * _columns + col;
+        OX_ASSERT(i < (int)_frames.size());
+        if (i < (int)_frames.size())
+            _frames[i] = frame;
+    }
+
+    const Vector2&  ResAnim::getSize() const
+    {
+        OX_ASSERT(!_frames.empty());
+        return _frames[0].getSize();
+    }
+    float   ResAnim::getWidth() const
+    {
+        return getSize().x;
+    }
+
+    float   ResAnim::getHeight() const
+    {
+        return getSize().y;
+    }
 }

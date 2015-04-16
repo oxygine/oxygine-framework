@@ -275,7 +275,7 @@ static int GREENLET_NOINLINE(slp_save_state)(char* stackref)
 #define SLP_EVAL
 #define slp_switch GREENLET_NOINLINE(slp_switch)
 
-#ifdef WIN32
+#ifdef _WIN32
 #define MS_WIN32
 #endif
 

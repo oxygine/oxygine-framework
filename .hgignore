@@ -46,3 +46,6 @@ examples/Game/*/proj.android/bin/
 examples/Game/*/proj.android/libs/
 examples/Game/*/proj.android/gen/
 examples/Match3/build_match3_*
+libs/SDL2main.lib
+libs/SDL2.lib
+libs/SDL2.dll

@@ -318,6 +318,9 @@
     <ClCompile Include="..\..\src\WebImage.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\TweenAnim.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\closure\closure.h">
@@ -458,9 +461,6 @@
     <ClInclude Include="..\..\src\core\file.h">
       <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\core\files_io.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\core\FileSystem.h">
       <Filter>src\core</Filter>
     </ClInclude>
@@ -474,9 +474,6 @@
       <Filter>src\core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\core\log.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\core\logging.h">
       <Filter>src\core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\core\Mem2Native.h">
@@ -693,6 +690,9 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\WebImage.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\TweenAnim.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

@@ -3,26 +3,26 @@
 
 
 #if __S3E__
-#	include "IwImage.h"
-#	include "IwGL.h"
-#	include "GLES/gl.h"
-#	define GL_GLEXT_PROTOTYPES
-#	include "GLES/glext.h"
-#	include <gles/egl.h>
+#   include "IwImage.h"
+#   include "IwGL.h"
+#   include "GLES/gl.h"
+#   define GL_GLEXT_PROTOTYPES
+#   include "GLES/glext.h"
+#   include <gles/egl.h>
 #else
-#	include "SDL_config.h"
+#   include "SDL_config.h"
 
-#if WIN32
-#	define GL_GLEXT_PROTOTYPES
-#	include "SDL_opengl.h"
+#if _WIN32
+#   define GL_GLEXT_PROTOTYPES
+#   include "SDL_opengl.h"
 
-#	define GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG                      0x8C00
-#	define GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG                      0x8C01
-#	define GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG                     0x8C02
-#	define GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG                     0x8C03
+#   define GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG                      0x8C00
+#   define GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG                      0x8C01
+#   define GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG                     0x8C02
+#   define GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG                     0x8C03
 
-#	define GL_ETC1_RGB8_OES                                        0x8D64
-	
+#   define GL_ETC1_RGB8_OES                                        0x8D64
+
 extern "C"
 {
     extern PFNGLSHADERSOURCEPROC _glShaderSource;
@@ -60,52 +60,52 @@ extern "C"
 }
 
 #elif __ANDROID__
-#	include "GLES2/gl2.h"
-#	define GL_GLEXT_PROTOTYPES
-#	include "GLES2/gl2ext.h"
+#   include "GLES2/gl2.h"
+#   define GL_GLEXT_PROTOTYPES
+#   include "GLES2/gl2ext.h"
 
 #elif __APPLE__
-#	include <TargetConditionals.h>
-#	if TARGET_OS_IPHONE
-#		define GL_ETC1_RGB8_OES                                        0x8D64
-#		include <OpenGLES/ES2/gl.h>
-#		include <OpenGLES/ES2/glext.h>
-#		include <OpenGLES/ES1/gl.h>
-#		include <OpenGLES/ES1/glext.h>
-#	else
-#		define GL_GLEXT_PROTOTYPES
-#		include "SDL_opengl.h"
+#   include <TargetConditionals.h>
+#   if TARGET_OS_IPHONE
+#       define GL_ETC1_RGB8_OES                                        0x8D64
+#       include <OpenGLES/ES2/gl.h>
+#       include <OpenGLES/ES2/glext.h>
+#       include <OpenGLES/ES1/gl.h>
+#       include <OpenGLES/ES1/glext.h>
+#   else
+#       define GL_GLEXT_PROTOTYPES
+#       include "SDL_opengl.h"
 
-#		define GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG                      0x8C00
-#		define GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG                      0x8C01
-#		define GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG                     0x8C02
-#		define GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG                     0x8C03
+#       define GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG                      0x8C00
+#       define GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG                      0x8C01
+#       define GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG                     0x8C02
+#       define GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG                     0x8C03
 
-#		define GL_ETC1_RGB8_OES                                        0x8D64
-#	endif
+#       define GL_ETC1_RGB8_OES                                        0x8D64
+#   endif
 #elif EMSCRIPTEN
-#	include "GLES2/gl2.h"
-#	define GL_GLEXT_PROTOTYPES
-#	include "GLES2/gl2ext.h"
+#   include "GLES2/gl2.h"
+#   define GL_GLEXT_PROTOTYPES
+#   include "GLES2/gl2ext.h"
 #elif __unix__
-#	define GL_GLEXT_PROTOTYPES
-#	include "SDL_opengl.h"
+#   define GL_GLEXT_PROTOTYPES
+#   include "SDL_opengl.h"
 
-#	define GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG                      0x8C00
-#	define GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG                      0x8C01
-#	define GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG                     0x8C02
-#	define GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG                     0x8C03
+#   define GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG                      0x8C00
+#   define GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG                      0x8C01
+#   define GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG                     0x8C02
+#   define GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG                     0x8C03
 
-#	define GL_ETC1_RGB8_OES                                        0x8D64
+#   define GL_ETC1_RGB8_OES                                        0x8D64
 #endif
 #endif
 
 
 
-#if WIN32
-#	define GLPREF _
+#if _WIN32
+#   define GLPREF _
 #else
-#	define GLPREF
+#   define GLPREF
 #endif
 
 #define PASTER(x,y) x ## y
@@ -153,6 +153,6 @@ namespace oxygine {void checkGLError();}
 #define CHECKGL() checkGLError()
 //#define CHECKGL() {}
 
-typedef void*  (*myGetProcAdress)(const char *);
+typedef void*  (*myGetProcAdress)(const char*);
 /**returns number of missing functions/extensions*/
 int initGLExtensions(myGetProcAdress);

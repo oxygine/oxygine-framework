@@ -4,22 +4,22 @@
 
 namespace oxygine
 {
-	DECLARE_SMART(ColorRectSprite, spColorRectSprite);
+    DECLARE_SMART(ColorRectSprite, spColorRectSprite);
 
     class ColorRectSprite: public _Sprite
-	{
-	public:
-		DECLARE_COPYCLONE_NEW(ColorRectSprite);
-		ColorRectSprite();
-		~ColorRectSprite();
+    {
+    public:
+        DECLARE_COPYCLONE_NEW(ColorRectSprite);
+        ColorRectSprite();
+        ~ColorRectSprite();
 
-		void serialize(serializedata* data);
-        void deserialize(const deserializedata *data);
+        void serialize(serializedata* data);
+        void deserialize(const deserializedata* data);
 
-		void doRender(const RenderState &rs);
+        void doRender(const RenderState& rs);
 
-	private:
-	};
+    private:
+    };
 }
 
 #ifdef OX_EDITOR

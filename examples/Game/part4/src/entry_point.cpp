@@ -17,144 +17,135 @@ using namespace oxygine;
 //called each frame
 int mainloop()
 {
-	example_update();
-	//update our stage
-	//update all actors. Actor::update would be called also for all children
-	getStage()->update();
-	
-	if (core::beginRendering())
-	{		
-		Color clearColor(32, 32, 32, 255);
-		Rect viewport(Point(0, 0), core::getDisplaySize());
-		//render all actors. Actor::render would be called also for all children
-		getStage()->render(clearColor, viewport);
+    example_update();
+    //update our stage
+    //update all actors. Actor::update would be called also for all children
+    getStage()->update();
 
-		core::swapDisplayBuffers();
-	}
+    if (core::beginRendering())
+    {
+        Color clearColor(32, 32, 32, 255);
+        Rect viewport(Point(0, 0), core::getDisplaySize());
+        //render all actors. Actor::render would be called also for all children
+        getStage()->render(clearColor, viewport);
 
-	//update internal components
-	//all input events would be passed to Stage::instance.handleEvent
-	//if done is true then User requests quit from app.
-	bool done = core::update();
+        core::swapDisplayBuffers();
+    }
 
-	return done ? 1 : 0;
+    //update internal components
+    //all input events would be passed to Stage::instance.handleEvent
+    //if done is true then User requests quit from app.
+    bool done = core::update();
+
+    return done ? 1 : 0;
 }
 
 //it is application entry point
 void run()
 {
-	ObjectBase::__startTracingLeaks();
+    ObjectBase::__startTracingLeaks();
 
-	//initialize Oxygine's internal stuff
-	core::init_desc desc;
+    //initialize Oxygine's internal stuff
+    core::init_desc desc;
 
 #if OXYGINE_SDL || OXYGINE_EMSCRIPTEN
-	//we could setup initial window size on SDL builds
-	desc.w = 960;
-	desc.h = 640;
-	//marmalade settings could be changed from emulator's menu
+    //we could setup initial window size on SDL builds
+    desc.w = 960;
+    desc.h = 640;
+    //marmalade settings could be changed from emulator's menu
 #endif
 
 
-	example_preinit();
-	core::init(&desc);
+    example_preinit();
+    core::init(&desc);
 
 
-	//create Stage. Stage is a root node
-	Stage::instance = new Stage(true);
-	Point size = core::getDisplaySize();
-	getStage()->setSize(size);
+    //create Stage. Stage is a root node
+    Stage::instance = new Stage(true);
+    Point size = core::getDisplaySize();
+    getStage()->setSize(size);
 
-	//DebugActor is a helper actor node. It shows FPS, memory usage and other useful stuff
-	DebugActor::show();
-		
-	//initialize this example stuff. see example.cpp
-	example_init();
+    //DebugActor is a helper actor node. It shows FPS, memory usage and other useful stuff
+    DebugActor::show();
+
+    //initialize this example stuff. see example.cpp
+    example_init();
 
 #ifdef EMSCRIPTEN
-	/*
-	if you build for Emscripten mainloop would be called automatically outside. 
-	see emscripten_set_main_loop below
-	*/	
-	return;
+    /*
+    if you build for Emscripten mainloop would be called automatically outside.
+    see emscripten_set_main_loop below
+    */
+    return;
 #endif
 
 
-	//here is main game loop
-	while (1)
-	{
-		int done = mainloop();
-		if (done)
-			break;
-	}
-	//user wants to leave application...
+    //here is main game loop
+    while (1)
+    {
+        int done = mainloop();
+        if (done)
+            break;
+    }
+    //user wants to leave application...
 
-	//lets dump all created objects into log
-	//all created and not freed resources would be displayed
-	ObjectBase::dumpCreatedObjects();
+    //lets dump all created objects into log
+    //all created and not freed resources would be displayed
+    ObjectBase::dumpCreatedObjects();
 
-	//lets cleanup everything right now and call ObjectBase::dumpObjects() again
-	//we need to free all allocated resources and delete all created actors
-	//all actors/sprites are smart pointer objects and actually you don't need it remove them by hands
-	//but now we want delete it by hands
+    //lets cleanup everything right now and call ObjectBase::dumpObjects() again
+    //we need to free all allocated resources and delete all created actors
+    //all actors/sprites are smart pointer objects and actually you don't need it remove them by hands
+    //but now we want delete it by hands
 
-	//check example.cpp
-	example_destroy();
+    //check example.cpp
+    example_destroy();
 
 
-	//renderer.cleanup();
+    //renderer.cleanup();
 
-	/**releases all internal components and Stage*/
-	core::release();
+    /**releases all internal components and Stage*/
+    core::release();
 
-	//dump list should be empty now
-	//we deleted everything and could be sure that there aren't any memory leaks
-	ObjectBase::dumpCreatedObjects();
+    //dump list should be empty now
+    //we deleted everything and could be sure that there aren't any memory leaks
+    ObjectBase::dumpCreatedObjects();
 
-	ObjectBase::__stopTracingLeaks();
-	//end
+    ObjectBase::__stopTracingLeaks();
+    //end
 }
 
 #ifdef __S3E__
 int main(int argc, char* argv[])
 {
-	run();
-	return 0;
+    run();
+    return 0;
 }
 #endif
 
 
 #ifdef OXYGINE_SDL
-#ifdef __MINGW32__
-int WinMain(HINSTANCE hInstance,
-	HINSTANCE hPrevInstance,
-	LPSTR lpCmdLine, int nCmdShow)
-{
-	run();
-	return 0;
-}
-#else
+
 #include "SDL_main.h"
 extern "C"
 {
-	int main(int argc, char* argv[])
-	{
-		run();
-		return 0;
-	}
+    int main(int argc, char* argv[])
+    {
+        run();
+        return 0;
+    }
 };
-#endif
 #endif
 
 #ifdef EMSCRIPTEN
 #include <emscripten.h>
 
-void one(){ mainloop(); }
+void one() { mainloop(); }
 
 int main(int argc, char* argv[])
 {
-	run();
-	emscripten_set_main_loop(one, 0, 0);
-	return 0;
+    run();
+    emscripten_set_main_loop(one, 0, 0);
+    return 0;
 }
 #endif

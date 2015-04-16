@@ -3,31 +3,31 @@
 #include "Resource.h"
 namespace oxygine
 {
-	class Resources;
-	class Restorable;
-	class CreateResourceContext;
-	DECLARE_SMART(NativeTexture, spNativeTexture);
+    class Resources;
+    class Restorable;
+    class CreateResourceContext;
+    DECLARE_SMART(NativeTexture, spNativeTexture);
 
-	class ResStarlingAtlas: public _Resource
-	{
-	public:
-		static Resource *create(CreateResourceContext &context);
+    class ResStarlingAtlas: public _Resource
+    {
+    public:
+        static Resource* create(CreateResourceContext& context);
 
-		ResStarlingAtlas();
-		~ResStarlingAtlas();
+        ResStarlingAtlas();
+        ~ResStarlingAtlas();
 
-		void init(Resources *, pugi::xml_node &node);
-		
+        void init(Resources*, pugi::xml_node& node);
 
-		void mtload();
 
-	private:
-		void loadAtlas(CreateResourceContext &context);
-		void _load(LoadResourcesContext *);
-		void _unload();
-		void _restore(Restorable *r, void *);
+        void mtload();
 
-		spNativeTexture _texture;
-		std::string _imagePath;
-	};
+    private:
+        void loadAtlas(CreateResourceContext& context);
+        void _load(LoadResourcesContext*);
+        void _unload();
+        void _restore(Restorable* r, void*);
+
+        spNativeTexture _texture;
+        std::string _imagePath;
+    };
 }

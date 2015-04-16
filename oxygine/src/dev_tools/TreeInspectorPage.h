@@ -4,35 +4,35 @@
 
 namespace oxygine
 {
-	DECLARE_SMART(TreeInspectorPage, spTreeInspectorPage);
-	DECLARE_SMART(TreeInspectorLine, spTreeInspectorLine);
+    DECLARE_SMART(TreeInspectorPage, spTreeInspectorPage);
+    DECLARE_SMART(TreeInspectorLine, spTreeInspectorLine);
 
-	class TreeInspector;
-	class TreeInspectorPage: public Actor
-	{
-	public:
-		TreeInspectorPage(TreeInspector *tree, TreeInspectorPage *parentPage);
-		~TreeInspectorPage();
+    class TreeInspector;
+    class TreeInspectorPage: public Actor
+    {
+    public:
+        TreeInspectorPage(TreeInspector* tree, TreeInspectorPage* parentPage);
+        ~TreeInspectorPage();
 
-		void init(spActor item);
+        void init(spActor item);
 
-		TreeInspector *getTreeInspector(){return _tree;}
+        TreeInspector* getTreeInspector() {return _tree;}
 
-	protected:
-		void updateSize();
-		void updateInternalSize();
-		void updateChildrenPositions();
+    protected:
+        void updateSize();
+        void updateInternalSize();
+        void updateChildrenPositions();
 
-		Vector2 updateSizesNew();
-		friend class TreeInspector;
+        Vector2 updateSizesNew();
+        friend class TreeInspector;
 
-	private:
-		void _onMinMaxClick(Event*);
+    private:
+        void _onMinMaxClick(Event*);
 
-		spTreeInspectorLine _line;
-		TreeInspector *_tree;
-		TreeInspectorPage *_parentPage;
-		spActor _pages;
+        spTreeInspectorLine _line;
+        TreeInspector* _tree;
+        TreeInspectorPage* _parentPage;
+        spActor _pages;
 
-	};
+    };
 }

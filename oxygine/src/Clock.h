@@ -3,42 +3,42 @@
 #include "core/Object.h"
 
 namespace oxygine
-{	
-	class UpdateState;
+{
+    class UpdateState;
 
 
-	DECLARE_SMART(Clock, spClock);
-	class Clock: public Object
-	{
-	public:
-		Clock();
-		~Clock();
+    DECLARE_SMART(Clock, spClock);
+    class Clock: public Object
+    {
+    public:
+        Clock();
+        ~Clock();
 
-		timeMS	getTime() const;
-		int		getPauseCounter() const;
-		int		getFixedStep() const;
-		float	getMultiplier() const;
+        timeMS  getTime() const;
+        int     getPauseCounter() const;
+        int     getFixedStep() const;
+        float   getMultiplier() const;
 
-		void	setFixedStep(float stepMS);
-		void	setMultiplier(float m);		
+        void    setFixedStep(float stepMS);
+        void    setMultiplier(float m);
 
-		void	pause();
-		void	resume();
-		void	resetPause();
+        void    pause();
+        void    resume();
+        void    resetPause();
 
-		void	update(timeMS globalTime = -1);
-		timeMS  doTick();
+        void    update(timeMS globalTime = -1);
+        timeMS  doTick();
 
-		std::string dump() const;
+        std::string dump() const;
 
-	private:
-		int		_counter;
-		double	_destTime;
-		double	_srcTime;
-		
-		float	_multiplier;
-		float	_fixedStep;
+    private:
+        int     _counter;
+        double  _destTime;
+        double  _srcTime;
 
-		timeMS _lastUpdateTime;
-	};
+        float   _multiplier;
+        float   _fixedStep;
+
+        timeMS _lastUpdateTime;
+    };
 }

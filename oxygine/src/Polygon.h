@@ -4,32 +4,32 @@
 
 namespace oxygine
 {
-	class ResAnim;
+    class ResAnim;
 
-	DECLARE_SMART(Polygon, spPolygon);
+    DECLARE_SMART(Polygon, spPolygon);
     class Polygon : public _Sprite
-	{
-	public:		
-		DECLARE_COPYCLONE_NEW(Polygon);
+    {
+    public:
+        DECLARE_COPYCLONE_NEW(Polygon);
 
-		Polygon();
-		~Polygon();
-		
-		void setVertices(const void* data, int size, int bformat, bool own);
+        Polygon();
+        ~Polygon();
 
-		void serialize(serializedata* data);
-		void deserialize(const deserializedata* data);
+        void setVertices(const void* data, int size, int bformat, bool own);
 
-		std::string dump(const dumpOptions &) const;
+        void serialize(serializedata* data);
+        void deserialize(const deserializedata* data);
 
-	protected:		
-		void doRender(const RenderState &rs);
+        std::string dump(const dumpOptions&) const;
 
-		const VertexDeclaration *_vdecl;
-		bool _own;
-		const unsigned char *_verticesData;
-		int _verticesSize;
-	};
+    protected:
+        void doRender(const RenderState& rs);
+
+        const VertexDeclaration* _vdecl;
+        bool _own;
+        const unsigned char* _verticesData;
+        int _verticesSize;
+    };
 }
 
 #ifdef OX_EDITOR

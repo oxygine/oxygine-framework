@@ -35,7 +35,6 @@
 		049B56781871F21E00EF3C66 /* coroutines.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B55A71871F21D00EF3C66 /* coroutines.h */; };
 		049B56791871F21E00EF3C66 /* file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B55A81871F21D00EF3C66 /* file.cpp */; };
 		049B567A1871F21E00EF3C66 /* file.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B55A91871F21D00EF3C66 /* file.h */; };
-		049B567B1871F21E00EF3C66 /* files_io.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B55AA1871F21D00EF3C66 /* files_io.h */; };
 		049B567C1871F21E00EF3C66 /* FileSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B55AB1871F21D00EF3C66 /* FileSystem.cpp */; };
 		049B567D1871F21E00EF3C66 /* FileSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B55AC1871F21D00EF3C66 /* FileSystem.h */; };
 		049B567E1871F21E00EF3C66 /* NativeTextureGLES.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B55AE1871F21D00EF3C66 /* NativeTextureGLES.cpp */; };
@@ -57,7 +56,6 @@
 		049B56901871F21E00EF3C66 /* intrusive_ptr.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B55C01871F21D00EF3C66 /* intrusive_ptr.h */; };
 		049B56911871F21E00EF3C66 /* log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B55C11871F21D00EF3C66 /* log.cpp */; };
 		049B56921871F21E00EF3C66 /* log.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B55C21871F21D00EF3C66 /* log.h */; };
-		049B56931871F21E00EF3C66 /* logging.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B55C31871F21D00EF3C66 /* logging.h */; };
 		049B56941871F21E00EF3C66 /* Mem2Native.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B55C41871F21D00EF3C66 /* Mem2Native.cpp */; };
 		049B56951871F21E00EF3C66 /* Mem2Native.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B55C51871F21D00EF3C66 /* Mem2Native.h */; };
 		049B56981871F21E00EF3C66 /* Mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B55C81871F21D00EF3C66 /* Mutex.cpp */; };
@@ -209,6 +207,8 @@
 		923A9E8C1A1FCA3500A6F08E /* STDRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 923A9E8A1A1FCA3500A6F08E /* STDRenderer.h */; };
 		923A9E8F1A1FCA6600A6F08E /* MaskedRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 923A9E8D1A1FCA6600A6F08E /* MaskedRenderer.cpp */; };
 		923A9E901A1FCA6600A6F08E /* MaskedRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 923A9E8E1A1FCA6600A6F08E /* MaskedRenderer.h */; };
+		9240B4101ADFBB3C005F9C5B /* TweenAnim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9240B40E1ADFBB3C005F9C5B /* TweenAnim.cpp */; };
+		9240B4111ADFBB3C005F9C5B /* TweenAnim.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240B40F1ADFBB3C005F9C5B /* TweenAnim.h */; };
 		92AA951E1A5CB260000B50A0 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92AA951D1A5CB260000B50A0 /* AppKit.framework */; };
 		92CE266B1A58AADB003901D6 /* HttpRequestCocoaTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 92CE26671A58AADB003901D6 /* HttpRequestCocoaTask.h */; };
 		92CE266C1A58AADB003901D6 /* HttpRequestCocoaTask.mm in Sources */ = {isa = PBXBuildFile; fileRef = 92CE26681A58AADB003901D6 /* HttpRequestCocoaTask.mm */; };
@@ -254,7 +254,6 @@
 		049B55A71871F21D00EF3C66 /* coroutines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coroutines.h; sourceTree = "<group>"; };
 		049B55A81871F21D00EF3C66 /* file.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = file.cpp; sourceTree = "<group>"; };
 		049B55A91871F21D00EF3C66 /* file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file.h; sourceTree = "<group>"; };
-		049B55AA1871F21D00EF3C66 /* files_io.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = files_io.h; sourceTree = "<group>"; };
 		049B55AB1871F21D00EF3C66 /* FileSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileSystem.cpp; sourceTree = "<group>"; };
 		049B55AC1871F21D00EF3C66 /* FileSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileSystem.h; sourceTree = "<group>"; };
 		049B55AE1871F21D00EF3C66 /* NativeTextureGLES.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NativeTextureGLES.cpp; sourceTree = "<group>"; };
@@ -276,7 +275,6 @@
 		049B55C01871F21D00EF3C66 /* intrusive_ptr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = intrusive_ptr.h; sourceTree = "<group>"; };
 		049B55C11871F21D00EF3C66 /* log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = log.cpp; sourceTree = "<group>"; };
 		049B55C21871F21D00EF3C66 /* log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = log.h; sourceTree = "<group>"; };
-		049B55C31871F21D00EF3C66 /* logging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logging.h; sourceTree = "<group>"; };
 		049B55C41871F21D00EF3C66 /* Mem2Native.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mem2Native.cpp; sourceTree = "<group>"; };
 		049B55C51871F21D00EF3C66 /* Mem2Native.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mem2Native.h; sourceTree = "<group>"; };
 		049B55C81871F21D00EF3C66 /* Mutex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mutex.cpp; sourceTree = "<group>"; };
@@ -435,6 +433,8 @@
 		923A9E8A1A1FCA3500A6F08E /* STDRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STDRenderer.h; path = ../../../src/STDRenderer.h; sourceTree = "<group>"; };
 		923A9E8D1A1FCA6600A6F08E /* MaskedRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MaskedRenderer.cpp; path = ../../../src/MaskedRenderer.cpp; sourceTree = "<group>"; };
 		923A9E8E1A1FCA6600A6F08E /* MaskedRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MaskedRenderer.h; path = ../../../src/MaskedRenderer.h; sourceTree = "<group>"; };
+		9240B40E1ADFBB3C005F9C5B /* TweenAnim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TweenAnim.cpp; path = ../../../src/TweenAnim.cpp; sourceTree = "<group>"; };
+		9240B40F1ADFBB3C005F9C5B /* TweenAnim.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweenAnim.h; path = ../../../src/TweenAnim.h; sourceTree = "<group>"; };
 		92AA951D1A5CB260000B50A0 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		92CE26671A58AADB003901D6 /* HttpRequestCocoaTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequestCocoaTask.h; sourceTree = "<group>"; };
 		92CE26681A58AADB003901D6 /* HttpRequestCocoaTask.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HttpRequestCocoaTask.mm; sourceTree = "<group>"; };
@@ -482,6 +482,8 @@
 		049B55901871F21000EF3C66 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				9240B40E1ADFBB3C005F9C5B /* TweenAnim.cpp */,
+				9240B40F1ADFBB3C005F9C5B /* TweenAnim.h */,
 				92CE26711A58ABDC003901D6 /* AsyncTask.cpp */,
 				92CE26721A58ABDC003901D6 /* AsyncTask.h */,
 				92CE26731A58ABDC003901D6 /* HttpRequestTask.cpp */,
@@ -595,7 +597,6 @@
 				049B55A71871F21D00EF3C66 /* coroutines.h */,
 				049B55A81871F21D00EF3C66 /* file.cpp */,
 				049B55A91871F21D00EF3C66 /* file.h */,
-				049B55AA1871F21D00EF3C66 /* files_io.h */,
 				049B55AB1871F21D00EF3C66 /* FileSystem.cpp */,
 				049B55AC1871F21D00EF3C66 /* FileSystem.h */,
 				049B55AD1871F21D00EF3C66 /* gl */,
@@ -606,7 +607,6 @@
 				049B55C01871F21D00EF3C66 /* intrusive_ptr.h */,
 				049B55C11871F21D00EF3C66 /* log.cpp */,
 				049B55C21871F21D00EF3C66 /* log.h */,
-				049B55C31871F21D00EF3C66 /* logging.h */,
 				049B55C41871F21D00EF3C66 /* Mem2Native.cpp */,
 				049B55C51871F21D00EF3C66 /* Mem2Native.h */,
 				049B55C81871F21D00EF3C66 /* Mutex.cpp */,
@@ -826,7 +826,6 @@
 				049B56CE1871F21E00EF3C66 /* EventDispatcher.h in Headers */,
 				049B57241871F21E00EF3C66 /* winnie_alloc_config.h in Headers */,
 				049B56D91871F21E00EF3C66 /* matrix.h in Headers */,
-				049B567B1871F21E00EF3C66 /* files_io.h in Headers */,
 				049B56A11871F21E00EF3C66 /* pixel.h in Headers */,
 				049B57121871F21E00EF3C66 /* TextActor.h in Headers */,
 				049B56FA1871F21E00EF3C66 /* ResBuffer.h in Headers */,
@@ -913,7 +912,6 @@
 				049B566A1871F21E00EF3C66 /* blocking.h in Headers */,
 				923663591A47561500EB65B3 /* Serializable.h in Headers */,
 				049B56741871F21E00EF3C66 /* closure_impl.h in Headers */,
-				049B56931871F21E00EF3C66 /* logging.h in Headers */,
 				049B56E81871F21E00EF3C66 /* Multithreading.h in Headers */,
 				049B56C71871F21E00EF3C66 /* TreeInspectorPage.h in Headers */,
 				92214D5F19F149BC00A4459A /* Polygon.h in Headers */,
@@ -937,6 +935,7 @@
 				049B56DD1871F21E00EF3C66 /* vector3.h in Headers */,
 				9236635E1A47561500EB65B3 /* TweenQueue.h in Headers */,
 				049B567D1871F21E00EF3C66 /* FileSystem.h in Headers */,
+				9240B4111ADFBB3C005F9C5B /* TweenAnim.h in Headers */,
 				049B56EF1871F21E00EF3C66 /* pugiconfig.hpp in Headers */,
 				049B56F41871F21E00EF3C66 /* CreateResourceContext.h in Headers */,
 				049B571D1871F21E00EF3C66 /* stringUtils.h in Headers */,
@@ -1001,6 +1000,7 @@
 				049B56CF1871F21E00EF3C66 /* Font.cpp in Sources */,
 				049B56E51871F21E00EF3C66 /* unzip.c in Sources */,
 				049B56EB1871F21E00EF3C66 /* PointerState.cpp in Sources */,
+				9240B4101ADFBB3C005F9C5B /* TweenAnim.cpp in Sources */,
 				049B56C41871F21E00EF3C66 /* TreeInspectorLine.cpp in Sources */,
 				049B56BC1871F21E00EF3C66 /* DebugActor.cpp in Sources */,
 				049B56E71871F21E00EF3C66 /* Multithreading.cpp in Sources */,

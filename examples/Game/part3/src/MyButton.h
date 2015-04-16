@@ -6,8 +6,8 @@ DECLARE_SMART(MyButton, spMyButton);
 class MyButton: public Sprite
 {
 public:
-	MyButton();
+    MyButton();
 
 private:
-	void onEvent(Event *);
+    void onEvent(Event*);
 };

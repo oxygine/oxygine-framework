@@ -4,25 +4,25 @@
 
 namespace oxygine
 {
-	class TreeInspectorPage;
-	DECLARE_SMART(TreeInspectorPreview, spTreeInspectorPreview);
-	
-	class TreeInspectorLine: public Actor
-	{
-	public:
-		TreeInspectorLine();
-		~TreeInspectorLine();
+    class TreeInspectorPage;
+    DECLARE_SMART(TreeInspectorPreview, spTreeInspectorPreview);
 
-		void init(TreeInspectorPage *page, spActor item);
+    class TreeInspectorLine: public Actor
+    {
+    public:
+        TreeInspectorLine();
+        ~TreeInspectorLine();
 
-	protected:
+        void init(TreeInspectorPage* page, spActor item);
+
+    protected:
 
 
-	private:
-		TreeInspectorPage *_page;
-		spTreeInspectorPreview _item;
+    private:
+        TreeInspectorPage* _page;
+        spTreeInspectorPreview _item;
 
-		void _onMouseOver(bool over);
-		void _onPress(bool over);
-	};
+        void _onMouseOver(bool over);
+        void _onPress(bool over);
+    };
 }

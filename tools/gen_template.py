@@ -8,6 +8,10 @@ import shutil
 from mimetypes import guess_type
 from mimetypes import add_type
 
+
+
+platforms = ("win32", "android", "macosx", "ios", "cmake", "emscripten", "all")
+
 def relpath(a, b):
     try:
         return os.path.relpath(a, b)
@@ -19,6 +23,29 @@ def unixpath(path):
     return path.replace("\\", "/")
 
 def run(args):
+    if args.hello:
+        dest = args.dest
+        
+        local = os.path.dirname(__file__)
+        if not local:
+            local = "."
+        
+        src = local + "/../examples/HelloWorld/src"
+        shutil.copytree(src, dest + "/src")
+        
+        data = local + "/../examples/HelloWorld/data"
+        shutil.copytree(src, dest + "/data")
+        
+        for p in platforms:
+            if p == "all":
+                continue
+            args.type = p
+            args.src = dest + "/src"
+            args.dest = dest + "/proj." + p
+            _run(args)
+            
+
+def _run(args):
     name = args.name
     project = "proj." + args.type + "/"
     values = {"PROJECT":name}
@@ -311,11 +338,13 @@ if __name__ == "__main__":
     import argparse	
     parser = argparse.ArgumentParser(description="oxygine projects template generator")
     parser.add_argument("-t", "--type", help = "choose your IDE/build tools", 
-                        choices = ["win32", "android", "macosx", "ios", "cmake", "emscripten"], default = "win32")
+                        choices = platforms, default = "win32")
 
     parser.add_argument("-s", "--src", help = "folder with already created source files", default = "")   
 
     parser.add_argument("-d", "--dest", help = "destination location", default = ".")
+
+    parser.add_argument("--hello", help = "generates full copy of HelloWorld example. It includes all platforms, data and src folder", action="store_true", default = False)
 
     parser.add_argument("name")
 

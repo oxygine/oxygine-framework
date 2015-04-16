@@ -71,6 +71,9 @@
 		923A9E981A1FCBB700A6F08E /* MaskedRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 923A9E941A1FCBB700A6F08E /* MaskedRenderer.h */; };
 		923A9E991A1FCBB700A6F08E /* STDRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 923A9E951A1FCBB700A6F08E /* STDRenderer.cpp */; };
 		923A9E9A1A1FCBB700A6F08E /* STDRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 923A9E961A1FCBB700A6F08E /* STDRenderer.h */; };
+		9240B4081ADFB856005F9C5B /* Property.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240B4051ADFB856005F9C5B /* Property.h */; };
+		9240B4091ADFB856005F9C5B /* TweenAnim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9240B4061ADFB856005F9C5B /* TweenAnim.cpp */; };
+		9240B40A1ADFB856005F9C5B /* TweenAnim.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240B4071ADFB856005F9C5B /* TweenAnim.h */; };
 		92CE26621A589401003901D6 /* ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 92CE26601A589401003901D6 /* ios.h */; };
 		92CE26631A589401003901D6 /* ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 92CE26611A589401003901D6 /* ios.mm */; };
 		92DC0A251A2F0ED900D2B55C /* greenlet.c in Sources */ = {isa = PBXBuildFile; fileRef = 92DC0A231A2F0ED900D2B55C /* greenlet.c */; };
@@ -110,13 +113,11 @@
 		C3E8700F16EBC8EB00052915 /* ColorRectSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86F6716EBC8EB00052915 /* ColorRectSprite.h */; };
 		C3E8701016EBC8EB00052915 /* coroutines.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3E86F6A16EBC8EB00052915 /* coroutines.cpp */; };
 		C3E8701116EBC8EB00052915 /* coroutines.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86F6B16EBC8EB00052915 /* coroutines.h */; };
-		C3E8701316EBC8EB00052915 /* files_io.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86F6D16EBC8EB00052915 /* files_io.h */; };
 		C3E8701416EBC8EB00052915 /* ImageData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3E86F6E16EBC8EB00052915 /* ImageData.cpp */; };
 		C3E8701516EBC8EB00052915 /* ImageData.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86F6F16EBC8EB00052915 /* ImageData.h */; };
 		C3E8701616EBC8EB00052915 /* ImageDataOperations.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3E86F7016EBC8EB00052915 /* ImageDataOperations.cpp */; };
 		C3E8701716EBC8EB00052915 /* ImageDataOperations.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86F7116EBC8EB00052915 /* ImageDataOperations.h */; };
 		C3E8701816EBC8EB00052915 /* intrusive_ptr.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86F7216EBC8EB00052915 /* intrusive_ptr.h */; };
-		C3E8701A16EBC8EB00052915 /* logging.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86F7416EBC8EB00052915 /* logging.h */; };
 		C3E8701B16EBC8EB00052915 /* Mem2Native.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3E86F7516EBC8EB00052915 /* Mem2Native.cpp */; };
 		C3E8701C16EBC8EB00052915 /* Mem2Native.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86F7616EBC8EB00052915 /* Mem2Native.h */; };
 		C3E8701F16EBC8EB00052915 /* Mutex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3E86F7916EBC8EB00052915 /* Mutex.cpp */; };
@@ -293,6 +294,9 @@
 		923A9E941A1FCBB700A6F08E /* MaskedRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MaskedRenderer.h; path = ../../../src/MaskedRenderer.h; sourceTree = "<group>"; };
 		923A9E951A1FCBB700A6F08E /* STDRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = STDRenderer.cpp; path = ../../../src/STDRenderer.cpp; sourceTree = "<group>"; };
 		923A9E961A1FCBB700A6F08E /* STDRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STDRenderer.h; path = ../../../src/STDRenderer.h; sourceTree = "<group>"; };
+		9240B4051ADFB856005F9C5B /* Property.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Property.h; path = ../../../src/Property.h; sourceTree = "<group>"; };
+		9240B4061ADFB856005F9C5B /* TweenAnim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TweenAnim.cpp; path = ../../../src/TweenAnim.cpp; sourceTree = "<group>"; };
+		9240B4071ADFB856005F9C5B /* TweenAnim.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweenAnim.h; path = ../../../src/TweenAnim.h; sourceTree = "<group>"; };
 		92CE26601A589401003901D6 /* ios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ios.h; path = ../../../src/core/ios/ios.h; sourceTree = "<group>"; };
 		92CE26611A589401003901D6 /* ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ios.mm; path = ../../../src/core/ios/ios.mm; sourceTree = "<group>"; };
 		92DC0A231A2F0ED900D2B55C /* greenlet.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = greenlet.c; path = ../../../greenlets/src/greenlet.c; sourceTree = "<group>"; };
@@ -334,13 +338,11 @@
 		C3E86F6716EBC8EB00052915 /* ColorRectSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColorRectSprite.h; path = ../../../src/ColorRectSprite.h; sourceTree = "<group>"; };
 		C3E86F6A16EBC8EB00052915 /* coroutines.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coroutines.cpp; sourceTree = "<group>"; };
 		C3E86F6B16EBC8EB00052915 /* coroutines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coroutines.h; sourceTree = "<group>"; };
-		C3E86F6D16EBC8EB00052915 /* files_io.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = files_io.h; sourceTree = "<group>"; };
 		C3E86F6E16EBC8EB00052915 /* ImageData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageData.cpp; sourceTree = "<group>"; };
 		C3E86F6F16EBC8EB00052915 /* ImageData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageData.h; sourceTree = "<group>"; };
 		C3E86F7016EBC8EB00052915 /* ImageDataOperations.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageDataOperations.cpp; sourceTree = "<group>"; };
 		C3E86F7116EBC8EB00052915 /* ImageDataOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageDataOperations.h; sourceTree = "<group>"; };
 		C3E86F7216EBC8EB00052915 /* intrusive_ptr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = intrusive_ptr.h; sourceTree = "<group>"; };
-		C3E86F7416EBC8EB00052915 /* logging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logging.h; sourceTree = "<group>"; };
 		C3E86F7516EBC8EB00052915 /* Mem2Native.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mem2Native.cpp; sourceTree = "<group>"; };
 		C3E86F7616EBC8EB00052915 /* Mem2Native.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mem2Native.h; sourceTree = "<group>"; };
 		C3E86F7916EBC8EB00052915 /* Mutex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mutex.cpp; sourceTree = "<group>"; };
@@ -545,6 +547,9 @@
 		C3E86F5316EBC8C200052915 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				9240B4051ADFB856005F9C5B /* Property.h */,
+				9240B4061ADFB856005F9C5B /* TweenAnim.cpp */,
+				9240B4071ADFB856005F9C5B /* TweenAnim.h */,
 				9223E31B1A530E8A00B2770B /* HttpRequestTask.cpp */,
 				9223E3151A52D6B800B2770B /* HttpRequestTask.h */,
 				9223E3161A52D6B800B2770B /* WebImage.cpp */,
@@ -678,13 +683,11 @@
 				C3EE215017BECD6100715678 /* gl */,
 				C3E86F6A16EBC8EB00052915 /* coroutines.cpp */,
 				C3E86F6B16EBC8EB00052915 /* coroutines.h */,
-				C3E86F6D16EBC8EB00052915 /* files_io.h */,
 				C3E86F6E16EBC8EB00052915 /* ImageData.cpp */,
 				C3E86F6F16EBC8EB00052915 /* ImageData.h */,
 				C3E86F7016EBC8EB00052915 /* ImageDataOperations.cpp */,
 				C3E86F7116EBC8EB00052915 /* ImageDataOperations.h */,
 				C3E86F7216EBC8EB00052915 /* intrusive_ptr.h */,
-				C3E86F7416EBC8EB00052915 /* logging.h */,
 				C3E86F7516EBC8EB00052915 /* Mem2Native.cpp */,
 				C3E86F7616EBC8EB00052915 /* Mem2Native.h */,
 				C3E86F7916EBC8EB00052915 /* Mutex.cpp */,
@@ -850,9 +853,9 @@
 				C3E8700B16EBC8EB00052915 /* Clock.h in Headers */,
 				C3E8700C16EBC8EB00052915 /* closure.h in Headers */,
 				C3E8700D16EBC8EB00052915 /* closure_impl.h in Headers */,
+				9240B40A1ADFB856005F9C5B /* TweenAnim.h in Headers */,
 				C3E8700F16EBC8EB00052915 /* ColorRectSprite.h in Headers */,
 				C3E8701116EBC8EB00052915 /* coroutines.h in Headers */,
-				C3E8701316EBC8EB00052915 /* files_io.h in Headers */,
 				0472E35A17F8A1A80016A832 /* FileSystem.h in Headers */,
 				0472E36517F8A1A80016A832 /* ZipFileSystem.h in Headers */,
 				0472E36317F8A1A80016A832 /* VertexDeclaration.h in Headers */,
@@ -861,7 +864,6 @@
 				C3E8701716EBC8EB00052915 /* ImageDataOperations.h in Headers */,
 				923A9E9A1A1FCBB700A6F08E /* STDRenderer.h in Headers */,
 				C3E8701816EBC8EB00052915 /* intrusive_ptr.h in Headers */,
-				C3E8701A16EBC8EB00052915 /* logging.h in Headers */,
 				048AD0AB197D2444001963EF /* TextField.h in Headers */,
 				C3E8701C16EBC8EB00052915 /* Mem2Native.h in Headers */,
 				C3E8702016EBC8EB00052915 /* Mutex.h in Headers */,
@@ -912,6 +914,7 @@
 				C3E8705A16EBC8EB00052915 /* RenderState.h in Headers */,
 				C3E8705B16EBC8EB00052915 /* CreateResourceContext.h in Headers */,
 				C3E8705D16EBC8EB00052915 /* ResAnim.h in Headers */,
+				9240B4081ADFB856005F9C5B /* Property.h in Headers */,
 				C3E8705F16EBC8EB00052915 /* ResAtlas.h in Headers */,
 				C3E8706116EBC8EB00052915 /* ResBuffer.h in Headers */,
 				C3E8706316EBC8EB00052915 /* ResFont.h in Headers */,
@@ -1093,6 +1096,7 @@
 				048AD0AA197D2444001963EF /* TextField.cpp in Sources */,
 				C38EC26F1709649300568283 /* DeveloperMenu.cpp in Sources */,
 				92214D6419F14A2F00A4459A /* Polygon.cpp in Sources */,
+				9240B4091ADFB856005F9C5B /* TweenAnim.cpp in Sources */,
 				C38EC2711709649300568283 /* TexturesInspector.cpp in Sources */,
 				C38EC2731709649300568283 /* TreeInspector.cpp in Sources */,
 				0467086E192796E500D71824 /* Serialize.cpp in Sources */,

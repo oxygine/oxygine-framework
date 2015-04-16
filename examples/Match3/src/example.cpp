@@ -12,17 +12,17 @@ void example_preinit()
 
 void example_init()
 {
-	//load xml file with resources definition
-	res.loadXML("resources.xml");
+    //load xml file with resources definition
+    res.loadXML("resources.xml");
 
-	getStage()->addChild(new GameFrame());
+    getStage()->addChild(new GameFrame());
 }
 
 void example_destroy()
 {
-	res.free();
+    res.free();
 }
 void example_update()
 {
-	
+
 }

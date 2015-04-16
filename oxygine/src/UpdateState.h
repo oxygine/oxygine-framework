@@ -2,13 +2,13 @@
 #include "oxygine_include.h"
 namespace oxygine
 {
-	class UpdateState
-	{
-	public:
-		UpdateState(): time(0),	dt(0), iteration(0){}
+    class UpdateState
+    {
+    public:
+        UpdateState(): time(0), dt(0), iteration(0) {}
 
-		timeMS time;
-		timeMS dt;
-		int iteration;
-	};
+        timeMS time;
+        timeMS dt;
+        int iteration;
+    };
 }

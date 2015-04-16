@@ -6,18 +6,20 @@
 
 namespace oxygine
 {
-	jobject			jniGetMainActivity();
-	jclass			jniGetMainActivityClass();
-	void			jniSetMainActivityClass(jclass);
+    jobject         jniGetMainActivity();
+    jclass          jniGetMainActivityClass();
+    void            jniSetMainActivityClass(jclass);
 
-	/**returns UTC time in MS*/
-	int64			jniGetTimeUTCMS();
+    /**returns UTC time in MS*/
+    int64           jniGetTimeUTCMS();
 
-	/**returns locale. ISO 639-1 */
-	std::string		jniGetLanguage();
-	bool			jniIsNetworkAvailable();
+    /**returns locale. ISO 639-1 */
+    std::string     jniGetLanguage();
+    bool            jniIsNetworkAvailable();
 
-	bool			jniExit();
-	void			jniMoveTaskToBack();
-	void			jniBrowse(const char *url);
+    bool            jniExit();
+    void            jniMoveTaskToBack();
+    void            jniBrowse(const char* url);
+
+    void            jniWriteBuffer2InternalStorageFile(const char* path, const char* data, size_t size);
 }

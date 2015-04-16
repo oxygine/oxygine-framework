@@ -4,23 +4,23 @@
 
 namespace oxygine
 {
-	DECLARE_SMART(MaskedSprite, spMaskedSprite);
+    DECLARE_SMART(MaskedSprite, spMaskedSprite);
     class MaskedSprite: public _Sprite
-	{
-	public:
-		spSprite getMask() const;
-		void setMask(spSprite);	
+    {
+    public:
+        spSprite getMask() const;
+        void setMask(spSprite);
 
         void serialize(serializedata* data);
         void deserialize(const deserializedata* data);
-		void deserializeLink(const deserializeLinkData*);
+        void deserializeLink(const deserializeLinkData*);
 
-	protected:
-		void render(const RenderState &parentRS);
+    protected:
+        void render(const RenderState& parentRS);
 
-	private:
-		spSprite _mask;
-	};
+    private:
+        spSprite _mask;
+    };
 }
 
 #ifdef OX_EDITOR

@@ -6,45 +6,45 @@
 
 namespace oxygine
 {
-	DECLARE_SMART(Stage, spStage);
-	class Actor;
-	class EventState;
-	
-	const int MAX_TOUCHES = 8;
+    DECLARE_SMART(Stage, spStage);
+    class Actor;
+    class EventState;
 
-	class Input: public EventDispatcher
-	{
-	public:
-		static Input instance;
+    const int MAX_TOUCHES = 8;
 
-		Input();
-		~Input();
+    class Input: public EventDispatcher
+    {
+    public:
+        static Input instance;
 
-		enum
-		{
-			event_platform = sysEventID('I', 'P', 'L')
-		};
+        Input();
+        ~Input();
 
-		void cleanup();
+        enum
+        {
+            event_platform = sysEventID('I', 'P', 'L')
+        };
 
-		/**id should be in range [1, MAX_TOUCHES]*/
-		PointerState *getTouchByIndex(int index);
+        void cleanup();
+
+        /**id should be in range [1, MAX_TOUCHES]*/
+        PointerState* getTouchByIndex(int index);
 
 #ifndef __S3E__
-		int	touchID2index(int id);
-		PointerState *getTouchByID(int id);
+        int touchID2index(int id);
+        PointerState* getTouchByID(int id);
 #endif
 
 
-		//internal:
-		PointerState _pointers[MAX_TOUCHES];
-		PointerState _pointerMouse;
+        //internal:
+        PointerState _pointers[MAX_TOUCHES];
+        PointerState _pointerMouse;
 
-		int _ids[MAX_TOUCHES + 1];
+        int _ids[MAX_TOUCHES + 1];
 
 
-		void sendPointerButtonEvent(spStage, MouseButton button, float x, float y, float pressure, int type, PointerState *);
-		void sendPointerMotionEvent(spStage, float x, float y, float pressure, PointerState *);
-		void sendPointerWheelEvent(spStage, int scroll, PointerState *);
-	};
+        void sendPointerButtonEvent(spStage, MouseButton button, float x, float y, float pressure, int type, PointerState*);
+        void sendPointerMotionEvent(spStage, float x, float y, float pressure, PointerState*);
+        void sendPointerWheelEvent(spStage, int scroll, PointerState*);
+    };
 }

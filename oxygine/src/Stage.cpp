@@ -13,170 +13,170 @@
 
 namespace oxygine
 {
-	spStage Stage::instance;
+    spStage Stage::instance;
 
-	Stage::Stage(bool autoReset) :_statUpdate(0), _statRender(0), _clipOuter(false), _viewport(0, 0, 0, 0)//, _active(true)
-	{
-		spClock clock = new Clock();
-		setClock(clock);
-		setName("Stage");
+    Stage::Stage(bool autoReset) : _statUpdate(0), _statRender(0), _clipOuter(false), _viewport(0, 0, 0, 0) //, _active(true)
+    {
+        spClock clock = new Clock();
+        setClock(clock);
+        setName("Stage");
 
-		//each mobile application should handle focus lost
-		//and free/restore GPU resources
-		if (autoReset)
-		{
-			addEventListener(Stage::DEACTIVATE, CLOSURE(this, &Stage::onDeactivate));
-			addEventListener(Stage::ACTIVATE, CLOSURE(this, &Stage::onActivate));
-		}
-		_stage = this;
+        //each mobile application should handle focus lost
+        //and free/restore GPU resources
+        if (autoReset)
+        {
+            addEventListener(Stage::DEACTIVATE, CLOSURE(this, &Stage::onDeactivate));
+            addEventListener(Stage::ACTIVATE, CLOSURE(this, &Stage::onActivate));
+        }
+        _stage = this;
 
 #ifdef OXYGINE_SDL
-		_window = 0;
+        _window = 0;
 #endif
-	}
+    }
 
-#if OXYGINE_SDL		
-	void Stage::associateWithWindow(SDL_Window *wnd)
-	{
-		_window = wnd;
-		SDL_SetWindowData(wnd, "_", this);
-		addRef();
-	}
+#if OXYGINE_SDL
+    void Stage::associateWithWindow(SDL_Window* wnd)
+    {
+        _window = wnd;
+        SDL_SetWindowData(wnd, "_", this);
+        addRef();
+    }
 
-	SDL_Window* Stage::getAssociatedWindow() const
-	{
-		if (_window)
-			return _window;
-		return core::getWindow();
-	}
+    SDL_Window* Stage::getAssociatedWindow() const
+    {
+        if (_window)
+            return _window;
+        return core::getWindow();
+    }
 #endif
 
-	Stage::~Stage()
-	{
+    Stage::~Stage()
+    {
 
-	}
-	
-	void Stage::onDeactivate(Event *)
-	{
-		//_active = false;
-		core::reset();
-	}
+    }
 
-	void Stage::onActivate(Event *)
-	{
-		core::restore();
-		//_active = true;
-	}
+    void Stage::onDeactivate(Event*)
+    {
+        //_active = false;
+        core::reset();
+    }
 
-	std::string Stage::dump(const dumpOptions &opt) const
-	{
-		std::stringstream st;
+    void Stage::onActivate(Event*)
+    {
+        core::restore();
+        //_active = true;
+    }
 
-		st << "{Stage}\n";
-		//st << " displaySize=(" << _realDisplaySize.x << "," << _realDisplaySize.y << ")";
-		st << Actor::dump(opt);
+    std::string Stage::dump(const dumpOptions& opt) const
+    {
+        std::stringstream st;
 
-		return st.str();
-	}
+        st << "{Stage}\n";
+        //st << " displaySize=(" << _realDisplaySize.x << "," << _realDisplaySize.y << ")";
+        st << Actor::dump(opt);
 
-	Rect	Stage::calcCenteredViewport(const Point &displaySize, const Point &gameSize)
-	{
-		float width = (float)displaySize.x;
-		float height = (float)displaySize.y;
+        return st.str();
+    }
 
-		float scaleFactorX = width / gameSize.x;
-		float scaleFactorY = height / gameSize.y;
+    Rect    Stage::calcCenteredViewport(const Point& displaySize, const Point& gameSize)
+    {
+        float width = (float)displaySize.x;
+        float height = (float)displaySize.y;
 
-		float scaleFactor = scaleFactorX < scaleFactorY ? scaleFactorX : scaleFactorY;
-		Vector2 size = gameSize * scaleFactor;
+        float scaleFactorX = width / gameSize.x;
+        float scaleFactorY = height / gameSize.y;
 
-		Vector2 free = displaySize.cast<Vector2>() - size;
+        float scaleFactor = scaleFactorX < scaleFactorY ? scaleFactorX : scaleFactorY;
+        Vector2 size = gameSize * scaleFactor;
 
-		return Rect((free/2).cast<Point>(), size.cast<Point>());
-	}
+        Vector2 free = displaySize.cast<Vector2>() - size;
 
-	void Stage::init(const Point &displaySize, const Point &gameSize)
-	{
-		//_realDisplaySize = displaySize;
-		setSize(gameSize);
+        return Rect((free / 2).cast<Point>(), size.cast<Point>());
+    }
 
-		_viewport = calcCenteredViewport(displaySize, gameSize);
+    void Stage::init(const Point& displaySize, const Point& gameSize)
+    {
+        //_realDisplaySize = displaySize;
+        setSize(gameSize);
 
-		float scaleFactor = _viewport.size.x / (float)gameSize.x;
+        _viewport = calcCenteredViewport(displaySize, gameSize);
 
-		setScale(scaleFactor);
-		setPosition(_viewport.pos);
-	}
+        float scaleFactor = _viewport.size.x / (float)gameSize.x;
 
-	bool Stage::isOn(const Vector2 &localPosition)
-	{
-		return true;
-	}
-		
+        setScale(scaleFactor);
+        setPosition(_viewport.pos);
+    }
 
-	RectF Stage::getDestRect() const
-	{
-		Vector2 s = getSize() + getPosition();
-		RectF r = calcDestRectF(RectF(-getPosition(), s), s);
-		return r;
-	}
+    bool Stage::isOn(const Vector2& localPosition)
+    {
+        return true;
+    }
 
-	/*
-	bool Stage::handleEvent(const EventState &es)
-	{
-		bool handled = Actor::handleEvent(es);
-		return handled;
-	}
-	*/
 
-	void Stage::render(Renderer &r)
-	{
-		timeMS t = getTimeMS();
-		RenderState rs;
-		rs.renderer = &r;
-		Point ds = core::getDisplaySize();
+    RectF Stage::getDestRect() const
+    {
+        Vector2 s = getSize() + getPosition();
+        RectF r = calcDestRectF(RectF(-getPosition(), s), s);
+        return r;
+    }
 
-		RectF clip(0.0f, 0.0f, (float)ds.x, (float)ds.y);
-		rs.clip = &clip;
+    /*
+    bool Stage::handleEvent(const EventState &es)
+    {
+        bool handled = Actor::handleEvent(es);
+        return handled;
+    }
+    */
 
-		if (_clipOuter)
-		{
-			r.getDriver()->setScissorRect(&_viewport);
-			clip = _viewport.cast<RectF>();
-		}
-		
-		Actor::render(rs);
+    void Stage::render(Renderer& r)
+    {
+        timeMS t = getTimeMS();
+        RenderState rs;
+        rs.renderer = &r;
+        Point ds = core::getDisplaySize();
 
-		_statRender = getTimeMS() - t;
-	}
+        RectF clip(0.0f, 0.0f, (float)ds.x, (float)ds.y);
+        rs.clip = &clip;
 
-	void Stage::render(const Color &clearColor, const Rect &viewport)
-	{
-		//if (!_active)
-		//	return;
+        if (_clipOuter)
+        {
+            r.getDriver()->setScissorRect(&_viewport);
+            clip = _viewport.cast<RectF>();
+        }
 
-		IVideoDriver *driver = IVideoDriver::instance;
+        Actor::render(rs);
 
-		driver->setViewport(viewport);
-		driver->clear(clearColor);
+        _statRender = getTimeMS() - t;
+    }
 
-		STDRenderer renderer(driver);
-		renderer.initCoordinateSystem(viewport.getWidth(), viewport.getHeight());
-		renderer.begin(0);
-		render(renderer);
-		renderer.end();
-	}
+    void Stage::render(const Color& clearColor, const Rect& viewport)
+    {
+        //if (!_active)
+        //  return;
 
-	void Stage::cleanup()
-	{
-	}
+        IVideoDriver* driver = IVideoDriver::instance;
 
-	void Stage::update()
-	{
-		timeMS t = getTimeMS();
-		UpdateState us;		
-		Actor::update(us);
+        driver->setViewport(viewport);
+        driver->clear(clearColor);
 
-		_statUpdate = getTimeMS() - t;		
-	}
+        STDRenderer renderer(driver);
+        renderer.initCoordinateSystem(viewport.getWidth(), viewport.getHeight());
+        renderer.begin(0);
+        render(renderer);
+        renderer.end();
+    }
+
+    void Stage::cleanup()
+    {
+    }
+
+    void Stage::update()
+    {
+        timeMS t = getTimeMS();
+        UpdateState us;
+        Actor::update(us);
+
+        _statUpdate = getTimeMS() - t;
+    }
 }

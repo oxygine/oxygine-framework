@@ -4,112 +4,112 @@
 
 namespace oxygine
 {
-	Restorable::restorable _restorable;
-	bool _restoring = false;
-	Mutex _mutex;
+    Restorable::restorable _restorable;
+    bool _restoring = false;
+    Mutex _mutex;
 
-	Restorable::restorable::iterator  findRestorable(Restorable *r)
-	{
-		Restorable::restorable::iterator i = std::find(_restorable.begin(), _restorable.end(), r);
-		return i;
-	}
+    Restorable::restorable::iterator  findRestorable(Restorable* r)
+    {
+        Restorable::restorable::iterator i = std::find(_restorable.begin(), _restorable.end(), r);
+        return i;
+    }
 
-	const Restorable::restorable &Restorable::getObjects()
-	{
-		return _restorable;
-	}
+    const Restorable::restorable& Restorable::getObjects()
+    {
+        return _restorable;
+    }
 
-	void Restorable::restoreAll()
-	{
-		restorable rs;
-		
-		{
-			MutexAutoLock al(_mutex);
-			swap(rs, _restorable);
-		}
+    void Restorable::restoreAll()
+    {
+        restorable rs;
 
-		for (restorable::iterator i = rs.begin(); i != rs.end(); ++i)
-		{
-			Restorable *r = *i;
-			r->restore();
-		}
-		//_restoring = false;
-	}
+        {
+            MutexAutoLock al(_mutex);
+            swap(rs, _restorable);
+        }
 
-	bool Restorable::isRestored()
-	{
-		return _restorable.empty();
-	}
+        for (restorable::iterator i = rs.begin(); i != rs.end(); ++i)
+        {
+            Restorable* r = *i;
+            r->restore();
+        }
+        //_restoring = false;
+    }
 
-	void Restorable::releaseAll()
-	{
-		restorable rs;
-		{
-			MutexAutoLock al(_mutex);
-			swap(rs, _restorable);
-		}
-		
-		for (restorable::iterator i = rs.begin(); i != rs.end(); ++i)
-		{
-			Restorable *r = *i;
-			r->release();
-		}
+    bool Restorable::isRestored()
+    {
+        return _restorable.empty();
+    }
 
-		{
-			MutexAutoLock al(_mutex);
-			swap(rs, _restorable);
-		}		
-	}
+    void Restorable::releaseAll()
+    {
+        restorable rs;
+        {
+            MutexAutoLock al(_mutex);
+            swap(rs, _restorable);
+        }
 
-	Restorable::Restorable(): _registered(false)
-	{
+        for (restorable::iterator i = rs.begin(); i != rs.end(); ++i)
+        {
+            Restorable* r = *i;
+            r->release();
+        }
 
-	}
+        {
+            MutexAutoLock al(_mutex);
+            swap(rs, _restorable);
+        }
+    }
 
-	Restorable::~Restorable()
-	{
-		unreg();
-	}
+    Restorable::Restorable(): _registered(false)
+    {
 
-	void Restorable::reg(RestoreCallback cb, void *user)
-	{
-		if (_registered)
-			return;
+    }
 
-		MutexAutoLock al(_mutex);
+    Restorable::~Restorable()
+    {
+        unreg();
+    }
 
-		OX_ASSERT(_restoring == false);
-		_cb = cb;
-		_userData = user;
+    void Restorable::reg(RestoreCallback cb, void* user)
+    {
+        if (_registered)
+            return;
 
-		_registered = true;
-		
-		restorable::iterator i = findRestorable(this);
-		OX_ASSERT(i == _restorable.end());		
-		_restorable.push_back(this);
-	}
+        MutexAutoLock al(_mutex);
 
-	void Restorable::unreg()
-	{
-		if (!_registered)
-			return;
+        OX_ASSERT(_restoring == false);
+        _cb = cb;
+        _userData = user;
 
-		MutexAutoLock al(_mutex);
-		OX_ASSERT(_restoring == false);
-		restorable::iterator i = findRestorable(this);
-		//OX_ASSERT(i != _restorable.end());
-		if (i != _restorable.end())
-		{
-			_restorable.erase(i);
-		}
-		_registered = false;
-	}
+        _registered = true;
 
-	void Restorable::restore()
-	{
-		if (!_cb)
-			return;
+        restorable::iterator i = findRestorable(this);
+        OX_ASSERT(i == _restorable.end());
+        _restorable.push_back(this);
+    }
 
-		_cb(this, _userData);
-	}
+    void Restorable::unreg()
+    {
+        if (!_registered)
+            return;
+
+        MutexAutoLock al(_mutex);
+        OX_ASSERT(_restoring == false);
+        restorable::iterator i = findRestorable(this);
+        //OX_ASSERT(i != _restorable.end());
+        if (i != _restorable.end())
+        {
+            _restorable.erase(i);
+        }
+        _registered = false;
+    }
+
+    void Restorable::restore()
+    {
+        if (!_cb)
+            return;
+
+        _cb(this, _userData);
+    }
 }

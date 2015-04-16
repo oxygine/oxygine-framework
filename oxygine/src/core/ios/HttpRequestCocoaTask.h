@@ -15,13 +15,13 @@ namespace oxygine
     public:
         HttpRequestCocoaTask();
         ~HttpRequestCocoaTask();
-        
+
         void complete_(NSData*);
         void progress_(int loaded, int total);
-        
+
     protected:
         void _run();
-        
+
     private:
     };
 }

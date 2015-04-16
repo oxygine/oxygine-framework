@@ -6,11 +6,11 @@ DECLARE_SMART(GameScene, spGameScene);
 class GameScene: public Scene
 {
 public:
-	static spGameScene instance;
-	GameScene();
+    static spGameScene instance;
+    GameScene();
 
 
 private:
-	void onEvent(Event *ev);
-	spGame _game;
+    void onEvent(Event* ev);
+    spGame _game;
 };

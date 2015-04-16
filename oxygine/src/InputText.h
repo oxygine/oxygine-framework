@@ -9,41 +9,41 @@
 
 namespace oxygine
 {
-	DECLARE_SMART(TextField, spTextField);
-	DECLARE_SMART(InputText, spInputText);
+    DECLARE_SMART(TextField, spTextField);
+    DECLARE_SMART(InputText, spInputText);
 
-	class InputText: public EventDispatcher
-	{
-	public:
-		InputText();
-		~InputText();
+    class InputText: public EventDispatcher
+    {
+    public:
+        InputText();
+        ~InputText();
 
-		/**Shows virtual keyboard(if supported on platform) and sends pressed chars to TextField*/
-		void start(spTextField textActor);
-		void stop();
+        /**Shows virtual keyboard(if supported on platform) and sends pressed chars to TextField*/
+        void start(spTextField textActor);
+        void stop();
 
-		void setAllowedSymbols(const std::string &utf8str);
-		void setAllowedSymbols(const std::wstring &str);
-		void setDisallowedSymbols(const std::string &utf8str);
-		void setDisallowedSymbols(const std::wstring &str);
-		void setMaxTextLength(int);
+        void setAllowedSymbols(const std::string& utf8str);
+        void setAllowedSymbols(const std::wstring& str);
+        void setDisallowedSymbols(const std::string& utf8str);
+        void setDisallowedSymbols(const std::wstring& str);
+        void setMaxTextLength(int);
 
-		static void stopAnyInput();
+        static void stopAnyInput();
 
-	private:
-		spTextField _textActor;
+    private:
+        spTextField _textActor;
 
-		std::string _allowed;
-		std::string _disallowed;
-		std::string _txt;
-		int	_maxLength;
-		void updateText();
-		static InputText *_active;		
+        std::string _allowed;
+        std::string _disallowed;
+        std::string _txt;
+        int _maxLength;
+        void updateText();
+        static InputText* _active;
 
-		void _onPlatform(Event *event);
+        void _onPlatform(Event* event);
 
 #ifndef __S3E__
-		int _onSDLEvent(SDL_Event *event);
+        int _onSDLEvent(SDL_Event* event);
 #endif
-	};
+    };
 }

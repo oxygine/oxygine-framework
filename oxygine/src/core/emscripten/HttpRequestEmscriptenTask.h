@@ -15,11 +15,11 @@ namespace oxygine
         typedef void (*em_async_wget2_data_onprogress_func)(unsigned, void*, int, int);
         */
 
-        static void onload(unsigned, void* This, void* arg1, unsigned arg2){((HttpRequestEmscriptenTask*)This)->_onload(arg1, arg2);}
-        static void onerror(unsigned, void* This, int arg1, const char* arg2){((HttpRequestEmscriptenTask*)This)->_onerror(arg1, arg2);}
-        static void onprogress(unsigned, void* This, int arg1, int arg2){((HttpRequestEmscriptenTask*)This)->_onprogress(arg1, arg2);}
+        static void onload(unsigned, void* This, void* arg1, unsigned arg2) {((HttpRequestEmscriptenTask*)This)->_onload(arg1, arg2);}
+        static void onerror(unsigned, void* This, int arg1, const char* arg2) {((HttpRequestEmscriptenTask*)This)->_onerror(arg1, arg2);}
+        static void onprogress(unsigned, void* This, int arg1, int arg2) {((HttpRequestEmscriptenTask*)This)->_onprogress(arg1, arg2);}
 
-        void _onload(void*, unsigned);  
+        void _onload(void*, unsigned);
         void _onerror(int, const char*);
         void _onprogress(int, int);
 

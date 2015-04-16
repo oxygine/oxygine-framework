@@ -4,29 +4,29 @@
 
 namespace oxygine
 {
-	DECLARE_SMART(HttpRequestTask, spHttpRequestTask);
-	DECLARE_SMART(Sprite, spSprite);
-	DECLARE_SMART(WebImage, spWebImage);
+    DECLARE_SMART(HttpRequestTask, spHttpRequestTask);
+    DECLARE_SMART(Sprite, spSprite);
+    DECLARE_SMART(WebImage, spWebImage);
 
-	class WebImage : public _Actor
-	{
-	public:
-		DECLARE_COPYCLONE(WebImage);
+    class WebImage : public _Actor
+    {
+    public:
+        DECLARE_COPYCLONE(WebImage);
 
-		WebImage();
-		~WebImage();
+        WebImage();
+        ~WebImage();
 
-		void load(const std::string &url);
-		void unload();
+        void load(const std::string& url);
+        void unload();
 
-	private:
-		void loaded(Event*);
-		void error(Event*);
+    private:
+        void loaded(Event*);
+        void error(Event*);
 
-		spSprite _image;
+        spSprite _image;
 
-		spHttpRequestTask _http;
-	};
+        spHttpRequestTask _http;
+    };
 }
 
 #ifdef OX_EDITOR

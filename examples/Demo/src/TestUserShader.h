@@ -9,119 +9,121 @@ DECLARE_SMART(ShaderSprite, spShaderSprite);
 class ShaderSprite: public Sprite
 {
 public:
-	ShaderSprite():_program(0), _val(0,0,0,0)
-	{
+    ShaderSprite(): _program(0), _val(0, 0, 0, 0)
+    {
 
-	}
-	
-	void setShaderProgram(UberShaderProgram* p)
-	{
-		_program = p;
-	}
+    }
 
-	const Vector4& getVal() const 
-	{
-		return _val;
-	}
+    void setShaderProgram(UberShaderProgram* p)
+    {
+        _program = p;
+    }
 
-	void setVal(const Vector4& v)
-	{
-		_val = v;
-	}
+    const Vector4& getVal() const
+    {
+        return _val;
+    }
 
-	typedef Property<Vector4, const Vector4&, ShaderSprite, &ShaderSprite::getVal, &ShaderSprite::setVal>	TweenVal;
+    void setVal(const Vector4& v)
+    {
+        _val = v;
+    }
+
+    typedef Property<Vector4, const Vector4&, ShaderSprite, &ShaderSprite::getVal, &ShaderSprite::setVal>   TweenVal;
 
 private:
-	Vector4 _val;
-	UberShaderProgram* _program;
-	void setUniforms(IVideoDriver *driver, ShaderProgram *prog)
-	{
-		driver->setUniform("userValue", &_val, 1);
-	}
+    Vector4 _val;
+    UberShaderProgram* _program;
+    void setUniforms(IVideoDriver* driver, ShaderProgram* prog)
+    {
+        driver->setUniform("userValue", &_val, 1);
+    }
 
-	void doRender(const RenderState &rs)
-	{
-		_program->setShaderUniformsCallback(CLOSURE(this, &ShaderSprite::setUniforms));
-		STDRenderer *renderer = safeCast<STDRenderer*>(rs.renderer);
-		renderer->setUberShaderProgram(_program);
-		Sprite::doRender(rs);
-		renderer->setUberShaderProgram(&Renderer::uberShader);
+    void doRender(const RenderState& rs)
+    {
+        _program->setShaderUniformsCallback(CLOSURE(this, &ShaderSprite::setUniforms));
+        STDRenderer* renderer = safeCast<STDRenderer*>(rs.renderer);
+        renderer->setUberShaderProgram(_program);
+        Sprite::doRender(rs);
+        renderer->setUberShaderProgram(&Renderer::uberShader);
 
-		_program->setShaderUniformsCallback(UberShaderProgram::ShaderUniformsCallback());
-	}
+        _program->setShaderUniformsCallback(UberShaderProgram::ShaderUniformsCallback());
+    }
 };
 
 class TestUserShader: public Test
 {
 public:
-	UberShaderProgram *_shaderMono;
-	UberShaderProgram *_shaderAddColor;
-	UberShaderProgram *_shaderInvert;
+    UberShaderProgram* _shaderMono;
+    UberShaderProgram* _shaderAddColor;
+    UberShaderProgram* _shaderInvert;
 
-	spShaderSprite _sprite;
+    spShaderSprite _sprite;
 
-	TestUserShader():_shaderMono(0), _shaderAddColor(0)
-	{
-		_shaderMono = new UberShaderProgram();
-		_shaderMono->init(Renderer::uberShaderBody, 
-			"#define MODIFY_BASE\n"
-			"uniform lowp vec4 userValue;"
-			"lowp vec4 modify_base(lowp vec4 base)\n"
-			"{\n"
-			"lowp float c = (base.r + base.g + base.b)/3.0;\n"
-			"return mix(vec4(c, c, c, base.a), base, userValue.r);\n"
-			"}\n");
+    TestUserShader(): _shaderMono(0), _shaderAddColor(0)
+    {
+        _shaderMono = new UberShaderProgram();
+        _shaderMono->init(Renderer::uberShaderBody,
+                          "#define MODIFY_BASE\n"
+                          "uniform lowp vec4 userValue;"
+                          "lowp vec4 modify_base(lowp vec4 base)\n"
+                          "{\n"
+                          "lowp float c = (base.r + base.g + base.b)/3.0;\n"
+                          "return mix(vec4(c, c, c, base.a), base, userValue.r);\n"
+                          "}\n");
 
-		_shaderAddColor = new UberShaderProgram();
-		_shaderAddColor->init(Renderer::uberShaderBody, 
-			"#define MODIFY_BASE\n"
-			"uniform lowp vec4 userValue;"
-			"lowp vec4 modify_base(lowp vec4 base)\n"
-			"{\n"
-			"return base + userValue;\n"
-			"}\n");
+        _shaderAddColor = new UberShaderProgram();
+        _shaderAddColor->init(Renderer::uberShaderBody,
+                              "#define MODIFY_BASE\n"
+                              "uniform lowp vec4 userValue;"
+                              "lowp vec4 modify_base(lowp vec4 base)\n"
+                              "{\n"
+                              "return base + userValue;\n"
+                              "}\n");
 
-		_shaderInvert = new UberShaderProgram();
-		_shaderInvert->init(Renderer::uberShaderBody, 
-			"#define MODIFY_BASE\n"
-			"uniform lowp vec4 userValue;"
-			"lowp vec4 modify_base(lowp vec4 base)\n"
-			"{\n"
-			"\n"
-			"return vec4(mix(vec4(1.0, 1.0, 1.0, 1.0) - base, base, userValue.r).rgb, base.a);\n"
-			"}\n");
+        _shaderInvert = new UberShaderProgram();
+        _shaderInvert->init(Renderer::uberShaderBody,
+                            "#define MODIFY_BASE\n"
+                            "uniform lowp vec4 userValue;"
+                            "lowp vec4 modify_base(lowp vec4 base)\n"
+                            "{\n"
+                            "\n"
+                            "return vec4(mix(vec4(1.0, 1.0, 1.0, 1.0) - base, base, userValue.r).rgb, base.a);\n"
+                            "}\n");
 
 
-		_sprite = initActor(new ShaderSprite, 
-			arg_resAnim = resources.getResAnim("bg"),
-			arg_attachTo = content
-			//arg_pos = content->getSize()/2,
-			//arg_anchor = Vector2(0.5f, 0.5f)
-			);
+        _sprite = initActor(new ShaderSprite,
+                            arg_resAnim = resources.getResAnim("bg"),
+                            arg_attachTo = content
+                                           //arg_pos = content->getSize()/2,
+                                           //arg_anchor = Vector2(0.5f, 0.5f)
+                           );
 
-		_sprite->addTween(ShaderSprite::TweenVal(Vector4(1,1,1,0)), 5000, -1, true);
-		_sprite->setShaderProgram(_shaderInvert);
-		
-		toggle t[] = {
-			toggle("->shader:add color", 0, _shaderAddColor),
-			toggle("->shader:mono", 0, _shaderMono), 
-			toggle("->shader:invert", 0, _shaderInvert)};
-		addToggle("shader", t, 3);		
-	}
+        _sprite->addTween(ShaderSprite::TweenVal(Vector4(1, 1, 1, 0)), 5000, -1, true);
+        _sprite->setShaderProgram(_shaderInvert);
 
-	~TestUserShader()
-	{
-		delete _shaderInvert;
-		delete _shaderMono;
-		delete _shaderAddColor;
-	}
+        toggle t[] =
+        {
+            toggle("->shader:add color", 0, _shaderAddColor),
+            toggle("->shader:mono", 0, _shaderMono),
+            toggle("->shader:invert", 0, _shaderInvert)
+        };
+        addToggle("shader", t, 3);
+    }
 
-	void toggleClicked(string id, const toggle *data)
-	{
-		if (id == "shader")
-		{
-			UberShaderProgram *shader = (UberShaderProgram *)data->data;
-			_sprite->setShaderProgram(shader);
-		}
-	}
+    ~TestUserShader()
+    {
+        delete _shaderInvert;
+        delete _shaderMono;
+        delete _shaderAddColor;
+    }
+
+    void toggleClicked(string id, const toggle* data)
+    {
+        if (id == "shader")
+        {
+            UberShaderProgram* shader = (UberShaderProgram*)data->data;
+            _sprite->setShaderProgram(shader);
+        }
+    }
 };

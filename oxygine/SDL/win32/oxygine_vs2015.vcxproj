@@ -192,7 +192,6 @@
     <ClInclude Include="..\..\src\core\coroutines.h" />
     <ClInclude Include="..\..\src\core\file.h" />
     <ClInclude Include="..\..\src\core\FileSystem.h" />
-    <ClInclude Include="..\..\src\core\files_io.h" />
     <ClInclude Include="..\..\src\core\gl\NativeTextureGLES.h" />
     <ClInclude Include="..\..\src\core\gl\oxgl.h" />
     <ClInclude Include="..\..\src\core\gl\ShaderProgramGL.h" />
@@ -203,7 +202,6 @@
     <ClInclude Include="..\..\src\core\ImageDataOperations.h" />
     <ClInclude Include="..\..\src\core\intrusive_ptr.h" />
     <ClInclude Include="..\..\src\core\log.h" />
-    <ClInclude Include="..\..\src\core\logging.h" />
     <ClInclude Include="..\..\src\core\Mem2Native.h" />
     <ClInclude Include="..\..\src\core\memory_pool.h" />
     <ClInclude Include="..\..\src\core\Mutex.h" />

@@ -22,205 +22,205 @@
 
 namespace oxygine
 {
-	void printvec(const char *s, const Vector2 &v)
-	{
-		//printf("%s: %.2f, %.2f\n", s, v.x, v.y);
-	}
+    void printvec(const char* s, const Vector2& v)
+    {
+        //printf("%s: %.2f, %.2f\n", s, v.x, v.y);
+    }
 
 
-	RectF getBounds(Actor *a)
-	{
-		return RectF(a->getPosition(), a->getSize());
-	}
+    RectF getBounds(Actor* a)
+    {
+        return RectF(a->getPosition(), a->getSize());
+    }
 
-	RectF TreeInspector::calcBounds(Actor *actor)
-	{
-		OX_ASSERT(actor);
+    RectF TreeInspector::calcBounds(Actor* actor)
+    {
+        OX_ASSERT(actor);
 
-		RectF r = getBounds(actor);
+        RectF r = getBounds(actor);
 
-		spActor c = actor->getFirstChild();
-		while (c)
-		{
-			if (c->getVisible())
-			{
-				RectF cr = calcBounds(c.get());				
-				cr.pos += c->getPosition();
-				r.unite(cr);
-			}
-			c = c->getNextSibling();
-		}
+        spActor c = actor->getFirstChild();
+        while (c)
+        {
+            if (c->getVisible())
+            {
+                RectF cr = calcBounds(c.get());
+                cr.pos += c->getPosition();
+                r.unite(cr);
+            }
+            c = c->getNextSibling();
+        }
 
-		r.pos = r.pos - actor->getPosition();
-		return r;
-	}
+        r.pos = r.pos - actor->getPosition();
+        return r;
+    }
 
-	ResAnim *CreateResAnim(const char *file, int rows, int cols)
-	{
-		ResAnim *rs = new ResAnim(0);
+    ResAnim* CreateResAnim(const char* file, int rows, int cols)
+    {
+        ResAnim* rs = new ResAnim(0);
 
-		MemoryTexture mt;
-		file::buffer bf;
-		file::read(file, bf);
-		mt.init(bf);
+        MemoryTexture mt;
+        file::buffer bf;
+        file::read(file, bf);
+        mt.init(bf);
 
-		rs->init(&mt, cols, rows);
+        rs->init(&mt, cols, rows);
 
-		return rs;
-	}
+        return rs;
+    }
 
-	TreeInspector::TreeInspector():_preview(0), _resSystem(0)
-	{	
-		setName(getDefaultName());
-		
-		DebugActor::initialize();
-		_resSystem = DebugActor::resSystem;
+    TreeInspector::TreeInspector(): _preview(0), _resSystem(0)
+    {
+        setName(getDefaultName());
 
-		setPriority(999);
-		//setTouchEnabled(false);
-		//setTouchChildrenEnabled(false);
-	}
+        DebugActor::initialize();
+        _resSystem = DebugActor::resSystem;
 
-	void getDescendants(spActor actor, std::vector<spActor> &actors)
-	{
-		actors.push_back(actor);
-		spActor child = actor->getFirstChild();
-		while (child)
-		{
-			getDescendants(child, actors);
-			child = child->getNextSibling();
-		}
-		//actor->removeChildren();
-	}
+        setPriority(999);
+        //setTouchEnabled(false);
+        //setTouchChildrenEnabled(false);
+    }
 
-	TreeInspector::~TreeInspector()
-	{
-	}
+    void getDescendants(spActor actor, std::vector<spActor>& actors)
+    {
+        actors.push_back(actor);
+        spActor child = actor->getFirstChild();
+        while (child)
+        {
+            getDescendants(child, actors);
+            child = child->getNextSibling();
+        }
+        //actor->removeChildren();
+    }
 
-	void TreeInspector::render(const RenderState &rs_)
-	{
-		RenderState rs = rs_;
-		rs.renderer->getDriver()->setScissorRect(0);
-		
-		Rect vp;
-		rs.renderer->getDriver()->getViewport(vp);		
-		RectF clip = vp.cast<RectF>();
-		rs.clip = &clip;
+    TreeInspector::~TreeInspector()
+    {
+    }
 
-		ClipRectActor::render(rs);
-	}
+    void TreeInspector::render(const RenderState& rs_)
+    {
+        RenderState rs = rs_;
+        rs.renderer->getDriver()->setScissorRect(0);
 
-	void TreeInspector::init(const Vector2 &size, spActor actor)
-	{
-		setSize(size);
+        Rect vp;
+        rs.renderer->getDriver()->getViewport(vp);
+        RectF clip = vp.cast<RectF>();
+        rs.clip = &clip;
 
-		
-		_rootPage = new TreeInspectorPage(this, 0);		
-		//_rootPage->setTouchChildrenEnabled(false);
-		//_rootPage->setTouchEnabled(false);
+        ClipRectActor::render(rs);
+    }
 
-		
-		_rootPage->init(actor);
-		
-		_rootPage->setY(5);
-		setWidth(_rootPage->getWidth());
+    void TreeInspector::init(const Vector2& size, spActor actor)
+    {
+        setSize(size);
 
-		
-		spSlidingActor slidingActor = new SlidingActor();
-		slidingActor->setSize(size);
-		slidingActor->setContent(_rootPage);
-		
-		addChild(slidingActor);
-		
-		_sliding = slidingActor;
-		
 
-		TextStyle style;
-		style.font = _resSystem->getResFont("system")->getFont();
-		style.vAlign = TextStyle::VALIGN_TOP;
+        _rootPage = new TreeInspectorPage(this, 0);
+        //_rootPage->setTouchChildrenEnabled(false);
+        //_rootPage->setTouchEnabled(false);
 
-		updateSizes();
-	}
 
-	void TreeInspector::onAdded2Stage()
-	{
-		_getStage()->addEventListener(TouchEvent::WHEEL_DOWN, CLOSURE(this, &TreeInspector::wheel));
-		_getStage()->addEventListener(TouchEvent::WHEEL_UP, CLOSURE(this, &TreeInspector::wheel));
-	}
+        _rootPage->init(actor);
 
-	void TreeInspector::onRemovedFromStage()
-	{
-		_getStage()->removeEventListeners(this);
-	}
+        _rootPage->setY(5);
+        setWidth(_rootPage->getWidth());
 
-	void TreeInspector::updateSizes()
-	{
-		Vector2 pos = _rootPage->getPosition();
-		Vector2 size = _rootPage->getSize();
-		_rootPage->updateSizesNew();
-		_rootPage->setPosition(pos);
-		_rootPage->setSize(size + Vector2(0, 24));
-		//_rootPage->setPosition(0, 20);
-		_sliding->snap();
-	}
-	
-	void TreeInspector::close(Event *ev)
-	{
-		detach();
-		_getStage()->removeEventListeners(this);
-		//return true;
-	}
 
-	void TreeInspector::wheel(Event *ev)
-	{
-		float y = _rootPage->getY();
-		if (ev->type == TouchEvent::WHEEL_DOWN)
-			y -= 10;
-		else
-			y += 10;
+        spSlidingActor slidingActor = new SlidingActor();
+        slidingActor->setSize(size);
+        slidingActor->setContent(_rootPage);
 
-		_rootPage->setY(y);
-	}
+        addChild(slidingActor);
 
-	Vector2 fitSize(const Vector2 &destSize, const Vector2 &src);
-	void TreeInspector::showPreview(TreeInspectorPreview *item, bool show)
-	{
-		/*
-		if (show == false && !_preview)
-			return;
+        _sliding = slidingActor;
 
-		if (_preview && _preview != item)
-			return;
 
-		if (show)
-		{
-			Vector2 pos = convertPosUp(item, _body.get(), item->getPosition(), false);
+        TextStyle style;
+        style.font = _resSystem->getResFont("system")->getFont();
+        style.vAlign = TextStyle::VALIGN_TOP;
 
-			item->_prevParent = item->getParent();
-			item->detach();
+        updateSizes();
+    }
 
-			_body->addChild(item);
+    void TreeInspector::onAdded2Stage()
+    {
+        _getStage()->addEventListener(TouchEvent::WHEEL_DOWN, CLOSURE(this, &TreeInspector::wheel));
+        _getStage()->addEventListener(TouchEvent::WHEEL_UP, CLOSURE(this, &TreeInspector::wheel));
+    }
 
-			item->setPosition(pos);
+    void TreeInspector::onRemovedFromStage()
+    {
+        _getStage()->removeEventListeners(this);
+    }
 
-			Point ns = calcBoundSize(Point(300, 300), item->_item->getSize());
-			float scale = ns.x / (float)item->getWidth();
+    void TreeInspector::updateSizes()
+    {
+        Vector2 pos = _rootPage->getPosition();
+        Vector2 size = _rootPage->getSize();
+        _rootPage->updateSizesNew();
+        _rootPage->setPosition(pos);
+        _rootPage->setSize(size + Vector2(0, 24));
+        //_rootPage->setPosition(0, 20);
+        _sliding->snap();
+    }
 
-			item->setScale(scale);
+    void TreeInspector::close(Event* ev)
+    {
+        detach();
+        _getStage()->removeEventListeners(this);
+        //return true;
+    }
 
-			_preview = item;
-		}
-		else
-		{
-			item->detach();
+    void TreeInspector::wheel(Event* ev)
+    {
+        float y = _rootPage->getY();
+        if (ev->type == TouchEvent::WHEEL_DOWN)
+            y -= 10;
+        else
+            y += 10;
 
-			item->_prevParent->addChild(item);
-			item->setScale(1);
+        _rootPage->setY(y);
+    }
 
-			item->setPosition(Point(0,0));
+    Vector2 fitSize(const Vector2& destSize, const Vector2& src);
+    void TreeInspector::showPreview(TreeInspectorPreview* item, bool show)
+    {
+        /*
+        if (show == false && !_preview)
+            return;
 
-			_preview = 0;
-		}
-		*/
-	}
+        if (_preview && _preview != item)
+            return;
+
+        if (show)
+        {
+            Vector2 pos = convertPosUp(item, _body.get(), item->getPosition(), false);
+
+            item->_prevParent = item->getParent();
+            item->detach();
+
+            _body->addChild(item);
+
+            item->setPosition(pos);
+
+            Point ns = calcBoundSize(Point(300, 300), item->_item->getSize());
+            float scale = ns.x / (float)item->getWidth();
+
+            item->setScale(scale);
+
+            _preview = item;
+        }
+        else
+        {
+            item->detach();
+
+            item->_prevParent->addChild(item);
+            item->setScale(1);
+
+            item->setPosition(Point(0,0));
+
+            _preview = 0;
+        }
+        */
+    }
 }

@@ -4,72 +4,72 @@
 
 Jewel::Jewel(int jewel_id)
 {
-	locked = false;
+    locked = false;
 
-	state = jsNormal;
-	Set(jewel_id);
-	setTouchEnabled(false);
-	setAnchor(0.5f, 0.5f);
+    state = jsNormal;
+    Set(jewel_id);
+    setTouchEnabled(false);
+    setAnchor(0.5f, 0.5f);
 }
 
 void Jewel::Set(int id)
 {
-	setResAnim(res.getResAnim(jewels_ids[id]));
-	_id = id;
-	setAlpha(255);
+    setResAnim(res.getResAnim(jewels_ids[id]));
+    _id = id;
+    setAlpha(255);
 }
 
 
 void Jewel::UnSelect()
 {
-	if (state != jsSelected)
-		return;
+    if (state != jsSelected)
+        return;
 
-	state = jsNormal;
-	setRotation(0);
-	setPosition(old_position);
-	removeTweens();
+    state = jsNormal;
+    setRotation(0);
+    setPosition(old_position);
+    removeTweens();
 }
 
 void Jewel::SetSelected()
 {
-	if (state != jsNormal)
-		return;
+    if (state != jsNormal)
+        return;
 
-	state = jsSelected;
-	spTweenQueue tween = new TweenQueue();
-	old_position = getPosition();
-	//setPosition(getX() + JEWEL_SIZE/2, getY() + JEWEL_SIZE/2);
+    state = jsSelected;
+    spTweenQueue tween = new TweenQueue();
+    old_position = getPosition();
+    //setPosition(getX() + JEWEL_SIZE/2, getY() + JEWEL_SIZE/2);
 
-	tween->add(Sprite::TweenRotation(MATH_PI * 0.1f), 100);
-	tween->add(Sprite::TweenRotation(MATH_PI  * (-0.1f)), 400,-1,true);
+    tween->add(Sprite::TweenRotation(MATH_PI * 0.1f), 100);
+    tween->add(Sprite::TweenRotation(MATH_PI  * (-0.1f)), 400, -1, true);
 
 
-	addTween(tween);
+    addTween(tween);
 }
 
 
 spTween Jewel::PlayAnimation()
 {
-	if (!(state==jsNormal && locked) )
-		return 0;
+    if (!(state == jsNormal && locked))
+        return 0;
 
-	state = jsAnimation;
+    state = jsAnimation;
 
-	string anim = jewels_ids[_id];
-	return addTween(Sprite::TweenAlpha(0), 500, 1);
+    string anim = jewels_ids[_id];
+    return addTween(Sprite::TweenAlpha(0), 500, 1);
 }
 
 spTween Jewel::DropTo(Vector2 pos)
 {
-	int time = fabs(getPosition().y - pos.y) * 2;
-	spTween tween = addTween(Sprite::TweenPosition(pos),time);
-	state = jsDropped;
-	return tween;
+    int time = fabs(getPosition().y - pos.y) * 2;
+    spTween tween = addTween(Sprite::TweenPosition(pos), time);
+    state = jsDropped;
+    return tween;
 }
 
 void Jewel::AnimationEnd()
 {
-	state = jsScored;
-	setVisible(false);
+    state = jsScored;
+    setVisible(false);
 }

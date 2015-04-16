@@ -9,77 +9,77 @@ typedef struct SDL_Window SDL_Window;
 
 namespace oxygine
 {
-	DECLARE_SMART(Stage, spStage);
+    DECLARE_SMART(Stage, spStage);
 
-	class DebugActor;
-        class Stage : public _Actor
-	{
-	public:
-		enum
-		{
-			ACTIVATE = sysEventID('S', 'A', 'c'),
-			DEACTIVATE = sysEventID('S', 'D', 'c'),
-			LOST_CONTEXT = sysEventID('S', 'L', 'C'),
-		};
+    class DebugActor;
+    class Stage : public _Actor
+    {
+    public:
+        enum
+        {
+            ACTIVATE = sysEventID('S', 'A', 'c'),
+            DEACTIVATE = sysEventID('S', 'D', 'c'),
+            LOST_CONTEXT = sysEventID('S', 'L', 'C'),
+        };
 
-		static spStage instance;
-		static Rect	calcCenteredViewport(const Point &displaySize, const Point &gameSize);
+        static spStage instance;
+        static Rect calcCenteredViewport(const Point& displaySize, const Point& gameSize);
 
-		Stage(bool autoHandleReset = false);
-		~Stage();
+        Stage(bool autoHandleReset = false);
+        ~Stage();
 
-		/**Initializes size, scale and position of Stage 
-		@param is real display size of device.
-		@param is your "virtual" preferred size. You could change it to any size you need
-		*/
-		void init(const Point &displaySize, const Point &gameSize);
-				
-		/**use Scissor test for outer Stage area*/
-		void setClipOuterArea(bool clip){_clipOuter = clip;}
-		/**Render all actors*/
-		void render(Renderer &r);
-		/**Render all actors, simplified version*/
-		void render(const Color &clearColor, const Rect &viewport);
+        /**Initializes size, scale and position of Stage
+        @param is real display size of device.
+        @param is your "virtual" preferred size. You could change it to any size you need
+        */
+        void init(const Point& displaySize, const Point& gameSize);
 
-		//const Rect	&getArea();
+        /**use Scissor test for outer Stage area*/
+        void setClipOuterArea(bool clip) {_clipOuter = clip;}
+        /**Render all actors*/
+        void render(Renderer& r);
+        /**Render all actors, simplified version*/
+        void render(const Color& clearColor, const Rect& viewport);
 
-		/**Updates each children*/
-		void update();
+        //const Rect    &getArea();
 
-		void cleanup();
+        /**Updates each children*/
+        void update();
 
-		RectF getDestRect() const;
+        void cleanup();
+
+        RectF getDestRect() const;
 
 
-		std::string dump(const dumpOptions &opt) const;
+        std::string dump(const dumpOptions& opt) const;
 
-#if OXYGINE_SDL		
-		void associateWithWindow(SDL_Window *wnd);
-		SDL_Window* getAssociatedWindow() const;
+#if OXYGINE_SDL
+        void associateWithWindow(SDL_Window* wnd);
+        SDL_Window* getAssociatedWindow() const;
 #endif
 
-	protected:
-		void onDeactivate(Event *);
-		void onActivate(Event *);
+    protected:
+        void onDeactivate(Event*);
+        void onActivate(Event*);
 
-		//bool _active;
+        //bool _active;
 
-		bool isOn(const Vector2 &localPosition);
+        bool isOn(const Vector2& localPosition);
 
-	private:
+    private:
 
-		timeMS _statUpdate;
-		timeMS _statRender;
-		bool	_clipOuter;
-		Rect	_viewport;
+        timeMS _statUpdate;
+        timeMS _statRender;
+        bool    _clipOuter;
+        Rect    _viewport;
 
-#if OXYGINE_SDL		
-		SDL_Window* _window;
+#if OXYGINE_SDL
+        SDL_Window* _window;
 #endif // OXYGINE_SDL
 
 
-		friend class DebugActor;
-	};
+        friend class DebugActor;
+    };
 
-	inline const spStage& getStage() {return Stage::instance;}
+    inline const spStage& getStage() {return Stage::instance;}
 }

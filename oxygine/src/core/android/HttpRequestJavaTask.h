@@ -18,14 +18,14 @@ namespace oxygine
     public:
         HttpRequestJavaTask();
         ~HttpRequestJavaTask();
-        
+
         void complete_(jbyteArray);
         void progress_(int loaded, int total);
         void error_();
 
-        
+
     protected:
-        void _run();        
+        void _run();
         void _finaliaze(bool);
         jobject _handle;
     private:

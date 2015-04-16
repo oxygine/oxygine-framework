@@ -6,56 +6,56 @@
 
 namespace oxygine
 {
-	typedef int eventType;
-	class Event;
+    typedef int eventType;
+    class Event;
 
 #define makefourcc(a,b,c,d) ( ((unsigned int)a) | (((unsigned int)b)<< 8) | (((unsigned int)c)<<16) | (((unsigned int)d)<<24))
 
-	//eventID('_', '_', '_', '_')
+    //eventID('_', '_', '_', '_')
 #define eventID(a,b,c,d) makefourcc(a,b,c,d)
 
-	/*sysEventID is used for system Oxygine events, use 'eventID' for custom game events*/
+    /*sysEventID is used for system Oxygine events, use 'eventID' for custom game events*/
 #define sysEventID(b,c,d) makefourcc(0xA,b,c,d)
 
 
-	typedef Closure<void (Event *ev)> EventCallback;
+    typedef Closure<void (Event* ev)> EventCallback;
 
-	DECLARE_SMART(EventDispatcher, spEventDispatcher);
-	class EventDispatcher: public _Object
-	{
-	public:
-		EventDispatcher(const EventDispatcher &ed):_Object(ed), _lastID(0), _listeners(0){}
-		EventDispatcher();
-		~EventDispatcher();
+    DECLARE_SMART(EventDispatcher, spEventDispatcher);
+    class EventDispatcher: public _Object
+    {
+    public:
+        EventDispatcher(const EventDispatcher& ed): _Object(ed), _lastID(0), _listeners(0) {}
+        EventDispatcher();
+        ~EventDispatcher();
 
-		int addEventListener(eventType, EventCallback);
-		void removeEventListener(eventType, EventCallback);
-		void removeEventListener(int id);
-		bool hasEventListeners(void *CallbackThis);
-		bool hasEventListeners(eventType, EventCallback);
-		void removeEventListeners(void *CallbackThis);
-		void removeAllEventListeners();
+        int addEventListener(eventType, EventCallback);
+        void removeEventListener(eventType, EventCallback);
+        void removeEventListener(int id);
+        bool hasEventListeners(void* CallbackThis);
+        bool hasEventListeners(eventType, EventCallback);
+        void removeEventListeners(void* CallbackThis);
+        void removeAllEventListeners();
 
-		virtual void dispatchEvent(Event *event);
+        virtual void dispatchEvent(Event* event);
 
-		int getListenersCount() const {if (!_listeners) return 0; return (int)_listeners->size();}
+        int getListenersCount() const {if (!_listeners) return 0; return (int)_listeners->size();}
 
-	protected:
+    protected:
 
-		struct listenerbase
-		{
-			EventCallback cb;			
-		};
+        struct listenerbase
+        {
+            EventCallback cb;
+        };
 
-		struct listener : public listenerbase
-		{
-			eventType type;
-			int id;
-		};
+        struct listener : public listenerbase
+        {
+            eventType type;
+            int id;
+        };
 
-		int _lastID;
-		
-		typedef std::vector<listener> listeners;
-		listeners *_listeners;
-	};
+        int _lastID;
+
+        typedef std::vector<listener> listeners;
+        listeners* _listeners;
+    };
 }

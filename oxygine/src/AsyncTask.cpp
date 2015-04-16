@@ -3,108 +3,108 @@
 #include <typeinfo>
 namespace oxygine
 {
-	const int successID = sysEventID('s', 'c', 'm');	
-	//const int customID = sysEventID('s', 'c', 'm');
-	const int runID = sysEventID('r', 'u', 'n');
-	const int errorID = sysEventID('s', 'e', 'r');
+    const int successID = sysEventID('s', 'c', 'm');
+    //const int customID = sysEventID('s', 'c', 'm');
+    const int runID = sysEventID('r', 'u', 'n');
+    const int errorID = sysEventID('s', 'e', 'r');
 
-	AsyncTask::AsyncTask() :_status(status_not_started), _mainThreadSync(false), _uiThreadSync(false)
-	{
+    AsyncTask::AsyncTask() : _status(status_not_started), _mainThreadSync(false), _uiThreadSync(false)
+    {
 
-	}
-	
-	AsyncTask::~AsyncTask()
-	{
+    }
 
-	}
+    AsyncTask::~AsyncTask()
+    {
 
-	void AsyncTask::run()
-	{
-		_prerun();
-		log::messageln("AsyncTask::run %d - %s", getObjectID(), typeid(*this).name());
+    }
 
-		OX_ASSERT(_status == status_not_started);
-		_status = status_inprogress;
-		if (!syncEvent(runID))		
-			_run();
-	}
+    void AsyncTask::run()
+    {
+        _prerun();
+        log::messageln("AsyncTask::run %d - %s", getObjectID(), typeid(*this).name());
 
-	void AsyncTask::threadCB(const ThreadMessages::message &msg)
-	{
-		((AsyncTask*)msg.cbData)->_threadCB(msg);
-	}
+        OX_ASSERT(_status == status_not_started);
+        _status = status_inprogress;
+        if (!syncEvent(runID))
+            _run();
+    }
 
-	void AsyncTask::_threadCB(const ThreadMessages::message &msg)
-	{
-		switch (msg.msgid)
-		{
-		case successID:
-			_complete();
-			break;
-		case errorID:
-			_error();
-			break;
-		case runID:
-			_run();
-			break;
-		case customID:
-			_custom(msg);
-			break;
-		default:
-			break;
-		}
-		if (msg.msgid != customID)
-			releaseRef();
-	}
+    void AsyncTask::threadCB(const ThreadMessages::message& msg)
+    {
+        ((AsyncTask*)msg.cbData)->_threadCB(msg);
+    }
 
-	void AsyncTask::_complete()
-	{
-		log::messageln("AsyncTask::_complete %d - %s", getObjectID(), typeid(*this).name());
+    void AsyncTask::_threadCB(const ThreadMessages::message& msg)
+    {
+        switch (msg.msgid)
+        {
+            case successID:
+                _complete();
+                break;
+            case errorID:
+                _error();
+                break;
+            case runID:
+                _run();
+                break;
+            case customID:
+                _custom(msg);
+                break;
+            default:
+                break;
+        }
+        if (msg.msgid != customID)
+            releaseRef();
+    }
 
-		_status = status_completed;
-		_onFinal(false);
-		_finalize(false);
-		_onComplete();
+    void AsyncTask::_complete()
+    {
+        log::messageln("AsyncTask::_complete %d - %s", getObjectID(), typeid(*this).name());
 
-		AsyncTaskEvent ev(COMPLETE, this);
-		dispatchEvent(&ev);
-	}
+        _status = status_completed;
+        _onFinal(false);
+        _finalize(false);
+        _onComplete();
 
-	void AsyncTask::_error()
-	{
-		log::messageln("AsyncTask::_error %d - %s", getObjectID(), typeid(*this).name());
+        AsyncTaskEvent ev(COMPLETE, this);
+        dispatchEvent(&ev);
+    }
 
-		_status = status_failed;
-		_onFinal(true);
-		_finalize(true);
-		_onError();
+    void AsyncTask::_error()
+    {
+        log::messageln("AsyncTask::_error %d - %s", getObjectID(), typeid(*this).name());
 
-		AsyncTaskEvent ev(ERROR, this);
-		dispatchEvent(&ev);
-	}
+        _status = status_failed;
+        _onFinal(true);
+        _finalize(true);
+        _onError();
 
-	bool AsyncTask::syncEvent(int msgid, void *arg1, void *arg2)
-	{
-		if (_mainThreadSync)
-		{
-			if (msgid != customID)
-				addRef();
-			core::getMainThreadMessages().postCallback(msgid, arg1, arg2, AsyncTask::threadCB, this);
-			return true;
-		}
+        AsyncTaskEvent ev(ERROR, this);
+        dispatchEvent(&ev);
+    }
 
-		return false;
-	}
+    bool AsyncTask::syncEvent(int msgid, void* arg1, void* arg2)
+    {
+        if (_mainThreadSync)
+        {
+            if (msgid != customID)
+                addRef();
+            core::getMainThreadMessages().postCallback(msgid, arg1, arg2, AsyncTask::threadCB, this);
+            return true;
+        }
 
-	void AsyncTask::onComplete()
-	{
-		if (!syncEvent(successID, 0, 0))
-			_complete();
-	}
+        return false;
+    }
 
-	void AsyncTask::onError()
-	{
-		if (!syncEvent(errorID, 0, 0))
-			_error();
-	}
+    void AsyncTask::onComplete()
+    {
+        if (!syncEvent(successID, 0, 0))
+            _complete();
+    }
+
+    void AsyncTask::onError()
+    {
+        if (!syncEvent(errorID, 0, 0))
+            _error();
+    }
 }

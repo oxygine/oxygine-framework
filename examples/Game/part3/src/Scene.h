@@ -7,13 +7,13 @@ DECLARE_SMART(Scene, spScene);
 class Scene: public Object
 {
 public:
-	Scene();
+    Scene();
 
-	void changeScene(spScene next);
+    void changeScene(spScene next);
 
-	spActor getView() const {return _view;}
+    spActor getView() const {return _view;}
 
-	spActor _view;
+    spActor _view;
 };
 
 

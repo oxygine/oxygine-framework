@@ -7,58 +7,58 @@
 
 namespace oxygine
 {
-	struct glyph;
-	class Font;
+    struct glyph;
+    class Font;
 
-	namespace text
-	{
-		struct Symbol
-		{
-			Symbol():gl(0), x(0), y(0), code(0){}
+    namespace text
+    {
+        struct Symbol
+        {
+            Symbol(): gl(0), x(0), y(0), code(0) {}
 
-			short x, y;
-			int code;
-			const glyph *gl;
-			RectF destRect;
-		};
+            short x, y;
+            int code;
+            const glyph* gl;
+            RectF destRect;
+        };
 
-		class Aligner
-		{
-		public:
-			Aligner();
-			~Aligner();
-
-			
-			const TextStyle &getStyle() const {return style;}
-			float getScale() const;
-
-			void begin();
-			void end();		
-		
-			int putSymbol(Symbol &s);		
-			void nextLine();		
+        class Aligner
+        {
+        public:
+            Aligner();
+            ~Aligner();
 
 
-			TextStyle style;
-			Rect bounds;		
-			int width;
-			int height;
+            const TextStyle& getStyle() const {return style;}
+            float getScale() const;
 
-		private:		
-			int getLineWidth()const;
-			int getLineSkip()const;
+            void begin();
+            void end();
 
-			typedef std::vector<Symbol*> line;
+            int putSymbol(Symbol& s);
+            void nextLine();
 
-			void _alignLine(line &ln);
-			int _alignX(int rx);
-			int _alignY(int ry);
-			void _nextLine(line &ln);		
 
-			float _scale;
-			int _x, _y;		
-			line _line;
-			int _lineWidth;
-		};
-	}
+            TextStyle style;
+            Rect bounds;
+            int width;
+            int height;
+
+        private:
+            int getLineWidth()const;
+            int getLineSkip()const;
+
+            typedef std::vector<Symbol*> line;
+
+            void _alignLine(line& ln);
+            int _alignX(int rx);
+            int _alignY(int ry);
+            void _nextLine(line& ln);
+
+            float _scale;
+            int _x, _y;
+            line _line;
+            int _lineWidth;
+        };
+    }
 }

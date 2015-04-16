@@ -2,17 +2,17 @@
 
 namespace res
 {
-	Resources ui;
+    Resources ui;
 
-	void load()
-	{
-		//load our resources
-		ui.loadXML("xmls/ui.xml");
-	}
+    void load()
+    {
+        //load our resources
+        ui.loadXML("xmls/ui.xml");
+    }
 
-	void free()
-	{
-		//unload
-		ui.free();
-	}
+    void free()
+    {
+        //unload
+        ui.free();
+    }
 }

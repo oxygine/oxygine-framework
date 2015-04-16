@@ -6,27 +6,27 @@
 
 namespace oxygine
 {
-	DECLARE_SMART(DeveloperMenu, spDeveloperMenu);
-	class Resources;
+    DECLARE_SMART(DeveloperMenu, spDeveloperMenu);
+    class Resources;
 
-	class DeveloperMenu: public ColorRectSprite
-	{
-	public:
-		static std::string getDefaultName(){ return "tree_inspector"; }
+    class DeveloperMenu: public ColorRectSprite
+    {
+    public:
+        static std::string getDefaultName() { return "tree_inspector"; }
 
-		DeveloperMenu();
-		~DeveloperMenu();
+        DeveloperMenu();
+        ~DeveloperMenu();
 
-		void init(const Vector2 &size, const char *text, spActor data, const Color &color);
+        void init(const Vector2& size, const char* text, spActor data, const Color& color);
 
-		Vector2 getBodySize() const;
+        Vector2 getBodySize() const;
 
-	private:
-		void close(Event *ev);
+    private:
+        void close(Event* ev);
 
-		Resources *_resSystem;
+        Resources* _resSystem;
 
-		spActor _body;
-		Draggable _topDrag;
-	};
+        spActor _body;
+        Draggable _topDrag;
+    };
 }

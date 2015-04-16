@@ -12,24 +12,24 @@ DECLARE_SMART(Unit, spUnit);
 class Game: public Actor
 {
 public:
-	Game();
-	~Game();
+    Game();
+    ~Game();
 
-	void init();
+    void init();
 
 protected:
-	friend class Rocket;
-	friend class Player;
-	friend class Unit;
+    friend class Rocket;
+    friend class Player;
+    friend class Unit;
 
-	void doUpdate(const UpdateState &us);
+    void doUpdate(const UpdateState& us);
 
-	spActor _ui;
-	spJoystick _move;
-	spJoystick _fire;
+    spActor _ui;
+    spJoystick _move;
+    spJoystick _fire;
 
-	spPlayer _player;
+    spPlayer _player;
 
-	typedef std::list<spUnit> units;
-	units _units;
+    typedef std::list<spUnit> units;
+    units _units;
 };

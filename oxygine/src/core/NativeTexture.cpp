@@ -7,113 +7,113 @@
 
 namespace oxygine
 {
-	volatile int NativeTexture::created = 0;
+    volatile int NativeTexture::created = 0;
 
-	void NativeTexture::dumpCreatedTextures()
-	{
-		log::messageln("created native textures dump:");
-		std::vector<spNativeTexture> t = getCreatedTextures();
+    void NativeTexture::dumpCreatedTextures()
+    {
+        log::messageln("created native textures dump:");
+        std::vector<spNativeTexture> t = getCreatedTextures();
 
-		int n = 0;
-		for (std::vector<spNativeTexture>::iterator i = t.begin(); i != t.end(); ++i)
-		{
-			spNativeTexture nt = *i;
+        int n = 0;
+        for (std::vector<spNativeTexture>::iterator i = t.begin(); i != t.end(); ++i)
+        {
+            spNativeTexture nt = *i;
 
-			log::message("%d)", n);
-			++n;
-			nt->dumpObject();
-		}
-		log::messageln("----");
-	}
+            log::message("%d)", n);
+            ++n;
+            nt->dumpObject();
+        }
+        log::messageln("----");
+    }
 
-	std::vector<spNativeTexture> NativeTexture::getCreatedTextures()
-	{
-	
-		std::vector<spNativeTexture> t;
+    std::vector<spNativeTexture> NativeTexture::getCreatedTextures()
+    {
 
-		const ObjectBase::__createdObjects &obj = ObjectBase::__getCreatedObjects();
-		for (ObjectBase::__createdObjects::const_iterator i = obj.begin(); i != obj.end(); ++i)
-		{
-			ObjectBase *ob = *i;
-			NativeTexture *nt = dynamic_cast<NativeTexture *>(ob);
-			if (!nt)
-				continue;
-			if (!nt->getHandle())
-				continue;
+        std::vector<spNativeTexture> t;
 
-			t.push_back(nt);
-		}
-		return t;
-	}
+        const ObjectBase::__createdObjects& obj = ObjectBase::__getCreatedObjects();
+        for (ObjectBase::__createdObjects::const_iterator i = obj.begin(); i != obj.end(); ++i)
+        {
+            ObjectBase* ob = *i;
+            NativeTexture* nt = dynamic_cast<NativeTexture*>(ob);
+            if (!nt)
+                continue;
+            if (!nt->getHandle())
+                continue;
+
+            t.push_back(nt);
+        }
+        return t;
+    }
 
 
-	void NativeTextureNull::init(nativeTextureHandle, int w, int h, TextureFormat tf)
-	{
+    void NativeTextureNull::init(nativeTextureHandle, int w, int h, TextureFormat tf)
+    {
 
-	}
+    }
 
-	void NativeTextureNull::init(int w, int h, TextureFormat tf, bool renderTarget)
-	{
+    void NativeTextureNull::init(int w, int h, TextureFormat tf, bool renderTarget)
+    {
 
-	}
+    }
 
-	void NativeTextureNull::init(const ImageData &src, bool sysMemCopy)
-	{
+    void NativeTextureNull::init(const ImageData& src, bool sysMemCopy)
+    {
 
-	}
+    }
 
-	void NativeTextureNull::release()
-	{
+    void NativeTextureNull::release()
+    {
 
-	}
-	
-	ImageData NativeTextureNull::lock(lock_flags, const Rect *src)
-	{
-		return ImageData();
-	}
+    }
 
-	void NativeTextureNull::unlock()
-	{
+    ImageData NativeTextureNull::lock(lock_flags, const Rect* src)
+    {
+        return ImageData();
+    }
 
-	}
+    void NativeTextureNull::unlock()
+    {
 
-	void NativeTextureNull::swap(NativeTexture *)
-	{
+    }
 
-	}
+    void NativeTextureNull::swap(NativeTexture*)
+    {
 
-	void NativeTextureNull::setLinearFilter(bool enable)
-	{
+    }
 
-	}
+    void NativeTextureNull::setLinearFilter(bool enable)
+    {
 
-	void NativeTextureNull::updateRegion(int x, int y, const ImageData &data)
-	{
+    }
 
-	}
+    void NativeTextureNull::updateRegion(int x, int y, const ImageData& data)
+    {
 
-	void NativeTextureNull::apply(const Rect *rect)
-	{
+    }
 
-	}
+    void NativeTextureNull::apply(const Rect* rect)
+    {
 
-	/**returns handle (ptr) to HW texture ID*/
-	nativeTextureHandle NativeTextureNull::getHandle() const
-	{
-		return 0;
-	}
+    }
 
-	int NativeTextureNull::getWidth() const
-	{
-		return 0;
-	}
+    /**returns handle (ptr) to HW texture ID*/
+    nativeTextureHandle NativeTextureNull::getHandle() const
+    {
+        return 0;
+    }
 
-	int NativeTextureNull::getHeight() const
-	{
-		return 0;
-	}
-	TextureFormat NativeTextureNull::getFormat() const
-	{
-		return TF_UNDEFINED;
-	}
+    int NativeTextureNull::getWidth() const
+    {
+        return 0;
+    }
+
+    int NativeTextureNull::getHeight() const
+    {
+        return 0;
+    }
+    TextureFormat NativeTextureNull::getFormat() const
+    {
+        return TF_UNDEFINED;
+    }
 }

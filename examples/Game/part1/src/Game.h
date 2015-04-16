@@ -8,15 +8,15 @@ DECLARE_SMART(Game, spGame);
 class Game: public Actor
 {
 public:
-	Game();
+    Game();
 
-	void init();
+    void init();
 
 private:
-	friend class Player;
-	void doUpdate(const UpdateState &us);
+    friend class Player;
+    void doUpdate(const UpdateState& us);
 
-	spJoystick _move;
+    spJoystick _move;
 
-	spPlayer _player;
+    spPlayer _player;
 };
