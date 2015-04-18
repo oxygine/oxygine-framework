@@ -125,10 +125,10 @@ namespace oxygine
         /**set Delay before starting tween*/
         void setDelay(timeMS delay) { _delay = delay; }
         /** loops = -1 means infinity repeat cycles*/
-        void setLoops(int loops) { _loops = loops; }        
-		/*set Duration of tween**/
-		void setDuration(timeMS duration) { _duration = duration; }
-		void setClient(Actor* client) { _client = client; }
+        void setLoops(int loops) { _loops = loops; }
+        /*set Duration of tween**/
+        void setDuration(timeMS duration) { _duration = duration; }
+        void setClient(Actor* client) { _client = client; }
 
         /**delete actor from parent node when tween done*/
         void setDetachActor(bool detach) { _detach = detach; }

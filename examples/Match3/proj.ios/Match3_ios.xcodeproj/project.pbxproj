@@ -22,10 +22,10 @@
 		04998EF817F8B6F3003441C3 /* libjpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04998EF617F8B6F3003441C3 /* libjpeg.a */; };
 		049B52B11871EBFA00EF3C66 /* liboxygine_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 049B52AD1871EBBA00EF3C66 /* liboxygine_ios.a */; };
 		04E9AD3F1876FE84006A7317 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04E9AD3E1876FE84006A7317 /* Images.xcassets */; };
-		2DC477AC10D6C07B3FE008F6 /* ../src/entry_point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360377333740D8A2FD15BBE6 /* ../src/entry_point.cpp */; };
-		DA49ED8903C628BA578C8670 /* ../src/example.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BF9628FC8D38F9748F0CDEB /* ../src/example.cpp */; };
-		C8860D93875589970329DCCD /* ../src/gameframe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DA100C319512824B7570663 /* ../src/gameframe.cpp */; };
-		1E839D002B2BA83FC83A695A /* ../src/jewels.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04FE4D4FB640E0DF92DFB865 /* ../src/jewels.cpp */; };
+		2DC477AC10D6C07B3FE008F6 /* ../src/Board.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360377333740D8A2FD15BBE6 /* ../src/Board.cpp */; };
+		DA49ED8903C628BA578C8670 /* ../src/Jewel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BF9628FC8D38F9748F0CDEB /* ../src/Jewel.cpp */; };
+		C8860D93875589970329DCCD /* ../src/entry_point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DA100C319512824B7570663 /* ../src/entry_point.cpp */; };
+		1E839D002B2BA83FC83A695A /* ../src/example.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04FE4D4FB640E0DF92DFB865 /* ../src/example.cpp */; };
 		3A631A475DE035FC53ADE5EA /* ../src/shared.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F3B12E3C9D554D9FE28101D /* ../src/shared.cpp */; };
 		CD59C69314E9E74CD0A11E03 /* ../data/fonts in Sources */ = {isa = PBXBuildFile; fileRef = F6123B1E6FE4471A00F49751 /* ../data/fonts */; };
 		EFF139F8BA484314F7AAF645 /* ../data/images in Sources */ = {isa = PBXBuildFile; fileRef = 5DE458993031811A4C7D28C1 /* ../data/images */; };
@@ -80,14 +80,14 @@
 		04998EF517F8B6F3003441C3 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = "../../..//oxygine/third_party/ios/libraries/libpng.a"; sourceTree = "<group>"; };
 		04998EF617F8B6F3003441C3 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = "../../..//oxygine/third_party/ios/libraries/libjpeg.a"; sourceTree = "<group>"; };
 		04E9AD3E1876FE84006A7317 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name =Images.xcassets; path = Match3/Images.xcassets; sourceTree = "<group>"; };
-		360377333740D8A2FD15BBE6 /* ../src/entry_point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = entry_point.cpp; path = ../src/entry_point.cpp; sourceTree = "<group>"; };
-		0BF9628FC8D38F9748F0CDEB /* ../src/example.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = example.cpp; path = ../src/example.cpp; sourceTree = "<group>"; };
-		4DA100C319512824B7570663 /* ../src/gameframe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = gameframe.cpp; path = ../src/gameframe.cpp; sourceTree = "<group>"; };
-		04FE4D4FB640E0DF92DFB865 /* ../src/jewels.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jewels.cpp; path = ../src/jewels.cpp; sourceTree = "<group>"; };
+		360377333740D8A2FD15BBE6 /* ../src/Board.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Board.cpp; path = ../src/Board.cpp; sourceTree = "<group>"; };
+		0BF9628FC8D38F9748F0CDEB /* ../src/Jewel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Jewel.cpp; path = ../src/Jewel.cpp; sourceTree = "<group>"; };
+		4DA100C319512824B7570663 /* ../src/entry_point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = entry_point.cpp; path = ../src/entry_point.cpp; sourceTree = "<group>"; };
+		04FE4D4FB640E0DF92DFB865 /* ../src/example.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = example.cpp; path = ../src/example.cpp; sourceTree = "<group>"; };
 		7F3B12E3C9D554D9FE28101D /* ../src/shared.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = shared.cpp; path = ../src/shared.cpp; sourceTree = "<group>"; };
-		2CE4BD5BB9DEF92439C0AB58 /* ../src/example.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = example.h; path = ../src/example.h; sourceTree = "<group>"; };
-		F196143B0370A9D348494ACC /* ../src/gameframe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = gameframe.h; path = ../src/gameframe.h; sourceTree = "<group>"; };
-		7746CA7A63049ED8F7D6BF42 /* ../src/jewels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = jewels.h; path = ../src/jewels.h; sourceTree = "<group>"; };
+		2CE4BD5BB9DEF92439C0AB58 /* ../src/Board.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Board.h; path = ../src/Board.h; sourceTree = "<group>"; };
+		F196143B0370A9D348494ACC /* ../src/Jewel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Jewel.h; path = ../src/Jewel.h; sourceTree = "<group>"; };
+		7746CA7A63049ED8F7D6BF42 /* ../src/example.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = example.h; path = ../src/example.h; sourceTree = "<group>"; };
 		D954BD82D7708B65A08FB6B9 /* ../src/shared.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = shared.h; path = ../src/shared.h; sourceTree = "<group>"; };
 		F6123B1E6FE4471A00F49751 /* ../data/fonts */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = fonts; path = ../data/fonts; sourceTree = "<group>"; };
 		5DE458993031811A4C7D28C1 /* ../data/images */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = images; path = ../data/images; sourceTree = "<group>"; };
@@ -189,14 +189,14 @@
 		04998D4417F8A9ED003441C3 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				360377333740D8A2FD15BBE6 /* entry_point.cpp */, 
-				0BF9628FC8D38F9748F0CDEB /* example.cpp */, 
-				4DA100C319512824B7570663 /* gameframe.cpp */, 
-				04FE4D4FB640E0DF92DFB865 /* jewels.cpp */, 
+				360377333740D8A2FD15BBE6 /* Board.cpp */, 
+				0BF9628FC8D38F9748F0CDEB /* Jewel.cpp */, 
+				4DA100C319512824B7570663 /* entry_point.cpp */, 
+				04FE4D4FB640E0DF92DFB865 /* example.cpp */, 
 				7F3B12E3C9D554D9FE28101D /* shared.cpp */, 
-				2CE4BD5BB9DEF92439C0AB58 /* example.h */, 
-				F196143B0370A9D348494ACC /* gameframe.h */, 
-				7746CA7A63049ED8F7D6BF42 /* jewels.h */, 
+				2CE4BD5BB9DEF92439C0AB58 /* Board.h */, 
+				F196143B0370A9D348494ACC /* Jewel.h */, 
+				7746CA7A63049ED8F7D6BF42 /* example.h */, 
 				D954BD82D7708B65A08FB6B9 /* shared.h */, 
 
 			);
@@ -307,10 +307,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2DC477AC10D6C07B3FE008F6 /* entry_point.cpp */, 
-				DA49ED8903C628BA578C8670 /* example.cpp */, 
-				C8860D93875589970329DCCD /* gameframe.cpp */, 
-				1E839D002B2BA83FC83A695A /* jewels.cpp */, 
+				2DC477AC10D6C07B3FE008F6 /* Board.cpp */, 
+				DA49ED8903C628BA578C8670 /* Jewel.cpp */, 
+				C8860D93875589970329DCCD /* entry_point.cpp */, 
+				1E839D002B2BA83FC83A695A /* example.cpp */, 
 				3A631A475DE035FC53ADE5EA /* shared.cpp */, 
 
 			);

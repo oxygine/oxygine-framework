@@ -17,7 +17,7 @@ namespace oxygine
 
         int getRow() const {return _row;}
 
-        void setResAnim(const ResAnim* r);
+        void setResAnim(const ResAnim* r, int  col = 0, int row = 0) OVERRIDE;
 
         /**Sets which row from ResAnim should be used. Default value is 0. Could be used for CheckBoxes*/
         void setRow(int row);

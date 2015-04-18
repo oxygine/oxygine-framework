@@ -7,7 +7,7 @@
 	<atlas>
 		<image file="bg.png"/>			
 
-		<set path = "images\jewels" scale_factor="0.5"/>	
+		<set path = "images\jewels"/>	
 
 		<image id="jewel1" file="air.png" />
 		<image id="jewel2" file="coin.png" />

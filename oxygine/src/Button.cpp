@@ -118,7 +118,7 @@ namespace oxygine
         }
     }
 
-    void Button::setResAnim(const ResAnim* r)
+    void Button::setResAnim(const ResAnim* r, int, int)
     {
         _resAnim = r;
         updateButtonState(_state);

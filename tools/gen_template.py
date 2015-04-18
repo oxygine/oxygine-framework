@@ -43,6 +43,8 @@ def run(args):
             args.src = dest + "/src"
             args.dest = dest + "/proj." + p
             _run(args)
+    else:
+        _run(args)
             
 
 def _run(args):

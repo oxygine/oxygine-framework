@@ -90,10 +90,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="../src/entry_point.cpp" /><ClCompile Include="../src/example.cpp" /><ClCompile Include="../src/gameframe.cpp" /><ClCompile Include="../src/jewels.cpp" /><ClCompile Include="../src/shared.cpp" />
+    <ClCompile Include="../src/Board.cpp" /><ClCompile Include="../src/Jewel.cpp" /><ClCompile Include="../src/entry_point.cpp" /><ClCompile Include="../src/example.cpp" /><ClCompile Include="../src/shared.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="../src/example.h" /><ClInclude Include="../src/gameframe.h" /><ClInclude Include="../src/jewels.h" /><ClInclude Include="../src/shared.h" />
+    <ClInclude Include="../src/Board.h" /><ClInclude Include="../src/Jewel.h" /><ClInclude Include="../src/example.h" /><ClInclude Include="../src/shared.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

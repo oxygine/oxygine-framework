@@ -13,4 +13,4 @@ make
 cd ../../data
 
 #run executable
-./../proj.cmake/build/Match3
+./../proj.cmake/build/${PROJECT}

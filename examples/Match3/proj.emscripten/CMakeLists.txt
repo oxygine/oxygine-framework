@@ -9,7 +9,7 @@ link_directories(${OXYGINE_LIBRARY_DIRS})
 SET(CMAKE_EXECUTABLE_SUFFIX ".html")
 set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-Wno-warn-absolute-paths -std=c++11")
 
-add_executable(Match3 ../src/entry_point.cpp ../src/example.cpp ../src/gameframe.cpp ../src/jewels.cpp ../src/shared.cpp  ../src/example.h ../src/gameframe.h ../src/jewels.h ../src/shared.h )
+add_executable(Match3 ../src/Board.cpp ../src/Jewel.cpp ../src/entry_point.cpp ../src/example.cpp ../src/shared.cpp  ../src/Board.h ../src/Jewel.h ../src/example.h ../src/shared.h )
 
 if (CMAKE_BUILD_TYPE STREQUAL Debug)
 	SET(linkFlags "-g4 ")
