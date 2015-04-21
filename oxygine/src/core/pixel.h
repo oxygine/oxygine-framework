@@ -148,6 +148,38 @@ namespace oxygine
         }
     };
 
+    class PixelB5G6R5
+    {
+        /*
+        in memory: RRRRR_GGGGGG_BBBBB
+        in dword:  BBBBB_GGGGGG_RRRRR
+        */
+    public:
+        void getPixel(const unsigned char* data, Pixel& p) const
+        {
+            unsigned short color = *((unsigned short*)data);
+            p.b = lookupTable5to8[(color & 0xF800) >> 11];
+            p.g = lookupTable6to8[(color & 0x7E0) >> 5];
+            p.r = lookupTable5to8[(color & 0x1F)];
+            p.a = 255;
+        }
+
+        void setPixel(unsigned char* data, const Pixel& p)
+        {
+            unsigned short* pshort = (unsigned short*)data;
+            *pshort = ((p.b >> 3) << 11) | ((p.g >> 2) << 5) | (p.r >> 3);
+        }
+        void copy(const unsigned char* src, unsigned char* dst)
+        {
+            *((unsigned short*)dst) = *((unsigned short*)src);
+        }
+
+        unsigned char snap_a(unsigned char alpha) const
+        {
+            return 255;
+        }
+    };
+
 
 
     /*

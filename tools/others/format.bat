@@ -5,3 +5,6 @@ d:\AStyle\bin\AStyle.exe d:\oxygine-sound\src\*.cpp d:\oxygine-sound\src\*.h %op
 d:\AStyle\bin\AStyle.exe d:\oxygine-magicparticles\src\*.cpp d:\oxygine-magicparticles\src\*.h %options%
 
 d:\AStyle\bin\AStyle.exe d:\oxygine-framework\examples\*.cpp d:\oxygine-framework\examples\*.h %options%  --exclude=box2d\box2d
+
+d:\AStyle\bin\AStyle.exe d:\oxygine-movie\examples\*.cpp d:\oxygine-movie\examples\*.h %options%
+d:\AStyle\bin\AStyle.exe d:\oxygine-movie\src\*.cpp d:\oxygine-movie\src\*.h %options%

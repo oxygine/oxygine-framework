@@ -20,6 +20,8 @@ namespace oxygine
                 return 2;
             case TF_R5G6B5:
                 return 2;
+            case TF_B5G6R5:
+                return 2;
             case TF_R4G4B4A4:
                 return 2;
             case TF_PVRTC_2RGB:

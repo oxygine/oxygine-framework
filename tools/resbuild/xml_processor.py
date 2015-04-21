@@ -25,7 +25,7 @@ class XmlWalker:
     def getPath(self, attr):
         path = self.root.getAttribute(attr)
         if path.startswith("./") or path.startswith(".\\"):
-            path = path[2:len(path)]
+            return self.base + path[2:len(path)]
             
         return self.path + path
     

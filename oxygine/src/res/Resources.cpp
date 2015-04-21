@@ -250,7 +250,8 @@ namespace oxygine
 
         FS_LOG("loading xml resources");
 
-        XmlWalker walker(destHead, "", 1.0f, load_completely, resources, resources_meta);
+        std::string xmlFolder = destHead;
+        XmlWalker walker(&xmlFolder, "", 1.0f, load_completely, resources, resources_meta);
 
         while (true)
         {

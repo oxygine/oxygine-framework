@@ -4,16 +4,16 @@
 
 namespace oxygine
 {
-    XmlWalker::XmlWalker(const std::string& base, const std::string& path, float scaleFactor, bool load, pugi::xml_node xml, pugi::xml_node meta) : _rootMeta(meta),
+    XmlWalker::XmlWalker(const std::string* xmlFolder, const std::string& path, float scaleFactor, bool load, pugi::xml_node xml, pugi::xml_node meta) : _rootMeta(meta),
         _root(xml),
         _notStarted(true),
         _notStartedMeta(true),
         _scaleFactor(scaleFactor),
         _load(load),
-        _base(base),
+        _xmlFolder(xmlFolder),
         _path(path)
     {
-        //_scaleFactor = _root.attribute("scale_factor").as_float(_scaleFactor);
+
     }
 
     std::string XmlWalker::connectPath(const char* currentPath, const char* str)
@@ -35,6 +35,7 @@ namespace oxygine
         if (str[0] == '.' && (str[1] == '/' || str[1] == '\\'))
         {
             str += 2;
+            return *_xmlFolder + str;
         }
 
         return _path + str;
@@ -76,7 +77,7 @@ namespace oxygine
             break;
         }
 
-        return XmlWalker(_base, _path, _scaleFactor, _load, _last, _lastMeta);
+        return XmlWalker(_xmlFolder, _path, _scaleFactor, _load, _last, _lastMeta);
     }
 
     void XmlWalker::_checkSetAttributes(pugi::xml_node node)
@@ -86,7 +87,7 @@ namespace oxygine
         {
             if (!strcmp(attr.name(), "path"))
             {
-                _path = connectPath(_base.c_str(), attr.value());
+                _path = connectPath(_xmlFolder->c_str(), attr.value());
                 if (!_path.empty())
                     _path += "/";
             }

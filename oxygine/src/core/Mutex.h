@@ -1,6 +1,12 @@
 #pragma once
 #include "oxygine_include.h"
-#include "pthread.h"
+
+#ifdef _WIN32
+typedef struct pthread_mutex_t_* pthread_mutex_t;
+#else
+#   include "pthread.h"
+#endif
+
 namespace oxygine
 {
     class Mutex

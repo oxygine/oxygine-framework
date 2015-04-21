@@ -17,6 +17,7 @@ namespace oxygine
         TF_R5G5B5A1,
         TF_R4G4B4A4,
         TF_R5G6B5,
+        TF_B5G6R5,
         TF_PVRTC_2RGB,
         TF_PVRTC_2RGBA,
         TF_PVRTC_4RGB,
@@ -38,6 +39,7 @@ namespace oxygine
             FORMAT_CASE(R5G5B5A1); \
             FORMAT_CASE(R4G4B4A4); \
             FORMAT_CASE(R5G6B5); \
+            FORMAT_CASE(B5G6R5); \
         default: \
             OX_ASSERT(!"unknown format"); \
     }
