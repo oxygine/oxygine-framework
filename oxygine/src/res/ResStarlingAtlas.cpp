@@ -7,6 +7,7 @@
 #include "core/NativeTexture.h"
 #include "MemoryTexture.h"
 #include "CreateResourceContext.h"
+#include "utils/stringUtils.h"
 
 namespace oxygine
 {
@@ -33,7 +34,11 @@ namespace oxygine
 
         pugi::xml_node root = doc.root().first_child();
         const std::string& img = root.attribute("imagePath").as_string();
-        _imagePath = context.walker.getCurrentFolder() + img;
+
+        char head[255];
+        char tail[255];
+        path::split(xml_path.c_str(), head, tail);
+        _imagePath = std::string(head) + img;
 
         _texture = IVideoDriver::instance->createTexture();
 

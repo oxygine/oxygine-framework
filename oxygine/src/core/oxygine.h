@@ -42,7 +42,7 @@ namespace oxygine
     {
         struct init_desc
         {
-            init_desc() : mode24bpp(true), w(-1), h(-1), fullscreen(false), title("Oxygine"), vsync(true), appName(0), companyName(0) {}
+            init_desc() : mode24bpp(true), w(-1), h(-1), fullscreen(false), title("Oxygine"), vsync(true), appName(0), companyName(0), force_gles(false) {}
 
             /**sets 24 bits per pixel, otherwise sets 16 bits per pixel?*/
             bool mode24bpp;
@@ -61,6 +61,9 @@ namespace oxygine
             const char* appName;
             /** Company name to be used as part of the file system directory for writable storage*/
             const char* companyName;
+
+            /**use OpenGLES driver. Could be used on Windows for emulation OpenGLES via Direct3D*/
+            bool force_gles;
         };
 
         /** Initializes Oxygine*/

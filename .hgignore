@@ -49,3 +49,4 @@ examples/Match3/build_match3_*
 libs/SDL2main.lib
 libs/SDL2.lib
 libs/SDL2.dll
+examples/Game/part2/build_game_vc12/

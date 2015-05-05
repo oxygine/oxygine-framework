@@ -19,6 +19,7 @@ namespace oxygine
         bool empty() const {return _root.empty();}
 
         const std::string&  getCurrentFolder() const { return _path; }
+        const std::string&  getXmlFolder() const { return *_xmlFolder; }
         std::string         getPath(const char* attrName) const;
         pugi::xml_node      getNode() const {return _root;}
         pugi::xml_node      getMeta() const {return _rootMeta;}

@@ -47,6 +47,7 @@ void run()
 
     //initialize Oxygine's internal stuff
     core::init_desc desc;
+    desc.title = "Oxygine Application";
 
 #if OXYGINE_SDL || OXYGINE_EMSCRIPTEN
     //we could setup initial window size on SDL builds

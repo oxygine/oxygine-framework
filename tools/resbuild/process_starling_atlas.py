@@ -4,7 +4,7 @@ except ImportError:
     from PIL import Image
     
 from . import process
-
+import os
 
 class starling_atlas_Processor(process.Process):
     node_id = "starling"
@@ -14,11 +14,14 @@ class starling_atlas_Processor(process.Process):
     def process(self, context, walker):
        
         meta = walker.root_meta
-        file_doc = context._open_xml(context.src_data + walker.getPath("file"))
+        xml_path = walker.getPath("file")
+        folder = os.path.split(xml_path)[0] + "/"
+        print folder
+        file_doc = context._open_xml(context.src_data + xml_path)
         
         file_root = file_doc
         image_name = file_root.getAttribute("imagePath")
-        image_path = context.src_data + walker.path + image_name
+        image_path = context.src_data + folder + image_name
         
         image = Image.open(image_path)
         image.load()

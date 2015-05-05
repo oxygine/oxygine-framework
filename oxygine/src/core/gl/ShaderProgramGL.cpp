@@ -2,6 +2,10 @@
 #include "VertexDeclarationGL.h"
 #include "oxgl.h"
 
+#ifndef __S3E__
+	#include "SDL.h"
+#endif
+
 namespace oxygine
 {
     ShaderProgramGL::ShaderProgramGL(): _program(0)
@@ -58,7 +62,6 @@ namespace oxygine
         CHECKGL();
     }
 
-
     unsigned int ShaderProgramGL::createShader(unsigned int type, const char* data, const char* prepend, const char* append)
     {
         GLuint shader = oxglCreateShader(type);
@@ -66,19 +69,33 @@ namespace oxygine
         const char* sources[16];
         const char** ptr = &sources[0];
 
-        char nonGLES[] =
-            "#define lowp\n"
-            "#define mediump\n"
-            "#define highp\n";
 
-#if SDL_VIDEO_OPENGL
-        log::messageln("not gles version");
-        *ptr = nonGLES;
-        ptr++;
-#endif
+#ifndef __S3E__
+#	ifndef EMSCRIPTEN
+        int profile = 0;
+        SDL_GL_GetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, &profile);
 
-#ifdef EMSCRIPTEN
+        if (profile == SDL_GL_CONTEXT_PROFILE_ES)
+        {
+        }
+        else
+        {
+
+			log::messageln("not gles version");
+
+			static const char nonGLES[] =
+				"#define lowp\n"
+				"#define mediump\n"
+				"#define highp\n";
+
+			*ptr = nonGLES;
+			ptr++;
+
+        }
+
+#	else
         *ptr = "precision float mediump;";
+#	endif
 #endif
 
 

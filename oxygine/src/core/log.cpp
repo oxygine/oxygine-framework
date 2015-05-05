@@ -73,7 +73,7 @@ namespace oxygine
         void out_line(char* str, int i)
         {
             out(str);
-#if __ANDROID__ || EMSCRIPTEN
+#if __ANDROID__
 #else
             out("\n");
 #endif

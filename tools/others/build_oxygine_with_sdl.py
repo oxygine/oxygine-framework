@@ -68,9 +68,13 @@ enum(SOUND_dest + "/examples/", copy)
 shutil.copy(SDL_dest + "/android-project/src/org/libsdl/app/SDLActivity.java", 
             OXYGINE_dest + "/oxygine/SDL/android/lib/src/org/libsdl/app/SDLActivity.java")
 
-libs = ("SDL2.lib", "SDL2main.lib")
+libs = ("SDL2.lib", "SDL2main.lib", )
 for lib in libs:
     shutil.copy("../../libs/" + lib, OXYGINE_dest + "/libs/" + lib)
+
+libs = ("libSDL2main.a", "libSDL2.dll", "libSDL2.dll.a")
+for lib in libs:
+    shutil.copy("../../libs/" + lib, OXYGINE_dest + "/libs/" + lib)    
 
 os.chdir(OXYGINE_dest)
 

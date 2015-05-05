@@ -64,6 +64,7 @@ namespace oxygine
         public:
             ZipFileSystem(): FileSystem(true) {}
 
+            /**add zip from file*/
             void add(const char* zip);
             //add zip from memory, data should not be deleted
             void add(const unsigned char* data, unsigned int size);

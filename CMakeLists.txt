@@ -108,6 +108,10 @@ set(OXYGINE_LIBRARY_DIRS
 	${OXYGINE_SOURCE_DIR}/libs
 	${THIRD_PARTY}/libraries)
 
+if (FORCE_GLES)
+	set(OPENGL_LIBRARIES libGLESv2.lib)
+endif(FORCE_GLES)
+
 
 if (MINGW) 
 	set(CORE_LIBS ${CORE_LIBS}	mingw32)

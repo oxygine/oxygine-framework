@@ -316,20 +316,23 @@ namespace oxygine
                 setY(parentSize.y - realSize.y);
                 break;
         }
+
+        setScale(1.0f / getStage()->getScaleX());
     }
 
     void DebugActor::render(RenderState const& parentRenderState)
     {
-        parentRenderState.renderer->drawBatch();
-        parentRenderState.renderer->getDriver()->setDebugStats(false);
+        RenderState rs = parentRenderState;
+        rs.renderer->drawBatch();
+        rs.renderer->getDriver()->setDebugStats(false);
 
         Rect vp(Point(0, 0), core::getDisplaySize());
-        parentRenderState.renderer->getDriver()->setViewport(vp);
-        parentRenderState.renderer->initCoordinateSystem(vp.getWidth(), vp.getHeight());
-        parentRenderState.renderer->resetSettings();
-        Actor::render(parentRenderState);
-        parentRenderState.renderer->drawBatch();
-        parentRenderState.renderer->getDriver()->setDebugStats(true);
+        rs.renderer->getDriver()->setViewport(vp);
+        rs.renderer->initCoordinateSystem(vp.getWidth(), vp.getHeight());
+        rs.renderer->resetSettings();
+        Actor::render(rs);
+        rs.renderer->drawBatch();
+        rs.renderer->getDriver()->setDebugStats(true);
     }
 
     void DebugActor::showTexel2PixelErrors(bool show)
