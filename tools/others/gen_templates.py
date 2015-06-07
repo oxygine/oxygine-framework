@@ -38,4 +38,4 @@ if 0:
 	gen("Match3")
 
 
-gen("Match3")
+gen("Demo")

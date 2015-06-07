@@ -109,7 +109,7 @@ def _run(args):
     data_files_ = sorted(glob.glob(abs_data + "/*"))
     data_files = []
     for d in data_files_:
-        if os.path.splitext(d)[1]  in (".dll", ):
+        if os.path.splitext(d)[1]  in (".dll", ".lib"):
             continue
         data_files.append(d)
 
