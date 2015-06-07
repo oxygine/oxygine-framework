@@ -14,7 +14,7 @@ namespace oxygine
     class XmlWalker
     {
     public:
-        XmlWalker(const std::string* xmlFolder, const std::string& path, float scaleFactor, bool load, pugi::xml_node xml, pugi::xml_node meta);
+        XmlWalker(const std::string* xmlFolder, const std::string& path, float scaleFactor, bool load, bool alpha, pugi::xml_node xml, pugi::xml_node meta);
 
         bool empty() const {return _root.empty();}
 
@@ -25,6 +25,7 @@ namespace oxygine
         pugi::xml_node      getMeta() const {return _rootMeta;}
         float               getScaleFactor() const {return _scaleFactor;}
         bool                getLoad() const {return _load;}
+        bool                getAlphaHitTest() const { return _alphaHitTest; }
         const char*         getType() const {return _root.name();}
 
         void            checkSetAttributes();
@@ -51,13 +52,14 @@ namespace oxygine
 
         float _scaleFactor;
         bool _load;
+        bool _alphaHitTest;
     };
 
     class CreateResourceContext//todo rename
     {
     public:
         CreateResourceContext(): resources(0), xml_name(0), prebuilt_folder(0),
-            walker(0, "", 1.0f, true, pugi::xml_node(), pugi::xml_node())
+            walker(0, "", 1.0f, true, false, pugi::xml_node(), pugi::xml_node())
         {
 
         }

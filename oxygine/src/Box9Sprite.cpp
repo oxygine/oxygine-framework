@@ -123,8 +123,8 @@ namespace oxygine
         _pointsX.clear();
         _pointsY.clear();
 
-        float fFrameWidth = (float)_frame.getFrameSize().x;
-        float fFrameHeight = (float)_frame.getFrameSize().y;
+        float fFrameWidth = _frame.getWidth();
+        float fFrameHeight = _frame.getHeight();
 
         /*
         float fActorWidth = max((float)getSize().x, fFrameWidth);

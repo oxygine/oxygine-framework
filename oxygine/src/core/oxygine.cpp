@@ -224,7 +224,7 @@ namespace oxygine
 
         void updateUIMessages()
         {
-            ThreadMessages::message msg;
+            ThreadMessages::peekMessage msg;
             while (_uiMessages.peek(msg, true)) {}
         }
 
@@ -323,11 +323,12 @@ namespace oxygine
 
 #if TARGET_OS_IPHONE
             flags |= SDL_WINDOW_BORDERLESS;
+            flags |= SDL_WINDOW_ALLOW_HIGHDPI;
 #endif
 
-            SDL_DisplayMode mode;
-            SDL_GetCurrentDisplayMode(0, &mode);
-            log::messageln("display mode: %d %d", mode.w, mode.h);
+            //SDL_DisplayMode mode;
+            //SDL_GetCurrentDisplayMode(0, &mode);
+            //log::messageln("display mode: %d %d", mode.w, mode.h);
 
             if (desc.w == -1 && desc.h == -1)
             {
@@ -639,7 +640,7 @@ namespace oxygine
 
         bool update()
         {
-            ThreadMessages::message msg;
+            ThreadMessages::peekMessage msg;
             while (_threadMessages.peek(msg, true)) {}
 
 #ifdef __S3E__
@@ -767,7 +768,8 @@ namespace oxygine
 #elif OXYGINE_SDL
             int w = 0;
             int h = 0;
-            SDL_GetWindowSize(_window, &w, &h);
+
+            SDL_GL_GetDrawableSize(_window, &w, &h);
             return Point(w, h);
 #elif EMSCRIPTEN
             return _displaySize;

@@ -21,7 +21,7 @@ namespace oxygine
         ~ResAnim();
 
         void init(MemoryTexture* original, int columns = 1, int rows = 1, float scaleFactor = 1.0f);
-        void init(animationFrames& frames, int columns, float scaleFactor = 1.0f);
+        void init(animationFrames& frames, int columns, float scaleFactor = 1.0f, float appliedScale = 1.0f);
         /**creates animation frames from NativeTexture*/
         void init(spNativeTexture texture, const Point& originalSize, int columns, int rows, float scaleFactor);
 
@@ -29,6 +29,7 @@ namespace oxygine
         //void addFrame(const AnimationFrame &frame);
 
         float                   getScaleFactor() const {return _scaleFactor;}
+        float                   getAppliedScale() const { return _appliedScale; }
         int                     getColumns() const {return _columns;}
         int                     getRows() const {return (int)_frames.size() / _columns;}
         int                     getTotalFrames() const {return (int)_frames.size();}
@@ -51,9 +52,10 @@ namespace oxygine
         void _load(LoadResourcesContext* ctx = 0);
         void _unload();
 
-        int _columns;
-        Resource* _atlas;
-        float _scaleFactor;
+        int         _columns;
+        Resource*   _atlas;
+        float       _scaleFactor;
+        float       _appliedScale;
 
         animationFrames _frames;
     };

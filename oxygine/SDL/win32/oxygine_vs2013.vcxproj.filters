@@ -321,6 +321,9 @@
     <ClCompile Include="..\..\src\TweenAnim.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\utils\cdecode.c">
+      <Filter>src\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\closure\closure.h">
@@ -694,6 +697,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\TweenAnim.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\utils\cdecode.h">
+      <Filter>src\utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

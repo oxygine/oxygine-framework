@@ -77,6 +77,36 @@ namespace oxygine
 
     }
 
+
+    extern int HIT_TEST_DOWNSCALE;
+
+    bool Sprite::isOn(const Vector2& localPosition)
+    {
+        if (!Actor::isOn(localPosition))
+            return false;
+
+        const HitTestData& ad = _frame.getHitTestData();
+        if (!ad.data)
+            return true;
+
+        const int BITS = (sizeof(int32_t) * 8);
+
+        const unsigned char* buff = ad.data;
+        Vector2 pos = localPosition * _frame.getResAnim()->getAppliedScale();
+        Point lp = pos.cast<Point>() / HIT_TEST_DOWNSCALE;
+        Rect r(0, 0, ad.w, ad.h);
+        if (r.pointIn(lp))
+        {
+            const int32_t* ints = reinterpret_cast<const int32_t*>(buff + lp.y * ad.pitch);
+
+            int n = lp.x / BITS;
+            int b = lp.x % BITS;
+
+            return (ints[n] >> b) & 1;
+        }
+        return false;
+    }
+
     void Sprite::setColumn(int column, int row)
     {
         const ResAnim* rs = getResAnim();
@@ -126,7 +156,7 @@ namespace oxygine
         }
 
         _frame = frame;
-        setSize(_frame.getFrameSize());
+        setSize(_frame.getSize());
 
         animFrameChanged(_frame);
     }
@@ -139,7 +169,7 @@ namespace oxygine
     RectF Sprite::getDestRect() const
     {
         if (_frame.getDiffuse().base)
-            return calcDestRectF(_frame.getDestRect(), _frame.getFrameSize());
+            return calcDestRectF(_frame.getDestRect(), _frame.getSize());
 
         return Actor::getDestRect();
     }

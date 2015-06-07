@@ -222,6 +222,8 @@
 		92CE267E1A58ABDC003901D6 /* Property.h in Headers */ = {isa = PBXBuildFile; fileRef = 92CE26761A58ABDC003901D6 /* Property.h */; };
 		92CE267F1A58ABDC003901D6 /* WebImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92CE26771A58ABDC003901D6 /* WebImage.cpp */; };
 		92CE26801A58ABDC003901D6 /* WebImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 92CE26781A58ABDC003901D6 /* WebImage.h */; };
+		92E0C9A61B24922600F0DB21 /* cdecode.c in Sources */ = {isa = PBXBuildFile; fileRef = 92E0C9A41B24922600F0DB21 /* cdecode.c */; };
+		92E0C9A71B24922600F0DB21 /* cdecode.h in Headers */ = {isa = PBXBuildFile; fileRef = 92E0C9A51B24922600F0DB21 /* cdecode.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -402,7 +404,6 @@
 		049B564F1871F21E00EF3C66 /* TextStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextStyle.h; path = ../../../src/TextStyle.h; sourceTree = "<group>"; };
 		049B56511871F21E00EF3C66 /* Tweener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tweener.h; path = ../../../src/Tweener.h; sourceTree = "<group>"; };
 		049B56521871F21E00EF3C66 /* UpdateState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UpdateState.h; path = ../../../src/UpdateState.h; sourceTree = "<group>"; };
-		049B56541871F21E00EF3C66 /* .oxbuild */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .oxbuild; sourceTree = "<group>"; };
 		049B56551871F21E00EF3C66 /* AtlasTool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AtlasTool.cpp; sourceTree = "<group>"; };
 		049B56561871F21E00EF3C66 /* AtlasTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtlasTool.h; sourceTree = "<group>"; };
 		049B56571871F21E00EF3C66 /* ImageUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageUtils.cpp; sourceTree = "<group>"; };
@@ -448,6 +449,8 @@
 		92CE26761A58ABDC003901D6 /* Property.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Property.h; path = ../../../src/Property.h; sourceTree = "<group>"; };
 		92CE26771A58ABDC003901D6 /* WebImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = WebImage.cpp; path = ../../../src/WebImage.cpp; sourceTree = "<group>"; };
 		92CE26781A58ABDC003901D6 /* WebImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebImage.h; path = ../../../src/WebImage.h; sourceTree = "<group>"; };
+		92E0C9A41B24922600F0DB21 /* cdecode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cdecode.c; sourceTree = "<group>"; };
+		92E0C9A51B24922600F0DB21 /* cdecode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cdecode.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -775,7 +778,8 @@
 		049B56531871F21E00EF3C66 /* utils */ = {
 			isa = PBXGroup;
 			children = (
-				049B56541871F21E00EF3C66 /* .oxbuild */,
+				92E0C9A41B24922600F0DB21 /* cdecode.c */,
+				92E0C9A51B24922600F0DB21 /* cdecode.h */,
 				049B56551871F21E00EF3C66 /* AtlasTool.cpp */,
 				049B56561871F21E00EF3C66 /* AtlasTool.h */,
 				049B56571871F21E00EF3C66 /* ImageUtils.cpp */,
@@ -862,6 +866,7 @@
 				049B569B1871F21E00EF3C66 /* NativeTexture.h in Headers */,
 				049B56F61871F21E00EF3C66 /* ResAnim.h in Headers */,
 				049B570C1871F21E00EF3C66 /* Aligner.h in Headers */,
+				92E0C9A71B24922600F0DB21 /* cdecode.h in Headers */,
 				92CE266D1A58AADB003901D6 /* ios.h in Headers */,
 				049B56F21871F21E00EF3C66 /* RenderState.h in Headers */,
 				049B56EE1871F21E00EF3C66 /* ProgressBar.h in Headers */,
@@ -1014,6 +1019,7 @@
 				049B566D1871F21E00EF3C66 /* Button.cpp in Sources */,
 				049B57011871F21E00EF3C66 /* Resources.cpp in Sources */,
 				049B56DF1871F21E00EF3C66 /* MemoryTexture.cpp in Sources */,
+				92E0C9A61B24922600F0DB21 /* cdecode.c in Sources */,
 				049B56ED1871F21E00EF3C66 /* ProgressBar.cpp in Sources */,
 				049B56A31871F21E00EF3C66 /* Renderer.cpp in Sources */,
 				04B3A71F18A6594D004C67E3 /* InputText.cpp in Sources */,

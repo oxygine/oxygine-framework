@@ -55,7 +55,7 @@ public:
     spSprite basket;
     spSprite ball;
     spSprite dragging;
-    spTextActor txt;
+    spTextField txt;
 
     timeMS timeLeft;
     const PointerState* touchedBy;
@@ -83,7 +83,7 @@ public:
         ball->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this,  &Drag2Test::ballTouchUp));
         content->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Drag2Test::touchUp));
 
-        txt = new TextActor;
+        txt = new TextField;
         txt->attachTo(content);
         txt->setVAlign(TextStyle::VALIGN_MIDDLE);
         txt->setHAlign(TextStyle::HALIGN_MIDDLE);

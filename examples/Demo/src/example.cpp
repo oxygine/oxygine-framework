@@ -19,6 +19,7 @@
 #include "TestPolygon.h"
 #include "TestInputText.h"
 #include "TestHttp.h"
+#include "TestAlphaHitTest.h"
 #include "core/STDFileSystem.h"
 
 #ifdef __S3E__
@@ -56,6 +57,7 @@ public:
         addButton("progress_bar", "Progress Bar");
         addButton("drag", "Drag and Drop");
         addButton("drag2", "Drag and Drop2");
+        addButton("hittest", "Alpha Hit Test");
         addButton("perf", "Performance");
         addButton("manage_res", "Manage Resources");
         addButton("texture_format", "Textures Format");
@@ -101,6 +103,10 @@ public:
         if (id == "drag2")
         {
             showTest(new Drag2Test);
+        }
+        if (id == "hittest")
+        {
+            showTest(new TestAlphaHitTest);
         }
         if (id == "manage_res")
         {

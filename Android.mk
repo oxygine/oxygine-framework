@@ -32,6 +32,7 @@ LOCAL_SRC_FILES := \
 				$(wildcard $(SRC)/text_utils/*.cpp) \
 				$(wildcard $(SRC)/dev_tools/*.cpp) \
 				$(wildcard $(SRC)/utils/*.cpp) \
+				$(wildcard $(SRC)/utils/*.c) \
 				$(wildcard $(SRC)/winnie_alloc/*.cpp) \
 				$(wildcard $(SRC)/minizip/*.c) \
 				$(wildcard $(SRC)/*.cpp) \

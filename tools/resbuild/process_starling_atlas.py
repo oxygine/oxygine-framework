@@ -16,7 +16,6 @@ class starling_atlas_Processor(process.Process):
         meta = walker.root_meta
         xml_path = walker.getPath("file")
         folder = os.path.split(xml_path)[0] + "/"
-        print folder
         file_doc = context._open_xml(context.src_data + xml_path)
         
         file_root = file_doc

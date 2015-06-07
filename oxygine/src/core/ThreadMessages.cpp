@@ -1,5 +1,6 @@
 #include "ThreadMessages.h"
 #include "log.h"
+#include "pthread.h"
 namespace oxygine
 {
 #if 0
@@ -117,20 +118,27 @@ namespace oxygine
         _events.clear();
     }
 
-    bool ThreadMessages::peek(message& ev, bool del)
+    bool ThreadMessages::peek(peekMessage& ev, bool del)
     {
+        if (ev.end)
+            return false;
+
         bool has = false;
 
         MutexPthreadLock lock(_mutex);
         _replyLast(0);
 
+
         if (!_events.empty())
         {
-            ev = _events.front();
+            static_cast<message&>(ev) = _events.front();
             if (del)
                 _events.erase(_events.begin());
             has = true;
             _last = ev;
+
+            if (_events.empty())
+                ev.end = true;
         }
 
         return has;
@@ -243,6 +251,21 @@ namespace oxygine
         ev._id = ++_id;
         _events.push_back(ev);
         pthread_cond_signal(&_cond);
+    }
+
+    void ThreadMessages::removeCallback(int msgid, callback cb, void* cbData)
+    {
+        MutexPthreadLock lock(_mutex);
+        for (messages::iterator i = _events.begin(); i != _events.end(); ++i)
+        {
+            message& m = *i;
+            if (m.cb == cb && m.cbData == cbData && m.msgid == msgid)
+            {
+                _events.erase(i);
+                break;
+            }
+        }
+
     }
 
 #ifndef __S3E__

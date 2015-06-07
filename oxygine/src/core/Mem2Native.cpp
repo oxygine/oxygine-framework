@@ -103,7 +103,7 @@ namespace oxygine
         //update only one texture per frame
         if (_prev == Point(0, 0))
         {
-            ThreadMessages::message ev;
+            ThreadMessages::peekMessage ev;
             while (_messages.peek(ev, true))
             {
                 MemoryTexture* src = (MemoryTexture*)ev.arg1;

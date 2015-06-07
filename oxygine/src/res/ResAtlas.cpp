@@ -11,6 +11,12 @@
 #include "core/Mem2Native.h"
 #include "core/VideoDriver.h"
 #include "core/Renderer.h"
+#include <stdint.h>
+
+extern "C"
+{
+#include "utils/cdecode.h"
+}
 
 #ifdef __S3E__
 #include "IwImage.h"
@@ -36,7 +42,6 @@ namespace oxygine
     {
         if (!ad.texture)
             return;
-
 
         MemoryTexture mt;
         const Rect& bounds = ad.atlas.getBounds();
@@ -71,381 +76,12 @@ namespace oxygine
         //ad.texture->init(ad.mt.getWidth(), ad.mt.getHeight(), ad.mt.getFormat());
     }
 
-    void ResAtlas::init_resAnim(ResAnim* rs, const std::string& file, pugi::xml_node node)
-    {
-        rs->setName(_Resource::extractID(node, file, ""));
-        setNode(rs, node);
-    }
-
-    void ResAtlas::addAtlas(TextureFormat tf, const std::string& base, const std::string& alpha, int w, int h)
-    {
-        atlas atl;
-        atl.base = IVideoDriver::instance->createTexture();
-        atl.base_path = base;
-        atl.base->setName(base);
-        atl.base->init(0, w, h, tf);
-
-        if (!alpha.empty())
-        {
-            atl.alpha = IVideoDriver::instance->createTexture();
-            atl.alpha_path = alpha;
-            atl.alpha->setName(alpha);
-            atl.alpha->init(0, w, h, tf);
-        }
-
-        _atlasses.push_back(atl);
-    }
-
-    void ResAtlas::loadAtlas(CreateResourceContext& context)
-    {
-        //string path = context.walker.getCurrentFolder();
-
-        pugi::xml_node node = context.walker.getNode();
-        pugi::xml_node meta = context.walker.getMeta();
-
-        int w = node.attribute("width").as_int(defaultAtlasWidth);
-        int h = node.attribute("height").as_int(defaultAtlasHeight);
-        const char* format = node.attribute("format").as_string("8888");
-
-        _linearFilter = node.attribute("linearFilter").as_bool(true);
-        _clamp2edge = node.attribute("clamp2edge").as_bool(true);
-
-        atlas_data ad;
-
-
-        TextureFormat tf = string2TextureFormat(format);
-
-        pugi::xml_node meta_image = meta.child("atlas");
-
-        bool compressed = false;
-
-        while (meta_image)
-        {
-            const char* file = meta_image.attribute("file").value();
-
-            int w = meta_image.attribute("w").as_int();
-            int h = meta_image.attribute("h").as_int();
-
-            const char* file_format = meta_image.attribute("format").as_string(0);
-            TextureFormat ffmt = TF_UNDEFINED;
-            if (file_format)
-            {
-                ffmt = string2TextureFormat(file_format);
-                compressed = isCompressedFormat(ffmt);
-            }
-
-            std::string alpha_file = meta_image.attribute("alpha").as_string("");
-            if (!alpha_file.empty())
-            {
-                alpha_file = *context.prebuilt_folder + alpha_file;
-            }
-
-            addAtlas(tf, *context.prebuilt_folder + file, alpha_file, w, h);
-
-            meta_image = meta_image.next_sibling("atlas");
-            context.walker.nextMeta();
-        }
-
-        //
-
-        std::vector<ResAnim*> anims;
-
-
-        while (true)
-        {
-            XmlWalker walker = context.walker.next();
-            if (walker.empty())
-                break;
-
-            pugi::xml_node child_node = walker.getNode();
-            pugi::xml_node meta_frames = walker.getMeta();
-
-            const char* name = child_node.name();
-            if (!strcmp(name, "image"))
-            {
-                std::string id = child_node.attribute("id").value();
-                std::string file = child_node.attribute("file").value();
-
-                if (file.empty())
-                {
-                    ResAnim* ra = new ResAnim(this);
-                    ra->init(0, 0, 0, walker.getScaleFactor());
-                    init_resAnim(ra, file, child_node);
-                    ra->setParent(this);
-                    context.resources->add(ra);
-                    continue;
-                }
-
-                if (meta)
-                {
-                    OX_ASSERT(meta_frames && "Did you recreate atlasses?");
-                }
-
-                MemoryTexture mt;
-                ImageData im;
-
-                int columns = 0;
-                int rows = 0;
-                int frame_width = 0;
-                int frame_height = 0;
-                float frame_scale = 1.0f;
-                bool loaded = false;
-
-                if (meta_frames  || meta)
-                {
-                    const char* frame_size = meta_frames.attribute("fs").value();
-
-                    //int w = 0;
-                    //int h = 0;
-
-                    sscanf(frame_size, "%d,%d,%d,%d,%f", &columns, &rows,
-                           &frame_width, &frame_height,
-                           &frame_scale);
-                    loaded = true;
-                    //frame_scale = 0.
-                    //frame_scale /= walker.getScaleFactor();//todo! fix
-
-                    //im.w = w;
-                    //im.h = h;
-                }
-                else
-                {
-                    file::buffer bf;
-                    file::read(walker.getPath("file").c_str(), bf);
-
-                    mt.init(bf, Renderer::getPremultipliedAlphaRender(), tf);
-                    im = mt.lock();
-                    if (im.w)
-                    {
-                        rows = child_node.attribute("rows").as_int();
-                        frame_width = child_node.attribute("frame_width").as_int();
-                        columns = child_node.attribute("cols").as_int();
-                        frame_height = child_node.attribute("frame_height").as_int();
-
-                        if (!rows)
-                            rows = 1;
-
-                        if (!columns)
-                            columns = 1;
-
-                        if (frame_width)
-                            columns = im.w / frame_width;
-                        else
-                            frame_width = im.w / columns;
-
-
-                        if (frame_height)
-                            rows = im.h / frame_height;
-                        else
-                            frame_height = im.h / rows;
-
-                    }
-                }
-
-                if (columns)
-                {
-                    animationFrames frames;
-                    int frames_count = rows * columns;
-                    frames.reserve(frames_count);
-
-                    ResAnim* ra = new ResAnim(this);
-
-                    if (meta)
-                    {
-                        OX_ASSERT(meta_frames);
-
-                        /*
-                        if (string(meta_frames.attribute("debug_image").as_string()) == "backleft.png")
-                        {
-
-                        }
-                        */
-
-                        char* frames_data = (char*)meta_frames.first_child().value();
-
-
-                        const char* begin = frames_data;
-                        while (*frames_data)
-                        {
-                            if (*frames_data == ';')
-                            {
-                                *frames_data = 0;
-                                int id = 0;
-                                int x = 0;
-                                int y = 0;
-
-                                int bbox_x = 0;
-                                int bbox_y = 0;
-                                int bbox_w = 0;
-                                int bbox_h = 0;
-
-                                sscanf(begin, "%d,%d,%d,%d,%d,%d,%d", &id, &x, &y, &bbox_x, &bbox_y, &bbox_w, &bbox_h);
-
-                                begin = frames_data + 1;
-
-                                spNativeTexture& texture = _atlasses[id].base;
-                                spNativeTexture& alpha = _atlasses[id].alpha;
-
-                                float iw = 1.0f / texture->getWidth();
-                                float ih = 1.0f / texture->getHeight();
-
-                                RectF srcRect(x * iw, y * ih, bbox_w * iw, bbox_h * ih);
-
-                                float fs = frame_scale;
-                                RectF destRect(
-                                    Vector2((float)bbox_x, (float)bbox_y) * fs,
-                                    Vector2((float)bbox_w, (float)bbox_h) * fs
-                                );
-
-                                AnimationFrame frame;
-                                Diffuse df;
-                                df.base = texture;
-                                df.alpha = alpha;
-                                //compressed data could not be premultiplied
-                                if (Renderer::getPremultipliedAlphaRender())
-                                    df.premultiplied = !compressed;
-                                else
-                                    df.premultiplied = true;//render should think that it is already premultiplied and don't worry about alpha
-
-                                size_t n = frames.size();
-                                int column = n % columns;
-                                int row = n / columns;
-
-                                frame.init2(ra, column, row, df,
-                                            srcRect, destRect,
-                                            Vector2((float)frame_width, (float)frame_height));
-
-                                frames.push_back(frame);
-                                if ((int)frames.size() >= frames_count)
-                                    break;
-                            }
-
-                            ++frames_data;
-                        }
-                    }
-                    else
-                    {
-                        anims.push_back(ra);
-
-                        for (int y = 0; y < rows; ++y)
-                        {
-                            for (int x = 0; x < columns; ++x)
-                            {
-                                Rect src;
-                                src.pos = Point(x * frame_width, y * frame_height);
-                                src.size = Point(frame_width, frame_height);
-
-                                ImageData srcImage = im.getRect(src);
-
-                                Rect dest(0, 0, 0, 0);
-
-                                if (!ad.texture)
-                                {
-                                    std::string atlas_id = getName();
-                                    next_atlas(w, h, tf, ad, atlas_id.c_str());
-                                }
-
-                                bool s = ad.atlas.add(&ad.mt, srcImage, dest);
-                                if (s == false)
-                                {
-                                    apply_atlas(ad);
-                                    next_atlas(w, h, tf, ad, walker.getCurrentFolder().c_str());
-                                    s = ad.atlas.add(&ad.mt, srcImage, dest);
-                                    OX_ASSERT(s);
-                                }
-
-                                /*
-                                float iw = 1.0f / ad.mt.getWidth();
-                                float ih = 1.0f / ad.mt.getHeight();
-                                */
-
-                                float iw = 1.0f;
-                                float ih = 1.0f;
-
-                                RectF srcRect(dest.pos.x * iw, dest.pos.y * ih, dest.size.x * iw, dest.size.y * ih);
-
-                                Vector2 sizeScaled = Vector2((float)dest.size.x, (float)dest.size.y) * walker.getScaleFactor();
-                                RectF destRect(Vector2(0, 0), sizeScaled);
-
-                                AnimationFrame frame;
-                                Diffuse df;
-                                df.base = ad.texture;
-                                df.premultiplied = true;//!Renderer::getPremultipliedAlphaRender();
-                                frame.init2(ra, x, y, df, srcRect, destRect, Vector2((float)frame_width, (float)frame_height) * walker.getScaleFactor());
-                                frames.push_back(frame);
-                            }
-                        }
-                    }
-
-
-
-                    init_resAnim(ra, file, child_node);
-
-                    ra->init(frames, columns, walker.getScaleFactor());
-                    ra->setParent(this);
-                    context.resources->add(ra);
-                }
-            }
-        }
-
-        apply_atlas(ad);
-
-        for (std::vector<ResAnim*>::iterator i = anims.begin(); i != anims.end(); ++i)
-        {
-            ResAnim* rs = *i;
-            int num = rs->getTotalFrames();
-
-            for (int n = 0; n < num; ++n)
-            {
-                AnimationFrame& frame = const_cast<AnimationFrame&>(rs->getFrame(n));
-
-                float iw = 1.0f / frame.getDiffuse().base->getWidth();
-                float ih = 1.0f / frame.getDiffuse().base->getHeight();
-
-                RectF rect = frame.getSrcRect();
-                rect.pos.x *= iw;
-                rect.pos.y *= ih;
-                rect.size.x *= iw;
-                rect.size.y *= ih;
-                frame.setSrcRect(rect);
-            }
-        }
-    }
-
-    Resource* ResAtlas::create(CreateResourceContext& context)
-    {
-        context.walker.checkSetAttributes();
-        ResAtlas* ra = new ResAtlas();
-        ra->setName(_Resource::extractID(context.walker.getNode(), "", std::string("!atlas:") + *context.xml_name));
-        ra->loadAtlas(context);
-        setNode(ra, context.walker.getNode());
-        //context.meta = context.meta.next_sibling();
-        return ra;
-    }
-
-    ResAtlas::ResAtlas(): _linearFilter(true), _clamp2edge(true)
-    {
-
-    }
-
-    ResAtlas::~ResAtlas()
-    {
-        for (atlasses::iterator i = _atlasses.begin(); i != _atlasses.end(); ++i)
-        {
-            atlas& atl = *i;
-            if (atl.base)
-                atl.base->release();
-            if (atl.alpha)
-                atl.alpha->release();
-        }
-    }
 
     static load_texture_hook _hook = 0;
     void set_load_texture_hook(load_texture_hook hook)
     {
         _hook = hook;
     }
-
 
     void load_texture_internal(const std::string& file, spNativeTexture nt, LoadResourcesContext* load_context)
     {
@@ -474,6 +110,73 @@ namespace oxygine
         }
 
         load_texture_internal(file, nt, load_context);
+    }
+
+
+    void ResAtlas::init_resAnim(ResAnim* rs, const std::string& file, pugi::xml_node node)
+    {
+        rs->setName(_Resource::extractID(node, file, ""));
+        setNode(rs, node);
+    }
+
+    void ResAtlas::addAtlas(TextureFormat tf, const std::string& base, const std::string& alpha, int w, int h)
+    {
+        atlas atl;
+        atl.base = IVideoDriver::instance->createTexture();
+        atl.base_path = base;
+        atl.base->setName(base);
+        atl.base->init(0, w, h, tf);
+
+        if (!alpha.empty())
+        {
+            atl.alpha = IVideoDriver::instance->createTexture();
+            atl.alpha_path = alpha;
+            atl.alpha->setName(alpha);
+            atl.alpha->init(0, w, h, tf);
+        }
+
+        _atlasses.push_back(atl);
+    }
+
+    Resource* ResAtlas::create(CreateResourceContext& context)
+    {
+        context.walker.checkSetAttributes();
+        ResAtlas* ra = 0;
+        if (context.walker.getMeta())
+        {
+            ResAtlasPrebuilt* rs = new ResAtlasPrebuilt(context);
+
+            ra = rs;
+        }
+        else
+        {
+            ResAtlasGeneric* rs = new ResAtlasGeneric();
+            rs->loadAtlas(context);
+
+            ra = rs;
+        }
+
+        ra->setName(_Resource::extractID(context.walker.getNode(), "", std::string("!atlas:") + *context.xml_name));
+        setNode(ra, context.walker.getNode());
+
+        return ra;
+    }
+
+    ResAtlas::ResAtlas()//: _linearFilter(true), _clamp2edge(true)
+    {
+
+    }
+
+    ResAtlas::~ResAtlas()
+    {
+        for (atlasses::iterator i = _atlasses.begin(); i != _atlasses.end(); ++i)
+        {
+            atlas& atl = *i;
+            if (atl.base)
+                atl.base->release();
+            if (atl.alpha)
+                atl.alpha->release();
+        }
     }
 
     void ResAtlas::_restore(Restorable* r, void*)
@@ -528,6 +231,543 @@ namespace oxygine
 
             if (atl.alpha)
                 atl.alpha->release();
+        }
+    }
+
+    ResAnim* ResAtlas::createEmpty(const XmlWalker& walker, CreateResourceContext& context)
+    {
+        ResAnim* ra = new ResAnim(this);
+        ra->init(0, 0, 0, walker.getScaleFactor());
+        init_resAnim(ra, "", walker.getNode());
+        ra->setParent(this);
+        context.resources->add(ra);
+
+        return ra;
+    }
+
+
+    int roundUp(int numToRound, int multiple)
+    {
+        if (multiple == 0)
+            return numToRound;
+
+        int remainder = numToRound % multiple;
+        if (remainder == 0)
+            return numToRound;
+        return numToRound + multiple - remainder;
+    }
+
+
+    int HIT_TEST_DOWNSCALE = 4;
+    const int ALIGN = sizeof(int32_t);
+    const int BITS = ALIGN * 8;
+
+    void makeAlpha(const ImageData& srcImage, Rect& bounds, std::vector<unsigned char>& alpha, HitTestData& adata, bool hittest)
+    {
+        int w = srcImage.w;
+        int h = srcImage.h;
+
+        size_t pos = alpha.size();
+        adata.data = reinterpret_cast<unsigned char*>(pos);
+        adata.w = roundUp(w, HIT_TEST_DOWNSCALE) / HIT_TEST_DOWNSCALE;
+        adata.h = roundUp(h, HIT_TEST_DOWNSCALE) / HIT_TEST_DOWNSCALE;
+
+
+        int lineInts = roundUp(adata.w, BITS) / BITS;
+
+        int destPitch = lineInts * ALIGN;
+
+        int size = adata.h * destPitch;
+
+        alpha.resize(pos + size);
+
+
+        const unsigned char* srcData = srcImage.data;
+        int srcStep = srcImage.bytespp;
+        int srcPitch = srcImage.pitch;
+
+        unsigned char* destData = &alpha[pos];
+
+        adata.pitch = destPitch;
+
+        const unsigned char* srcRow = srcData;
+        unsigned char* destRow = destData;
+
+
+        int minX = w;
+        int minY = h;
+        int maxX = 0;
+        int maxY = 0;
+
+        bool hasAlpha = false;
+
+        for (int y = 0; y != h; y += 1)
+        {
+            const unsigned char* srcLine = srcRow;
+            int32_t* destLine = reinterpret_cast<int32_t*>(destRow);
+
+            bool lineWithAlpha = false;
+
+
+            for (int x = 0; x != w; x += 1)
+            {
+                PixelR8G8B8A8 pd;
+                Pixel p;
+                pd.getPixel(srcLine, p);
+
+
+                if (p.a > 10)
+                {
+                    hasAlpha = true;
+
+                    int dx = x / HIT_TEST_DOWNSCALE;
+                    int n = dx / BITS;
+                    int b = dx % BITS;
+
+                    destLine[n] |= 1 << b;
+
+                    lineWithAlpha = true;
+                    if (x > maxX)
+                        maxX = x;
+                    else if (x < minX)
+                        minX = x;
+                }
+                srcLine += srcStep;
+            }
+
+            if (lineWithAlpha)
+            {
+                if (minY == h)
+                    minY = y;
+                maxY = y;
+            }
+
+            if (y % HIT_TEST_DOWNSCALE == HIT_TEST_DOWNSCALE - 1)
+            {
+                //reset line
+                destRow += destPitch;
+            }
+
+            srcRow += srcPitch;
+        }
+
+        //if image is transparent
+        if (minX == w && maxX == 0)
+        {
+            minX = 0;
+            maxX = 0;
+        }
+
+        if (minY == h && maxY == 0)
+        {
+            minY = 0;
+            maxY = 0;
+        }
+
+        bounds = Rect(minX, minY, maxX - minX + 1, maxY - minY + 1);
+
+        if (!hasAlpha || !hittest)
+        {
+            alpha.resize(pos);
+            adata = HitTestData();
+        }
+    }
+
+
+    void ResAtlasGeneric::loadAtlas(CreateResourceContext& context)
+    {
+        pugi::xml_node node = context.walker.getNode();
+
+        int w = node.attribute("width").as_int(defaultAtlasWidth);
+        int h = node.attribute("height").as_int(defaultAtlasHeight);
+        const char* format = node.attribute("format").as_string("8888");
+
+        //_linearFilter = node.attribute("linearFilter").as_bool(true);
+        //_clamp2edge = node.attribute("clamp2edge").as_bool(true);
+
+        atlas_data ad;
+
+
+        TextureFormat tf = string2TextureFormat(format);
+
+
+        bool compressed = false;
+
+
+        std::vector<ResAnim*> anims;
+
+
+        while (true)
+        {
+            XmlWalker walker = context.walker.next();
+            if (walker.empty())
+                break;
+
+            pugi::xml_node child_node = walker.getNode();
+
+            const char* name = child_node.name();
+            if (strcmp(name, "image"))
+                continue;
+
+
+            std::string id = child_node.attribute("id").value();
+            std::string file = child_node.attribute("file").value();
+
+            if (file.empty())
+            {
+                createEmpty(walker, context);
+                continue;
+            }
+
+
+
+            MemoryTexture mt;
+            ImageData im;
+
+            int columns = 0;
+            int rows = 0;
+            int frame_width = 0;
+            int frame_height = 0;
+            float frame_scale = 1.0f;
+            bool loaded = false;
+
+
+            file::buffer bf;
+            file::read(walker.getPath("file").c_str(), bf);
+
+            mt.init(bf, Renderer::getPremultipliedAlphaRender(), tf);
+            im = mt.lock();
+            if (im.w)
+            {
+                rows = child_node.attribute("rows").as_int();
+                frame_width = child_node.attribute("frame_width").as_int();
+                columns = child_node.attribute("cols").as_int();
+                frame_height = child_node.attribute("frame_height").as_int();
+
+                if (!rows)
+                    rows = 1;
+
+                if (!columns)
+                    columns = 1;
+
+                if (frame_width)
+                    columns = im.w / frame_width;
+                else
+                    frame_width = im.w / columns;
+
+
+                if (frame_height)
+                    rows = im.h / frame_height;
+                else
+                    frame_height = im.h / rows;
+            }
+
+
+            if (columns)
+            {
+                animationFrames frames;
+                int frames_count = rows * columns;
+                frames.reserve(frames_count);
+
+                ResAnim* ra = new ResAnim(this);
+
+
+                anims.push_back(ra);
+
+                for (int y = 0; y < rows; ++y)
+                {
+                    for (int x = 0; x < columns; ++x)
+                    {
+                        Rect src;
+                        src.pos = Point(x * frame_width, y * frame_height);
+                        src.size = Point(frame_width, frame_height);
+
+                        ImageData srcImage_ = im.getRect(src);
+
+
+                        HitTestData adata;
+                        ImageData trimmedImage;
+                        Rect bounds;
+                        makeAlpha(srcImage_, bounds, _hitTestBuffer, adata, walker.getAlphaHitTest());
+                        trimmedImage = srcImage_.getRect(bounds);
+
+                        Rect dest(0, 0, 0, 0);
+
+                        if (!ad.texture)
+                        {
+                            std::string atlas_id = getName();
+                            next_atlas(w, h, tf, ad, atlas_id.c_str());
+                        }
+
+                        bool s = ad.atlas.add(&ad.mt, trimmedImage, dest);
+                        if (s == false)
+                        {
+                            apply_atlas(ad);
+                            next_atlas(w, h, tf, ad, walker.getCurrentFolder().c_str());
+                            s = ad.atlas.add(&ad.mt, trimmedImage, dest);
+                            OX_ASSERT(s);
+                        }
+
+
+                        float iw = 1.0f;
+                        float ih = 1.0f;
+
+                        RectF srcRect(dest.pos.x * iw, dest.pos.y * ih, dest.size.x * iw, dest.size.y * ih);
+
+                        Vector2 sizeScaled = Vector2((float)dest.size.x, (float)dest.size.y) * walker.getScaleFactor();
+                        RectF destRect(bounds.pos.cast<Vector2>(), sizeScaled);
+
+                        AnimationFrame frame;
+                        Diffuse df;
+                        df.base = ad.texture;
+                        df.premultiplied = true;//!Renderer::getPremultipliedAlphaRender();
+
+                        Vector2 fsize = Vector2((float)frame_width, (float)frame_height) * walker.getScaleFactor();
+                        frame.init2(ra, x, y, df,
+                                    srcRect, destRect, fsize);
+
+                        frame.setHitTestData(adata);
+
+                        frames.push_back(frame);
+                    }
+                }
+
+                init_resAnim(ra, file, child_node);
+
+                ra->init(frames, columns, walker.getScaleFactor(), 1.0f / walker.getScaleFactor());
+                ra->setParent(this);
+                context.resources->add(ra);
+            }
+
+        }
+
+        apply_atlas(ad);
+
+        for (std::vector<ResAnim*>::iterator i = anims.begin(); i != anims.end(); ++i)
+        {
+            ResAnim* rs = *i;
+            int num = rs->getTotalFrames();
+
+            for (int n = 0; n < num; ++n)
+            {
+                AnimationFrame& frame = const_cast<AnimationFrame&>(rs->getFrame(n));
+
+                float iw = 1.0f / frame.getDiffuse().base->getWidth();
+                float ih = 1.0f / frame.getDiffuse().base->getHeight();
+
+                RectF rect = frame.getSrcRect();
+                rect.pos.x *= iw;
+                rect.pos.y *= ih;
+                rect.size.x *= iw;
+                rect.size.y *= ih;
+                frame.setSrcRect(rect);
+
+                HitTestData ad = frame.getHitTestData();
+                if (ad.pitch)
+                {
+                    ad.data = &_hitTestBuffer[reinterpret_cast<size_t>(ad.data)];
+                    frame.setHitTestData(ad);
+                }
+            }
+        }
+    }
+
+
+    ResAtlasPrebuilt::ResAtlasPrebuilt(CreateResourceContext& context)
+    {
+        pugi::xml_node node = context.walker.getNode();
+        pugi::xml_node meta = context.walker.getMeta();
+
+        const char* format = node.attribute("format").as_string("8888");
+
+        //_linearFilter = node.attribute("linearFilter").as_bool(true);
+        //_clamp2edge = node.attribute("clamp2edge").as_bool(true);
+
+
+        TextureFormat tf = string2TextureFormat(format);
+
+        pugi::xml_node meta_image = meta.child("atlas");
+
+        pugi::xml_node meta_alpha = meta.child("ht");
+        if (meta_alpha)
+        {
+            const char* data = meta_alpha.text().as_string();
+            int len = meta_alpha.attribute("len").as_int();
+            base64_decodestate state;
+            base64_init_decodestate(&state);
+            _hitTestBuffer.resize(len * 3 / 4);
+            if (len)
+                base64_decode_block(data, len, (char*)&_hitTestBuffer.front(), &state);
+        }
+
+        bool compressed = false;
+
+        while (meta_image)
+        {
+            const char* file = meta_image.attribute("file").value();
+
+            int w = meta_image.attribute("w").as_int();
+            int h = meta_image.attribute("h").as_int();
+
+            const char* file_format = meta_image.attribute("format").as_string(0);
+            TextureFormat ffmt = TF_UNDEFINED;
+            if (file_format)
+            {
+                ffmt = string2TextureFormat(file_format);
+                compressed = isCompressedFormat(ffmt);
+            }
+
+            std::string alpha_file = meta_image.attribute("alpha").as_string("");
+            if (!alpha_file.empty())
+            {
+                alpha_file = *context.prebuilt_folder + alpha_file;
+            }
+
+            addAtlas(tf, *context.prebuilt_folder + file, alpha_file, w, h);
+
+            meta_image = meta_image.next_sibling("atlas");
+            context.walker.nextMeta();
+        }
+
+        while (true)
+        {
+            XmlWalker walker = context.walker.next();
+            if (walker.empty())
+                break;
+
+            pugi::xml_node child_node = walker.getNode();
+
+            const char* name = child_node.name();
+            if (strcmp(name, "image"))
+                continue;
+
+            pugi::xml_node meta_frames = walker.getMeta();
+
+            std::string id = child_node.attribute("id").value();
+            std::string file = child_node.attribute("file").value();
+
+            if (file.empty())
+            {
+                createEmpty(walker, context);
+                continue;
+            }
+
+
+            OX_ASSERT(meta_frames && "Did you recreate atlasses?");
+
+            int columns = 0;
+            int rows = 0;
+            int frame_width = 0;
+            int frame_height = 0;
+            float frame_scale = 1.0f;
+
+
+            const char* frame_size = meta_frames.attribute("fs").value();
+
+            sscanf(frame_size, "%d,%d,%d,%d,%f", &columns, &rows,
+                   &frame_width, &frame_height,
+                   &frame_scale);
+
+            HitTestData adata;
+            const char* alpha = meta_frames.attribute("ht").as_string(0);
+            if (alpha)
+            {
+                int ad_w, ad_h, ad_pos, ad_size;
+                sscanf(alpha, "%d,%d,%d,%d", &ad_pos, &ad_size, &ad_w, &ad_h);
+                adata.w = ad_w;
+                adata.h = ad_h;
+                adata.pitch = ad_size / ad_h;
+                adata.data = &_hitTestBuffer[ad_pos];
+            }
+
+
+
+            if (columns)
+            {
+                animationFrames frames;
+                int frames_count = rows * columns;
+                frames.reserve(frames_count);
+
+                ResAnim* ra = new ResAnim(this);
+
+
+                OX_ASSERT(meta_frames);
+
+
+                char* frames_data = (char*)meta_frames.first_child().value();
+
+
+                const char* begin = frames_data;
+                while (*frames_data)
+                {
+                    if (*frames_data == ';')
+                    {
+                        *frames_data = 0;
+                        int id = 0;
+                        int x = 0;
+                        int y = 0;
+
+                        int bbox_x = 0;
+                        int bbox_y = 0;
+                        int bbox_w = 0;
+                        int bbox_h = 0;
+
+                        sscanf(begin, "%d,%d,%d,%d,%d,%d,%d", &id, &x, &y, &bbox_x, &bbox_y, &bbox_w, &bbox_h);
+
+                        begin = frames_data + 1;
+
+                        spNativeTexture& texture = _atlasses[id].base;
+                        spNativeTexture& alpha = _atlasses[id].alpha;
+
+                        float iw = 1.0f / texture->getWidth();
+                        float ih = 1.0f / texture->getHeight();
+
+                        RectF srcRect(x * iw, y * ih, bbox_w * iw, bbox_h * ih);
+
+                        float fs = frame_scale;
+                        RectF destRect(
+                            Vector2((float)bbox_x, (float)bbox_y) * fs,
+                            Vector2((float)bbox_w, (float)bbox_h) * fs
+                        );
+
+                        AnimationFrame frame;
+                        Diffuse df;
+                        df.base = texture;
+                        df.alpha = alpha;
+
+                        //compressed data could not be premultiplied
+                        if (Renderer::getPremultipliedAlphaRender())
+                            df.premultiplied = !compressed;
+                        else
+                            df.premultiplied = true;//render should think that it is already premultiplied and don't worry about alpha
+
+                        size_t n = frames.size();
+                        int column = n % columns;
+                        int row = n / columns;
+
+                        frame.init2(ra, column, row, df,
+                                    srcRect, destRect,
+                                    Vector2((float)frame_width, (float)frame_height));
+                        if (adata.pitch)
+                        {
+                            frame.setHitTestData(adata);
+                            adata.data += adata.h * adata.pitch;
+                        }
+
+                        frames.push_back(frame);
+                        if ((int)frames.size() >= frames_count)
+                            break;
+                    }
+
+                    ++frames_data;
+                }
+
+                init_resAnim(ra, file, child_node);
+
+                ra->init(frames, columns, walker.getScaleFactor(), 1.0f / frame_scale);
+                ra->setParent(this);
+                context.resources->add(ra);
+            }
         }
     }
 }

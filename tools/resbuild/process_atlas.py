@@ -9,6 +9,9 @@ import os
 from . import atlas
 from . import process
 
+import struct
+import base64
+
 def as_int(attr, df = 0):
     if not attr:
         return df
@@ -51,10 +54,19 @@ def premultipliedAlpha(image):
 
     return image    
 
+class alphaData:
+    def __init__(self, w, h, data):
+        self.w = w
+        self.h = h
+        self.data = data
+
+
 class frame:
-    def __init__(self, image, bbox, image_element, rs):
+    def __init__(self, image, bbox, image_element, rs, adata):
+
         self.image = image
         self.image_element = image_element
+        self.adata = adata
 
         self.node = None
         self.resanim = rs
@@ -106,7 +118,7 @@ def applyScale2(x, scale):
             return int(best[1])
 
         x += 1
-        
+
 def nextPOT(v):
     v = v - 1;
     v = v | (v >> 1);
@@ -126,11 +138,60 @@ class settings:
         self.atlasses = []
         self.square = False
         self.npot = False
+        
+def makeAlpha(a):
+    
+    def roundUp(v, multiple):
+        if multiple == 0:
+            return v
+        rem = v % multiple
+        if rem == 0:
+            return v     
+        res = v + multiple - rem
+        return res                
+    
+    asmall = a.resize((int(a.size[0]/4), int(a.size[1]/4)), Image.ANTIALIAS)
+
+
+    b = asmall.getextrema()
+    
+    if not b:
+        return None
+
+    if b[0] > 10:
+        return None
+
+    asmall_size = asmall.size                    
+
+    BITS = 32
+
+    val = roundUp(asmall_size[0], BITS)
+    lineLen = val // BITS
+
+
+    buff = b''
+
+    for y in range(asmall_size[1]):
+
+        line = [0 for x in range(lineLen)]                    
+        for x in range(asmall_size[0]):
+            p = asmall.getpixel((x,y))
+            if p > 5:                            
+                n = x // BITS
+                b = x % BITS                            
+                line[n] |= 1 << b
+
+
+        for v in line:
+            buff += struct.pack("<I", v)
+
+    adata = alphaData(asmall_size[0], asmall_size[1], buff)                        
+    return adata
 
 def pack(st, frames, sw, sh):                       
-                
+
     atl = atlas.Atlas(st.padding, sw, sh)            
-            
+
     not_packed = []    
     for fr in frames:
         ns = st.get_size(fr)
@@ -139,10 +200,10 @@ def pack(st, frames, sw, sh):
             not_packed.append(fr)
         else:
             st.set_node(fr, node)   
-        
+
     #atl.add(250, 250)
     #atl.save()
-        
+
     return not_packed, atl
 
 
@@ -176,42 +237,42 @@ def pck(st, frames):
             sq += size[0] * size[1]
             min_w = max(min_w, size[0])
             min_h = max(min_h, size[1])
-            
+
         sizes_w = list(get_pow2list(st.npot, min_w, st.max_w))
         sizes_h = list(get_pow2list(st.npot, min_h, st.max_h))
-        
+
         for sw in sizes_w:
             for sh in sizes_h:
                 end = sh == sizes_h[-1] and sw == sizes_w[-1]
-                
+
                 if st.square and sw != sh:
                     continue
-                
+
                 if sw * sh < sq and not end:
                     continue                
-                
+
                 not_packed, bn = pack(st, frames, sw, sh)
                 st.atlasses.append(bn)
                 if not not_packed:
                     return
-                
+
                 if end:                    
                     frames = not_packed   
                 else:
                     st.atlasses.pop()
-                    
-                    
+
+
 def processRS(context, walker):
-        
+
     image_el = walker.root
-    
+
     image_name = image_el.getAttribute("file")
     if not image_name:
         return None
 
     file_path = walker.getPath("file")
-    
-    
+
+
     #print image_path
 
     image = None
@@ -240,7 +301,7 @@ def processRS(context, walker):
     resAnim.image = image
     resAnim.name = image_name                        
 
-    
+
 
     columns = as_int(image_el.getAttribute("cols"))
     frame_width = as_int(image_el.getAttribute("frame_width"))
@@ -249,7 +310,7 @@ def processRS(context, walker):
     border = as_int(image_el.getAttribute("border"))
     #sq = as_float(image_el.getAttribute("scale_quality"), 1)
     #next.scale_quality *= sq
-    
+
     if not columns:
         columns = 1
     if not rows:
@@ -277,43 +338,47 @@ def processRS(context, walker):
 
     if size_warning:
         context.warnings += 1
-        
+
     scale_factor = walker.scale_factor    
-    
+
     resAnim.frame_scale2 = scale_factor        
     finalScale = 1    
-    
+
     upscale = False
-    
+
     if context.args.resize:
         max_scale = 1.0 / scale_factor
-        
+
         finalScale = context.scale * walker.scale_quality
-        
+
         if finalScale > max_scale:
             if not context.args.upscale:
                 finalScale = max_scale
             else:
                 upscale = True
-            
+
         resAnim.frame_scale2 = 1.0 / finalScale
-        
+
         finalScale = finalScale * scale_factor
-            
+
 
     frame_size = (applyScale(frame_width, finalScale),
                   applyScale(frame_height, finalScale))
-    
+
     resAnim.frame_size2 = (applyScale(frame_width, scale_factor),
-                          applyScale(frame_height, scale_factor))            
+                           applyScale(frame_height, scale_factor))            
 
     resAnim.columns = columns
     resAnim.rows = rows
-    
-    
+
+
     for row in range(rows):
         for col in range(columns):
-            rect = (int(col * frame_width), int(row * frame_height), int((col + 1) * frame_width), int((row + 1)* frame_height), )
+
+            rect = (int(col * frame_width),
+                    int(row * frame_height),
+                    int((col + 1) * frame_width), 
+                    int((row + 1) * frame_height))
 
 
             frame_image = image.crop(rect)      
@@ -328,7 +393,7 @@ def processRS(context, walker):
                 im.paste(frame_image, (0, 0, frame_image.size[0], frame_image.size[1]))
                 frame_image = im.resize((ax, ay), Image.ANTIALIAS)
                 frame_image = frame_image.crop((0, 0, frame_size[0], frame_size[1]))                        
-                
+
             resize_filter = Image.ANTIALIAS
             if upscale:
                 resize_filter = Image.BICUBIC
@@ -349,9 +414,16 @@ def processRS(context, walker):
             trim = True
             if image_el.getAttribute("trim") == "0":
                 trim = False
+
+
+            adata = None
+
             if image.mode == "RGBA" and trim:
                 r,g,b,a = frame_image.split()
                 a = a.point(lambda p: p - 2)
+
+                adata = makeAlpha(a)
+
                 frame_bbox = a.getbbox()
             else:
                 frame_bbox = frame_image.getbbox()
@@ -365,12 +437,14 @@ def processRS(context, walker):
 
             frame_image = frame_image.crop(frame_bbox)
 
-            fr = frame(frame_image, frame_bbox, image_el, resAnim)
+            fr = frame(frame_image, frame_bbox, image_el, resAnim, adata)
             if border:
                 fr.border_left = fr.border_right = fr.border_top = fr.border_bottom = border
-            
+
+
+
             resAnim.frames.append(fr)
-            
+
     return resAnim                    
 
 
@@ -388,23 +462,28 @@ class atlas_Processor(process.Process):
 
         anims = []
         frames = []
-        
+
+
+        import struct
+
+        alphaData = ""        
+
         while True:
             next = walker.next()
             if 0:
                 import xml_processor
                 next = xml_processor.XmlWalker()
-                
+
             if not next:
                 break
-            
+
             anim = processRS(context, next)
-            
+
             if anim:
                 anims.append(anim)
                 frames.extend(anim.frames)            
-            
-        
+
+
         #sort frames by size
         #frames = sorted(frames, key = lambda fr: -fr.image.size[1])
         #frames = sorted(frames, key = lambda fr: -fr.image.size[0])
@@ -430,15 +509,15 @@ class atlas_Processor(process.Process):
                 return p
             sz = frame.image.size
             return align_pixel(sz[0] + frame.border_left + frame.border_right), align_pixel(sz[1] + frame.border_top + frame.border_bottom)
-        
+
         def get_original_frame_size(frame):
             sz = frame.image.size
             return sz
-        
-        
+
+
         def set_node(frame, node):
             frame.node = node
-        
+
         st = settings()
         st.npot = context._npot
         st.get_size = get_aligned_frame_size
@@ -446,18 +525,18 @@ class atlas_Processor(process.Process):
         st.max_w = context.args.max_width
         st.max_h = context.args.max_height
         st.square = context.compression == "pvrtc"
-        
+
         if len(frames) == 1:
             st.get_size = get_original_frame_size
             st.padding = 0
-        
+
         pck(st, frames) 
 
         #print "done"
-        
+
         for atlas_id, atl in enumerate(st.atlasses):
             image = Image.new("RGBA", (atl.w, atl.h))
-            
+
             for node in atl.nodes:
                 fr = node.data
                 x = node.rect.x + fr.border_left
@@ -478,12 +557,12 @@ class atlas_Processor(process.Process):
             def compress(src, dest, fmt):
                 cmd = context.helper.path_pvrtextool + " -i %s -f %s,UBN,lRGB -o %s" % (src, fmt, dest)
                 cmd += " -l" #alpha bleed
-                                
+
                 if context.args.quality == "best":
                     cmd += " -q pvrtcbest"
                 else:
                     cmd += " -q pvrtcfast"
-                    
+
                 if context.args.dither:
                     cmd += " -dither"                            
                 cmd += " -shh" #silent
@@ -497,7 +576,7 @@ class atlas_Processor(process.Process):
                 base_alpha_name = base_name + "_alpha"
                 alpha_path = context.get_inner_dest(base_alpha_name + ".png")
                 alpha.save(alpha_path)
-                
+
                 image_atlas_el.setAttribute("alpha", base_alpha_name + ".png")
 
                 path_base = base_name + ".png"
@@ -529,7 +608,7 @@ class atlas_Processor(process.Process):
                     path_base = base_name + ".tga"
                 else:
                     path_base = base_name + ".png"
-                    
+
                 path = context.get_inner_dest(path_base)
                 image_atlas_el.setAttribute("file", path_base)
                 image.save(path)            
@@ -540,15 +619,15 @@ class atlas_Processor(process.Process):
                     compress(path, context.get_inner_dest(base_name + ".pvr"), "PVRTC1_4")
                     image_atlas_el.setAttribute("file", base_name + ".pvr")
                     os.remove(path)
-                    
+
                 if context.compression == "pvrtc2":
                     ox_fmt = "PVRTC2_4RGBA"
 
                     compress(path, context.get_inner_dest(base_name + ".pvr"), "PVRTC2_4")
                     image_atlas_el.setAttribute("file", base_name + ".pvr")
                     os.remove(path)                
-                    
-                    
+
+
 
 
             image_atlas_el.setAttribute("format", ox_fmt)
@@ -557,16 +636,22 @@ class atlas_Processor(process.Process):
             image_atlas_el.setAttribute("h", str(image.size[1]))  
 
 
-        for anim in anims:                
+        alpha = b''
+        
+
+        for anim in anims:           
+
             if 0:
                 anim = ResAnim()
-
+                
             image_frames_el = anim.walker.root_meta
 
-            
             image_frames_el.setAttribute("fs", "%d,%d,%d,%d,%f" % (anim.columns, anim.rows, 
                                                                    anim.frame_size2[0], anim.frame_size2[1], 
-                                                                   anim.frame_scale2))        
+                                                                   anim.frame_scale2)) 
+            adata = anim.frames[0].adata
+            if adata:
+                image_frames_el.setAttribute("ht", "%d,%d,%d,%d" % (len(alpha), len(adata.data), adata.w, adata.h))
 
             if context.debug:
                 image_frames_el.setAttribute("debug_image", anim.name)
@@ -578,6 +663,19 @@ class atlas_Processor(process.Process):
                                                   fr.node.rect.x + fr.border_left, fr.node.rect.y + fr.border_top, 
                                                   fr.bbox[0], fr.bbox[1],
                                                   fr.bbox[2] - fr.bbox[0], fr.bbox[3] - fr.bbox[1])
+                if fr.adata:
+                    alpha += fr.adata.data
 
             text = image_frames_el.ownerDocument.createTextNode(data)
             image_frames_el.appendChild(text)
+        
+        if alpha:
+            doc = walker.root_meta.ownerDocument
+    
+            alpha_el = doc.createElement("ht")            
+            adata_str = base64.b64encode(alpha)
+            text = doc.createTextNode(adata_str.decode("utf-8"))
+            alpha_el.setAttribute("len", str(len(adata_str)))
+            alpha_el.appendChild(text)        
+    
+            walker.root_meta.appendChild(alpha_el)

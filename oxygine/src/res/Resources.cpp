@@ -240,7 +240,7 @@ namespace oxygine
         if (!resources_meta.empty())
         {
             int metaVersion = resources_meta.attribute("version").as_int(0);
-            OX_ASSERT(metaVersion == 1  && "Please rebuild xmls with latest 'oxyresbuild' tool");
+            OX_ASSERT(metaVersion <= 2  && "Please rebuild xmls with latest 'oxyresbuild' tool");
         }
 
 
@@ -251,7 +251,7 @@ namespace oxygine
         FS_LOG("loading xml resources");
 
         std::string xmlFolder = destHead;
-        XmlWalker walker(&xmlFolder, "", 1.0f, load_completely, resources, resources_meta);
+        XmlWalker walker(&xmlFolder, "", 1.0f, load_completely, false, resources, resources_meta);
 
         while (true)
         {

@@ -46,6 +46,7 @@ files
 	(../src/utils)
 	"*.h"
 	"*.cpp"	
+	"*.c"	
 	
 	[src/math]
 	(../src/math)

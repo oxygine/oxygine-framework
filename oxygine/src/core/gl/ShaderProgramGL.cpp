@@ -3,7 +3,7 @@
 #include "oxgl.h"
 
 #ifndef __S3E__
-	#include "SDL.h"
+#include "SDL.h"
 #endif
 
 namespace oxygine
@@ -71,7 +71,7 @@ namespace oxygine
 
 
 #ifndef __S3E__
-#	ifndef EMSCRIPTEN
+#   ifndef EMSCRIPTEN
         int profile = 0;
         SDL_GL_GetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, &profile);
 
@@ -81,21 +81,21 @@ namespace oxygine
         else
         {
 
-			log::messageln("not gles version");
+            log::messageln("not gles version");
 
-			static const char nonGLES[] =
-				"#define lowp\n"
-				"#define mediump\n"
-				"#define highp\n";
+            static const char nonGLES[] =
+                "#define lowp\n"
+                "#define mediump\n"
+                "#define highp\n";
 
-			*ptr = nonGLES;
-			ptr++;
+            *ptr = nonGLES;
+            ptr++;
 
         }
 
-#	else
+#   else
         *ptr = "precision float mediump;";
-#	endif
+#   endif
 #endif
 
 

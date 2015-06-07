@@ -92,7 +92,7 @@ namespace oxygine
                 break;
         }
 
-        Vector2 newSize = _originalFrame.getFrameSize() * _progress;
+        Vector2 newSize = _originalFrame.getSize() * _progress;
         _frame.init(_frame.getResAnim(), _frame.getDiffuse(), newSrc, newDest, newSize);
         //_vstyle._material.srcRect = newSrc;
     }
@@ -338,7 +338,7 @@ namespace oxygine
 
     RectF ProgressBar::getDestRect() const
     {
-        return calcDestRectF(_frame.getDestRect(), _frame.getFrameSize());
+        return calcDestRectF(_frame.getDestRect(), _frame.getSize());
     }
 
     void ProgressBar::setProgress(float f)

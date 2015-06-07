@@ -5,15 +5,10 @@
 #include "Resource.h"
 #include "ResAnim.h"
 
-namespace pugi
-{
-    class xml_node;
-}
-
 namespace oxygine
 {
-
     class Resources;
+    class XmlWalker;
     class CreateResourceContext;
     DECLARE_SMART(NativeTexture, spNativeTexture);
 
@@ -44,16 +39,16 @@ namespace oxygine
         void _load(LoadResourcesContext*);
         void _unload();
 
-        void loadAtlas(CreateResourceContext& context);
+        //void loadAtlas(CreateResourceContext& context);
+        ResAnim* createEmpty(const XmlWalker& walker, CreateResourceContext& context);
         static void init_resAnim(ResAnim* rs, const std::string& file, pugi::xml_node node);
 
-    private:
-        //void next_atlas(int w, int h, TextureFormat tf, atlas_data &ad, const char *name);
-        //void apply_atlas(atlas_data &ad);
-
+    protected:
         //settings from xml
-        bool _linearFilter;
-        bool _clamp2edge;
+        //bool _linearFilter;
+        //bool _clamp2edge;
+
+        std::vector<unsigned char> _hitTestBuffer;
 
         typedef std::vector<atlas> atlasses;
         atlasses _atlasses;
@@ -61,4 +56,22 @@ namespace oxygine
 
     typedef void(*load_texture_hook)(const std::string& file, spNativeTexture nt, LoadResourcesContext* load_context);
     void set_load_texture_hook(load_texture_hook);
+
+
+    class ResAtlasGeneric : public ResAtlas
+    {
+    public:
+
+        //protected:
+        void loadAtlas(CreateResourceContext& context);
+    };
+
+    class ResAtlasPrebuilt : public ResAtlas
+    {
+    public:
+
+        ResAtlasPrebuilt(CreateResourceContext& context);
+
+    protected:
+    };
 }

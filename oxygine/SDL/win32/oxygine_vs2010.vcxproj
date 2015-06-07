@@ -173,6 +173,7 @@
     <ClCompile Include="..\..\src\Tween.cpp" />
     <ClCompile Include="..\..\src\TweenAnim.cpp" />
     <ClCompile Include="..\..\src\TweenQueue.cpp" />
+    <ClCompile Include="..\..\src\utils\cdecode.c" />
     <ClCompile Include="..\..\src\utils\stringUtils.cpp" />
     <ClCompile Include="..\..\src\math\AffineTransform.cpp" />
     <ClCompile Include="..\..\src\pugixml\pugixml.cpp" />
@@ -286,6 +287,7 @@
     <ClInclude Include="..\..\src\Tweener.h" />
     <ClInclude Include="..\..\src\TweenQueue.h" />
     <ClInclude Include="..\..\src\UpdateState.h" />
+    <ClInclude Include="..\..\src\utils\cdecode.h" />
     <ClInclude Include="..\..\src\utils\stringUtils.h" />
     <ClInclude Include="..\..\src\closure\closure.h" />
     <ClInclude Include="..\..\src\closure\closure_impl.h" />

@@ -2,7 +2,43 @@ import os
 import sys
 import shutil
 import zipfile
+import time
 
+
+def recursive_zip(zipf, directory, folder = ""):
+    for item in os.listdir(directory):
+        if os.path.isfile(os.path.join(directory, item)):
+            src = os.path.join(directory, item)
+            dest = folder + os.sep + item
+            ext = os.path.splitext(dest)[1]
+            
+            st = os.stat(src)
+            mtime = time.localtime(st.st_mtime)
+            date_time = mtime[0:6]            
+
+            info = zipfile.ZipInfo(dest, date_time)
+            bts = open(src, "rb").read()
+            if ext == ".sh" or item in ("PVRTexToolCLI", "oxyresbuild.py", "gen_template.py", "png_strip.py"):
+                info.external_attr = 0755 << 16L #a+x
+            zipf.writestr(info, bts, zipfile.ZIP_DEFLATED)
+            
+            
+        elif os.path.isdir(os.path.join(directory, item)):
+            recursive_zip(zipf, os.path.join(directory, item), folder + os.sep + item)
+            
+
+
+def buildzip(name):
+    print("building zip: " + name)
+    destzip = "../../" + name
+    with zipfile.ZipFile(destzip, "w", compression = zipfile.ZIP_DEFLATED) as zp:
+        recursive_zip(zp, "../../temp")
+        
+    shutil.copyfile(destzip, "../../../gdrive/oxygine/" + name)
+    print("zip created: " + name)
+    
+    
+    
 temp = "../../temp"
 SDL_dest = temp + "/SDL"
 OXYGINE_dest = temp + "/oxygine-framework/"
@@ -14,6 +50,11 @@ shutil.rmtree(temp, True)
 print("hg archive...")
 cmd = "hg archive " + OXYGINE_dest
 os.system(cmd)
+
+#os.chdir(dest)
+
+buildzip("oxygine-framework.zip")
+
 
 cmd = "hg archive -R ../../../SDL %s" % (SDL_dest, )
 os.system(cmd)
@@ -43,7 +84,6 @@ def enum(folder, cb):
         path = folder + item 
         if os.path.isdir(path):
             if item == "data":
-                print(path)
                 cb(path)
             enum(path + "/", cb)
             
@@ -76,21 +116,6 @@ libs = ("libSDL2main.a", "libSDL2.dll", "libSDL2.dll.a")
 for lib in libs:
     shutil.copy("../../libs/" + lib, OXYGINE_dest + "/libs/" + lib)    
 
-os.chdir(OXYGINE_dest)
-
-
-
-def recursive_zip(zipf, directory, folder = ""):
-    for item in os.listdir(directory):
-        if os.path.isfile(os.path.join(directory, item)):
-            zipf.write(os.path.join(directory, item), folder + os.sep + item)
-        elif os.path.isdir(os.path.join(directory, item)):
-            recursive_zip(zipf, os.path.join(directory, item), folder + os.sep + item)
-
-destzip = "../../oxygine-framework-with-sdl.zip"
-with zipfile.ZipFile(destzip, "w", compression = zipfile.ZIP_DEFLATED) as zp:
-    recursive_zip(zp, "../")
-    
-shutil.copyfile(destzip, "../../../gdrive/oxygine/oxygine-framework-with-sdl.zip")
+buildzip("oxygine-framework-with-sdl.zip")
 
 print("done.")

@@ -78,6 +78,8 @@
 		92CE26631A589401003901D6 /* ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 92CE26611A589401003901D6 /* ios.mm */; };
 		92DC0A251A2F0ED900D2B55C /* greenlet.c in Sources */ = {isa = PBXBuildFile; fileRef = 92DC0A231A2F0ED900D2B55C /* greenlet.c */; };
 		92DC0A261A2F0ED900D2B55C /* greenlet.h in Headers */ = {isa = PBXBuildFile; fileRef = 92DC0A241A2F0ED900D2B55C /* greenlet.h */; };
+		92E0C9A01B2491C200F0DB21 /* cdecode.c in Sources */ = {isa = PBXBuildFile; fileRef = 92E0C99E1B2491C200F0DB21 /* cdecode.c */; };
+		92E0C9A11B2491C200F0DB21 /* cdecode.h in Headers */ = {isa = PBXBuildFile; fileRef = 92E0C99F1B2491C200F0DB21 /* cdecode.h */; };
 		C38704A617C0C71700015CA8 /* VideoDriverGLES20.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C38704A417C0C71700015CA8 /* VideoDriverGLES20.cpp */; };
 		C38704A717C0C71700015CA8 /* VideoDriverGLES20.h in Headers */ = {isa = PBXBuildFile; fileRef = C38704A517C0C71700015CA8 /* VideoDriverGLES20.h */; };
 		C38EC22C1709600E00568283 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C38EC22B1709600E00568283 /* OpenGLES.framework */; };
@@ -301,6 +303,8 @@
 		92CE26611A589401003901D6 /* ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ios.mm; path = ../../../src/core/ios/ios.mm; sourceTree = "<group>"; };
 		92DC0A231A2F0ED900D2B55C /* greenlet.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = greenlet.c; path = ../../../greenlets/src/greenlet.c; sourceTree = "<group>"; };
 		92DC0A241A2F0ED900D2B55C /* greenlet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = greenlet.h; path = ../../../greenlets/src/greenlet.h; sourceTree = "<group>"; };
+		92E0C99E1B2491C200F0DB21 /* cdecode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cdecode.c; sourceTree = "<group>"; };
+		92E0C99F1B2491C200F0DB21 /* cdecode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cdecode.h; sourceTree = "<group>"; };
 		C38704A417C0C71700015CA8 /* VideoDriverGLES20.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VideoDriverGLES20.cpp; path = gl/VideoDriverGLES20.cpp; sourceTree = "<group>"; };
 		C38704A517C0C71700015CA8 /* VideoDriverGLES20.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VideoDriverGLES20.h; path = gl/VideoDriverGLES20.h; sourceTree = "<group>"; };
 		C38EC22B1709600E00568283 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -431,7 +435,6 @@
 		C3E86FDD16EBC8EB00052915 /* TextStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextStyle.h; path = ../../../src/TextStyle.h; sourceTree = "<group>"; };
 		C3E86FEA16EBC8EB00052915 /* Tweener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tweener.h; path = ../../../src/Tweener.h; sourceTree = "<group>"; };
 		C3E86FEB16EBC8EB00052915 /* UpdateState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UpdateState.h; path = ../../../src/UpdateState.h; sourceTree = "<group>"; };
-		C3E86FED16EBC8EB00052915 /* .oxbuild */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .oxbuild; sourceTree = "<group>"; };
 		C3E86FEE16EBC8EB00052915 /* AtlasTool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AtlasTool.cpp; sourceTree = "<group>"; };
 		C3E86FEF16EBC8EB00052915 /* AtlasTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtlasTool.h; sourceTree = "<group>"; };
 		C3E86FF016EBC8EB00052915 /* ImageUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageUtils.cpp; sourceTree = "<group>"; };
@@ -787,7 +790,8 @@
 		C3E86FEC16EBC8EB00052915 /* utils */ = {
 			isa = PBXGroup;
 			children = (
-				C3E86FED16EBC8EB00052915 /* .oxbuild */,
+				92E0C99E1B2491C200F0DB21 /* cdecode.c */,
+				92E0C99F1B2491C200F0DB21 /* cdecode.h */,
 				C3E86FEE16EBC8EB00052915 /* AtlasTool.cpp */,
 				C3E86FEF16EBC8EB00052915 /* AtlasTool.h */,
 				C3E86FF016EBC8EB00052915 /* ImageUtils.cpp */,
@@ -911,6 +915,7 @@
 				04AEC314182BD98D006413A9 /* UberShaderProgram.h in Headers */,
 				C3E8705716EBC8EB00052915 /* pugiconfig.hpp in Headers */,
 				C3E8705916EBC8EB00052915 /* pugixml.hpp in Headers */,
+				92E0C9A11B2491C200F0DB21 /* cdecode.h in Headers */,
 				C3E8705A16EBC8EB00052915 /* RenderState.h in Headers */,
 				C3E8705B16EBC8EB00052915 /* CreateResourceContext.h in Headers */,
 				C3E8705D16EBC8EB00052915 /* ResAnim.h in Headers */,
@@ -1099,6 +1104,7 @@
 				9240B4091ADFB856005F9C5B /* TweenAnim.cpp in Sources */,
 				C38EC2711709649300568283 /* TexturesInspector.cpp in Sources */,
 				C38EC2731709649300568283 /* TreeInspector.cpp in Sources */,
+				92E0C9A01B2491C200F0DB21 /* cdecode.c in Sources */,
 				0467086E192796E500D71824 /* Serialize.cpp in Sources */,
 				C38EC2751709649300568283 /* TreeInspectorLine.cpp in Sources */,
 				C38EC2771709649300568283 /* TreeInspectorPage.cpp in Sources */,

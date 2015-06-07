@@ -40,6 +40,8 @@ namespace oxygine
         void                    setRow(int row, int column = -1);
         void                    setColumn(int column, int row = -1);
 
+        bool                    isOn(const Vector2& localPosition);
+
         void serialize(serializedata* data);
         void deserialize(const deserializedata* data);
 

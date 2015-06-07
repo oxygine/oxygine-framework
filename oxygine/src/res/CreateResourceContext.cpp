@@ -4,16 +4,25 @@
 
 namespace oxygine
 {
-    XmlWalker::XmlWalker(const std::string* xmlFolder, const std::string& path, float scaleFactor, bool load, pugi::xml_node xml, pugi::xml_node meta) : _rootMeta(meta),
+    XmlWalker::XmlWalker(
+        const std::string* xmlFolder,
+        const std::string& path,
+        float scaleFactor,
+        bool load,
+        bool alpha,
+        pugi::xml_node xml, pugi::xml_node meta) :
+
+        _rootMeta(meta),
         _root(xml),
         _notStarted(true),
         _notStartedMeta(true),
         _scaleFactor(scaleFactor),
         _load(load),
+        _alphaHitTest(alpha),
         _xmlFolder(xmlFolder),
         _path(path)
     {
-
+        //_alphaTracking = true;
     }
 
     std::string XmlWalker::connectPath(const char* currentPath, const char* str)
@@ -77,7 +86,7 @@ namespace oxygine
             break;
         }
 
-        return XmlWalker(_xmlFolder, _path, _scaleFactor, _load, _last, _lastMeta);
+        return XmlWalker(_xmlFolder, _path, _scaleFactor, _load, _alphaHitTest, _last, _lastMeta);
     }
 
     void XmlWalker::_checkSetAttributes(pugi::xml_node node)
@@ -98,6 +107,10 @@ namespace oxygine
             else if (!strcmp(attr.name(), "scale_factor"))
             {
                 _scaleFactor = attr.as_float(1.0f);
+            }
+            else if (!strcmp(attr.name(), "hit_test"))
+            {
+                _alphaHitTest = attr.as_bool(false);
             }
 
             attr = attr.next_attribute();

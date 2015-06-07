@@ -1,8 +1,14 @@
 #pragma once
 #include "oxygine_include.h"
 #include <vector>
-#include "pthread.h"
 #include <functional>
+
+#if defined(_WIN32) && !defined(__MINGW32__)
+typedef struct pthread_mutex_t_* pthread_mutex_t;
+typedef struct pthread_cond_t_* pthread_cond_t;
+#else
+#   include "pthread.h"
+#endif
 
 namespace oxygine
 {
@@ -42,6 +48,12 @@ namespace oxygine
             bool    _replied;
         };
 
+        struct peekMessage: public message
+        {
+            peekMessage() : end(false) {}
+            bool end;
+        };
+
 
         ThreadMessages();
         ~ThreadMessages();
@@ -51,12 +63,14 @@ namespace oxygine
 
         void wait();
         void get(message& ev);
-        bool peek(message& ev, bool del);
+        bool peek(peekMessage& ev, bool del);
         void clear();
 
         void* send(int msgid, void* arg1, void* arg2);
         void post(int msgid, void* arg1, void* arg2);
         void postCallback(int msgid, void* arg1, void* arg2, callback cb, void* cbData);
+        void removeCallback(int msgid, callback cb, void* cbData);
+
 #ifndef __S3E__
         void postCallback(const std::function<void()>&);
 #endif

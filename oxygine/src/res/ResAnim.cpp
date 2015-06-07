@@ -6,7 +6,7 @@
 namespace oxygine
 {
     static AnimationFrame emptyFrame;
-    ResAnim::ResAnim(Resource* atlas): _columns(1), _atlas(atlas), _scaleFactor(1.0f)
+    ResAnim::ResAnim(Resource* atlas) : _columns(1), _atlas(atlas), _scaleFactor(1.0f), _appliedScale(1.0f)
     {
     }
 
@@ -76,11 +76,12 @@ namespace oxygine
         init(texture, original->getSize(), columns, rows, scaleFactor);
     }
 
-    void ResAnim::init(animationFrames& frames, int columns, float scaleFactor)
+    void ResAnim::init(animationFrames& frames, int columns, float scaleFactor, float appliedScale)
     {
         _columns = columns;
         _frames.swap(frames);
         _scaleFactor = scaleFactor;
+        _appliedScale = appliedScale;
     }
 
     void ResAnim::_load(LoadResourcesContext* c)

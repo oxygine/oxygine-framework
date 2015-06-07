@@ -21,7 +21,11 @@ public:
 
         //setup it:
         //set button.png image. Resource 'button' defined in 'res.xml'
-        button->setResAnim(gameResources.getResAnim("button"));
+        button->setResAnim(gameResources.getResAnim("anim"));
+        //button->setScale(3);
+        //button->setRotation(1);
+        button->setAnchor(Vector2(0.5, 0.5f));
+        //button->addTween(TweenAnim(gameResources.getResAnim("anim")), 5000, -1);
 
         //centered button at screen
         Vector2 pos = getStage()->getSize() / 2 - button->getSize() / 2;
@@ -38,6 +42,17 @@ public:
             log::messageln("button clicked");
         });
 
+
+        button->addEventListener(TouchEvent::OVER, [ = ](Event * e)->void
+        {
+            button->setColor(Color::Red);
+        });
+
+        button->addEventListener(TouchEvent::OUT, [ = ](Event * e)->void
+        {
+            button->setColor(Color::White);
+        });
+
 #endif
 
         //attach button as child to current actor
@@ -51,7 +66,7 @@ public:
         //create TextField Actor
         spTextField text = new TextField();
         //attach it as child to button
-        text->attachTo(button);
+        //text->attachTo(button);
         //centered in button
         text->setPosition(button->getSize() / 2);
 

@@ -2,7 +2,7 @@
 #include "core/oxygine.h"
 #include "core/ThreadMessages.h"
 #include "SDL.h"
-
+#include "pthread.h"
 
 namespace oxygine
 {
@@ -81,7 +81,7 @@ namespace oxygine
                 static int i = 0;
                 //log::messageln("upd---------%d - %d", getTimeMS(), ++i);
 
-                ThreadMessages::message tmsg;
+                ThreadMessages::peekMessage tmsg;
                 if (_messages.peek(tmsg, true))
                 {
                     curl_multi_add_handle(multi_handle, (CURL*)tmsg.arg1);

@@ -228,7 +228,7 @@ class XmlProcessor:
 
         self._meta_doc = minidom.Document()
         meta_element = self._meta_doc.createElement("resources")
-        meta_element.setAttribute("version", "1")
+        meta_element.setAttribute("version", "2")
         self._meta_doc.appendChild(meta_element)
         
         totalAtlasses = 0
