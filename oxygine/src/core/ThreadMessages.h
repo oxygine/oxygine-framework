@@ -50,8 +50,8 @@ namespace oxygine
 
         struct peekMessage: public message
         {
-            peekMessage() : end(false) {}
-            bool end;
+            peekMessage() : num(-1) {}
+            int num;
         };
 
 

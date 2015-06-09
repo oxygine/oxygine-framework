@@ -589,7 +589,7 @@ namespace oxygine
                     KeyEvent ev(KeyEvent::KEY_UP, &event.key);
                     stage->dispatchEvent(&ev);
                 } break;
-#if SDL_VIDEO_OPENGL
+#if SDL_VIDEO_OPENGL || EMSCRIPTEN
                 case SDL_MOUSEMOTION:
                     input->sendPointerMotionEvent(stage, (float)event.motion.x, (float)event.motion.y, 1.0f, &input->_pointerMouse);
                     break;

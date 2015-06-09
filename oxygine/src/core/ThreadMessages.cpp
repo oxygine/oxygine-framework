@@ -120,16 +120,18 @@ namespace oxygine
 
     bool ThreadMessages::peek(peekMessage& ev, bool del)
     {
-        if (ev.end)
+        if (!ev.num)
             return false;
 
         bool has = false;
 
         MutexPthreadLock lock(_mutex);
+        if (ev.num == -1)
+            ev.num = _events.size();
+
         _replyLast(0);
 
-
-        if (!_events.empty())
+        if (!_events.empty() && ev.num > 0)
         {
             static_cast<message&>(ev) = _events.front();
             if (del)
@@ -137,8 +139,7 @@ namespace oxygine
             has = true;
             _last = ev;
 
-            if (_events.empty())
-                ev.end = true;
+            ev.num--;
         }
 
         return has;
