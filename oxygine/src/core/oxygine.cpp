@@ -89,6 +89,8 @@ namespace oxygine
     static ThreadMessages _uiMessages;
     Mutex mutexAlloc;
 
+    bool _useTouchAPI = false;
+
 #if EMSCRIPTEN
     static Point _displaySize(0, 0);
     static void* _window = 0;
@@ -272,6 +274,7 @@ namespace oxygine
 
             s3eDeviceRegister(S3E_DEVICE_UNPAUSE, applicationUnPause, 0);
             s3eDeviceRegister(S3E_DEVICE_PAUSE, applicationPause, 0);
+
 #elif EMSCRIPTEN
             log::messageln("EMSCRIPTEN build");
 
@@ -291,6 +294,18 @@ namespace oxygine
             _displaySize = Point(desc.w, desc.h);
 
             emscripten_SDL_SetEventHandler(SDL_eventsHandler, 0);
+
+            int v = EM_ASM_INT(
+            {
+                var p = navigator.platform;
+                if (p === 'iPad' || p === 'iPhone' || p === 'iPod')
+                    return 1;
+                return 0;
+            }, 0);
+
+            if (v)
+                _useTouchAPI = true;
+
 #elif OXYGINE_SDL
 
             log::messageln("SDL build");
@@ -311,11 +326,8 @@ namespace oxygine
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 
-#ifndef EMSCRIPTEN
             if (desc.force_gles)
                 SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
-#endif
-
 
             SDL_GL_SetAttribute(SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 1);
 
@@ -357,10 +369,13 @@ namespace oxygine
 
             SDL_GL_SetSwapInterval(desc.vsync ? 1 : 0);
 
+            if (SDL_GetNumTouchDevices() > 0)
+                _useTouchAPI = true;
 
             //SDL_SetEventFilter(eventsFilter, 0);
 
 #endif
+
             file::init(desc.companyName, desc.appName);
             init2();
         }
@@ -589,50 +604,57 @@ namespace oxygine
                     KeyEvent ev(KeyEvent::KEY_UP, &event.key);
                     stage->dispatchEvent(&ev);
                 } break;
-#if SDL_VIDEO_OPENGL || EMSCRIPTEN
+
                 case SDL_MOUSEMOTION:
-                    input->sendPointerMotionEvent(stage, (float)event.motion.x, (float)event.motion.y, 1.0f, &input->_pointerMouse);
+                    if (!_useTouchAPI)
+                        input->sendPointerMotionEvent(stage, (float)event.motion.x, (float)event.motion.y, 1.0f, &input->_pointerMouse);
                     break;
                 case SDL_MOUSEBUTTONDOWN:
                 case SDL_MOUSEBUTTONUP:
                 {
-                    MouseButton b = MouseButton_Left;
-                    switch (event.button.button)
+                    if (!_useTouchAPI)
                     {
-                        case 1: b = MouseButton_Left; break;
-                        case 2: b = MouseButton_Middle; break;
-                        case 3: b = MouseButton_Right; break;
-                    }
+                        MouseButton b = MouseButton_Left;
+                        switch (event.button.button)
+                        {
+                            case 1: b = MouseButton_Left; break;
+                            case 2: b = MouseButton_Middle; break;
+                            case 3: b = MouseButton_Right; break;
+                        }
 
-                    input->sendPointerButtonEvent(stage, b, (float)event.button.x, (float)event.button.y, 1.0f,
-                                                  event.type == SDL_MOUSEBUTTONDOWN ? TouchEvent::TOUCH_DOWN : TouchEvent::TOUCH_UP, &input->_pointerMouse);
+                        input->sendPointerButtonEvent(stage, b, (float)event.button.x, (float)event.button.y, 1.0f,
+                                                      event.type == SDL_MOUSEBUTTONDOWN ? TouchEvent::TOUCH_DOWN : TouchEvent::TOUCH_UP, &input->_pointerMouse);
+                    }
                 }
                 break;
-#else
-
                 case SDL_FINGERMOTION:
                 {
-                    //log::messageln("SDL_FINGERMOTION");
-                    Vector2 pos = convertTouch(event);
-                    input->sendPointerMotionEvent(stage,
-                                                  pos.x, pos.y, event.tfinger.pressure,
-                                                  input->getTouchByID((int)event.tfinger.fingerId));
+                    if (_useTouchAPI)
+                    {
+                        //log::messageln("SDL_FINGERMOTION");
+                        Vector2 pos = convertTouch(event);
+                        input->sendPointerMotionEvent(stage,
+                                                      pos.x, pos.y, event.tfinger.pressure,
+                                                      input->getTouchByID((int)event.tfinger.fingerId));
+                    }
                 }
 
                 break;
                 case SDL_FINGERDOWN:
                 case SDL_FINGERUP:
                 {
-                    //log::messageln("SDL_FINGER");
-                    Vector2 pos = convertTouch(event);
-                    input->sendPointerButtonEvent(stage,
-                                                  MouseButton_Touch,
-                                                  pos.x, pos.y, event.tfinger.pressure,
-                                                  event.type == SDL_FINGERDOWN ? TouchEvent::TOUCH_DOWN : TouchEvent::TOUCH_UP,
-                                                  input->getTouchByID((int)event.tfinger.fingerId));
+                    if (_useTouchAPI)
+                    {
+                        //log::messageln("SDL_FINGER");
+                        Vector2 pos = convertTouch(event);
+                        input->sendPointerButtonEvent(stage,
+                                                      MouseButton_Touch,
+                                                      pos.x, pos.y, event.tfinger.pressure,
+                                                      event.type == SDL_FINGERDOWN ? TouchEvent::TOUCH_DOWN : TouchEvent::TOUCH_UP,
+                                                      input->getTouchByID((int)event.tfinger.fingerId));
+                    }
                 }
                 break;
-#endif
             }
 
         }

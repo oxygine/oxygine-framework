@@ -9,6 +9,7 @@
 #   include "core/android/jniUtils.h"
 #elif EMSCRIPTEN
 #include <sys/time.h>
+#include "SDL_timer.h"
 #elif __APPLE__
 #   include <CoreFoundation/CFDate.h>
 #   include <sys/time.h>
@@ -147,23 +148,10 @@ namespace oxygine
     {
 #if __S3E__
         return (timeMS)s3eTimerGetUST();
+#elif EMSCRIPTEN
+        return SDL_GetTicks();
 #elif OXYGINE_SDL
         return SDL_GetTicks();
-#elif EMSCRIPTEN
-        static bool init = false;
-        static struct timespec start_ts;
-        if (!init)
-        {
-            init = true;
-            clock_gettime(CLOCK_MONOTONIC, &start_ts);
-        }
-
-        struct timespec now;
-        clock_gettime(CLOCK_MONOTONIC, &now);
-        timeMS ticks = (now.tv_sec - start_ts.tv_sec) * 1000 + (now.tv_nsec -
-                       start_ts.tv_nsec) / 1000000;
-
-        return ticks;
 #else
 #pragma error "getTimeMS not implemented"
 #endif
