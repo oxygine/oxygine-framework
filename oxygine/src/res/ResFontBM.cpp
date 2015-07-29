@@ -330,7 +330,7 @@ namespace oxygine
         }
     }
 
-    Font* ResFontBM::getFont(const char* name, int size) const
+    const Font* ResFontBM::getFont(const char* name, int size) const
     {
         return _font;
     }

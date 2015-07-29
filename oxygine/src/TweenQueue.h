@@ -7,7 +7,14 @@ namespace oxygine
     class TweenQueue : public Tween
     {
     public:
+
+        enum { EVENT_LOOP_BEGIN = sysEventID('T', 'L', 'B'), };
+        enum { EVENT_LOOP_END = sysEventID('T', 'L', 'E'), };
+
         TweenQueue();
+
+        /**short syntax for easy tween queue creation*/
+        static spTweenQueue create(spTween t1);
 
         /**short syntax for easy tween queue creation*/
         static spTweenQueue create(spTween t1, spTween t2);
@@ -20,6 +27,12 @@ namespace oxygine
 
         /**short syntax for easy tween queue creation*/
         static spTweenQueue create(spTween t1, spTween t2, spTween t3, spTween t4, spTween t5);
+
+        /**short syntax for easy tween queue creation*/
+        static spTweenQueue create(spTween t1, spTween t2, spTween t3, spTween t4, spTween t5, spTween t6);
+
+        /**short syntax for easy tween queue creation*/
+        static spTweenQueue create(spTween t1, spTween t2, spTween t3, spTween t4, spTween t5, spTween t6, spTween t7);
 
         /*Add new new tween to Queue, returns added tween*/
         spTween add(spTween t);

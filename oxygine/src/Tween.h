@@ -33,6 +33,7 @@ namespace oxygine
     };
 
     class UpdateState;
+    class TweenOptions;
 
 
     DECLARE_SMART(Tween, spTween);
@@ -98,11 +99,13 @@ namespace oxygine
         ~Tween();
 
         void init(timeMS duration, int loops = 1, bool twoSides = false, timeMS delay = 0, EASE ease = Tween::ease_linear);//todo twoSide find better name
+        void init2(const TweenOptions& opt);
         /**if you reset internal Tween state it could be reused and added to actor again */
         void reset();
 
         int         getLoops() const { return _loops; }
         timeMS      getDuration() const { return _duration; }
+        timeMS      getElapsed() const { return _elapsed; }
         EASE        getEase() const { return _ease; }
         timeMS      getDelay() const { return _delay; }
         Actor*      getClient() const { return _client; }
@@ -214,6 +217,14 @@ namespace oxygine
     {
         TweenT<GS>* p = new TweenT<GS>(gs);
         p->init(duration, loops, twoSides, delay, ease);
+        return p;
+    }
+
+    template <typename GS>
+    TweenT<GS>* createTween2(const GS& gs, const TweenOptions& opt)
+    {
+        TweenT<GS>* p = new TweenT<GS>(gs);
+        p->init2(opt);
         return p;
     }
 

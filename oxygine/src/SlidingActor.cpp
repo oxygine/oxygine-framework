@@ -23,12 +23,12 @@ namespace oxygine
         _speed(0, 0),
         _lastTime(0), _current(0), _lastIterTime(0)
     {
-        _clip = initActor(new ClipRectActor,
-                          arg_attachTo = this);
-
+        _clip = new ClipRectActor;
         _clip->addEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &SlidingActor::_newEvent));
         _clip->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &SlidingActor::_newEvent));
         _clip->addEventListener(TouchEvent::MOVE, CLOSURE(this, &SlidingActor::_newEvent));
+
+        addChild(_clip);
     }
 
     void SlidingActor::destroy()

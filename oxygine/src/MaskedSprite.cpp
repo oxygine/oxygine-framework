@@ -5,14 +5,30 @@
 
 namespace oxygine
 {
+    MaskedSprite::MaskedSprite() : _useRChannel(false)
+    {
+    }
+
+    MaskedSprite::~MaskedSprite()
+    {
+    }
+
+    void MaskedSprite::copyFrom(const MaskedSprite& src, cloneOptions opt)
+    {
+        _Sprite::copyFrom(src, opt);
+        _useRChannel = src._useRChannel;
+        //_mask = src._mask;
+    }
+
     spSprite MaskedSprite::getMask() const
     {
         return _mask;
     }
 
-    void MaskedSprite::setMask(spSprite mask)
+    void MaskedSprite::setMask(spSprite mask, bool useRChannel)
     {
         _mask = mask;
+        _useRChannel = useRChannel;
     }
 
     void MaskedSprite::render(const RenderState& parentRS)
@@ -27,7 +43,10 @@ namespace oxygine
             const Diffuse& df = _mask->getAnimFrame().getDiffuse();
 
 
-            MaskedRenderer mr(df.alpha ? df.alpha : df.base, maskSrc, maskDest, t, df.alpha ? true : false);
+            bool rchannel       = _useRChannel ? true    : (df.alpha ? true     : false);
+            spNativeTexture msk = _useRChannel ? df.base : (df.alpha ? df.alpha : df.base);
+
+            MaskedRenderer mr(msk, maskSrc, maskDest, t, rchannel);
             RenderState rs = parentRS;
             rs.renderer = &mr;
             mr.begin(parentRS.renderer);

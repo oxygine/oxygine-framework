@@ -3,6 +3,8 @@ package org.oxygine.lib;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.PowerManager;
+import android.os.Build;
+import android.annotation.TargetApi;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -40,13 +42,24 @@ class HttpRequestHolder {
     {
     }
 
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB) // API 11
+    public static <T> void executeAsyncTask(AsyncTask<T, ?, ?> asyncTask, T... params) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+            asyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, params);
+        else
+            asyncTask.execute(params);
+    }   
+
+
     public  void run(final  RequestDetails details)
     {
         OxygineActivity.instance.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 HttpRequest task = new HttpRequest();
-                task.execute(details);
+                //task.execute(details);
+                executeAsyncTask(task, details);
             }
         });
     }

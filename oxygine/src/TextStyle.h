@@ -37,7 +37,7 @@ namespace oxygine
             fontSize2Scale(0),
             breakLongWords(false) {}
 
-        Font* font;
+        const Font* font;
 
         HorizontalAlign hAlign;
         VerticalAlign vAlign;

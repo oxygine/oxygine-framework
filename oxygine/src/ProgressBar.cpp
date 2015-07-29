@@ -344,6 +344,10 @@ namespace oxygine
     void ProgressBar::setProgress(float f)
     {
         _progress = scalar::clamp(f, 0.0f, 1.0f);
+
+        Event ev(PROGRESS_CHANGED);
+        dispatchEvent(&ev);
+
         if (_direction == __dir_radial_ccw || _direction == dir_radial_cw)
             return;
         _update();

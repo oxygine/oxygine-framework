@@ -8,8 +8,14 @@ namespace oxygine
     class MaskedSprite: public _Sprite
     {
     public:
+        DECLARE_COPYCLONE_NEW(MaskedSprite);
+
+        MaskedSprite();
+        ~MaskedSprite();
+
         spSprite getMask() const;
-        void setMask(spSprite);
+
+        void setMask(spSprite, bool useRChannel = false);
 
         void serialize(serializedata* data);
         void deserialize(const deserializedata* data);
@@ -20,6 +26,7 @@ namespace oxygine
 
     private:
         spSprite _mask;
+        bool _useRChannel;
     };
 }
 

@@ -53,6 +53,24 @@ namespace oxygine
     type* type::clone(cloneOptions opt) const {type *tp = new type(); tp->copyFrom(*this, opt); return tp;}
 
 
+    class TweenOptions
+    {
+    public:
+        explicit TweenOptions(timeMS duration): _duration(duration), _delay(0), _ease(Tween::ease_linear), _loops(1), _twoSides(false) {}
+        TweenOptions& duration(timeMS duration) { _duration = duration; return *this; }
+        TweenOptions& delay(timeMS delay) { _delay = delay; return *this; }
+        TweenOptions& loops(int loops) { _loops = loops; return *this; }
+        TweenOptions& twoSides(bool enabled = true) { _twoSides = enabled; return *this; }
+        TweenOptions& ease(Tween::EASE ease) { _ease = ease; return *this; }
+
+        timeMS  _duration;
+        timeMS  _delay;
+        Tween::EASE _ease;
+        int     _loops;
+        bool    _twoSides;
+    };
+
+
     class Actor : public EventDispatcher, public intrusive_list_item<spActor>, public Serializable
     {
         typedef intrusive_list_item<spActor> intr_list;
@@ -108,6 +126,8 @@ namespace oxygine
         Actor*              getParent() {return _parent;}
         const Actor*        getParent() const {return _parent;}
         Vector2             getSize() const {return _size;}
+        /**Returns Size*Scale*/
+        Vector2             getScaledSize() const { return _size.mult(_scale); }
         float               getWidth() const {return getSize().x;}
         float               getHeight() const {return getSize().y;}
         unsigned char       getAlpha() const {return _alpha;}
@@ -216,6 +236,10 @@ namespace oxygine
         template<class Prop>
         spTween addTween(const Prop& prop, timeMS duration, int loops = 1, bool twoSides = false, timeMS delay = 0, Tween::EASE ease = Tween::ease_linear)
         {return addTween(createTween(prop, duration, loops, twoSides, delay, ease));}
+
+        template<class Prop>
+        spTween addTween2(const Prop& prop, const TweenOptions& opt)
+        {return addTween(createTween2(prop, opt));}
 
         void removeTween(spTween);
         void removeTweensByName(const std::string& name);

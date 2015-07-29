@@ -11,7 +11,7 @@ namespace oxygine
         _end(0)
     {
         if (_resAnim)
-            _end = _resAnim->getColumns();
+            _end = _resAnim->getColumns() - 1;
     }
 
     TweenAnim::TweenAnim(const ResAnim* resAnim, int startFrame, int endFrame):
@@ -20,7 +20,7 @@ namespace oxygine
         _start(0),
         _end(0)
     {
-
+        setInterval(startFrame, endFrame);
     }
 
     void TweenAnim::init(Sprite& actor)
@@ -33,20 +33,17 @@ namespace oxygine
     {
         _resAnim = resAnim;
         if (_resAnim && _row != -1)
-            _end = _resAnim->getColumns();
-    }
-
-
-    void TweenAnim::setColumns(int start, int end)
-    {
-        _start = start;
-        _end = end;
+            _end = _resAnim->getColumns() - 1;
     }
 
     void TweenAnim::setInterval(int start, int end)
     {
         _start = start;
         _end = end;
+
+        int num = _row == -1 ? _resAnim->getTotalFrames() : _resAnim->getColumns();
+        OX_ASSERT(_start >= 0 && _start < num);
+        OX_ASSERT(_end >= 0 && _end < num);
     }
 
 
@@ -54,19 +51,6 @@ namespace oxygine
     {
         OX_ASSERT(_resAnim);
         int frame = interpolate<int>(_start, _end, p);
-
-        if (_start > _end)
-        {
-            if (frame <= _end)
-                frame = _end + 1;
-            OX_ASSERT(frame <= _start && frame > _end);
-        }
-        else
-        {
-            if (frame >= _end)
-                frame = _end - 1;
-            OX_ASSERT(frame >= _start && frame < _end);
-        }
 
         if (_row == -1)
             actor.setAnimFrame(_resAnim->getFrame(frame));

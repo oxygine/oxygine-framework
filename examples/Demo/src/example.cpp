@@ -218,13 +218,12 @@ void example_init()
     resourcesUI.loadXML("demo/res_ui.xml");
     resourcesUI.loadXML("demo/fonts.xml");
 
-    spSprite sp = initActor(new Sprite,
-                            arg_resAnim = resourcesUI.getResAnim("logo2"),
-                            arg_input = false,
-                            arg_attachTo = getStage(),
-                            arg_priority = 10,
-                            arg_alpha = 128
-                           );
+    spSprite sp = new Sprite;
+    sp->setResAnim(resourcesUI.getResAnim("logo2"));
+    sp->setInputEnabled(false);
+    sp->attachTo(getStage());
+    sp->setPriority(10);
+    sp->setAlpha(128);
 
     sp->setX(getStage()->getWidth() - sp->getWidth());
     sp->setY(getStage()->getHeight() - sp->getHeight());

@@ -22,7 +22,7 @@ namespace oxygine
         /**Row/Column mode. Plays single row*/
         TweenAnim(const ResAnim* resAnim, int row = 0);
 
-        /**Frames mode. Plays frames from start to end*/
+        /**Frames mode. Play animation in interval [start, end]*/
         TweenAnim(const ResAnim* resAnim, int startFrame, int endFrame);
 
         void init(Sprite& actor);
@@ -35,10 +35,7 @@ namespace oxygine
         /**Changes ResAnim*/
         void setResAnim(const ResAnim* resAnim);
 
-        /**Play animation in interval [start, end). Deprecated, use setInterval*/
-        void setColumns(int start, int end);
-
-        /**Play animation in interval [start, end)*/
+        /**Play animation in interval [start, end]*/
         void setInterval(int start, int end);
 
         void update(Sprite& actor, float p, const UpdateState& us);

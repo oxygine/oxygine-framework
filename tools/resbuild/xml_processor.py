@@ -6,8 +6,14 @@ from . import process_font
 from . import process_starling_atlas
 from . import oxygine_helper
 
+def as_bool(attr):
+    if not attr:
+        return False
+    lw = attr.lower()
+    return lw == "true" or lw == "1"
+
 class XmlWalker:
-    def __init__(self, src, xml_folder, path, scale_factor, node, meta_node, scale_quality):
+    def __init__(self, src, xml_folder, path, scale_factor, node, meta_node, scale_quality, hit_test):
         self.xml_folder = xml_folder
         self.path = path
         self.scale_factor = scale_factor
@@ -17,6 +23,7 @@ class XmlWalker:
         self.last_meta = None        
         self.src = src
         self.scale_quality = scale_quality
+        self.hit_test = hit_test
         self.checkSetAttributes()
     
     def getType(self):
@@ -48,6 +55,7 @@ class XmlWalker:
             if path.startswith("./") or path.startswith(".\\"):
                 path = self.xml_folder + path[2:len(path)]
             self.path = path + "/"
+
         scale_factor = node.getAttribute("scale_factor")
         if scale_factor:
             self.scale_factor = float(scale_factor)
@@ -55,6 +63,10 @@ class XmlWalker:
         scale_quality = node.getAttribute("scale_quality")
         if scale_quality:
             self.scale_quality = float(scale_quality)        
+
+        attr = node.getAttribute("hit_test")
+        if attr:
+            self.hit_test = as_bool(attr)
     
     def next(self):
         while True:
@@ -82,12 +94,10 @@ class XmlWalker:
             if self.last.nodeName == "set":
                 self._checkSetAttributes(self.last)
                 continue
-            
-            
                 
             break
             
-        return XmlWalker(self.src, self.xml_folder, self.path, self.scale_factor, self.last, self.last_meta, self.scale_quality)
+        return XmlWalker(self.src, self.xml_folder, self.path, self.scale_factor, self.last, self.last_meta, self.scale_quality, self.hit_test)
                 
             
         
@@ -243,7 +253,11 @@ class XmlProcessor:
         
         xml_folder = os.path.split(self.path_xml)[0] + "/"
         
-        walker = XmlWalker(self.src_data, xml_folder, "", 1.0, doc.documentElement, meta_element, 1.0)
+        hit_test = True
+        if self.args.no_hit_test:
+            hit_test = False
+            
+        walker = XmlWalker(self.src_data, xml_folder, "", 1.0, doc.documentElement, meta_element, 1.0, hit_test)
         
         while True:
             next = walker.next();

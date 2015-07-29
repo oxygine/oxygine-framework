@@ -4,6 +4,8 @@
 #include "math/Rect.h"
 #include "math/Color.h"
 #include "TextStyle.h"
+#include "Font.h"
+#include "core/NativeTexture.h"
 
 namespace oxygine
 {
@@ -14,11 +16,11 @@ namespace oxygine
     {
         struct Symbol
         {
-            Symbol(): gl(0), x(0), y(0), code(0) {}
+            Symbol(): x(0), y(0), code(0) {}
 
             short x, y;
             int code;
-            const glyph* gl;
+            glyph gl;
             RectF destRect;
         };
 

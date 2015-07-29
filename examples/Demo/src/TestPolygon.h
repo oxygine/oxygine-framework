@@ -44,8 +44,8 @@ public:
         v.x = pos.x;
         v.y = pos.y;
         v.z = 0;
-        v.u = v.x / 100;
-        v.v = v.y / 100;
+        v.u = v.x / 128;
+        v.v = v.y / 128;
 
         return v;
     }

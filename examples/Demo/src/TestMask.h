@@ -1,6 +1,5 @@
 #pragma once
 #include "test.h"
-#include "initActor.h"
 #include "Polygon.h"
 #include "TestPolygon.h"
 
@@ -14,52 +13,51 @@ public:
 
     TestMask(): _lastSnow(0)
     {
-        _mask = initActor(new Sprite,
-                          arg_scale = 2.5f,
-                          arg_priority = 1,
-                          arg_alpha = 100,
-                          arg_x = 100,
-                          arg_y = 50,
-                          arg_anchor = Vector2(0.5f, 0.5f),
-                          arg_resAnim = resources.getResAnim("logo2"),
-                          arg_attachTo = content);
+        spSprite sp = new Sprite;
+        sp->attachTo(content);
+        sp->setResAnim(resources.getResAnim("sky"));
+
+        _mask = new Sprite;
+        _mask->setScale(1.5f);
+        _mask->setPriority(1);
+        _mask->setAlpha(100);
+        _mask->setX(100);
+        _mask->setY(50);
+        _mask->setAnchor(0.5f, 0.5f);
+        _mask->setResAnim(resources.getResAnim("mask"));
+        _mask->setVisible(true);
+        _mask->attachTo(content);
 
         _mask->addTween(Actor::TweenRotation(MATH_PI * 2), 15000, -1, true);
         _mask->addTween(Actor::TweenX(content->getWidth() - 100), 10000, -1, true);
         _mask->addTween(Actor::TweenY(content->getHeight() - 50), 12000, -1, true);
 
-        _masked = initActor(new MaskedSprite,
-                            arg_attachTo = content);
+        _masked = new MaskedSprite;
+        _masked->attachTo(content);
 
-        _masked->setMask(_mask);
+        _masked->setMask(_mask, true);
 
 
         spPolygon poly = new oxygine::Polygon;
 
         vertexPCT2* data = TestPolygon::createVertices(10);
         poly->setVertices(data, sizeof(vertexPCT2) * 10 * 4, vertexPCT2::FORMAT, true);
-        poly->setPosition(getSize() / 2);
-        poly->setScale(1.3f);
+        poly->setPosition(getSize());
         _masked->addChild(poly);
-
-        spSprite sp = new Sprite;
-        sp->attachTo(_masked);
-        sp->setResAnim(resources.getResAnim("bg"));
 
 
         TextStyle style;
         style.font = resourcesUI.getResFont("big")->getFont();
-        style.color = Color::BlanchedAlmond,
-              style.vAlign = TextStyle::VALIGN_MIDDLE;
+        style.color = Color::OrangeRed;
+        style.vAlign = TextStyle::VALIGN_MIDDLE;
         style.hAlign = TextStyle::HALIGN_CENTER;
         style.multiline = true;
 
-        spTextField text = initActor(new TextField(),
-                                     arg_attachTo = _masked,
-                                     arg_pos = content->getSize() / 2,
-                                     arg_scale = 1.5f,
-                                     arg_text = "Oxygine. Masked text",
-                                     arg_style = style);
+        spTextField text = new TextField();
+        text->attachTo(_masked);
+        text->setPosition(content->getSize() / 2);
+        text->setText("Oxygine. Masked sky demo");
+        text->setStyle(style);
 
 
         const Test::toggle sm[] = {Test::toggle("hide mask", 0), Test::toggle("show mask", 1), };
@@ -103,10 +101,12 @@ public:
             switch (t->value)
             {
                 case 1:
-                    _mask->setResAnim(resources.getResAnim("logo2"));
+                    _mask->setResAnim(resources.getResAnim("mask"));
+                    _masked->setMask(_mask, true);
                     break;
                 case 0:
                     _mask->addTween(TweenAnim(resources.getResAnim("anim")), 600, -1, false)->setName("tweenanim");
+                    _masked->setMask(_mask, false);
                     break;
             }
         }
@@ -115,20 +115,20 @@ public:
 
     void doUpdate(const UpdateState& us)
     {
-        if (_lastSnow  + 40 < us.time)
+        if (_lastSnow  + 20 < us.time)
         {
             _lastSnow = us.time;
-            spSprite snow = initActor(new Sprite,
-                                      arg_anchor = Vector2(0.5f, 0.5f),
-                                      arg_resAnim = resources.getResAnim("snow"),
-                                      arg_attachTo = _masked,
-                                      arg_rotation = scalar::randFloat(0, MATH_PI * 2),
-                                      arg_y = -50,
-                                      arg_scale = scalar::randFloat(0.4f, 1.0f),
-                                      arg_x = scalar::randFloat(0, content->getWidth()));
+            spSprite snow = new Sprite;
+            snow->setAnchor(0.5f, 0.5f);
+            snow->setResAnim(resources.getResAnim("snow"));
+            snow->setRotation(scalar::randFloat(0, MATH_PI * 2));
+            snow->setScale(scalar::randFloat(0.4f, 1.0f));
+            snow->setX(scalar::randFloat(0, content->getWidth()));
+            snow->setY(-50);
+            snow->attachTo(_masked);
 
             snow->addTween(Actor::TweenY(content->getHeight() + 50), 6000)->setDetachActor(true);
-            snow->addTween(Actor::TweenRotation(scalar::randFloat(0, MATH_PI * 2)), 10000);
+            snow->addTween(Actor::TweenRotation(scalar::randFloat(0, MATH_PI * 2)), 5000);
         }
     }
 };

@@ -7,7 +7,6 @@
 
 	<atlas id = "primary" format="8888">
 		<image file="gray.png"/>
-		<image file="logo2.png" /> <!-- border=2 adds 2 pixel border from each side of image in atlas to avoid problem with mask -->
 		<image file="brush.png"/>
 		<image file="palette.png"/>		
 		<image file="snow.png"/>
@@ -17,9 +16,7 @@
 		<set hit_test="false" />
 		
 		<image id="anim" file="anim1.png" cols = "7" /> <!-- 'id' is optional -->
-		<image id="anim2" file="anim2.png" cols = "20" /> <!-- 'id' is optional -->
 		<image file="batterfly.png"/>
-		<image file="batterfly2.png"/>
 		<image file="bg.png" data-custom = "custom user data per xml resource defined in xml"/>
 		<image file="grad.png"/>
 		<image file="t2p.png"/>
@@ -29,26 +26,27 @@
 		<image file="light.png"/>
 		<image file="normal.png"/>
 		<image file="defnormal.png"/>
+		<image file="map.png"/>
+		<image file="mask.png"/>
+		<image file="sky.png"/>
+		<image file="tiled2.png"/>
 	</atlas>
 
 	<atlas>
-		<image file="tiled.png"/>
+		<image file="tiled.png"/>		
 	</atlas>	
 	
 	<set load = "false" /> <!--do not load next atlasses by default-->
 	<atlas format="4444">
 		<image id="bg_4444" file="bg.png"/>
-		<image id="logo2_4444" file="logo2.png"/>
 	</atlas>
 	
 	<atlas format="5551">
 		<image id="bg_5551" file="bg.png"/>
-		<image id="logo2_5551" file="logo2.png"/>
 	</atlas>
 	
 	<atlas format="565">
 		<image id="bg_565" file="bg.png"/>
-		<image id="logo2_565" file="logo2.png"/>
 	</atlas>	
 	
 </resources>

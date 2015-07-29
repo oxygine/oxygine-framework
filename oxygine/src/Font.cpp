@@ -55,17 +55,39 @@ namespace oxygine
         std::sort(_glyphs.begin(), _glyphs.end(), glyphsComparePred);
     }
 
-    const glyph* Font::getGlyph(int ch) const
+    const glyph* Font::findGlyph(int code) const
     {
-        glyphs::const_iterator it = std::lower_bound(_glyphs.begin(), _glyphs.end(), ch, glyphFindPred);
+        glyphs::const_iterator it = std::lower_bound(_glyphs.begin(), _glyphs.end(), code, glyphFindPred);
         if (it != _glyphs.end())
         {
             const glyph& g = *it;
-            if (g.ch == ch)
+            if (g.ch == code)
                 return &g;
         }
 
         return 0;
+    }
+
+    const glyph* Font::getGlyph(int code) const
+    {
+        const glyph* g = findGlyph(code);
+        if (g)
+            return g;
+
+        glyph gl;
+        Font* fn = const_cast<Font*>(this);
+        if (fn->loadGlyph(code, gl))
+        {
+            glyphs::iterator it = std::lower_bound(fn->_glyphs.begin(), fn->_glyphs.end(), code, glyphFindPred);
+            fn->_glyphs.insert(it, gl);
+
+            //fn->addGlyph(gl);
+            //fn->sortGlyphs();
+            g = findGlyph(code);
+            OX_ASSERT(g);
+        }
+
+        return g;
     }
 
     int Font::getBaselineDistance() const

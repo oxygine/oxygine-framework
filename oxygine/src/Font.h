@@ -44,7 +44,11 @@ namespace oxygine
         float           getScale() const;
         int             getLineHeight() const;
 
-    private:
+    protected:
+        const glyph* findGlyph(int code) const;
+
+        virtual bool loadGlyph(int code, glyph&) { return false; }
+
         typedef std::vector<glyph> glyphs;
         glyphs _glyphs;
 

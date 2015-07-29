@@ -1,4 +1,5 @@
 #include "ResBuffer.h"
+#include "Resources.h"
 #include "CreateResourceContext.h"
 
 namespace oxygine
@@ -12,6 +13,8 @@ namespace oxygine
         rs->setName(_Resource::extractID(node, file, ""));
         rs->init(context.walker.getPath("file").c_str());
         setNode(rs, node);
+
+        context.resources->add(rs);
 
         return rs;
     }

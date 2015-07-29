@@ -27,6 +27,9 @@ public:
 
             sprite->setRotation(scalar::randFloat(0, (float)MATH_PI * 2));
             sprite->setScale(scalar::randFloat(1.0f, 2.0f));
+
+            sprite->addEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &DragTest::onMouseDown));
+            sprite->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &DragTest::onMouseUp));
         }
     }
 
@@ -63,21 +66,21 @@ public:
 
     Drag2Test(): touchedBy(0), timeLeft(0)
     {
-        basket = initActor(new Sprite,
-                           arg_name = "basket",
-                           arg_resAnim = resources.getResAnim("batterfly"),
-                           arg_attachTo = content,
-                           arg_anchor = Vector2(0.5f, 0.5f),
-                           arg_x = content->getWidth() * 3 / 4,
-                           arg_y = content->getHeight() / 2);
+        basket = new Sprite;
+        basket->setName("basket");
+        basket->setResAnim(resources.getResAnim("batterfly"));
+        basket->attachTo(content);
+        basket->setAnchor(0.5f, 0.5f);
+        basket->setX(content->getWidth() * 3 / 4);
+        basket->setY(content->getHeight() / 2);
 
-        ball = initActor(new Sprite,
-                         arg_name = "ball",
-                         arg_resAnim = resources.getResAnim("batterfly"),
-                         arg_attachTo = content,
-                         arg_anchor = Vector2(0.5f, 0.5f),
-                         arg_x = content->getWidth() * 1 / 4,
-                         arg_y = content->getHeight() / 2);
+        ball = new Sprite;
+        ball->setName("ball");
+        ball->setResAnim(resources.getResAnim("batterfly"));
+        ball->attachTo(content);
+        ball->setAnchor(0.5f, 0.5f);
+        ball->setX(content->getWidth() * 1 / 4);
+        ball->setY(content->getHeight() / 2);
 
         ball->addEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this,  &Drag2Test::ballTouchDown));
         ball->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this,  &Drag2Test::ballTouchUp));
@@ -143,12 +146,13 @@ public:
             txt->setText("Now drop it on right object");
 
             timeLeft = 0;
-            dragging = initActor(ball->clone(),
-                                 arg_name = "dragging",
-                                 arg_attachTo = ball->getParent(),
-                                 arg_color = Color(0xff0000ff),
-                                 arg_anchor = Vector2(0, 0),
-                                 arg_input = false);
+            dragging = ball->clone();
+
+            dragging->setName("dragging");
+            dragging->attachTo(ball->getParent());
+            dragging->setColor(Color::Red);
+            dragging->setAnchor(0, 0);
+            dragging->setInputEnabled(false);
             drag.start(touchedBy, dragging.get(), dragging->getSize() / 2);
         }
     }

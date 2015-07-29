@@ -329,14 +329,25 @@ namespace oxygine
     }
 
 
-    void NativeTextureGLES::updateRegion(int x, int y, const ImageData& data)
+    void NativeTextureGLES::updateRegion(int x, int y, const ImageData& data_)
     {
+        ImageData data = data_;
         assert(_width >= data.w - x);
         assert(_height >= data.h - y);
         glBindTexture(GL_TEXTURE_2D, _id);
 
         glPixel glp = SurfaceFormat2GL(_format);
         //saveImage(data, "test1.png");
+
+
+        MemoryTexture mt;
+        if (_format != data.format)
+        {
+            mt.init(data.w, data.h, _format);
+            mt.fill_zero();
+            mt.updateRegion(0, 0, data);
+            data = mt.lock();
+        }
 
         glTexSubImage2D(GL_TEXTURE_2D, 0,
                         x, y, data.w, data.h,

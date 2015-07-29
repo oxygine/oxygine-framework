@@ -39,6 +39,21 @@ namespace oxygine
         }
     }
 
+	void Tween::init2(const TweenOptions& opt)
+	{
+		_duration = opt._duration;
+		_ease = opt._ease;
+		_loops = opt._loops;
+		_twoSides = opt._twoSides;
+		_delay = opt._delay;
+
+		if (_duration <= 0)
+		{
+			OX_ASSERT(!"Tweener duration should be more than ZERO");
+			_duration = 1;
+		}
+	}
+
     void Tween::setDoneCallback(EventCallback cb)
     {
         _cbDone = cb;

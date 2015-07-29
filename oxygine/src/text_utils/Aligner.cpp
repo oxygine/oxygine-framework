@@ -113,7 +113,7 @@ namespace oxygine
                 for (size_t i = 0; i < ln.size(); ++i)
                 {
                     Symbol& s = *ln[i];
-                    rx = std::max(s.x + s.gl->sw, rx);
+                    rx = std::max(s.x + s.gl.sw, rx);
                 }
 
                 int tx = _alignX(rx);
@@ -163,14 +163,14 @@ namespace oxygine
             _line.push_back(&s);
 
             //optional.. remove?
-            if (_line.size() == 1 && s.gl->offset_x < 0)
-                _x -= s.gl->offset_x;
+            if (_line.size() == 1 && s.gl.offset_x < 0)
+                _x -= s.gl.offset_x;
 
-            s.x = _x + s.gl->offset_x;
-            s.y = _y + s.gl->offset_y;
-            _x += s.gl->advance_x + getStyle().kerning;
+            s.x = _x + s.gl.offset_x;
+            s.y = _y + s.gl.offset_y;
+            _x += s.gl.advance_x + getStyle().kerning;
 
-            int rx = s.x + s.gl->sw;
+            int rx = s.x + s.gl.sw;
 
 
             _lineWidth = std::max(rx, _lineWidth);

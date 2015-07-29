@@ -1,6 +1,5 @@
 #pragma once
 #include "test.h"
-#include "initActor.h"
 
 #undef OUT
 
@@ -20,12 +19,11 @@ public:
         'hit_test' enables access to alpha channel
         */
 
-        sprite = initActor(new Sprite,
-                           arg_resAnim = resources.getResAnim("flower"),
-                           arg_attachTo = content,
-                           arg_anchor = Vector2(0.5f, 0.5f),
-                           arg_x = content->getWidth() / 2,
-                           arg_y = content->getHeight() / 2);
+        sprite = new Sprite;
+        sprite->setResAnim(resources.getResAnim("flower"));
+        sprite->attachTo(content);
+        sprite->setAnchor(0.5f, 0.5f);
+        sprite->setPosition(content->getSize() / 2);
 
         sprite->addEventListener(TouchEvent::OVER, CLOSURE(this, &TestAlphaHitTest::onEvent));
         sprite->addEventListener(TouchEvent::OUT, CLOSURE(this, &TestAlphaHitTest::onEvent));

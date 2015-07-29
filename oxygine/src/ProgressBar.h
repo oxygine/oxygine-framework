@@ -9,6 +9,8 @@ namespace oxygine
     class ProgressBar: public _Sprite
     {
     public:
+        enum { PROGRESS_CHANGED = sysEventID('P', 'C', 'h') };
+
         enum direction
         {
             dir_0,//moveable right edge

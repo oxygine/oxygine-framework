@@ -20,7 +20,8 @@ def recursive_zip(zipf, directory, folder = ""):
             bts = open(src, "rb").read()
             if ext == ".sh" or item in ("PVRTexToolCLI", "oxyresbuild.py", "gen_template.py", "png_strip.py"):
                 info.external_attr = 0755 << 16L #a+x
-            zipf.writestr(info, bts, zipfile.ZIP_DEFLATED)
+            #zipf.writestr(info, bts, zipfile.ZIP_DEFLATED)
+            zipf.write(os.path.join(directory, item), folder + os.sep + item)
             
             
         elif os.path.isdir(os.path.join(directory, item)):

@@ -2,41 +2,52 @@
 
 namespace oxygine
 {
-    spTweenQueue TweenQueue::create(spTween t1, spTween t2)
+    spTweenQueue TweenQueue::create(spTween t1)
     {
         spTweenQueue t = new TweenQueue;
         t->add(t1);
+        return t;
+    }
+
+    spTweenQueue TweenQueue::create(spTween t1, spTween t2)
+    {
+        spTweenQueue t = create(t1);
         t->add(t2);
         return t;
     }
 
     spTweenQueue TweenQueue::create(spTween t1, spTween t2, spTween t3)
     {
-        spTweenQueue t = new TweenQueue;
-        t->add(t1);
-        t->add(t2);
+        spTweenQueue t = create(t1, t2);
         t->add(t3);
         return t;
     }
 
     spTweenQueue TweenQueue::create(spTween t1, spTween t2, spTween t3, spTween t4)
     {
-        spTweenQueue t = new TweenQueue;
-        t->add(t1);
-        t->add(t2);
-        t->add(t3);
+        spTweenQueue t = create(t1, t2, t3);
         t->add(t4);
         return t;
     }
 
     spTweenQueue TweenQueue::create(spTween t1, spTween t2, spTween t3, spTween t4, spTween t5)
     {
-        spTweenQueue t = new TweenQueue;
-        t->add(t1);
-        t->add(t2);
-        t->add(t3);
-        t->add(t4);
+        spTweenQueue t = create(t1, t2, t3, t4);
         t->add(t5);
+        return t;
+    }
+
+    spTweenQueue TweenQueue::create(spTween t1, spTween t2, spTween t3, spTween t4, spTween t5, spTween t6)
+    {
+        spTweenQueue t = create(t1, t2, t3, t4, t5);
+        t->add(t6);
+        return t;
+    }
+
+    spTweenQueue TweenQueue::create(spTween t1, spTween t2, spTween t3, spTween t4, spTween t5, spTween t6, spTween t7)
+    {
+        spTweenQueue t = create(t1, t2, t3, t4, t5, t6);
+        t->add(t7);
         return t;
     }
 
@@ -64,6 +75,9 @@ namespace oxygine
         if (!_current)
             return;
 
+        Event ev(EVENT_LOOP_BEGIN);
+        dispatchEvent(&ev);
+
         _current->start(actor);
     }
 
@@ -85,6 +99,9 @@ namespace oxygine
 
         if (!_current)
         {
+            Event ev(EVENT_LOOP_END);
+            dispatchEvent(&ev);
+
             _loopsDone++;
 
             if (_loopsDone >= _loops && _loops > 0)
@@ -100,8 +117,7 @@ namespace oxygine
                     next = next->getNextSibling();
                 }
 
-                _current = _tweens._first;
-                _current->start(actor);
+                _start(actor);
             }
         }
     }

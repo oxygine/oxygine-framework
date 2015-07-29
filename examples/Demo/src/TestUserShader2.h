@@ -158,8 +158,10 @@ public:
 
         AnimationFrame frame = resources.getResAnim("normal")->getFrame(0);
         spSprite spr = new Sprite2(frame);
-        spr->setResAnim(resources.getResAnim("tiled"));
-        spr->setPosition(content->getSize() / 2 - spr->getSize() / 2);
+        spr->setResAnim(resources.getResAnim("tiled2"));
+        spr->setScale(2);
+        spr->setAnchor(0.5f, 0.5f);
+        spr->setPosition(content->getSize() / 2);
         spr->attachTo(lightning);
 
 

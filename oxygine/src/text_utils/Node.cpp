@@ -127,9 +127,9 @@ namespace oxygine
             for (size_t i = 0; i < _data.size(); ++i)
             {
                 const Symbol& s = _data[i];
-                if (!s.gl)
+                if (!s.gl.texture)
                     continue;
-                dc.renderer->draw(dc.rs->transform, s.gl->texture, dc.color.rgba(), s.gl->src, s.destRect);
+                dc.renderer->draw(dc.rs->transform, s.gl.texture, dc.color.rgba(), s.gl.src, s.destRect);
             }
 
             drawChildren(dc);
@@ -146,22 +146,25 @@ namespace oxygine
             if (!_data.empty())
             {
                 int i = 0;
-                Font* font = rd.getStyle().font;
+                const Font* font = rd.getStyle().font;
 
                 while (i != (int)_data.size())
                 {
                     Symbol& s = _data[i];
                     //wchar_t c = s.c;
-                    s.gl = font->getGlyph(s.code);
-                    if (s.gl)
+                    const glyph* gl = font->getGlyph(s.code);
+                    if (gl)
+                    {
+                        s.gl = *gl;
                         i += rd.putSymbol(s);
+                    }
                     else
                     {
                         if (s.code == '\n')
                             rd.nextLine();
                         else
                         {
-                            s.gl = font->getGlyph(_defMissing);
+                            s.gl = *font->getGlyph(_defMissing);
                             i += rd.putSymbol(s);
                         }
                     }
@@ -189,8 +192,8 @@ namespace oxygine
                 Symbol& s = _data[i];
                 s.y += offsetY;
 
-                if (s.gl)
-                    s.destRect = RectF(mlt(s.x, scaleFactor), mlt(s.y, scaleFactor), mlt(s.gl->sw, scaleFactor), mlt(s.gl->sh, scaleFactor));
+                if (s.gl.texture)
+                    s.destRect = RectF(mlt(s.x, scaleFactor), mlt(s.y, scaleFactor), mlt(s.gl.sw, scaleFactor), mlt(s.gl.sh, scaleFactor));
                 else
                     s.destRect = RectF(0, 0, 0, 0);
 

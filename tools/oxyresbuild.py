@@ -1,5 +1,8 @@
 #!/usr/bin/python
 
+def str2bool(v):
+    return v.lower() in ("yes", "true", "t", "1")
+
 def get_parser():
     import argparse	
     parser = argparse.ArgumentParser(description="oxyresbuild is being used to processing and optimizing xml resources file. It generated <xml-name>.ox folder with meta.xml file inside. Meta file has optimized information about resources, atlasses.")
@@ -21,6 +24,7 @@ def get_parser():
     parser.add_argument("-v", "--verbosity", help = "verbosity level. 1 - only errors, 2 - normal. Default value is 2", type=int, default = 2)
     parser.add_argument("--hash", help = "enables creating md5 hash lists for some special files", action="store_true", default = False)
     parser.add_argument("--debug", help = "debug mode", action="store_true", default = False)
+    parser.add_argument("--no_hit_test", help = "disables generation hit_test data by default", action="store_true", default = False)
     parser.add_argument("--nopng", help = "stores images without packing to png. TGA will be used if compressiong disabled.", 
                         action="store_true", default = False)            
     return parser

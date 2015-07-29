@@ -422,7 +422,8 @@ def processRS(context, walker):
                 r,g,b,a = frame_image.split()
                 a = a.point(lambda p: p - 2)
 
-                adata = makeAlpha(a)
+                if walker.hit_test:
+                    adata = makeAlpha(a)
 
                 frame_bbox = a.getbbox()
             else:

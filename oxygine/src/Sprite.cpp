@@ -257,8 +257,7 @@ namespace oxygine
         if (res)
         {
             ResAnim* rs = safeCast<ResAnim*>(data->factory->getResAnim(res));
-
-            setResAnim(rs);
+            setResAnim(rs, node.attribute("col").as_int(0), node.attribute("row").as_int(0));
         }
     }
 }

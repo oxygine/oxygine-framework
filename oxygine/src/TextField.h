@@ -31,6 +31,7 @@ namespace oxygine
         /**Returns current text*/
         const std::string&          getText() const { return _text; }
         int                         getFontSize2Scale() const;
+        int                         getLinesOffset() const;
         TextStyle::VerticalAlign    getVAlign() const;
         TextStyle::HorizontalAlign  getHAlign() const;
         bool                        getMultiline() const;
@@ -40,6 +41,7 @@ namespace oxygine
         void setVAlign(TextStyle::VerticalAlign align);
         /**Overwrites TextStyle Horizontal align*/
         void setHAlign(TextStyle::HorizontalAlign align);
+        void setAlign(TextStyle::VerticalAlign, TextStyle::HorizontalAlign);
         /**Overwrites TextStyle multiline*/
         void setMultiline(bool multiline);
         /**Overwrites TextStyle breakLongWords*/
@@ -49,7 +51,7 @@ namespace oxygine
         /**Overwrites TextStyle scale2Size.*/
         void setFontSize2Scale(int scale2size);
         /**Overwrites TextStyle font.*/
-        void setFont(Font* rs);
+        void setFont(const Font* rs);
 
         void setStyle(const TextStyle& st);
         /**Changes text utf-8 string*/

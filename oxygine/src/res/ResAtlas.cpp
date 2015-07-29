@@ -34,7 +34,7 @@ namespace oxygine
     {
         spNativeTexture texture;
         MemoryTexture mt;
-        Atlas atlas;
+        Atlas2 atlas;
     };
 
 
@@ -155,6 +155,8 @@ namespace oxygine
 
             ra = rs;
         }
+
+        context.resources->add(ra);
 
         ra->setName(_Resource::extractID(context.walker.getNode(), "", std::string("!atlas:") + *context.xml_name));
         setNode(ra, context.walker.getNode());

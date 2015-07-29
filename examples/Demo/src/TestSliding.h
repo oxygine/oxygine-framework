@@ -7,7 +7,10 @@
 class TestSliding: public Test
 {
 public:
-    spSlidingActor _sliding;
+    spSlidingActor  _sliding;
+    spSprite        _map;
+    spButton        _button;
+
     bool _snapEnabled;
     TestSliding()
     {
@@ -22,37 +25,32 @@ public:
         sliding->setSize(getWidth() / 3 * 2, getHeight() / 3 * 2);
 
 
-        spColorRectSprite content = new ColorRectSprite();
-        content->setSize(sliding->getWidth(), 2000);
-        content->setColor(Color(200, 200, 200, 255));
-        for (int i = 0; i < 20; i += 2)
-        {
-            spColorRectSprite c = initActor(new ColorRectSprite,
-                                            arg_size = Vector2(content->getWidth(), 100),
-                                            arg_color = Color(164, 164, 164, 255),
-                                            arg_y = i * 100.0f,
-                                            arg_attachTo = content);
+        spSprite map = new Sprite();
+        map->setResAnim(resources.getResAnim("map"));
+        map->setPosition(sliding->getSize() / 2 - map->getSize() / 2);
+        _map = map;
 
-            c->setCull(true);//cull invisible parts
+        spButton button = new Button;
+        _button = button;
+        button->setPosition(map->getSize() / 2);
+        button->setResAnim(resourcesUI.getResAnim("button"));
+        button->attachTo(map);
+        button->setAnchor(0.5f, 0.5f);
+        button->addEventListener(TouchEvent::CLICK, CLOSURE(this, &TestSliding::testClick));
 
-            spButton button = initActor(new Button,
-                                        arg_resAnim = resourcesUI.getResAnim("button"),
-                                        arg_attachTo = c);
-            button->addEventListener(TouchEvent::CLICK, CLOSURE(this, &TestSliding::testClick));
-        }
 
-        spTextField title = initActor(new TextField,
-                                      arg_text = "Sliding demo",
-                                      arg_w = content->getWidth(),
-                                      arg_vAlign = TextStyle::VALIGN_TOP,
-                                      arg_hAlign = TextStyle::HALIGN_CENTER,
-                                      arg_font = resourcesUI.getResFont("big")->getFont(),
-                                      arg_color = Color(0xFF0000ff),
-                                      arg_attachTo = content);
+        spTextField title = new TextField;
+        title->setText("Sliding Demo");
+        title->setSize(map->getSize());
+        title->setAlign(TextStyle::VALIGN_MIDDLE, TextStyle::HALIGN_MIDDLE);
+        title->setY(-50);
+        title->setFont(resourcesUI.getResFont("big")->getFont());
+        title->setColor(Color::Black);
+        title->attachTo(map);
 
-        sliding->setContent(content);
+        sliding->setContent(map);
         sliding->setPosition(getSize() / 2 - sliding->getSize() / 2);
-        sliding->attachTo(this->content);
+        sliding->attachTo(content);
 
         _sliding = sliding;
 
@@ -80,6 +78,8 @@ public:
         if (id == "snap")
         {
             _snapEnabled = data->value == 0;
+
+            snap();
         }
     }
 
@@ -89,36 +89,37 @@ public:
         SlidingActor::SlidingEvent* sd = safeCast<SlidingActor::SlidingEvent*>(event);
     }
 
-    void slideEnd(Event* event)
+    void snap()
     {
-        notify("slideEnd");
-
         if (!_snapEnabled)
             return;
 
         //snap to  grid
-        SlidingActor::SlidingEvent* sd = safeCast<SlidingActor::SlidingEvent*>(event);
         spActor content = _sliding->getContent();
         float y = content->getY();
-        y = int(y / 100) * 100.0f;
-        Vector2 dest(content->getX(), y);
+        y = int(y / 169) * 169;
+
+        float x = content->getX();
+        x = int(x / 166) * 166;
+        Vector2 dest(x, y);
         content->addTween(Actor::TweenPosition(dest), 100);
+    }
+
+    void slideEnd(Event* event)
+    {
+        notify("slideEnd");
+
+        snap();
     }
 
     void sliding(Event* event)
     {
-        /*
-        //snap
-        SlidingActor::SlidingEvent* sd = safeCast<SlidingActor::SlidingEvent *>(event);
-        if (sd->speed.sqlength() < 2500)
-        {
-            sd->speed = Vector2(0,0);
-        }
-        */
+
     }
 
     void testClick(Event* event)
     {
         notify("clicked");
+        _button->addTween(Sprite::TweenColor(Color::Red), 300, 1, true);
     }
 };
