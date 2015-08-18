@@ -114,19 +114,7 @@ void b2ContactManager::Collide()
 		int32 indexB = c->GetChildIndexB();
 		b2Body* bodyA = fixtureA->GetBody();
 		b2Body* bodyB = fixtureB->GetBody();
-
-		b2Assert(bodyA->m_type == b2_dynamicBody || bodyB->m_type == b2_dynamicBody);
 		 
-		bool activeA = bodyA->IsAwake() && bodyA->m_type != b2_staticBody;
-		bool activeB = bodyB->IsAwake() && bodyB->m_type != b2_staticBody;
-
-		// At least one body must be awake and it must be dynamic or kinematic.
-		if (activeA == false && activeB == false)
-		{
-			c = c->GetNext();
-			continue;
-		}
-
 		// Is this contact flagged for filtering?
 		if (c->m_flags & b2Contact::e_filterFlag)
 		{
@@ -150,6 +138,16 @@ void b2ContactManager::Collide()
 
 			// Clear the filtering flag.
 			c->m_flags &= ~b2Contact::e_filterFlag;
+		}
+
+		bool activeA = bodyA->IsAwake() && bodyA->m_type != b2_staticBody;
+		bool activeB = bodyB->IsAwake() && bodyB->m_type != b2_staticBody;
+
+		// At least one body must be awake and it must be dynamic or kinematic.
+		if (activeA == false && activeB == false)
+		{
+			c = c->GetNext();
+			continue;
 		}
 
 		int32 proxyIdA = fixtureA->m_proxies[indexA].proxyId;
@@ -196,6 +194,8 @@ void b2ContactManager::AddPair(void* proxyUserDataA, void* proxyUserDataB)
 		return;
 	}
 
+	// TODO_ERIN use a hash table to remove a potential bottleneck when both
+	// bodies have a lot of contacts.
 	// Does a contact already exist?
 	b2ContactEdge* edge = bodyB->GetContactList();
 	while (edge)
@@ -237,6 +237,10 @@ void b2ContactManager::AddPair(void* proxyUserDataA, void* proxyUserDataB)
 
 	// Call the factory.
 	b2Contact* c = b2Contact::Create(fixtureA, indexA, fixtureB, indexB, m_allocator);
+	if (c == NULL)
+	{
+		return;
+	}
 
 	// Contact creation may swap fixtures.
 	fixtureA = c->GetFixtureA();
@@ -280,6 +284,13 @@ void b2ContactManager::AddPair(void* proxyUserDataA, void* proxyUserDataB)
 		bodyB->m_contactList->prev = &c->m_nodeB;
 	}
 	bodyB->m_contactList = &c->m_nodeB;
+
+	// Wake up the bodies
+	if (fixtureA->IsSensor() == false && fixtureB->IsSensor() == false)
+	{
+		bodyA->SetAwake(true);
+		bodyB->SetAwake(true);
+	}
 
 	++m_contactCount;
 }

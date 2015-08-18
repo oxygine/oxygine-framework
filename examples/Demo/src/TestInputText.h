@@ -20,7 +20,7 @@ public:
         style.hAlign = TextStyle::HALIGN_CENTER;
         style.vAlign = TextStyle::VALIGN_MIDDLE;
         style.multiline = true;
-        style.font = resourcesUI.getResFont("big")->getFont();
+        style.font = Test::resourcesUI.getResFont("big")->getFont();
         text->setStyle(style);
         text->setText(defText);
 

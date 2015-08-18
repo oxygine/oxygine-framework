@@ -21,4 +21,20 @@ namespace oxygine
         env->ReleaseStringUTFChars(jstr, cstr);
         return str;
     }
+
+    void jniGetStringArray(vector<std::string>& res, JNIEnv* env, jobjectArray jarray)
+    {
+        jsize sz = env->GetArrayLength(jarray);
+        res.reserve(sz);
+
+        for (size_t i = 0; i < sz; ++i)
+        {
+            jstring obj = (jstring)env->GetObjectArrayElement(jarray, i);
+            const char* str = env->GetStringUTFChars(obj, 0);
+
+            res.emplace_back(str);
+
+            env->ReleaseStringUTFChars(obj, str);
+        }
+    }
 }

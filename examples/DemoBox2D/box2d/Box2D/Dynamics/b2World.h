@@ -43,8 +43,7 @@ class b2World
 public:
 	/// Construct a world object.
 	/// @param gravity the world gravity vector.
-	/// @param doSleep improve performance by not simulating inactive bodies.
-	b2World(const b2Vec2& gravity, bool doSleep);
+	b2World(const b2Vec2& gravity);
 
 	/// Destruct the world. All physics entities are destroyed and all heap memory is released.
 	~b2World();
@@ -105,7 +104,7 @@ public:
 	/// @see SetAutoClearForces
 	void ClearForces();
 
-	/// Call this to draw shapes and other debug draw data.
+	/// Call this to draw shapes and other debug draw data. This is intentionally non-const.
 	void DrawDebugData();
 
 	/// Query the world for all fixtures that potentially overlap the
@@ -137,18 +136,26 @@ public:
 	/// Get the world contact list. With the returned contact, use b2Contact::GetNext to get
 	/// the next contact in the world list. A NULL contact indicates the end of the list.
 	/// @return the head of the world contact list.
-	/// @warning contacts are 
+	/// @warning contacts are created and destroyed in the middle of a time step.
+	/// Use b2ContactListener to avoid missing contacts.
 	b2Contact* GetContactList();
 	const b2Contact* GetContactList() const;
 
+	/// Enable/disable sleep.
+	void SetAllowSleeping(bool flag);
+	bool GetAllowSleeping() const { return m_allowSleep; }
+
 	/// Enable/disable warm starting. For testing.
 	void SetWarmStarting(bool flag) { m_warmStarting = flag; }
+	bool GetWarmStarting() const { return m_warmStarting; }
 
 	/// Enable/disable continuous physics. For testing.
 	void SetContinuousPhysics(bool flag) { m_continuousPhysics = flag; }
+	bool GetContinuousPhysics() const { return m_continuousPhysics; }
 
 	/// Enable/disable single stepped continuous physics. For testing.
 	void SetSubStepping(bool flag) { m_subStepping = flag; }
+	bool GetSubStepping() const { return m_subStepping; }
 
 	/// Get the number of broad-phase proxies.
 	int32 GetProxyCount() const;
@@ -187,11 +194,20 @@ public:
 	/// Get the flag that controls automatic clearing of forces after each time step.
 	bool GetAutoClearForces() const;
 
+	/// Shift the world origin. Useful for large worlds.
+	/// The body shift formula is: position -= newOrigin
+	/// @param newOrigin the new origin with respect to the old origin
+	void ShiftOrigin(const b2Vec2& newOrigin);
+
 	/// Get the contact manager for testing.
 	const b2ContactManager& GetContactManager() const;
 
 	/// Get the current profile.
 	const b2Profile& GetProfile() const;
+
+	/// Dump the world into the log file.
+	/// @warning this should be called outside of a time step.
+	void Dump();
 
 private:
 
@@ -231,7 +247,7 @@ private:
 	bool m_allowSleep;
 
 	b2DestructionListener* m_destructionListener;
-	b2Draw* m_debugDraw;
+	b2Draw* g_debugDraw;
 
 	// This is used to compute the time step ratio to
 	// support a variable time step.

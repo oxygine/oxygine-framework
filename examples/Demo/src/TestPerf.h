@@ -1,6 +1,9 @@
 #pragma once
 #include "test.h"
 
+
+extern Resources resources;
+
 class PerfTest: public Test
 {
 public:

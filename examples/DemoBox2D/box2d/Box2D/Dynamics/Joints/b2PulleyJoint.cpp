@@ -49,7 +49,6 @@ void b2PulleyJointDef::Initialize(b2Body* bA, b2Body* bB,
 	lengthB = dB.Length();
 	ratio = r;
 	b2Assert(ratio > b2_epsilon);
-	float32 C = lengthA + ratio * lengthB;
 }
 
 b2PulleyJoint::b2PulleyJoint(const b2PulleyJointDef* def)
@@ -59,6 +58,9 @@ b2PulleyJoint::b2PulleyJoint(const b2PulleyJointDef* def)
 	m_groundAnchorB = def->groundAnchorB;
 	m_localAnchorA = def->localAnchorA;
 	m_localAnchorB = def->localAnchorB;
+
+	m_lengthA = def->lengthA;
+	m_lengthB = def->lengthB;
 
 	b2Assert(def->ratio != 0.0f);
 	m_ratio = def->ratio;
@@ -289,7 +291,22 @@ b2Vec2 b2PulleyJoint::GetGroundAnchorB() const
 	return m_groundAnchorB;
 }
 
-float32 b2PulleyJoint::GetLength1() const
+float32 b2PulleyJoint::GetLengthA() const
+{
+	return m_lengthA;
+}
+
+float32 b2PulleyJoint::GetLengthB() const
+{
+	return m_lengthB;
+}
+
+float32 b2PulleyJoint::GetRatio() const
+{
+	return m_ratio;
+}
+
+float32 b2PulleyJoint::GetCurrentLengthA() const
 {
 	b2Vec2 p = m_bodyA->GetWorldPoint(m_localAnchorA);
 	b2Vec2 s = m_groundAnchorA;
@@ -297,7 +314,7 @@ float32 b2PulleyJoint::GetLength1() const
 	return d.Length();
 }
 
-float32 b2PulleyJoint::GetLength2() const
+float32 b2PulleyJoint::GetCurrentLengthB() const
 {
 	b2Vec2 p = m_bodyB->GetWorldPoint(m_localAnchorB);
 	b2Vec2 s = m_groundAnchorB;
@@ -305,7 +322,27 @@ float32 b2PulleyJoint::GetLength2() const
 	return d.Length();
 }
 
-float32 b2PulleyJoint::GetRatio() const
+void b2PulleyJoint::Dump()
 {
-	return m_ratio;
+	int32 indexA = m_bodyA->m_islandIndex;
+	int32 indexB = m_bodyB->m_islandIndex;
+
+	b2Log("  b2PulleyJointDef jd;\n");
+	b2Log("  jd.bodyA = bodies[%d];\n", indexA);
+	b2Log("  jd.bodyB = bodies[%d];\n", indexB);
+	b2Log("  jd.collideConnected = bool(%d);\n", m_collideConnected);
+	b2Log("  jd.groundAnchorA.Set(%.15lef, %.15lef);\n", m_groundAnchorA.x, m_groundAnchorA.y);
+	b2Log("  jd.groundAnchorB.Set(%.15lef, %.15lef);\n", m_groundAnchorB.x, m_groundAnchorB.y);
+	b2Log("  jd.localAnchorA.Set(%.15lef, %.15lef);\n", m_localAnchorA.x, m_localAnchorA.y);
+	b2Log("  jd.localAnchorB.Set(%.15lef, %.15lef);\n", m_localAnchorB.x, m_localAnchorB.y);
+	b2Log("  jd.lengthA = %.15lef;\n", m_lengthA);
+	b2Log("  jd.lengthB = %.15lef;\n", m_lengthB);
+	b2Log("  jd.ratio = %.15lef;\n", m_ratio);
+	b2Log("  joints[%d] = m_world->CreateJoint(&jd);\n", m_index);
+}
+
+void b2PulleyJoint::ShiftOrigin(const b2Vec2& newOrigin)
+{
+	m_groundAnchorA -= newOrigin;
+	m_groundAnchorB -= newOrigin;
 }

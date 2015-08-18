@@ -77,6 +77,11 @@ namespace oxygine
             _nfs.mount(&_nfsWrite);
         }
 
+        void free()
+        {
+            _nfs.unmount(&_nfsWrite);
+        }
+
         void mount(FileSystem* fs)
         {
             _nfs.mount(fs);

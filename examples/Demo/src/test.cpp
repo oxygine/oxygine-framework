@@ -1,5 +1,39 @@
 #include "test.h"
 #include "oxygine-framework.h"
+#include "core/STDFileSystem.h"
+
+Resources Test::resourcesUI;
+file::STDFileSystem extfs(true);
+spTest Test::instance;
+
+void Test::init()
+{
+    //mount additional file system with inner path "ext"
+    //it would be used for searching path in data/ext
+    extfs.setPath(file::fs().getFullPath("ext").c_str());
+    file::mount(&extfs);
+
+    resourcesUI.loadXML("demo/res_ui.xml");
+    resourcesUI.loadXML("demo/fonts.xml");
+
+
+    spSprite sp = new Sprite;
+    sp->setResAnim(resourcesUI.getResAnim("logo2"));
+    sp->setInputEnabled(false);
+    sp->attachTo(getStage());
+    sp->setPriority(10);
+    sp->setAlpha(128);
+
+    sp->setX(getStage()->getWidth() - sp->getWidth());
+    sp->setY(getStage()->getHeight() - sp->getHeight());
+}
+
+void Test::free()
+{
+    resourcesUI.free();
+    instance->detach();
+    instance = 0;
+}
 
 class Toggle: public Button
 {
@@ -19,7 +53,7 @@ spTextField createText(std::string txt)
     spTextField text = new TextField();
 
     TextStyle style;
-    style.font = resourcesUI.getResFont("main")->getFont();
+    style.font = Test::resourcesUI.getResFont("main")->getFont();
     style.color = Color(72, 61, 139, 255);
     style.vAlign = TextStyle::VALIGN_MIDDLE;
     style.hAlign = TextStyle::HALIGN_CENTER;
@@ -35,7 +69,7 @@ spButton createButtonHelper(spButton button, string txt, EventCallback cb)
 {
     button->setPriority(10);
     //button->setName(id);
-    button->setResAnim(resourcesUI.getResAnim("button"));
+    button->setResAnim(Test::resourcesUI.getResAnim("button"));
     button->addEventListener(TouchEvent::CLICK, cb);
 
     //create Actor with Text and it to button as child
@@ -61,7 +95,7 @@ Test::Test()
     addChild(content);
     addChild(ui);
 
-    if (_tests)
+    if (instance)
     {
         spButton button = createButtonHelper(new Button, "back", CLOSURE(this, &Test::back));
         button->setY(getHeight() - button->getHeight());
@@ -149,7 +183,7 @@ void Test::_toggleClicked(Event* event)
 void Test::back(Event* event)
 {
     detach();
-    _tests->setVisible(true);
+    instance->setVisible(true);
 }
 
 

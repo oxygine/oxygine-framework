@@ -1,6 +1,9 @@
 #include "jniUtils.h"
 #include "jniHelper.h"
 #include "core/log.h"
+#include "core/ThreadMessages.h"
+
+using namespace oxygine;
 
 jobject _jmainActivity = 0;
 jclass _jmainActivityClass = 0;
@@ -9,6 +12,7 @@ jclass _jUtils = 0;
 jmethodID _jUtils_getTimeUTCMS = 0;
 jmethodID _jUtils_getLanguage = 0;
 jmethodID _jUtils_isNetworkAvailable = 0;
+jmethodID _jRunnable_run = 0;
 
 namespace oxygine
 {
@@ -46,6 +50,12 @@ namespace oxygine
 
             _jUtils_isNetworkAvailable = env->GetStaticMethodID(_jUtils, "isNetworkAvailable", "()Z");
             JNI_NOT_NULL(_jUtils_isNetworkAvailable);
+
+
+            jclass rn = env->FindClass("java/lang/Runnable");
+            JNI_NOT_NULL(rn);
+            _jRunnable_run = env->GetMethodID(rn, "run", "()V");
+            JNI_NOT_NULL(_jRunnable_run);
         }
         catch (const notFound&)
         {
@@ -169,11 +179,34 @@ namespace oxygine
         }
         catch (const notFound&) {}
     }
+
+
+
+    jobject jniFindExtension(JNIEnv* env, jclass cl)
+    {
+        jmethodID m = env->GetMethodID(jniGetMainActivityClass(), "findClass", "(Ljava/lang/Class;)Lorg/oxygine/lib/ActivityObserver;");
+        JNI_NOT_NULL(m);
+
+        jobject r = env->CallObjectMethod(jniGetMainActivity(), m, cl);
+        JNI_NOT_NULL(r);
+    }
+
+
 }
 
 static void _init(JNIEnv* env)
 {
     oxygine::_jniInit(env);
+}
+
+
+void runTask(const ThreadMessages::message& m)
+{
+    JNIEnv* env = jniGetEnv();
+
+    jobject task = (jobject)m.arg1;
+    env->CallVoidMethod(task, _jRunnable_run);
+    env->DeleteGlobalRef(task);
 }
 
 extern "C"
@@ -186,11 +219,17 @@ extern "C"
 
 
     JNIEXPORT void JNICALL Java_org_oxygine_lib_OxygineActivity_nativeOxygineInit
-    (JNIEnv* env, jclass clazz, jobject object)
+    (JNIEnv* env, jclass clazz, jobject act, jclass actClass)
     {
-        _jmainActivityClass = (jclass)env->NewGlobalRef(clazz);
-        _jmainActivity = env->NewGlobalRef(object);
+        _jmainActivityClass = (jclass)env->NewGlobalRef(actClass);
+        _jmainActivity = env->NewGlobalRef(act);
 
         _init(env);
+    }
+
+    JNIEXPORT void JNICALL Java_org_oxygine_lib_Utils_runOnGameThread
+    (JNIEnv* env, jclass clazz, jobject object)
+    {
+        core::getMainThreadMessages().postCallback(0, env->NewGlobalRef(object), 0, runTask, 0);
     }
 }

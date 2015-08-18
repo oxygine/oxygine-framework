@@ -29,12 +29,19 @@ def run(args):
         local = os.path.dirname(__file__)
         if not local:
             local = "."
-        
+
         src = local + "/../examples/HelloWorld/src"
-        shutil.copytree(src, dest + "/src")
-        
         data = local + "/../examples/HelloWorld/data"
-        shutil.copytree(src, dest + "/data")
+
+        try:
+            shutil.copytree(src, dest + "/src")
+        except OSError:
+            pass
+
+        try:
+            shutil.copytree(data, dest + "/data")
+        except OSError:
+            pass
         
         for p in platforms:
             if p == "all":
@@ -307,7 +314,7 @@ def _run(args):
 
             q = tp[0].split("/")
 
-            if q[0] == "text" or q[1] in ("xml", "x-msdos-program"):
+            if q[0] == "text" or q[1] in ("xml", "x-msdos-program", "x-sh"):
                 print("creating file: " + dest_path)
                 src_data = open(src_path, "r").read()
                 t = Template(src_data)

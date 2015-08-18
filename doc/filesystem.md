@@ -1,5 +1,9 @@
 #File System
 
+You should access to files only after Oxygine core initialization:
+
+	oxygine::core::init(..)
+
 ##Typical usage example 
 Read file, modify it and save back:
 	
@@ -110,3 +114,28 @@ Read any data from file as usual:
 
 
 > ZipFileSystem is read only.
+
+
+##Working with folders
+
+Create folder:
+
+	oxygine::file::makeDirectory("name");
+
+Delete:
+
+	oxygine::file::deleteDirectory("name");
+
+
+##Loading XMLs
+
+[Pugixml](https://github.com/zeux/pugixml) is included to Oxygine.
+
+		#include "pugixml/pugixml.hpp"
+
+
+		file::buffer bf;
+		file::read("file.xml", bf);
+
+		pugi::xml_document doc;
+		doc.load_buffer(&bf.data[0], bf.size());

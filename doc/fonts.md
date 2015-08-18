@@ -24,7 +24,7 @@ BMFont tool is located here:
 
 
 ##Advanced usage
-Fonts could be automatically generated from BMFont configuration files (.bmfc) by **process_xml2.py** tool.
+Fonts could be automatically generated from BMFont configuration files (.bmfc) by **oxyresbuild** tool.
 
 Add this line to resources xml:
 
@@ -35,7 +35,7 @@ Add this line to resources xml:
 Where:
 
 - file="main.bmfc" is your BMFont configuration file
-- chars="eng.txt" is text (TF-16 LE encoding) with symbols to export
+- chars="eng.txt" is file (TF-16 LE encoding) with text (symbols) to export
 
 
-> read more about process_xml2.py tool
+> read more about [oxyresbuild](https://bitbucket.org/oxygine/oxygine-framework/wiki/atlasses) tool

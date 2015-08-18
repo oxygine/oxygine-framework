@@ -27,17 +27,17 @@
 #include <Box2D/Collision/b2BroadPhase.h>
 #include <Box2D/Collision/Shapes/b2CircleShape.h>
 #include <Box2D/Collision/Shapes/b2EdgeShape.h>
-#include <Box2D/Collision/Shapes/b2LoopShape.h>
+#include <Box2D/Collision/Shapes/b2ChainShape.h>
 #include <Box2D/Collision/Shapes/b2PolygonShape.h>
 #include <Box2D/Collision/b2TimeOfImpact.h>
 #include <Box2D/Common/b2Draw.h>
 #include <Box2D/Common/b2Timer.h>
 #include <new>
 
-b2World::b2World(const b2Vec2& gravity, bool doSleep)
+b2World::b2World(const b2Vec2& gravity)
 {
 	m_destructionListener = NULL;
-	m_debugDraw = NULL;
+	g_debugDraw = NULL;
 
 	m_bodyList = NULL;
 	m_jointList = NULL;
@@ -51,7 +51,7 @@ b2World::b2World(const b2Vec2& gravity, bool doSleep)
 
 	m_stepComplete = true;
 
-	m_allowSleep = doSleep;
+	m_allowSleep = true;
 	m_gravity = gravity;
 
 	m_flags = e_clearForces;
@@ -101,7 +101,7 @@ void b2World::SetContactListener(b2ContactListener* listener)
 
 void b2World::SetDebugDraw(b2Draw* debugDraw)
 {
-	m_debugDraw = debugDraw;
+	g_debugDraw = debugDraw;
 }
 
 b2Body* b2World::CreateBody(const b2BodyDef* def)
@@ -360,6 +360,24 @@ void b2World::DestroyJoint(b2Joint* j)
 			}
 
 			edge = edge->next;
+		}
+	}
+}
+
+//
+void b2World::SetAllowSleeping(bool flag)
+{
+	if (flag == m_allowSleep)
+	{
+		return;
+	}
+
+	m_allowSleep = flag;
+	if (m_allowSleep == false)
+	{
+		for (b2Body* b = m_bodyList; b; b = b->m_next)
+		{
+			b->SetAwake(true);
 		}
 	}
 }
@@ -1022,7 +1040,7 @@ void b2World::DrawShape(b2Fixture* fixture, const b2Transform& xf, const b2Color
 			float32 radius = circle->m_radius;
 			b2Vec2 axis = b2Mul(xf.q, b2Vec2(1.0f, 0.0f));
 
-			m_debugDraw->DrawSolidCircle(center, radius, axis, color);
+			g_debugDraw->DrawSolidCircle(center, radius, axis, color);
 		}
 		break;
 
@@ -1031,22 +1049,22 @@ void b2World::DrawShape(b2Fixture* fixture, const b2Transform& xf, const b2Color
 			b2EdgeShape* edge = (b2EdgeShape*)fixture->GetShape();
 			b2Vec2 v1 = b2Mul(xf, edge->m_vertex1);
 			b2Vec2 v2 = b2Mul(xf, edge->m_vertex2);
-			m_debugDraw->DrawSegment(v1, v2, color);
+			g_debugDraw->DrawSegment(v1, v2, color);
 		}
 		break;
 
-	case b2Shape::e_loop:
+	case b2Shape::e_chain:
 		{
-			b2LoopShape* loop = (b2LoopShape*)fixture->GetShape();
-			int32 count = loop->GetCount();
-			const b2Vec2* vertices = loop->GetVertices();
+			b2ChainShape* chain = (b2ChainShape*)fixture->GetShape();
+			int32 count = chain->m_count;
+			const b2Vec2* vertices = chain->m_vertices;
 
-			b2Vec2 v1 = b2Mul(xf, vertices[count - 1]);
-			for (int32 i = 0; i < count; ++i)
+			b2Vec2 v1 = b2Mul(xf, vertices[0]);
+			for (int32 i = 1; i < count; ++i)
 			{
 				b2Vec2 v2 = b2Mul(xf, vertices[i]);
-				m_debugDraw->DrawSegment(v1, v2, color);
-				m_debugDraw->DrawCircle(v1, 0.05f, color);
+				g_debugDraw->DrawSegment(v1, v2, color);
+				g_debugDraw->DrawCircle(v1, 0.05f, color);
 				v1 = v2;
 			}
 		}
@@ -1055,7 +1073,7 @@ void b2World::DrawShape(b2Fixture* fixture, const b2Transform& xf, const b2Color
 	case b2Shape::e_polygon:
 		{
 			b2PolygonShape* poly = (b2PolygonShape*)fixture->GetShape();
-			int32 vertexCount = poly->m_vertexCount;
+			int32 vertexCount = poly->m_count;
 			b2Assert(vertexCount <= b2_maxPolygonVertices);
 			b2Vec2 vertices[b2_maxPolygonVertices];
 
@@ -1064,9 +1082,12 @@ void b2World::DrawShape(b2Fixture* fixture, const b2Transform& xf, const b2Color
 				vertices[i] = b2Mul(xf, poly->m_vertices[i]);
 			}
 
-			m_debugDraw->DrawSolidPolygon(vertices, vertexCount, color);
+			g_debugDraw->DrawSolidPolygon(vertices, vertexCount, color);
 		}
 		break;
+            
+    default:
+        break;
 	}
 }
 
@@ -1086,7 +1107,7 @@ void b2World::DrawJoint(b2Joint* joint)
 	switch (joint->GetType())
 	{
 	case e_distanceJoint:
-		m_debugDraw->DrawSegment(p1, p2, color);
+		g_debugDraw->DrawSegment(p1, p2, color);
 		break;
 
 	case e_pulleyJoint:
@@ -1094,9 +1115,9 @@ void b2World::DrawJoint(b2Joint* joint)
 			b2PulleyJoint* pulley = (b2PulleyJoint*)joint;
 			b2Vec2 s1 = pulley->GetGroundAnchorA();
 			b2Vec2 s2 = pulley->GetGroundAnchorB();
-			m_debugDraw->DrawSegment(s1, p1, color);
-			m_debugDraw->DrawSegment(s2, p2, color);
-			m_debugDraw->DrawSegment(s1, s2, color);
+			g_debugDraw->DrawSegment(s1, p1, color);
+			g_debugDraw->DrawSegment(s2, p2, color);
+			g_debugDraw->DrawSegment(s1, s2, color);
 		}
 		break;
 
@@ -1105,20 +1126,20 @@ void b2World::DrawJoint(b2Joint* joint)
 		break;
 
 	default:
-		m_debugDraw->DrawSegment(x1, p1, color);
-		m_debugDraw->DrawSegment(p1, p2, color);
-		m_debugDraw->DrawSegment(x2, p2, color);
+		g_debugDraw->DrawSegment(x1, p1, color);
+		g_debugDraw->DrawSegment(p1, p2, color);
+		g_debugDraw->DrawSegment(x2, p2, color);
 	}
 }
 
 void b2World::DrawDebugData()
 {
-	if (m_debugDraw == NULL)
+	if (g_debugDraw == NULL)
 	{
 		return;
 	}
 
-	uint32 flags = m_debugDraw->GetFlags();
+	uint32 flags = g_debugDraw->GetFlags();
 
 	if (flags & b2Draw::e_shapeBit)
 	{
@@ -1170,7 +1191,7 @@ void b2World::DrawDebugData()
 			//b2Vec2 cA = fixtureA->GetAABB().GetCenter();
 			//b2Vec2 cB = fixtureB->GetAABB().GetCenter();
 
-			//m_debugDraw->DrawSegment(cA, cB, color);
+			//g_debugDraw->DrawSegment(cA, cB, color);
 		}
 	}
 
@@ -1198,7 +1219,7 @@ void b2World::DrawDebugData()
 					vs[2].Set(aabb.upperBound.x, aabb.upperBound.y);
 					vs[3].Set(aabb.lowerBound.x, aabb.upperBound.y);
 
-					m_debugDraw->DrawPolygon(vs, 4, color);
+					g_debugDraw->DrawPolygon(vs, 4, color);
 				}
 			}
 		}
@@ -1210,7 +1231,7 @@ void b2World::DrawDebugData()
 		{
 			b2Transform xf = b->GetTransform();
 			xf.p = b->GetWorldCenter();
-			m_debugDraw->DrawTransform(xf);
+			g_debugDraw->DrawTransform(xf);
 		}
 	}
 }
@@ -1233,4 +1254,86 @@ int32 b2World::GetTreeBalance() const
 float32 b2World::GetTreeQuality() const
 {
 	return m_contactManager.m_broadPhase.GetTreeQuality();
+}
+
+void b2World::ShiftOrigin(const b2Vec2& newOrigin)
+{
+	b2Assert((m_flags & e_locked) == 0);
+	if ((m_flags & e_locked) == e_locked)
+	{
+		return;
+	}
+
+	for (b2Body* b = m_bodyList; b; b = b->m_next)
+	{
+		b->m_xf.p -= newOrigin;
+		b->m_sweep.c0 -= newOrigin;
+		b->m_sweep.c -= newOrigin;
+	}
+
+	for (b2Joint* j = m_jointList; j; j = j->m_next)
+	{
+		j->ShiftOrigin(newOrigin);
+	}
+
+	m_contactManager.m_broadPhase.ShiftOrigin(newOrigin);
+}
+
+void b2World::Dump()
+{
+	if ((m_flags & e_locked) == e_locked)
+	{
+		return;
+	}
+
+	b2Log("b2Vec2 g(%.15lef, %.15lef);\n", m_gravity.x, m_gravity.y);
+	b2Log("m_world->SetGravity(g);\n");
+
+	b2Log("b2Body** bodies = (b2Body**)b2Alloc(%d * sizeof(b2Body*));\n", m_bodyCount);
+	b2Log("b2Joint** joints = (b2Joint**)b2Alloc(%d * sizeof(b2Joint*));\n", m_jointCount);
+	int32 i = 0;
+	for (b2Body* b = m_bodyList; b; b = b->m_next)
+	{
+		b->m_islandIndex = i;
+		b->Dump();
+		++i;
+	}
+
+	i = 0;
+	for (b2Joint* j = m_jointList; j; j = j->m_next)
+	{
+		j->m_index = i;
+		++i;
+	}
+
+	// First pass on joints, skip gear joints.
+	for (b2Joint* j = m_jointList; j; j = j->m_next)
+	{
+		if (j->m_type == e_gearJoint)
+		{
+			continue;
+		}
+
+		b2Log("{\n");
+		j->Dump();
+		b2Log("}\n");
+	}
+
+	// Second pass on joints, only gear joints.
+	for (b2Joint* j = m_jointList; j; j = j->m_next)
+	{
+		if (j->m_type != e_gearJoint)
+		{
+			continue;
+		}
+
+		b2Log("{\n");
+		j->Dump();
+		b2Log("}\n");
+	}
+
+	b2Log("b2Free(joints);\n");
+	b2Log("b2Free(bodies);\n");
+	b2Log("joints = NULL;\n");
+	b2Log("bodies = NULL;\n");
 }

@@ -31,7 +31,7 @@ Create Emitter actor:
 
 	spMagicEmitter em = new MagicEmitter;
 
-	em->attachTo(getRoot());
+	em->attachTo(getStage());
 	em->setPosition(pos);
 	em->setEmitter(mpem);
 	em->setAutoDetach(true);

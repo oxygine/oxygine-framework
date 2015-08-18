@@ -7,6 +7,7 @@
 #include "SlidingActor.h"
 #include "Polygon.h"
 #include "MaskedSprite.h"
+#include "Box9Sprite.h"
 
 namespace oxygine
 {
@@ -20,6 +21,7 @@ namespace oxygine
         CREATE(TextField);
         CREATE(Actor);
         CREATE(ProgressBar);
+        CREATE(Box9Sprite);
         CREATE(SlidingActor);
         CREATE(ColorRectSprite);
         CREATE(ClipRectActor);

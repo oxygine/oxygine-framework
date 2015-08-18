@@ -28,6 +28,7 @@ LOCAL_SRC_FILES := \
 				$(wildcard $(SRC)/core/*.cpp) \
 				$(wildcard $(SRC)/math/*.cpp) \
 				$(wildcard $(SRC)/pugixml/*.cpp) \
+				$(wildcard $(SRC)/json/*.cpp) \
 				$(wildcard $(SRC)/res/*.cpp) \
 				$(wildcard $(SRC)/text_utils/*.cpp) \
 				$(wildcard $(SRC)/dev_tools/*.cpp) \

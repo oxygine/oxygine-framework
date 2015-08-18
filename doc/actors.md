@@ -17,9 +17,6 @@ You could create second *"child"* sprite attached to already created and they wo
 
 	spSprite child = new Sprite;
 	child->attachTo(sprite);
-
-   
- 
  
 ![Actor inheritance](img/actor.png)
  

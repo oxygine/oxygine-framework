@@ -45,15 +45,13 @@ public:
 	
 	enum Type
 	{
-		e_unknown= -1,
 		e_circle = 0,
 		e_edge = 1,
 		e_polygon = 2,
-		e_loop = 3,
+		e_chain = 3,
 		e_typeCount = 4
 	};
 
-	b2Shape() { m_type = e_unknown; }
 	virtual ~b2Shape() {}
 
 	/// Clone the concrete shape using the provided allocator.

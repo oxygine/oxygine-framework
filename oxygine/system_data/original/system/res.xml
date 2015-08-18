@@ -10,6 +10,7 @@
 		<image file="remove.png"/>
 		<image file="images.png"/>
 		<image file="logo.png"/>
+		<image file="btn.png" guideX1="19" guideY1="15" guideX2="46" guideY2="42" vertical="2" horizontal="2"/>
 	</atlas>
 	
 	<set path = "system/fonts" />

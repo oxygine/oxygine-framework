@@ -2,6 +2,8 @@
 #include <jni.h>
 #include <android/log.h>
 #include <string>
+#include <vector>
+
 namespace oxygine
 {
     using namespace std;
@@ -43,5 +45,7 @@ namespace oxygine
 
 
     JNIEnv* jniGetEnv(void);
+
     std::string jniGetString(JNIEnv* env, jstring jstr);
+    void        jniGetStringArray(vector<std::string>& res, JNIEnv* env, jobjectArray jarray);
 }

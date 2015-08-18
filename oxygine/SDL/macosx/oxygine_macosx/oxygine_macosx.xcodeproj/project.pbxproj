@@ -209,6 +209,9 @@
 		923A9E901A1FCA6600A6F08E /* MaskedRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 923A9E8E1A1FCA6600A6F08E /* MaskedRenderer.h */; };
 		9240B4101ADFBB3C005F9C5B /* TweenAnim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9240B40E1ADFBB3C005F9C5B /* TweenAnim.cpp */; };
 		9240B4111ADFBB3C005F9C5B /* TweenAnim.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240B40F1ADFBB3C005F9C5B /* TweenAnim.h */; };
+		9264E5CB1B835AFD0049F91F /* json-forwards.h in Headers */ = {isa = PBXBuildFile; fileRef = 9264E5C81B835AFD0049F91F /* json-forwards.h */; };
+		9264E5CC1B835AFD0049F91F /* json.h in Headers */ = {isa = PBXBuildFile; fileRef = 9264E5C91B835AFD0049F91F /* json.h */; };
+		9264E5CD1B835AFD0049F91F /* jsoncpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9264E5CA1B835AFD0049F91F /* jsoncpp.cpp */; };
 		92AA951E1A5CB260000B50A0 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92AA951D1A5CB260000B50A0 /* AppKit.framework */; };
 		92CE266B1A58AADB003901D6 /* HttpRequestCocoaTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 92CE26671A58AADB003901D6 /* HttpRequestCocoaTask.h */; };
 		92CE266C1A58AADB003901D6 /* HttpRequestCocoaTask.mm in Sources */ = {isa = PBXBuildFile; fileRef = 92CE26681A58AADB003901D6 /* HttpRequestCocoaTask.mm */; };
@@ -436,6 +439,9 @@
 		923A9E8E1A1FCA6600A6F08E /* MaskedRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MaskedRenderer.h; path = ../../../src/MaskedRenderer.h; sourceTree = "<group>"; };
 		9240B40E1ADFBB3C005F9C5B /* TweenAnim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TweenAnim.cpp; path = ../../../src/TweenAnim.cpp; sourceTree = "<group>"; };
 		9240B40F1ADFBB3C005F9C5B /* TweenAnim.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweenAnim.h; path = ../../../src/TweenAnim.h; sourceTree = "<group>"; };
+		9264E5C81B835AFD0049F91F /* json-forwards.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "json-forwards.h"; path = "../../../src/json/json-forwards.h"; sourceTree = "<group>"; };
+		9264E5C91B835AFD0049F91F /* json.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = json.h; path = ../../../src/json/json.h; sourceTree = "<group>"; };
+		9264E5CA1B835AFD0049F91F /* jsoncpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsoncpp.cpp; path = ../../../src/json/jsoncpp.cpp; sourceTree = "<group>"; };
 		92AA951D1A5CB260000B50A0 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		92CE26671A58AADB003901D6 /* HttpRequestCocoaTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpRequestCocoaTask.h; sourceTree = "<group>"; };
 		92CE26681A58AADB003901D6 /* HttpRequestCocoaTask.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HttpRequestCocoaTask.mm; sourceTree = "<group>"; };
@@ -485,6 +491,7 @@
 		049B55901871F21000EF3C66 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				9264E5C71B835AE50049F91F /* json */,
 				9240B40E1ADFBB3C005F9C5B /* TweenAnim.cpp */,
 				9240B40F1ADFBB3C005F9C5B /* TweenAnim.h */,
 				92CE26711A58ABDC003901D6 /* AsyncTask.cpp */,
@@ -806,6 +813,16 @@
 			path = ../../../src/winnie_alloc;
 			sourceTree = "<group>";
 		};
+		9264E5C71B835AE50049F91F /* json */ = {
+			isa = PBXGroup;
+			children = (
+				9264E5C81B835AFD0049F91F /* json-forwards.h */,
+				9264E5C91B835AFD0049F91F /* json.h */,
+				9264E5CA1B835AFD0049F91F /* jsoncpp.cpp */,
+			);
+			name = json;
+			sourceTree = "<group>";
+		};
 		92CE26661A58AADB003901D6 /* ios */ = {
 			isa = PBXGroup;
 			children = (
@@ -854,6 +871,7 @@
 				049B56E21871F21E00EF3C66 /* ioapi.h in Headers */,
 				048AD0D219B1FE96001963EF /* Stage.h in Headers */,
 				049B56A41871F21E00EF3C66 /* Renderer.h in Headers */,
+				9264E5CB1B835AFD0049F91F /* json-forwards.h in Headers */,
 				04670868192795E700D71824 /* Serialize.h in Headers */,
 				049B56D01871F21E00EF3C66 /* Font.h in Headers */,
 				049B56DE1871F21E00EF3C66 /* vector4.h in Headers */,
@@ -895,6 +913,7 @@
 				049B56CB1871F21E00EF3C66 /* Draggable.h in Headers */,
 				049B569E1871F21E00EF3C66 /* ox_debug.h in Headers */,
 				049B56681871F21E00EF3C66 /* AnimationFrame.h in Headers */,
+				9264E5CC1B835AFD0049F91F /* json.h in Headers */,
 				049B56811871F21E00EF3C66 /* oxgl.h in Headers */,
 				049B56B61871F21E00EF3C66 /* vertex.h in Headers */,
 				049B56D11871F21E00EF3C66 /* initActor.h in Headers */,
@@ -1047,6 +1066,7 @@
 				049B56791871F21E00EF3C66 /* file.cpp in Sources */,
 				049B566B1871F21E00EF3C66 /* Box9Sprite.cpp in Sources */,
 				049B56671871F21E00EF3C66 /* AnimationFrame.cpp in Sources */,
+				9264E5CD1B835AFD0049F91F /* jsoncpp.cpp in Sources */,
 				049B57221871F21E00EF3C66 /* winnie_alloc.cpp in Sources */,
 				049B56E11871F21E00EF3C66 /* ioapi.c in Sources */,
 				049B56911871F21E00EF3C66 /* log.cpp in Sources */,

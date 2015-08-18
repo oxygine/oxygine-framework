@@ -411,9 +411,7 @@ def processRS(context, walker):
                     frame_image = im.resize((ax, ay), resize_filter)
                     frame_image = frame_image.crop((0, 0, frame_size[0], frame_size[1]))
 
-            trim = True
-            if image_el.getAttribute("trim") == "0":
-                trim = False
+            trim = as_bool(image_el.getAttribute("trim"))
 
 
             adata = None

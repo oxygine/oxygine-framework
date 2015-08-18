@@ -34,8 +34,11 @@ def buildzip(name):
     destzip = "../../" + name
     with zipfile.ZipFile(destzip, "w", compression = zipfile.ZIP_DEFLATED) as zp:
         recursive_zip(zp, "../../temp")
-        
-    shutil.copyfile(destzip, "../../../gdrive/oxygine/" + name)
+    
+    try:
+        shutil.copyfile(destzip, "../../../gdrive/oxygine/" + name)
+    except IOError, e:
+        pass
     print("zip created: " + name)
     
     
@@ -112,11 +115,11 @@ shutil.copy(SDL_dest + "/android-project/src/org/libsdl/app/SDLActivity.java",
 libs = ("SDL2.lib", "SDL2main.lib", )
 for lib in libs:
     shutil.copy("../../libs/" + lib, OXYGINE_dest + "/libs/" + lib)
-
+"""
 libs = ("libSDL2main.a", "libSDL2.dll", "libSDL2.dll.a")
 for lib in libs:
     shutil.copy("../../libs/" + lib, OXYGINE_dest + "/libs/" + lib)    
-
+"""
 buildzip("oxygine-framework-with-sdl.zip")
 
 print("done.")

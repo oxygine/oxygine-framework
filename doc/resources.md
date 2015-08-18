@@ -102,7 +102,7 @@ This pseudo code demonstrates usage of image with four columns and connecting it
 	
 	state state = getLocationState();
 	int column = state; 
-	locationSprite->setResAnim(resources.getResAnim("flags"), column);
+	locationSprite->setAnimFrame(resources.getResAnim("flags"), column);
 
 ###User data attributes
 Any type of resource could have custom user data associated with it. Custom attributes could have any name (except already reserved).
@@ -122,6 +122,8 @@ Access to them:
 Path to the current folder where resources should be found could be set in xml with:
  
 	<set path = "path/to/folder" />
+
+Path is relative to your root "data" folder.
 
 Path could be also set relative to the current xml. It should begin with **"./"**:
 

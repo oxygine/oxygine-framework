@@ -46,6 +46,9 @@
     <Filter Include="src\curl">
       <UniqueIdentifier>{54e007da-0017-4cb0-9307-c80350cae8ad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\json">
+      <UniqueIdentifier>{7a1b519b-dd33-4a0c-a441-f3e579b7bf8f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\math\AffineTransform.cpp">
@@ -323,6 +326,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\utils\cdecode.c">
       <Filter>src\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\json\jsoncpp.cpp">
+      <Filter>src\json</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -700,6 +706,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\utils\cdecode.h">
       <Filter>src\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\json\json.h">
+      <Filter>src\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\json\json-forwards.h">
+      <Filter>src\json</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

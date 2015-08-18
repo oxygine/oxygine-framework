@@ -21,6 +21,8 @@ namespace oxygine
         StretchMode getVerticalMode() const {return _vertMode;}
         StretchMode getHorizontalMode() const {return _horzMode;}
 
+        bool isOn(const Vector2& localPosition);
+
         void setVerticalMode(StretchMode m);
         void setHorizontalMode(StretchMode m);
 

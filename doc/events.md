@@ -21,6 +21,16 @@ Using EventDispatcher, you use removeEventListener(). This method removes an eve
 
 	submitButton.removeEventListener(TouchEvent::CLICK, CLOSURE(this, &SomeClass::clickHandler));
 
+
+You also could use C++11 with **std::function** and **lambda**:
+
+	submitButton.addEventListener(TouchEvent::CLICK, [](Event*){
+		log::messageln("button clicked");
+	});
+
+> It is slower than using CLOSURE
+
+
 ##Where is EventDispatcher?
 You may have noticed that the code snippets above do not explicitly reference EventDispatcher. In fact, it's rare that you would ever use EventDispatcher directly in your code. EventDispatcher, in Oxygine, is actually a base class, which other classes extend in order to be able to have access to addEventListener and other EventDispatcher methods. 
 
@@ -254,7 +264,7 @@ Custom events are useful for indicating events which are not inherently recogniz
 	class AchieveEarnedEvent: public Event
 	{
 	public:
-		enum {EVENT = makefourcc('A','c','E','r')};
+		enum {EVENT = eventID('A','c','E','r')};
 
 		string achievementID;
 
@@ -262,10 +272,10 @@ Custom events are useful for indicating events which are not inherently recogniz
 	};
 
 
-**makefourcc** above is a preprocessor command to easy define unique integer value: 
+**eventID** above is a preprocessor command to easy define unique integer value: 
 
 
-	#define makefourcc(a,b,c,d) ( ((unsigned int)a) | (((unsigned int)b)<< 8) | (((unsigned int)c)<<16) | (((unsigned int)d)<<24))
+	#define eventID(a,b,c,d) ( ((unsigned int)a) | (((unsigned int)b)<< 8) | (((unsigned int)c)<<16) | (((unsigned int)d)<<24))
 
 Listen custom created event:
 

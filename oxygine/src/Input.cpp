@@ -108,13 +108,16 @@ namespace oxygine
             if (d == id)
                 return index;
         }
-        OX_ASSERT("can't find touch id");
-        return 0;
+        //log::warning("can't find touch id %d", id);
+        return -1;
     }
 
     PointerState* Input::getTouchByID(int id)
     {
-        return getTouchByIndex(touchID2index(id));
+        int i = touchID2index(id);
+        if (i == -1)
+            return 0;
+        return getTouchByIndex(i);
     }
 #endif
 }

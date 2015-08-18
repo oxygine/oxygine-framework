@@ -97,10 +97,10 @@ public:
         //snap to  grid
         spActor content = _sliding->getContent();
         float y = content->getY();
-        y = int(y / 169) * 169;
+        y = int(y / 169) * 169.0f;
 
         float x = content->getX();
-        x = int(x / 166) * 166;
+        x = int(x / 166) * 166.0f;
         Vector2 dest(x, y);
         content->addTween(Actor::TweenPosition(dest), 100);
     }

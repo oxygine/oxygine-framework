@@ -22,4 +22,6 @@ namespace oxygine
     void            jniBrowse(const char* url);
 
     void            jniWriteBuffer2InternalStorageFile(const char* path, const char* data, size_t size);
+
+    jobject         jniFindExtension(JNIEnv* env, jclass cl);
 }

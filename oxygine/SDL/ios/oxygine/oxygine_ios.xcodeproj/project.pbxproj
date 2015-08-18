@@ -74,6 +74,9 @@
 		9240B4081ADFB856005F9C5B /* Property.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240B4051ADFB856005F9C5B /* Property.h */; };
 		9240B4091ADFB856005F9C5B /* TweenAnim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9240B4061ADFB856005F9C5B /* TweenAnim.cpp */; };
 		9240B40A1ADFB856005F9C5B /* TweenAnim.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240B4071ADFB856005F9C5B /* TweenAnim.h */; };
+		9264E5BD1B8358D80049F91F /* json-forwards.h in Headers */ = {isa = PBXBuildFile; fileRef = 9264E5BA1B8358D80049F91F /* json-forwards.h */; };
+		9264E5BE1B8358D80049F91F /* json.h in Headers */ = {isa = PBXBuildFile; fileRef = 9264E5BB1B8358D80049F91F /* json.h */; };
+		9264E5BF1B8358D80049F91F /* jsoncpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9264E5BC1B8358D80049F91F /* jsoncpp.cpp */; };
 		92CE26621A589401003901D6 /* ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 92CE26601A589401003901D6 /* ios.h */; };
 		92CE26631A589401003901D6 /* ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 92CE26611A589401003901D6 /* ios.mm */; };
 		92DC0A251A2F0ED900D2B55C /* greenlet.c in Sources */ = {isa = PBXBuildFile; fileRef = 92DC0A231A2F0ED900D2B55C /* greenlet.c */; };
@@ -299,6 +302,9 @@
 		9240B4051ADFB856005F9C5B /* Property.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Property.h; path = ../../../src/Property.h; sourceTree = "<group>"; };
 		9240B4061ADFB856005F9C5B /* TweenAnim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TweenAnim.cpp; path = ../../../src/TweenAnim.cpp; sourceTree = "<group>"; };
 		9240B4071ADFB856005F9C5B /* TweenAnim.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweenAnim.h; path = ../../../src/TweenAnim.h; sourceTree = "<group>"; };
+		9264E5BA1B8358D80049F91F /* json-forwards.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "json-forwards.h"; path = "../../../src/json/json-forwards.h"; sourceTree = "<group>"; };
+		9264E5BB1B8358D80049F91F /* json.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = json.h; path = ../../../src/json/json.h; sourceTree = "<group>"; };
+		9264E5BC1B8358D80049F91F /* jsoncpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsoncpp.cpp; path = ../../../src/json/jsoncpp.cpp; sourceTree = "<group>"; };
 		92CE26601A589401003901D6 /* ios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ios.h; path = ../../../src/core/ios/ios.h; sourceTree = "<group>"; };
 		92CE26611A589401003901D6 /* ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ios.mm; path = ../../../src/core/ios/ios.mm; sourceTree = "<group>"; };
 		92DC0A231A2F0ED900D2B55C /* greenlet.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = greenlet.c; path = ../../../greenlets/src/greenlet.c; sourceTree = "<group>"; };
@@ -497,6 +503,16 @@
 			name = ios;
 			sourceTree = "<group>";
 		};
+		9264E5B91B8358B00049F91F /* json */ = {
+			isa = PBXGroup;
+			children = (
+				9264E5BA1B8358D80049F91F /* json-forwards.h */,
+				9264E5BB1B8358D80049F91F /* json.h */,
+				9264E5BC1B8358D80049F91F /* jsoncpp.cpp */,
+			);
+			name = json;
+			sourceTree = "<group>";
+		};
 		92DC0A221A2F0EB700D2B55C /* greenlet */ = {
 			isa = PBXGroup;
 			children = (
@@ -550,6 +566,7 @@
 		C3E86F5316EBC8C200052915 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				9264E5B91B8358B00049F91F /* json */,
 				9240B4051ADFB856005F9C5B /* Property.h */,
 				9240B4061ADFB856005F9C5B /* TweenAnim.cpp */,
 				9240B4071ADFB856005F9C5B /* TweenAnim.h */,
@@ -880,6 +897,7 @@
 				C3E8702516EBC8EB00052915 /* ox_debug.h in Headers */,
 				C3E8702916EBC8EB00052915 /* oxygine.h in Headers */,
 				C3E8702A16EBC8EB00052915 /* pixel.h in Headers */,
+				9264E5BD1B8358D80049F91F /* json-forwards.h in Headers */,
 				C3E8702B16EBC8EB00052915 /* ref_counter.h in Headers */,
 				04AEC310182BD912006413A9 /* ShaderProgramGL.h in Headers */,
 				0472E38217F8A2EC0016A832 /* oxygine-framework.h in Headers */,
@@ -926,6 +944,7 @@
 				C3E8706516EBC8EB00052915 /* ResFontBM.h in Headers */,
 				0472E35F17F8A1A80016A832 /* STDFileSystem.h in Headers */,
 				C3E8706716EBC8EB00052915 /* Resource.h in Headers */,
+				9264E5BE1B8358D80049F91F /* json.h in Headers */,
 				C3E8706916EBC8EB00052915 /* Resources.h in Headers */,
 				C3E8706B16EBC8EB00052915 /* ResStarlingAtlas.h in Headers */,
 				C3E8706D16EBC8EB00052915 /* RootActor.h in Headers */,
@@ -1032,6 +1051,7 @@
 				0472E37717F8A2D30016A832 /* ioapi_mem.c in Sources */,
 				9223E3121A5193E000B2770B /* AsyncTask.cpp in Sources */,
 				C3E8700816EBC8EB00052915 /* ClipRectActor.cpp in Sources */,
+				9264E5BF1B8358D80049F91F /* jsoncpp.cpp in Sources */,
 				C3E8700A16EBC8EB00052915 /* Clock.cpp in Sources */,
 				C3E8700E16EBC8EB00052915 /* ColorRectSprite.cpp in Sources */,
 				C3E8701016EBC8EB00052915 /* coroutines.cpp in Sources */,

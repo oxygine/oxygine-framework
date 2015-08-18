@@ -1,5 +1,11 @@
-#Building Atlasses
-Все изображения, объявленные в xml файле ресурсов в группе <atlas> автоматически собираются в атласы при загрузке xml. 
+#Atlasses
+
+If you wish to use a third-party tool for packing images into atlasses, for example TexturePacker, then you may use the Oxygine-supported Starling/Sparrow format. See [Resources article](resources) #Starling
+
+However, if you wish to experience everything Oxygine has to offer, then you should use the utility oxyresbuild. Look below for details.
+
+##Building Atlasses with Oxygine
+All decals in the xml resource files in the <atlas> group automatically turn into atlases upon loading the xml files.
 	
 	<atlas>
 	    <image file="close.png" />
@@ -7,48 +13,47 @@
 	    <image file="anim/run.png" />
 	</atlas>
 
-Можно существенно повысить скорость загрузки приложения и снизить использование памяти, если собрать атласы заранее, еще на этапе сборки игры.
+It is possible to decrease the loading times and memory usage of a game if you prebuild the atlases with special tool.
+> as it essentially creates a single image with another marking file instead of many individual images. This results in quicker loading times and saves memory.
 
-Для этого в oxygine есть специальная командная утилита **"oxyresbuild"**, расположенная в папке tools:
+For this, Oxygine posesses a special utility command called **"oxyresbuild"**, which located in the tools folder:
 
 	oxygine-framework/tools/oxyresbuild.py
 
 ![](img/oxyresbuild.png)
 
-Чтобы ее использовать потребуется дополнительно установить Python, читайте подробности:
+To use this tool, you will need to install Python. Read how to do so below:
 		
 [oxygine-framework/tools/readme.txt](https://bitbucket.org/oxygine/oxygine-framework/src/tip/tools/readme.txt?at=tip)
 
-В examples/Game/Part5 есть примеры ее использования, смотрите shell скрипты. Например, 
-examples/Game/part5/gen-atlasses.bat:
+In examples/Game/Part5 there are examples on how to use it. Look at the shell scripts for more details. For example, examples/Game/part5/gen-atlasses.bat:
 
 	python ../../../tools/oxyresbuild.py -x xmls/ui.xml --src_data data --dest_data data
 
-результат его работы появится в папке:
+its result is located in the following folder:
 
 	oxygine-framework/examples/Game/part5/data/ui.xml.ox/
 
-Также, в Game/Part5 папка с исходными изображениями вынесена наружу из data, т.к они не нужны в финальной сборке приложения.
-
+Also, in Game/Part5 the folder with the source images is outside of the data folder, as it is not needed in the final compiled version of the application.
 
 ##HD Assets
 
-Исходный арт обычно принято хранить в высоком разрешении, с запасом для HD экранов.
+Source artwork is usually saved in high resolution to support HD displays.
  
-Допустим, художник взял за основу разрешение 2048х1536, а игра пока готовится для дисплеев размерностью 1024x768.
-Художник прислал задний фон, который нужно вставить в игре, мы добавили его в наш resources.xml файл:
+For example, an artist used 2048x1536 resolution as a basis for source images, but the game is displayed at 1024x768.
+The artist made a background which needs to be displayed in the game, so we add it to our resources.xml file:
 
 	<atlas>
 	    <image file="background.png" />
 	</atlas> 
 
-Теперь создадим его:
+Now, let's create it in code:
 
 	spSprite sprite = new Sprite;
 	sprite->setResAnim(res.getResAnim("background"));
 	sprite->attachTo(getStage());
 
-Спрайт вылезет за границы экрана, потому необходимо уменьшить его:
+The sprite will be too large for the display, so we will need to make it smaller:
 
 	float scaleFactor = 1024.0f / 2048.0f; // =0.5f
 	/* or
@@ -56,7 +61,7 @@ examples/Game/part5/gen-atlasses.bat:
 	*/
 	sprite->setScale(scaleFactor);
 
-Аналогичные вызовы *setScale* придется делать для каждого созданного спрайта, который хранится в высоком разрешении. Но можно поступить проще и указать в xml заранее необходимый scale_factor
+Similar *setScale* calls will need to be done on every created sprite that is saved in high resolution. However, we can make our job easier by specifying everything in the xml file with scale_factor:
 
 	<set scale_factor = "0.5f" />
 
@@ -64,44 +69,43 @@ examples/Game/part5/gen-atlasses.bat:
 	    <image file="background.png" />
 	</atlas>
 
-И таким образом код упростится до изначального: 
+This way the code will simplify to the way it was before: 
 	
 	spSprite sprite = new Sprite;
 	sprite->setResAnim(res.getResAnim("background"));
 	sprite->attachTo(getStage());
 
-а sprite будет иметь требуемую "виртуальную" размерность, равную 1024x768 и полностью поместится на экране:
+while the sprite will be displayed in proper resolution (1024x768), and will fully fit on the screen:
 
 	sprite->getWidth () == 1024
 	sprite->getHeight() == 768 
 
-Но в оперативной памяти картинка до сих пор будет иметь размеры 2048х1536 и занимать лишнюю память, потому сгенерируем атлас для xml с помощью *oxyresbuild* с аргументом **-r**:
+The source image, however, will still be stored at 2048x1536 and will therefore take up more memory. To avoid this, we generate an atlas for xml with the help of *oxyresbuild* with the argument **-r**:
 
 	python path/to/oxyresbuild/oxyresbuild.py -x resources.xml --src_data data --dest_data data -r
 
-**-r** - это сокращение от **--resize**, обозначающее что перед сборкой атласа изображения нужно отмасштабировать в соответствии с установленным scale_factor. Таким образом в атлас попадет изображение уменьшенное в 2 раза.
+**-r** is short for **--resize**, which means that before the creation of an atlas the image needs to be resized according to scale_factor. This way atlas receives an image which is 2 times smaller.
 
-Можно еще снизить размер изображение в атласе, добавив аргумент **-s**:
+We can also lower the size of the image in atlas by adding the argument **-s**:
 
 	python path/to/oxyresbuild/oxyresbuild.py -x resources.xml --src_data data --dest_data data -r -s 0.625
 
-**-s** - сокращение от **--scale**, равное 0.625 говорит, что изображения перед упаковкой в атласы нужно дополнительно отмасштабировать на 0.625. Таким образом, в атлас попадет картинка размерами
+**-s** is short for **--scale**. When it is 0.625, the image needs to the rescaled by a factor of 0.625 before being loaded in. This way the atlast receives the image of the following scales:
 
 	w = 2048 * 0.5 * 0.625 = 640
 	h = 1536 * 0.5 * 0.625 = 480
 
-Но, "виртуальные" ее размеры от этого не изменяться и будут равны, как и раньше:
+However, the size of the Sprite will remain the same:
 
 	sprite->getWidth () == 1024
 	sprite->getHeight() == 768 
 
-Можно, наоборот, повысить размер в атласе, выставив **-s** > 1:
+We can also increase the size of an image in atlas by setting the argument **-s** > 1:
 	
 	python path/to/oxyresbuild/oxyresbuild.py -x resources.xml --src_data data --dest_data data -r -s 1.25 
 
-Таким образом, в атлас попадет картинка размерами
+This way atlas receives the images of the following sizes:
 
 	w = 2048 * 0.5 * 1.25 = 1280
 	h = 1536 * 0.5 * 1.25 = 960
-
 

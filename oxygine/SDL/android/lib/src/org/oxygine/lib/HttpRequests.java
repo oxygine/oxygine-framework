@@ -1,32 +1,25 @@
 package org.oxygine.lib;
 
-import android.content.Context;
-import android.os.AsyncTask;
-import android.os.PowerManager;
-import android.os.Build;
 import android.annotation.TargetApi;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
+import android.os.Build;
+import android.os.PowerManager;
+import android.util.Log;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.Proxy;
 import java.net.InetSocketAddress;
-
-import android.util.Log;
-
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import java.net.Proxy;
+import java.net.URL;
 
 /**
  * Created by Denis on 31.12.2014.
  */
 
-class RequestDetails{
+class RequestDetails {
     public String url;
     public String fileName;
     public byte[] postData;
@@ -38,22 +31,20 @@ class HttpRequestHolder {
 
     private HttpRequest task;
 
-    public HttpRequestHolder()
-    {
+    public HttpRequestHolder() {
     }
 
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB) // API 11
     public static <T> void executeAsyncTask(AsyncTask<T, ?, ?> asyncTask, T... params) {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
             asyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, params);
         else
             asyncTask.execute(params);
-    }   
+    }
 
 
-    public  void run(final  RequestDetails details)
-    {
+    public void run(final RequestDetails details) {
         OxygineActivity.instance.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -75,11 +66,12 @@ class HttpRequest extends AsyncTask<RequestDetails, Integer, String> {
     }
 
     public static native void nativeHttpRequestResponseSuccess(long handle, byte[] data);
+
     public static native void nativeHttpRequestResponseProgress(long handle, int loaded, int total);
+
     public static native void nativeHttpRequestResponseError(long handle);
 
-    private Proxy detectProxy() 
-    {
+    private Proxy detectProxy() {
         try {
             ConnectivityManager cm = (ConnectivityManager) OxygineActivity.instance.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo ni = cm.getActiveNetworkInfo();
@@ -91,9 +83,7 @@ class HttpRequest extends AsyncTask<RequestDetails, Integer, String> {
                     return new Proxy(Proxy.Type.HTTP, sa);
                 }
             }
-        }
-        catch (SecurityException ex)
-        {
+        } catch (SecurityException ex) {
         }
         return null;
     }
@@ -103,7 +93,7 @@ class HttpRequest extends AsyncTask<RequestDetails, Integer, String> {
         InputStream input = null;
         OutputStream output = null;
         HttpURLConnection connection = null;
-        RequestDetails  details = details_[0];
+        RequestDetails details = details_[0];
 
 
         try {
@@ -127,8 +117,8 @@ class HttpRequest extends AsyncTask<RequestDetails, Integer, String> {
             // expect HTTP 200 OK, so we don't mistakenly save error report
             // instead of the file
             if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                return "Server returned HTTP " + connection.getResponseCode()
-                        + " " + connection.getResponseMessage();
+                nativeHttpRequestResponseError(details.handle);
+                return "Server returned HTTP " + connection.getResponseCode() + " " + connection.getResponseMessage();
             }
 
             // this will be useful to display download percentage
@@ -193,6 +183,7 @@ class HttpRequest extends AsyncTask<RequestDetails, Integer, String> {
         }
         return null;
     }
+
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
@@ -229,14 +220,13 @@ class HttpRequest extends AsyncTask<RequestDetails, Integer, String> {
     }
 }
 
-class HttpHandler
-{
+class HttpHandler {
     //private RequestQueue _queue;
-    public HttpHandler(){
+    public HttpHandler() {
         //_queue = Volley.newRequestQueue(OxygineActivity.instance);
     }
 
-    public HttpRequestHolder createRequest(final RequestDetails details){
+    public HttpRequestHolder createRequest(final RequestDetails details) {
 
         //HttpRequest r = new HttpRequest(url, fname, post, handle);
         //_queue.add(r);
@@ -249,18 +239,18 @@ class HttpHandler
 }
 
 
-public class HttpRequests
-{
+public class HttpRequests {
     static private HttpHandler _handler;
-    static public void init(){
+
+    static public void init() {
         _handler = new HttpHandler();
     }
 
-    static public void release(){
+    static public void release() {
 
     }
 
-    static public HttpRequestHolder createRequest(String url, String fname, byte[] post, long handle){
+    static public HttpRequestHolder createRequest(String url, String fname, byte[] post, long handle) {
 
         RequestDetails details = new RequestDetails();
         details.fileName = fname;

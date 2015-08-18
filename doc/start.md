@@ -19,7 +19,7 @@ Each example has configuration folders for different platforms/OS:
 * **proj.macosx** - MacOSX xcode project
 * **proj.marmalade** - Marmalade project
 * *proj.android* - build folder for Android SDK/NDK
-* *proj.cmake* - CMake configuration folder
+* *proj.cmake* - CMake configuration folder (Windows | Linux)
 * *proj.emscripten* - Emscripten configuration folder
 
 > if you have any troubles or if you need to build for android, cmake, emscripten check **oxygine-framework/readme** folder
@@ -43,15 +43,28 @@ Oxygine has some tools written in Python and you need to install them for advanc
 [see details](https://bitbucket.org/oxygine/oxygine-framework/src/tip/tools/readme.txt?at=tip)
 
 ##Generate own project 
+
 You could generate own project outside of oxygine-framework folder by **gen_template.py** tool. It is located in
   
 	oxygine-framework/tools/
+
+![](img/gen_template.png)
 
 Run **gen_template.py** script with Python, example:
 
 	python gen_template.py MyProjectName -t win32 -d path/to/MyProject/
 
 It would create empty solution *MyProject* for Visual Studio in the folder *path/to/MyProject*
+
+
+Other example:
+
+	python gen_template.py MyProjectName -t all --hello -d path/to/MyProject/
+
+It would create full copy of examples/HelloWorld including src, data and proj.* folders.
+
+
+Next step is add *entry_point.cpp* (copy it from any example) to your project and implement basic functions (example_init, example_update and so on). Also, remember to copy the data folder as well if you are using a ready-made example code to start your project.
 
 see for more info: 
 	

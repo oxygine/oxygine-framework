@@ -29,11 +29,16 @@ public:
     }
 };
 
+DECLARE_SMART(Test, spTest);
 class Test: public Actor
 {
 public:
     Test();
     ~Test();
+
+    static void init();
+    static void free();
+    static spTest instance;
 
     struct toggle
     {
@@ -65,8 +70,7 @@ protected:
     Content* content;
     enum {MAX_NOTIFIES = 8};
     int _notifies[MAX_NOTIFIES];
-};
 
-extern spActor _tests;
-extern Resources resources;
-extern Resources resourcesUI;
+public:
+    static Resources resourcesUI;
+};

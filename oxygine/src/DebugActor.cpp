@@ -73,6 +73,7 @@ namespace oxygine
         delete resSystem;
         resSystem = 0;
         file::unmount(&zp);
+        zp.reset();
     }
 
     void DebugActor::setCornerPosition(int corner)

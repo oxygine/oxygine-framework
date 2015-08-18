@@ -59,7 +59,7 @@ endif(EMSCRIPTEN)
 
 
 set(OXYGINE_ROOT_SRC ${CMAKE_CURRENT_SOURCE_DIR}/oxygine/src)
-set(FOLDERS . closure minizip core core/gl dev_tools minizip math pugixml res text_utils utils winnie_alloc)
+set(FOLDERS . closure minizip core core/gl dev_tools minizip math pugixml json res text_utils utils winnie_alloc)
 if (WIN32)
 	set(FOLDERS ${FOLDERS} core/curl)
 	include_directories(${THIRD_PARTY}/curl/)

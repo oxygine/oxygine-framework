@@ -20,7 +20,6 @@
 #include "TestInputText.h"
 #include "TestHttp.h"
 #include "TestAlphaHitTest.h"
-#include "core/STDFileSystem.h"
 
 #ifdef __S3E__
 #include "s3eKeyboard.h"
@@ -28,12 +27,10 @@
 
 using namespace oxygine;
 
-spActor _tests;
 
 //it is our resources
 //in real project you would have more than one Resources declarations. It is important on mobile devices with limited memory and you would load/unload them
 Resources resources;
-Resources resourcesUI;
 
 //#define MULTIWINDOW 1
 
@@ -204,32 +201,16 @@ void example_preinit()
     Renderer::setPremultipliedAlphaRender(false);
 }
 
-file::STDFileSystem extfs(true);
 
 void example_init()
 {
-    //mount additional file system with inner path "ext"
-    //it would be used for searching path in data/ext
-    extfs.setPath(file::fs().getFullPath("ext").c_str());
-    file::mount(&extfs);
-
     //load xml file with resources definition
     resources.loadXML("xmls/res.xml");
-    resourcesUI.loadXML("demo/res_ui.xml");
-    resourcesUI.loadXML("demo/fonts.xml");
 
-    spSprite sp = new Sprite;
-    sp->setResAnim(resourcesUI.getResAnim("logo2"));
-    sp->setInputEnabled(false);
-    sp->attachTo(getStage());
-    sp->setPriority(10);
-    sp->setAlpha(128);
+    Test::init();
 
-    sp->setX(getStage()->getWidth() - sp->getWidth());
-    sp->setY(getStage()->getHeight() - sp->getHeight());
-
-    _tests = new TestActor;
-    getStage()->addChild(_tests);
+    Test::instance = new TestActor;
+    getStage()->addChild(Test::instance);
 
     //initialize http requests
     HttpRequestTask::init();
@@ -263,9 +244,7 @@ void example_update()
 
 void example_destroy()
 {
-    _tests->detach();
-    _tests = 0;
     resources.free();
-    resourcesUI.free();
+    Test::free();
     HttpRequestTask::release();
 }

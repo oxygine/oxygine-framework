@@ -32,12 +32,16 @@ To display custom text on DebugActor (image above) call it each frame:
 
     log::messageln("it is message");
     > it is message
+
+    log::messageln("printf formatting %s-%d", "abc", 123);
+    > printf formatting abc-123
     
     log::warning("it is warning");
     > warning: it is warning
     
     log::error("it is error");
     > error: it is error
+
 
 
 #Tracing Object leaks

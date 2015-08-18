@@ -20,24 +20,13 @@
 #define B2_MATH_H
 
 #include <Box2D/Common/b2Settings.h>
+#include <math.h>
 
-#include <cmath>
-#include <cfloat>
-#include <cstddef>
-#include <limits>
-
-/// This function is used to ensure that a floating point number is
-/// not a NaN or infinity.
+/// This function is used to ensure that a floating point number is not a NaN or infinity.
 inline bool b2IsValid(float32 x)
 {
-	if (x != x)
-	{
-		// NaN.
-		return false;
-	}
-
-	float32 infinity = std::numeric_limits<float32>::infinity();
-	return -infinity < x && x < infinity;
+	int32 ix = *reinterpret_cast<int32*>(&x);
+	return (ix & 0x7f800000) != 0x7f800000;
 }
 
 /// This is a approximate yet fast inverse square-root.
@@ -57,8 +46,8 @@ inline float32 b2InvSqrt(float32 x)
 	return x;
 }
 
-#define	b2Sqrt(x)	std::sqrt(x)
-#define	b2Atan2(y, x)	std::atan2(y, x)
+#define	b2Sqrt(x)	sqrtf(x)
+#define	b2Atan2(y, x)	atan2f(y, x)
 
 /// A 2D column vector.
 struct b2Vec2
@@ -294,6 +283,14 @@ struct b2Mat33
 	/// than computing the inverse in one-shot cases. Solve only the upper
 	/// 2-by-2 matrix equation.
 	b2Vec2 Solve22(const b2Vec2& b) const;
+
+	/// Get the inverse of this matrix as a 2-by-2.
+	/// Returns the zero matrix if singular.
+	void GetInverse22(b2Mat33* M) const;
+
+	/// Get the symmetric inverse of this matrix as a 3-by-3.
+	/// Returns the zero matrix if singular.
+	void GetSymInverse33(b2Mat33* M) const;
 
 	b2Vec3 ex, ey, ez;
 };
@@ -533,6 +530,12 @@ inline b2Vec3 b2Mul(const b2Mat33& A, const b2Vec3& v)
 	return v.x * A.ex + v.y * A.ey + v.z * A.ez;
 }
 
+/// Multiply a matrix times a vector.
+inline b2Vec2 b2Mul22(const b2Mat33& A, const b2Vec2& v)
+{
+	return b2Vec2(A.ex.x * v.x + A.ey.x * v.y, A.ex.y * v.x + A.ey.y * v.y);
+}
+
 /// Multiply two rotations: q * r
 inline b2Rot b2Mul(const b2Rot& q, const b2Rot& r)
 {
@@ -549,13 +552,13 @@ inline b2Rot b2Mul(const b2Rot& q, const b2Rot& r)
 /// Transpose multiply two rotations: qT * r
 inline b2Rot b2MulT(const b2Rot& q, const b2Rot& r)
 {
-	// [ qc qs] * [rc -rs] = [qc*rc-qs*rs -qc*rs-qs*rc]
-	// [-qs qc]   [rs  rc]   [qs*rc+qc*rs -qs*rs+qc*rc]
-	// s = qs * rc + qc * rs
-	// c = qc * rc - qs * rs
+	// [ qc qs] * [rc -rs] = [qc*rc+qs*rs -qc*rs+qs*rc]
+	// [-qs qc]   [rs  rc]   [-qs*rc+qc*rs qs*rs+qc*rc]
+	// s = qc * rs - qs * rc
+	// c = qc * rc + qs * rs
 	b2Rot qr;
-	qr.s = q.s * r.c + q.c * r.s;
-	qr.c = q.c * r.c - q.s * r.s;
+	qr.s = q.c * r.s - q.s * r.c;
+	qr.c = q.c * r.c + q.s * r.s;
 	return qr;
 }
 
@@ -700,8 +703,8 @@ inline void b2Sweep::Advance(float32 alpha)
 {
 	b2Assert(alpha0 < 1.0f);
 	float32 beta = (alpha - alpha0) / (1.0f - alpha0);
-	c0 = (1.0f - beta) * c0 + beta * c;
-	a0 = (1.0f - beta) * a0 + beta * a;
+	c0 += beta * (c - c0);
+	a0 += beta * (a - a0);
 	alpha0 = alpha;
 }
 

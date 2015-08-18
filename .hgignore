@@ -50,3 +50,7 @@ libs/SDL2main.lib
 libs/SDL2.lib
 libs/SDL2.dll
 examples/Game/part2/build_game_vc12/
+oxygine/SDL/android/extension/gen/
+oxygine/SDL/android/extension/bin/
+*.exp
+*.pdb

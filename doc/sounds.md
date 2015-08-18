@@ -20,7 +20,8 @@ Initialize sound system with 16 channels:
 	SoundPlayer::initialize();
 
 *SoundPlayer::initialize* registers new type of resource "sound".
-	
+
+
 Add your ogg tracks to resources file, lets call it "sounds.xml":
 
 	<?xml version="1.0"?>
@@ -61,10 +62,23 @@ SoundPlayer is a container for group of sounds playing right now. You could decl
 	musicPlayer.setVolume(0.5f);
 
 
-Play sounds:
+Update SoundSystem and SoundPlayer instances each frame:
+
+	void example_update()
+	{
+		SoundSystem::instance->update();
+		sfxPlayer.update();
+		musicPlayer.update();
+	}
+
+
+Play single sound:
 	
 	sfxPlayer.play(resources.get("sfx1"));
-	musicPlayer.play(resources.get("music"));
+
+Play looped music with fade in 1.5 seconds:
+
+	musicPlayer.play(resources.get("music"), PlayOptions().loop().fade(1500));
 
 You could save handle to playing sound instance and use it for control:
 

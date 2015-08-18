@@ -75,6 +75,11 @@ namespace oxygine
         _prepared = false;
     }
 
+    bool Box9Sprite::isOn(const Vector2& localPosition)
+    {
+        return Actor::isOn(localPosition);
+    }
+
     void Box9Sprite::animFrameChanged(const AnimationFrame& f)
     {
         _prepared = false;
@@ -326,8 +331,12 @@ namespace oxygine
         data->node.set_name("Box9Sprite");
     }
 
+    Vector2 attr2Vector2(const char* data);
+
     void Box9Sprite::deserialize(const deserializedata* data)
     {
         _Sprite::deserialize(data);
+
+        setSize(attr2Vector2(data->node.attribute("size").as_string()));
     }
 }

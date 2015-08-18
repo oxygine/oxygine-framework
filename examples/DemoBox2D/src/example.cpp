@@ -102,7 +102,7 @@ public:
         addEventListener(TouchEvent::CLICK, CLOSURE(this, &MainActor::click));
 
 
-        _world = new b2World(b2Vec2(0, 10), false);
+        _world = new b2World(b2Vec2(0, 10));
 
 
         spStatic ground = new Static(_world, RectF(getWidth() / 2, getHeight() - 10, getWidth() - 100, 30));
@@ -180,7 +180,7 @@ public:
             Vector2 dir = actor->getPosition() - te->localPosition;
             dir = dir / dir.length() * body->GetMass() * 200;
 
-            body->ApplyForceToCenter(b2Vec2(dir.x, dir.y));
+            body->ApplyForceToCenter(b2Vec2(dir.x, dir.y), true);
 
             spSprite sprite = new Sprite();
             sprite->setResAnim(gameResources.getResAnim("shot"));

@@ -48,6 +48,8 @@
 #include <SDL_events.h>
 #elif __ANDROID__
 #include "core/android/jniUtils.h"
+#elif __APPLE__
+#include "TargetConditionals.h"
 #endif
 
 #ifdef OXYGINE_SDL
@@ -80,6 +82,7 @@ namespace oxygine
     namespace file
     {
         void init(const char* company, const char* app);
+        void free();
     }
 
 
@@ -298,7 +301,7 @@ namespace oxygine
             int v = EM_ASM_INT(
             {
                 var p = navigator.platform;
-                if (p === 'iPad' || p === 'iPhone' || p === 'iPod')
+                if (p == 'iPad' || p == 'iPhone' || p == 'iPod')
                     return 1;
                 return 0;
             }, 0);
@@ -369,10 +372,10 @@ namespace oxygine
 
             SDL_GL_SetSwapInterval(desc.vsync ? 1 : 0);
 
-            if (SDL_GetNumTouchDevices() > 0)
-                _useTouchAPI = true;
-
-            //SDL_SetEventFilter(eventsFilter, 0);
+#if defined(__ANDROID__) || defined(TARGET_OS_IPHONE)
+            //if (SDL_GetNumTouchDevices() > 0)
+            _useTouchAPI = true;
+#endif
 
 #endif
 
@@ -633,9 +636,10 @@ namespace oxygine
                     {
                         //log::messageln("SDL_FINGERMOTION");
                         Vector2 pos = convertTouch(event);
-                        input->sendPointerMotionEvent(stage,
-                                                      pos.x, pos.y, event.tfinger.pressure,
-                                                      input->getTouchByID((int)event.tfinger.fingerId));
+                        PointerState* ps = input->getTouchByID((int)event.tfinger.fingerId);
+                        if (ps)
+                            input->sendPointerMotionEvent(stage,
+                                                          pos.x, pos.y, event.tfinger.pressure, ps);
                     }
                 }
 
@@ -647,11 +651,13 @@ namespace oxygine
                     {
                         //log::messageln("SDL_FINGER");
                         Vector2 pos = convertTouch(event);
-                        input->sendPointerButtonEvent(stage,
-                                                      MouseButton_Touch,
-                                                      pos.x, pos.y, event.tfinger.pressure,
-                                                      event.type == SDL_FINGERDOWN ? TouchEvent::TOUCH_DOWN : TouchEvent::TOUCH_UP,
-                                                      input->getTouchByID((int)event.tfinger.fingerId));
+                        PointerState* ps = input->getTouchByID((int)event.tfinger.fingerId);
+                        if (ps)
+                            input->sendPointerButtonEvent(stage,
+                                                          MouseButton_Touch,
+                                                          pos.x, pos.y, event.tfinger.pressure,
+                                                          event.type == SDL_FINGERDOWN ? TouchEvent::TOUCH_DOWN : TouchEvent::TOUCH_UP,
+                                                          ps);
                     }
                 }
                 break;
@@ -717,6 +723,15 @@ namespace oxygine
             if (Stage::instance)
                 Stage::instance->cleanup();
             Stage::instance = 0;
+            file::free();
+
+            Resources::unregisterResourceType("atlas");
+            Resources::unregisterResourceType("buffer");
+            Resources::unregisterResourceType("font");
+            Resources::unregisterResourceType("bmfc_font");
+            Resources::unregisterResourceType("sdfont");
+            Resources::unregisterResourceType("starling");
+
 #if OXYGINE_SDL
             SDL_GL_DeleteContext(_context);
             SDL_DestroyWindow(_window);
