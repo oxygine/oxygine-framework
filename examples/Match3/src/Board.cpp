@@ -274,3 +274,11 @@ spActor Board::getView()
 {
     return _view;
 }
+
+void Board::free()
+{
+    _field.clear();
+    _view->detach();
+    _view = 0;
+    _current = 0;
+}

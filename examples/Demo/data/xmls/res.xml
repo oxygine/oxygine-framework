@@ -30,6 +30,18 @@
 		<image file="mask.png"/>
 		<image file="sky.png"/>
 		<image file="tiled2.png"/>
+
+		<image file="n0.png"/>
+		<image file="n1.png"/>
+		<image file="n2.png"/>
+		<image file="n3.png"/>
+		<image file="n4.png"/>
+		<image file="n5.png"/>
+		<image file="n6.png"/>
+		<image file="n7.png"/>
+		<image file="n8.png"/>
+		<image file="n9.png"/>
+		<image file="score_table.png"/>
 	</atlas>
 
 	<atlas>

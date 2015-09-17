@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<resources>
-	<set path = "images/animals" />
-	<atlas>
-		<image file="cat.png" />
-		<image file="dog.png"/>		
-	</atlas>
-</resources>

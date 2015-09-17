@@ -48,13 +48,15 @@ public:
     std::vector<Test::toggle> _items;
 };
 
-spTextField createText(std::string txt)
+Color textColor(72, 61, 139, 255);
+
+spTextField createText(const std::string& txt)
 {
     spTextField text = new TextField();
 
     TextStyle style;
     style.font = Test::resourcesUI.getResFont("main")->getFont();
-    style.color = Color(72, 61, 139, 255);
+    style.color = textColor;
     style.vAlign = TextStyle::VALIGN_MIDDLE;
     style.hAlign = TextStyle::HALIGN_CENTER;
     style.multiline = true;
@@ -65,7 +67,7 @@ spTextField createText(std::string txt)
     return text;
 }
 
-spButton createButtonHelper(spButton button, string txt, EventCallback cb)
+spButton createButtonHelper(spButton button, const std::string& txt, EventCallback cb)
 {
     button->setPriority(10);
     //button->setName(id);
@@ -81,7 +83,7 @@ spButton createButtonHelper(spButton button, string txt, EventCallback cb)
 }
 
 
-Test::Test()
+Test::Test() : _color(Color::White), _txtColor(72, 61, 139, 255)
 {
     setSize(getStage()->getSize());
 
@@ -113,18 +115,21 @@ Test::~Test()
 
 spButton Test::addButton(std::string id, std::string txt)
 {
+    textColor = _txtColor;
     spButton button = createButtonHelper(new Button, txt, CLOSURE(this, &Test::_clicked));
     initActor(button.get(),
               arg_name = id,
               arg_attachTo = ui,
               arg_anchor = Vector2(0.5f, 0.0f),
               arg_pos = Vector2(_x, _y));
+    button->setColor(_color);
+    textColor = Color(72, 61, 139, 255);
 
     _y += button->getHeight() + 2.0f;
 
     if (_y + button->getHeight() >= getHeight())
     {
-        _y = 0;
+        _y = 5;
         _x += button->getWidth() + 70;
     }
 

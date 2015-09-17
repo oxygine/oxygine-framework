@@ -7,7 +7,7 @@
 namespace oxygine
 {
     template<class T>
-    inline T interpolate(T a, T b, float v)
+    inline T lerp(T a, T b, float v)
     {
         return T(a + (b - a) * v);
     }

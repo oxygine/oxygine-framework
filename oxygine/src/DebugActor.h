@@ -31,7 +31,7 @@ namespace oxygine
         /**where to display DebugActor. 0 - top left, 1 - top right, 2 - bottom right, 3 - bottom left corner*/
         void setCornerPosition(int corner);
         //void addDebugString(const string &str);
-        void addDebugString(const char* format, ...);
+        static void addDebugString(const char* format, ...);
 
         /**function for debug. Helps you to find actor who handled TouchEvent*/
         void showTouchedActor(bool show);

@@ -213,6 +213,23 @@ namespace oxygine
         return utfstr;
     }
 
+    void charCode2Bytes(std::string& res, int code)
+    {
+        const char* p = (char*)&code;
+        const char& c = *p;
+
+        res.push_back(*p++);
+        if ((c & 0xE0) == 0xE0)
+        {
+            res.push_back(*p++);
+            res.push_back(*p++);
+        }
+        else if ((c & 0xC0) == 0xC0)
+        {
+            res.push_back(*p++);
+        }
+    }
+
     std::string lower(const std::string& str)
     {
         std::string data = str;
@@ -239,6 +256,7 @@ namespace oxygine
         s[len] = 0;
 
         std::wstring str = s;
+        str.reserve(n);
         fastFree(s);
 
         return str;
@@ -251,10 +269,25 @@ namespace oxygine
             s = (wchar_t*)SDL_iconv_string("UCS-4-INTERNAL", "UTF-8", utf8str, n);
 
         std::wstring str = s;
+        str.reserve(n);
         SDL_free(s);
         return str;
 #else
-        return L"not_implemented";
+        log::warning("utf8tows not implemented correctly!");
+
+        std::wstring ws;
+        ws.reserve(n);
+
+        int code = 0;
+        while (true)
+        {
+            utf8str = getNextCode(code, utf8str);
+            if (!code)
+                break;
+            ws.push_back(code);
+        }
+
+        return ws;
 #endif
     }
 
@@ -289,7 +322,15 @@ namespace oxygine
         SDL_free(s);
         return str;
 #else
-        return "not_implemented";
+        log::warning("utf8tows not implemented correctly!");
+        std::string s;
+        int i = 0;
+        while (wchar_t t = wstr[i])
+        {
+            ++i;
+            charCode2Bytes(s, t);
+        }
+        return s;
 #endif
         return "";
     }

@@ -1,11 +1,11 @@
-how to start:
+How to start:
 1. Download and install Marmalade.  http://www.madewithmarmalade.com/
-2. go to oxygine-framework/examples folder
-3. double click on examples/Demo/proj.marmalade/demo.mkb 
-4. select x86 debug configuration
-5. build and run!
+2. Go to oxygine-framework/examples folder
+3. Double click on examples/Demo/proj.marmalade/demo.mkb 
+4. Select x86 debug configuration
+5. Build and run!
 
-* if you see build error:
+* If you see build error:
 	d:/marmalade/7.4/s3e/h/std/math_gcc.h(40): error : reference to 'log' is ambiguous (col 47)
 
 	then open math_gcc.h, find line with error:

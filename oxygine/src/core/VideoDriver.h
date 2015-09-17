@@ -46,6 +46,7 @@ namespace oxygine
             BT_SRC_ALPHA,
             BT_ONE_MINUS_SRC_ALPHA,
             BT_DST_ALPHA,
+            BT_DST_COLOR,
             BT_ONE_MINUS_DST_ALPHA,
         };
 

@@ -1,7 +1,7 @@
-1. start from readme.txt
-2. How to build and run Oxygine on Windows with CMake and Visual Studio (tested with VS2010 and VS2012). Steps:
+1. Start from readme.txt
+2. How to build and run Oxygine on Windows with CMake and Visual Studio (tested with VS2010, VS2012, VS2013 and VS2015). Steps:
 =================================================================================================
-- build SDL2
+- Build SDL2
     - see oxygine-framework/readme/VisualStudio.txt 
 
 - Find and copy compiled SDL2 libraries to oxygine-framework/libs:
@@ -11,9 +11,9 @@
 
 
 - select any example from examples folder. I chose Demo
-- go to folder oxygine-framework/examples/Demo/proj.cmake
+- Go to folder oxygine-framework/examples/Demo/proj.cmake
 - run: cmake .
-- open generated solution. 
+- Open generated solution. 
 - Select Demo project and set it "as startup project".
 - set working directory for Demo project to "..\data"
 	(right mouse click on Demo -> project->properties->ConfigurationProperties->Debugging->WorkingDirectory)
@@ -21,17 +21,17 @@
    and SDL2.dll from oxygine-framework/libs 
    to  oxygine-framework\examples\Demo\data\   
    
-- ready! run!
+- Ready! run!
 
 
 3. How to build and run Oxygine on Linux with CMake & make
 =================================================================================================
-make and install SDL2
-- also should be installed packages (apt-get install):
+Make and install SDL2
+- Use apt-get to install packages (apt-get install package-name-here):
   - libjpeg8-dev zlib1g-dev libpng12-dev
   - freeglut3 (needed only opengl)
-- goto oxygine-framework/examples/Demo (or any other example)
-- goto folder proj.cmake
+- Go to oxygine-framework/examples/Demo (or any other example)
+- Go to folder proj.cmake
 - exec shell script "run.sh":
    ./run.sh   
    
@@ -39,8 +39,8 @@ make and install SDL2
 =================================================================================================
 
 4. You could generate your own CMake configuration
-- you need installed Python 2.7
-- you need to run this script
+- You need Python 2.7 installed
+- You need to run this script
   oxygine-framework\tools\gen_template.py
 
 example:

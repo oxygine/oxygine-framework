@@ -17,6 +17,7 @@ namespace oxygine
         blend_premultiplied_alpha,
         blend_alpha,
         blend_add,
+        blend_multiply,
         //blend_xor,
 
         //gles2

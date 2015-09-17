@@ -20,6 +20,7 @@ public:
     Board();
 
     void init(int w, int h);
+    void free();
 
     spActor getView();
 

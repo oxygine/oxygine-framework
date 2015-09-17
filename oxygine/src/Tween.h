@@ -154,6 +154,7 @@ namespace oxygine
         virtual void _start(Actor& actor) {}
         virtual void _update(Actor& actor, const UpdateState& us) {}
         virtual void _done(Actor& actor, const UpdateState& us) {}
+        virtual void _loopDone(Actor& actor, const UpdateState& us) {}
         virtual float _calcEase(float v);
 
         enum status
@@ -170,6 +171,7 @@ namespace oxygine
         timeMS _duration;
         timeMS _delay;
         int _loops;
+        int _loopsDone;
         EASE _ease;
         bool _twoSides;
 

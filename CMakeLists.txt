@@ -146,9 +146,19 @@ endif(WIN32)
 
 #add png library
 if (OX_HAVE_LIBPNG)
+
+	set(LIBPNG ${libprefix}png)
+
+	if (MSVC)
+		if (MSVC_VERSION EQUAL "1900")
+			set(LIBPNG ${LIBPNG}-2015)
+		endif()
+	endif()	
+
 	set(CORE_LIBS
 		${CORE_LIBS}
-		${libprefix}png)
+		${LIBPNG})
+
 	set(OX_DEFINITIONS	${OX_DEFINITIONS}
 		-DOX_HAVE_LIBPNG)
 endif(OX_HAVE_LIBPNG)
@@ -171,11 +181,19 @@ message(STATUS ${CORE_LIBS})
 
 #add jpeg library
 if (OX_HAVE_LIBJPEG)
+	set(LIBJPEG ${libprefix}jpeg)
+
+	if (MSVC)
+		if (MSVC_VERSION EQUAL "1900")
+			set(LIBJPEG ${LIBJPEG}-2015)
+		endif()	
+	endif()	
+
 	set(OX_DEFINITIONS	${OX_DEFINITIONS}
 		-DOX_HAVE_LIBJPEG)
 	set(CORE_LIBS
 		${CORE_LIBS}
-		${libprefix}jpeg)
+		${LIBJPEG})
 endif(OX_HAVE_LIBJPEG)
 
 

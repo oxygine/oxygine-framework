@@ -49,7 +49,7 @@
 #elif __ANDROID__
 #include "core/android/jniUtils.h"
 #elif __APPLE__
-#include "TargetConditionals.h"
+#include <TargetConditionals.h>
 #endif
 
 #ifdef OXYGINE_SDL
@@ -372,7 +372,7 @@ namespace oxygine
 
             SDL_GL_SetSwapInterval(desc.vsync ? 1 : 0);
 
-#if defined(__ANDROID__) || defined(TARGET_OS_IPHONE)
+#if __ANDROID__ || TARGET_OS_IPHONE
             //if (SDL_GetNumTouchDevices() > 0)
             _useTouchAPI = true;
 #endif

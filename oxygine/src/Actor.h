@@ -56,18 +56,20 @@ namespace oxygine
     class TweenOptions
     {
     public:
-        explicit TweenOptions(timeMS duration): _duration(duration), _delay(0), _ease(Tween::ease_linear), _loops(1), _twoSides(false) {}
+        explicit TweenOptions(timeMS duration) : _duration(duration), _delay(0), _ease(Tween::ease_linear), _loops(1), _twoSides(false), _detach(false) {}
         TweenOptions& duration(timeMS duration) { _duration = duration; return *this; }
         TweenOptions& delay(timeMS delay) { _delay = delay; return *this; }
         TweenOptions& loops(int loops) { _loops = loops; return *this; }
         TweenOptions& twoSides(bool enabled = true) { _twoSides = enabled; return *this; }
         TweenOptions& ease(Tween::EASE ease) { _ease = ease; return *this; }
+        TweenOptions& detach(bool detach_ = true) { _detach = detach_; return *this; }
 
         timeMS  _duration;
         timeMS  _delay;
         Tween::EASE _ease;
         int     _loops;
         bool    _twoSides;
+        bool    _detach;
     };
 
 
@@ -238,7 +240,7 @@ namespace oxygine
         {return addTween(createTween(prop, duration, loops, twoSides, delay, ease));}
 
         template<class Prop>
-        spTween addTween2(const Prop& prop, const TweenOptions& opt)
+        spTween addTween(const Prop& prop, const TweenOptions& opt)
         {return addTween(createTween2(prop, opt));}
 
         void removeTween(spTween);

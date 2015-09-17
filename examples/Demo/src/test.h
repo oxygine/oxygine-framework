@@ -3,11 +3,13 @@
 #include "Button.h"
 #include "RenderState.h"
 #include "STDRenderer.h"
+#include "TextField.h"
 using namespace oxygine;
 using namespace std;
 
 
-spButton createButtonHelper(spButton, std::string txt, EventCallback cb);
+spTextField createText(const std::string& txt);
+spButton createButtonHelper(spButton, const std::string& txt, EventCallback cb);
 
 class Content: public Actor
 {
@@ -63,6 +65,9 @@ public:
 
 protected:
     void notifyDone(Event* ev);
+
+    Color _color;
+    Color _txtColor;
 
     float _x;
     float _y;

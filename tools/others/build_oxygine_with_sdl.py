@@ -93,7 +93,7 @@ def enum(folder, cb):
             
 def copy(path):
     win32 = OXYGINE_dest + "/oxygine/third_party/win32/dlls/"
-    items = (win32 + "zlib1.dll", 
+    items = (win32 + "zlib.dll", 
              win32 + "pthreadVCE2.dll",
              "../../libs/SDL2.dll")
 

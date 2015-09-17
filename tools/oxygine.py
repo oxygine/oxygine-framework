@@ -6,7 +6,23 @@ def helper(root = ""):
     if not _helper:        
         if not root:
             import os
-            root = os.environ["OXYGINE"] + "/"
+            if "OXYGINE" in os.environ:
+                root = os.environ["OXYGINE"] + "/"
+            else:
+                print("OXYGINE env variable not set. Searching...")
+                cur = os.path.split(__file__)[0]
+                while cur:
+                    parent = os.path.split(cur)[0]
+                    if parent == cur:
+                        break
+                    cur = parent
+                    
+                    ox = cur + "oxygine-framework"
+                    if os.path.isdir(ox):
+                        print("oxygine-framework folder found at " + ox)
+                        root = ox
+                        break
+                    #print cur
         import sys
         p = root + "/tools/"
         sys.path.append(p)
@@ -15,3 +31,6 @@ def helper(root = ""):
         sys.path.remove(p)
 
     return _helper
+
+
+#helper()

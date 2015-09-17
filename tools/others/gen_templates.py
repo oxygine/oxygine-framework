@@ -9,7 +9,7 @@ def gen(path, project = ""):
 	
 	#projs = ("ios", "macosx")
 	#projs = ("macosx", )	
-	#projs = ("win32", )
+	projs = ("win32", )
 	#projs = ("cmake", )	
 	#projs = ("android", )
 	#projs = ("emscripten", )
@@ -26,14 +26,14 @@ def gen(path, project = ""):
 
 
 
-if 0:
+if 1:
 	gen("Demo")
+	gen("DemoBox2D")
 	gen("Game/part1", "GamePart1")
 	gen("Game/part2", "GamePart2")
 	gen("Game/part3", "GamePart3")
 	gen("Game/part4", "GamePart4")
 	gen("Game/part5", "GamePart5")
-	gen("TutorialResources")
 	gen("HelloWorld")
 	gen("Match3")
 

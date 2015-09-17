@@ -57,6 +57,8 @@ namespace oxygine
                 return GL_SRC_ALPHA;
             case BT_ONE_MINUS_SRC_ALPHA:
                 return GL_ONE_MINUS_SRC_ALPHA;
+            case BT_DST_COLOR:
+                return GL_DST_COLOR;
             case BT_DST_ALPHA:
                 return GL_DST_ALPHA;
             case BT_ONE_MINUS_DST_ALPHA:

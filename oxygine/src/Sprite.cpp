@@ -56,6 +56,8 @@ namespace oxygine
         if (_frame.getDiffuse().base)
             tname = _frame.getDiffuse().base->getName();
         stream << "texture='" << tname << "' ";
+        //if (_frame.getResAnim())
+        //    stream << "resanim='" << _frame.getResAnim()->getName() << "' ";
         if (_flags & flag_manageResAnim)
             stream << "manageResAnim=true";
 

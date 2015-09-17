@@ -1,12 +1,12 @@
-1. start from readme.txt
-2a. Examples folder have configured android project (exception is demobox2d)
+1. Start from readme.txt
+2a. Examples folder have configured android project
 =================================================================================================
-how to build. Steps:
-- install Android NDK and setup it
-- install Android SDK - 12 (if newer need to fix some properties in example)
-- install apache-ant 
-- install JDK version 6/7
-- configure environment variables properly:
+How to build. Steps:
+- Install Android NDK (https://developer.android.com/tools/sdk/ndk/index.html) and set it up
+- Install Android SDK (https://developer.android.com/sdk/index.html) - 10 and 14 (if newer need to fix some properties in example)
+- Install apache-ant (http://ant.apache.org/bindownload.cgi)
+- Install JDK version 6/7
+- Configure environment variables properly:
   NDK_ROOT points to root NDK folder 
   	example: d:\android\android-ndk-r9c\
   ANDROID_HOME points to root Android SDK folder
@@ -14,7 +14,7 @@ how to build. Steps:
   JAVA_HOME points to JDK 
   	example: c:\Program Files (x86)\Java\jdk1.6.0_26\
 
-- add necessary paths to environment variable PATH:
+- Add necessary paths to environment variable PATH:
   JDK 
   	example: "c:\Program Files (x86)\Java\jdk1.6.0_26\bin\"
   apache-ant
@@ -25,18 +25,24 @@ how to build. Steps:
   	example: d:\android\android-sdk\platform-tools\
   	example: d:\android\android-sdk\tools\)
 
-- copy latest source code (and don't forget to update it if you updated SDL)
+- Copy latest source code (and don't forget to update it if you updated SDL)
 	from SDL/android-project/src/
 	to oxygine-framework/oxygine/SDL/android/lib/src/
 
-- goto oxygine-framework\examples and choose any example. Lets call it "Demo" 
-- try to build and run it using these scripts located in proj.android folder:
-	build.cmd
-  ant_debug.bat
-	install.bat
+- Go to oxygine-framework\examples and choose any example. For example "Demo" 
+- Try to build and run it using these scripts located in proj.android folder*:
+  - build native part:
+      build.cmd
+  - build complete application in debug mode:
+      ant_debug.bat
+  - install it to device and run (using adb):
+      install.bat
+
+  * there is also build-run.bat includes these 3 steps
+  
 
 !!!note!!!:
-  folder with oxygine-framework should have exact name 'oxygine-framework'
+  Folder containing oxygine-framework should have the exact name 'oxygine-framework'
   not 'oxygine-framework-master' not 'oxygine-framework.git' etc.
   otherwise you would see error:
     > Android NDK: jni/src/Android.mk: Cannot find module with tag 'oxygine-framework'
@@ -44,8 +50,8 @@ how to build. Steps:
 
 2b. You could generate your own android build config.
 =================================================================================================
-- you need installed Python 2.7
-- you need to run this script
+- You need installed Python 2.7
+- You need to run this script
   oxygine-framework\tools\gen_template.py
 
 example:

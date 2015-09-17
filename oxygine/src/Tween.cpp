@@ -7,6 +7,7 @@ namespace oxygine
 {
     Tween::Tween() : _duration(0),
         _loops(1),
+		_loopsDone(0),
         _percent(0),
         _status(status_not_started),
         _elapsed(0), _twoSides(false), _ease(ease_linear), _detach(false), _delay(0), _client(0)
@@ -22,6 +23,7 @@ namespace oxygine
     {
         _elapsed = 0;
         _status = status_not_started;
+		_loopsDone = 0;
     }
 
     void Tween::init(timeMS duration, int loops, bool twoSides, timeMS delay, EASE ease)
@@ -46,6 +48,7 @@ namespace oxygine
 		_loops = opt._loops;
 		_twoSides = opt._twoSides;
 		_delay = opt._delay;
+		_detach = opt._detach;
 
 		if (_duration <= 0)
 		{
@@ -92,7 +95,7 @@ namespace oxygine
 
 //OX_ASSERT(!"not implemented");
 
-//not started yet because if delay
+//not started yet because has delay
         if (_status == status_delayed)
         {
             _start(*_client);
@@ -148,6 +151,11 @@ namespace oxygine
                     int loopsDone = localElapsed / _duration;
 
                     _percent = _calcEase(((float)(localElapsed - loopsDone * _duration)) / _duration);
+					while(_loopsDone < loopsDone)
+					{
+						_loopDone(actor, us);
+						_loopsDone++;
+					}
 
                     if (_loops > 0 && int(loopsDone) >= _loops)
                     {

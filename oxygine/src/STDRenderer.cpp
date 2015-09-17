@@ -30,6 +30,9 @@ namespace oxygine
                 case blend_add:
                     _driver->setBlendFunc(IVideoDriver::BT_ONE, IVideoDriver::BT_ONE);
                     break;
+                case blend_multiply:
+                    _driver->setBlendFunc(IVideoDriver::BT_DST_COLOR, IVideoDriver::BT_ONE_MINUS_SRC_ALPHA);
+                    break;
                 //case blend_sub:
                 //_driver->setBlendFunc(IVideoDriver::BT_ONE, IVideoDriver::BT_ONE);
                 //glBlendEquation(GL_FUNC_REVERSE_SUBTRACT);
@@ -199,7 +202,7 @@ namespace oxygine
             if (!t)
             {
                 float c = (sinf((float)getTimeMS() / 200 + v[0].x * v[0].y) + 1) / 2.0f;
-                Color b = interpolate(Color(rand() % 255, rand() % 255, rand() % 255, 255), color, c);
+                Color b = lerp(Color(rand() % 255, rand() % 255, rand() % 255, 255), color, c);
                 fillQuadT(v, srcRect, destRect, rs->transform, b.rgba());
             }
         }
@@ -264,7 +267,7 @@ namespace oxygine
             if (!t)
             {
                 float c = (sinf((float)getTimeMS() / 200 + v[0].x * v[0].y) + 1) / 2.0f;
-                Color b = interpolate(Color(rand() % 255, rand() % 255, rand() % 255, 255), color, c);
+                Color b = lerp(Color(rand() % 255, rand() % 255, rand() % 255, 255), color, c);
                 fillQuadT(v, srcRect, destRect, tr, b.rgba());
             }
         }

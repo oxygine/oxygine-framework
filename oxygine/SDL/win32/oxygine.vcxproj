@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{52411305-CFE1-4FA8-9885-5729BFC816CF}</ProjectGuid>
+    <RootNamespace>oxygine</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectName>oxygine</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0'">v140</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v140_xp</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0'">v140</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v140_xp</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)_$(PlatformToolset)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)_$(PlatformToolset)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)_$(PlatformToolset)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)_$(PlatformToolset)\</IntDir>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectName)_d</TargetName>
+    <PostBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</PostBuildEventUseInBuild>
+    <PostBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</PostBuildEventUseInBuild>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\src\;..\..\third_party\win32\zlib;..\..\third_party\win32\libjpeg;..\..\third_party\win32\libpng;..\..\greenlets\src\;..\..\..\..\SDL\include\;..\..\third_party\win32\OGLES;..\..\third_party\win32\glew;../../third_party/win32/pthreads/include;..\..\third_party\win32\curl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;OXYGINE_SDL;_WINDOWS;OX_HAVE_LIBPNG;OX_HAVE_LIBJPEG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <ShowIncludes>false</ShowIncludes>
+    </ClCompile>
+    <Lib>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <AdditionalDependencies>libcurl_imp.lib;ws2_32.lib;libjpeg.lib;libpng.lib;libzlib.lib;opengl32.lib;pthreadVCE2.lib;SDL2.lib;SDL2main.lib;</AdditionalDependencies>
+      <AdditionalDependencies Condition="'$(VisualStudioVersion)' == '14.0'">libcurl_imp.lib;ws2_32.lib;libjpeg-2015.lib;libpng-2015.lib;libzlib.lib;opengl32.lib;pthreadVCE2.lib;SDL2.lib;SDL2main.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../../third_party/win32/libraries;../../..//libs;</AdditionalLibraryDirectories>
+    </Lib>
+    <PostBuildEvent>
+      <Command>copy $(TargetPath) $(ProjectDir)\..\lib\$(TargetFileName)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\..\src\;..\..\third_party\win32\zlib;..\..\third_party\win32\libjpeg;..\..\third_party\win32\libpng;..\..\greenlets\src\;..\..\..\..\SDL\include\;..\..\third_party\win32\OGLES;..\..\third_party\win32\glew;../../third_party/win32/pthreads/include;..\..\third_party\win32\curl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;OXYGINE_SDL;_WINDOWS;_CRT_SECURE_NO_WARNINGS;OX_HAVE_LIBPNG;OX_HAVE_LIBJPEG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Lib>
+      <AdditionalDependencies>libcurl_imp.lib;ws2_32.lib;libjpeg.lib;libpng.lib;libzlib.lib;opengl32.lib;pthreadVCE2.lib;SDL2.lib;SDL2main.lib;</AdditionalDependencies>
+      <AdditionalDependencies Condition="'$(VisualStudioVersion)' == '14.0'">libcurl_imp.lib;ws2_32.lib;libjpeg-2015.lib;libpng-2015.lib;libzlib.lib;opengl32.lib;pthreadVCE2.lib;SDL2.lib;SDL2main.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../../third_party/win32/libraries;../../..//libs;</AdditionalLibraryDirectories>
+    </Lib>
+    <PostBuildEvent>
+      <Command>copy $(TargetPath) $(ProjectDir)\..\lib\$(TargetFileName)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\Actor.cpp" />
+    <ClCompile Include="..\..\src\AnimationFrame.cpp" />
+    <ClCompile Include="..\..\src\AsyncTask.cpp" />
+    <ClCompile Include="..\..\src\Blocking.cpp" />
+    <ClCompile Include="..\..\src\Box9Sprite.cpp" />
+    <ClCompile Include="..\..\src\Button.cpp" />
+    <ClCompile Include="..\..\src\ClipRectActor.cpp" />
+    <ClCompile Include="..\..\src\Clock.cpp" />
+    <ClCompile Include="..\..\src\ColorRectSprite.cpp" />
+    <ClCompile Include="..\..\src\core\coroutines.cpp" />
+    <ClCompile Include="..\..\src\core\curl\HttpRequestCurlTask.cpp" />
+    <ClCompile Include="..\..\src\core\file.cpp" />
+    <ClCompile Include="..\..\src\core\FileSystem.cpp" />
+    <ClCompile Include="..\..\src\core\gl\NativeTextureGLES.cpp" />
+    <ClCompile Include="..\..\src\core\gl\oxgl.cpp" />
+    <ClCompile Include="..\..\src\core\gl\ShaderProgramGL.cpp" />
+    <ClCompile Include="..\..\src\core\gl\VertexDeclarationGL.cpp" />
+    <ClCompile Include="..\..\src\core\gl\VideoDriverGL.cpp" />
+    <ClCompile Include="..\..\src\core\gl\VideoDriverGLES20.cpp" />
+    <ClCompile Include="..\..\src\core\ImageData.cpp" />
+    <ClCompile Include="..\..\src\core\ImageDataOperations.cpp" />
+    <ClCompile Include="..\..\src\core\log.cpp" />
+    <ClCompile Include="..\..\src\core\Mem2Native.cpp" />
+    <ClCompile Include="..\..\src\core\Mutex.cpp" />
+    <ClCompile Include="..\..\src\core\NativeTexture.cpp" />
+    <ClCompile Include="..\..\src\core\Object.cpp" />
+    <ClCompile Include="..\..\src\core\oxygine.cpp" />
+    <ClCompile Include="..\..\src\core\Renderer.cpp" />
+    <ClCompile Include="..\..\src\core\Restorable.cpp" />
+    <ClCompile Include="..\..\src\core\STDFileSystem.cpp" />
+    <ClCompile Include="..\..\src\core\system_data.cpp" />
+    <ClCompile Include="..\..\src\core\Texture.cpp" />
+    <ClCompile Include="..\..\src\core\ThreadMessages.cpp" />
+    <ClCompile Include="..\..\src\core\UberShaderProgram.cpp" />
+    <ClCompile Include="..\..\src\core\VideoDriver.cpp" />
+    <ClCompile Include="..\..\src\core\ZipFileSystem.cpp" />
+    <ClCompile Include="..\..\src\DebugActor.cpp" />
+    <ClCompile Include="..\..\src\dev_tools\DeveloperMenu.cpp" />
+    <ClCompile Include="..\..\src\dev_tools\TexturesInspector.cpp" />
+    <ClCompile Include="..\..\src\dev_tools\TreeInspector.cpp" />
+    <ClCompile Include="..\..\src\dev_tools\TreeInspectorLine.cpp" />
+    <ClCompile Include="..\..\src\dev_tools\TreeInspectorPage.cpp" />
+    <ClCompile Include="..\..\src\dev_tools\TreeInspectorPreview.cpp" />
+    <ClCompile Include="..\..\src\Draggable.cpp" />
+    <ClCompile Include="..\..\src\EventDispatcher.cpp" />
+    <ClCompile Include="..\..\src\Font.cpp" />
+    <ClCompile Include="..\..\src\HttpRequestTask.cpp" />
+    <ClCompile Include="..\..\src\Input.cpp" />
+    <ClCompile Include="..\..\src\InputText.cpp" />
+    <ClCompile Include="..\..\src\json\jsoncpp.cpp" />
+    <ClCompile Include="..\..\src\MaskedRenderer.cpp" />
+    <ClCompile Include="..\..\src\MaskedSprite.cpp" />
+    <ClCompile Include="..\..\src\MemoryTexture.cpp" />
+    <ClCompile Include="..\..\src\minizip\ioapi.c" />
+    <ClCompile Include="..\..\src\minizip\ioapi_mem.c" />
+    <ClCompile Include="..\..\src\minizip\unzip.c" />
+    <ClCompile Include="..\..\src\Multithreading.cpp" />
+    <ClCompile Include="..\..\src\PointerState.cpp" />
+    <ClCompile Include="..\..\src\Polygon.cpp" />
+    <ClCompile Include="..\..\src\ProgressBar.cpp" />
+    <ClCompile Include="..\..\src\res\CreateResourceContext.cpp" />
+    <ClCompile Include="..\..\src\res\ResAnim.cpp" />
+    <ClCompile Include="..\..\src\res\ResAtlas.cpp" />
+    <ClCompile Include="..\..\src\res\ResBuffer.cpp" />
+    <ClCompile Include="..\..\src\res\ResFont.cpp" />
+    <ClCompile Include="..\..\src\res\ResFontBM.cpp" />
+    <ClCompile Include="..\..\src\res\Resource.cpp" />
+    <ClCompile Include="..\..\src\res\Resources.cpp" />
+    <ClCompile Include="..\..\src\res\ResStarlingAtlas.cpp" />
+    <ClCompile Include="..\..\src\Serializable.cpp" />
+    <ClCompile Include="..\..\src\Stage.cpp" />
+    <ClCompile Include="..\..\src\Serialize.cpp" />
+    <ClCompile Include="..\..\src\SlidingActor.cpp" />
+    <ClCompile Include="..\..\src\Sprite.cpp" />
+    <ClCompile Include="..\..\src\STDRenderer.cpp" />
+    <ClCompile Include="..\..\src\TextField.cpp" />
+    <ClCompile Include="..\..\src\text_utils\Aligner.cpp" />
+    <ClCompile Include="..\..\src\text_utils\Node.cpp" />
+    <ClCompile Include="..\..\src\text_utils\TextBuilder.cpp" />
+    <ClCompile Include="..\..\src\Tween.cpp" />
+    <ClCompile Include="..\..\src\TweenAnim.cpp" />
+    <ClCompile Include="..\..\src\TweenQueue.cpp" />
+    <ClCompile Include="..\..\src\utils\cdecode.c" />
+    <ClCompile Include="..\..\src\utils\stringUtils.cpp" />
+    <ClCompile Include="..\..\src\math\AffineTransform.cpp" />
+    <ClCompile Include="..\..\src\pugixml\pugixml.cpp" />
+    <ClCompile Include="..\..\src\utils\AtlasTool.cpp" />
+    <ClCompile Include="..\..\src\utils\ImageUtils.cpp" />
+    <ClCompile Include="..\..\src\VisualStyle.cpp" />
+    <ClCompile Include="..\..\src\WebImage.cpp" />
+    <ClCompile Include="..\..\src\winnie_alloc\system_alloc.cpp" />
+    <ClCompile Include="..\..\src\winnie_alloc\winnie_alloc.cpp" />
+    <ClCompile Include="..\..\greenlets\src\greenlet.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\Actor.h" />
+    <ClInclude Include="..\..\src\AnimationFrame.h" />
+    <ClInclude Include="..\..\src\AsyncTask.h" />
+    <ClInclude Include="..\..\src\Blocking.h" />
+    <ClInclude Include="..\..\src\Box9Sprite.h" />
+    <ClInclude Include="..\..\src\Button.h" />
+    <ClInclude Include="..\..\src\ClipRectActor.h" />
+    <ClInclude Include="..\..\src\Clock.h" />
+    <ClInclude Include="..\..\src\ColorRectSprite.h" />
+    <ClInclude Include="..\..\src\core\coroutines.h" />
+    <ClInclude Include="..\..\src\core\curl\HttpRequestCurlTask.h" />
+    <ClInclude Include="..\..\src\core\file.h" />
+    <ClInclude Include="..\..\src\core\FileSystem.h" />
+    <ClInclude Include="..\..\src\core\gl\NativeTextureGLES.h" />
+    <ClInclude Include="..\..\src\core\gl\oxgl.h" />
+    <ClInclude Include="..\..\src\core\gl\ShaderProgramGL.h" />
+    <ClInclude Include="..\..\src\core\gl\VertexDeclarationGL.h" />
+    <ClInclude Include="..\..\src\core\gl\VideoDriverGL.h" />
+    <ClInclude Include="..\..\src\core\gl\VideoDriverGLES20.h" />
+    <ClInclude Include="..\..\src\core\ImageData.h" />
+    <ClInclude Include="..\..\src\core\ImageDataOperations.h" />
+    <ClInclude Include="..\..\src\core\intrusive_ptr.h" />
+    <ClInclude Include="..\..\src\core\log.h" />
+    <ClInclude Include="..\..\src\core\Mem2Native.h" />
+    <ClInclude Include="..\..\src\core\Mutex.h" />
+    <ClInclude Include="..\..\src\core\NativeTexture.h" />
+    <ClInclude Include="..\..\src\core\Object.h" />
+    <ClInclude Include="..\..\src\core\oxygine.h" />
+    <ClInclude Include="..\..\src\core\ox_debug.h" />
+    <ClInclude Include="..\..\src\core\pixel.h" />
+    <ClInclude Include="..\..\src\core\ref_counter.h" />
+    <ClInclude Include="..\..\src\core\Renderer.h" />
+    <ClInclude Include="..\..\src\core\Restorable.h" />
+    <ClInclude Include="..\..\src\core\ShaderProgram.h" />
+    <ClInclude Include="..\..\src\core\STDFileSystem.h" />
+    <ClInclude Include="..\..\src\core\system_data.h" />
+    <ClInclude Include="..\..\src\core\Texture.h" />
+    <ClInclude Include="..\..\src\core\ThreadMessages.h" />
+    <ClInclude Include="..\..\src\core\UberShaderProgram.h" />
+    <ClInclude Include="..\..\src\core\vertex.h" />
+    <ClInclude Include="..\..\src\core\VertexDeclaration.h" />
+    <ClInclude Include="..\..\src\core\VideoDriver.h" />
+    <ClInclude Include="..\..\src\core\ZipFileSystem.h" />
+    <ClInclude Include="..\..\src\DebugActor.h" />
+    <ClInclude Include="..\..\src\dev_tools\DeveloperMenu.h" />
+    <ClInclude Include="..\..\src\dev_tools\TexturesInspector.h" />
+    <ClInclude Include="..\..\src\dev_tools\TreeInspector.h" />
+    <ClInclude Include="..\..\src\dev_tools\TreeInspectorLine.h" />
+    <ClInclude Include="..\..\src\dev_tools\TreeInspectorPage.h" />
+    <ClInclude Include="..\..\src\dev_tools\TreeInspectorPreview.h" />
+    <ClInclude Include="..\..\src\Draggable.h" />
+    <ClInclude Include="..\..\src\Event.h" />
+    <ClInclude Include="..\..\src\EventDispatcher.h" />
+    <ClInclude Include="..\..\src\Font.h" />
+    <ClInclude Include="..\..\src\HttpRequestTask.h" />
+    <ClInclude Include="..\..\src\InitActor.h" />
+    <ClInclude Include="..\..\src\Input.h" />
+    <ClInclude Include="..\..\src\InputText.h" />
+    <ClInclude Include="..\..\src\json\json-forwards.h" />
+    <ClInclude Include="..\..\src\json\json.h" />
+    <ClInclude Include="..\..\src\KeyEvent.h" />
+    <ClInclude Include="..\..\src\MaskedRenderer.h" />
+    <ClInclude Include="..\..\src\MaskedSprite.h" />
+    <ClInclude Include="..\..\src\MemoryTexture.h" />
+    <ClInclude Include="..\..\src\minizip\ioapi.h" />
+    <ClInclude Include="..\..\src\minizip\ioapi_mem.h" />
+    <ClInclude Include="..\..\src\minizip\unzip.h" />
+    <ClInclude Include="..\..\src\Multithreading.h" />
+    <ClInclude Include="..\..\src\oxygine-framework.h" />
+    <ClInclude Include="..\..\src\oxygine_include.h" />
+    <ClInclude Include="..\..\src\PointerState.h" />
+    <ClInclude Include="..\..\src\Polygon.h" />
+    <ClInclude Include="..\..\src\ProgressBar.h" />
+    <ClInclude Include="..\..\src\Property.h" />
+    <ClInclude Include="..\..\src\RenderState.h" />
+    <ClInclude Include="..\..\src\res\CreateResourceContext.h" />
+    <ClInclude Include="..\..\src\res\ResAnim.h" />
+    <ClInclude Include="..\..\src\res\ResAtlas.h" />
+    <ClInclude Include="..\..\src\res\ResBuffer.h" />
+    <ClInclude Include="..\..\src\res\ResFont.h" />
+    <ClInclude Include="..\..\src\res\ResFontBM.h" />
+    <ClInclude Include="..\..\src\res\Resource.h" />
+    <ClInclude Include="..\..\src\res\Resources.h" />
+    <ClInclude Include="..\..\src\res\ResStarlingAtlas.h" />
+    <ClInclude Include="..\..\src\RootActor.h" />
+    <ClInclude Include="..\..\src\Serializable.h" />
+    <ClInclude Include="..\..\src\Stage.h" />
+    <ClInclude Include="..\..\src\Serialize.h" />
+    <ClInclude Include="..\..\src\SlidingActor.h" />
+    <ClInclude Include="..\..\src\Sprite.h" />
+    <ClInclude Include="..\..\src\STDRenderer.h" />
+    <ClInclude Include="..\..\src\TextActor.h" />
+    <ClInclude Include="..\..\src\TextField.h" />
+    <ClInclude Include="..\..\src\TextStyle.h" />
+    <ClInclude Include="..\..\src\text_utils\Aligner.h" />
+    <ClInclude Include="..\..\src\text_utils\Node.h" />
+    <ClInclude Include="..\..\src\text_utils\TextBuilder.h" />
+    <ClInclude Include="..\..\src\TouchEvent.h" />
+    <ClInclude Include="..\..\src\Tween.h" />
+    <ClInclude Include="..\..\src\TweenAnim.h" />
+    <ClInclude Include="..\..\src\Tweener.h" />
+    <ClInclude Include="..\..\src\TweenQueue.h" />
+    <ClInclude Include="..\..\src\UpdateState.h" />
+    <ClInclude Include="..\..\src\utils\cdecode.h" />
+    <ClInclude Include="..\..\src\utils\stringUtils.h" />
+    <ClInclude Include="..\..\src\closure\closure.h" />
+    <ClInclude Include="..\..\src\closure\closure_impl.h" />
+    <ClInclude Include="..\..\src\math\AffineTransform.h" />
+    <ClInclude Include="..\..\src\math\Color.h" />
+    <ClInclude Include="..\..\src\math\matrix.h" />
+    <ClInclude Include="..\..\src\math\Rect.h" />
+    <ClInclude Include="..\..\src\math\ScalarMath.h" />
+    <ClInclude Include="..\..\src\math\vector2.h" />
+    <ClInclude Include="..\..\src\math\vector3.h" />
+    <ClInclude Include="..\..\src\math\vector4.h" />
+    <ClInclude Include="..\..\src\pugixml\pugiconfig.hpp" />
+    <ClInclude Include="..\..\src\pugixml\pugixml.hpp" />
+    <ClInclude Include="..\..\src\utils\AtlasTool.h" />
+    <ClInclude Include="..\..\src\utils\ImageUtils.h" />
+    <ClInclude Include="..\..\src\utils\intrusive_list.h" />
+    <ClInclude Include="..\..\src\VisualStyle.h" />
+    <ClInclude Include="..\..\src\WebImage.h" />
+    <ClInclude Include="..\..\src\winnie_alloc\system_alloc.h" />
+    <ClInclude Include="..\..\src\winnie_alloc\winnie_alloc.h" />
+    <ClInclude Include="..\..\src\winnie_alloc\winnie_alloc_config.h" />
+    <ClInclude Include="..\..\greenlets\src\greenlet.h" />
+    <ClInclude Include="..\..\greenlets\src\slp_platformselect.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

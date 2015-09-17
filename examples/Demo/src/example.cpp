@@ -20,6 +20,9 @@
 #include "TestInputText.h"
 #include "TestHttp.h"
 #include "TestAlphaHitTest.h"
+#include "TestCounter.h"
+#include "TestTweenText.h"
+#include "TestTweenShine.h"
 
 #ifdef __S3E__
 #include "s3eKeyboard.h"
@@ -70,6 +73,15 @@ public:
         addButton("inputtext", "Input Text");
         addButton("openbrowser", "Open Browser");
         addButton("http", "Http requests");
+
+        _color = Color::Red;
+        _txtColor = Color::White;
+
+        _y = 5;
+        _x += 200;
+        addButton("counter", "Counter");
+        addButton("tweentext", "Tween Text");
+        addButton("tweenshine", "Tween Shine");
     }
 
     void showTest(spActor actor)
@@ -182,6 +194,21 @@ public:
         if (id == "http")
         {
             showTest(new TestHttp);
+        }
+
+        if (id == "counter")
+        {
+            showTest(new TestCounter);
+        }
+
+        if (id == "tweentext")
+        {
+            showTest(new TestTweenText);
+        }
+
+        if (id == "tweenshine")
+        {
+            showTest(new TestTweenShine);
         }
     }
 };

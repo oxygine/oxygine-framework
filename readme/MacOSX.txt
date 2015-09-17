@@ -1,16 +1,16 @@
-1. start from readme.txt
-2a. Examples folder have configured MacOSX projects (exception is demobox2d)
+1. Start from readme.txt
+2a. Examples folder have configured MacOSX projects (except demobox2d)
 =================================================================================================
-- goto oxygine-framework\examples and choose any example. Lets call it "Demo" 
-- open xcode project from:
+- Go to oxygine-framework\examples and choose any example. For example "Demo"
+- Open the XCode project from:
   examples\Demo\proj.macosx\
 - select correct scheme: demo_macosx->mac 32 or 64 bit
-- build and run!
+- Build and run!
 
 2b. You could generate your own MacOSX project.
 =================================================================================================
-- you need installed Python 2.7
-- you need to run this script
+- You need Python 2.7 installed
+- You need to run this script
   oxygine-framework\tools\gen_template.py
 
 example:

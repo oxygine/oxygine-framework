@@ -50,7 +50,7 @@ namespace oxygine
     void TweenAnim::update(Sprite& actor, float p, const UpdateState& us)
     {
         OX_ASSERT(_resAnim);
-        int frame = interpolate<int>(_start, _end, p);
+        int frame = lerp<int>(_start, _end, p);
 
         if (_row == -1)
             actor.setAnimFrame(_resAnim->getFrame(frame));

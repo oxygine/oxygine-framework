@@ -201,11 +201,11 @@ namespace oxygine
             return c;
         }
 
-        static Color interpolate(const Color& a, const Color& b, float v)
+        static Color lerp(const Color& a, const Color& b, float v)
         {
             Color c;
             for (int i = 0; i < 4; ++i)
-                c.colors[i] = oxygine::interpolate(a.colors[i], b.colors[i], v);
+                c.colors[i] = oxygine::lerp(a.colors[i], b.colors[i], v);
 
             return c;
         }
@@ -298,8 +298,8 @@ namespace oxygine
         };
     };
 
-    inline Color interpolate(const Color& a, const Color& b, float v)
+    inline Color lerp(const Color& a, const Color& b, float v)
     {
-        return Color::interpolate(a, b, v);
+        return Color::lerp(a, b, v);
     }
 }

@@ -31,6 +31,7 @@ void example_init()
 
 void example_destroy()
 {
+    board.free();
     res.free();
 }
 void example_update()

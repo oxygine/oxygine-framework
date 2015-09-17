@@ -147,13 +147,13 @@ namespace oxygine
         RectF srcFrameRect = _frame.getSrcRect();
 
         _guidesX[0] = srcFrameRect.getLeft(); // these guides contains floats from 0.0 to 1.0, compared to original guides which contain floats in px
-        _guidesX[1] = interpolate(srcFrameRect.getLeft(), srcFrameRect.getRight(), _guideX[0] / fFrameWidth); // lerp is needed here cuz the frame might be in an atlas
-        _guidesX[2] = interpolate(srcFrameRect.getLeft(), srcFrameRect.getRight(), _guideX[1] / fFrameWidth);
+        _guidesX[1] = lerp(srcFrameRect.getLeft(), srcFrameRect.getRight(), _guideX[0] / fFrameWidth); // lerp is needed here cuz the frame might be in an atlas
+        _guidesX[2] = lerp(srcFrameRect.getLeft(), srcFrameRect.getRight(), _guideX[1] / fFrameWidth);
         _guidesX[3] = srcFrameRect.getRight();
 
         _guidesY[0] = srcFrameRect.getTop();
-        _guidesY[1] = interpolate(srcFrameRect.getTop(), srcFrameRect.getBottom(), _guideY[0] / fFrameHeight);
-        _guidesY[2] = interpolate(srcFrameRect.getTop(), srcFrameRect.getBottom(), _guideY[1] / fFrameHeight);
+        _guidesY[1] = lerp(srcFrameRect.getTop(), srcFrameRect.getBottom(), _guideY[0] / fFrameHeight);
+        _guidesY[2] = lerp(srcFrameRect.getTop(), srcFrameRect.getBottom(), _guideY[1] / fFrameHeight);
         _guidesY[3] = srcFrameRect.getBottom();
 
         // filling X axis

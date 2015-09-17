@@ -250,6 +250,8 @@ enum {
 #    define HAVE_MODE_T
 #  elif defined(_UWIN) || defined(__MINGW32__)
 #    define HAVE_MODE_T
+#  elif _MSC_VER >= 1900
+#    define HAVE_STRUCT_TIMESPEC 1
 #  endif
 #endif
 

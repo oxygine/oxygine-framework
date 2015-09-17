@@ -189,6 +189,9 @@ namespace oxygine
 
     void SlidingActor::_newEvent(Event* event)
     {
+        if (!_content)
+            return;
+
         TouchEvent* te = safeCast<TouchEvent*>(event);
         timeMS tm = getTimeMS();
         switch (te->type)

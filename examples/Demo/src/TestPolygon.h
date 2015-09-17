@@ -58,7 +58,7 @@ public:
         float rad = getRoot()->getHeight() * 0.4f * (1 + scalar::sin(theta * 10) / 10);
         Vector2 p = dir * rad;
 
-        Color c = interpolate(Color(Color::Lime), Color(Color::Red), scalar::abs(scalar::sin(theta * 3)));
+        Color c = lerp(Color(Color::Lime), Color(Color::Red), scalar::abs(scalar::sin(theta * 3)));
         return initVertex(p, c.rgba());
     }
 

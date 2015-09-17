@@ -181,7 +181,8 @@ namespace oxygine
         vsnprintf(buff + len, sizeof(buff) - len, format, args);
         va_end(args);
 
-        _debugText += buff;
+        if (DebugActor::instance)
+            DebugActor::instance->_debugText += buff;
     }
 
     void DebugActor::_btnClicked(Event* ev)
@@ -380,5 +381,11 @@ namespace oxygine
         actor->addChild(cr);
         std::string dmp = actor->dump(0);
         log::messageln("touched actor:\n%s", dmp.c_str());
+        actor = actor->getParent();
+        while (actor)
+        {
+            log::messageln("parent: %s", actor->getName().c_str());
+            actor = actor->getParent();
+        }
     }
 }
