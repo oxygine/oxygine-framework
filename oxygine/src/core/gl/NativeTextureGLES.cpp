@@ -29,6 +29,16 @@ namespace oxygine
                 pixel.type = GL_UNSIGNED_BYTE;
                 break;
 
+            case TF_A8L8:
+                pixel.format = GL_LUMINANCE_ALPHA;
+                pixel.type = GL_UNSIGNED_BYTE;
+                break;
+
+            case TF_L8:
+                pixel.format = GL_LUMINANCE;
+                pixel.type = GL_UNSIGNED_BYTE;
+                break;
+
             case TF_R5G6B5:
                 pixel.format = GL_RGB;
                 pixel.type = GL_UNSIGNED_SHORT_5_6_5;

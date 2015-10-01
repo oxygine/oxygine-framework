@@ -11,7 +11,7 @@ namespace oxygine
         TF_A8,//luminance
         TF_L8,//luminance
         TF_A8L8,//luminance+alpha
-        TF_R8G8B8A8,
+        TF_R8G8B8A8,//default
         TF_B8G8R8A8,
         TF_R8G8B8,
         TF_R5G5B5A1,

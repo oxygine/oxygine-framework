@@ -104,12 +104,13 @@
 		12CAC42FDF06ABE860CFEA53 /* ../src/TestTexel2Pixel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestTexel2Pixel.h; path = ../src/TestTexel2Pixel.h; sourceTree = "<group>"; };
 		0F4469FB587862663D529DC9 /* ../src/TestText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestText.h; path = ../src/TestText.h; sourceTree = "<group>"; };
 		B6A9281364AF5D3B581D374C /* ../src/TestTextureFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestTextureFormat.h; path = ../src/TestTextureFormat.h; sourceTree = "<group>"; };
-		4013C6794AAE8DFC641D2870 /* ../src/TestTweenText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestTweenText.h; path = ../src/TestTweenText.h; sourceTree = "<group>"; };
-		22E408FD6FCDA6E7E8E76952 /* ../src/TestTweens.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestTweens.h; path = ../src/TestTweens.h; sourceTree = "<group>"; };
-		C0253E2158DFD901AD4F8991 /* ../src/TestUserShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestUserShader.h; path = ../src/TestUserShader.h; sourceTree = "<group>"; };
-		5BE09AD6F31291430F5FB3E0 /* ../src/TestUserShader2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestUserShader2.h; path = ../src/TestUserShader2.h; sourceTree = "<group>"; };
-		01AAF6B516BCFD9887A9D77D /* ../src/example.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = example.h; path = ../src/example.h; sourceTree = "<group>"; };
-		B4059CD311FA2BF93FB2C895 /* ../src/test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = test.h; path = ../src/test.h; sourceTree = "<group>"; };
+		4013C6794AAE8DFC641D2870 /* ../src/TestTweenShine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestTweenShine.h; path = ../src/TestTweenShine.h; sourceTree = "<group>"; };
+		22E408FD6FCDA6E7E8E76952 /* ../src/TestTweenText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestTweenText.h; path = ../src/TestTweenText.h; sourceTree = "<group>"; };
+		C0253E2158DFD901AD4F8991 /* ../src/TestTweens.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestTweens.h; path = ../src/TestTweens.h; sourceTree = "<group>"; };
+		5BE09AD6F31291430F5FB3E0 /* ../src/TestUserShader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestUserShader.h; path = ../src/TestUserShader.h; sourceTree = "<group>"; };
+		01AAF6B516BCFD9887A9D77D /* ../src/TestUserShader2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestUserShader2.h; path = ../src/TestUserShader2.h; sourceTree = "<group>"; };
+		B4059CD311FA2BF93FB2C895 /* ../src/example.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = example.h; path = ../src/example.h; sourceTree = "<group>"; };
+		58D859948404178DBBF45318 /* ../src/test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = test.h; path = ../src/test.h; sourceTree = "<group>"; };
 		7F3B12E3C9D554D9FE28101D /* ../data/demo */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = demo; path = ../data/demo; sourceTree = "<group>"; };
 		F6123B1E6FE4471A00F49751 /* ../data/ext */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = ext; path = ../data/ext; sourceTree = "<group>"; };
 		5DE458993031811A4C7D28C1 /* ../data/images */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = images; path = ../data/images; sourceTree = "<group>"; };
@@ -156,6 +157,7 @@
 		04998CE317F8A933003441C3 = {
 			isa = PBXGroup;
 			children = (
+				922B9F661BBB236900B1401E /* LaunchScreen.storyboard */,
 				045D531C17F8BD5E00CC2C64 /* dependencies */,
 				04998D3917F8A9AA003441C3 /* oxygine_ios.xcodeproj */,
 				04998D2F17F8A96E003441C3 /* SDL.xcodeproj */,
@@ -238,12 +240,13 @@
 				12CAC42FDF06ABE860CFEA53 /* TestTexel2Pixel.h */, 
 				0F4469FB587862663D529DC9 /* TestText.h */, 
 				B6A9281364AF5D3B581D374C /* TestTextureFormat.h */, 
-				4013C6794AAE8DFC641D2870 /* TestTweenText.h */, 
-				22E408FD6FCDA6E7E8E76952 /* TestTweens.h */, 
-				C0253E2158DFD901AD4F8991 /* TestUserShader.h */, 
-				5BE09AD6F31291430F5FB3E0 /* TestUserShader2.h */, 
-				01AAF6B516BCFD9887A9D77D /* example.h */, 
-				B4059CD311FA2BF93FB2C895 /* test.h */, 
+				4013C6794AAE8DFC641D2870 /* TestTweenShine.h */, 
+				22E408FD6FCDA6E7E8E76952 /* TestTweenText.h */, 
+				C0253E2158DFD901AD4F8991 /* TestTweens.h */, 
+				5BE09AD6F31291430F5FB3E0 /* TestUserShader.h */, 
+				01AAF6B516BCFD9887A9D77D /* TestUserShader2.h */, 
+				B4059CD311FA2BF93FB2C895 /* example.h */, 
+				58D859948404178DBBF45318 /* test.h */, 
 
 			);
 			name = src;
@@ -339,6 +342,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				04E9AD3F1876FE84006A7317 /* Images.xcassets in Resources */,
+				922B9F671BBB236900B1401E /* LaunchScreen.storyboard in Resources */,
 				3A631A475DE035FC53ADE5EA /* demo */, 
 				CD59C69314E9E74CD0A11E03 /* ext */, 
 				EFF139F8BA484314F7AAF645 /* images */, 
@@ -399,6 +403,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_BITCODE = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -440,6 +445,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = YES;
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -474,7 +480,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = Demo_ios;
-				PROVISIONING_PROFILE = "A34F5D84-E1EB-47B5-AD4B-67D0FA4A5BE6";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -498,7 +504,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = Demo_ios;
-				PROVISIONING_PROFILE = "A34F5D84-E1EB-47B5-AD4B-67D0FA4A5BE6";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};

@@ -46,15 +46,17 @@ namespace oxygine
         OX_ASSERT(_end >= 0 && _end < num);
     }
 
+    void TweenAnim::_setAnimFrame(Sprite& actor, const AnimationFrame& frame)
+    {
+        actor.setAnimFrame(frame);
+    }
 
     void TweenAnim::update(Sprite& actor, float p, const UpdateState& us)
     {
         OX_ASSERT(_resAnim);
         int frame = lerp<int>(_start, _end, p);
 
-        if (_row == -1)
-            actor.setAnimFrame(_resAnim->getFrame(frame));
-        else
-            actor.setAnimFrame(_resAnim->getFrame(frame, _row));
+        const AnimationFrame& fr = _row == -1 ? _resAnim->getFrame(frame) : _resAnim->getFrame(frame, _row);
+        _setAnimFrame(actor, fr);
     }
 }

@@ -1,6 +1,6 @@
 /* pnglibconf.h - library build configuration */
 
-/* libpng version 1.6.15,November 20, 2014 */
+/* libpng version 1.6.16,December 22, 2014 */
 
 /* Copyright (c) 1998-2014 Glenn Randers-Pehrson */
 
@@ -16,7 +16,7 @@
 /* options */
 #define PNG_16BIT_SUPPORTED
 #define PNG_ALIGNED_MEMORY_SUPPORTED
-#define PNG_ARM_NEON_API_SUPPORTED
+/*#undef PNG_ARM_NEON_API_SUPPORTED*/
 /*#undef PNG_ARM_NEON_CHECK_SUPPORTED*/
 #define PNG_BENIGN_ERRORS_SUPPORTED
 #define PNG_BENIGN_READ_ERRORS_SUPPORTED
@@ -185,7 +185,6 @@
 /* end of options */
 /* settings */
 #define PNG_API_RULE 0
-#define PNG_ARM_NEON_OPT 1
 #define PNG_COST_SHIFT 3
 #define PNG_DEFAULT_READ_MACROS 1
 #define PNG_GAMMA_THRESHOLD_FIXED 5000
@@ -199,7 +198,7 @@
 #define PNG_TEXT_Z_DEFAULT_STRATEGY 0
 #define PNG_WEIGHT_SHIFT 8
 #define PNG_ZBUF_SIZE 8192
-#define PNG_ZLIB_VERNUM 0x1250
+#define PNG_ZLIB_VERNUM 0x1280
 #define PNG_Z_DEFAULT_COMPRESSION (-1)
 #define PNG_Z_DEFAULT_NOFILTER_STRATEGY 0
 #define PNG_Z_DEFAULT_STRATEGY 1

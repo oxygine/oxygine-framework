@@ -1,6 +1,6 @@
 /* pnglibconf.h - library build configuration */
 
-/* libpng version 1.6.15,November 20, 2014 */
+/* libpng version 1.6.16,December 22, 2014 */
 
 /* Copyright (c) 1998-2014 Glenn Randers-Pehrson */
 
@@ -198,7 +198,7 @@
 #define PNG_TEXT_Z_DEFAULT_STRATEGY 0
 #define PNG_WEIGHT_SHIFT 8
 #define PNG_ZBUF_SIZE 8192
-#define PNG_ZLIB_VERNUM 0x1250
+#define PNG_ZLIB_VERNUM 0x1280
 #define PNG_Z_DEFAULT_COMPRESSION (-1)
 #define PNG_Z_DEFAULT_NOFILTER_STRATEGY 0
 #define PNG_Z_DEFAULT_STRATEGY 1

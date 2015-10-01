@@ -4,6 +4,7 @@
 namespace oxygine
 {
     class ResAnim;
+    class AnimationFrame;
     class Sprite;
     class UpdateState;
 
@@ -40,7 +41,8 @@ namespace oxygine
 
         void update(Sprite& actor, float p, const UpdateState& us);
 
-    private:
+    protected:
+        virtual void _setAnimFrame(Sprite&, const AnimationFrame&);
         const ResAnim* _resAnim;
         int _row;
         int _start;

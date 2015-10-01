@@ -303,11 +303,18 @@ def _run(args):
 
             dest_path = dest + dest_local
 
+            ext = os.path.splitext(dest_path)[1]
+
 
             from mimetypes import guess_type
             print("src " + src_path)
             tp = guess_type(src_path)
+
+            if ext == ".storyboard":
+                tp = ("text", "")
+
             if not tp[0]:
+                print(">>>>>>>>>>" + str(tp))
                 continue
 
             print(tp[0])
@@ -320,7 +327,9 @@ def _run(args):
                 t = Template(src_data)
                 dest_data = t.safe_substitute(**values)                 
 
-                if args.type == "ios" or args.type == "macosx":
+                ext = os.path.splitext(dest_path)[1]
+
+                if args.type == "ios" or args.type == "macosx" or ext==".sh":
                     dest_file = io.open(dest_path, "w", newline="\n")
                     try:
                         dest_file.write(str(dest_data, encoding='utf-8')) 

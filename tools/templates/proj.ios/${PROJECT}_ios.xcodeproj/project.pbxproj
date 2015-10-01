@@ -22,6 +22,7 @@
 		04998EF817F8B6F3003441C3 /* libjpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04998EF617F8B6F3003441C3 /* libjpeg.a */; };
 		049B52B11871EBFA00EF3C66 /* liboxygine_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 049B52AD1871EBBA00EF3C66 /* liboxygine_ios.a */; };
 		04E9AD3F1876FE84006A7317 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04E9AD3E1876FE84006A7317 /* Images.xcassets */; };
+		922B9F661BBB236900B1401E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 922B9F661BBB236900B1401E /* Images.xcassets */; };
 ${PBXBuildFile}
 /* End PBXBuildFile section */
 
@@ -112,6 +113,7 @@ ${PBXFileReference}
 		04998CE317F8A933003441C3 = {
 			isa = PBXGroup;
 			children = (
+				922B9F661BBB236900B1401E /* LaunchScreen.storyboard */,
 				045D531C17F8BD5E00CC2C64 /* dependencies */,
 				04998D3917F8A9AA003441C3 /* oxygine_ios.xcodeproj */,
 				04998D2F17F8A96E003441C3 /* SDL.xcodeproj */,
@@ -261,6 +263,7 @@ ${PBXGroup_src}
 			buildActionMask = 2147483647;
 			files = (
 				04E9AD3F1876FE84006A7317 /* Images.xcassets in Resources */,
+				922B9F671BBB236900B1401E /* LaunchScreen.storyboard in Resources */,
 ${PBXResourcesBuildPhase}
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -311,6 +314,7 @@ ${PBXSourcesBuildPhase}
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_BITCODE = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -352,6 +356,7 @@ ${PBXSourcesBuildPhase}
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = YES;
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -386,7 +391,7 @@ ${PBXSourcesBuildPhase}
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = ${PROJECT}_ios;
-				PROVISIONING_PROFILE = "A34F5D84-E1EB-47B5-AD4B-67D0FA4A5BE6";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -410,7 +415,7 @@ ${PBXSourcesBuildPhase}
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = ${PROJECT}_ios;
-				PROVISIONING_PROFILE = "A34F5D84-E1EB-47B5-AD4B-67D0FA4A5BE6";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};

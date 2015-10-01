@@ -127,6 +127,7 @@
 		04998CE317F8A933003441C3 = {
 			isa = PBXGroup;
 			children = (
+				922B9F661BBB236900B1401E /* LaunchScreen.storyboard */,
 				045D531C17F8BD5E00CC2C64 /* dependencies */,
 				04998D3917F8A9AA003441C3 /* oxygine_ios.xcodeproj */,
 				04998D2F17F8A96E003441C3 /* SDL.xcodeproj */,
@@ -284,6 +285,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				04E9AD3F1876FE84006A7317 /* Images.xcassets in Resources */,
+				922B9F671BBB236900B1401E /* LaunchScreen.storyboard in Resources */,
 				C8860D93875589970329DCCD /* data.js */, 
 				1E839D002B2BA83FC83A695A /* fonts */, 
 				3A631A475DE035FC53ADE5EA /* images */, 
@@ -341,6 +343,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_BITCODE = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -382,6 +385,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = YES;
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -416,7 +420,7 @@
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = HelloWorld_ios;
-				PROVISIONING_PROFILE = "A34F5D84-E1EB-47B5-AD4B-67D0FA4A5BE6";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -440,7 +444,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = HelloWorld_ios;
-				PROVISIONING_PROFILE = "A34F5D84-E1EB-47B5-AD4B-67D0FA4A5BE6";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};

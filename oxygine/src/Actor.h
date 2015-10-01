@@ -270,6 +270,7 @@ namespace oxygine
         typedef Property<float, float, Actor, &Actor::getRotation, &Actor::setRotation>                         TweenRotation;
         typedef Property<float, float, Actor, &Actor::getRotationDegrees, &Actor::setRotationDegrees>           TweenRotationDegrees;
         typedef Property2Args1Arg<float, Vector2, const Vector2&, Actor, &Actor::getScale, &Actor::setScale>    TweenScale;
+        typedef Property2Args1Arg<float, Vector2, const Vector2&, Actor, &Actor::getAnchor, &Actor::setAnchor>  TweenAnchor;
         typedef Property<float, float, Actor, &Actor::getScaleX, &Actor::setScaleX>                             TweenScaleX;
         typedef Property<float, float, Actor, &Actor::getScaleY, &Actor::setScaleY>                             TweenScaleY;
         typedef Property<unsigned char, unsigned char, Actor, &Actor::getAlpha, &Actor::setAlpha>               TweenAlpha;

@@ -29,6 +29,9 @@ namespace oxygine
         float h = (float)_diffuse.base->getHeight();
 
         f._destRect.clip(rect);
+        if (f._destRect.isEmpty())
+            f._destRect = RectF(0, 0, 0, 0);
+
 
         RectF srcRect = _srcRect * Vector2(w, h);
 

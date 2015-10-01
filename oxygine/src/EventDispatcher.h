@@ -28,11 +28,11 @@ namespace oxygine
         EventDispatcher();
         ~EventDispatcher();
 
-        int addEventListener(eventType, EventCallback);
-        void removeEventListener(eventType, EventCallback);
+        int addEventListener(eventType, const EventCallback&);
+        void removeEventListener(eventType, const EventCallback&);
         void removeEventListener(int id);
         bool hasEventListeners(void* CallbackThis);
-        bool hasEventListeners(eventType, EventCallback);
+        bool hasEventListeners(eventType, const EventCallback&);
         void removeEventListeners(void* CallbackThis);
         void removeAllEventListeners();
 

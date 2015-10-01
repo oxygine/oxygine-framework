@@ -57,12 +57,12 @@ namespace oxygine
 		}
 	}
 
-    void Tween::setDoneCallback(EventCallback cb)
+	void Tween::setDoneCallback(const EventCallback& cb)
     {
         _cbDone = cb;
     }
 
-    void Tween::addDoneCallback(EventCallback cb)
+	void Tween::addDoneCallback(const EventCallback& cb)
     {
         addEventListener(TweenEvent::DONE, cb);
     }

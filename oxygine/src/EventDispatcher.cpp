@@ -17,7 +17,7 @@ namespace oxygine
         delete _listeners;
     }
 
-    int EventDispatcher::addEventListener(eventType et, EventCallback cb)
+    int EventDispatcher::addEventListener(eventType et, const EventCallback& cb)
     {
         __doCheck();
 
@@ -67,7 +67,7 @@ namespace oxygine
         }
     }
 
-    void EventDispatcher::removeEventListener(eventType et, EventCallback cb)
+    void EventDispatcher::removeEventListener(eventType et, const EventCallback& cb)
     {
         __doCheck();
 
@@ -103,7 +103,7 @@ namespace oxygine
         return false;
     }
 
-    bool EventDispatcher::hasEventListeners(eventType et, EventCallback cb)
+    bool EventDispatcher::hasEventListeners(eventType et, const EventCallback& cb)
     {
         __doCheck();
         if (!_listeners)
