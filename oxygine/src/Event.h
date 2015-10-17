@@ -33,8 +33,8 @@ namespace oxygine
         void* userData;
         spObject userDataObject;
 
-        spEventDispatcher target;
-        spEventDispatcher currentTarget;// = object with our listener
+        spEventDispatcher target; //The event target
+        spEventDispatcher currentTarget;// The object that is actively processing the Event object with an event listener.
 
         Event(eventType Type, bool Bubbles = false) : userData(0), type(Type), phase(phase_target), bubbles(Bubbles), stopsImmediatePropagation(false), stopsPropagation(false) {}
         virtual ~Event() {}

@@ -299,17 +299,13 @@ namespace oxygine
                 float d = offset.dot(offset);
                 if (_holded && (d >= _rad * _rad))
                 {
-                    TouchEvent ev(TouchEvent::TOUCH_UP, false, Vector2(-10000, -10000));
                     spActor act = safeSpCast<Actor>(_holded);
                     while (act && act.get() != _content.get())
                     {
-                        _Actor::setPressed(act.get(), 0);
-                        //act->setPressed(0);
-                        //act->setOvered(0);
+                        act->setNotPressed();
                         act = act->getParent();
                     }
 
-                    _Actor::setPressed(_content.get(), te->index);
                     _holded = 0;
                 }
             }

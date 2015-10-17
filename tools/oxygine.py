@@ -17,7 +17,7 @@ def helper(root = ""):
                         break
                     cur = parent
                     
-                    ox = cur + "oxygine-framework"
+                    ox = cur + "/oxygine-framework"
                     if os.path.isdir(ox):
                         print("oxygine-framework folder found at " + ox)
                         root = ox

@@ -14,7 +14,7 @@ spButton createButtonHelper(spButton, const std::string& txt, EventCallback cb);
 class Content: public Actor
 {
 public:
-    Content(): driver(0) {}
+    Content() : driver(0) { setName("content"); }
     IVideoDriver* driver;
 
     void render(const RenderState& parentRS)

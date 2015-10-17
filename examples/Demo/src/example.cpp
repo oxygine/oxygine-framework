@@ -23,6 +23,7 @@
 #include "TestCounter.h"
 #include "TestTweenText.h"
 #include "TestTweenShine.h"
+#include "TestTouches.h"
 
 #ifdef __S3E__
 #include "s3eKeyboard.h"
@@ -32,7 +33,8 @@ using namespace oxygine;
 
 
 //it is our resources
-//in real project you would have more than one Resources declarations. It is important on mobile devices with limited memory and you would load/unload them
+//in real project you would have more than one Resources declarations.
+//It is important on mobile devices with limited memory and you would load/unload them
 Resources resources;
 
 //#define MULTIWINDOW 1
@@ -63,6 +65,7 @@ public:
         addButton("texture_format", "Textures Format");
         addButton("r2t", "Render to Texture");
         addButton("t2p", "Texel to Pixel");
+        addButton("touches", "Touches");
         addButton("sliding", "Sliding Actor");
         addButton("box9sprite", "Box9 Sprite");
         addButton("cliprect", "ClipRect Actor");
@@ -148,6 +151,11 @@ public:
         if (id == "t2p")
         {
             showTest(new TestTexel2Pixel);
+        }
+
+        if (id == "touches")
+        {
+            showTest(new TestTouches);
         }
 
         if (id == "box9sprite")

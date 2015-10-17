@@ -40,7 +40,6 @@ namespace oxygine
         pointer_index _btnOvered;
 
         void _mouseEvent(Event* event);
-        void _mouseUpOutside(Event* event);
 
         void setState(state s);
     };

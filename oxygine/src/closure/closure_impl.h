@@ -134,9 +134,13 @@ struct Closure<R(PARAM_TYPE_LIST)>: public detail::CLOSURE_NUM::ClosureBase<R PA
         return !safe_bool(*this);
     }
 
-	bool operator == (const Closure &c)
+	bool operator == (const Closure &c) const
 	{
-		return this->p_proxy == c.p_proxy && this->p_this == c.p_this;
+		return this->p_proxy == c.p_proxy && this->p_this == c.p_this
+#if CLOSURE_FUNCTION
+			&& this->p_function == c.p_function
+#endif
+		;
 	}
 
 };

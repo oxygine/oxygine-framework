@@ -131,7 +131,7 @@ namespace oxygine
 
     void Atlas2::clean()
     {
-
+        _free.clear();
     }
 
     void Atlas2::init(int w, int h, int skipSize)
@@ -155,10 +155,13 @@ namespace oxygine
     bool Atlas2::add(Texture* dest, const ImageData& src, Rect& srcRect)
     {
         Point offset(2, 2);
-        if (src.w == dest->getWidth())
-            offset.x = 0;
-        if (src.h == dest->getHeight())
-            offset.y = 0;
+        if (dest)
+        {
+            if (src.w == dest->getWidth())
+                offset.x = 0;
+            if (src.h == dest->getHeight())
+                offset.y = 0;
+        }
 
         int w = src.w + offset.x;
         int h = src.h + offset.y;
@@ -177,7 +180,8 @@ namespace oxygine
 
                 _bounds.unite(srcRect);
 
-                dest->updateRegion(rect.pos.x, rect.pos.y, src);
+                if (dest)
+                    dest->updateRegion(rect.pos.x, rect.pos.y, src);
 
                 _free.erase(_free.begin() + i);
 

@@ -36,11 +36,6 @@ namespace oxygine
         void* _getRestorableObject() {return this;}
         void _restore(Restorable*, void*);
 
-        //typedef std::unordered_map<int, shader*> shaders;
-        //shaders _shaders;
-
-        //shader* _shaders[SIZE];
-
         std::vector<unsigned char> _data;
         ShaderUniformsCallback _cb;
 
@@ -50,6 +45,8 @@ namespace oxygine
     class UberShaderProgram : public UberShaderProgramBase
     {
     public:
+        UberShaderProgram();
+        ~UberShaderProgram();
 
         enum
         {
@@ -71,7 +68,7 @@ namespace oxygine
         shader*                 getShaderProgram(int flags);
 
     protected:
-        void releaseShaders();
+        void releaseShaders() OVERRIDE;
         shader _shaders[SIZE];
     };
 }

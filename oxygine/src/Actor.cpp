@@ -248,140 +248,103 @@ namespace oxygine
         return _overred;
     }
 
-    void Actor::setPressed(pointer_index v)
+    void Actor::setNotPressed()
     {
-        if (_pressed == v)
-            return;
-        pointer_index old = _pressed;
-        _pressed = v;
+        _pressed = 0;
+        _getStage()->removeEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onGlobalTouchUpEvent));
 
-        //spMouseEvent
-        //dispatchEvent()
-
-        if (v)
-        {
-            _getStage()->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onMouseEvent));
-            //printf("added\n");
-        }
-        else
-            _getStage()->removeEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onMouseEvent));
-
-        if (!old)
-            updateState();
+        updateState();
     }
 
-    void Actor::setOverred(pointer_index v)
+    void Actor::_onGlobalTouchUpEvent(Event* ev)
     {
-        if (_overred == v)
+        TouchEvent* te = safeCast<TouchEvent*>(ev);
+        if (te->index != _pressed)
             return;
 
-        pointer_index old = _overred;
-        _overred = v;
+        setNotPressed();
 
-        if (v)
-        {
-            TouchEvent e(TouchEvent::OVER);
-            e.index = v;
-            dispatchEvent(&e);
-
-            _getStage()->addEventListener(TouchEvent::MOVE, CLOSURE(this, &Actor::_onMouseEvent));
-        }
-        else
-        {
-            _getStage()->removeEventListener(TouchEvent::MOVE, CLOSURE(this, &Actor::_onMouseEvent));
-            //if (!_overed)
-            {
-                TouchEvent e(TouchEvent::OUT);
-                e.index = old;
-                dispatchEvent(&e);
-            }
-        }
-
-        if (!old)
-            updateState();
+        TouchEvent up = *te;
+        up.bubbles = false;
+        up.localPosition = convert_global2local(this, _getStage(), te->localPosition);
+        dispatchEvent(&up);
     }
 
-    void Actor::_onMouseEvent(Event* event)
+    void Actor::_onGlobalTouchMoveEvent(Event* ev)
     {
-        TouchEvent* me = safeCast<TouchEvent*>(event);
-        Actor* act = safeCast<Actor*>(event->target.get());
+        TouchEvent* te = safeCast<TouchEvent*>(ev);
+        if (te->index != _overred)
+            return;
 
-        switch (event->type)
-        {
-            case  TouchEvent::TOUCH_DOWN:
-                if (isDescendant(act))
-                {
-                    setPressed(me->index);
-                    //_pressed = me->id;
-                    //setPressed(true);
-                }
-                break;
-            case  TouchEvent::TOUCH_UP:
-            {
-                //if (_pressed))
-                {
-                    if (_pressed == me->index)
-                    {
-                        setPressed(0);
-                        //it is event from ROOT, convert to local space
-                        Vector2 lp = convert_global2local(this, _getStage(), me->localPosition);
-                        if (isDescendant(act))
-                        {
-                            TouchEvent e(TouchEvent::CLICK, true, lp);
-                            e.index = me->index;
-                            dispatchEvent(&e);
-                        }
-                        else
-                        {
-                            dispatchEvent(event);
-                        }
-                    }
-                }
-            }
-            break;
-            case  TouchEvent::MOVE:
-            {
-                if (isDescendant(act))
-                {
-                    if (!_overred)
-                    {
-                        setOverred(me->index);
+        if (isDescendant(safeCast<Actor*>(ev->target.get())))
+            return;
 
-                        /*
-                        if (event->phase == Event::phase_target)
-                        {
-                            _getStage()->removeEventListener(TouchEvent::MOVE, CLOSURE(this, &Actor::_onMouseEvent));
-                            _getStage()->addEventListener(TouchEvent::MOVE, CLOSURE(this, &Actor::_onMouseEvent));
-                        }
-                        */
-                    }
-                }
-                else
-                {
-                    if (_overred == me->index)
-                        setOverred(0);
-                }
-            }
-            break;
-        }
+        _overred = 0;
+        _getStage()->removeEventListener(TouchEvent::MOVE, CLOSURE(this, &Actor::_onGlobalTouchMoveEvent));
 
+        TouchEvent up = *te;
+        up.type = TouchEvent::OUT;
+        up.bubbles = false;
+        up.localPosition = convert_global2local(this, _getStage(), te->localPosition);
+        dispatchEvent(&up);
+        //log::messageln("out %s", getName().c_str());
+
+        updateState();
     }
 
     void Actor::dispatchEvent(Event* event)
     {
-        spEventDispatcher prevTarget = event->target;
-        if (prevTarget == 0 || event->currentTarget != 0)
-            event->target = this;
-
-
-        //event->currentTarget = this;
-
         EventDispatcher::dispatchEvent(event);
+
+
+        if (event->type == TouchEvent::MOVE)
+        {
+            TouchEvent* te = safeCast<TouchEvent*>(event);
+            if (!_overred)
+            {
+                _overred = te->index;
+                updateState();
+
+                TouchEvent over = *te;
+                over.type = TouchEvent::OVER;
+                over.bubbles = false;
+                dispatchEvent(&over);
+
+                _getStage()->addEventListener(TouchEvent::MOVE, CLOSURE(this, &Actor::_onGlobalTouchMoveEvent));
+            }
+        }
+
+        if (event->type == TouchEvent::TOUCH_DOWN)
+        {
+            TouchEvent* te = safeCast<TouchEvent*>(event);
+            if (!_pressed)
+            {
+                _pressed = te->index;
+                _getStage()->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onGlobalTouchUpEvent));
+
+                updateState();
+            }
+        }
+
+        TouchEvent click(0);
+
+        if (event->type == TouchEvent::TOUCH_UP)
+        {
+            TouchEvent* te = safeCast<TouchEvent*>(event);
+            if (_pressed == te->index)
+            {
+                click = *te;
+                click.type = TouchEvent::CLICK;
+                click.bubbles = false;
+                //will be dispatched later after UP
+
+                setNotPressed();
+            }
+        }
 
 
         if (!event->stopsImmediatePropagation && event->bubbles && !event->stopsPropagation)
         {
-
             if (_parent)
             {
                 if (TouchEvent::isTouchEvent(event->type))
@@ -389,14 +352,18 @@ namespace oxygine
                     TouchEvent* me = safeCast<TouchEvent*>(event);
                     me->localPosition = local2global(me->localPosition);
                 }
-                event->phase = Event::phase_bubbling;
 
+                event->phase = Event::phase_bubbling;
                 event->currentTarget = 0;
                 _parent->dispatchEvent(event);
             }
         }
-        if (prevTarget)
-            event->target = prevTarget;
+
+        if (click.type)
+        {
+            //send click event at the end after TOUCH_UP event
+            dispatchEvent(&click);
+        }
     }
 
     void Actor::handleEvent(Event* event)
@@ -408,7 +375,7 @@ namespace oxygine
                 return;
         }
 
-        Vector2 originalLocalPos(0, 0);
+        Vector2 originalLocalPos;
 
         if (touchEvent)
         {
@@ -429,10 +396,6 @@ namespace oxygine
             actor = prev;
         }
 
-        /*
-        if (getID() == 46 && event->type == TouchEvent::TOUCH_DOWN)
-            int q=0;
-            */
         if (touchEvent)
         {
             TouchEvent* me = safeCast<TouchEvent*>(event);
@@ -443,23 +406,15 @@ namespace oxygine
                     event->phase = Event::phase_target;
                     event->target = this;
 
-
-                    if (event->type == TouchEvent::TOUCH_DOWN || event->type == TouchEvent::MOVE)
-                        _onMouseEvent(event);
-
-
+                    me->position = me->localPosition;
                     dispatchEvent(event);
                 }
-            }
-            else
-            {
-                if (event->type == TouchEvent::TOUCH_UP && getParent() == 0)
-                    dispatchEvent(event);
             }
 
             me->localPosition = originalLocalPos;
         }
     }
+
 
     void Actor::setAnchor(const Vector2& anchor)
     {

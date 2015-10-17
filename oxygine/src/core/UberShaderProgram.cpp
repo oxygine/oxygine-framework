@@ -104,10 +104,19 @@ namespace oxygine
         return &s;
     }
 
+    UberShaderProgram::UberShaderProgram()
+    {
+
+    }
+
+    UberShaderProgram::~UberShaderProgram()
+    {
+        releaseShaders();
+    }
+
     void UberShaderProgram::releaseShaders()
     {
         for (int i = 0; i < SIZE; ++i)
-            //for (shaders::iterator i = _shaders.begin(); i != _shaders.end(); ++i)
         {
             shader& s = _shaders[i];
             delete s.program;

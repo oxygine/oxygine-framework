@@ -23,27 +23,11 @@ namespace oxygine
 
     Button::~Button()
     {
-        /*
-        removeEventHandlers();
-        if (_ph)
-        {
-            _ph->reset();
-        }
-        */
-    }
-
-    void Button::_mouseUpOutside(Event* event)
-    {
-        //Actor *act = safeCast<Actor*>(event->target.get());
-        //if (isDescendant(act))
-        _pressed = false;
-        setState(stateNormal);
     }
 
     void Button::_mouseEvent(Event* event)
     {
         TouchEvent* me = safeCast<TouchEvent*>(event);
-        //Actor *act = safeCast<Actor*>(event->target.get());
 
         switch (event->type)
         {
@@ -51,13 +35,6 @@ namespace oxygine
             {
                 event->phase = Event::phase_target;
                 event->target = this;
-                /*
-                if (event->target.get() != this)
-                {
-                    spMouseEvent e = new MouseEvent(et_Click);
-                    dispatchEvent(e.get());
-                }
-                */
             }
             break;
             case TouchEvent::OVER:
@@ -82,17 +59,12 @@ namespace oxygine
             break;
             case TouchEvent::TOUCH_DOWN:
             {
-                //if (isDescendant(act))
-                //if (me->target.get() == this)
+                if (!_btnPressed)
                 {
-                    //event->stopImmediatePropagation();
-                    if (!_btnPressed)
-                    {
-                        _btnPressed = me->index;
-                        setState(statePressed);
+                    _btnPressed = me->index;
+                    setState(statePressed);
 
-                        _getStage()->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Button::_mouseEvent));
-                    }
+                    _getStage()->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Button::_mouseEvent));
                 }
             }
             break;
@@ -105,14 +77,6 @@ namespace oxygine
                         _getStage()->removeEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Button::_mouseEvent));
                     _btnPressed = 0;
                 }
-
-                //if (isOn(me->localPosition))
-                //if (isDescendant(act))
-                if (_overred)
-                {
-                    //spMouseEvent e = new MouseEvent(et_Click);
-                    //dispatchEvent(e.get());
-                }
             }
             break;
         }
@@ -124,24 +88,11 @@ namespace oxygine
         updateButtonState(_state);
     }
 
-    /*
-    void Button::setAnimFrame(const ResAnim *resanim, int col, int row)
-    {
-        setResAnim(resanim);
-    }
-    */
-
     void Button::setRow(int row)
     {
         _row = row;
         updateButtonState(_state);
     }
-    /*
-    void Button::setCallbackClick(EventCallback cb)
-    {
-        _cbClick = cb;
-    }
-    */
 
     void Button::setState(state s)
     {

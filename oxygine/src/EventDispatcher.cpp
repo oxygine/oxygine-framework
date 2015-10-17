@@ -145,6 +145,9 @@ namespace oxygine
 
     void EventDispatcher::dispatchEvent(Event* event)
     {
+        if (!event->target)
+            event->target = this;
+
         __doCheck();
         if (!_listeners)
             return;

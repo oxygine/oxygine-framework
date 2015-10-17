@@ -104,5 +104,8 @@
     <ClInclude Include="../src/test.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\TestTouches.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

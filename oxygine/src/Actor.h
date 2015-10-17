@@ -285,6 +285,8 @@ namespace oxygine
         /**Returns Stage where Actor attached to. Use if for multi stage (window) mode*/
         Stage*              _getStage();
 
+        void setNotPressed();
+
     protected:
         Stage* _stage;
         void added2stage(Stage*);
@@ -295,12 +297,11 @@ namespace oxygine
 
         typedef intrusive_list<spActor> children;
         static void setParent(Actor* actor, Actor* parent);
-        static void setPressed(Actor* actor, pointer_index v) { actor->setPressed(v); }
         static children& getChildren(spActor& actor) { return actor->_children; }
 
-        void setOverred(pointer_index v);
-        void setPressed(pointer_index v);
-        void _onMouseEvent(Event* ev);
+        void _onGlobalTouchUpEvent(Event*);
+        void _onGlobalTouchMoveEvent(Event*);
+
         RectF calcDestRectF(const RectF& destRect, const Vector2& size) const;
         void _setSize(const Vector2&);
         virtual void sizeChanged(const Vector2& size);

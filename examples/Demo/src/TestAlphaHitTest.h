@@ -27,6 +27,7 @@ public:
 
         sprite->addEventListener(TouchEvent::OVER, CLOSURE(this, &TestAlphaHitTest::onEvent));
         sprite->addEventListener(TouchEvent::OUT, CLOSURE(this, &TestAlphaHitTest::onEvent));
+        sprite->setInputChildrenEnabled(false);
 
         txt = new TextField;
         txt->attachTo(content);
@@ -39,6 +40,7 @@ public:
 
     void onEvent(Event* ev)
     {
+        TouchEvent* te = safeCast<TouchEvent*>(ev);
         if (ev->type == TouchEvent::OVER)
         {
             txt->setText("Mouse is OVER");
@@ -49,5 +51,12 @@ public:
             txt->setText("Mouse is OUT");
             sprite->setColor(Color::White);
         }
+
+        spSprite sp = new Sprite;
+        sp->setResAnim(resources.getResAnim("snow"));
+        sp->setAnchor(0.5f, 0.5f);
+        sp->setScale(0.5f);
+        sp->setPosition(te->localPosition);
+        sp->attachTo(sprite);
     }
 };
