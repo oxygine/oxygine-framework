@@ -3,17 +3,13 @@
 	<font file="demo/font.fnt" />
 	<set path = "./../images" />
 
-	<set alpha="1" />
-
 	<atlas id = "primary" format="8888">
 		<image file="gray.png"/>
 		<image file="brush.png"/>
 		<image file="palette.png"/>		
 		<image file="snow.png"/>
-
-		<set hit_test="true" />
+		
 		<image file="flower.png"/>
-		<set hit_test="false" />
 		
 		<image id="anim" file="anim1.png" cols = "7" /> <!-- 'id' is optional -->
 		<image file="batterfly.png"/>
