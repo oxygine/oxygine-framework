@@ -294,9 +294,6 @@ namespace oxygine
 
     void Actor::dispatchEvent(Event* event)
     {
-        EventDispatcher::dispatchEvent(event);
-
-
         if (event->type == TouchEvent::MOVE)
         {
             TouchEvent* te = safeCast<TouchEvent*>(event);
@@ -341,6 +338,9 @@ namespace oxygine
                 setNotPressed();
             }
         }
+
+
+        EventDispatcher::dispatchEvent(event);
 
 
         if (!event->stopsImmediatePropagation && event->bubbles && !event->stopsPropagation)
