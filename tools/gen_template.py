@@ -332,7 +332,7 @@ def _run(args):
                 if args.type == "ios" or args.type == "macosx" or ext==".sh":
                     dest_file = io.open(dest_path, "w", newline="\n")
                     try:
-                        dest_file.write(str(dest_data, encoding='utf-8')) 
+                        dest_file.write(dest_data) 
                     except TypeError:
                         dest_file.write(unicode(dest_data, encoding='utf-8')) 
 

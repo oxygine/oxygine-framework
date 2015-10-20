@@ -17,7 +17,7 @@ public:
     void init(TextField& actor) {}
     void update(TextField& actor, float p, const UpdateState& us)
     {
-        int v = lerp<int>(0, _text.size(), p);
+        int v = lerp<int>(0, (int)_text.size(), p);
         wstring res = _text.substr(0, v) + L"<div c = '0x00000000'>" + _text.substr(v, _text.size()) + L"</div>";
 
         //convert back to utf8 string
