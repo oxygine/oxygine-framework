@@ -138,7 +138,8 @@ namespace oxygine
 
     void HttpRequestTask::init()
     {
-        OX_ASSERT(!multi_handle);
+        if (multi_handle)
+            return;
         multi_handle = curl_multi_init();
         pthread_create(&_thread, 0, thread, 0);
     }

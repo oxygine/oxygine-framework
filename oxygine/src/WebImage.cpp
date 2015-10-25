@@ -55,7 +55,7 @@ namespace oxygine
         _http->getResponseSwap(bf.data);
 
         MemoryTexture mt;
-        if (mt.init(bf))
+        if (mt.init(bf, true))
         {
             ResAnim rs;
             rs.init(&mt);

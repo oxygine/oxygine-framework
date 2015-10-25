@@ -1,6 +1,7 @@
 #include "test.h"
 #include "oxygine-framework.h"
 #include "core/STDFileSystem.h"
+#include "WebImage.h"
 
 Resources Test::resourcesUI;
 file::STDFileSystem extfs(true);
@@ -17,12 +18,16 @@ void Test::init()
     resourcesUI.loadXML("demo/fonts.xml");
 
 
-    spSprite sp = new Sprite;
-    sp->setResAnim(resourcesUI.getResAnim("logo2"));
+    HttpRequestTask::init();
+
+    //load logo from oxygine server
+    spWebImage sp = new WebImage;
+    sp->load("http://oxygine.org/test/logo.png");
     sp->setInputEnabled(false);
     sp->attachTo(getStage());
     sp->setPriority(10);
     sp->setAlpha(128);
+    sp->setSize(150, 107);
 
     sp->setX(getStage()->getWidth() - sp->getWidth());
     sp->setY(getStage()->getHeight() - sp->getHeight());
@@ -33,6 +38,7 @@ void Test::free()
     resourcesUI.free();
     instance->detach();
     instance = 0;
+    HttpRequestTask::release();
 }
 
 class Toggle: public Button

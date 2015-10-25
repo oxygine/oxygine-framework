@@ -79,7 +79,7 @@ public:
     void onError(Event* event)
     {
         HttpRequestTask* task = safeCast<HttpRequestTask*>(event->currentTarget.get());
-        OX_ASSERT(task->_ref_counter == 2);
+        //OX_ASSERT(task->_ref_counter == 2);
     }
 
     void onPostLoaded(Event* event)
