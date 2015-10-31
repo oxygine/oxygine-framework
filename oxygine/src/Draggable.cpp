@@ -56,6 +56,7 @@ namespace oxygine
         _actor(0),
         _clientPos(0, 0),
         _dragPos(0, 0),
+        _startTm(0),
         _clientIsParent(false),
         _dragEnabled(true),
         _pressed(false),
@@ -111,6 +112,7 @@ namespace oxygine
 
     void Draggable::startDrag(const Vector2& localCenter)
     {
+        _startTm = getTimeMS();
         _pressed = true;
         _dragPos = localCenter;
         _clientPos = _dragClient->getPosition();
@@ -166,6 +168,10 @@ namespace oxygine
             {
                 _pressed = false;
                 _actor->_getStage()->removeEventListeners(this);
+                if (getTimeMS() - _startTm < 2)
+                {
+                    _actor->setPosition(_clientPos);
+                }
             }
             break;
 

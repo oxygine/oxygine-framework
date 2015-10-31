@@ -15,21 +15,70 @@ public:
 class DragTest: public Test
 {
 public:
+
+    spSprite sprites[3];
+    spActor contacts;
+    int priority;
+
     DragTest()
     {
+        priority = 0;
+
+        Vector2 pos[3];
+        pos[0] = Vector2(425, 420);
+        pos[1] = Vector2(600, 225);
+        pos[2] = Vector2(305, 170);
+
         for (int i = 0; i < 3; ++i)
         {
             spSprite sprite = new DraggableSprite;
-            Vector2 pos(100.0f * (i + 1), 150.0f);
-            sprite->setPosition(pos);
+            sprite->setPosition(pos[i]);
             sprite->setResAnim(resources.getResAnim("batterfly"));
             sprite->attachTo(content);
 
-            sprite->setRotation(scalar::randFloat(0, (float)MATH_PI * 2));
-            sprite->setScale(scalar::randFloat(1.0f, 2.0f));
+            float angle = scalar::randFloat(0, (float)MATH_PI * 2);
+            sprite->setRotation(angle);
+            sprite->addTween(Actor::TweenRotation(MATH_PI * 2 + angle), 30000, -1);
+            sprite->setScale(scalar::randFloat(1.0f, 1.5f));
+            sprite->setAnchor(0.5f, 0.5f);
 
             sprite->addEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &DragTest::onMouseDown));
             sprite->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &DragTest::onMouseUp));
+
+            sprites[i] = sprite;
+        }
+
+        contacts = new Actor;
+        contacts->attachTo(content);
+        contacts->setPriority(10000);
+        contacts->setInputChildrenEnabled(false);
+    }
+
+    void doUpdate(const UpdateState& us)
+    {
+        //check intersections between sprites and visualize contact points
+        for (int i = 0; i < 3; ++i)
+        {
+            spSprite a = sprites[i];
+
+            for (int n = 0; n < 3; ++n)
+            {
+                spSprite b = sprites[n];
+                if (a == b)
+                    continue;
+
+                Vector2 contact;
+                if (testIntersection(a, b, 0, &contact))
+                {
+                    spSprite c = new Sprite;
+                    c->setAnchor(0.5f, 0.5f);
+                    c->setResAnim(resources.getResAnim("snow"));
+                    c->addTween(Actor::TweenAlpha(0), 300)->setDetachActor(true);
+                    Vector2 pos = convert_local2global(a, content, contact);
+                    c->setPosition(pos);
+                    c->attachTo(contacts);
+                }
+            }
         }
     }
 
@@ -37,16 +86,18 @@ public:
     {
         spActor actor = safeSpCast<Actor>(event->currentTarget);
 
-        int new_priority = actor->getParent()->getLastChild()->getPriority() + 1;
-        actor->setPriority(new_priority);
+        //show clicked sprite on top
+        actor->setPriority(priority++);
 
-        actor->addTween(Sprite::TweenColor(Color(255, 0, 0, 255)), 300, -1, true);
+        spTween t = actor->addTween(Sprite::TweenColor(Color::Red), 300, -1, true);
+        t->setName("color");
     }
 
     void onMouseUp(Event* event)
     {
         spSprite actor = safeSpCast<Sprite>(event->currentTarget);
-        actor->removeTweens();
+
+        actor->removeTween(actor->getTween("color"));
         actor->setColor(Color::White);
     }
 };

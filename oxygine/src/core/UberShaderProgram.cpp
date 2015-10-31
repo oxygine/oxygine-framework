@@ -2,6 +2,7 @@
 #include "vertex.h"
 #include "gl/VideoDriverGLES20.h"
 #include "gl/ShaderProgramGL.h"
+#include "NativeTexture.h"
 
 namespace oxygine
 {
@@ -122,5 +123,16 @@ namespace oxygine
             delete s.program;
             s.program = 0;
         }
+    }
+
+    void UberShaderProgram::apply(spNativeTexture base, spNativeTexture alpha)
+    {
+        //STDRenderer
+        IVideoDriver* driver = IVideoDriver::instance;
+
+        driver->setTexture(UberShaderProgram::SAMPLER_BASE, base);
+
+        if (alpha)
+            driver->setTexture(UberShaderProgram::SAMPLER_ALPHA, alpha);
     }
 }

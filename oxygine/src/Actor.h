@@ -374,6 +374,8 @@ namespace oxygine
     /**Deprecated*/
     inline Vector2 convert_root2local(spActor child, const Vector2& pos, spActor root = 0) { return convert_stage2local(child, pos, root); }
 
+    /*Tests 2 actors intersection and returns contact point in space of object1.*/
+    bool testIntersection(spActor obj1, spActor obj2, spActor commonParent = 0, Vector2* contact = 0);
 
 
     Renderer::transform getGlobalTransform(spActor child, spActor parent = 0);

@@ -3,6 +3,8 @@
 #include "RenderState.h"
 #include "core/VertexDeclaration.h"
 #include <sstream>
+#include "core/UberShaderProgram.h"
+#include "STDRenderer.h"
 
 namespace oxygine
 {
@@ -101,4 +103,5 @@ namespace oxygine
             rs.renderer->addVertices(&buff.front(), buff.size());
         }
     }
+
 }

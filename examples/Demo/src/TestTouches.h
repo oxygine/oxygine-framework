@@ -23,13 +23,34 @@ public:
         //orange->setAlpha(200);
         orange->addEventListener(TouchEvent::OVER, CLOSURE(this, &TestTouches::onOver));
         orange->addEventListener(TouchEvent::OUT, CLOSURE(this, &TestTouches::onOver));
+        orange->addEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &TestTouches::onDownUp));
+        orange->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &TestTouches::onDownUp));
+        orange->addEventListener(TouchEvent::MOVE, CLOSURE(this, &TestTouches::onMove));
 
         spTextField tf = new TextField;
-        tf->setText("out");
+        tf->setText("");
         tf->setColor(Color::Black);
-        tf->setName("txt");
-        tf->setX(10);
+        tf->setName("state1");
+        tf->setX(5);
         tf->setY(5);
+        tf->attachTo(orange);
+
+        tf = new TextField;
+        tf->setText("");
+        tf->setColor(Color::Black);
+        tf->setName("state2");
+        tf->setX(35);
+        tf->setY(5);
+        tf->attachTo(orange);
+
+        tf = new TextField;
+        tf->setText("");
+        tf->setColor(Color::Black);
+        tf->setName("local");
+        tf->setX(5);
+        tf->setY(25);
+        tf->setMultiline(true);
+        tf->setWidth(orange->getWidth());
         tf->attachTo(orange);
 
         return orange;
@@ -38,9 +59,39 @@ public:
     void onOver(Event* ev)
     {
         spSprite s = safeSpCast<Sprite>(ev->currentTarget);
-        spTextField tf = s->getChildT<TextField>("txt");
-        tf->setText(ev->type == TouchEvent::OVER ? "over" : "out");
+        spTextField tf = s->getChildT<TextField>("state1");
+        tf->setText(ev->type == TouchEvent::OVER ? "over" : "");
+        updateLocalPos(ev);
     }
+
+    void onDownUp(Event* ev)
+    {
+        spSprite s = safeSpCast<Sprite>(ev->currentTarget);
+        spTextField tf = s->getChildT<TextField>("state2");
+        tf->setText(ev->type == TouchEvent::TOUCH_DOWN ? "pressed" : "");
+        updateLocalPos(ev);
+    }
+
+    void updateLocalPos(Event* ev)
+    {
+        spSprite s = safeSpCast<Sprite>(ev->currentTarget);
+        spTextField tf = s->getChildT<TextField>("local");
+
+        if (ev->type != TouchEvent::OUT)
+        {
+            TouchEvent* te = safeCast<TouchEvent*>(ev);
+            char str[255];
+            safe_sprintf(str, "loc.pos: %d,%d", (int)te->localPosition.x, (int)te->localPosition.y);
+            tf->setText(str);
+        }
+        else
+            tf->setText("");
+    }
+    void onMove(Event* ev)
+    {
+        updateLocalPos(ev);
+    }
+
 
 
     TestTouches()
@@ -56,7 +107,7 @@ public:
         spSprite Orange = createRect("Orange", Color::Orange, Vector2(200, 200), Vector2(300, 300));
         Orange->attachTo(content);
 
-        spSprite Green = createRect("Green", Color::Green, Vector2(100, 25), Vector2(100, 100));
+        spSprite Green = createRect("Green", Color::Green, Vector2(100, 25), Vector2(100, 150));
         Green->attachTo(Orange);
 
         spSprite Beige = createRect("Beige", Color::Beige, Vector2(150, 150), Vector2(250, 100));

@@ -2,7 +2,7 @@
 #include "ClipRectActor.h"
 #include "PointerState.h"
 #include "UpdateState.h"
-#include "Draggable.h"
+//#include "Draggable.h"
 #include "initActor.h"
 #include "Serialize.h"
 
@@ -76,6 +76,23 @@ namespace oxygine
             _drag.destroy();
             _content->detach();
         }
+
+        _downTime = 0;
+
+        _current = 0;
+        _lastIterTime = 0;
+        _sliding = false;
+
+        //_prev[0].pos = _content->getPosition();
+        //_prev[0].tm = tm;
+
+        for (int i = 0; i < NUM; ++i)
+            _prev[i].tm = 0;
+
+        _holded = 0; //event->target;
+        //_downPos = te->localPosition;
+        //_downTime = tm;
+
 
         _speed = Vector2(0, 0);
 
@@ -246,35 +263,27 @@ namespace oxygine
                     if (!mid)
                         mid = last;
 
+
+
                     Vector2 midpos = mid->pos;
                     Vector2 dir = pos - midpos;
                     if (dir.sqlength() < 10 * 10)
                         _speed = Vector2(0, 0);
                     else
                     {
-                        Vector2 dr = pos - old->pos;
                         timeMS v = tm - old->tm;
-                        OX_ASSERT(v);
-                        if (v)
-                        {
-                            Vector2 ns = (dr * 1000.0f) / v;
+                        if (!v)
+                            return;
 
-                            /*
-                            int d = tm - _downTime;
-                            Vector2 dr2 = pos - _downPos;
-                            Vector2 ts = dr2 / float(d) * 1000.0f;
-                            ts.x = 0;
+                        Vector2 dr = pos - old->pos;
 
-                            log::messageln("fs: %.2f %d ns: %.2f %d", ns.y, int(tm), ts.y, d);
-                            */
-                            //ns = ts;
+                        Vector2 ns = (dr * 1000.0f) / v;
 
+                        if (_speed.dot(ns) < 0)
+                            _speed = ns;
+                        else
+                            _speed += ns;
 
-                            if (_speed.dot(ns) < 0)
-                                _speed = ns;
-                            else
-                                _speed += ns;
-                        }
                     }
 
 

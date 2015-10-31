@@ -1,12 +1,15 @@
 #pragma once
 #include <vector>
 #include "Restorable.h"
+#include "Object.h"
 //#include <unordered_map>
 
 namespace oxygine
 {
     class ShaderProgram;
     class IVideoDriver;
+    DECLARE_SMART(NativeTexture, spNativeTexture);
+
 
     class UberShaderProgramBase: public Restorable
     {
@@ -26,9 +29,11 @@ namespace oxygine
         void release();
 
         typedef Closure<void (IVideoDriver*, ShaderProgram*)> ShaderUniformsCallback;
+
+        ShaderUniformsCallback  getShaderUniformsCallback() const { return _cb; }
         void setShaderUniformsCallback(ShaderUniformsCallback cb) {_cb = cb;}
 
-        ShaderUniformsCallback  getShaderUniformsCallback() const {return _cb;}
+
         virtual shader*         getShaderProgram(int flags) = 0;
 
 
@@ -66,6 +71,8 @@ namespace oxygine
         };
 
         shader*                 getShaderProgram(int flags);
+
+        void apply(spNativeTexture base, spNativeTexture alpha);
 
     protected:
         void releaseShaders() OVERRIDE;

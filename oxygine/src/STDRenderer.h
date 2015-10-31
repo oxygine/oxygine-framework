@@ -11,7 +11,7 @@ namespace oxygine
         /**Sets blend mode. Default value is blend_premultiplied_alpha*/
         void draw(const RState* rs, const Color&, const RectF& srcRect, const RectF& destRect) OVERRIDE;
 
-        void setUberShaderProgram(UberShaderProgramBase* pr);
+        void setUberShaderProgram(UberShaderProgram* pr);
 
         void setBlendMode(blend_mode blend);
         /**Sets texture. If texture is null White texture would be used.*/
@@ -35,7 +35,7 @@ namespace oxygine
 
         blend_mode _blend;
 
-        UberShaderProgramBase* _uberShader;
+        UberShaderProgram* _uberShader;
         unsigned int _shaderFlags;
     };
 

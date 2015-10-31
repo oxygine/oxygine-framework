@@ -1339,4 +1339,169 @@ namespace oxygine
         actor->setPosition(pos);
         actor->attachTo(newParent);
     }
+
+
+
+
+    class OBB2D
+    {
+    private:
+        /** Corners of the box, where 0 is the lower left. */
+        Vector2         corner[4];
+
+        /** Two edges of the box extended away from corner[0]. */
+        Vector2         axis[2];
+
+        /** origin[a] = corner[0].dot(axis[a]); */
+        double          origin[2];
+
+        /** Returns true if other overlaps one dimension of this. */
+        bool overlaps1Way(const OBB2D& other) const
+        {
+            for (int a = 0; a < 2; ++a)
+            {
+
+                float t = other.corner[0].dot(axis[a]);
+
+                // Find the extent of box 2 on axis a
+                float tMin = t;
+                float tMax = t;
+
+                for (int c = 1; c < 4; ++c)
+                {
+                    t = other.corner[c].dot(axis[a]);
+
+                    if (t < tMin)
+                    {
+                        tMin = t;
+                    }
+                    else if (t > tMax)
+                    {
+                        tMax = t;
+                    }
+                }
+
+                // We have to subtract off the origin
+
+                // See if [tMin, tMax] intersects [0, 1]
+                if ((tMin > 1 + origin[a]) || (tMax < origin[a]))
+                {
+                    // There was no intersection along this dimension;
+                    // the boxes cannot possibly overlap.
+                    return false;
+                }
+            }
+
+            // There was no dimension along which there is no intersection.
+            // Therefore the boxes overlap.
+            return true;
+        }
+
+
+        /** Updates the axes after the corners move.  Assumes the
+        corners actually form a rectangle. */
+        void computeAxes()
+        {
+            axis[0] = corner[1] - corner[0];
+            axis[1] = corner[3] - corner[0];
+
+            // Make the length of each axis 1/edge length so we know any
+            // dot product must be less than 1 to fall within the edge.
+
+            for (int a = 0; a < 2; ++a)
+            {
+                axis[a] /= axis[a].sqlength();
+                origin[a] = corner[0].dot(axis[a]);
+            }
+        }
+
+    public:
+
+        OBB2D(const RectF& rect, const AffineTransform& tr)
+        {
+            corner[0] = tr.transform(rect.getLeftTop());
+            corner[1] = tr.transform(rect.getRightTop());
+            corner[2] = tr.transform(rect.getRightBottom());
+            corner[3] = tr.transform(rect.getLeftBottom());
+
+            computeAxes();
+        }
+
+        /** Returns true if the intersection of the boxes is non-empty. */
+        bool overlaps(const OBB2D& other) const
+        {
+            return overlaps1Way(other) && other.overlaps1Way(*this);
+        }
+    };
+
+
+
+    extern int HIT_TEST_DOWNSCALE;
+
+    bool testIntersection(spActor objA, spActor objB, spActor parent, Vector2* contact)
+    {
+        float s1 = objB->getSize().x * objB->getSize().y;
+        float s2 = objA->getSize().x * objA->getSize().y;
+        bool swapped = false;
+        if (s2 < s1)
+        {
+            swapped = true;
+            std::swap(objA, objB);
+        }
+
+        Renderer::transform transA = getGlobalTransform(objA, parent);
+        Renderer::transform transB = getGlobalTransform(objB, parent);
+        //Renderer::transform transBInv = getGlobalTransform(objB, parent);
+        transB.invert();
+        Renderer::transform n = transA * transB;
+
+        AffineTransform ident;
+        ident.identity();
+
+        OBB2D a(objB->getDestRect(), ident);
+        OBB2D b(objA->getDestRect(), n);
+        if (!a.overlaps(b))
+            return false;
+
+        /*
+        float s1 = objB->getSize().x * objB->getSize().y;
+        float s2 = objA->getSize().x * objA->getSize().y;
+        bool swapped = false;
+        if (s2 < s1)
+        {
+            swapped = true;
+            std::swap(objA, objB);
+            std::swap(transA, transB);
+            n = transA * transB;
+        }
+
+        */
+
+
+        int w = (int)objA->getWidth();
+        int h = (int)objA->getHeight();
+
+
+        for (int y = 0; y < w; y += HIT_TEST_DOWNSCALE)
+        {
+            for (int x = 0; x < h; x += HIT_TEST_DOWNSCALE)
+            {
+                Vector2 posA = Vector2(float(x), float(y));
+
+                if (!objA->isOn(posA))
+                    continue;
+
+                Vector2 posB = n.transform(posA);
+
+                if (!objB->isOn(posB))
+                    continue;
+
+                if (contact)
+                    *contact = swapped ? posB : posA;
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

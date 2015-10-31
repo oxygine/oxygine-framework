@@ -57,7 +57,7 @@ public:
         addButton("tweens", "Tweens");
         addButton("text", "Text");
         addButton("progress_bar", "Progress Bar");
-        addButton("drag", "Drag and Drop");
+        addButton("drag", "Drag and Drop with Test Intersections");
         addButton("drag2", "Drag and Drop2");
         addButton("hittest", "Alpha Hit Test");
         addButton("perf", "Performance");

@@ -26,7 +26,7 @@ namespace oxygine
         virtual ~ObjectBase();
 
         const std::string&  getName() const;
-        void*               getUserData() const {return __userData;}
+        const void*         getUserData() const {return __userData;}
         int                 getObjectID()const {return __id;}
         bool                isName(const std::string& name) const;
         bool                isName(const char* name) const;
@@ -34,7 +34,7 @@ namespace oxygine
 
 
         void setName(const std::string& name);
-        void setUserData(void* data) {__userData = data;}
+        void setUserData(const void* data) {__userData = data;}
 
         void dumpObject() const;
 
@@ -69,7 +69,7 @@ namespace oxygine
         void __freeName() const;
 
         int __id;
-        void* __userData;
+        const void* __userData;
 
 
 #ifdef OXYGINE_DEBUG_TRACE_LEAKS

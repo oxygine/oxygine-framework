@@ -123,10 +123,7 @@ namespace oxygine
         ShaderProgram* prog = _uberShader->getShaderProgram(_shaderFlags)->program;
         setShader(prog);
 
-        _driver->setTexture(UberShaderProgram::SAMPLER_BASE, _base);
-
-        if (_alpha)
-            _driver->setTexture(UberShaderProgram::SAMPLER_ALPHA, _alpha);
+        _uberShader->apply(_base, _alpha);
 
         UberShaderProgramBase::ShaderUniformsCallback cb = _uberShader->getShaderUniformsCallback();
         if (cb)
@@ -211,7 +208,7 @@ namespace oxygine
         addVertices(v, sizeof(v));
     }
 
-    void STDRenderer::setUberShaderProgram(UberShaderProgramBase* pr)
+    void STDRenderer::setUberShaderProgram(UberShaderProgram* pr)
     {
         if (_uberShader != pr)
         {

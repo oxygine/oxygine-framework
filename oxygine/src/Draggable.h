@@ -43,7 +43,7 @@ namespace oxygine
 
         Actor* _dragClient;
         Actor* _actor;
-
+        timeMS _startTm;
         bool _singleDrag;
 
         RectF _bounds;
