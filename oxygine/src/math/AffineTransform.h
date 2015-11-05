@@ -38,10 +38,24 @@ namespace oxygine
             y = T(0);
         }
 
+        static affineTransform getIdentity()
+        {
+            affineTransform t;
+            t.identity();
+            return t;
+        }
+
         void translate(const vector2& v)
         {
             x += a * v.x + c * v.y;
             y += b * v.x + d * v.y;
+        }
+
+        affineTransform translated(const vector2& v) const
+        {
+            affineTransform t = *this;
+            t.translate(v);
+            return t;
         }
 
         void scale(const vector2& v)
@@ -52,6 +66,13 @@ namespace oxygine
             d *= v.y;
         }
 
+        affineTransform scaled(const vector2& v) const
+        {
+            affineTransform t = *this;
+            t.scale(v);
+            return t;
+        }
+
         void rotate(T v)
         {
             T sin_ = scalar::sin(v);
@@ -59,6 +80,13 @@ namespace oxygine
 
             affineTransform rot(cos_, sin_, -sin_, cos_, 0, 0);
             *this = *this * rot;
+        }
+
+        affineTransform rotated(T v) const
+        {
+            affineTransform t = *this;
+            t.rotate(v);
+            return t;
         }
 
         void invert()
@@ -75,10 +103,21 @@ namespace oxygine
             y = det * (t.b * t.x - t.a * t.y);
         }
 
+        affineTransform inverted() const
+        {
+            affineTransform t = *this;
+            t.invert();
+            return t;
+        }
+
         operator matrix() const
         {
-            return matrix
-                   (
+            return toMatrix();
+        }
+
+        matrix toMatrix() const
+        {
+            return matrix(
                        a, b, 0, 0,
                        c, d, 0, 0,
                        0, 0, 1, 0,
