@@ -32,6 +32,8 @@ namespace oxygine
         _image->setResAnim(0);
 
         _http = HttpRequestTask::create();
+        if (!_http)
+            return;
         _http->setUrl(url);
         _http->run();
 

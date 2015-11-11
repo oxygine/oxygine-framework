@@ -36,9 +36,16 @@ def buildzip(name):
         recursive_zip(zp, "../../temp")
     
     try:
-        shutil.copyfile(destzip, "../../../gdrive/oxygine/" + name)
+        shutil.copyfile(destzip, "../../../gdrive/oxygine/" + name)        
     except IOError, e:
         pass
+
+    try:
+        shutil.copyfile(destzip, "../../../Dropbox/Public/oxygine/" + name)
+    except IOError, e:
+        pass
+
+        
     print("zip created: " + name)
     
     

@@ -72,7 +72,7 @@ namespace oxygine
 
         shader*                 getShaderProgram(int flags);
 
-        void apply(spNativeTexture base, spNativeTexture alpha);
+        void apply(IVideoDriver* driver, spNativeTexture base, spNativeTexture alpha);
 
     protected:
         void releaseShaders() OVERRIDE;

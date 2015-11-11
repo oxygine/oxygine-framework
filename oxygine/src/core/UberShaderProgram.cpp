@@ -125,11 +125,8 @@ namespace oxygine
         }
     }
 
-    void UberShaderProgram::apply(spNativeTexture base, spNativeTexture alpha)
+    void UberShaderProgram::apply(IVideoDriver* driver, spNativeTexture base, spNativeTexture alpha)
     {
-        //STDRenderer
-        IVideoDriver* driver = IVideoDriver::instance;
-
         driver->setTexture(UberShaderProgram::SAMPLER_BASE, base);
 
         if (alpha)

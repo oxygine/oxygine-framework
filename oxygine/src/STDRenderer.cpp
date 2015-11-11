@@ -123,7 +123,7 @@ namespace oxygine
         ShaderProgram* prog = _uberShader->getShaderProgram(_shaderFlags)->program;
         setShader(prog);
 
-        _uberShader->apply(_base, _alpha);
+        _uberShader->apply(_driver, _base, _alpha);
 
         UberShaderProgramBase::ShaderUniformsCallback cb = _uberShader->getShaderUniformsCallback();
         if (cb)

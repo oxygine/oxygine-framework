@@ -27,11 +27,13 @@ if __name__ == "__main__":
         if size[0] != im.size[0]:
             print(("warning! width should be {}".format(size[0])))
 
-    anim = Image.new("RGBA", (w, h))
-    w = 0
-    for im in images:
-        anim.paste(im, (w, 0))
-        w += im.size[0]
+    if w:
 
-    print(("writing result...\nfile=\"{}\" cols=\"{}\"".format(args.dest, len(images))))
-    anim.save(args.dest)
+        anim = Image.new("RGBA", (w, h))
+        w = 0
+        for im in images:
+            anim.paste(im, (w, 0))
+            w += im.size[0]
+
+        print(("writing result...\nfile=\"{}\" cols=\"{}\"".format(args.dest, len(images))))
+        anim.save(args.dest)
