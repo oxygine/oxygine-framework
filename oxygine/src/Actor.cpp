@@ -1089,6 +1089,12 @@ namespace oxygine
         return _addTween(tween, false);
     }
 
+    spTween Actor::addTween2(spTween tween, const TweenOptions& opt)
+    {
+        tween->init2(opt);
+        return _addTween(tween, false);
+    }
+
     spTween Actor::getTween(const std::string& name, error_policy ep)
     {
         spTween tween = _tweens._first;
@@ -1316,6 +1322,19 @@ namespace oxygine
         Renderer::transform t;
         t.identity();
         while (child != parent)
+        {
+            t = t * child->getTransform();
+            child = child->getParent();
+        }
+
+        return t;
+    }
+
+    Renderer::transform getGlobalTransform2(spActor child, Actor* parent)
+    {
+        Renderer::transform t;
+        t.identity();
+        while (child.get() != parent)
         {
             t = t * child->getTransform();
             child = child->getParent();

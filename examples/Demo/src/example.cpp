@@ -24,6 +24,7 @@
 #include "TestTweenText.h"
 #include "TestTweenShine.h"
 #include "TestTouches.h"
+#include "TestColorFont.h"
 
 #ifdef __S3E__
 #include "s3eKeyboard.h"
@@ -71,6 +72,7 @@ public:
         addButton("cliprect", "ClipRect Actor");
         addButton("usershader", "User Shader");
         addButton("usershader2", "User Shader2");
+        addButton("multicolorfont", "Outer Font Color");
         addButton("mask", "Mask");
         addButton("polygon", "Polygon");
         addButton("inputtext", "Input Text");
@@ -218,6 +220,13 @@ public:
         {
             showTest(new TestTweenShine);
         }
+
+        if (id == "multicolorfont")
+        {
+            showTest(new TestColorFont);
+        }
+
+
     }
 };
 

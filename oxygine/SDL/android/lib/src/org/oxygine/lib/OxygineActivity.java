@@ -3,6 +3,8 @@ package org.oxygine.lib;
 import android.content.Intent;
 import android.os.Bundle;
 import org.libsdl.app.SDLActivity;
+import org.oxygine.lib.extension.ActivityObservable;
+import org.oxygine.lib.extension.ActivityObserver;
 
 /**
  * OxygineActivity

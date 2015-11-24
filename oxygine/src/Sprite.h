@@ -47,6 +47,8 @@ namespace oxygine
 
         typedef oxygine::TweenAnim TweenAnim;
         std::string dump(const dumpOptions&) const;
+
+        void doRender(const RenderState& rs);
     protected:
         enum
         {
@@ -54,7 +56,6 @@ namespace oxygine
         };
         virtual void changeAnimFrame(const AnimationFrame& f);
         virtual void animFrameChanged(const AnimationFrame& f);
-        void doRender(const RenderState& rs);
 
         AnimationFrame _frame;
     };

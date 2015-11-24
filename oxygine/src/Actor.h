@@ -234,6 +234,7 @@ namespace oxygine
         virtual void updateState() {}
 
         spTween addTween(spTween);
+        spTween addTween2(spTween, const TweenOptions& opt);
 
         template<class Prop>
         spTween addTween(const Prop& prop, timeMS duration, int loops = 1, bool twoSides = false, timeMS delay = 0, Tween::EASE ease = Tween::ease_linear)
@@ -379,6 +380,7 @@ namespace oxygine
 
 
     Renderer::transform getGlobalTransform(spActor child, spActor parent = 0);
+    Renderer::transform getGlobalTransform2(spActor child, Actor* parent = 0);
 
     void    changeParentAndSavePosition(spActor mutualParent, spActor actor, spActor newParent);
 

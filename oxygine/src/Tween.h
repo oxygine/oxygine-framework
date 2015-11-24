@@ -132,6 +132,7 @@ namespace oxygine
         /*set Duration of tween**/
         void setDuration(timeMS duration) { _duration = duration; }
         void setClient(Actor* client) { _client = client; }
+        void setTwoSides(bool ts) { _twoSides = ts; }
 
         /**delete actor from parent node when tween done*/
         void setDetachActor(bool detach) { _detach = detach; }

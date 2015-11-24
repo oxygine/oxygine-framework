@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <resources>
 	<font file="demo/font.fnt" />
+	<font file="demo/num_fnt_shdr.fnt" premultiplied_alpha="false"/>
 	<set path = "./../images" />
 
 	<atlas id = "primary" format="8888">

@@ -177,7 +177,7 @@ else(EMSCRIPTEN)
 endif(EMSCRIPTEN)
 
 
-message(STATUS ${CORE_LIBS})
+#message(STATUS ${CORE_LIBS})
 
 #add jpeg library
 if (OX_HAVE_LIBJPEG)

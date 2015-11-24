@@ -141,6 +141,7 @@
     <ClInclude Include="../src/TestUserShader2.h" />
     <ClInclude Include="../src/example.h" />
     <ClInclude Include="../src/test.h" />
+    <ClInclude Include="..\src\TestColorFont.h" />
     <ClInclude Include="..\src\TestTouches.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
