@@ -23,6 +23,10 @@
             </intent-filter>
         </activity>
     </application>
+   
+    <uses-permission android:name="android.permission.INTERNET" /> <!--used for http requests demo-->    
+    <uses-permission android:name="android.permission.WAKE_LOCK" /><!--used for http requests demo (downloading files)-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/><!--used for Proxy detection, could be disabled-->  
 
     <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="16" />
 

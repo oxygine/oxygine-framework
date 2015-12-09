@@ -251,6 +251,7 @@ void example_init()
     //load xml file with resources definition
     resources.loadXML("xmls/res.xml");
 
+
     Test::init();
 
     Test::instance = new TestActor;
@@ -266,7 +267,6 @@ void example_init()
     stage2->setSize(getStage()->getSize());
     stage2->associateWithWindow(window2);
 #endif
-
 }
 
 void example_update()

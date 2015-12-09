@@ -2,7 +2,7 @@
 2. emscripten build configured with CMakeFiles
 
 How to build. Steps:
-- Install Emscripten SDK and setup it
+- Install Emscripten SDK and setup it. Minimal version 1.35.0 required
 - Install CMake
 - Installe JDK version 6/7
 - if you are Windows user you need also install Make tool:
@@ -13,13 +13,13 @@ How to build. Steps:
 
 - Configure environment variables properly:
   EMSCRIPTEN points to Emscripten SDK folder with emcc
-  	example: d:\Emscripten\emscripten\1.25.0\   
+  	example: d:\Emscripten\emscripten\1.35.0\
   JAVA_HOME points to JDK 
   	example: c:\Program Files (x86)\Java\jdk1.6.0_26\
 
 - Add necessary paths to environment variable PATH:
   EMSCRIPTEN
-  	example: d:\Emscripten\emscripten\1.25.0\
+  	example: d:\Emscripten\emscripten\1.35.0\
   JDK 
   	example: "c:\Program Files (x86)\Java\jdk1.6.0_26\bin\"
 

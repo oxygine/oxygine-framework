@@ -31,7 +31,7 @@ set(OX_HAVE_LIBJPEG 1)
 set(OX_HAVE_LIBPNG 1)
 
 if (EMSCRIPTEN)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-warn-absolute-paths")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 	set(OX_HAVE_LIBJPEG 0)
 	set(OX_HAVE_LIBPNG 1)
 	set(THIRD_PARTY ${CMAKE_CURRENT_SOURCE_DIR}/oxygine/third_party/emscripten)

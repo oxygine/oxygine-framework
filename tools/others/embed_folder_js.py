@@ -27,7 +27,7 @@ def do(src, dest):
     for f in files:
         s = s + " --embed " + f
         
-    cmd = "python \"" + os.environ["EMSCRIPTEN"] + "/tools/file_packager.py\" test --compress 100 --js-output=\"%s\" %s" % (dest, s)
+    cmd = "python \"" + os.environ["EMSCRIPTEN"] + "/tools/file_packager.py\" test --lz4  --js-output=\"%s\" %s" % (dest, s)
     print(cmd)
     os.system(cmd)
 
