@@ -74,6 +74,20 @@ namespace oxygine
             }
         }
 
+        const Symbol* Node::getSymbol(int& pos) const
+        {
+            Node* node = _firstChild;
+            while (node)
+            {
+                int num = 0;
+                const Symbol* res = node->getSymbol(pos);
+                if (res)
+                    return res;
+                node = node->_nextSibling;
+            }
+            return 0;
+        }
+
         void Node::draw(DrawContext& dc)
         {
             drawChildren(dc);
@@ -120,6 +134,14 @@ namespace oxygine
 
                 utfstr = getNextCode(code, utfstr);
             }
+        }
+
+        const Symbol* TextNode::getSymbol(int& pos) const
+        {
+            if (_data.size() < pos)
+                return &_data[pos];
+            pos -= _data.size();
+            return Node::getSymbol(pos);
         }
 
         void TextNode::draw(DrawContext& dc)

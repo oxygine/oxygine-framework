@@ -244,6 +244,13 @@ namespace oxygine
         spTween addTween(const Prop& prop, const TweenOptions& opt)
         {return addTween(createTween2(prop, opt));}
 
+        /**short syntax version of actor->addEventListener(TouchEvent::CLICK, ...);*/
+        int addClickListener(const EventCallback& cb) { return addEventListener(TouchEvent::CLICK, cb); }
+        /**short syntax version of actor->addEventListener(TouchEvent::TOUCH_DOWN, ...);*/
+        int addTouchDownListener(const EventCallback& cb) { return addEventListener(TouchEvent::TOUCH_DOWN, cb); }
+        /**short syntax version of actor->addEventListener(TouchEvent::TOUCH_UP, ...);*/
+        int addTouchUpListener(const EventCallback& cb) { return addEventListener(TouchEvent::TOUCH_UP, cb); }
+
         void removeTween(spTween);
         void removeTweensByName(const std::string& name);
         /**remove all tweens and call completes them if callComplete == true*/

@@ -23,6 +23,10 @@ public class Utils {
         return Locale.getDefault().getLanguage();
     }
 
+    public static String getPackage() {
+        return _context.getPackageName();
+    }
+
     public static boolean isNetworkAvailable() {
         if (_context == null)
             return false;

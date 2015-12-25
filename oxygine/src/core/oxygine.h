@@ -93,6 +93,9 @@ namespace oxygine
         /**Opens browser*/
         void execute(const char* url);
 
+        /**returns app package, example: com.company.apps*/
+        std::string getPackage();
+
         /** Returns display size in pixels*/
         Point getDisplaySize();
 

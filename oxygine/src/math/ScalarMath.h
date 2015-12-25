@@ -36,7 +36,7 @@ namespace oxygine
 #ifdef IW_SYS_MATH_H
             return fabsf(s);
 #else
-            return fabs(s);
+            return fabsf(s);
 #endif
         }
 

@@ -24,6 +24,7 @@
 		1E839D002B2BA83FC83A695A /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 04FE4D4FB640E0DF92DFB865 /* fonts */; };
 		2DC477AC10D6C07B3FE008F6 /* Box2DDebugDraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360377333740D8A2FD15BBE6 /* Box2DDebugDraw.cpp */; };
 		3A631A475DE035FC53ADE5EA /* images in Resources */ = {isa = PBXBuildFile; fileRef = 7F3B12E3C9D554D9FE28101D /* images */; };
+		9223FE881C2D98D0000B1FDA /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9223FE871C2D98D0000B1FDA /* GameController.framework */; };
 		9271CF101BAB66B50085E667 /* b2BroadPhase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9271CEAE1BAB66B50085E667 /* b2BroadPhase.cpp */; };
 		9271CF111BAB66B50085E667 /* b2CollideCircle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9271CEB01BAB66B50085E667 /* b2CollideCircle.cpp */; };
 		9271CF121BAB66B50085E667 /* b2CollideEdge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9271CEB11BAB66B50085E667 /* b2CollideEdge.cpp */; };
@@ -128,6 +129,7 @@
 		4DA100C319512824B7570663 /* example.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = example.cpp; path = ../src/example.cpp; sourceTree = "<group>"; };
 		5DE458993031811A4C7D28C1 /* Box2DDebugDraw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Box2DDebugDraw.h; path = ../src/Box2DDebugDraw.h; sourceTree = "<group>"; };
 		7F3B12E3C9D554D9FE28101D /* images */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = images; path = ../data/images; sourceTree = "<group>"; };
+		9223FE871C2D98D0000B1FDA /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
 		9271CEAC1BAB66B50085E667 /* Box2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2D.h; sourceTree = "<group>"; };
 		9271CEAE1BAB66B50085E667 /* b2BroadPhase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2BroadPhase.cpp; sourceTree = "<group>"; };
 		9271CEAF1BAB66B50085E667 /* b2BroadPhase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2BroadPhase.h; sourceTree = "<group>"; };
@@ -230,6 +232,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9223FE881C2D98D0000B1FDA /* GameController.framework in Frameworks */,
 				049B52B11871EBFA00EF3C66 /* liboxygine_ios.a in Frameworks */,
 				04998D3617F8A97D003441C3 /* libSDL2.a in Frameworks */,
 				04998EF017F8ADD4003441C3 /* CoreGraphics.framework in Frameworks */,
@@ -284,6 +287,7 @@
 		04998CEE17F8A933003441C3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9223FE871C2D98D0000B1FDA /* GameController.framework */,
 				04998EEB17F8ADD4003441C3 /* UIKit.framework */,
 				048AD0AD197D24AB001963EF /* CoreMotion.framework */,
 				04998EEC17F8ADD4003441C3 /* Foundation.framework */,

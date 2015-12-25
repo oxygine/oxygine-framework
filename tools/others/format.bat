@@ -12,3 +12,7 @@ set astyle=d:\dropbox\tools\AStyle.exe
 
 %astyle% d:\oxygine-movie\examples\*.cpp d:\oxygine-movie\examples\*.h %options%
 %astyle% d:\oxygine-movie\src\*.cpp d:\oxygine-movie\src\*.h %options%
+
+
+%astyle% d:\oxygine-billing\examples\*.cpp d:\oxygine-billing\examples\*.h %options%
+%astyle% d:\oxygine-billing\src\*.cpp d:\oxygine-billing\src\*.h %options%

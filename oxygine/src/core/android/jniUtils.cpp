@@ -11,6 +11,7 @@ jclass _jUtils = 0;
 
 jmethodID _jUtils_getTimeUTCMS = 0;
 jmethodID _jUtils_getLanguage = 0;
+jmethodID _jUtils_getPackage = 0;
 jmethodID _jUtils_isNetworkAvailable = 0;
 jmethodID _jRunnable_run = 0;
 
@@ -48,6 +49,9 @@ namespace oxygine
             _jUtils_getLanguage = env->GetStaticMethodID(_jUtils, "getLanguage", "()Ljava/lang/String;");
             JNI_NOT_NULL(_jUtils_getLanguage);
 
+            _jUtils_getPackage = env->GetStaticMethodID(_jUtils, "getPackage", "()Ljava/lang/String;");
+            JNI_NOT_NULL(_jUtils_getPackage);
+
             _jUtils_isNetworkAvailable = env->GetStaticMethodID(_jUtils, "isNetworkAvailable", "()Z");
             JNI_NOT_NULL(_jUtils_isNetworkAvailable);
 
@@ -84,21 +88,22 @@ namespace oxygine
 
     std::string     jniGetLanguage()
     {
-        try
-        {
-            JNIEnv* env = jniGetEnv();
-            LOCAL_REF_HOLDER(env);
+        JNIEnv* env = jniGetEnv();
+        LOCAL_REF_HOLDER(env);
 
-            jstring jstr = (jstring)env->CallStaticObjectMethod(_jUtils, _jUtils_getLanguage);
+        jstring jstr = (jstring)env->CallStaticObjectMethod(_jUtils, _jUtils_getLanguage);
 
-            return jniGetString(env, jstr);
-        }
-        catch (const notFound&)
-        {
+        return jniGetString(env, jstr);
+    }
 
-        }
+    std::string jniGetPackage()
+    {
+        JNIEnv* env = jniGetEnv();
+        LOCAL_REF_HOLDER(env);
 
-        return "";
+        jstring jstr = (jstring)env->CallStaticObjectMethod(_jUtils, _jUtils_getPackage);
+
+        return jniGetString(env, jstr);
     }
 
     bool            jniIsNetworkAvailable()
@@ -184,7 +189,7 @@ namespace oxygine
 
     jobject jniFindExtension(JNIEnv* env, jclass cl)
     {
-        jmethodID m = env->GetMethodID(jniGetMainActivityClass(), "findClass", "(Ljava/lang/Class;)Lorg/oxygine/lib/ActivityObserver;");
+        jmethodID m = env->GetMethodID(jniGetMainActivityClass(), "findClass", "(Ljava/lang/Class;)Lorg/oxygine/lib/extension/ActivityObserver;");
         JNI_NOT_NULL(m);
 
         jobject r = env->CallObjectMethod(jniGetMainActivity(), m, cl);

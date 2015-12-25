@@ -756,6 +756,15 @@ namespace oxygine
 #endif
         }
 
+        std::string getPackage()
+        {
+#ifdef __ANDROID__
+            return jniGetPackage();
+#else
+            return "unknown";
+#endif
+        }
+
         void requestQuit()
         {
 #ifdef __S3E__
