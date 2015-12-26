@@ -590,6 +590,11 @@ namespace oxygine
         _clock = clock;
     }
 
+    void Actor::setAlpha(unsigned char alpha)
+    {
+        _alpha = alpha;
+    }
+    
     const Renderer::transform& Actor::getTransform() const
     {
         updateTransform();
@@ -606,6 +611,11 @@ namespace oxygine
         }
 
         return _transformInvert;
+    }
+
+    unsigned char Actor::getAlpha() const
+    {
+        return _alpha;
     }
 
     const spClock&  Actor::getClock() const
