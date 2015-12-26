@@ -214,9 +214,9 @@ namespace oxygine
         size_t indices = (count * 3) / 2;
 
         if (indices <= indices8.size())
-            getDriver()->draw(IVideoDriver::PT_TRIANGLES, _vdecl, &_vertices.front(), count, &indices8.front(), indices, false);
+            getDriver()->draw(IVideoDriver::PT_TRIANGLES, _vdecl, &_vertices.front(), (unsigned int) count, &indices8.front(), (unsigned int) indices, false);
         else
-            getDriver()->draw(IVideoDriver::PT_TRIANGLES, _vdecl, &_vertices.front(), count, &indices16.front(), indices, true);
+            getDriver()->draw(IVideoDriver::PT_TRIANGLES, _vdecl, &_vertices.front(), (unsigned int) count, &indices16.front(), (unsigned int) indices, true);
 
         _vertices.clear();
     }

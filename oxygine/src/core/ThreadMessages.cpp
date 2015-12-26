@@ -127,7 +127,7 @@ namespace oxygine
 
         MutexPthreadLock lock(_mutex);
         if (ev.num == -1)
-            ev.num = _events.size();
+            ev.num = (int) _events.size();
 
         _replyLast(0);
 
