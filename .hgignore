@@ -36,6 +36,7 @@ oxygine-framework.zip
 *.orig
 xcuserdata
 contents.xcworkspacedata
+*.xcscmblueprint
 examples/Demo/data/res.xml.ox
 examples/*/proj.cmake/build/
 temp/
