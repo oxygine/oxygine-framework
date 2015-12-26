@@ -100,7 +100,7 @@ namespace oxygine
                 ptr += _vdecl->size;
             }
 
-            rs.renderer->addVertices(&buff.front(), buff.size());
+            rs.renderer->addVertices(&buff.front(), (unsigned int) buff.size());
         }
     }
 

@@ -133,12 +133,12 @@ namespace oxygine
 
             unsigned int read(void* dest, unsigned int size)
             {
-                return oxFileRead(dest, 1, size, _handle);
+                return (unsigned int) oxFileRead(dest, 1, size, _handle);
             }
 
             unsigned int write(const void* src, unsigned int size)
             {
-                return oxFileWrite(src, 1, size, _handle);
+                return (unsigned int) oxFileWrite(src, 1, size, _handle);
             }
 
             int seek(unsigned int offset, int whence)

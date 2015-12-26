@@ -307,7 +307,7 @@ namespace oxygine
             {
                 unz_file_info file_info;
                 unzGetCurrentFileInfo(_entry->zp, &file_info, 0, 0, 0, 0, 0, 0);
-                return file_info.uncompressed_size;
+                return (unsigned int) file_info.uncompressed_size;
             }
 
             const file_entry* _entry;
