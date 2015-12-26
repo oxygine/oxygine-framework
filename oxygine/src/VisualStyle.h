@@ -37,9 +37,9 @@ namespace oxygine
         void deserialize(const deserializedata* data);
 
         blend_mode              getBlendMode() const {return _vstyle.getBlendMode();}
-        const Color&            getColor() const {return _vstyle.getColor();}
+        const Color&            getColor() const;
 
-        void                    setColor(const Color& color) {_vstyle.setColor(color);}
+        void                    setColor(const Color& color);
         void                    setBlendMode(blend_mode mode) {_vstyle.setBlendMode(mode);}
 
         typedef Property<Color, const Color&, VStyleActor, &VStyleActor::getColor, &VStyleActor::setColor> TweenColor;
