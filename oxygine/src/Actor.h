@@ -131,7 +131,9 @@ namespace oxygine
         /**Returns Size*Scale*/
         Vector2             getScaledSize() const { return _size.mult(_scale); }
         float               getWidth() const {return getSize().x;}
+        float               getScaledWidth() const {return getSize().x * _scale.x;}
         float               getHeight() const {return getSize().y;}
+        float               getScaledHeight() const {return getSize().y * _scale.y;}
         unsigned char       getAlpha() const {return _alpha;}
         const spClock&      getClock() const;
         virtual RectF       getDestRect() const;
