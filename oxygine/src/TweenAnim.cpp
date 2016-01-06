@@ -54,7 +54,23 @@ namespace oxygine
     void TweenAnim::update(Sprite& actor, float p, const UpdateState& us)
     {
         OX_ASSERT(_resAnim);
-        int frame = lerp<int>(_start, _end, p);
+        int frame;
+        if (_start > _end)
+            frame = - int((_start + 1 - _end) * p);
+        else
+            frame =   int((_end   + 1 - _start) * p);
+
+        frame += _start;
+        /*
+        static int lastFrame = -1;
+        static int ltime = 0;
+        if (lastFrame != frame)
+        {
+            log::messageln("%d frame %d", getTimeMS() - ltime, frame);
+            ltime = getTimeMS();
+        }
+        lastFrame = frame;
+        */
 
         const AnimationFrame& fr = _row == -1 ? _resAnim->getFrame(frame) : _resAnim->getFrame(frame, _row);
         _setAnimFrame(actor, fr);
