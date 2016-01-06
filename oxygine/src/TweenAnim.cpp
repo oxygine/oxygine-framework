@@ -55,12 +55,17 @@ namespace oxygine
     {
         OX_ASSERT(_resAnim);
         int frame;
+
+        if (p >= 1.0f)
+            p = 0.9999999f;
+
         if (_start > _end)
             frame = - int((_start + 1 - _end) * p);
         else
             frame =   int((_end   + 1 - _start) * p);
 
         frame += _start;
+
         /*
         static int lastFrame = -1;
         static int ltime = 0;
