@@ -1,4 +1,3 @@
-syntax: glob
 */proj.android/obj/
 */proj.android/out/
 */proj.emscripten/build/
