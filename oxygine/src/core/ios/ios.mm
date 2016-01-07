@@ -112,7 +112,7 @@ namespace oxygine
         int h = image.size.height;
         
         TextureFormat srcFormat = image.bitsPerPixel == 32 ? TF_R8G8B8A8 : TF_R8G8B8;
-        ImageData src(w, h, image.bytesPerRow, srcFormat, image.bitmapData);
+        ImageData src(w, h, (int) image.bytesPerRow, srcFormat, image.bitmapData);
         
         if (destFormat == TF_UNDEFINED)
             destFormat = srcFormat;

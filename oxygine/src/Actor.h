@@ -132,7 +132,7 @@ namespace oxygine
         Vector2             getScaledSize() const { return _size.mult(_scale); }
         float               getWidth() const {return getSize().x;}
         float               getHeight() const {return getSize().y;}
-        unsigned char       getAlpha() const {return _alpha;}
+        unsigned char       getAlpha() const;
         const spClock&      getClock() const;
         virtual RectF       getDestRect() const;
         /**returns touch id if actor is pressed down*/
@@ -190,7 +190,7 @@ namespace oxygine
         /**Enable/Disable culling this actor outside of clip area (use it with ClipRectActor)*/
         void setCull(bool enable) {_flags &= ~flag_cull; if (enable) _flags |= flag_cull;}
         /**Sets transparency. if alpha is 0 actor and children are completely invisible, don't rendering and don't receive events.*/
-        void setAlpha(unsigned char alpha) {_alpha = alpha;}
+        void setAlpha(unsigned char alpha);
 
         /**Deprecated, use setTouchEnabled*/
         void setInputEnabled(bool enabled) { setTouchEnabled(enabled); }
