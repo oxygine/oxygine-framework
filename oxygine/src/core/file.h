@@ -41,6 +41,8 @@ namespace oxygine
 
             const void* getData() const {if (data.empty()) return 0; return &data[0];}
             unsigned int getSize() const {return (unsigned int)data.size();}
+			
+			std::string getString() const {return std::string((char *)&data[0], size());}
 
             typedef std::vector<uchar> buff;
             buff data;
