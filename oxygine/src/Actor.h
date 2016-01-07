@@ -130,11 +130,11 @@ namespace oxygine
         Vector2             getSize() const {return _size;}
         /**Returns Size*Scale*/
         Vector2             getScaledSize() const { return _size.mult(_scale); }
-        float               getWidth() const {return _size.x;}
+        float               getWidth() const;
         float               getScaledWidth() const {return _size.x * _scale.x;}
-        float               getHeight() const {return _size.y;}
+        float               getHeight() const;
         float               getScaledHeight() const {return _size.y * _scale.y;}
-        unsigned char       getAlpha() const {return _alpha;}
+        unsigned char       getAlpha() const;
         const spClock&      getClock() const;
         virtual RectF       getDestRect() const;
         /**returns touch id if actor is pressed down*/

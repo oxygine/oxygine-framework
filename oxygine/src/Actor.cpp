@@ -610,6 +610,16 @@ namespace oxygine
         return _transformInvert;
     }
 
+    float Actor::getWidth() const
+    {
+        return _size.x;
+    }
+
+    float Actor::getHeight() const
+    {
+        return _size.y;
+    }
+
     unsigned char Actor::getAlpha() const
     {
         return _alpha;

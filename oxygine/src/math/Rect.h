@@ -96,11 +96,11 @@ namespace oxygine
         T getRight() const {return pos.x + size.x;}
         T getBottom() const {return pos.y + size.y;}
 
-		void set(T x, T y, T w, T h) {pos.x = x; pos.y = y; size.x = w; size.y = h;}
+        void set(T x, T y, T w, T h) {pos.x = x; pos.y = y; size.x = w; size.y = h;}
         void setPosition(const point2& pos_) {pos = pos_;}
-		void setPosition(T x, T y) {pos.x = x; pos.y = y;}
+        void setPosition(T x, T y) {pos.x = x; pos.y = y;}
         void setSize(const point2& size_) {size = size_;}
-		void setSize(T x, T y) {size.x = x; size.y = y;}
+        void setSize(T x, T y) {size.x = x; size.y = y;}
         void setX(T v) {pos.x = v;}
         void setY(T v) {pos.y = v;}
 

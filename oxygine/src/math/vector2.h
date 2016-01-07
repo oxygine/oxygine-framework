@@ -22,9 +22,9 @@ namespace oxygine
         VectorT2 operator - (const VectorT2&) const;
         VectorT2 operator - () const;
 
-		void set(T x_, T y_) {x = x_; y = y_;}
-		void setZero() {x = 0; y = 0;}
-		
+        void set(T x_, T y_) {x = x_; y = y_;}
+        void setZero() {x = 0; y = 0;}
+
         template <class R>
         VectorT2 operator * (R s) const {VectorT2 r(*this); r.x = type(r.x * s); r.y = type(r.y * s); return r;}
         template <class R>
