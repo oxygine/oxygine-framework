@@ -99,7 +99,8 @@ namespace oxygine
     }
 
     template <class T>
-    VectorT2<T>::VectorT2()
+	VectorT2<T>::VectorT2():
+        x(0), y(0)
     {}
 
     template <class T>
