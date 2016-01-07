@@ -591,7 +591,7 @@ namespace oxygine
     {
         _alpha = alpha;
     }
-    
+
     const Renderer::transform& Actor::getTransform() const
     {
         updateTransform();

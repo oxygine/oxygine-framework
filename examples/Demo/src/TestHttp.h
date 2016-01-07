@@ -53,7 +53,7 @@ public:
         task = HttpRequestTask::create();
         task->setUrl("http://oxygine.org/test/reply.php");
         vector<unsigned char> postBody;
-        for (unsigned char i = 0; i < 256; ++i)
+        for (int i = 0; i < 256; ++i)
             postBody.push_back(i);
         task->setPostData(postBody);
         task->addEventListener(HttpRequestTask::COMPLETE, CLOSURE(this, &TestHttp::onPostLoaded));

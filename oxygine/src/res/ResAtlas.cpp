@@ -745,7 +745,7 @@ namespace oxygine
 
                         size_t n = frames.size();
                         int column = n % columns;
-                        int row = (int) (n / columns);
+                        int row = (int)(n / columns);
 
                         frame.init2(ra, column, row, df,
                                     srcRect, destRect,

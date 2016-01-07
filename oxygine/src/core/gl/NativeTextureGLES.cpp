@@ -293,7 +293,7 @@ namespace oxygine
             //_data.resize(_width)
         }
 
-        ImageData im =  ImageData(_width, _height, (int) (_data.size() / _height), _format, &_data.front());
+        ImageData im =  ImageData(_width, _height, (int)(_data.size() / _height), _format, &_data.front());
         return im.getRect(_lockRect);
     }
 
@@ -308,7 +308,7 @@ namespace oxygine
             glBindTexture(GL_TEXTURE_2D, (GLuint) _id);
             GLenum er = glGetError();
 
-            ImageData src = ImageData(_width, _height, (int) (_data.size() / _height), _format, &_data.front());
+            ImageData src = ImageData(_width, _height, (int)(_data.size() / _height), _format, &_data.front());
             ImageData locked = src.getRect(_lockRect);
 
             //glPixelStorei (GL_UNPACK_ALIGNMENT,  1);//byte align

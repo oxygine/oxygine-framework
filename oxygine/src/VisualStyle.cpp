@@ -69,12 +69,14 @@ namespace oxygine
         _Actor::deserialize(data);
         setColor(hex2color(data->node.attribute("color").as_string("ffffffff")));
     }
-    
-    const Color& VStyleActor::getColor() const {
+
+    const Color& VStyleActor::getColor() const
+    {
         return _vstyle.getColor();
     }
 
-    void VStyleActor::setColor(const Color& color) {
+    void VStyleActor::setColor(const Color& color)
+    {
         _vstyle.setColor(color);
     }
 }

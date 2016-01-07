@@ -138,7 +138,7 @@ namespace oxygine
 
         const Symbol* TextNode::getSymbol(int& pos) const
         {
-            if (_data.size() < pos)
+            if ((int)_data.size() < pos)
                 return &_data[pos];
             pos -= _data.size();
             return Node::getSymbol(pos);
