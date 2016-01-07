@@ -63,7 +63,7 @@ static char key;
 -(void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite
 {
     oxygine::HttpRequestCocoaTask* task = [self getTask:downloadTask remove:false];
-    task->progress_(totalBytesWritten, totalBytesExpectedToWrite);
+    task->progress_((int) totalBytesWritten, (int) totalBytesExpectedToWrite);
 }
 
 -(void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location {

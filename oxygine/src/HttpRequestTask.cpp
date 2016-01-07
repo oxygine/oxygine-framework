@@ -80,7 +80,7 @@ namespace oxygine
 
     void HttpRequestTask::_onCustom(const ThreadMessages::message& msg)
     {
-        dispatchProgress((size_t)msg.arg1, (size_t)msg.arg2);
+        dispatchProgress((int)(size_t)msg.arg1, (int)(size_t)msg.arg2);
     }
 
     void HttpRequestTask::progress(int loaded, int total)

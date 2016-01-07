@@ -198,7 +198,7 @@ namespace oxygine
 
     void NativeTextureGLES::setLinearFilter(bool enable)
     {
-        glBindTexture(GL_TEXTURE_2D, _id);
+        glBindTexture(GL_TEXTURE_2D, (GLuint) _id);
 
         unsigned int f = enable ? GL_LINEAR : GL_NEAREST;
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, f);
@@ -208,7 +208,7 @@ namespace oxygine
 
     void NativeTextureGLES::setClamp2Edge(bool clamp2edge)
     {
-        glBindTexture(GL_TEXTURE_2D, _id);
+        glBindTexture(GL_TEXTURE_2D, (GLuint) _id);
 
         unsigned int f = clamp2edge ? GL_CLAMP_TO_EDGE : GL_REPEAT;
 
@@ -293,7 +293,7 @@ namespace oxygine
             //_data.resize(_width)
         }
 
-        ImageData im =  ImageData(_width, _height, _data.size() / _height, _format, &_data.front());
+        ImageData im =  ImageData(_width, _height, (int) (_data.size() / _height), _format, &_data.front());
         return im.getRect(_lockRect);
     }
 
@@ -305,10 +305,10 @@ namespace oxygine
 
         if (_lockFlags & lock_write)
         {
-            glBindTexture(GL_TEXTURE_2D, _id);
+            glBindTexture(GL_TEXTURE_2D, (GLuint) _id);
             GLenum er = glGetError();
 
-            ImageData src = ImageData(_width, _height, _data.size() / _height, _format, &_data.front());
+            ImageData src = ImageData(_width, _height, (int) (_data.size() / _height), _format, &_data.front());
             ImageData locked = src.getRect(_lockRect);
 
             //glPixelStorei (GL_UNPACK_ALIGNMENT,  1);//byte align
@@ -344,7 +344,7 @@ namespace oxygine
         ImageData data = data_;
         assert(_width >= data.w - x);
         assert(_height >= data.h - y);
-        glBindTexture(GL_TEXTURE_2D, _id);
+        glBindTexture(GL_TEXTURE_2D, (GLuint) _id);
 
         glPixel glp = SurfaceFormat2GL(_format);
         //saveImage(data, "test1.png");
@@ -377,6 +377,6 @@ namespace oxygine
 
     unsigned int NativeTextureGLES::getFboID() const
     {
-        return _fbo;
+        return (unsigned int) _fbo;
     }
 }
