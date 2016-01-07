@@ -29,11 +29,8 @@ namespace oxygine
     }
 
     Actor::Actor():
-        _pos(0, 0),
-        _size(0, 0),
         _extendedIsOn(0),
         _zOrder(0),
-        _anchor(0, 0),
         _scale(1, 1),
         _rotation(0),
         _flags(flag_visible | flag_touchEnabled | flag_touchChildrenEnabled | flag_childrenRelative | flag_fastTransform),

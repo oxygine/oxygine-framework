@@ -19,8 +19,6 @@ namespace oxygine
         _rad(_defaultTouchThreshold),
         _maxSpeed(250),
         _downTime(0),
-        _downPos(0, 0),
-        _speed(0, 0),
         _lastTime(0), _current(0), _lastIterTime(0)
     {
         _clip = new ClipRectActor;

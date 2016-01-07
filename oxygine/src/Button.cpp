@@ -1,5 +1,8 @@
 #include "Button.h"
 #include "Stage.h"
+#include "DebugActor.h"
+#include "res/ResAnim.h"
+#include "res/Resources.h"
 
 namespace oxygine
 {
@@ -19,6 +22,9 @@ namespace oxygine
         addEventListener(TouchEvent::OVER, ncb);
         addEventListener(TouchEvent::OUT, ncb);
         addEventListener(TouchEvent::CLICK, ncb);
+
+        if (DebugActor::resSystem)
+            setResAnim(DebugActor::resSystem->getResAnim("button"));
     }
 
     Button::~Button()

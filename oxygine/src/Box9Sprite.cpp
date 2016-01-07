@@ -5,6 +5,9 @@
 #include "Serialize.h"
 #include <sstream>
 #include "STDRenderer.h"
+#include "DebugActor.h"
+#include "res/ResAnim.h"
+#include "res/resources.h"
 
 namespace oxygine
 {
@@ -38,6 +41,9 @@ namespace oxygine
         _guideX[1] = 0.0f;
         _guideY[0] = 0.0f;
         _guideY[1] = 0.0f;
+
+        if (DebugActor::resSystem)
+            setResAnim(DebugActor::resSystem->getResAnim("btn"));
     }
 
     void Box9Sprite::setVerticalMode(StretchMode m)

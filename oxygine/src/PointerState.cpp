@@ -2,7 +2,7 @@
 #include "Actor.h"
 namespace oxygine
 {
-    PointerState::PointerState(): _index(0), _position(0, 0)
+    PointerState::PointerState(): _index(0)
     {
         for (int i = 0; i < MouseButton_Count; ++i)
             _isPressed[i] = false;

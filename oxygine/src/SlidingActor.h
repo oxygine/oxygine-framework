@@ -25,7 +25,7 @@ namespace oxygine
                 END = sysEventID('S', 'E', 'N')
             };
 
-            SlidingEvent(SEvent ev) : Event(ev), speed(0, 0) {}
+            SlidingEvent(SEvent ev) : Event(ev) {}
             Vector2 speed;
         };
 

@@ -54,8 +54,6 @@ namespace oxygine
     Draggable::Draggable(): _bounds(0, 0, -1, -1),
         _dragClient(0),
         _actor(0),
-        _clientPos(0, 0),
-        _dragPos(0, 0),
         _startTm(0),
         _clientIsParent(false),
         _dragEnabled(true),
