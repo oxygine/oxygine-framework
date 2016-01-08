@@ -61,7 +61,9 @@ namespace oxygine
         void            setDiffuse(const Diffuse& d) { _diffuse = d; }
         void            setSize(const Vector2& size) {_frameSize = size;}
         void            setHitTestData(const HitTestData& ad) { _hittest = ad; }
-
+        
+        void            flipX();
+        void            flipY();
 
     private:
         enum flags

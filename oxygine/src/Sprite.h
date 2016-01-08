@@ -41,6 +41,12 @@ namespace oxygine
         void                    setColumn(int column, int row = -1);
 
         bool                    isOn(const Vector2& localPosition);
+        
+        bool                    isFlippedX() const {return _flags & flag_flipX;}
+        bool                    isFlippedY() const {return _flags & flag_flipY;}
+        void                    setFlippedX(bool flippedX);
+        void                    setFlippedY(bool flippedY);
+        void                    setFlipped(bool flippedX, bool flippedY);
 
         void serialize(serializedata* data);
         void deserialize(const deserializedata* data);
@@ -52,7 +58,9 @@ namespace oxygine
     protected:
         enum
         {
-            flag_manageResAnim = flag_last << 1
+            flag_manageResAnim = flag_last << 1,
+            flag_flipX = flag_last << 2,
+            flag_flipY = flag_last << 3
         };
         virtual void changeAnimFrame(const AnimationFrame& f);
         virtual void animFrameChanged(const AnimationFrame& f);
