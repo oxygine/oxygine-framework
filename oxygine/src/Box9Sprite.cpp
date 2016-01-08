@@ -7,7 +7,7 @@
 #include "STDRenderer.h"
 #include "DebugActor.h"
 #include "res/ResAnim.h"
-#include "res/resources.h"
+#include "res/Resources.h"
 
 namespace oxygine
 {
