@@ -68,7 +68,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\src\;..\..\third_party\win32\zlib;..\..\third_party\win32\libjpeg;..\..\third_party\win32\libpng;..\..\greenlets\src\;..\..\..\..\SDL\include\;..\..\third_party\win32\OGLES;..\..\third_party\win32\glew;../../third_party/win32/pthreads/include;..\..\third_party\win32\curl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src\;..\..\third_party\win32\zlib;..\..\third_party\win32\libjpeg;..\..\third_party\win32\libpng;..\..\..\..\SDL\include\;..\..\third_party\win32\OGLES;..\..\third_party\win32\glew;../../third_party/win32/pthreads/include;..\..\third_party\win32\curl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;OXYGINE_SDL;_WINDOWS;OX_HAVE_LIBPNG;OX_HAVE_LIBJPEG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -93,7 +93,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\src\;..\..\third_party\win32\zlib;..\..\third_party\win32\libjpeg;..\..\third_party\win32\libpng;..\..\greenlets\src\;..\..\..\..\SDL\include\;..\..\third_party\win32\OGLES;..\..\third_party\win32\glew;../../third_party/win32/pthreads/include;..\..\third_party\win32\curl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src\;..\..\third_party\win32\zlib;..\..\third_party\win32\libjpeg;..\..\third_party\win32\libpng;..\..\..\..\SDL\include\;..\..\third_party\win32\OGLES;..\..\third_party\win32\glew;../../third_party/win32/pthreads/include;..\..\third_party\win32\curl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;OXYGINE_SDL;_WINDOWS;_CRT_SECURE_NO_WARNINGS;OX_HAVE_LIBPNG;OX_HAVE_LIBJPEG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -204,7 +204,6 @@
     <ClCompile Include="..\..\src\WebImage.cpp" />
     <ClCompile Include="..\..\src\winnie_alloc\system_alloc.cpp" />
     <ClCompile Include="..\..\src\winnie_alloc\winnie_alloc.cpp" />
-    <ClCompile Include="..\..\greenlets\src\greenlet.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Actor.h" />
@@ -332,8 +331,6 @@
     <ClInclude Include="..\..\src\winnie_alloc\system_alloc.h" />
     <ClInclude Include="..\..\src\winnie_alloc\winnie_alloc.h" />
     <ClInclude Include="..\..\src\winnie_alloc\winnie_alloc_config.h" />
-    <ClInclude Include="..\..\greenlets\src\greenlet.h" />
-    <ClInclude Include="..\..\greenlets\src\slp_platformselect.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />

@@ -1161,7 +1161,7 @@
 				SDKROOT = macosx;
 				SDL = ../../../../../SDL/;
 				THIRD_PARTY = ../../../third_party/macosx/;
-				USER_HEADER_SEARCH_PATHS = "../../../greenlets/src $(SDL)/include/ ../../../src $(THIRD_PARTY)/libpng $(THIRD_PARTY)/libjpeg";
+				USER_HEADER_SEARCH_PATHS = "$(SDL)/include/ ../../../src $(THIRD_PARTY)/libpng $(THIRD_PARTY)/libjpeg";
 				VALID_ARCHS = x86_64;
 			};
 			name = Debug;
@@ -1203,7 +1203,7 @@
 				SDKROOT = macosx;
 				SDL = ../../../../../SDL/;
 				THIRD_PARTY = ../../../third_party/macosx/;
-				USER_HEADER_SEARCH_PATHS = "../../../greenlets/src $(SDL)/include/ ../../../src $(THIRD_PARTY)/libpng $(THIRD_PARTY)/libjpeg";
+				USER_HEADER_SEARCH_PATHS = "$(SDL)/include/ ../../../src $(THIRD_PARTY)/libpng $(THIRD_PARTY)/libjpeg";
 				VALID_ARCHS = x86_64;
 			};
 			name = Release;

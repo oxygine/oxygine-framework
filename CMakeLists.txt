@@ -25,8 +25,6 @@ else(WIN32)
 endif(WIN32)
 
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/oxygine/greenlets/src/)
-
 set(OX_HAVE_LIBJPEG 1)
 set(OX_HAVE_LIBPNG 1)
 
@@ -53,8 +51,6 @@ endif()
 
 if (EMSCRIPTEN)
 	set(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/oxygine/src/core/emscripten/HttpRequestEmscriptenTask.cpp)
-else(EMSCRIPTEN)
-	set(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/oxygine/greenlets/src/greenlet.c)
 endif(EMSCRIPTEN)
 
 

@@ -42,9 +42,6 @@ LOCAL_SRC_FILES := \
 SRC := oxygine/src
 
 LOCAL_SRC_FILES += \
-				oxygine/greenlets/src/greenlet.c \
-
-LOCAL_SRC_FILES += \
 				$(SRC)/core/android/jniUtils.cpp \
 				$(SRC)/core/android/jniHelper.cpp \
 				$(SRC)/core/android/HttpRequestJavaTask.cpp
@@ -62,7 +59,6 @@ THIRD_PARTY := $(LOCAL_PATH)/oxygine/third_party/android/
 OXYGINE_SRC := $(LOCAL_PATH)/oxygine/src
 
 LOCAL_C_INCLUDES := $(OXYGINE_SRC)/ \
-					$(OXYGINE_SRC)/../greenlets/src/ \
 					$(LOCAL_PATH)/../SDL/include/ \
 					$(THIRD_PARTY)/libjpeg/ \
 					$(THIRD_PARTY)/libpng/

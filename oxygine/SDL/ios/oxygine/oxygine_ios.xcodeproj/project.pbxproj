@@ -51,7 +51,6 @@
 		04D6FB4D1851914000A5403A /* ThreadMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = 04D6FB4B1851914000A5403A /* ThreadMessages.h */; };
 		92214D6419F14A2F00A4459A /* Polygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92214D6219F14A2F00A4459A /* Polygon.cpp */; };
 		92214D6519F14A2F00A4459A /* Polygon.h in Headers */ = {isa = PBXBuildFile; fileRef = 92214D6319F14A2F00A4459A /* Polygon.h */; };
-		9223E2DD1A4DF6FC00B2770B /* slp_platformselect.h in Headers */ = {isa = PBXBuildFile; fileRef = 9223E2DC1A4DF6FC00B2770B /* slp_platformselect.h */; };
 		9223E30E1A518CC400B2770B /* HttpRequestCocoaTask.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9223E30D1A518CC400B2770B /* HttpRequestCocoaTask.mm */; };
 		9223E3121A5193E000B2770B /* AsyncTask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9223E3101A5193E000B2770B /* AsyncTask.cpp */; };
 		9223E3131A5193E000B2770B /* AsyncTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 9223E3111A5193E000B2770B /* AsyncTask.h */; };
@@ -79,8 +78,6 @@
 		9264E5BF1B8358D80049F91F /* jsoncpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9264E5BC1B8358D80049F91F /* jsoncpp.cpp */; };
 		92CE26621A589401003901D6 /* ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 92CE26601A589401003901D6 /* ios.h */; };
 		92CE26631A589401003901D6 /* ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 92CE26611A589401003901D6 /* ios.mm */; };
-		92DC0A251A2F0ED900D2B55C /* greenlet.c in Sources */ = {isa = PBXBuildFile; fileRef = 92DC0A231A2F0ED900D2B55C /* greenlet.c */; };
-		92DC0A261A2F0ED900D2B55C /* greenlet.h in Headers */ = {isa = PBXBuildFile; fileRef = 92DC0A241A2F0ED900D2B55C /* greenlet.h */; };
 		92E0C9A01B2491C200F0DB21 /* cdecode.c in Sources */ = {isa = PBXBuildFile; fileRef = 92E0C99E1B2491C200F0DB21 /* cdecode.c */; };
 		92E0C9A11B2491C200F0DB21 /* cdecode.h in Headers */ = {isa = PBXBuildFile; fileRef = 92E0C99F1B2491C200F0DB21 /* cdecode.h */; };
 		C38704A617C0C71700015CA8 /* VideoDriverGLES20.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C38704A417C0C71700015CA8 /* VideoDriverGLES20.cpp */; };
@@ -277,8 +274,6 @@
 		04D6FB4B1851914000A5403A /* ThreadMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadMessages.h; sourceTree = "<group>"; };
 		92214D6219F14A2F00A4459A /* Polygon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Polygon.cpp; path = ../../../src/Polygon.cpp; sourceTree = "<group>"; };
 		92214D6319F14A2F00A4459A /* Polygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Polygon.h; path = ../../../src/Polygon.h; sourceTree = "<group>"; };
-		9223E2DC1A4DF6FC00B2770B /* slp_platformselect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = slp_platformselect.h; path = ../../../greenlets/src/slp_platformselect.h; sourceTree = "<group>"; };
-		9223E2DE1A4DF72500B2770B /* platform */ = {isa = PBXFileReference; lastKnownFileType = folder; name = platform; path = ../../../greenlets/src/platform; sourceTree = "<group>"; };
 		9223E30C1A518CA100B2770B /* HttpRequestCocoaTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HttpRequestCocoaTask.h; path = ../../../src/core/ios/HttpRequestCocoaTask.h; sourceTree = "<group>"; };
 		9223E30D1A518CC400B2770B /* HttpRequestCocoaTask.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = HttpRequestCocoaTask.mm; path = ../../../src/core/ios/HttpRequestCocoaTask.mm; sourceTree = "<group>"; };
 		9223E3101A5193E000B2770B /* AsyncTask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AsyncTask.cpp; path = ../../../src/AsyncTask.cpp; sourceTree = "<group>"; };
@@ -307,8 +302,6 @@
 		9264E5BC1B8358D80049F91F /* jsoncpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsoncpp.cpp; path = ../../../src/json/jsoncpp.cpp; sourceTree = "<group>"; };
 		92CE26601A589401003901D6 /* ios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ios.h; path = ../../../src/core/ios/ios.h; sourceTree = "<group>"; };
 		92CE26611A589401003901D6 /* ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ios.mm; path = ../../../src/core/ios/ios.mm; sourceTree = "<group>"; };
-		92DC0A231A2F0ED900D2B55C /* greenlet.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = greenlet.c; path = ../../../greenlets/src/greenlet.c; sourceTree = "<group>"; };
-		92DC0A241A2F0ED900D2B55C /* greenlet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = greenlet.h; path = ../../../greenlets/src/greenlet.h; sourceTree = "<group>"; };
 		92E0C99E1B2491C200F0DB21 /* cdecode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cdecode.c; sourceTree = "<group>"; };
 		92E0C99F1B2491C200F0DB21 /* cdecode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cdecode.h; sourceTree = "<group>"; };
 		C38704A417C0C71700015CA8 /* VideoDriverGLES20.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VideoDriverGLES20.cpp; path = gl/VideoDriverGLES20.cpp; sourceTree = "<group>"; };
@@ -513,17 +506,6 @@
 			name = json;
 			sourceTree = "<group>";
 		};
-		92DC0A221A2F0EB700D2B55C /* greenlet */ = {
-			isa = PBXGroup;
-			children = (
-				9223E2DE1A4DF72500B2770B /* platform */,
-				9223E2DC1A4DF6FC00B2770B /* slp_platformselect.h */,
-				92DC0A231A2F0ED900D2B55C /* greenlet.c */,
-				92DC0A241A2F0ED900D2B55C /* greenlet.h */,
-			);
-			name = greenlet;
-			sourceTree = "<group>";
-		};
 		C38EC2611709649300568283 /* dev_tools */ = {
 			isa = PBXGroup;
 			children = (
@@ -585,7 +567,6 @@
 				923663661A4756C500EB65B3 /* Tween.h */,
 				923663671A4756C500EB65B3 /* TweenQueue.cpp */,
 				923663681A4756C500EB65B3 /* TweenQueue.h */,
-				92DC0A221A2F0EB700D2B55C /* greenlet */,
 				923A9E931A1FCBB700A6F08E /* MaskedRenderer.cpp */,
 				923A9E941A1FCBB700A6F08E /* MaskedRenderer.h */,
 				923A9E951A1FCBB700A6F08E /* STDRenderer.cpp */,
@@ -925,7 +906,6 @@
 				C3E8704A16EBC8EB00052915 /* vector4.h in Headers */,
 				0472E37617F8A2D30016A832 /* ioapi.h in Headers */,
 				0472E37817F8A2D30016A832 /* ioapi_mem.h in Headers */,
-				92DC0A261A2F0ED900D2B55C /* greenlet.h in Headers */,
 				C3E8704C16EBC8EB00052915 /* MemoryTexture.h in Headers */,
 				C3E8704E16EBC8EB00052915 /* Multithreading.h in Headers */,
 				C3E8705416EBC8EB00052915 /* PointerState.h in Headers */,
@@ -975,7 +955,6 @@
 				C38EC2721709649300568283 /* TexturesInspector.h in Headers */,
 				C38EC2741709649300568283 /* TreeInspector.h in Headers */,
 				C38EC2761709649300568283 /* TreeInspectorLine.h in Headers */,
-				9223E2DD1A4DF6FC00B2770B /* slp_platformselect.h in Headers */,
 				C38EC2781709649300568283 /* TreeInspectorPage.h in Headers */,
 				C38EC27A1709649300568283 /* TreeInspectorPreview.h in Headers */,
 				0472E35D17F8A1A80016A832 /* ShaderProgram.h in Headers */,
@@ -1042,7 +1021,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				92DC0A251A2F0ED900D2B55C /* greenlet.c in Sources */,
 				C3E86FFE16EBC8EB00052915 /* Actor.cpp in Sources */,
 				C3E8700016EBC8EB00052915 /* AnimationFrame.cpp in Sources */,
 				C3E8700216EBC8EB00052915 /* Blocking.cpp in Sources */,
@@ -1164,7 +1142,6 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = (
-					../../../greenlets/src,
 					"$(SDL)/include/",
 					../../../src,
 					"$(THIRD_PARTY)/libpng",
@@ -1199,7 +1176,6 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = (
-					../../../greenlets/src,
 					"$(SDL)/include/",
 					../../../src,
 					"$(THIRD_PARTY)/libpng",
@@ -1225,7 +1201,6 @@
 				);
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = (
-					../../../greenlets/src,
 					"$(SDL)/include/",
 					../../../src,
 					"$(THIRD_PARTY)/libpng",
@@ -1247,7 +1222,6 @@
 				);
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = (
-					../../../greenlets/src,
 					"$(SDL)/include/",
 					../../../src,
 					"$(THIRD_PARTY)/libpng",

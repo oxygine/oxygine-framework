@@ -4,16 +4,15 @@
 #define OXYGINE_COROUTINES
 #include "IwFibre.h"
 #elif OXYGINE_QT
-#define GREENLETS 0
 #elif OXYGINE_SDL
 #ifndef __APPLE__
-#define GREENLETS 1
-#include "greenlet.h"
+//#include "greenlet.h"
 #else
+#endif
+#else
+#endif
+
 #define GREENLETS 0
-#endif
-#else
-#endif
 
 namespace oxygine
 {

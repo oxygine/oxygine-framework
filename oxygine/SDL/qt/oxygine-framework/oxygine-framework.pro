@@ -109,7 +109,6 @@ HEADERS +=  \
   $$SRC/utils/cdecode.h
 
 linux:INCLUDEPATH += /usr/include/SDL2
-INCLUDEPATH += $$SRC/../greenlets/src/
 
 SOURCES += \
   $$SRC/core/coroutines.cpp \

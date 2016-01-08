@@ -21,10 +21,7 @@
     </Filter>
     <Filter Include="src\winnie_alloc">
       <UniqueIdentifier>{fa541539-b6e5-433e-b100-978d94de0a0d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="greenlets">
-      <UniqueIdentifier>{72931d72-245a-4626-a2e3-882f1a24f241}</UniqueIdentifier>
-    </Filter>
+    </Filter>    
     <Filter Include="src\res">
       <UniqueIdentifier>{18bec777-8592-44da-9495-72a4cdb72f88}</UniqueIdentifier>
     </Filter>
@@ -68,10 +65,7 @@
     </ClCompile>
     <ClCompile Include="..\..\src\winnie_alloc\winnie_alloc.cpp">
       <Filter>src\winnie_alloc</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\greenlets\src\greenlet.c">
-      <Filter>greenlets</Filter>
-    </ClCompile>
+    </ClCompile>    
     <ClCompile Include="..\..\src\res\ResAnim.cpp">
       <Filter>src\res</Filter>
     </ClCompile>
@@ -385,13 +379,7 @@
     </ClInclude>
     <ClInclude Include="..\..\src\winnie_alloc\winnie_alloc_config.h">
       <Filter>src\winnie_alloc</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\greenlets\src\greenlet.h">
-      <Filter>greenlets</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\greenlets\src\slp_platformselect.h">
-      <Filter>greenlets</Filter>
-    </ClInclude>
+    </ClInclude>    
     <ClInclude Include="..\..\src\res\CreateResourceContext.h">
       <Filter>src\res</Filter>
     </ClInclude>
