@@ -1,3 +1,3 @@
-#!/bin/bash
+#!/usr/bin/env sh
 adb install -r bin/HelloWorld-debug.apk
 adb shell am start -n org.oxygine.HelloWorld/org.oxygine.HelloWorld.MainActivity
