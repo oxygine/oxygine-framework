@@ -133,22 +133,13 @@ endif(WIN32)
 
 #add png library
 if (OX_HAVE_LIBPNG)
-
-	set(LIBPNG ${libprefix}png)
-
-	if (MSVC)
-		if (MSVC_VERSION EQUAL "1900")
-			set(LIBPNG ${LIBPNG}-2015)
-		endif()
-	endif()	
-
-	set(CORE_LIBS
+	find_package(PNG REQUIRED)
+	set (CORE_LIBS
 		${CORE_LIBS}
-		${LIBPNG})
-
-	set(OX_DEFINITIONS	${OX_DEFINITIONS}
-		-DOX_HAVE_LIBPNG)
+		${PNG_LIBRARY}
+	)
 endif(OX_HAVE_LIBPNG)
+
 
 #add z library
 if (EMSCRIPTEN)
@@ -168,19 +159,11 @@ endif(EMSCRIPTEN)
 
 #add jpeg library
 if (OX_HAVE_LIBJPEG)
-	set(LIBJPEG ${libprefix}jpeg)
-
-	if (MSVC)
-		if (MSVC_VERSION EQUAL "1900")
-			set(LIBJPEG ${LIBJPEG}-2015)
-		endif()	
-	endif()	
-
-	set(OX_DEFINITIONS	${OX_DEFINITIONS}
-		-DOX_HAVE_LIBJPEG)
-	set(CORE_LIBS
+	find_package(JPEG REQUIRED)
+	set (CORE_LIBS
 		${CORE_LIBS}
-		${LIBJPEG})
+		${JPEG_LIBRARY}
+	)
 endif(OX_HAVE_LIBJPEG)
 
 
