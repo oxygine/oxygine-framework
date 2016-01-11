@@ -15,8 +15,6 @@ endif(WIN32)
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIR})
 
-
-
 set(OX_HAVE_LIBJPEG 1)
 set(OX_HAVE_LIBPNG 1)
 
@@ -74,15 +72,41 @@ endforeach(F)
 
 
 find_package(OpenGL REQUIRED)
-include_directories(
-	${THIRD_PARTY}/libjpeg
-	${THIRD_PARTY}/libpng
+
+#add png library
+if (OX_HAVE_LIBPNG)
+	find_package(PNG REQUIRED)
+	set (CORE_LIBS
+		${CORE_LIBS}
+		${PNG_LIBRARIES}
 	)
+	include_directories(
+		${PNG_INCLUDE_DIR}
+	)
+	set(OX_DEFINITIONS	${OX_DEFINITIONS}
+		-DOX_HAVE_LIBPNG)
+endif(OX_HAVE_LIBPNG)
+
+#add jpeg library
+if (OX_HAVE_LIBJPEG)
+	find_package(JPEG REQUIRED)
+	set (CORE_LIBS
+		${CORE_LIBS}
+		${JPEG_LIBRARIES}
+	)
+	include_directories(
+		${JPEG_INCLUDE_DIR}
+	)
+	set(OX_DEFINITIONS	${OX_DEFINITIONS}
+		-DOX_HAVE_LIBJPEG)
+endif(OX_HAVE_LIBJPEG)
 
 set(OXYGINE_INCLUDE_DIRS 
 	${OXYGINE_ROOT_SRC}
 	${SDL2_INCLUDE_DIR}
 	${OPENGL_INCLUDE_DIR}
+	${PNG_INCLUDE_DIR}
+	${JPEG_INCLUDE_DIR}
 	${THIRD_PARTY}/pthreads/include/
 	${THIRD_PARTY}/zlib)
 
@@ -131,16 +155,6 @@ else(WIN32)
 endif(WIN32)
 
 
-#add png library
-if (OX_HAVE_LIBPNG)
-	find_package(PNG REQUIRED)
-	set (CORE_LIBS
-		${CORE_LIBS}
-		${PNG_LIBRARY}
-	)
-endif(OX_HAVE_LIBPNG)
-
-
 #add z library
 if (EMSCRIPTEN)
 	set(CORE_LIBS
@@ -156,15 +170,6 @@ endif(EMSCRIPTEN)
 
 
 #message(STATUS ${CORE_LIBS})
-
-#add jpeg library
-if (OX_HAVE_LIBJPEG)
-	find_package(JPEG REQUIRED)
-	set (CORE_LIBS
-		${CORE_LIBS}
-		${JPEG_LIBRARY}
-	)
-endif(OX_HAVE_LIBJPEG)
 
 
 if (OX_HAVE_LIBCURL)
