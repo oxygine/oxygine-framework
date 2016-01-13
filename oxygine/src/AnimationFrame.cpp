@@ -67,4 +67,16 @@ namespace oxygine
 
         return f;
     }
+    
+    void AnimationFrame::flipX()
+    {
+        _srcRect.setX(_srcRect.getRight());
+        _srcRect.setWidth(-_srcRect.getWidth());
+    }
+    
+    void AnimationFrame::flipY()
+    {
+        _srcRect.setY(_srcRect.getBottom());
+        _srcRect.setHeight(-_srcRect.getHeight());
+    }
 }

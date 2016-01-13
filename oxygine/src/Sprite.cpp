@@ -108,6 +108,47 @@ namespace oxygine
         }
         return false;
     }
+    
+    void Sprite::setFlippedX(bool flippedX)
+    {
+        if (flippedX != isFlippedX())
+        {
+            _frame.flipX();
+            _flags ^= flag_flipX;
+            animFrameChanged(_frame);
+        }
+    }
+    
+    void Sprite::setFlippedY(bool flippedY)
+    {
+        if (flippedY != isFlippedY())
+        {
+            _frame.flipY();
+            _flags ^= flag_flipY;
+            animFrameChanged(_frame);
+        }
+    }
+
+    void Sprite::setFlipped(bool flippedX, bool flippedY)
+    {
+        bool fx = flippedX != isFlippedX();
+        bool fy = flippedY != isFlippedY();
+
+        if (fx)
+        {
+            _frame.flipX();
+            _flags ^= flag_flipX;
+        }
+        
+        if (fy)
+        {
+            _frame.flipY();
+            _flags ^= flag_flipY;
+        }
+        
+        if (fx || fy)
+            animFrameChanged(_frame);
+    }
 
     void Sprite::setColumn(int column, int row)
     {
@@ -157,7 +198,12 @@ namespace oxygine
                 rs->getAtlas()->load();
         }
 
-        _frame = frame;
+        bool flipX = (_flags & flag_flipX) != 0;
+        bool flipY = (_flags & flag_flipY) != 0;
+        if (flipX || flipY)
+            _frame = frame.getFlipped(flipY, flipX);
+        else
+            _frame = frame;
         setSize(_frame.getSize());
 
         animFrameChanged(_frame);
