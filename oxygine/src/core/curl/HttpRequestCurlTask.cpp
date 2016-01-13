@@ -63,7 +63,7 @@ namespace oxygine
             case ID_PROGRESS:
             {
                 HttpRequestTaskCURL* task = (HttpRequestTaskCURL*)msg.cbData;
-                task->dispatchProgress((size_t)msg.arg2, (size_t)msg.arg1);
+                task->dispatchProgress((int)(size_t)msg.arg2, (int)(size_t)msg.arg1);
             } break;
         }
 
@@ -179,7 +179,7 @@ namespace oxygine
         size_t size = n * l;
         if (!_fname.empty())
         {
-            file::write(_handle, d, size);
+            file::write(_handle, d, (unsigned int)size);
         }
         else
         {
