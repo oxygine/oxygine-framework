@@ -8,6 +8,7 @@
 #include "DebugActor.h"
 #include "res/ResAnim.h"
 #include "res/Resources.h"
+#include "STDMaterial.h"
 
 namespace oxygine
 {
@@ -43,7 +44,7 @@ namespace oxygine
         _guideY[1] = 0.0f;
 
         if (DebugActor::resSystem)
-            setResAnim(DebugActor::resSystem->getResAnim("btn"));
+            Sprite::setResAnim(DebugActor::resSystem->getResAnim("btn"));
     }
 
     void Box9Sprite::setVerticalMode(StretchMode m)
@@ -285,15 +286,21 @@ namespace oxygine
         if (!_prepared)
             prepare();
 
-        _vstyle._apply(rs);
+        //_vstyle._apply(rs);
         const Diffuse& df = _frame.getDiffuse();
 
-        STDRenderer* renderer = safeCast<STDRenderer*>(rs.renderer);
+        STDRenderer* renderer = STDMaterial::instance->getRenderer();
+        Material::setCurrent(rs.material);
+
         if (df.base)
         {
             if (_guidesX.size() >= 2 || _guidesY.size() >= 2)
             {
                 renderer->setTexture(df.base, df.alpha, df.premultiplied);
+                renderer->setBlendMode(getBlendMode());
+                renderer->setTransform(rs.transform);
+
+                Color color = rs.getFinalColor(getColor());
 
                 // number of vertical blocks
                 int vc = (int)_pointsX.size() - 1;
@@ -323,7 +330,8 @@ namespace oxygine
                         RectF srcRect(_guidesX[xgi], _guidesY[ygi], _guidesX[xgi + 1] - _guidesX[xgi], _guidesY[ygi + 1] - _guidesY[ygi]);
                         RectF destRect(_pointsX[xc], _pointsY[yc], _pointsX[xc + 1] - _pointsX[xc], _pointsY[yc + 1] - _pointsY[yc]);
 
-                        renderer->draw(&rs, getColor(), srcRect, destRect);
+                        renderer->draw(color, srcRect, destRect);
+
                     }
                 }
             }

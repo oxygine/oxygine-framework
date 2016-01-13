@@ -14,7 +14,7 @@ void main()
 	lowp vec3 normal = texture2D(normal_texture, result_uv2).xyz * 2.0 - 1.0;
 
 
-	mediump vec3 dir = normalize(vec3(result_pos.xy, 0.0) - vec3(light, 40.0));
+	mediump vec3 dir = normalize(vec3(result_pos.xy, 0.0) - vec3(light, 200.0));
 
 
 	dir = vec3(-dir.x, dir.y, -dir.z);

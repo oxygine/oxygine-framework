@@ -2,6 +2,7 @@
 #include "RenderState.h"
 #include <sstream>
 #include "Serialize.h"
+#include "Material.h"
 #include "STDRenderer.h"
 
 namespace oxygine
@@ -107,12 +108,19 @@ namespace oxygine
             return;
         }
 
-        STDRenderer* renderer = safeCast<STDRenderer*>(rs.renderer);
 
-        _vstyle._apply(rs);
+
+        Material::setCurrent(rs.material);
+        //rs.material->doRender(this, rs);
+        ///*
+
+        //STDRenderer* renderer = safeCast<STDRenderer*>(rs.renderer);
+        STDRenderer* renderer = STDRenderer::instance;
+
         const Diffuse& df = _frame.getDiffuse();
         if (df.base)
         {
+            renderer->setBlendMode(getBlendMode());
             renderer->setTexture(df.base, df.alpha, df.premultiplied);
 
             RectF destRect = _Sprite::getDestRect();
@@ -300,9 +308,13 @@ namespace oxygine
                 fill_tex_coord(*pv, rgba, p2, u2, v2);
                 pv++;
 
-                rs.renderer->addVertices(vertices, sizeof(vertices));
+
+
+                renderer->addVertices(vertices, sizeof(vertices));
             }
         }
+
+        //renderer->drawBatch();
     }
 
     std::string ProgressBar::dump(const dumpOptions& options) const

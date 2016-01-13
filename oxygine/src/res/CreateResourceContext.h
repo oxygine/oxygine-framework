@@ -80,13 +80,28 @@ namespace oxygine
     DECLARE_SMART(MemoryTexture, spMemoryTexture);
     DECLARE_SMART(NativeTexture, spNativeTexture);
 
+
+    class CreateTextureTask
+    {
+    public:
+        CreateTextureTask();
+
+        spMemoryTexture src;
+        spNativeTexture dest;
+        bool linearFilter;
+        bool clamp2edge;
+
+        void ready() const;
+    };
+
     /**internal class*/
     class LoadResourcesContext
     {
     public:
         virtual ~LoadResourcesContext() {}
 
-        virtual void createTexture(spMemoryTexture src, spNativeTexture dest) = 0;
+
+        virtual void createTexture(const CreateTextureTask& opt) = 0;
         virtual bool isNeedProceed(spNativeTexture t) = 0;
     };
 
@@ -94,7 +109,7 @@ namespace oxygine
     {
     public:
         static SingleThreadResourcesContext instance;
-        void createTexture(spMemoryTexture src, spNativeTexture dest);
+        void createTexture(const CreateTextureTask& opt) OVERRIDE;
         bool isNeedProceed(spNativeTexture t);
     };
 
@@ -102,7 +117,7 @@ namespace oxygine
     {
     public:
         static RestoreResourcesContext instance;
-        void createTexture(spMemoryTexture src, spNativeTexture dest);
+        void createTexture(const CreateTextureTask& opt) OVERRIDE;
         bool isNeedProceed(spNativeTexture t);
     };
 }

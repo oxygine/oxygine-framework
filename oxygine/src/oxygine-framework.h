@@ -42,6 +42,7 @@
 #include "UpdateState.h"
 #include "VisualStyle.h"
 #include "Serialize.h"
+#include "STDRenderer.h"
 
 //closure/
 #include "closure/closure.h"
@@ -77,12 +78,6 @@
 //#include "core/gl/VideoDriverGLES11.h"
 //#include "core/gl/VideoDriverGLES20.h"
 
-//core/stage3d/
-/*
-#include "core/stage3d/NativeTextureStage3D.h"
-#include "core/stage3d/VideoDriverStage3D.h"
-*/
-
 //dev_tools/
 //#include "dev_tools/DeveloperMenu.h"
 //#include "dev_tools/TexturesInspector.h"
@@ -94,12 +89,12 @@
 //math/
 #include "math/AffineTransform.h"
 #include "math/Color.h"
-#include "math/matrix.h"
+#include "math/Matrix.h"
 #include "math/Rect.h"
 #include "math/ScalarMath.h"
-#include "math/vector2.h"
-#include "math/vector3.h"
-#include "math/vector4.h"
+#include "math/Vector2.h"
+#include "math/Vector3.h"
+#include "math/Vector4.h"
 
 //pugixml/
 //#include "pugixml/pugiconfig.hpp"

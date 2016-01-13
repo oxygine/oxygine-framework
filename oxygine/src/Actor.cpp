@@ -1,6 +1,5 @@
 #include "Actor.h"
 #include "core/Texture.h"
-#include "core/Renderer.h"
 #include "res/ResAnim.h"
 #include "Stage.h"
 #include "Clock.h"
@@ -14,7 +13,7 @@
 #include "RenderState.h"
 #include <stdio.h>
 #include "Serialize.h"
-
+#include "Material.h"
 //#include ""
 
 namespace oxygine
@@ -38,7 +37,8 @@ namespace oxygine
         _alpha(255),
         _pressed(0),
         _overred(0),
-        _stage(0)
+        _stage(0),
+        _material(0)
     {
         _transform.identity();
         _transformInvert.identity();
@@ -218,21 +218,6 @@ namespace oxygine
             stream << " " << getClock()->dump();
 
         return stream.str();
-    }
-
-
-    RectF Actor::getScreenSpaceDestRect(const Renderer::transform& tr) const
-    {
-        RectF rect = getDestRect();
-        Vector2 tl = rect.pos;
-        Vector2 br = rect.pos + rect.size;
-
-        tl = tr.transform(tl);
-        br = tr.transform(br);
-
-        Vector2 size = br - tl;
-
-        return RectF(tl, size);
     }
 
     pointer_index Actor::getPressed() const
@@ -592,13 +577,19 @@ namespace oxygine
         _alpha = alpha;
     }
 
-    const Renderer::transform& Actor::getTransform() const
+    void Actor::setMaterial(Material* mat)
+    {
+        _material = mat;
+    }
+
+
+    const Transform& Actor::getTransform() const
     {
         updateTransform();
         return _transform;
     }
 
-    const Renderer::transform& Actor::getTransformInvert() const
+    const Transform& Actor::getTransformInvert() const
     {
         if (_flags & flag_transformInvertDirty)
         {
@@ -1010,26 +1001,24 @@ namespace oxygine
         rs.alpha = alpha;
 
 
-        const Renderer::transform& tr = getTransform();
+        const Transform& tr = getTransform();
         if (_flags & flag_fastTransform)
         {
             rs.transform = parentRS.transform;
             rs.transform.translate(Vector2(tr.x, tr.y));
         }
         else
-            Renderer::transform::multiply(rs.transform, tr, parentRS.transform);
+            Transform::multiply(rs.transform, tr, parentRS.transform);
 
 
         if (_flags & flag_cull)
         {
-            RectF ss_rect = getScreenSpaceDestRect(rs.transform);
+            RectF ss_rect = getActorTransformedDestRect(this, rs.transform);
             RectF intersection = ss_rect;
             intersection.clip(*rs.clip);
             if (intersection.isEmpty())
                 return false;
         }
-
-        //rs.renderer->setTransform(rs.transform);
 
         return true;
     }
@@ -1044,27 +1033,19 @@ namespace oxygine
         if (!prepareRender(rs, parentRS))
             return false;
 
-        //if (_cbDoRender)
-        //  _cbDoRender(rs);
+        //if (!_renderer->render(this, rs))
         doRender(rs);
+
         completeRender(rs);
         return true;
     }
 
     void Actor::render(const RenderState& parentRS)
     {
-        RenderState rs;
-        if (!internalRender(rs, parentRS))
-            return;
-
-        Actor* actor = _children._first.get();
-        while (actor)
-        {
-            OX_ASSERT(actor->getParent());
-            //if (actor->getParent())//todo remove???
-            actor->render(rs);
-            actor = actor->_next.get();
-        }
+        RenderState rs = parentRS;
+        if (_material)
+            rs.material = _material;
+        rs.material->render(this, rs);
     }
 
     RectF Actor::calcDestRectF(const RectF& destRect_, const Vector2& size) const
@@ -1334,9 +1315,9 @@ namespace oxygine
         return convert_global2local(actor, root, pos);
     }
 
-    Renderer::transform getGlobalTransform(spActor child, spActor parent)
+    Transform getGlobalTransform(spActor child, spActor parent)
     {
-        Renderer::transform t;
+        Transform t;
         t.identity();
         while (child != parent)
         {
@@ -1347,9 +1328,9 @@ namespace oxygine
         return t;
     }
 
-    Renderer::transform getGlobalTransform2(spActor child, Actor* parent)
+    Transform getGlobalTransform2(spActor child, Actor* parent)
     {
-        Renderer::transform t;
+        Transform t;
         t.identity();
         while (child.get() != parent)
         {
@@ -1376,6 +1357,20 @@ namespace oxygine
         actor->attachTo(newParent);
     }
 
+
+    RectF getActorTransformedDestRect(Actor* actor, const Transform& tr)
+    {
+        RectF rect = actor->getDestRect();
+        Vector2 tl = rect.pos;
+        Vector2 br = rect.pos + rect.size;
+
+        tl = tr.transform(tl);
+        br = tr.transform(br);
+
+        Vector2 size = br - tl;
+
+        return RectF(tl, size);
+    }
 
 
 
@@ -1485,11 +1480,11 @@ namespace oxygine
             std::swap(objA, objB);
         }
 
-        Renderer::transform transA = getGlobalTransform(objA, parent);
-        Renderer::transform transB = getGlobalTransform(objB, parent);
-        //Renderer::transform transBInv = getGlobalTransform(objB, parent);
+        Transform transA = getGlobalTransform(objA, parent);
+        Transform transB = getGlobalTransform(objB, parent);
+        //Transform transBInv = getGlobalTransform(objB, parent);
         transB.invert();
-        Renderer::transform n = transA * transB;
+        Transform n = transA * transB;
 
         AffineTransform ident;
         ident.identity();

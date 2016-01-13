@@ -27,6 +27,7 @@ namespace oxygine
         TweenAnim(const ResAnim* resAnim, int startFrame, int endFrame);
 
         void init(Sprite& actor);
+        void done(Sprite& actor) {}
 
         const ResAnim*  getResAnim() const {return _resAnim;}
         int             getRow() const {return _row;}

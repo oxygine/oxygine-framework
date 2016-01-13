@@ -11,7 +11,6 @@
 #include "s3eFile.h"
 #endif
 
-using namespace oxygine;
 namespace oxygine
 {
     namespace file

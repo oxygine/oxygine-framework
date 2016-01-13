@@ -7,22 +7,25 @@
 #include "core/gl/ShaderProgramGL.h"
 
 
-class LightningRenderer : public Renderer
+class LightningMaterial : public Material
 {
 public:
-    spNativeTexture _base;
-    spNativeTexture _normal;
-
-    spNativeTexture _base2;
-
-    AnimationFrame _defaultNormal;
-
+    const VertexDeclaration* _vdecl;
     ShaderProgramGL* _lightShader;
     Vector2 _light;
-    LightningRenderer() : _light(0, 0)
+
+    vector<vertexPCT2T2> _vertices;
+    AnimationFrame _normal;
+    spNativeTexture _base;
+
+    LightningMaterial()
     {
-        //vertex declaration with 2 pairs of UV
-        _vdecl = getDriver()->getVertexDeclaration(vertexPCT2T2::FORMAT);
+        _normal = resources.getResAnim("normal")->getFrame(0);
+
+        _light = getStage()->getSize() / 2;
+
+        IVideoDriver* driver = IVideoDriver::instance;
+        _vdecl = driver->getVertexDeclaration(vertexPCT2T2::FORMAT);
 
         //load vertex shader
         file::buffer vsdata;
@@ -42,127 +45,103 @@ public:
         _lightShader->init(pr);
 
         //set shader and apply samplers uniforms
-        getDriver()->setShaderProgram(_lightShader);
-        getDriver()->setUniformInt("base_texture", 0);
-        getDriver()->setUniformInt("normal_texture", 1);
-
-        //texture for sprites without normals
-        _defaultNormal = resources.getResAnim("defnormal")->getFrame(0);
+        driver->setShaderProgram(_lightShader);
+        driver->setUniformInt("base_texture", 0);
+        driver->setUniformInt("normal_texture", 1);
     }
 
-    void setLightPosition(const Vector2& pos)
+    void apply(Material* prev) OVERRIDE
     {
-        _light = pos;
+        IVideoDriver* driver = IVideoDriver::instance;
+        driver->setShaderProgram(_lightShader);
+
+        Vector2 light = getStage()->getDescendant("light")->getPosition();
+
+        driver->setUniform("light", &light, 1);
+        driver->setUniform("mat", &STDMaterial::instance->getRenderer()->getViewProjection());
+
+        driver->setTexture(1, _normal.getDiffuse().base);
+
+        driver->setState(IVideoDriver::STATE_BLEND, 0);
+        driver->setBlendFunc(IVideoDriver::BT_ONE, IVideoDriver::BT_ONE_MINUS_SRC_ALPHA);
+        driver->setBlendFunc(IVideoDriver::BT_SRC_ALPHA, IVideoDriver::BT_ONE_MINUS_SRC_ALPHA);
     }
 
-    void _begin()
+    void finish() OVERRIDE
     {
-        setShader(_lightShader);
-        _base = 0;
-        _normal = 0;
-
-        _driver->setUniform("light", &_light, 1);
-
-        _driver->setState(IVideoDriver::STATE_BLEND, 1);
-        _driver->setBlendFunc(IVideoDriver::BT_ONE, IVideoDriver::BT_ONE_MINUS_SRC_ALPHA);
-        _driver->setBlendFunc(IVideoDriver::BT_SRC_ALPHA, IVideoDriver::BT_ONE_MINUS_SRC_ALPHA);
+        drawBatch(IVideoDriver::instance);
     }
 
-    void setBlendMode(blend_mode blend)
+    void drawBatch(IVideoDriver* driver)
     {
+        size_t count = _vertices.size();
+        if (!count)
+            return;
+
+        size_t indices = (count * 3) / 2;
+
+        driver->setTexture(0, _base);
+
+        if (indices <= STDRenderer::indices8.size())
+            driver->draw(IVideoDriver::PT_TRIANGLES, _vdecl, &_vertices.front(), count, &STDRenderer::indices8.front(), indices, false);
+        else
+            driver->draw(IVideoDriver::PT_TRIANGLES, _vdecl, &_vertices.front(), count, &STDRenderer::indices16.front(), indices, true);
+
+        _vertices.clear();
     }
 
-    void setTexture(spNativeTexture base, spNativeTexture alpha, bool basePremultiplied /* = true */)
+
+    void doRender(Sprite* sprite, const RenderState& rs) OVERRIDE
     {
-        _base2 = base;
-
-    }
-
-    void preDrawBatch()
-    {
-    }
-
-    void draw(const RState* rs, const Color& color, const RectF& srcRect, const RectF& destRect)
-    {
-        draw(rs, color, srcRect, destRect,
-             _base2, _defaultNormal.getDiffuse().base, _defaultNormal.getSrcRect());
-    }
-
-    void draw(const RState* rs, const Color& color, const RectF& srcRect, const RectF& destRect, spNativeTexture base, spNativeTexture normal, const RectF& normalSrc)
-    {
-        if (_base != base)
-        {
-            drawBatch();
-            _base = base;
-            _driver->setTexture(0, _base);
-        }
-
-        if (_normal != normal)
-        {
-            drawBatch();
-            _normal = normal;
-            _driver->setTexture(1, _normal);
-        }
+        Material::setCurrent(this);
 
         vertexPCT2T2 v[4];
-        fillQuadT2(v, srcRect, normalSrc, destRect, rs->transform, color.rgba());
-        _vertices.insert(_vertices.end(), (unsigned char*)v, (unsigned char*)v + sizeof(v));
-        _checkDrawBatch();
+        const AnimationFrame& frame = sprite->getAnimFrame();
+
+        if (frame.getDiffuse().base != _base)
+        {
+            drawBatch(IVideoDriver::instance);
+            _base = frame.getDiffuse().base;
+        }
+
+        fillQuadT2(v, frame.getSrcRect(), _normal.getSrcRect(), sprite->getDestRect(), rs.transform, 0xffFFffFF);
+        _vertices.insert(_vertices.end(), v, v + 4);
     }
 };
 
-class Sprite2 : public Sprite
-{
-public:
-    Sprite2(const AnimationFrame& n) : normal(n) {}
-
-    void doRender(const RenderState& rs)
-    {
-        LightningRenderer* renderer = safeCast<LightningRenderer*>(rs.renderer);
-
-        const Diffuse& df = _frame.getDiffuse();
-        renderer->draw(&rs, getColor(), _frame.getSrcRect(), getDestRect(), df.base, normal.getDiffuse().base, normal.getSrcRect());
-    }
-
-    AnimationFrame normal;
-};
-
-
-class LightningActor : public Actor
-{
-public:
-    LightningRenderer _renderer;
-    void render(const RenderState& parent)
-    {
-        _renderer.setLightPosition(_getStage()->getDescendant("light")->getPosition());
-
-        RenderState rs = parent;
-        rs.renderer = &_renderer;
-        _renderer.begin(parent.renderer);
-        Actor::render(rs);
-        _renderer.end();
-    }
-};
 class TestUserShader2 : public Test
 {
 public:
-    UberShaderProgram* _shader;
-
     Draggable drag;
 
-    TestUserShader2() : _shader(0)
+    TestUserShader2()
     {
-        spActor lightning = new LightningActor;
-        this->content->addChild(lightning);
-        lightning->setSize(this->content->getSize());
+        LightningMaterial* mat = new LightningMaterial;
 
-        AnimationFrame frame = resources.getResAnim("normal")->getFrame(0);
-        spSprite spr = new Sprite2(frame);
+        spSprite spr = new Sprite();
         spr->setResAnim(resources.getResAnim("tiled2"));
         spr->setScale(2);
         spr->setAnchor(0.5f, 0.5f);
         spr->setPosition(content->getSize() / 2);
-        spr->attachTo(lightning);
+        spr->attachTo(content);
+        spr->setMaterial(mat);
+
+
+        spr = new Sprite();
+        spr->setResAnim(resources.getResAnim("tiled2"));
+        spr->setScale(2);
+        spr->setAnchor(0.5f, 0.5f);
+        spr->setPosition(content->getSize() / 2 + Vector2(300, 50));
+        spr->attachTo(content);
+        spr->setMaterial(mat);
+
+        spr = new Sprite();
+        spr->setResAnim(resources.getResAnim("tiled2"));
+        spr->setScale(2);
+        spr->setAnchor(0.5f, 0.5f);
+        spr->setPosition(content->getSize() / 2 + Vector2(-200, 50));
+        spr->attachTo(content);
+        spr->setMaterial(mat);
 
 
         spSprite light = new Sprite;
@@ -172,7 +151,7 @@ public:
         drag.init(light.get());
         light->setPosition(getSize() / 2);
 
-        lightning->addChild(light);
+        content->addChild(light);
     }
 
 };

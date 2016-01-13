@@ -5,6 +5,7 @@
 #include "res/Resources.h"
 #include "RenderState.h"
 #include "STDRenderer.h"
+#include "STDMaterial.h"
 
 namespace oxygine
 {
@@ -39,15 +40,28 @@ namespace oxygine
     void TreeInspectorPreview::init(spActor item)
     {
         //_item = item;
-        STDRenderer r(&_videoCache);
+
+        //STDMaterial mt;
+        ////mt.getRenderer()->
+        //mt.apply(0);
+        //mt.getRenderer()
+
+
+
+        STDRenderer r_(&_videoCache);
+        STDMaterial mat(&r_);
+
+        STDRenderer& r = r_;
         RenderState rs;
-        rs.renderer = &r;
         rs.transform = item->getTransform();
+        rs.material = &mat;
         r.begin(0);
         //r.setTransform(rs.transform);
         item->doRender(rs);
         r.end();
         r.drawBatch();
+
+        Material::setCurrent(0);
 
         setSize(30, 30);
 
@@ -83,43 +97,15 @@ namespace oxygine
         cfr.init(0, df, srcRect, destRect, ns);
 
         setAnimFrame(cfr);
-
-
-        /*
-        spEventHandler bh = new EventHandler();
-
-        bh->setCallbackEnter(CLOSURE(this, &TreeInspectorPreview::_onEvent));
-        bh->setCallbackExit(CLOSURE(this, &TreeInspectorPreview::_onEvent));
-        bh->setCallbackPressDown(CLOSURE(this, &TreeInspectorPreview::_onEvent));
-        bh->setCallbackPressUp(CLOSURE(this, &TreeInspectorPreview::_onEvent));
-        addEventHandler(bh);
-        */
     }
 
     void TreeInspectorPreview::doRender(RenderState const& parentRenderState)
     {
         Sprite::doRender(parentRenderState);
 
-        parentRenderState.renderer->drawBatch();
+        STDMaterial::instance->getRenderer()->drawBatch();
         _videoCache.render(_cacheTransform * parentRenderState.transform);
-        parentRenderState.renderer->drawBatch();
-        parentRenderState.renderer->resetSettings();
-
-        /*
-        bool rel = _item->getChildrenRelative();
-
-        AffineTransform tr;
-        tr.identity();
-        Rect rect = _getItemRect();
-        float scale = (float)getWidth() / rect.size.x;
-        tr.scale(Vector2(scale, scale));
-        tr.translate(-rect.pos);
-
-        AffineTransform res = tr * parentRenderState.transform;
-        _item->setChildrenRelative(true);
-        parentRenderState.renderer->setTransform(res);
-        _item->doRender(parentRenderState);
-        _item->setChildrenRelative(rel);
-        */
+        STDMaterial::instance->getRenderer()->drawBatch();
+        STDMaterial::instance->getRenderer()->resetSettings();
     }
 }

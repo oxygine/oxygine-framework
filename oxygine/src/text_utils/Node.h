@@ -2,7 +2,7 @@
 #include "oxygine_include.h"
 #include "core/Object.h"
 #include "math/Color.h"
-#include "math/vector2.h"
+#include "math/Vector2.h"
 #include "Aligner.h"
 #include <string>
 #include <vector>
@@ -21,6 +21,7 @@ namespace oxygine
     class STDRenderer;
     class RenderState;
     class TextRenderer2;
+    class IElementRenderer;
 
     namespace text
     {
@@ -30,13 +31,11 @@ namespace oxygine
         class DrawContext
         {
         public:
-            DrawContext(): rs(0), renderer(0) {}
+            DrawContext(): renderer(0) {}
 
             Color color;
             Color primary;
-
-            const RenderState* rs;
-            TextRenderer2* renderer;
+            IElementRenderer* renderer;
         };
 
         class Node: public PoolObject

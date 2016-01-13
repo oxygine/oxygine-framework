@@ -15,6 +15,7 @@ public:
     }
 
     void init(TextField& actor) {}
+    void done(TextField& actor) {}
     void update(TextField& actor, float p, const UpdateState& us)
     {
         int v = lerp<int>(0, (int)_text.size(), p);

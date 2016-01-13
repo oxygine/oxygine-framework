@@ -3,19 +3,74 @@
 #include "core/Renderer.h"
 namespace oxygine
 {
-    class STDRenderer : public Renderer
+    class UberShaderProgram;
+    DECLARE_SMART(STDMaterial, spSTDMaterial);
+
+    class STDRenderer : public IElementRenderer
     {
     public:
+
+        static STDRenderer* instance;
+        /**Sets default rendering OpenGL options for 2D*/
+        static void setDefaultSettings();
+        /**Initializes internal classes. Called automatically from oxygine::init();*/
+        static void initialize();
+        /**Clears internal data*/
+        static void release();
+        /**for lost context*/
+        static void reset();
+        /**is Renderer was restored and ready to be used*/
+        static bool isReady();
+        /**restore after lost context*/
+        static void restore();
+
+        /**White 4x4 Texture*/
+        static spNativeTexture white;
+        static UberShaderProgram uberShader;
+        static std::vector<unsigned char> uberShaderBody;
+
+        static std::vector<unsigned char> indices8;
+        static std::vector<unsigned short> indices16;
+        static size_t maxVertices;
+
+
+
         STDRenderer(IVideoDriver* driver = 0);
+        virtual ~STDRenderer();
 
-        /**Sets blend mode. Default value is blend_premultiplied_alpha*/
-        void draw(const RState* rs, const Color&, const RectF& srcRect, const RectF& destRect) OVERRIDE;
+        const Matrix&   getViewProjection() const { return _vp; }
+        IVideoDriver*   getDriver();
 
+
+        void setDriver(IVideoDriver*);
+        void setViewProjTransform(const Matrix& view, const Matrix& proj);
+        void setVertexDeclaration(const VertexDeclaration* decl);
         void setUberShaderProgram(UberShaderProgram* pr);
-
+        /**Sets blend mode. Default value is blend_premultiplied_alpha*/
         void setBlendMode(blend_mode blend);
         /**Sets texture. If texture is null White texture would be used.*/
-        void setTexture(spNativeTexture base, spNativeTexture alpha, bool basePremultiplied = true);
+        void setTexture(const spNativeTexture& base, const spNativeTexture& alpha, bool basePremultiplied = true);
+        void setTexture(const spNativeTexture& base, bool basePremultiplied = true);
+        /**Sets World transformation.*/
+        void setTransform(const Transform& tr) { _transform = tr; }
+
+        void beginElementRendering(bool basePremultiplied);// OVERRIDE;
+        void drawElement(const spNativeTexture& texture, unsigned int color, const RectF& src, const RectF& dest) OVERRIDE;
+        void draw(const Color&, const RectF& srcRect, const RectF& destRect);
+        /**Draws existing batch immediately.*/
+        void drawBatch();
+
+        /**Begins rendering into RenderTexture or into primary framebuffer if rt is null*/
+        void begin(STDRenderer* prev);
+        /**Completes started rendering and restores previous Frame Buffer.*/
+        void end();
+        /**initializes View + Projection matrices where TopLeft is (0,0) and RightBottom is (width, height). use flipU = true for render to texture*/
+        void initCoordinateSystem(int width, int height, bool flipU = false);
+        void resetSettings();
+        /**Cleans existing accumulated batch.*/
+        void cleanup();
+
+        virtual void addVertices(const void* data, unsigned int size);
 
 
         //debug utils
@@ -24,12 +79,30 @@ namespace oxygine
 #endif
 
     protected:
+        Transform _transform;
 
-        void preDrawBatch();
-        void _cleanup();
-        void _begin();
-        void _resetSettings();
+        STDRenderer* _previous;
+        void setShader(ShaderProgram* prog);
 
+        void _drawBatch();
+
+
+        void _addVertices(const void* data, unsigned int size);
+        void _checkDrawBatch();
+
+        std::vector<unsigned char> _vertices;
+
+        const VertexDeclaration* _vdecl;
+
+        IVideoDriver* _driver;
+        ShaderProgram* _program;
+        Matrix _vp;
+
+        virtual void preDrawBatch();
+        virtual void _cleanup();
+        virtual void _begin();
+        virtual void _resetSettings();
+        //virtual
         spNativeTexture _base;
         spNativeTexture _alpha;
 
@@ -37,31 +110,5 @@ namespace oxygine
 
         UberShaderProgram* _uberShader;
         unsigned int _shaderFlags;
-    };
-
-
-    class PrimitiveRenderer
-    {
-    public:
-        PrimitiveRenderer(STDRenderer* r);
-
-        void setTexture(spNativeTexture texture);
-        void setBlendMode(blend_mode mode);
-        void draw(const void* data, int size, bvertex_format format, bool worldTransform = false);
-
-    protected:
-        STDRenderer* _renderer;
-    };
-
-    class TextRenderer2
-    {
-    public:
-        TextRenderer2(STDRenderer*);
-
-        void draw(const AffineTransform& tr, spNativeTexture texture, unsigned int color, const RectF& src, const RectF& dest);
-
-    protected:
-        spNativeTexture _texture;
-        STDRenderer* _renderer;
     };
 }

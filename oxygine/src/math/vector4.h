@@ -1,6 +1,6 @@
 #pragma once
 #include "oxygine_include.h"
-#include "vector3.h"
+#include "Vector3.h"
 namespace oxygine
 {
     template <class T>

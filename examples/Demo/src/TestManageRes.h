@@ -28,7 +28,8 @@ public:
                 continue;
             spSprite sprite = new Sprite;
             sprite->setResAnim(ra);
-            sprite->addTween(TweenAnim(ra), 500, -1);
+            if (ra->getTotalFrames() > 1)
+                sprite->addTween(TweenAnim(ra), 500, -1);
             sprite->setPosition(scalar::randFloat(50.0f, getWidth() - 100.0f), scalar::randFloat(50.0f, getHeight() - 100.0f));
             sprite->attachTo(content);
 

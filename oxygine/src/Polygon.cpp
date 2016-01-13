@@ -5,7 +5,8 @@
 #include <sstream>
 #include "core/UberShaderProgram.h"
 #include "STDRenderer.h"
-
+#include "Material.h"
+#include "STDMaterial.h"
 namespace oxygine
 {
     Polygon::Polygon() : _verticesSize(0), _verticesData(0), _own(false), _vdecl(0)
@@ -76,32 +77,33 @@ namespace oxygine
         if (!_verticesSize)
             return;
 
-        //Sprite
-        _vstyle._apply(rs);
+        Material::setCurrent(rs.material);
+
         const Diffuse& df = _frame.getDiffuse();
 
-        //if (df.base)
+        STDRenderer* renderer = (safeCast<STDMaterial*>(rs.material))->getRenderer();
+
+        renderer->setTexture(df.base, df.alpha, df.premultiplied);
+        renderer->setBlendMode(getBlendMode());
+
+        static std::vector<unsigned char> buff;
+        buff.clear();
+
+        buff.reserve(_verticesSize);
+        int num = _verticesSize / _vdecl->size;
+
+        const unsigned char* ptr = (const unsigned char*)_verticesData;
+        for (int i = 0; i < num; ++i)
         {
-            rs.renderer->setTexture(df.base, df.alpha, df.premultiplied);
-            static std::vector<unsigned char> buff;
-            buff.reserve(_verticesSize);
-            buff.clear();
-            int num = _verticesSize / _vdecl->size;
+            const Vector2* pos = (Vector2*)ptr;
+            Vector2 t = rs.transform.transform(*pos);
 
-            const unsigned char* ptr = (const unsigned char*)_verticesData;
-            for (int i = 0; i < num; ++i)
-            {
-                const Vector2* pos = (Vector2*)ptr;
-                Vector2 t = rs.transform.transform(*pos);
+            append(buff, t);
+            buff.insert(buff.end(), ptr + sizeof(t), ptr + sizeof(t) + _vdecl->size - sizeof(t));
 
-                append(buff, t);
-                buff.insert(buff.end(), ptr + sizeof(t), ptr + sizeof(t) + _vdecl->size - sizeof(t));
-
-                ptr += _vdecl->size;
-            }
-
-            rs.renderer->addVertices(&buff.front(), (unsigned int) buff.size());
+            ptr += _vdecl->size;
         }
-    }
 
+        renderer->addVertices(&buff.front(), (unsigned int) buff.size());
+    }
 }

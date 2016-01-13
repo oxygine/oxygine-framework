@@ -5,7 +5,7 @@ namespace oxygine
 {
     const int RECT_SIZE = 4096;
 
-    Mem2Native::Mem2Native(): _prev(0, 0), _size(0)
+    Mem2Native::Mem2Native(): _prev(0, 0), _size(0), _opt(0)
     {
     }
 
@@ -13,34 +13,41 @@ namespace oxygine
     {
     }
 
-    void Mem2Native::push(spMemoryTexture src, spNativeTexture dest)
+    void Mem2Native::push(const CreateTextureTask& opt)
     {
-        src->addRef();
-        dest->addRef();
-        _messages.send(0, src.get(), dest.get());
-        //_messages.post(0, src.get(), dest.get());
+        //copy should be deleted later
+        CreateTextureTask* copy = new CreateTextureTask(opt);
+        _messages.send(0, copy, 0);
     }
 
     bool Mem2Native::isEmpty()
     {
         return _prev == Point(0, 0) && _messages.empty();
-        /*
-        bool empty = false;
-        MutexAutoLock al(_mutex);
-        empty = _textures.empty();
-        return empty;
-        */
     }
 
-    void Mem2Native::updateTexture(Point& prev, MemoryTexture* src, NativeTexture* dest)
+    void Mem2Native::textureDone()
+    {
+        _opt->ready();
+        delete _opt;
+        _opt = 0;
+    }
+
+    void Mem2Native::updateTexture()
     {
         int SIZE = _size;
         if (!SIZE)
             SIZE = RECT_SIZE;
 
+        MemoryTexture* src = _opt->src.get();
+        NativeTexture* dest = _opt->dest.get();
+        Point& prev = _prev;
+
+        bool done = false;
+
         if (isCompressedFormat(src->getFormat()))
         {
             dest->init(src->lock(), false);
+            done = true;
         }
         else
         {
@@ -51,7 +58,8 @@ namespace oxygine
                 dest->init(textureRect.getWidth(), textureRect.getHeight(), src->getFormat());
 
 
-            Rect srcRect(prev.x, prev.y, std::min(SIZE, textureRect.getWidth()), std::min(SIZE, textureRect.getHeight()));
+            Rect srcRect(prev.x, prev.y,
+                         std::min(SIZE, textureRect.getWidth()), std::min(SIZE, textureRect.getHeight()));
             srcRect.clip(textureRect);
 
 
@@ -84,17 +92,19 @@ namespace oxygine
             {
                 prev.x = 0;
                 prev.y += SIZE;
-
             }
 
             if (prev.y >= textureRect.getBottom())
             {
                 _buffer.clear();
                 prev = Point(0, 0);
-
-                src->releaseRef();
-                dest->releaseRef();
+                done = true;
             }
+        }
+
+        if (done)
+        {
+            textureDone();
         }
     }
 
@@ -104,23 +114,17 @@ namespace oxygine
         if (_prev == Point(0, 0))
         {
             ThreadMessages::peekMessage ev;
-            while (_messages.peek(ev, true))
+            if (_messages.peek(ev, true))
             {
-                MemoryTexture* src = (MemoryTexture*)ev.arg1;
-                NativeTexture* dest = (NativeTexture*)ev.arg2;
+                CreateTextureTask* opt = (CreateTextureTask*)ev.arg1;
+                _opt = opt;
 
-                updateTexture(_prev, src, dest);
-                if (_prev != Point(0, 0))
-                {
-                    _src = src;
-                    _dest = dest;
-                    break;
-                }
+                updateTexture();
             }
         }
         else
         {
-            updateTexture(_prev, _src, _dest);
+            updateTexture();
         }
     }
 }

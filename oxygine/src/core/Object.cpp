@@ -134,7 +134,7 @@ namespace oxygine
     {
         __id = ++_lastID;
 
-        //OX_ASSERT(_id != 889);
+        //OX_ASSERT(__id != 266);
         OX_ASSERT(_assertCtorID != __id);
     }
 

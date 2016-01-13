@@ -54,6 +54,7 @@ temp = "../../temp"
 SDL_dest = temp + "/SDL"
 OXYGINE_dest = temp + "/oxygine-framework/"
 SOUND_dest = temp + "/oxygine-sound/"
+FLOW_dest = temp + "/oxygine-flow/"
 
 print("cleaning temp...")
 shutil.rmtree(temp, True)
@@ -71,6 +72,9 @@ cmd = "hg archive -R ../../../SDL %s" % (SDL_dest, )
 os.system(cmd)
 
 cmd = "hg archive -R ../../../oxygine-sound %s" % (SOUND_dest, )
+os.system(cmd)
+
+cmd = "hg archive -R ../../../oxygine-flow %s" % (FLOW_dest, )
 os.system(cmd)
 
 shutil.rmtree(SDL_dest + "/test")

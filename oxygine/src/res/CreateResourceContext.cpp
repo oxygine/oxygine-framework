@@ -4,6 +4,18 @@
 
 namespace oxygine
 {
+    CreateTextureTask::CreateTextureTask(): linearFilter(true), clamp2edge(true)
+    {
+    }
+
+    void CreateTextureTask::ready() const
+    {
+        if (!linearFilter)
+            dest->setLinearFilter(linearFilter);
+        if (!clamp2edge)
+            dest->setClamp2Edge(clamp2edge);
+    }
+
     XmlWalker::XmlWalker(
         const std::string* xmlFolder,
         const std::string& path,
@@ -137,9 +149,10 @@ namespace oxygine
     }
 
     RestoreResourcesContext RestoreResourcesContext::instance;
-    void RestoreResourcesContext::createTexture(spMemoryTexture src, spNativeTexture dest)
+    void RestoreResourcesContext::createTexture(const CreateTextureTask& opt)
     {
-        dest->init(src->lock(), false);
+        opt.dest->init(opt.src->lock(), false);
+        opt.ready();
     }
 
     bool RestoreResourcesContext::isNeedProceed(spNativeTexture t)
@@ -149,9 +162,10 @@ namespace oxygine
 
     SingleThreadResourcesContext SingleThreadResourcesContext::instance;
 
-    void SingleThreadResourcesContext::createTexture(spMemoryTexture src, spNativeTexture dest)
+    void SingleThreadResourcesContext::createTexture(const CreateTextureTask& opt)
     {
-        dest->init(src->lock(), false);
+        opt.dest->init(opt.src->lock(), false);
+        opt.ready();
     }
 
     bool SingleThreadResourcesContext::isNeedProceed(spNativeTexture t)

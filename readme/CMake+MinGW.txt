@@ -1,0 +1,78 @@
+0. Start from readme.txt
+1. How to build and run Oxygine on Windows with CMake and MINGW with CodeBlocks or CLion. Steps:
+=================================================================================================
+- Prepare SDL2 for building:
+   	- open SDL\src\dynapi\SDL_dynapi.h and find these lines:
+
+	    #ifdef SDL_DYNAMIC_API  /* Tried to force it on the command line? */
+		#error Nope, you have to edit this file to force this off.
+		#endif
+
+
+	- add lines below:
+
+		#if __MINGW32__
+		#define SDL_DYNAMIC_API 0
+		#endif
+
+	- result:
+    
+	    #ifdef SDL_DYNAMIC_API  /* Tried to force it on the command line? */
+		#error Nope, you have to edit this file to force this off.
+		#endif
+
+		#if __MINGW32__
+		#define SDL_DYNAMIC_API 0
+		#endif
+
+
+- Build SDL2. Add these options to CMake command line:
+
+    -DRENDER_D3D=0 -DVIDEO_OPENGLES=0
+
+
+	example for codeblocks:
+		
+		cmake .. -G"CodeBlocks - MinGW Makefiles" -DRENDER_D3D=0 -DVIDEO_OPENGLES=0
+
+	example for CLion:
+
+	    - open SDL2 cmake project
+	    - go to menu->File->Settings->Build,Execution,Deployment->
+	    - and add  -DRENDER_D3D=0 -DVIDEO_OPENGLES=0  to  CMake options
+	    - build...
+
+
+- Find compiled libraries and dlls: libSDL2.dll, libSDL2.dll.a, libSDL2.a, libSDL2main.a
+  and copy it to oxygine-framework\libs
+
+
+2. now you are ready to open and build examples.
+=================================================================================================
+- select any example from examples folder. I chose Demo
+
+- copy libSDL2.dll and dlls from oxygine-framework\oxygine\third_party\win32_mingw\dlls\ to data folder :
+  oxygine-framework\examples\Demo\data\
+
+CLion:
+
+	- open Demo project in CLion: oxygine-framework/examples/Demo/proj.cmake/CMakeLists.txt
+	- go to menu->Run->Edit Configurations
+	- find Demo in the list of Apllications and set working directory to Demo "data" folder  (where you copied dlls)
+	- menu->Run->Build and Run Demo application
+
+CodeBlocks:
+
+	- go to folder oxygine-framework/examples/Demo/proj.cmake/
+	- create "build" folder inside
+	- go to "build" folder:
+	- run command:
+		cmake .. -G"CodeBlocks - MinGW Makefiles"
+	- open generated project Demo.cbp in CodeBlocks
+
+	- menu->Build->select target->Demo
+	- menu->Project->Properties->Build targets-> find target "Demo" and set Execution directory to Demo "data" folder  (where you copied dlls)
+	- menu->Build->Build	
+	- menu->Build->Run!
+
+

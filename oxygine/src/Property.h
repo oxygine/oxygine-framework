@@ -39,6 +39,10 @@ namespace oxygine
             set(t, v);
         }
 
+        void done(type& t)
+        {
+        }
+
         static getValueRef get(C& c)
         {
             return (c.*GetF)();

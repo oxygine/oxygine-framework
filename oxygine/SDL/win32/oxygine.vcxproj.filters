@@ -324,6 +324,18 @@
     <ClCompile Include="..\..\src\json\jsoncpp.cpp">
       <Filter>src\json</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\STDMaterial.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\TweenAlphaFade.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\TweenGlow.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Material.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\closure\closure.h">
@@ -700,6 +712,18 @@
     </ClInclude>
     <ClInclude Include="..\..\src\json\json-forwards.h">
       <Filter>src\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\STDMaterial.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\TweenAlphaFade.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\TweenGlow.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Material.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

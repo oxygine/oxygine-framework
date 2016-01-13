@@ -5,9 +5,6 @@
 
 #include "IwHTTP.h"
 
-using namespace std;
-using namespace oxygine;
-
 class MyHttp
 {
 public:
@@ -31,12 +28,12 @@ public:
     ProgressCallback        _cbProgress;
     ErrorCallback           _cbError;
 
-    void            getFile(const string& url, const string& name);
-    void            get(const string& url);
-    void            post(const string& url, const char* data, int size);
+    void            getFile(const std::string& url, const std::string& name);
+    void            get(const std::string& url);
+    void            post(const std::string& url, const char* data, int size);
 
 
-    vector<unsigned char>&  getBuffer() {return _data;}
+    std::vector<unsigned char>&  getBuffer() {return _data;}
     status          getStatus() const {return _status;}
     unsigned int    getTotalSize() const;
     unsigned int    getReceivedSize() const;
@@ -59,13 +56,13 @@ private:
 
     void onError();
 
-    string _url;
+    std::string _url;
     const char* _post;
     int _postSize;
 
-    vector<unsigned char> _tempBuffer;
-    vector<unsigned char> _data;
-    file::handle _handle;
+    std::vector<unsigned char> _tempBuffer;
+    std::vector<unsigned char> _data;
+    oxygine::file::handle _handle;
     CIwHTTP* _http;
 
     status _status;

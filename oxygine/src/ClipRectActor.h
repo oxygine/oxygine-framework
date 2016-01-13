@@ -15,11 +15,10 @@ namespace oxygine
         ClipRectActor();
         ~ClipRectActor();
 
-        ///**Enables culling for children. By default is off*/
-        //void setEnableCulling(bool enable){_culling = enable;}
+        bool getClipping() const { return _clipping; }
 
         /**Enables clipping for children. By default is on*/
-        void setEnableClipping(bool enable) {_clipping = enable;}
+        void setClipping(bool enable) {_clipping = enable;}
 
         void render(const RenderState& rs);
 
@@ -31,7 +30,6 @@ namespace oxygine
 
     protected:
 
-        bool _culling;
         bool _clipping;
     };
 }

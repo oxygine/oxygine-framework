@@ -100,10 +100,10 @@ namespace oxygine
     void TreeInspector::render(const RenderState& rs_)
     {
         RenderState rs = rs_;
-        rs.renderer->getDriver()->setScissorRect(0);
+        IVideoDriver::instance->setScissorRect(0);
 
         Rect vp;
-        rs.renderer->getDriver()->getViewport(vp);
+        IVideoDriver::instance->getViewport(vp);
         RectF clip = vp.cast<RectF>();
         rs.clip = &clip;
 

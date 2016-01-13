@@ -17,6 +17,7 @@ public:
     Content() : driver(0) { setName("content"); }
     IVideoDriver* driver;
 
+    /*
     void render(const RenderState& parentRS)
     {
 
@@ -24,11 +25,12 @@ public:
 
         RenderState rs = parentRS;
         STDRenderer renderer(driver ? driver : IVideoDriver::instance);
-        renderer.begin(parentRS.renderer);
+        renderer.Renderer::begin(parentRS.renderer);
         rs.renderer = &renderer;
         Actor::render(rs);
         renderer.end();
     }
+    */
 };
 
 DECLARE_SMART(Test, spTest);

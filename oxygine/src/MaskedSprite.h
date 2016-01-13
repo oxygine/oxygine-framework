@@ -13,7 +13,8 @@ namespace oxygine
         MaskedSprite();
         ~MaskedSprite();
 
-        spSprite getMask() const;
+        spSprite    getMask() const;
+        bool        getUseRChannel() const;
 
         void setMask(spSprite, bool useRChannel = false);
 

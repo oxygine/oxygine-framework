@@ -1,6 +1,5 @@
 #include "oxygine.h"
 #include <stdio.h>
-#include "Renderer.h"
 #include "log.h"
 #include "VideoDriver.h"
 #include "res/CreateResourceContext.h"
@@ -13,7 +12,6 @@
 #include "PointerState.h"
 #include "Input.h"
 
-#include "Renderer.h"
 #include "DebugActor.h"
 #include "Stage.h"
 #include "KeyEvent.h"
@@ -38,6 +36,7 @@
 
 
 #include "gl/VideoDriverGLES20.h"
+#include "STDMaterial.h"
 
 
 #ifdef EMSCRIPTEN
@@ -414,7 +413,7 @@ namespace oxygine
 
             CHECKGL();
 
-            Renderer::initialize();
+            STDRenderer::initialize();
 
             Resources::registerResourceType(ResAtlas::create, "atlas");
             Resources::registerResourceType(ResBuffer::create, "buffer");
@@ -422,6 +421,9 @@ namespace oxygine
             Resources::registerResourceType(ResFontBM::createBM, "bmfc_font");
             Resources::registerResourceType(ResFontBM::createSD, "sdfont");
             Resources::registerResourceType(ResStarlingAtlas::create, "starling");
+
+            STDRenderer::instance = new STDRenderer;
+            STDMaterial::instance = new STDMaterial(STDRenderer::instance);
 
             CHECKGL();
             log::messageln("oxygine initialized");
@@ -466,7 +468,7 @@ namespace oxygine
         {
             log::messageln("core::reset()");
             Restorable::releaseAll();
-            Renderer::reset();
+            STDRenderer::reset();
             IVideoDriver::instance->reset();
             log::messageln("core::reset() done");
         }
@@ -475,13 +477,18 @@ namespace oxygine
         {
             log::messageln("core::restore()");
             IVideoDriver::instance->restore();
-            Renderer::restore();
+            STDRenderer::restore();
             Restorable::restoreAll();
             log::messageln("core::restore() done");
         }
 
+        bool isReady2Render()
+        {
+            return STDRenderer::isReady();
+        }
 
-        bool beginRendering(window w)
+
+        bool  beginRendering(window w)
         {
 #ifdef OXYGINE_SDL
             SDL_Window* wnd = w;
@@ -492,7 +499,7 @@ namespace oxygine
 
             CHECKGL();
 
-            return Renderer::isReady();
+            return STDRenderer::isReady();
         }
 
         void swapDisplayBuffers(window w)
@@ -716,7 +723,9 @@ namespace oxygine
 
             Input::instance.cleanup();
 
-            Renderer::release();
+            STDRenderer::release();
+            delete STDMaterial::instance;
+            STDMaterial::instance = 0;
 
             DebugActor::release();
 

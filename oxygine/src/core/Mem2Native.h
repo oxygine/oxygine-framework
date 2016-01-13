@@ -7,6 +7,7 @@
 #include "MemoryTexture.h"
 #include "Mutex.h"
 #include "ThreadMessages.h"
+#include "res/CreateResourceContext.h"
 
 namespace oxygine
 {
@@ -21,20 +22,20 @@ namespace oxygine
 
         bool isEmpty();
 
-        void push(spMemoryTexture src, spNativeTexture dest);
+        void push(const CreateTextureTask& opt);
         void update();
 
         void setUpdateSize(int size) {_size = size;}
 
     private:
 
-        void updateTexture(Point& prev, MemoryTexture* src, NativeTexture* dest);
+        void updateTexture();
+        void textureDone();
 
         int _size;
         Point _prev;
 
-        MemoryTexture* _src;
-        NativeTexture* _dest;
+        CreateTextureTask* _opt;
 
         std::vector<unsigned char> _buffer;
         ThreadMessages _messages;//todo, use global messages

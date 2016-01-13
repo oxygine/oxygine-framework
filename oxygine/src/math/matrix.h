@@ -1,8 +1,8 @@
 #pragma once
 #include "oxygine_include.h"
 
-#include "vector3.h"
-#include "vector4.h"
+#include "Vector3.h"
+#include "Vector4.h"
 #include <math.h>
 #include <stdlib.h>
 #include <algorithm>

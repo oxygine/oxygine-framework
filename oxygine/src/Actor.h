@@ -21,6 +21,7 @@ namespace oxygine
 
     class RenderState;
     class UpdateState;
+    class Material;
 
 
     DECLARE_SMART(Texture, spTexture);
@@ -72,11 +73,11 @@ namespace oxygine
         bool    _detach;
     };
 
-
     class Actor : public EventDispatcher, public intrusive_list_item<spActor>, public Serializable
     {
         typedef intrusive_list_item<spActor> intr_list;
     public:
+
         DECLARE_COPYCLONE_NEW2(Actor);
 
         Actor();
@@ -145,10 +146,11 @@ namespace oxygine
         bool                getInputChildrenEnabled() const {return (_flags & flag_touchChildrenEnabled) != 0;}
         bool                getChildrenRelative() const {return (_flags & flag_childrenRelative) != 0;;}
         UpdateCallback      getCallbackDoUpdate() const {return _cbDoUpdate;}
+        Material*           getMaterial() { return _material; }
         //RenderCallback        getCallbackDoRender() const {return _cbDoRender;}
 
-        const Renderer::transform&      getTransform() const;
-        const Renderer::transform&      getTransformInvert() const;
+        const Transform&      getTransform() const;
+        const Transform&      getTransformInvert() const;
 
 
         /**Sets Anchor. Anchor is "center" of rotation/scale/position*/
@@ -186,6 +188,7 @@ namespace oxygine
         void setExtendedClickArea(char add) {_extendedIsOn = add;}
 
         void setClock(spClock clock);
+        void setMaterial(Material* mat);
 
         /**Show/Hide actor and children. Invisible Actor doesn't receive events.*/
         void setVisible(bool vis) {_flags &= ~flag_visible; if (vis) _flags |= flag_visible;}
@@ -297,8 +300,14 @@ namespace oxygine
 
         void setNotPressed();
 
+        bool internalRender(RenderState& rs, const RenderState& parentRS);
+
+
     protected:
+
+        Material* _material;
         Stage* _stage;
+
         void added2stage(Stage*);
         void removedFromStage();
         virtual void onAdded2Stage() {}
@@ -315,13 +324,12 @@ namespace oxygine
         RectF calcDestRectF(const RectF& destRect, const Vector2& size) const;
         void _setSize(const Vector2&);
         virtual void sizeChanged(const Vector2& size);
-        RectF   getScreenSpaceDestRect(const Renderer::transform&) const;
         Actor*  _getDescendant(const std::string& name);
         spTween _addTween(spTween tween, bool rel);
 
         bool prepareRender(RenderState& rs, const RenderState& parentRS);
         void completeRender(const RenderState& rs);
-        bool internalRender(RenderState& rs, const RenderState& parentRS);
+
 
         void updateTransform() const;
         void internalUpdate(const UpdateState& us);
@@ -330,8 +338,8 @@ namespace oxygine
         virtual void doUpdate(const UpdateState& us);
         UpdateCallback _cbDoUpdate;
 
-        mutable Renderer::transform _transform;
-        mutable Renderer::transform _transformInvert;
+        mutable Transform _transform;
+        mutable Transform _transformInvert;
 
 
         enum flags
@@ -388,8 +396,9 @@ namespace oxygine
     bool testIntersection(spActor obj1, spActor obj2, spActor commonParent = 0, Vector2* contact = 0);
 
 
-    Renderer::transform getGlobalTransform(spActor child, spActor parent = 0);
-    Renderer::transform getGlobalTransform2(spActor child, Actor* parent = 0);
+    Transform getGlobalTransform(spActor child, spActor parent = 0);
+    Transform getGlobalTransform2(spActor child, Actor* parent = 0);
+    RectF getActorTransformedDestRect(Actor* actor, const Transform& tr);
 
     void    changeParentAndSavePosition(spActor mutualParent, spActor actor, spActor newParent);
 
@@ -403,6 +412,7 @@ namespace oxygine
         typedef Actor type;
 
         void init(Actor&) {}
+        void done(Actor&) {}
         void update(Actor&, float p, const UpdateState& us) {}
     };
 }

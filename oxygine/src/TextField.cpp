@@ -2,8 +2,6 @@
 
 #include "TextField.h"
 #include "Font.h"
-#include "core/Renderer.h"
-#include "core/Texture.h"
 #include "DebugActor.h"
 #include "res/Resources.h"
 #include "RenderState.h"
@@ -14,7 +12,7 @@
 #include "text_utils/Node.h"
 #include "Serialize.h"
 
-#include "STDRenderer.h"
+#include "Material.h"
 
 namespace oxygine
 {
@@ -327,35 +325,9 @@ namespace oxygine
 
     }
 
-//#define  SD_FONT
-
     void TextField::doRender(RenderState const& rs)
     {
-        text::Node* root = getRootNode();
-        if (!root)
-            return;
-
-        if (_text == "Tree Inspector")
-            int q = 0;
-
-        VisualStyle vs = _vstyle;
-        vs._apply(rs);
-
-
-
-        //TextRenderer
-        text::DrawContext dc;
-        Color color = _vstyle.getColor();
-        color.a = (color.a * rs.alpha) / 255;
-        dc.primary = color.premultiplied();
-        dc.color = _style.color * dc.primary;
-
-        dc.rs = &rs;
-
-        TextRenderer2 tr(safeCast<STDRenderer*>(rs.renderer));
-        dc.renderer = &tr;
-
-        root->draw(dc);
+        rs.material->doRender(this, rs);
     }
 
     void TextField::serialize(serializedata* data)

@@ -7,22 +7,19 @@
 
 namespace oxygine
 {
-    VisualStyle::VisualStyle(): _color(255, 255, 255, 255), _blend(Renderer::getPremultipliedAlphaRender() ? blend_premultiplied_alpha : blend_alpha)
+    VisualStyle::VisualStyle(): _color(255, 255, 255, 255), _blend(blend_premultiplied_alpha)
     {
 
+    }
+
+    VStyleActor::VStyleActor()
+    {
     }
 
     void VStyleActor::copyFrom(const VStyleActor& src, cloneOptions opt)
     {
         _Actor::copyFrom(src, opt);
         _vstyle = src._vstyle;
-    }
-
-    void VisualStyle::_apply(const RenderState& rs)
-    {
-        //rs.renderer->setMaterial(&_material);
-        rs.renderer->setBlendMode(_blend);
-        //rs.renderer->setTexture()
     }
 
     void VisualStyle::setColor(const Color& color)

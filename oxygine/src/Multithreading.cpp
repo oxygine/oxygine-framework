@@ -50,9 +50,9 @@ namespace oxygine
         LoadResourcesContextMT(Mem2Native* m2n): _m2n(m2n) {}
         ~LoadResourcesContextMT() {}
 
-        void createTexture(spMemoryTexture src, spNativeTexture dest)
+        void createTexture(const CreateTextureTask& opt) OVERRIDE
         {
-            _m2n->push(src, dest);
+            _m2n->push(opt);
         }
 
         bool isNeedProceed(spNativeTexture t)

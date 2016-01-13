@@ -1,6 +1,6 @@
 #pragma once
 #include "oxygine_include.h"
-#include "math/vector2.h"
+#include "math/Vector2.h"
 #include <string>
 
 #if OXYGINE_SDL
@@ -84,6 +84,8 @@ namespace oxygine
         /** Update engine*/
         bool update();
 
+        /**returns True if device is ready for rendering*/
+        bool isReady2Render();
         /**returns True if device is ready for rendering*/
         bool beginRendering(window i = 0);
 

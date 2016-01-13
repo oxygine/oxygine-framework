@@ -1,11 +1,10 @@
 #include "Stage.h"
 #include "core/oxygine.h"
-#include "core/Renderer.h"
 #include "math/Rect.h"
 #include "RenderState.h"
-#include "STDRenderer.h"
 #include "Clock.h"
 #include <sstream>
+#include "STDMaterial.h"
 
 #ifdef OXYGINE_SDL
 #include "SDL.h"
@@ -29,6 +28,8 @@ namespace oxygine
             addEventListener(Stage::ACTIVATE, CLOSURE(this, &Stage::onActivate));
         }
         _stage = this;
+
+        _material = STDMaterial::instance;
 
 #ifdef OXYGINE_SDL
         _window = 0;
@@ -129,11 +130,23 @@ namespace oxygine
     }
     */
 
-    void Stage::render(Renderer& r)
+    void Stage::render(const Color* clearColor, const Rect& viewport, const Matrix& view, const Matrix& proj)
     {
+        Material::setCurrent(0);
+
+        IVideoDriver* driver = IVideoDriver::instance;
+        driver->setViewport(viewport);
+
+        if (clearColor)
+            driver->clear(*clearColor);
+
+        STDMaterial& mat = *STDMaterial::instance;
+        mat.apply(0);
+        mat.setViewProj(view, proj);
+
         timeMS t = getTimeMS();
         RenderState rs;
-        rs.renderer = &r;
+        rs.material = _material;
         Point ds = core::getDisplaySize();
 
         RectF clip(0.0f, 0.0f, (float)ds.x, (float)ds.y);
@@ -141,30 +154,24 @@ namespace oxygine
 
         if (_clipOuter)
         {
-            r.getDriver()->setScissorRect(&_viewport);
+            driver->setScissorRect(&_viewport);
             clip = _viewport.cast<RectF>();
         }
 
         Actor::render(rs);
+
+        mat.finish();
 
         _statRender = getTimeMS() - t;
     }
 
     void Stage::render(const Color& clearColor, const Rect& viewport)
     {
-        //if (!_active)
-        //  return;
-
-        IVideoDriver* driver = IVideoDriver::instance;
-
-        driver->setViewport(viewport);
-        driver->clear(clearColor);
-
-        STDRenderer renderer(driver);
-        renderer.initCoordinateSystem(viewport.getWidth(), viewport.getHeight());
-        renderer.begin(0);
-        render(renderer);
-        renderer.end();
+        //initialize projection and view matrix
+        Matrix proj;
+        Matrix::orthoLH(proj, (float)viewport.getWidth(), (float)viewport.getHeight(), 0, 1);
+        Matrix view = makeViewMatrix(viewport.getWidth(), viewport.getHeight());
+        render(&clearColor, viewport, view, proj);
     }
 
     void Stage::cleanup()

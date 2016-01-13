@@ -1,18 +1,21 @@
 #include "HttpRequestTaskS3E.h"
 
-spHttpRequestTask HttpRequestTask::create()
+namespace oxygine
 {
-    return new HttpRequestTaskS3E;
-}
+    spHttpRequestTask HttpRequestTask::create()
+    {
+        return new HttpRequestTaskS3E;
+    }
 
-void HttpRequestTask::init()
-{
+    void HttpRequestTask::init()
+    {
 
-}
+    }
 
-void HttpRequestTask::release()
-{
+    void HttpRequestTask::release()
+    {
 
+    }
 }
 
 
@@ -49,10 +52,4 @@ void HttpRequestTaskS3E::onError(MyHttp*)
 {
     AsyncTask::onError();
     releaseRef();
-}
-
-
-spHttpRequestTask createHttpRequest()
-{
-    return new HttpRequestTaskS3E;
 }

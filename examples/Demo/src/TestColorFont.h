@@ -3,6 +3,52 @@
 #include "core/UberShaderProgram.h"
 
 DECLARE_SMART(ShaderTextField, spShaderTextField);
+class CustomShader : public Material
+{
+public:
+    static CustomShader* get(Actor* a)
+    {
+        return safeCast<CustomShader*>(a->getMaterial());
+    }
+
+    CustomShader(UberShaderProgram* shader): _shader(shader) {}
+
+    void apply(Actor* a)
+    {
+        a->setMaterial(this);
+    }
+
+    void free()
+    {
+
+    }
+
+    void setUniforms(IVideoDriver* driver, ShaderProgram* prog)
+    {
+        //driver->setUniform("userValue", &_val, 1);
+
+        /*Color q(_adata, _adata, _adata, _adata);
+        Vector4 c;
+        c = tovec(_outer * q);
+        driver->setUniform("_black", &c, 1);
+        c = tovec(getColor() * _style.color * q);
+        driver->setUniform("_white", &c, 1);*/
+    }
+
+    void doRender(Actor* actor, RenderState& rs)
+    {
+        /* _shader->setShaderUniformsCallback(CLOSURE(this, &CustomShader::setUniforms));
+         STDRenderer* renderer = safeCast<STDRenderer*>(rs.renderer);
+         renderer->setUberShaderProgram(_shader);
+
+         actor->doRender(rs);
+
+         renderer->setUberShaderProgram(&Renderer::uberShader);
+         _shader->setShaderUniformsCallback(UberShaderProgram::ShaderUniformsCallback());*/
+    }
+
+    UberShaderProgram* _shader;
+};
 
 class ShaderTextField : public TextField
 {
@@ -11,7 +57,7 @@ public:
     static void init()
     {
         shader = new UberShaderProgram();
-        shader->init(Renderer::uberShaderBody,
+        shader->init(STDRenderer::uberShaderBody,
                      "#define MODIFY_BASE\n"
                      "#define DONT_MULT_BY_RESULT_COLOR\n"
                      "uniform lowp vec4 _black;"
@@ -28,6 +74,8 @@ public:
     {
         delete shader;
     }
+
+    //void set
 
     ShaderTextField() : _outer(Color::White)
     {
@@ -67,12 +115,14 @@ private:
 
     void doRender(const RenderState& rs)
     {
+        Material::setCurrent(rs.material);
+
+        STDRenderer* renderer = STDRenderer::instance;
         _adata = rs.alpha;
         shader->setShaderUniformsCallback(CLOSURE(this, &ShaderTextField::setUniforms));
-        STDRenderer* renderer = safeCast<STDRenderer*>(rs.renderer);
         renderer->setUberShaderProgram(shader);
         TextField::doRender(rs);
-        renderer->setUberShaderProgram(&Renderer::uberShader);
+        renderer->setUberShaderProgram(&STDRenderer::uberShader);
 
         shader->setShaderUniformsCallback(UberShaderProgram::ShaderUniformsCallback());
     }

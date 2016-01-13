@@ -2,6 +2,7 @@
 #include "RenderState.h"
 #include "MaskedRenderer.h"
 #include "Serialize.h"
+#include "Material.h"
 
 namespace oxygine
 {
@@ -25,39 +26,26 @@ namespace oxygine
         return _mask;
     }
 
+    bool    MaskedSprite::getUseRChannel() const
+    {
+        return _useRChannel;
+    }
+
     void MaskedSprite::setMask(spSprite mask, bool useRChannel)
     {
         _mask = mask;
         _useRChannel = useRChannel;
     }
 
+
     void MaskedSprite::render(const RenderState& parentRS)
     {
-        if (_mask && _mask->getAnimFrame().getDiffuse().base)
-        {
-            Renderer::transform t = getGlobalTransform(_mask);
-            RectF maskDest = _mask->getDestRect();
-            RectF maskSrc = _mask->getSrcRect();
-            //maskDest
-
-            const Diffuse& df = _mask->getAnimFrame().getDiffuse();
-
-
-            bool rchannel       = _useRChannel ? true    : (df.alpha ? true     : false);
-            spNativeTexture msk = _useRChannel ? df.base : (df.alpha ? df.alpha : df.base);
-
-            MaskedRenderer mr(msk, maskSrc, maskDest, t, rchannel);
-            RenderState rs = parentRS;
-            rs.renderer = &mr;
-            mr.begin(parentRS.renderer);
-            _Sprite::render(rs);
-            mr.end();
-        }
-        else
-        {
-            _Sprite::render(parentRS);
-        }
+        RenderState rs = parentRS;
+        if (_material)
+            rs.material = _material;
+        rs.material->render(this, rs);
     }
+
 
     void MaskedSprite::serialize(serializedata* data)
     {

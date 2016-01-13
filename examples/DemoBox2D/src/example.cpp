@@ -93,7 +93,6 @@ public:
         setSize(getStage()->getSize());
 
         spButton btn = new Button;
-        btn->setResAnim(gameResources.getResAnim("button"));
         btn->setX(getWidth() - btn->getWidth() - 3);
         btn->setY(3);
         btn->attachTo(this);

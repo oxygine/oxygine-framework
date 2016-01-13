@@ -425,7 +425,7 @@ def processRS(context, walker):
 
                 frame_bbox = a.getbbox()
             else:
-                frame_bbox = frame_image.getbbox()
+                frame_bbox = (0,0,frame_image.size[0],frame_image.size[1])
 
             if not frame_bbox:
                 frame_bbox = (0,0,0,0)

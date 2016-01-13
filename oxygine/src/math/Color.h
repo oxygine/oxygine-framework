@@ -277,6 +277,13 @@ namespace oxygine
             return c;
         }
 
+        Color withAlpha(unsigned char alpha) const
+        {
+            Color c = *this;
+            c.a = alpha;
+            return c;
+        }
+
         bool operator == (const Color& color) const
         {
             return argb == color.argb;

@@ -42,6 +42,11 @@ lowp vec4 get_base()
 	base.a = texture2D(alpha_texture, result_uv).r;	
 #endif
 
+#ifdef MODIFY_BASE_PRE
+	//define MODIFY_BASE_PRE and declare your own function modify_base_pre	
+	base = modify_base_pre(base);
+#endif
+
 #ifdef ALPHA_PREMULTIPLY
 	base.rgb = base.rgb * base.a;
 #endif

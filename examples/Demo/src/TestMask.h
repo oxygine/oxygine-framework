@@ -83,7 +83,7 @@ public:
             if (t->value == 0)
                 _masked->setMask(0);
             else
-                _masked->setMask(_mask);
+                _masked->setMask(_mask, true);
         }
 
         if (id == "pause")

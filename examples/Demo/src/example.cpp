@@ -25,6 +25,7 @@
 #include "TestTweenShine.h"
 #include "TestTouches.h"
 #include "TestColorFont.h"
+#include "TestTweenAlphaFade.h"
 
 #ifdef __S3E__
 #include "s3eKeyboard.h"
@@ -78,6 +79,7 @@ public:
         addButton("inputtext", "Input Text");
         addButton("openbrowser", "Open Browser");
         addButton("http", "Http requests");
+        addButton("tweenfade", "Tween Alpha Fade");
 
         _color = Color::Red;
         _txtColor = Color::White;
@@ -226,7 +228,10 @@ public:
             showTest(new TestColorFont);
         }
 
-
+        if (id == "tweenfade")
+        {
+            showTest(new TestTweenAlphaFade);
+        }
     }
 };
 
@@ -242,7 +247,7 @@ void example_preinit()
     I set it to false to simplify shaders for UserShaderDemo
     */
 
-    Renderer::setPremultipliedAlphaRender(false);
+    //Renderer::setPremultipliedAlphaRender(false);
 }
 
 

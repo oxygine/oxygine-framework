@@ -6,6 +6,8 @@
 
 #define NETWORK_AVAILABLE() OX_ASSERT(s3eSocketGetInt(S3E_SOCKET_NETWORK_AVAILABLE) == 1)
 
+using namespace std;
+using namespace oxygine;
 
 
 const int httpTimeout = 20000;

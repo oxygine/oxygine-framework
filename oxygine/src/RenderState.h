@@ -4,9 +4,9 @@
 
 namespace oxygine
 {
-    class Renderer;
     class Color;
     class Event;
+    class Material;
 
     class RState
     {
@@ -16,7 +16,14 @@ namespace oxygine
             transform.identity();
         }
 
-        Renderer::transform transform;
+        Color getFinalColor(const Color& clr) const
+        {
+            Color color = clr;
+            color = clr.withAlpha((int(color.a) * alpha) / 255);
+            return color;
+        }
+
+        Transform transform;
         unsigned char alpha;
         const RectF* clip;
     };
@@ -24,7 +31,7 @@ namespace oxygine
     class RenderState: public RState
     {
     public:
-        RenderState(): renderer(0) {}
-        Renderer* renderer;
+        RenderState(): material(0) {}
+        Material* material;
     };
 }

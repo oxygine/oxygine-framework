@@ -45,8 +45,10 @@ namespace oxygine
 
     protected:
         //settings from xml
-        //bool _linearFilter;
-        //bool _clamp2edge;
+        bool _linearFilter;
+        bool _clamp2edge;
+
+        void loadBase(pugi::xml_node node);
 
         std::vector<unsigned char> _hitTestBuffer;
 

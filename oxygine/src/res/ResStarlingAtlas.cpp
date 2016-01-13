@@ -156,11 +156,11 @@ namespace oxygine
 
     }
 
-    void load_texture(const std::string& file, spNativeTexture nt, LoadResourcesContext* load_context);
+    void load_texture(const std::string& file, spNativeTexture nt, bool linearFilter, LoadResourcesContext* load_context);
 
     void ResStarlingAtlas::_restore(Restorable* r, void*)
     {
-        load_texture(_imagePath, _texture, &RestoreResourcesContext::instance);
+        load_texture(_imagePath, _texture, true, &RestoreResourcesContext::instance);
         _texture->reg(CLOSURE(this, &ResStarlingAtlas::_restore), 0);
     }
 
@@ -169,7 +169,7 @@ namespace oxygine
         if (!load_context->isNeedProceed(_texture))
             return;
 
-        load_texture(_imagePath, _texture, load_context);
+        load_texture(_imagePath, _texture, true, load_context);
         _texture->reg(CLOSURE(this, &ResStarlingAtlas::_restore), 0);
     }
 

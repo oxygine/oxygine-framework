@@ -1,7 +1,7 @@
 #pragma once
 #include "oxygine_include.h"
 #include "Actor.h"
-#include "math/vector2.h"
+#include "math/Vector2.h"
 #include "Draggable.h"
 #include "ClipRectActor.h"
 

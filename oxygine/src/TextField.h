@@ -1,7 +1,6 @@
 #pragma once
 #include "oxygine_include.h"
 #include "Actor.h"
-#include "core/Renderer.h"
 #include "TextStyle.h"
 #include "VisualStyle.h"
 namespace oxygine
@@ -74,6 +73,7 @@ namespace oxygine
         std::string dump(const dumpOptions& options) const;
         void doRender(RenderState const& parentRenderState);
 
+        text::Node* getRootNode();
     protected:
         enum
         {
@@ -86,7 +86,7 @@ namespace oxygine
         text::Node* _root;
         Rect _textRect;
 
-        text::Node* getRootNode();
+
         void needRebuild();
         void sizeChanged(const Vector2& size);
     };

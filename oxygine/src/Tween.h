@@ -208,6 +208,12 @@ namespace oxygine
             _gs.update(t, _calcEase(0.0f), us);
         }
 
+        void _done(Actor& actor, const UpdateState& us)
+        {
+            type& t = *safeCast<type*>(&actor);
+            _gs.done(t);
+        }
+
         GS& getGS() { return _gs; }
 
     private:

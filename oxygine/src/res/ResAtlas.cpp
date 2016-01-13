@@ -10,7 +10,6 @@
 #include <stdio.h>
 #include "core/Mem2Native.h"
 #include "core/VideoDriver.h"
-#include "core/Renderer.h"
 #include <stdint.h>
 
 extern "C"
@@ -83,7 +82,7 @@ namespace oxygine
         _hook = hook;
     }
 
-    void load_texture_internal(const std::string& file, spNativeTexture nt, LoadResourcesContext* load_context)
+    void load_texture_internal(const std::string& file, spNativeTexture nt, bool linearFilter, LoadResourcesContext* load_context)
     {
         ImageData im;
         spMemoryTexture mt = new MemoryTexture;
@@ -92,16 +91,18 @@ namespace oxygine
         file::buffer bf;
         file::read(file.c_str(), bf);
         LOGD("atlas file loaded: %s", file.c_str());
-        mt->init(bf, Renderer::getPremultipliedAlphaRender(), nt->getFormat());
-        //mt->init(2048, 2048, TF_R8G8B8A8);
+        mt->init(bf, true, nt->getFormat());
         im = mt->lock();
         LOGD("atlas size: %d %d", im.w, im.h);
 
-        //Object::dumpCreatedObjects();
-        load_context->createTexture(mt, nt);
+        CreateTextureTask opt;
+        opt.src = mt;
+        opt.dest = nt;
+        opt.linearFilter = linearFilter;
+        load_context->createTexture(opt);
     }
 
-    void load_texture(const std::string& file, spNativeTexture nt, LoadResourcesContext* load_context)
+    void load_texture(const std::string& file, spNativeTexture nt, bool linearFilter, LoadResourcesContext* load_context)
     {
         if (_hook)
         {
@@ -109,7 +110,7 @@ namespace oxygine
             return;
         }
 
-        load_texture_internal(file, nt, load_context);
+        load_texture_internal(file, nt, linearFilter, load_context);
     }
 
 
@@ -164,7 +165,7 @@ namespace oxygine
         return ra;
     }
 
-    ResAtlas::ResAtlas()//: _linearFilter(true), _clamp2edge(true)
+    ResAtlas::ResAtlas(): _linearFilter(true), _clamp2edge(true)
     {
 
     }
@@ -181,6 +182,13 @@ namespace oxygine
         }
     }
 
+
+    void ResAtlas::loadBase(pugi::xml_node node)
+    {
+        _linearFilter = node.attribute("linearFilter").as_bool(true);
+        _clamp2edge = node.attribute("clamp2edge").as_bool(true);
+    }
+
     void ResAtlas::_restore(Restorable* r, void*)
     {
         NativeTexture* texture = (NativeTexture*)r->_getRestorableObject();
@@ -190,14 +198,14 @@ namespace oxygine
             atlas& atl = *i;
             if (atl.base.get() == texture)
             {
-                load_texture(atl.base_path, atl.base, &RestoreResourcesContext::instance);
+                load_texture(atl.base_path, atl.base, _linearFilter , &RestoreResourcesContext::instance);
                 atl.base->reg(CLOSURE(this, &ResAtlas::_restore), 0);
                 break;
             }
 
             if (atl.alpha.get() == texture)
             {
-                load_texture(atl.alpha_path, atl.alpha, &RestoreResourcesContext::instance);
+                load_texture(atl.alpha_path, atl.alpha, _linearFilter, &RestoreResourcesContext::instance);
                 atl.alpha->reg(CLOSURE(this, &ResAtlas::_restore), 0);
                 break;
             }
@@ -212,12 +220,12 @@ namespace oxygine
             if (!load_context->isNeedProceed(atl.base))
                 continue;
 
-            load_texture(atl.base_path, atl.base, load_context);
+            load_texture(atl.base_path, atl.base, _linearFilter, load_context);
             atl.base->reg(CLOSURE(this, &ResAtlas::_restore), 0);
 
             if (atl.alpha)
             {
-                load_texture(atl.alpha_path, atl.alpha, load_context);
+                load_texture(atl.alpha_path, atl.alpha, _linearFilter, load_context);
                 atl.alpha->reg(CLOSURE(this, &ResAtlas::_restore), 0);
             }
         }
@@ -376,6 +384,7 @@ namespace oxygine
     }
 
 
+
     void ResAtlasGeneric::loadAtlas(CreateResourceContext& context)
     {
         pugi::xml_node node = context.walker.getNode();
@@ -384,8 +393,7 @@ namespace oxygine
         int h = node.attribute("height").as_int(defaultAtlasHeight);
         const char* format = node.attribute("format").as_string("8888");
 
-        //_linearFilter = node.attribute("linearFilter").as_bool(true);
-        //_clamp2edge = node.attribute("clamp2edge").as_bool(true);
+        loadBase(node);
 
         atlas_data ad;
 
@@ -437,7 +445,7 @@ namespace oxygine
             file::buffer bf;
             file::read(walker.getPath("file").c_str(), bf);
 
-            mt.init(bf, Renderer::getPremultipliedAlphaRender(), tf);
+            mt.init(bf, true, tf);
             im = mt.lock();
             if (im.w)
             {
@@ -582,8 +590,7 @@ namespace oxygine
 
         const char* format = node.attribute("format").as_string("8888");
 
-        //_linearFilter = node.attribute("linearFilter").as_bool(true);
-        //_clamp2edge = node.attribute("clamp2edge").as_bool(true);
+        loadBase(node);
 
 
         TextureFormat tf = string2TextureFormat(format);
@@ -738,10 +745,7 @@ namespace oxygine
                         df.alpha = alpha;
 
                         //compressed data could not be premultiplied
-                        if (Renderer::getPremultipliedAlphaRender())
-                            df.premultiplied = !compressed;
-                        else
-                            df.premultiplied = true;//render should think that it is already premultiplied and don't worry about alpha
+                        df.premultiplied = !compressed;
 
                         size_t n = frames.size();
                         int column = n % columns;

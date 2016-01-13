@@ -78,7 +78,7 @@ namespace oxygine { namespace log { void error(const char* format, ...); } }
 
 #define OXYGINE_HAS_RESTORE
 
-#define OXYGINE_RENDERER 2
+#define OXYGINE_RENDERER 3
 
 #ifdef __GNUC__
 #   define OXYGINE_DEPRECATED __attribute__((deprecated))

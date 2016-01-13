@@ -4,7 +4,6 @@
 #include "FileSystem.h"
 #include "minizip/unzip.h"
 #include "core/file.h"
-using namespace oxygine;
 
 namespace oxygine
 {

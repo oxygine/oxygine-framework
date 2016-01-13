@@ -49,29 +49,29 @@ public:
             return;
 
         STDRenderer renderer(0);
-        RenderState rs;
-        rs.renderer = &renderer;
-
 
         Rect viewport(Point(0, 0), content->getSize().cast<Point>());
         renderer.initCoordinateSystem(viewport.getWidth(), viewport.getHeight(), true);
 
-        IVideoDriver::instance->setRenderTarget(texture);
-        IVideoDriver::instance->setViewport(viewport);
+        IVideoDriver* driver = IVideoDriver::instance;
+
+        driver->setRenderTarget(texture);
+        driver->setViewport(viewport);
+
+        RectF destRect(te->localPosition - Vector2(16, 16), Vector2(32, 32));
 
         //begin rendering
         renderer.begin(0);
 
         ResAnim* brush = resources.getResAnim("brush");
-        AnimationFrame frame = brush->getFrame(0, 0);
+        AnimationFrame frame = brush->getFrame(0);
         const Diffuse& df = frame.getDiffuse();
         renderer.setTexture(df.base, 0);
         renderer.setBlendMode(blend_alpha);
-        RectF destRect(te->localPosition - Vector2(16, 16), Vector2(32, 32));
-        renderer.draw(&rs, color, frame.getSrcRect(), destRect);
+        renderer.draw(color, frame.getSrcRect(), destRect);
         renderer.end();
 
         //restore to default render target
-        IVideoDriver::instance->setRenderTarget(0);
+        driver->setRenderTarget(0);
     }
 };

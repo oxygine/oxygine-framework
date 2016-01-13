@@ -17,9 +17,9 @@ namespace oxygine
         void setColor(const Color& color);
         void setBlendMode(blend_mode mode);
 
-
-        void _apply(const RenderState& rs);
         std::string dump() const;
+
+
 
     protected:
         Color _color;
@@ -31,7 +31,7 @@ namespace oxygine
     {
     public:
         DECLARE_COPYCLONE_NEW(VStyleActor);
-        VStyleActor() {}
+        VStyleActor();
 
         void serialize(serializedata* data);
         void deserialize(const deserializedata* data);

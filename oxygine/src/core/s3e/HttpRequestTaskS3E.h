@@ -3,7 +3,7 @@
 #include "MyHttp.h"
 
 DECLARE_SMART(HttpRequestTaskS3E, spHttpRequestTaskS3E);
-class HttpRequestTaskS3E: public HttpRequestTask
+class HttpRequestTaskS3E: public oxygine::HttpRequestTask
 {
 public:
     HttpRequestTaskS3E();

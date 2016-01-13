@@ -1,11 +1,11 @@
 #include <sstream>
 #include "Sprite.h"
 #include "res/ResAnim.h"
-#include "core/Renderer.h"
 #include "RenderState.h"
 #include "utils/stringUtils.h"
 #include "Stage.h"
 #include "Serialize.h"
+#include "Material.h"
 
 namespace oxygine
 {
@@ -225,36 +225,7 @@ namespace oxygine
 
     void Sprite::doRender(const RenderState& rs)
     {
-        /*
-        _vstyle._apply(rs);
-        const Diffuse &df = _frame.getDiffuse();
-        #ifdef EMSCRIPTEN
-        if (df.base && df.base->getHandle())
-        #else
-        if (df.base)
-        #endif
-        {
-            rs.renderer->setDiffuse(df);
-
-            RectF destRect = getDestRect();
-            rs.renderer->draw(_frame.getSrcRect(), destRect);
-        }
-
-        */
-
-        _vstyle._apply(rs);
-
-        const Diffuse& df = _frame.getDiffuse();
-        const spNativeTexture& base = df.base;
-#ifdef EMSCRIPTEN
-        if (base && base->getHandle())
-#else
-        if (base)
-#endif
-        {
-            rs.renderer->setTexture(df.base, df.alpha, df.premultiplied);
-            rs.renderer->draw(&rs, getColor(), _frame.getSrcRect(), getDestRect());
-        }
+        rs.material->doRender(this, rs);
     }
 
     void Sprite::serialize(serializedata* data)

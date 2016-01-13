@@ -3,6 +3,8 @@
 #include "RenderState.h"
 #include "core/gl/VideoDriverGLES20.h"
 #include "core/gl/ShaderProgramGL.h"
+#include "Material.h"
+#include "STDMaterial.h"
 
 Box2DDraw::Box2DDraw(): _worldScale(1.0f), _world(0)
 {
@@ -41,20 +43,21 @@ Box2DDraw::~Box2DDraw()
 
 void Box2DDraw::doRender(const RenderState& rs)
 {
-    rs.renderer->drawBatch();
+    Material::setCurrent(0);
+
+    IVideoDriver* driver = IVideoDriver::instance;
 
     _world->SetDebugDraw(this);
 
-    rs.renderer->getDriver()->setShaderProgram(_program);
+    driver->setShaderProgram(_program);
 
-    Matrix m = Matrix(rs.transform) * rs.renderer->getViewProjection();
-    rs.renderer->getDriver()->setUniform("projection", &m);
+    Matrix m = Matrix(rs.transform) * STDMaterial::instance->getRenderer()->getViewProjection();
+    driver->setUniform("projection", &m);
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     _world->DrawDebugData();
     _world->SetDebugDraw(0);
-    rs.renderer->resetSettings();
 }
 
 void Box2DDraw::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)

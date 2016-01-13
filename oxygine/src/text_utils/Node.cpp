@@ -1,11 +1,9 @@
 #include "Node.h"
 #include "Font.h"
-#include "core/Renderer.h"
 #include "pugixml/pugixml.hpp"
 #include "utils/stringUtils.h"
 #include "RenderState.h"
 #include "AnimationFrame.h"
-#include "STDRenderer.h"
 
 namespace oxygine
 {
@@ -151,7 +149,7 @@ namespace oxygine
                 const Symbol& s = _data[i];
                 if (!s.gl.texture)
                     continue;
-                dc.renderer->draw(dc.rs->transform, s.gl.texture, dc.color.rgba(), s.gl.src, s.destRect);
+                dc.renderer->drawElement(s.gl.texture, dc.color.rgba(), s.gl.src, s.destRect);
             }
 
             drawChildren(dc);

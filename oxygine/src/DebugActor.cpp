@@ -9,7 +9,7 @@
 #include "core/NativeTexture.h"
 #include "core/ZipFileSystem.h"
 #include "core/system_data.h"
-#include "core/Renderer.h"
+#include "STDRenderer.h"
 
 #include "dev_tools/DeveloperMenu.h"
 #include "dev_tools/TreeInspector.h"
@@ -25,6 +25,7 @@
 #include "RenderState.h"
 #include "initActor.h"
 #include "MaskedSprite.h"
+#include "STDMaterial.h"
 
 #include <stdio.h>
 #include <stdarg.h>
@@ -101,7 +102,7 @@ namespace oxygine
         setName(getDefaultName());
 
         _startTime = getTimeMS();
-        setPriority(1000);
+        setPriority(30000);
 
         setTouchEnabled(false);
 
@@ -297,44 +298,66 @@ namespace oxygine
         _bg->setSize(getSize());
 
 
-        float scale = getScaleX();
-        Vector2 parentSize = getParent()->getSize();
-        Vector2 realSize = getSize() * scale;
+        Vector2 ds = core::getDisplaySize();
 
-        setX(0);
-        setY(0);
+        Vector2 pos(0, 0);
 
         switch (_corner)
         {
             case 1:
-                setX(parentSize.x - realSize.x);
-                setY(0);
+                pos.x = ds.x;
                 break;
             case 2:
-                setPosition(parentSize - realSize);
+                pos = ds;
                 break;
             case 3:
-                setX(0);
-                setY(parentSize.y - realSize.y);
+                pos.y = ds.y;
                 break;
         }
 
+        pos = getStage()->global2local(pos);
+
+        Vector2 realSize = getScaledSize();
+        switch (_corner)
+        {
+            case 1:
+                pos.x -= realSize.x;
+                break;
+            case 2:
+                pos -= realSize;
+                break;
+            case 3:
+                pos.y -= realSize.y;
+                break;
+        }
+
+        setPosition(pos);
         setScale(1.0f / getStage()->getScaleX());
     }
 
-    void DebugActor::render(RenderState const& parentRenderState)
+    void DebugActor::render(RenderState const& parentRS)
     {
-        RenderState rs = parentRenderState;
-        rs.renderer->drawBatch();
-        rs.renderer->getDriver()->setDebugStats(false);
+        RenderState rs = parentRS;
+        parentRS.material->finish();
+
+        STDRenderer renderer;
+        STDMaterial mat(&renderer);
+        mat.apply(0);
+        //STDRenderer* renderer = mat.getRenderer();
+        IVideoDriver* driver = renderer.getDriver();
+        driver->setDebugStats(false);
 
         Rect vp(Point(0, 0), core::getDisplaySize());
-        rs.renderer->getDriver()->setViewport(vp);
-        rs.renderer->initCoordinateSystem(vp.getWidth(), vp.getHeight());
-        rs.renderer->resetSettings();
+        driver->setViewport(vp);
+        renderer.initCoordinateSystem(vp.getWidth(), vp.getHeight());
+        renderer.resetSettings();
+        rs.material = &mat;
         Actor::render(rs);
-        rs.renderer->drawBatch();
-        rs.renderer->getDriver()->setDebugStats(true);
+        renderer.drawBatch();
+        driver->setDebugStats(true);
+        mat.finish();
+
+        Material::setCurrent(0);
     }
 
     void DebugActor::showTexel2PixelErrors(bool show)
