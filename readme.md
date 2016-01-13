@@ -25,25 +25,24 @@ Source code is available under MIT license (use for free anywhere).
 - MacOSX
 - Emscripten (web)
 
-
 ##Examples of code:
 
- 	```cpp
-		//create sprite and display it
-		spSprite sprite = new Sprite();
-		sprite->setResAnim(gameResources.getResAnim("anim"));
-		sprite->attachTo(getStage());
-		sprite->setScale(0.5f);
-		
-		//run animation tween
-		sprite->addTween(TweenAnim(gameResources.getResAnim("anim2")), duration, loops);
-		
-		//run position tween
-		sprite->addTween(Sprite::TweenPosition(x, y), duration, loops);
-		
-		//handle events
-		sprite->addEventListener(TouchEvent::CLICK, clickHandler);
- 	```		     
+```cpp
+//create sprite and display it
+spSprite sprite = new Sprite();
+sprite->setResAnim(gameResources.getResAnim("anim"));
+sprite->attachTo(getStage());
+sprite->setScale(0.5f);
+
+//run animation tween
+sprite->addTween(TweenAnim(gameResources.getResAnim("anim2")), duration, loops);
+
+//run position tween
+sprite->addTween(Sprite::TweenPosition(x, y), duration, loops);
+
+//handle events
+sprite->addEventListener(TouchEvent::CLICK, clickHandler);
+```		     
 
 ##Features:
 - Programming language is C++.
