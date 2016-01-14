@@ -18,10 +18,16 @@ namespace oxygine
         spNativeTexture _rt;
         unsigned char _a;
         bool _fadeIn;
-        bool _singleR2T;
 
+		enum options
+		{
+			opt_singleR2T = 1,
+			opt_fullscreen = 1,
+		};
 
-        TweenAlphaFade(bool fadeIn, bool singleR2T = true) : _actor(0), _prev(0), _fadeIn(fadeIn), _singleR2T(singleR2T) {}
+		int _options;
+
+        TweenAlphaFade(bool fadeIn, int opt = opt_singleR2T) : _actor(0), _prev(0), _fadeIn(fadeIn), _options(opt) {}
 
         ~TweenAlphaFade()
         {
@@ -79,55 +85,67 @@ namespace oxygine
             if (!STDRenderer::isReady())
                 return;
 
-            Actor& actor = *_actor;
-            Rect screen = getScreenRect(actor);
-            if (_rt->getWidth() < screen.getWidth() || _rt->getHeight() < screen.getHeight())
-                _rt->init(screen.getWidth(), screen.getHeight(), TF_R8G8B8A8, true);
+			IVideoDriver* driver = IVideoDriver::instance;
 
 
-            //if (screen.getWidth() != _rt->getW)
 
-            IVideoDriver* driver = IVideoDriver::instance;
-
-            driver->setRenderTarget(_rt);
-
-            Rect vp = screen;
-            vp.pos = Point(0, 0);
-            driver->setViewport(vp);
-
-            driver->clear(0);
+			Actor& actor = *_actor;
+			Rect screen = getScreenRect(actor);
+			
+			if (_options & opt_fullscreen)
+			{
+				driver->getViewport(screen);				
+			}
 
 
-            RenderState rs;
-            Material* mat = STDMaterial::instance;
-            STDRenderer* renderer = STDMaterial::instance->getRenderer();
+			if (_rt->getWidth() < screen.getWidth() || _rt->getHeight() < screen.getHeight())
+				_rt->init(screen.getWidth(), screen.getHeight(), TF_R8G8B8A8, true);
 
-            rs.material = mat;
+			driver->setRenderTarget(_rt);
 
-            renderer->initCoordinateSystem(vp.getWidth(), vp.getHeight(), true);
-            AffineTransform copy = actor.getTransform();
+			Rect vp = screen;
+			vp.pos = Point(0, 0);
+			driver->setViewport(vp);
+			driver->clear(0);
 
 
-            AffineTransform transform;
-            transform.identity();
-            Vector2 gpos = actor._getStage()->local2global(convert_local2stage(&actor, Vector2(0, 0)));
-            Vector2 offset = gpos - screen.pos.cast<Vector2>();
-            transform.translate(offset);
-            transform.scale(actor.getScale());
-            actor.setTransform(transform);
+			RenderState rs;
+			Material* mat = STDMaterial::instance;
+			STDRenderer* renderer = STDMaterial::instance->getRenderer();
+			rs.material = mat;
 
-            mat->render(&actor, rs);
-            mat->finish();
+			renderer->initCoordinateSystem(vp.getWidth(), vp.getHeight(), true);
 
-            //restore original transform
-            actor.setTransform(copy);
+			if (_options & opt_fullscreen)
+			{
+				rs.transform = getGlobalTransform(_actor->getParent());
+				mat->render(&actor, rs);
+			}
+			else
+			{
+				AffineTransform copy = actor.getTransform();
 
+				AffineTransform transform;
+				transform.identity();
+				Vector2 gpos = actor._getStage()->local2global(convert_local2stage(&actor, Vector2(0, 0)));
+				Vector2 offset = gpos - screen.pos.cast<Vector2>();
+				transform.translate(offset);
+				transform.scale(actor.getScale());
+				actor.setTransform(transform);
+
+				mat->render(&actor, rs);
+
+				//restore original transform
+				actor.setTransform(copy);
+			}
+
+			mat->finish();
             driver->setRenderTarget(0);
         }
 
         void update(Actor& actor, float p, const UpdateState& us)
         {
-            if (!_singleR2T)
+            if (!(_options & opt_singleR2T))
                 render2texture();
             _a = lerp(_fadeIn ? 0 : 255, _fadeIn ? 255 : 0, p);
         }

@@ -9,11 +9,11 @@ You could start from example.cpp and example.h it has main functions being calle
 #include "DebugActor.h"
 
 #include "example.h"
-
+#include "STDMaterial.h"
 
 using namespace oxygine;
 
-
+//STDRenderer* renderer = 0;
 //called each frame
 int mainloop()
 {
@@ -25,9 +25,15 @@ int mainloop()
     if (core::beginRendering())
     {
         Color clearColor(32, 32, 32, 255);
-        Rect viewport(Point(0, 0), core::getDisplaySize());
+        Rect  viewport(Point(0, 0), core::getDisplaySize());
+
+        //initialize projection and view matrix
+        Matrix proj;
+        Matrix::orthoLH(proj, (float)viewport.getWidth(), (float)viewport.getHeight(), 0, 1);
+        Matrix view = makeViewMatrix(viewport.getWidth(), viewport.getHeight());
+
         //render all actors. Actor::render would be called also for all children
-        getStage()->render(clearColor, viewport);
+        getStage()->render(&clearColor, viewport, view, proj);
 
         core::swapDisplayBuffers();
     }
@@ -47,6 +53,7 @@ void run()
 
     //initialize Oxygine's internal stuff
     core::init_desc desc;
+    desc.title = "Oxygine Application";
 
 #if OXYGINE_SDL || OXYGINE_EMSCRIPTEN
     //we could setup initial window size on SDL builds
@@ -59,9 +66,13 @@ void run()
     example_preinit();
     core::init(&desc);
 
+    //renderer = new STDRenderer;
+    //STDMaterial::instance = new STDMaterial(renderer);
+    //Material::defaultMaterial = STDMaterial::instance;
 
     //create Stage. Stage is a root node
     Stage::instance = new Stage(true);
+    Stage::instance->_material = STDMaterial::instance;
     Point size = core::getDisplaySize();
     getStage()->setSize(size);
 
