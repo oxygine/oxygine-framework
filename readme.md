@@ -1,4 +1,4 @@
-# BUILD AND RUN  
+# BUILD AND RUN   
 See **oxygine-framework/readme/** folder. It has insructions how to build and run oxygine on different platforms.
 
 # Online documentation available at
