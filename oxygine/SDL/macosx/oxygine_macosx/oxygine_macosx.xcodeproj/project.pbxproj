@@ -227,6 +227,14 @@
 		92CE26801A58ABDC003901D6 /* WebImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 92CE26781A58ABDC003901D6 /* WebImage.h */; };
 		92E0C9A61B24922600F0DB21 /* cdecode.c in Sources */ = {isa = PBXBuildFile; fileRef = 92E0C9A41B24922600F0DB21 /* cdecode.c */; };
 		92E0C9A71B24922600F0DB21 /* cdecode.h in Headers */ = {isa = PBXBuildFile; fileRef = 92E0C9A51B24922600F0DB21 /* cdecode.h */; };
+		CEC2CFF61C47274C00450163 /* Material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEC2CFEE1C47274C00450163 /* Material.cpp */; };
+		CEC2CFF71C47274C00450163 /* Material.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC2CFEF1C47274C00450163 /* Material.h */; };
+		CEC2CFF81C47274C00450163 /* STDMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEC2CFF01C47274C00450163 /* STDMaterial.cpp */; };
+		CEC2CFF91C47274C00450163 /* STDMaterial.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC2CFF11C47274C00450163 /* STDMaterial.h */; };
+		CEC2CFFA1C47274C00450163 /* TweenAlphaFade.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEC2CFF21C47274C00450163 /* TweenAlphaFade.cpp */; };
+		CEC2CFFB1C47274C00450163 /* TweenAlphaFade.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC2CFF31C47274C00450163 /* TweenAlphaFade.h */; };
+		CEC2CFFC1C47274C00450163 /* TweenGlow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEC2CFF41C47274C00450163 /* TweenGlow.cpp */; };
+		CEC2CFFD1C47274C00450163 /* TweenGlow.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC2CFF51C47274C00450163 /* TweenGlow.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -457,6 +465,14 @@
 		92CE26781A58ABDC003901D6 /* WebImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebImage.h; path = ../../../src/WebImage.h; sourceTree = "<group>"; };
 		92E0C9A41B24922600F0DB21 /* cdecode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cdecode.c; sourceTree = "<group>"; };
 		92E0C9A51B24922600F0DB21 /* cdecode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cdecode.h; sourceTree = "<group>"; };
+		CEC2CFEE1C47274C00450163 /* Material.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Material.cpp; path = ../../../src/Material.cpp; sourceTree = "<group>"; };
+		CEC2CFEF1C47274C00450163 /* Material.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Material.h; path = ../../../src/Material.h; sourceTree = "<group>"; };
+		CEC2CFF01C47274C00450163 /* STDMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = STDMaterial.cpp; path = ../../../src/STDMaterial.cpp; sourceTree = "<group>"; };
+		CEC2CFF11C47274C00450163 /* STDMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STDMaterial.h; path = ../../../src/STDMaterial.h; sourceTree = "<group>"; };
+		CEC2CFF21C47274C00450163 /* TweenAlphaFade.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TweenAlphaFade.cpp; path = ../../../src/TweenAlphaFade.cpp; sourceTree = "<group>"; };
+		CEC2CFF31C47274C00450163 /* TweenAlphaFade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweenAlphaFade.h; path = ../../../src/TweenAlphaFade.h; sourceTree = "<group>"; };
+		CEC2CFF41C47274C00450163 /* TweenGlow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TweenGlow.cpp; path = ../../../src/TweenGlow.cpp; sourceTree = "<group>"; };
+		CEC2CFF51C47274C00450163 /* TweenGlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweenGlow.h; path = ../../../src/TweenGlow.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -492,6 +508,10 @@
 			isa = PBXGroup;
 			children = (
 				9264E5C71B835AE50049F91F /* json */,
+				CEC2CFEE1C47274C00450163 /* Material.cpp */,
+				CEC2CFEF1C47274C00450163 /* Material.h */,
+				CEC2CFF01C47274C00450163 /* STDMaterial.cpp */,
+				CEC2CFF11C47274C00450163 /* STDMaterial.h */,
 				9240B40E1ADFBB3C005F9C5B /* TweenAnim.cpp */,
 				9240B40F1ADFBB3C005F9C5B /* TweenAnim.h */,
 				92CE26711A58ABDC003901D6 /* AsyncTask.cpp */,
@@ -509,6 +529,10 @@
 				923663551A47561500EB65B3 /* Tween.h */,
 				923663561A47561500EB65B3 /* TweenQueue.cpp */,
 				923663571A47561500EB65B3 /* TweenQueue.h */,
+				CEC2CFF21C47274C00450163 /* TweenAlphaFade.cpp */,
+				CEC2CFF31C47274C00450163 /* TweenAlphaFade.h */,
+				CEC2CFF41C47274C00450163 /* TweenGlow.cpp */,
+				CEC2CFF51C47274C00450163 /* TweenGlow.h */,
 				923A9E8D1A1FCA6600A6F08E /* MaskedRenderer.cpp */,
 				923A9E8E1A1FCA6600A6F08E /* MaskedRenderer.h */,
 				923A9E891A1FCA3500A6F08E /* STDRenderer.cpp */,
@@ -864,6 +888,7 @@
 				049B56B11871F21E00EF3C66 /* Texture.h in Headers */,
 				049B56991871F21E00EF3C66 /* Mutex.h in Headers */,
 				049B57131871F21E00EF3C66 /* TextStyle.h in Headers */,
+				CEC2CFFB1C47274C00450163 /* TweenAlphaFade.h in Headers */,
 				048AD0A5197D238D001963EF /* TextField.h in Headers */,
 				049B56E91871F21E00EF3C66 /* oxygine_include.h in Headers */,
 				049B56951871F21E00EF3C66 /* Mem2Native.h in Headers */,
@@ -902,8 +927,10 @@
 				049B56D51871F21E00EF3C66 /* MaskedSprite.h in Headers */,
 				92CE267A1A58ABDC003901D6 /* AsyncTask.h in Headers */,
 				049B570A1871F21E00EF3C66 /* Sprite.h in Headers */,
+				CEC2CFF91C47274C00450163 /* STDMaterial.h in Headers */,
 				049B56E61871F21E00EF3C66 /* unzip.h in Headers */,
 				049B56781871F21E00EF3C66 /* coroutines.h in Headers */,
+				CEC2CFFD1C47274C00450163 /* TweenGlow.h in Headers */,
 				049B571A1871F21E00EF3C66 /* ImageUtils.h in Headers */,
 				049B57021871F21E00EF3C66 /* Resources.h in Headers */,
 				049B56921871F21E00EF3C66 /* log.h in Headers */,
@@ -914,6 +941,7 @@
 				049B569E1871F21E00EF3C66 /* ox_debug.h in Headers */,
 				049B56681871F21E00EF3C66 /* AnimationFrame.h in Headers */,
 				9264E5CC1B835AFD0049F91F /* json.h in Headers */,
+				CEC2CFF71C47274C00450163 /* Material.h in Headers */,
 				049B56811871F21E00EF3C66 /* oxgl.h in Headers */,
 				049B56B61871F21E00EF3C66 /* vertex.h in Headers */,
 				049B56D11871F21E00EF3C66 /* initActor.h in Headers */,
@@ -1034,6 +1062,7 @@
 				049B57031871F21E00EF3C66 /* ResStarlingAtlas.cpp in Sources */,
 				049B568C1871F21E00EF3C66 /* ImageData.cpp in Sources */,
 				049B56751871F21E00EF3C66 /* ColorRectSprite.cpp in Sources */,
+				CEC2CFF81C47274C00450163 /* STDMaterial.cpp in Sources */,
 				049B57171871F21E00EF3C66 /* AtlasTool.cpp in Sources */,
 				049B566D1871F21E00EF3C66 /* Button.cpp in Sources */,
 				049B57011871F21E00EF3C66 /* Resources.cpp in Sources */,
@@ -1057,6 +1086,7 @@
 				049B56CA1871F21E00EF3C66 /* Draggable.cpp in Sources */,
 				049B571C1871F21E00EF3C66 /* stringUtils.cpp in Sources */,
 				049B56841871F21E00EF3C66 /* VertexDeclarationGL.cpp in Sources */,
+				CEC2CFFC1C47274C00450163 /* TweenGlow.cpp in Sources */,
 				049B56B41871F21E00EF3C66 /* UberShaderProgram.cpp in Sources */,
 				049B56A51871F21E00EF3C66 /* Restorable.cpp in Sources */,
 				049B56F01871F21E00EF3C66 /* pugixml.cpp in Sources */,
@@ -1071,6 +1101,7 @@
 				049B56E11871F21E00EF3C66 /* ioapi.c in Sources */,
 				049B56911871F21E00EF3C66 /* log.cpp in Sources */,
 				049B56BA1871F21E00EF3C66 /* ZipFileSystem.cpp in Sources */,
+				CEC2CFF61C47274C00450163 /* Material.cpp in Sources */,
 				049B56B21871F21E00EF3C66 /* ThreadMessages.cpp in Sources */,
 				049B56861871F21E00EF3C66 /* VideoDriverGL.cpp in Sources */,
 				049B56691871F21E00EF3C66 /* blocking.cpp in Sources */,
@@ -1111,6 +1142,7 @@
 				049B56821871F21E00EF3C66 /* ShaderProgramGL.cpp in Sources */,
 				049B56981871F21E00EF3C66 /* Mutex.cpp in Sources */,
 				049B57091871F21E00EF3C66 /* Sprite.cpp in Sources */,
+				CEC2CFFA1C47274C00450163 /* TweenAlphaFade.cpp in Sources */,
 				049B56FB1871F21E00EF3C66 /* ResFont.cpp in Sources */,
 				049B56651871F21E00EF3C66 /* Actor.cpp in Sources */,
 				049B56941871F21E00EF3C66 /* Mem2Native.cpp in Sources */,
