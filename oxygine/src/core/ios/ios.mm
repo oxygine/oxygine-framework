@@ -56,11 +56,11 @@ namespace oxygine
         NSData *data = [NSData dataWithBytesNoCopy:pData length:nDatalen];
         UIImage *image = [UIImage imageWithData:data];
         
-        GLuint width = CGImageGetWidth(image.CGImage);
-        GLuint height = CGImageGetHeight(image.CGImage);
+        GLuint width = (GLuint)CGImageGetWidth(image.CGImage);
+        GLuint height = (GLuint)CGImageGetHeight(image.CGImage);
         
-        int bits = CGImageGetBitsPerPixel(image.CGImage);
-        int pitch = CGImageGetBytesPerRow(image.CGImage);
+        int bits = (int)CGImageGetBitsPerPixel(image.CGImage);
+        int pitch = (int)CGImageGetBytesPerRow(image.CGImage);
         
         CGImageAlphaInfo alpha = CGImageGetAlphaInfo(image.CGImage);
         TextureFormat srcFormat = bits == 32 ? TF_R8G8B8A8 : TF_R8G8B8;
