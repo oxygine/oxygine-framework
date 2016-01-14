@@ -226,6 +226,14 @@
 		C3EE216217BECD7200715678 /* VertexDeclarationGL.h in Headers */ = {isa = PBXBuildFile; fileRef = C3EE215617BECD7200715678 /* VertexDeclarationGL.h */; };
 		C3EE216317BECD7200715678 /* VideoDriverGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3EE215717BECD7200715678 /* VideoDriverGL.cpp */; };
 		C3EE216417BECD7200715678 /* VideoDriverGL.h in Headers */ = {isa = PBXBuildFile; fileRef = C3EE215817BECD7200715678 /* VideoDriverGL.h */; };
+		CEC2D0081C47288E00450163 /* Material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEC2D0001C47288E00450163 /* Material.cpp */; };
+		CEC2D0091C47288E00450163 /* Material.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC2D0011C47288E00450163 /* Material.h */; };
+		CEC2D00A1C47288E00450163 /* STDMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEC2D0021C47288E00450163 /* STDMaterial.cpp */; };
+		CEC2D00B1C47288E00450163 /* STDMaterial.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC2D0031C47288E00450163 /* STDMaterial.h */; };
+		CEC2D00C1C47288E00450163 /* TweenAlphaFade.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEC2D0041C47288E00450163 /* TweenAlphaFade.cpp */; };
+		CEC2D00D1C47288E00450163 /* TweenAlphaFade.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC2D0051C47288E00450163 /* TweenAlphaFade.h */; };
+		CEC2D00E1C47288E00450163 /* TweenGlow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEC2D0061C47288E00450163 /* TweenGlow.cpp */; };
+		CEC2D00F1C47288E00450163 /* TweenGlow.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC2D0071C47288E00450163 /* TweenGlow.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -457,6 +465,14 @@
 		C3EE215617BECD7200715678 /* VertexDeclarationGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VertexDeclarationGL.h; path = gl/VertexDeclarationGL.h; sourceTree = "<group>"; };
 		C3EE215717BECD7200715678 /* VideoDriverGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VideoDriverGL.cpp; path = gl/VideoDriverGL.cpp; sourceTree = "<group>"; };
 		C3EE215817BECD7200715678 /* VideoDriverGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VideoDriverGL.h; path = gl/VideoDriverGL.h; sourceTree = "<group>"; };
+		CEC2D0001C47288E00450163 /* Material.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Material.cpp; path = ../../../src/Material.cpp; sourceTree = "<group>"; };
+		CEC2D0011C47288E00450163 /* Material.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Material.h; path = ../../../src/Material.h; sourceTree = "<group>"; };
+		CEC2D0021C47288E00450163 /* STDMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = STDMaterial.cpp; path = ../../../src/STDMaterial.cpp; sourceTree = "<group>"; };
+		CEC2D0031C47288E00450163 /* STDMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STDMaterial.h; path = ../../../src/STDMaterial.h; sourceTree = "<group>"; };
+		CEC2D0041C47288E00450163 /* TweenAlphaFade.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TweenAlphaFade.cpp; path = ../../../src/TweenAlphaFade.cpp; sourceTree = "<group>"; };
+		CEC2D0051C47288E00450163 /* TweenAlphaFade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweenAlphaFade.h; path = ../../../src/TweenAlphaFade.h; sourceTree = "<group>"; };
+		CEC2D0061C47288E00450163 /* TweenGlow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TweenGlow.cpp; path = ../../../src/TweenGlow.cpp; sourceTree = "<group>"; };
+		CEC2D0071C47288E00450163 /* TweenGlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweenGlow.h; path = ../../../src/TweenGlow.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -549,6 +565,10 @@
 			isa = PBXGroup;
 			children = (
 				9264E5B91B8358B00049F91F /* json */,
+				CEC2D0001C47288E00450163 /* Material.cpp */,
+				CEC2D0011C47288E00450163 /* Material.h */,
+				CEC2D0021C47288E00450163 /* STDMaterial.cpp */,
+				CEC2D0031C47288E00450163 /* STDMaterial.h */,
 				9240B4051ADFB856005F9C5B /* Property.h */,
 				9240B4061ADFB856005F9C5B /* TweenAnim.cpp */,
 				9240B4071ADFB856005F9C5B /* TweenAnim.h */,
@@ -567,6 +587,10 @@
 				923663661A4756C500EB65B3 /* Tween.h */,
 				923663671A4756C500EB65B3 /* TweenQueue.cpp */,
 				923663681A4756C500EB65B3 /* TweenQueue.h */,
+				CEC2D0041C47288E00450163 /* TweenAlphaFade.cpp */,
+				CEC2D0051C47288E00450163 /* TweenAlphaFade.h */,
+				CEC2D0061C47288E00450163 /* TweenGlow.cpp */,
+				CEC2D0071C47288E00450163 /* TweenGlow.h */,
 				923A9E931A1FCBB700A6F08E /* MaskedRenderer.cpp */,
 				923A9E941A1FCBB700A6F08E /* MaskedRenderer.h */,
 				923A9E951A1FCBB700A6F08E /* STDRenderer.cpp */,
@@ -918,6 +942,7 @@
 				C3E8705B16EBC8EB00052915 /* CreateResourceContext.h in Headers */,
 				C3E8705D16EBC8EB00052915 /* ResAnim.h in Headers */,
 				9240B4081ADFB856005F9C5B /* Property.h in Headers */,
+				CEC2D00B1C47288E00450163 /* STDMaterial.h in Headers */,
 				C3E8705F16EBC8EB00052915 /* ResAtlas.h in Headers */,
 				C3E8706116EBC8EB00052915 /* ResBuffer.h in Headers */,
 				C3E8706316EBC8EB00052915 /* ResFont.h in Headers */,
@@ -961,12 +986,15 @@
 				C3EE215E17BECD7200715678 /* NativeTextureGLES.h in Headers */,
 				9223E3131A5193E000B2770B /* AsyncTask.h in Headers */,
 				C3EE216017BECD7200715678 /* oxgl.h in Headers */,
+				CEC2D0091C47288E00450163 /* Material.h in Headers */,
 				9223E31A1A52D6B800B2770B /* WebImage.h in Headers */,
 				C3EE216217BECD7200715678 /* VertexDeclarationGL.h in Headers */,
 				0472E36217F8A1A80016A832 /* vertex.h in Headers */,
 				C3EE216417BECD7200715678 /* VideoDriverGL.h in Headers */,
 				04B3A71A18A65668004C67E3 /* InputText.h in Headers */,
 				C38704A717C0C71700015CA8 /* VideoDriverGLES20.h in Headers */,
+				CEC2D00F1C47288E00450163 /* TweenGlow.h in Headers */,
+				CEC2D00D1C47288E00450163 /* TweenAlphaFade.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1034,6 +1062,7 @@
 				C3E8700E16EBC8EB00052915 /* ColorRectSprite.cpp in Sources */,
 				C3E8701016EBC8EB00052915 /* coroutines.cpp in Sources */,
 				C3E8701416EBC8EB00052915 /* ImageData.cpp in Sources */,
+				CEC2D00A1C47288E00450163 /* STDMaterial.cpp in Sources */,
 				0472E36417F8A1A80016A832 /* ZipFileSystem.cpp in Sources */,
 				C3E8701616EBC8EB00052915 /* ImageDataOperations.cpp in Sources */,
 				C3E8701B16EBC8EB00052915 /* Mem2Native.cpp in Sources */,
@@ -1057,6 +1086,7 @@
 				C3E8704B16EBC8EB00052915 /* MemoryTexture.cpp in Sources */,
 				C3E8704D16EBC8EB00052915 /* Multithreading.cpp in Sources */,
 				0472E37F17F8A2EC0016A832 /* MaskedSprite.cpp in Sources */,
+				CEC2D00E1C47288E00450163 /* TweenGlow.cpp in Sources */,
 				04AEC313182BD98D006413A9 /* UberShaderProgram.cpp in Sources */,
 				C3E8705316EBC8EB00052915 /* PointerState.cpp in Sources */,
 				9223E31C1A530E8A00B2770B /* HttpRequestTask.cpp in Sources */,
@@ -1071,6 +1101,7 @@
 				923A9E971A1FCBB700A6F08E /* MaskedRenderer.cpp in Sources */,
 				C3E8706216EBC8EB00052915 /* ResFont.cpp in Sources */,
 				C3E8706416EBC8EB00052915 /* ResFontBM.cpp in Sources */,
+				CEC2D0081C47288E00450163 /* Material.cpp in Sources */,
 				C3E8706616EBC8EB00052915 /* Resource.cpp in Sources */,
 				C3E8706816EBC8EB00052915 /* Resources.cpp in Sources */,
 				C3E8706A16EBC8EB00052915 /* ResStarlingAtlas.cpp in Sources */,
@@ -1111,6 +1142,7 @@
 				C3EE215F17BECD7200715678 /* oxgl.cpp in Sources */,
 				C3EE216117BECD7200715678 /* VertexDeclarationGL.cpp in Sources */,
 				C3EE216317BECD7200715678 /* VideoDriverGL.cpp in Sources */,
+				CEC2D00C1C47288E00450163 /* TweenAlphaFade.cpp in Sources */,
 				0472E35B17F8A1A80016A832 /* log.cpp in Sources */,
 				C38704A617C0C71700015CA8 /* VideoDriverGLES20.cpp in Sources */,
 				049B64AB1803054300EC333E /* CreateResourceContext.cpp in Sources */,
