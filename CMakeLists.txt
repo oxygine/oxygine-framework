@@ -242,4 +242,3 @@ message(STATUS "Platform: ${PLATFORM}")
 set(CMAKE_INSTALL_PREFIX ../libs)
 install(TARGETS oxygine-framework CONFIGURATIONS Debug DESTINATION ./debug)
 install(TARGETS oxygine-framework CONFIGURATIONS Release DESTINATION ./release)
-
