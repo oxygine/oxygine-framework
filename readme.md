@@ -33,7 +33,7 @@ spSprite sprite = new Sprite();
 sprite->attachTo(getStage());
 
 //run animation tween
-sprite->addTween(TweenAnim(gameResources.getResAnim("anim2")), duration, loops);
+sprite->addTween(Sprite::TweenAnim(gameResources.getResAnim("anim2")), duration, loops);
 
 //run position tween
 sprite->addTween(Sprite::TweenPosition(x, y), duration, loops);
