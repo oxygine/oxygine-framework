@@ -1,19 +1,29 @@
 cmake_minimum_required (VERSION 2.6)
 project (OXYGINE)
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 ")
 
 if (WIN32)
 	set(OX_DEFINITIONS	${OX_DEFINITIONS}
 		-D_CRT_SECURE_NO_WARNINGS)
+	set(SDL2_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../SDL/include)
 else(WIN32)
+	find_path(SDL2_INCLUDE_DIRS NAMES SDL2/SDL.h)
+	message(STATUS ${SDL2_INCLUDE_DIRS_FOUND})
+
+	if (SDL2_INCLUDE_DIRS)		
+		set(SDL2_INCLUDE_DIRS ${SDL2_INCLUDE_DIRS}/SDL2)
+		message(STATUS "found")		
+	else()
+		message(STATUS "SDL notfound")
+		set(SDL2_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../SDL/include)					
+	endif()
+
 	find_package(CURL)
+
 endif(WIN32)
 
-find_package(SDL2 REQUIRED)
-include_directories(${SDL2_INCLUDE_DIR})
 
 set(OX_HAVE_LIBJPEG 1)
 set(OX_HAVE_LIBPNG 1)
@@ -71,47 +81,22 @@ foreach(F ${FOLDERS})
 endforeach(F)
 
 
-find_package(OpenGL REQUIRED)
-
-#add png library
-if (OX_HAVE_LIBPNG)
-	find_package(PNG REQUIRED)
-	set (CORE_LIBS
-		${CORE_LIBS}
-		${PNG_LIBRARIES}
-	)
-	include_directories(
-		${PNG_INCLUDE_DIR}
-	)
-	set(OX_DEFINITIONS	${OX_DEFINITIONS}
-		-DOX_HAVE_LIBPNG)
-endif(OX_HAVE_LIBPNG)
-
-#add jpeg library
-if (OX_HAVE_LIBJPEG)
-	find_package(JPEG REQUIRED)
-	set (CORE_LIBS
-		${CORE_LIBS}
-		${JPEG_LIBRARIES}
-	)
-	include_directories(
-		${JPEG_INCLUDE_DIR}
-	)
-	set(OX_DEFINITIONS	${OX_DEFINITIONS}
-		-DOX_HAVE_LIBJPEG)
-endif(OX_HAVE_LIBJPEG)
 
 set(OXYGINE_INCLUDE_DIRS 
 	${OXYGINE_ROOT_SRC}
-	${SDL2_INCLUDE_DIR}
-	${OPENGL_INCLUDE_DIR}
-	${PNG_INCLUDE_DIR}
-	${JPEG_INCLUDE_DIR}
+	${SDL2_INCLUDE_DIRS}
 	${THIRD_PARTY}/pthreads/include/
 	${THIRD_PARTY}/zlib)
 
 
 include_directories(${OXYGINE_INCLUDE_DIRS})
+
+
+find_package(OpenGL)
+include_directories(
+	${THIRD_PARTY}/libjpeg
+	${THIRD_PARTY}/libpng
+	)
 
 
 set(OXYGINE_LIBRARY_DIRS
@@ -132,9 +117,9 @@ endif(MINGW)
 set(CORE_LIBS 
 	${CORE_LIBS}
 	oxygine-framework
-	${OPENGL_LIBRARIES}
-	${SDL2_LIBRARY}
-
+	SDL2main	
+	SDL2	
+	${OPENGL_LIBRARIES}		
 )
 
 if (WIN32)
@@ -155,6 +140,16 @@ else(WIN32)
 endif(WIN32)
 
 
+#add png library
+if (OX_HAVE_LIBPNG)
+	find_package(PNG REQUIRED)
+	set (CORE_LIBS
+		${CORE_LIBS}
+		${PNG_LIBRARY}
+	)
+endif(OX_HAVE_LIBPNG)
+
+
 #add z library
 if (EMSCRIPTEN)
 	set(CORE_LIBS
@@ -170,6 +165,15 @@ endif(EMSCRIPTEN)
 
 
 #message(STATUS ${CORE_LIBS})
+
+#add jpeg library
+if (OX_HAVE_LIBJPEG)
+	find_package(JPEG REQUIRED)
+	set (CORE_LIBS
+		${CORE_LIBS}
+		${JPEG_LIBRARY}
+	)
+endif(OX_HAVE_LIBJPEG)
 
 
 if (OX_HAVE_LIBCURL)
