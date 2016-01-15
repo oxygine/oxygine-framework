@@ -1,8 +1,8 @@
 # BUILD AND RUN  
 See **oxygine-framework/readme/** folder. It has insructions how to build and run oxygine on different platforms.
 
-# Online documentation available at
-https://bitbucket.org/oxygine/oxygine-framework/wiki/Home
+# Wiki available at
+https://github.com/oxygine/oxygine-framework/wiki
 
 
 # Oxygine is C++ engine for 2D mobile games. 
