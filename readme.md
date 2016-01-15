@@ -30,9 +30,7 @@ Source code is available under MIT license (use for free anywhere).
 ```cpp
 //create sprite and display it
 spSprite sprite = new Sprite();
-sprite->setResAnim(gameResources.getResAnim("anim"));
 sprite->attachTo(getStage());
-sprite->setScale(0.5f);
 
 //run animation tween
 sprite->addTween(TweenAnim(gameResources.getResAnim("anim2")), duration, loops);
@@ -40,8 +38,13 @@ sprite->addTween(TweenAnim(gameResources.getResAnim("anim2")), duration, loops);
 //run position tween
 sprite->addTween(Sprite::TweenPosition(x, y), duration, loops);
 
-//handle events
-sprite->addEventListener(TouchEvent::CLICK, clickHandler);
+//handle click event
+sprite->addEventListener(TouchEvent::CLICK, [sprite](Event*){
+    
+    log::messageln("clicked to sprite!");
+    //change sprite color
+    sprite->setColor(Color::Gray);
+});
 ```		     
 
 ##Features:
