@@ -41,7 +41,7 @@ namespace oxygine
         void                    setColumn(int column, int row = -1);
 
         bool                    isOn(const Vector2& localPosition);
-        
+
         bool                    isFlippedX() const {return (_flags & flag_flipX) != 0;}
         bool                    isFlippedY() const {return (_flags & flag_flipY) != 0;}
         void                    setFlippedX(bool flippedX);

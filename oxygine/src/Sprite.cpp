@@ -108,7 +108,7 @@ namespace oxygine
         }
         return false;
     }
-    
+
     void Sprite::setFlippedX(bool flippedX)
     {
         if (flippedX != isFlippedX())
@@ -118,7 +118,7 @@ namespace oxygine
             animFrameChanged(_frame);
         }
     }
-    
+
     void Sprite::setFlippedY(bool flippedY)
     {
         if (flippedY != isFlippedY())
@@ -139,13 +139,13 @@ namespace oxygine
             _frame.flipX();
             _flags ^= flag_flipX;
         }
-        
+
         if (fy)
         {
             _frame.flipY();
             _flags ^= flag_flipY;
         }
-        
+
         if (fx || fy)
             animFrameChanged(_frame);
     }

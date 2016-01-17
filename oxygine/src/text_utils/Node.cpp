@@ -184,8 +184,12 @@ namespace oxygine
                             rd.nextLine();
                         else
                         {
-                            s.gl = *font->getGlyph(_defMissing);
-                            i += rd.putSymbol(s);
+                            gl = font->getGlyph(_defMissing);
+                            if (gl)//even 'missing' symbol  could be missing
+                            {
+                                s.gl = *gl;
+                                i += rd.putSymbol(s);
+                            }
                         }
                     }
                     ++i;

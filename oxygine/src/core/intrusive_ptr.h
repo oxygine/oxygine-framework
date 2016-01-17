@@ -139,7 +139,7 @@ namespace oxygine
     class RefHolder : public T
     {
     public:
-        RefHolder() {this->_ref_counter = -1;}
+        RefHolder() {this->_ref_counter = 1000000;}
         void addRef()
         {}
 
