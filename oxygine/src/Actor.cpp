@@ -1513,9 +1513,9 @@ namespace oxygine
         int h = (int)objA->getHeight();
 
 
-        for (int y = 0; y < w; y += HIT_TEST_DOWNSCALE)
+        for (int y = 0; y < h; y += HIT_TEST_DOWNSCALE)
         {
-            for (int x = 0; x < h; x += HIT_TEST_DOWNSCALE)
+            for (int x = 0; x < w; x += HIT_TEST_DOWNSCALE)
             {
                 Vector2 posA = Vector2(float(x), float(y));
 
