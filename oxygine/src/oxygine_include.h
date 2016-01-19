@@ -8,7 +8,7 @@
 
 // Round everything to whole pixels during rendering.
 // Helps to avoid artifacts in pixel art games
-// when using textures wiyh linearFilter="false"
+// when using textures with linearFilter="false"
 // and fractional sprite coordinates or sprite scaling.
 // Introduces some CPU overhead.
 //#define OXYGINE_NO_SUBPIXEL_RENDERING 1
