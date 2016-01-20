@@ -9,9 +9,9 @@
 #include "VideoDriver.h"
 
 #if OXYGINE_NO_SUBPIXEL_RENDERING
-#define ROUND_TO_PIXELS_IF_ENABLED(arg) floor(arg)
+#define SNAP_PIXEL(arg) floor(arg)
 #else
-#define ROUND_TO_PIXELS_IF_ENABLED(arg) (arg)
+#define SNAP_PIXEL(arg) (arg)
 #endif
 
 namespace oxygine
@@ -56,29 +56,29 @@ namespace oxygine
 
         vt.z = 0;
 
-        vt.x = ROUND_TO_PIXELS_IF_ENABLED(p1.x);
-        vt.y = ROUND_TO_PIXELS_IF_ENABLED(p1.y);
+        vt.x = SNAP_PIXEL(p1.x);
+        vt.y = SNAP_PIXEL(p1.y);
         vt.u = u;
         vt.v = v;
         *pv = vt;
         ++pv;
 
-        vt.x = ROUND_TO_PIXELS_IF_ENABLED(p2.x);
-        vt.y = ROUND_TO_PIXELS_IF_ENABLED(p2.y);
+        vt.x = SNAP_PIXEL(p2.x);
+        vt.y = SNAP_PIXEL(p2.y);
         vt.u = u;
         vt.v = v + dv;
         *pv = vt;
         ++pv;
 
-        vt.x = ROUND_TO_PIXELS_IF_ENABLED(p3.x);
-        vt.y = ROUND_TO_PIXELS_IF_ENABLED(p3.y);
+        vt.x = SNAP_PIXEL(p3.x);
+        vt.y = SNAP_PIXEL(p3.y);
         vt.u = u + du;
         vt.v = v;
         *pv = vt;
         ++pv;
 
-        vt.x = ROUND_TO_PIXELS_IF_ENABLED(p4.x);
-        vt.y = ROUND_TO_PIXELS_IF_ENABLED(p4.y);
+        vt.x = SNAP_PIXEL(p4.x);
+        vt.y = SNAP_PIXEL(p4.y);
         vt.u = u + du;
         vt.v = v + dv;
         *pv = vt;
@@ -108,29 +108,29 @@ namespace oxygine
 
         vt.z = Z;
 
-        vt.x = ROUND_TO_PIXELS_IF_ENABLED(p1.x);
-        vt.y = ROUND_TO_PIXELS_IF_ENABLED(p1.y);
+        vt.x = SNAP_PIXEL(p1.x);
+        vt.y = SNAP_PIXEL(p1.y);
         vt.u = u;
         vt.v = v;
         *pv = vt;
         ++pv;
 
-        vt.x = ROUND_TO_PIXELS_IF_ENABLED(p2.x);
-        vt.y = ROUND_TO_PIXELS_IF_ENABLED(p2.y);
+        vt.x = SNAP_PIXEL(p2.x);
+        vt.y = SNAP_PIXEL(p2.y);
         vt.u = u;
         vt.v = v + dv;
         *pv = vt;
         ++pv;
 
-        vt.x = ROUND_TO_PIXELS_IF_ENABLED(p3.x);
-        vt.y = ROUND_TO_PIXELS_IF_ENABLED(p3.y);
+        vt.x = SNAP_PIXEL(p3.x);
+        vt.y = SNAP_PIXEL(p3.y);
         vt.u = u + du;
         vt.v = v;
         *pv = vt;
         ++pv;
 
-        vt.x = ROUND_TO_PIXELS_IF_ENABLED(p4.x);
-        vt.y = ROUND_TO_PIXELS_IF_ENABLED(p4.y);
+        vt.x = SNAP_PIXEL(p4.x);
+        vt.y = SNAP_PIXEL(p4.y);
         vt.u = u + du;
         vt.v = v + dv;
         *pv = vt;
@@ -172,8 +172,8 @@ namespace oxygine
 
         vt.z = 0;
 
-        vt.x = ROUND_TO_PIXELS_IF_ENABLED(p1.x);
-        vt.y = ROUND_TO_PIXELS_IF_ENABLED(p1.y);
+        vt.x = SNAP_PIXEL(p1.x);
+        vt.y = SNAP_PIXEL(p1.y);
         vt.u = u;
         vt.v = v;
         vt.u2 = u2;
@@ -181,8 +181,8 @@ namespace oxygine
         *pv = vt;
         ++pv;
 
-        vt.x = ROUND_TO_PIXELS_IF_ENABLED(p2.x);
-        vt.y = ROUND_TO_PIXELS_IF_ENABLED(p2.y);
+        vt.x = SNAP_PIXEL(p2.x);
+        vt.y = SNAP_PIXEL(p2.y);
         vt.u = u;
         vt.v = v + dv;
         vt.u2 = u2;
@@ -190,8 +190,8 @@ namespace oxygine
         *pv = vt;
         ++pv;
 
-        vt.x = ROUND_TO_PIXELS_IF_ENABLED(p3.x);
-        vt.y = ROUND_TO_PIXELS_IF_ENABLED(p3.y);
+        vt.x = SNAP_PIXEL(p3.x);
+        vt.y = SNAP_PIXEL(p3.y);
         vt.u = u + du;
         vt.v = v;
         vt.u2 = u2 + du2;
@@ -199,8 +199,8 @@ namespace oxygine
         *pv = vt;
         ++pv;
 
-        vt.x = ROUND_TO_PIXELS_IF_ENABLED(p4.x);
-        vt.y = ROUND_TO_PIXELS_IF_ENABLED(p4.y);
+        vt.x = SNAP_PIXEL(p4.x);
+        vt.y = SNAP_PIXEL(p4.y);
         vt.u = u + du;
         vt.v = v + dv;
         vt.u2 = u2 + du2;
