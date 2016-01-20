@@ -385,7 +385,9 @@ namespace oxygine
     Vector2 convert_local2global(spActor child, spActor parent, const Vector2& pos);//deprecated, use convert_local2stage
 
     Vector2 convert_local2stage(spActor child, const Vector2& pos, spActor root = 0);
+    Vector2 convert_local2stage(const Actor* child, const Vector2& pos, const Actor* root = 0);
     Vector2 convert_stage2local(spActor child, const Vector2& pos, spActor root = 0);
+    Vector2 convert_stage2local(const Actor* child, const Vector2& pos, const Actor* root = 0);
 
     /**Deprecated*/
     inline Vector2 convert_local2root(spActor child, const Vector2& pos, spActor root = 0) { return convert_local2stage(child, pos, root); }

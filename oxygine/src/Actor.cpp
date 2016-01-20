@@ -1267,10 +1267,10 @@ namespace oxygine
         }
     }
 
-    Vector2 convert_global2local_(Actor* child, Actor* parent, Vector2 pos)
+    Vector2 convert_global2local_(const Actor* child, const Actor* parent, Vector2 pos)
     {
         if (child->getParent() && child->getParent() != parent)
-            pos = convert_global2local(child->getParent(), parent, pos);
+            pos = convert_global2local_(child->getParent(), parent, pos);
         /*
         Actor *p = child->getParent();
         if (p && child != parent)
@@ -1285,7 +1285,7 @@ namespace oxygine
         return convert_global2local_(child.get(), parent.get(), pos);
     }
 
-    Vector2 convert_local2global_(Actor* child, Actor* parent, Vector2 pos)
+    Vector2 convert_local2global_(const Actor* child, const Actor* parent, Vector2 pos)
     {
         while (child && child != parent)
         {
@@ -1308,11 +1308,25 @@ namespace oxygine
         return convert_local2global(actor, root, pos);
     }
 
+    Vector2 convert_local2stage(const Actor* actor, const Vector2& pos, const Actor* root)
+    {
+        if (!root)
+            root = getStage().get();
+        return convert_local2global_(actor, root, pos);
+    }
+
     Vector2 convert_stage2local(spActor actor, const Vector2& pos, spActor root)
     {
         if (!root)
             root = getStage();
         return convert_global2local(actor, root, pos);
+    }
+
+    Vector2 convert_stage2local(const Actor* actor, const Vector2& pos, const Actor* root)
+    {
+        if (!root)
+            root = getStage().get();
+        return convert_global2local_(actor, root, pos);
     }
 
     Transform getGlobalTransform(spActor child, spActor parent)
