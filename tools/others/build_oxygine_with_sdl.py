@@ -35,6 +35,7 @@ def buildzip(name):
     with zipfile.ZipFile(destzip, "w", compression = zipfile.ZIP_DEFLATED) as zp:
         recursive_zip(zp, "../../temp")
     
+    #return
     try:
         shutil.copyfile(destzip, "../../../gdrive/oxygine/" + name)        
     except IOError, e:
@@ -59,23 +60,19 @@ FLOW_dest = temp + "/oxygine-flow/"
 print("cleaning temp...")
 shutil.rmtree(temp, True)
 
-print("hg archive...")
-cmd = "hg archive " + OXYGINE_dest
-os.system(cmd)
+def export(repo, dest):
+    cmd = "git -C %s checkout-index -a -f --prefix=%s/" % ("d:/" + repo, "d:/oxygine-framework/temp/" + dest)
+    os.system(cmd)
 
-#os.chdir(dest)
-
+export("oxygine-framework", "oxygine-framework")
 buildzip("oxygine-framework.zip")
 
-
+#################### ALL IN ONE
 cmd = "hg archive -R ../../../SDL %s" % (SDL_dest, )
 os.system(cmd)
+export("oxygine-sound", "oxygine-sound")
+export("oxygine-flow", "oxygine-flow")
 
-cmd = "hg archive -R ../../../oxygine-sound %s" % (SOUND_dest, )
-os.system(cmd)
-
-cmd = "hg archive -R ../../../oxygine-flow %s" % (FLOW_dest, )
-os.system(cmd)
 
 shutil.rmtree(SDL_dest + "/test")
 
@@ -119,6 +116,7 @@ def copy(path):
         
 enum(OXYGINE_dest + "/examples/", copy)
 enum(SOUND_dest + "/examples/", copy)
+enum(FLOW_dest + "/examples/", copy)
 
 shutil.copy(SDL_dest + "/android-project/src/org/libsdl/app/SDLActivity.java", 
             OXYGINE_dest + "/oxygine/SDL/android/lib/src/org/libsdl/app/SDLActivity.java")
