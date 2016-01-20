@@ -63,8 +63,8 @@ namespace oxygine
                 return GL_DST_ALPHA;
             case BT_ONE_MINUS_DST_ALPHA:
                 return GL_ONE_MINUS_DST_ALPHA;
-			case BT_ONE_MINUS_DST_COLOR:
-				return GL_ONE_MINUS_DST_COLOR;
+            case BT_ONE_MINUS_DST_COLOR:
+                return GL_ONE_MINUS_DST_COLOR;
         }
         OX_ASSERT(!"unknown blend");
         return GL_ONE;
