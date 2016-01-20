@@ -48,6 +48,7 @@ namespace oxygine
             BT_DST_ALPHA,
             BT_DST_COLOR,
             BT_ONE_MINUS_DST_ALPHA,
+			BT_ONE_MINUS_DST_COLOR,
         };
 
         enum STATE
