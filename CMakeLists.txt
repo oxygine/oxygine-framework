@@ -8,28 +8,28 @@ set(OX_HAVE_LIBCURL 0)
 set(OX_HAVE_HTTP 0)
 set(OX_USE_SDL2 1)
 
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 find_package(OpenGL)
 set(OXYGINE_INCLUDE_DIRS ${OXYGINE_INCLUDE_DIRS} ${OPENGL_INCLUDE_DIRS})
 
-if (EMSCRIPTEN)
-	#don't need SDL2
-elseif (WIN32)	
-	#hardcoded path to SDL2 on windows
-	set(SDL2_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../SDL/include)
-else(WIN32)
-	find_path(SDL2_INCLUDE_DIRS NAMES SDL2/SDL.h)
-	message(STATUS ${SDL2_INCLUDE_DIRS_FOUND})
-
-	if (SDL2_INCLUDE_DIRS)		
-		set(SDL2_INCLUDE_DIRS ${SDL2_INCLUDE_DIRS}/SDL2)
-		message(STATUS "found")		
-	else()
-		message(STATUS "SDL not found")
-		set(SDL2_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/../SDL/include)					
+if (EMSCRIPTEN) #don't need SDL2
+else()
+	if(WIN32)
+		set(ENV{SDL2DIR} ${CMAKE_CURRENT_SOURCE_DIR}/../SDL/include)
+		set(CORE_LIBS ${CORE_LIBS}
+		SDL2main SDL2)
+	else(WIN32)
+		find_package(CURL)
 	endif()
 
-	find_package(CURL)
+	find_package(SDL2)
+	if (SDL2_FOUND)
+		message(STATUS "found")
+	else()
+		message(STATUS "SDL not found")
+		set(SDL2_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../SDL/include)
+	endif()
 endif(EMSCRIPTEN)
 
 
@@ -44,7 +44,7 @@ set(FOLDERS src src/closure src/minizip src/core
 
 if (EMSCRIPTEN)
 	set(PLATFORM emscripten)
-elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux") 	
+elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	set(PLATFORM linux)
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 	set(PLATFORM ios)
@@ -57,11 +57,9 @@ endif()
 
 set(THIRD_PARTY ${OXYGINE_ROOT}/third_party/${PLATFORM})
 
-
-
 if (EMSCRIPTEN)
 	set(OX_HAVE_LIBPNG 1)
-	set(OX_HAVE_HTTP 1)	
+	set(OX_HAVE_HTTP 1)
 	set(OX_USE_SDL2 0)
 
 	set(SOURCES ${OXYGINE_SRC}/core/emscripten/HttpRequestEmscriptenTask.cpp)
@@ -78,7 +76,7 @@ elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 elseif(MSVC)
 
 	set(OX_HAVE_LIBJPEG 1)
-	set(OX_HAVE_LIBPNG 1)	
+	set(OX_HAVE_LIBPNG 1)
 	set(OX_HAVE_LIBCURL 1)
 	set(OX_HAVE_HTTP 1)
 
@@ -86,11 +84,11 @@ elseif(MSVC)
 
 	set(OX_DEFINITIONS	${OX_DEFINITIONS} -D_CRT_SECURE_NO_WARNINGS)
 
-elseif(MINGW)	
+elseif(MINGW)
 
 	set(libprefix lib)
 
-	set(OX_HAVE_LIBPNG 1)	
+	set(OX_HAVE_LIBPNG 1)
 	set(OX_HAVE_LIBCURL 1)
 	set(OX_HAVE_HTTP 1)
 
@@ -122,6 +120,7 @@ endforeach(ITEM)
 
 set(OXYGINE_INCLUDE_DIRS 
 	${OXYGINE_SRC}
+	${SDL2_INCLUDE_DIR}
 	${OPENGL_INCLUDE_DIR}
 	${THIRD_PARTY}/pthreads/include/
 	${THIRD_PARTY}/zlib)
@@ -151,9 +150,12 @@ set(CORE_LIBS
 
 
 if (OX_USE_SDL2)
-	set(CORE_LIBS ${CORE_LIBS}
-		SDL2main SDL2)
-	set(OXYGINE_INCLUDE_DIRS ${OXYGINE_INCLUDE_DIRS} ${SDL2_INCLUDE_DIRS})
+	if (WIN32)
+
+	elseif(EMSCRIPTEN)
+	else(WIN32)
+		set(CORE_LIBS ${CORE_LIBS} ${SDL2_LIBRARY})
+	endif(WIN32)
 endif(OX_USE_SDL2)	
 
 
@@ -237,7 +239,7 @@ set(OXYGINE_JS_LIBRARIES
 	${OXYGINE_JS_LIBRARIES}
 	PARENT_SCOPE)
 
-message(STATUS "SDL includes: ${SDL2_INCLUDE_DIRS}")
+message(STATUS "SDL includes: ${SDL2_INCLUDE_DIR}")
 message(STATUS "Libs:     ${CORE_LIBS}")
 message(STATUS "Platform: ${PLATFORM}")
 
