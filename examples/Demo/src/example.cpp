@@ -26,6 +26,7 @@
 #include "TestTouches.h"
 #include "TestColorFont.h"
 #include "TestTweenAlphaFade.h"
+#include "TestEdges.h"
 
 #ifdef __S3E__
 #include "s3eKeyboard.h"
@@ -67,6 +68,7 @@ public:
         addButton("texture_format", "Textures Format");
         addButton("r2t", "Render to Texture");
         addButton("t2p", "Texel to Pixel");
+        addButton("edges", "Edges");
         addButton("touches", "Touches");
         addButton("sliding", "Sliding Actor");
         addButton("box9sprite", "Box9 Sprite");
@@ -155,6 +157,10 @@ public:
         if (id == "t2p")
         {
             showTest(new TestTexel2Pixel);
+        }
+        if (id == "edges")
+        {
+            showTest(new TestEdges);
         }
 
         if (id == "touches")

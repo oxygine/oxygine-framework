@@ -488,18 +488,24 @@ namespace oxygine
                 {
                     for (int x = 0; x < columns; ++x)
                     {
-                        Rect src;
-                        src.pos = Point(x * frame_width, y * frame_height);
-                        src.size = Point(frame_width, frame_height);
+                        Rect frameRect;
+                        frameRect.pos = Point(x * frame_width, y * frame_height);
+                        frameRect.size = Point(frame_width, frame_height);
 
-                        ImageData srcImage_ = im.getRect(src);
+                        ImageData srcImage_ = im.getRect(frameRect);
 
 
                         HitTestData adata;
-                        ImageData trimmedImage;
+                        ImageData src;
                         Rect bounds;
                         makeAlpha(srcImage_, bounds, _hitTestBuffer, adata, walker.getAlphaHitTest());
-                        trimmedImage = srcImage_.getRect(bounds);
+                        src = srcImage_.getRect(bounds);
+
+
+                        //mt.init(src.w + 4, src.h + 4, src.format);
+                        //mt.fill_zero();
+
+
 
                         Rect dest(0, 0, 0, 0);
 
@@ -509,14 +515,21 @@ namespace oxygine
                             next_atlas(w, h, tf, ad, atlas_id.c_str());
                         }
 
-                        bool s = ad.atlas.add(&ad.mt, trimmedImage, dest);
+                        bool s = ad.atlas.add(&ad.mt, src, dest);
                         if (s == false)
                         {
                             apply_atlas(ad);
                             next_atlas(w, h, tf, ad, walker.getCurrentFolder().c_str());
-                            s = ad.atlas.add(&ad.mt, trimmedImage, dest);
+                            s = ad.atlas.add(&ad.mt, src, dest);
                             OX_ASSERT(s);
                         }
+
+                        //duplicate image edges
+                        MemoryTexture& mt = ad.mt;
+                        operations::copy(src.getRect(Rect(0, 0, src.w, 1)),         mt.lock(&Rect(dest.pos.x, dest.pos.y - 1,    src.w, 1)));
+                        operations::copy(src.getRect(Rect(0, src.h - 1, src.w, 1)), mt.lock(&Rect(dest.pos.x, dest.pos.y + src.h, src.w, 1)));
+                        operations::copy(src.getRect(Rect(0, 0, 1, src.h)),         mt.lock(&Rect(dest.pos.x - 1, dest.pos.y,    1, src.h)));
+                        operations::copy(src.getRect(Rect(src.w - 1, 0, 1, src.h)), mt.lock(&Rect(dest.pos.x + src.w, dest.pos.y, 1, src.h)));
 
 
                         float iw = 1.0f;

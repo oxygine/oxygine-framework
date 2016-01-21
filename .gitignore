@@ -54,3 +54,4 @@ oxygine/SDL/android/extension/bin/
 *.exp
 *.pdb
 */Debug_v*
+build

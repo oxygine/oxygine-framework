@@ -1,5 +1,7 @@
 #include "AtlasTool.h"
 #include "core/Texture.h"
+#include "MemoryTexture.h"
+#include "core/ImageDataOperations.h"
 
 namespace oxygine
 {
@@ -163,8 +165,8 @@ namespace oxygine
                 offset.y = 0;
         }
 
-        int w = src.w + offset.x;
-        int h = src.h + offset.y;
+        int w = src.w + offset.x * 2;
+        int h = src.h + offset.y * 2;
 
         Point size(w, h);
 
@@ -175,13 +177,13 @@ namespace oxygine
             {
                 Rect rect = rect_;
 
-                srcRect.pos = rect.pos;
+                srcRect.pos = rect.pos + offset;
                 srcRect.size = Point(src.w, src.h);
 
                 _bounds.unite(srcRect);
 
                 if (dest)
-                    dest->updateRegion(rect.pos.x, rect.pos.y, src);
+                    dest->updateRegion(srcRect.pos.x, srcRect.pos.y, src);
 
                 _free.erase(_free.begin() + i);
 

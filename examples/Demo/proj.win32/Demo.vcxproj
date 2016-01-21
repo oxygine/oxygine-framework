@@ -17,8 +17,6 @@
     <ProjectName>Demo</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
@@ -34,11 +32,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    
     <WholeProgramOptimization>false</WholeProgramOptimization>
     <WholeProgramOptimization Condition="'$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '14.0'">true</WholeProgramOptimization>
-    
-
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
@@ -58,15 +53,12 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-
   <PropertyGroup>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)_$(PlatformToolset)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)_$(PlatformToolset)\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)_$(PlatformToolset)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)_$(PlatformToolset)\</IntDir>
   </PropertyGroup>
-
-
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
@@ -85,7 +77,8 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies></AdditionalDependencies>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
       <AdditionalLibraryDirectories>../../..//oxygine/third_party/win32/libraries;../../..//libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
@@ -107,20 +100,51 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>../../..//oxygine/third_party/win32/libraries;../../..//libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies></AdditionalDependencies>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
       <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>    
+  <ItemGroup>
     <ProjectReference Include="../../../\oxygine\SDL\win32\oxygine.vcxproj">
       <Project>{52411305-cfe1-4fa8-9885-5729bfc816cf}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="../src/Counter.cpp" /><ClCompile Include="../src/entry_point.cpp" /><ClCompile Include="../src/example.cpp" /><ClCompile Include="../src/test.cpp" />
+    <ClCompile Include="../src/Counter.cpp" />
+    <ClCompile Include="../src/entry_point.cpp" />
+    <ClCompile Include="../src/example.cpp" />
+    <ClCompile Include="../src/test.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="../src/Counter.h" /><ClInclude Include="../src/TestAlphaHitTest.h" /><ClInclude Include="../src/TestBox9Sprite.h" /><ClInclude Include="../src/TestClipRect.h" /><ClInclude Include="../src/TestColorFont.h" /><ClInclude Include="../src/TestCounter.h" /><ClInclude Include="../src/TestDrag.h" /><ClInclude Include="../src/TestHttp.h" /><ClInclude Include="../src/TestInputText.h" /><ClInclude Include="../src/TestManageRes.h" /><ClInclude Include="../src/TestMask.h" /><ClInclude Include="../src/TestPerf.h" /><ClInclude Include="../src/TestPolygon.h" /><ClInclude Include="../src/TestProgressBar.h" /><ClInclude Include="../src/TestRender2Texture.h" /><ClInclude Include="../src/TestSliding.h" /><ClInclude Include="../src/TestTexel2Pixel.h" /><ClInclude Include="../src/TestText.h" /><ClInclude Include="../src/TestTextureFormat.h" /><ClInclude Include="../src/TestTouches.h" /><ClInclude Include="../src/TestTweenShine.h" /><ClInclude Include="../src/TestTweenText.h" /><ClInclude Include="../src/TestTweens.h" /><ClInclude Include="../src/TestUserShader.h" /><ClInclude Include="../src/TestUserShader2.h" /><ClInclude Include="../src/example.h" /><ClInclude Include="../src/test.h" />
+    <ClInclude Include="../src/Counter.h" />
+    <ClInclude Include="../src/TestAlphaHitTest.h" />
+    <ClInclude Include="../src/TestBox9Sprite.h" />
+    <ClInclude Include="../src/TestClipRect.h" />
+    <ClInclude Include="../src/TestColorFont.h" />
+    <ClInclude Include="../src/TestCounter.h" />
+    <ClInclude Include="../src/TestDrag.h" />
+    <ClInclude Include="../src/TestHttp.h" />
+    <ClInclude Include="../src/TestInputText.h" />
+    <ClInclude Include="../src/TestManageRes.h" />
+    <ClInclude Include="../src/TestMask.h" />
+    <ClInclude Include="../src/TestPerf.h" />
+    <ClInclude Include="../src/TestPolygon.h" />
+    <ClInclude Include="../src/TestProgressBar.h" />
+    <ClInclude Include="../src/TestRender2Texture.h" />
+    <ClInclude Include="../src/TestSliding.h" />
+    <ClInclude Include="../src/TestTexel2Pixel.h" />
+    <ClInclude Include="../src/TestText.h" />
+    <ClInclude Include="../src/TestTextureFormat.h" />
+    <ClInclude Include="../src/TestTouches.h" />
+    <ClInclude Include="../src/TestTweenShine.h" />
+    <ClInclude Include="../src/TestTweenText.h" />
+    <ClInclude Include="../src/TestTweens.h" />
+    <ClInclude Include="../src/TestUserShader.h" />
+    <ClInclude Include="../src/TestUserShader2.h" />
+    <ClInclude Include="../src/example.h" />
+    <ClInclude Include="../src/test.h" />
+    <ClInclude Include="..\src\TestEdges.h" />
     <ClInclude Include="..\src\TestTweenAlphaFade.h" />
     <ClInclude Include="..\src\TestTweenGlow.h" />
   </ItemGroup>
