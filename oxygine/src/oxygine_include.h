@@ -11,7 +11,7 @@
 // when using textures with linearFilter="false"
 // and fractional sprite coordinates or sprite scaling.
 // Introduces some CPU overhead.
-#define OXYGINE_NO_SUBPIXEL_RENDERING 1
+//#define OXYGINE_NO_SUBPIXEL_RENDERING 1
 
 //#define OXYGINE_NO_YEILD 1
 
