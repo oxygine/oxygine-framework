@@ -10,6 +10,7 @@ set(OX_USE_SDL2 1)
 
 
 find_package(OpenGL)
+set(OXYGINE_INCLUDE_DIRS ${OXYGINE_INCLUDE_DIRS} ${OPENGL_INCLUDE_DIRS})
 
 if (EMSCRIPTEN)
 	#don't need SDL2
@@ -121,6 +122,7 @@ endforeach(ITEM)
 
 set(OXYGINE_INCLUDE_DIRS 
 	${OXYGINE_SRC}
+	${OPENGL_INCLUDE_DIR}
 	${THIRD_PARTY}/pthreads/include/
 	${THIRD_PARTY}/zlib)
 
