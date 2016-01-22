@@ -54,6 +54,9 @@ def premultipliedAlpha(image):
 
     return image    
 
+def bbox(x, y, w, h):
+    return (x, y, x + w, y + h)
+
 class alphaData:
     def __init__(self, w, h, data):
         self.w = w
@@ -70,7 +73,7 @@ class frame:
 
         self.node = None
         self.resanim = rs
-        self.border_top = self.border_left = 0
+        self.border_top = self.border_left = 2
         self.border_right = self.border_bottom = 1
 
         if not bbox:
@@ -524,10 +527,10 @@ class atlas_Processor(process.Process):
         st.max_w = context.args.max_width
         st.max_h = context.args.max_height
         st.square = context.compression == "pvrtc"
-
+        st.padding = 0
+        
         if len(frames) == 1:
-            st.get_size = get_original_frame_size
-            st.padding = 0
+            st.get_size = get_original_frame_size            
 
         pck(st, frames) 
 
@@ -541,8 +544,23 @@ class atlas_Processor(process.Process):
                 x = node.rect.x + fr.border_left
                 y = node.rect.y + fr.border_top
                 sz = fr.image.size
-                rect = (x, y, x + sz[0], y + sz[1])
+                rect = bbox(x, y, sz[0], sz[1])
+                
+                part = fr.image.crop(bbox(0, 0,     sz[0], 1))
+                image.paste(part,    bbox(x, y - 1, sz[0], 1))
+
+                part = fr.image.crop(bbox(0, sz[1] - 1, sz[0], 1))
+                image.paste(part,    bbox(x, y + sz[1], sz[0], 1))
+
+
+                part = fr.image.crop(bbox(0    , 0,     1, sz[1]))
+                image.paste(part,    bbox(x - 1, y,     1, sz[1]))
+                
+                part = fr.image.crop(bbox(sz[0]- 1, 0,  1, sz[1]))
+                image.paste(part,    bbox(x+sz[0],  y,  1, sz[1]))
+
                 image.paste(fr.image, rect)
+
                 fr.atlas_id = atlas_id
 
             image_atlas_el = walker.root_meta.ownerDocument.createElement("atlas")                
