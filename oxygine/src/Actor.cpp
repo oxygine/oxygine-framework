@@ -93,11 +93,6 @@ namespace oxygine
         //printf("Actor::~Actor %s\n", getName().c_str());
         removeTweens();
         removeChildren();
-        if (_getStage())
-        {
-            //OX_ASSERT(_getStage()->hasEventListeners(this) == false);
-            //_getStage()->removeEventListeners(this);
-        }
     }
 
     Stage* Actor::_getStage()
@@ -269,7 +264,6 @@ namespace oxygine
         up.bubbles = false;
         up.localPosition = convert_global2local(this, _getStage(), te->localPosition);
         dispatchEvent(&up);
-        //log::messageln("out %s", getName().c_str());
 
         updateState();
     }
@@ -769,11 +763,6 @@ namespace oxygine
         }
 
         actor->detach();
-        /*
-        OX_ASSERT(actor->getParent() == 0);
-        if (actor->getParent())
-            return;
-            */
 
         if (insertAfter)
             _children.insert_after(actor, insertAfter);
@@ -794,13 +783,6 @@ namespace oxygine
         }
 
         actor->detach();
-
-        /*
-        OX_ASSERT(actor->getParent() == 0);
-        if (actor->getParent())
-            return;
-            */
-
 
         if (insertBefore)
             _children.insert_before(actor, insertBefore);
@@ -833,7 +815,6 @@ namespace oxygine
         OX_ASSERT(actor != this);
 
         actor->detach();
-        //assert(actor->_parent == 0 && "child should be removed from previous parent");
 
         int z = actor->getPriority();
 
@@ -1271,11 +1252,7 @@ namespace oxygine
     {
         if (child->getParent() && child->getParent() != parent)
             pos = convert_global2local_(child->getParent(), parent, pos);
-        /*
-        Actor *p = child->getParent();
-        if (p && child != parent)
-            pos = convert_global2local(p, parent, pos);
-            */
+
         pos = child->global2local(pos);
         return pos;
     }
