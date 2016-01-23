@@ -31,7 +31,7 @@ typedef s3eFile oxHandle;
 #define oxFileRead s3eFileRead
 #define oxExists(name) s3eFileCheckExists(name)
 
-#elif OXYGINE_SDL
+#elif OXYGINE_SDL && !OXYGINE_FS_STDIO
 #ifdef _WIN32
 #include <direct.h>
 #include <Windows.h>
@@ -86,7 +86,17 @@ typedef FILE oxHandle;
 #define ox_FILESEEK_END SEEK_END
 #define ox_FILESEEK_SET SEEK_SET
 
-#define oxExists(name) (true)
+bool fileExists(const char* name)
+{
+	LOGD("check file exists: %s___", name);
+	oxHandle* h = oxFileOpen_(name, "rb");
+	LOGD("check ");
+	if (h)
+		oxFileClose_(h);
+	LOGD("check file exists: %s %d", name, (int)(h != 0));
+	return h != 0;
+}
+#define oxExists(name) fileExists(name)
 #define oxFileRead(ptr, size, n, handle) fread(ptr, size, n, handle)
 
 #endif//__S3E__
@@ -157,7 +167,7 @@ namespace oxygine
 
             virtual unsigned int getSize() const
             {
-#if OXYGINE_SDL
+#if OXYGINE_SDL && !OXYGINE_FS_STDIO
                 return (int)SDL_RWsize((SDL_RWops*)_handle);
 #else
                 oxFileSeek(_handle, 0, ox_FILESEEK_END);
