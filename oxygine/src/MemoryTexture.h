@@ -44,6 +44,7 @@ namespace oxygine
 
         ImageData   lock(lock_flags f = 0, const Rect* pRect = 0);
         ImageData   lock(const Rect* pRect);
+        ImageData   lock(const Rect& pRect);
         void        unlock();
 
         void        updateRegion(int x, int y, const ImageData& data);

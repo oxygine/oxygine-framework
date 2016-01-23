@@ -768,6 +768,11 @@ namespace oxygine
         return lock(lock_read | lock_write, pRect);
     }
 
+    ImageData MemoryTexture::lock(const Rect& rect)
+    {
+        return lock(lock_read | lock_write, &rect);
+    }
+
     void MemoryTexture::unlock()
     {
 

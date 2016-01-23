@@ -526,13 +526,22 @@ namespace oxygine
 
                         //duplicate image edges
                         MemoryTexture& mt = ad.mt;
-                        operations::copy(src.getRect(Rect(0, 0, src.w, 1)),         mt.lock(&Rect(dest.pos.x, dest.pos.y - 1,    src.w, 1)));
-                        operations::copy(src.getRect(Rect(0, src.h - 1, src.w, 1)), mt.lock(&Rect(dest.pos.x, dest.pos.y + src.h, src.w, 1)));
-                        operations::copy(src.getRect(Rect(0, 0, 1, src.h)),         mt.lock(&Rect(dest.pos.x - 1, dest.pos.y,    1, src.h)));
-                        operations::copy(src.getRect(Rect(src.w - 1, 0, 1, src.h)), mt.lock(&Rect(dest.pos.x + src.w, dest.pos.y, 1, src.h)));
+                        ImageData tmp;
 
-                        operations::copy(src.getRect(Rect(0, 0, 1, 1)), mt.lock(&Rect(dest.pos.x - 1, dest.pos.y - 1, 1, 1)));
-                        operations::copy(src.getRect(Rect(src.w - 1, 0, 1, 1)), mt.lock(&Rect(dest.pos.x + src.w, dest.pos.y - 1, 1, 1)));
+                        tmp = mt.lock(Rect(dest.pos.x, dest.pos.y - 1,    src.w, 1));
+                        operations::copy(src.getRect(Rect(0, 0, src.w, 1)),         tmp);
+
+                        tmp = mt.lock(Rect(dest.pos.x, dest.pos.y + src.h, src.w, 1));
+                        operations::copy(src.getRect(Rect(0, src.h - 1, src.w, 1)), tmp);
+
+                        tmp = mt.lock(Rect(dest.pos.x - 1, dest.pos.y,    1, src.h));
+                        operations::copy(src.getRect(Rect(0, 0, 1, src.h)),         tmp);
+
+                        tmp = mt.lock(Rect(dest.pos.x + src.w, dest.pos.y, 1, src.h));
+                        operations::copy(src.getRect(Rect(src.w - 1, 0, 1, src.h)), tmp);
+
+                        //operations::copy(src.getRect(Rect(0, 0, 1, 1)), mt.lock(&Rect(dest.pos.x - 1, dest.pos.y - 1, 1, 1)));
+                        //operations::copy(src.getRect(Rect(src.w - 1, 0, 1, 1)), mt.lock(&Rect(dest.pos.x + src.w, dest.pos.y - 1, 1, 1)));
 
                         //operations::copy(src.getRect(Rect(0, src.h - 1, 1, 1)), mt.lock(&Rect(dest.pos.x - 1, dest.pos.y + src.h, 1, 1)));
                         //operations::copy(src.getRect(Rect(src.w - 1, src.h - 1, 1, 1)), mt.lock(&Rect(dest.pos.x + src.w, dest.pos.y + src.h, 1, 1)));

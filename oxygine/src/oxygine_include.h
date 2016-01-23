@@ -16,7 +16,7 @@
 //#define OXYGINE_NO_YEILD 1
 
 // Bypass SDL file functions and use plain fopen, fread etc.
-//#define OXYGINE_FS_STDIO 1
+//#define OXYGINE_FILESYSTEM_USE_STDIO 1
 
 #if __S3E__
 #   define OXYGINE_MARMALADE 1
