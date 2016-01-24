@@ -101,7 +101,8 @@ namespace oxygine
             }
 
 
-            if (_rt->getWidth() < screen.getWidth() || _rt->getHeight() < screen.getHeight())
+            if (_rt->getWidth() < screen.getWidth() ||
+                    _rt->getHeight() < screen.getHeight())
                 _rt->init(screen.getWidth(), screen.getHeight(), TF_R8G8B8A8, true);
 
             driver->setRenderTarget(_rt);
@@ -166,6 +167,11 @@ namespace oxygine
             STDMaterial* mat = STDMaterial::instance;
             STDRenderer* renderer = mat->getRenderer();
             Rect sr = getScreenRect(*actor);
+            if (_options & opt_fullscreen)
+            {
+                sr.pos = Point(0, 0);
+                sr.size = core::getDisplaySize();
+            }
             RectF src(0, 0,
                       sr.getWidth()  / (float)_rt->getWidth(),
                       sr.getHeight() / (float)_rt->getHeight());
