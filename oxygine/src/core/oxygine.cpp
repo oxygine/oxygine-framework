@@ -718,14 +718,16 @@ namespace oxygine
 
         void release()
         {
+            Material::setCurrent(0);
+            STDRenderer::release();
+            delete STDMaterial::instance;
+            STDMaterial::instance = 0;
+
             delete IVideoDriver::instance;
             IVideoDriver::instance = 0;
 
             Input::instance.cleanup();
 
-            STDRenderer::release();
-            delete STDMaterial::instance;
-            STDMaterial::instance = 0;
 
             DebugActor::release();
 

@@ -85,6 +85,7 @@ namespace oxygine
             if (!STDRenderer::isReady())
                 return;
 
+            Material::setCurrent(0);
             IVideoDriver* driver = IVideoDriver::instance;
 
 
@@ -94,7 +95,9 @@ namespace oxygine
 
             if (_options & opt_fullscreen)
             {
-                driver->getViewport(screen);
+                //driver->getViewport(screen);
+                screen.pos = Point(0, 0);
+                screen.size = core::getDisplaySize();
             }
 
 
@@ -114,8 +117,8 @@ namespace oxygine
             STDRenderer* renderer = STDMaterial::instance->getRenderer();
             rs.material = mat;
 
-			RectF clip = vp.cast<RectF>();
-			rs.clip = &clip;
+            RectF clip = vp.cast<RectF>();
+            rs.clip = &clip;
 
             renderer->initCoordinateSystem(vp.getWidth(), vp.getHeight(), true);
 
