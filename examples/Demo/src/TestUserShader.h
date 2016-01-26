@@ -67,7 +67,7 @@ public:
     void _start(Actor& actor) OVERRIDE
     {
         actor.setName("zzz");
-        actor.setMaterial(this) ;
+        actor.setMaterial(this);
     }
 
     void _update(Actor& actor, const UpdateState& us)
