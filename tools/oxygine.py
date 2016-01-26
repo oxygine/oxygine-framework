@@ -1,9 +1,19 @@
-#this file is part of oxygine-framework. Copy it from oxygine-framework/tools/ to your folder and import for usage
+# -*- coding: utf-8 -*-
+"""
+    this file is part of oxygine-framework. Copy it from
+    oxygine-framework/tools/ to your folder and import for usage
+"""
+
+from __future__ import unicode_literals, print_function
+
+
 VERSION = 1
 _helper = None
-def helper(root = ""):
+
+
+def helper(root=""):
     global _helper
-    if not _helper:        
+    if not _helper:
         if not root:
             import os
             if "OXYGINE" in os.environ:
@@ -16,13 +26,13 @@ def helper(root = ""):
                     if parent == cur:
                         break
                     cur = parent
-                    
+
                     ox = cur + "/oxygine-framework"
                     if os.path.isdir(ox):
                         print("oxygine-framework folder found at " + ox)
                         root = ox
                         break
-                    #print cur
+                    # print cur
         import sys
         p = root + "/tools/"
         sys.path.append(p)
@@ -33,4 +43,4 @@ def helper(root = ""):
     return _helper
 
 
-#helper()
+# helper()

@@ -1,14 +1,20 @@
-#!/usr/bin/python
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
-import Image
 import glob
 import argparse
 
+import Image
+
 if __name__ == "__main__":
-    import argparse	
-    parser = argparse.ArgumentParser(description="Generates single png strip from multiple images. Just copy it to folder and run.")
-    parser.add_argument("-p", "--pattern", help = "searching files pattern ", default = "*.png")
-    parser.add_argument("-d", "--dest", help="destination file", default = "anim.png")
+    parser = argparse.ArgumentParser(
+        description="Generates single png strip from multiple images. Just "
+                    "copy it to folder and run."
+    )
+    parser.add_argument("-p", "--pattern",
+                        help="searching files pattern ", default="*.png")
+    parser.add_argument(
+        "-d", "--dest", help="destination file", default="anim.png")
     args = parser.parse_args()
 
     images = []
@@ -16,14 +22,15 @@ if __name__ == "__main__":
     h = 0
     size = None
     for g in sorted(glob.glob(args.pattern)):
-        im = Image.open(g)        
+        im = Image.open(g)
         images.append(im)
-        h = max(h, im.size[1])        
+        h = max(h, im.size[1])
         w += im.size[0]
         if not size:
-            size = im.size        
-        print(("appending image: '{}' with size ({}, {}) ".format(g, im.size[0], im.size[1])))
-        
+            size = im.size
+        print(("appending image: '{}' with size ({}, {}) ".format(
+            g, im.size[0], im.size[1])))
+
         if size[0] != im.size[0]:
             print(("warning! width should be {}".format(size[0])))
 
@@ -35,5 +42,6 @@ if __name__ == "__main__":
             anim.paste(im, (w, 0))
             w += im.size[0]
 
-        print(("writing result...\nfile=\"{}\" cols=\"{}\"".format(args.dest, len(images))))
+        print(("writing result...\nfile=\"{}\" cols=\"{}\"".format(
+            args.dest, len(images))))
         anim.save(args.dest)
