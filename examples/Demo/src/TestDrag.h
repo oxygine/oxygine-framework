@@ -97,7 +97,9 @@ public:
     {
         spSprite actor = safeSpCast<Sprite>(event->currentTarget);
 
-        actor->removeTween(actor->getTween("color"));
+        spTween t = actor->getTween("color", ep_ignore_error);
+        if (t)
+            actor->removeTween(t);
         actor->setColor(Color::White);
     }
 };

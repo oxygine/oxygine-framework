@@ -114,8 +114,8 @@ namespace oxygine
             STDRenderer* renderer = STDMaterial::instance->getRenderer();
             rs.material = mat;
 
-			RectF clip = vp.cast<RectF>();
-			rs.clip = &clip;
+            RectF clip = vp.cast<RectF>();
+            rs.clip = &clip;
 
             renderer->initCoordinateSystem(vp.getWidth(), vp.getHeight(), true);
 
