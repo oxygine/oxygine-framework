@@ -17,17 +17,18 @@ if (EMSCRIPTEN) #don't need SDL2
 else()
 	if(WIN32)
 		set(ENV{SDL2DIR} ${CMAKE_CURRENT_SOURCE_DIR}/../SDL/include)
-		set(CORE_LIBS ${CORE_LIBS}
-		SDL2main SDL2)
+		set(CORE_LIBS ${CORE_LIBS} SDL2main SDL2)
 	else(WIN32)
 		find_package(CURL)
 	endif()
 
 	find_package(SDL2)
+
 	if (SDL2_FOUND)
-		message(STATUS "found")
+		message(STATUS "SDL2 found")
+		include_directories(${SDL2_INCLUDE_DIR})
 	else()
-		message(STATUS "SDL not found")
+		message(STATUS "SDL2 not found")
 		set(SDL2_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../SDL/include)
 	endif()
 endif(EMSCRIPTEN)
@@ -67,14 +68,8 @@ if (EMSCRIPTEN)
 
 	file(GLOB OXYGINE_JS_LIBRARIES ${OXYGINE_SRC}/core/emscripten/*.js)
 
-elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux") 	
-	
-	set(OX_HAVE_LIBJPEG 1)
-	set(OX_HAVE_LIBPNG 1)
-
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 elseif(MSVC)
-
 	set(OX_HAVE_LIBJPEG 1)
 	set(OX_HAVE_LIBPNG 1)
 	set(OX_HAVE_LIBCURL 1)
@@ -85,14 +80,76 @@ elseif(MSVC)
 	set(OX_DEFINITIONS	${OX_DEFINITIONS} -D_CRT_SECURE_NO_WARNINGS)
 
 elseif(MINGW)
-
 	set(libprefix lib)
 
 	set(OX_HAVE_LIBPNG 1)
 	set(OX_HAVE_LIBCURL 1)
 	set(OX_HAVE_HTTP 1)
-
+else()  # anything else (POSIX we assume)
+	set(OX_HAVE_LIBJPEG 1)
+	set(OX_HAVE_LIBPNG 1)
 endif()
+
+#add png library
+if (OX_HAVE_LIBPNG)
+	set(OX_DEFINITIONS	${OX_DEFINITIONS}
+		-DOX_HAVE_LIBPNG)
+	if (MSVC)
+		include_directories(${THIRD_PARTY}/libpng)
+		set(LIBPNG ${libprefix}png)
+		if (MSVC_VERSION EQUAL "1900")
+			set(LIBPNG ${LIBPNG}-2015)
+		endif()
+		set(CORE_LIBS ${CORE_LIBS} ${LIBPNG})
+	elseif(EMSCRIPTEN)
+		include_directories(${THIRD_PARTY}/libpng)
+		set(LIBPNG ${libprefix}png)
+		set(LIBPNG libz libpng16)
+		set(CORE_LIBS ${CORE_LIBS} ${LIBPNG})
+	else()
+		find_package(PNG REQUIRED)
+		set (CORE_LIBS
+			${CORE_LIBS}
+			${PNG_LIBRARIES}
+		)
+		include_directories(
+			${PNG_INCLUDE_DIR}
+		)
+
+		set(OXYGINE_INCLUDE_DIRS
+			${OXYGINE_INCLUDE_DIRS}
+			${PNG_INCLUDE_DIR}
+		)
+	endif()
+endif(OX_HAVE_LIBPNG)
+
+#add jpeg library
+if (OX_HAVE_LIBJPEG)
+	set(OX_DEFINITIONS	${OX_DEFINITIONS}
+		-DOX_HAVE_LIBJPEG)
+	if (MSVC)
+		if (MSVC_VERSION EQUAL "1900")
+			set(LIBJPEG ${LIBJPEG}-2015)
+		endif()
+		set(CORE_LIBS ${CORE_LIBS} ${LIBJPEG})
+		include_directories(${THIRD_PARTY}/libjpeg)
+		set(LIBJPEG ${libprefix}jpeg)
+	else()
+		find_package(JPEG REQUIRED)
+		set (CORE_LIBS
+			${CORE_LIBS}
+			${JPEG_LIBRARIES}
+		)
+		include_directories(
+			${JPEG_INCLUDE_DIR}
+		)
+		set(OXYGINE_INCLUDE_DIRS
+			${OXYGINE_INCLUDE_DIRS}
+			${JPEG_INCLUDE_DIR}
+		)
+	endif()
+endif(OX_HAVE_LIBJPEG)
+
 
 if (OX_HAVE_LIBCURL)	
 	set(FOLDERS ${FOLDERS} src/core/curl)
@@ -151,7 +208,6 @@ set(CORE_LIBS
 
 if (OX_USE_SDL2)
 	if (WIN32)
-
 	elseif(EMSCRIPTEN)
 	else(WIN32)
 		set(CORE_LIBS ${CORE_LIBS} ${SDL2_LIBRARY})
@@ -168,39 +224,6 @@ elseif(EMSCRIPTEN)
 else(WIN32)
 	set(CORE_LIBS ${CORE_LIBS} pthread)
 endif(WIN32)
-
-
-
-if (OX_HAVE_LIBPNG)		
-	set(OX_DEFINITIONS	${OX_DEFINITIONS} -DOX_HAVE_LIBPNG)
-	include_directories(${THIRD_PARTY}/libpng)
-	set(LIBPNG ${libprefix}png)
-
-	if (MSVC)		
-		if (MSVC_VERSION EQUAL "1900")
-			set(LIBPNG ${LIBPNG}-2015)
-		endif()
-	elseif(EMSCRIPTEN)
-		set(LIBPNG libz libpng16)
-	endif()	
-
-	set(CORE_LIBS ${CORE_LIBS} ${LIBPNG})
-endif(OX_HAVE_LIBPNG)
-
-
-if (OX_HAVE_LIBJPEG)	
-	set(OX_DEFINITIONS	${OX_DEFINITIONS} -DOX_HAVE_LIBJPEG)
-	include_directories(${THIRD_PARTY}/libjpeg)
-	set(LIBJPEG ${libprefix}jpeg)
-	
-	if (MSVC)
-		if (MSVC_VERSION EQUAL "1900")
-			set(LIBJPEG ${LIBJPEG}-2015)
-		endif()	
-	endif()
-
-	set(CORE_LIBS ${CORE_LIBS} ${LIBJPEG})
-endif(OX_HAVE_LIBJPEG)
 
 
 if (NOT EMSCRIPTEN)
