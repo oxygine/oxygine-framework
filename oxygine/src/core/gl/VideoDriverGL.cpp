@@ -101,6 +101,11 @@ namespace oxygine
         return scrTest ? true : false;
     }
 
+    spNativeTexture VideoDriverGL::getRenderTarget() const
+    {
+        return _rt;
+    }
+
     const VertexDeclarationGL* VideoDriverGL::getVertexDeclaration(bvertex_format fmt) const
     {
         return _vdeclarations.get(fmt);
@@ -130,6 +135,7 @@ namespace oxygine
 
     void VideoDriverGL::setRenderTarget(spNativeTexture rt)
     {
+        _rt = rt;
         if (!rt)
         {
             oxglBindFramebuffer(GL_FRAMEBUFFER, _prevFBO);

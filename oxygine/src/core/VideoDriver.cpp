@@ -35,6 +35,11 @@ namespace oxygine
         return false;
     }
 
+    spNativeTexture VideoDriverNull::getRenderTarget() const
+    {
+        return _rt;
+    }
+
     const VertexDeclaration*    VideoDriverNull::getVertexDeclaration(bvertex_format bf) const
     {
         return IVideoDriver::instance->getVertexDeclaration(bf);
@@ -49,9 +54,9 @@ namespace oxygine
     {
 
     }
-    void VideoDriverNull::setRenderTarget(spNativeTexture)
+    void VideoDriverNull::setRenderTarget(spNativeTexture rt)
     {
-
+        _rt = rt;
     }
     void VideoDriverNull::setShaderProgram(ShaderProgram*)
     {
