@@ -71,9 +71,10 @@ namespace oxygine
         virtual void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData, unsigned int verticesDataSize) = 0;
         virtual void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData, unsigned int verticesDataSize, const void* indicesData, unsigned int numIndices, bool indicesShortType) = 0;
 
-        virtual void    getStats(Stats& s) const = 0;
-        virtual void    getViewport(Rect& r) const = 0;
-        virtual bool    getScissorRect(Rect&) const = 0;
+        virtual void            getStats(Stats& s) const = 0;
+        virtual void            getViewport(Rect& r) const = 0;
+        virtual bool            getScissorRect(Rect&) const = 0;
+        virtual spNativeTexture getRenderTarget() const = 0;
         virtual const VertexDeclaration* getVertexDeclaration(bvertex_format) const = 0;
 
         virtual void setScissorRect(const Rect*) = 0;
@@ -109,6 +110,8 @@ namespace oxygine
         void getStats(Stats& s) const;
         void getViewport(Rect& r) const;
         bool getScissorRect(Rect&) const;
+        spNativeTexture getRenderTarget() const;
+
         const VertexDeclaration*    getVertexDeclaration(bvertex_format) const;
 
         void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData, unsigned int verticesDataSize) {}
@@ -135,6 +138,8 @@ namespace oxygine
 
         void reset() {}
         void restore() {}
+
+        spNativeTexture _rt;
     };
 
 }

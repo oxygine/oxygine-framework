@@ -64,8 +64,11 @@ namespace oxygine
                                    int(clippedRect.size.x + 0.01f),
                                    int(clippedRect.size.y + 0.01f));
 
-                Point vp_size = core::getDisplaySize();
-                gl_rect.pos.y = vp_size.y - gl_rect.getBottom();
+                if (!_renderer->getDriver()->getRenderTarget())
+                {
+                    Point vp_size = core::getDisplaySize();
+                    gl_rect.pos.y = vp_size.y - gl_rect.getBottom();
+                }
 
                 _renderer->getDriver()->setScissorRect(&gl_rect);
             }

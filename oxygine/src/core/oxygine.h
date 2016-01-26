@@ -28,7 +28,7 @@ namespace oxygine
     int64           getTimeUTCMS();
 
     /** is any network connection available?*/
-    bool            isNetworkAvaible();
+    bool            isNetworkAvailable();
 
     /**returns locale. ISO 639-1 */
     std::string     getLanguage();

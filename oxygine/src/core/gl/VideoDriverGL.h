@@ -18,6 +18,7 @@ namespace oxygine
         void    getStats(Stats& s) const;
         void    getViewport(Rect& r) const;
         bool    getScissorRect(Rect&) const;
+        spNativeTexture getRenderTarget() const;
         const VertexDeclarationGL*  getVertexDeclaration(bvertex_format) const;
 
         void setScissorRect(const Rect*);
@@ -36,6 +37,7 @@ namespace oxygine
 
         void _begin(const Rect& viewport, const Color* clearColor);
         GLint _prevFBO;
+        spNativeTexture _rt;
 
         mutable VertexDeclarations<VertexDeclarationGL> _vdeclarations;
         bool _traceStats;

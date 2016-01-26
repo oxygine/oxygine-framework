@@ -860,7 +860,7 @@ namespace oxygine
         va_end(args);
     }
 
-    bool    isNetworkAvaible()
+    bool    isNetworkAvailable()
     {
 #if __S3E__
         return s3eSocketGetInt(S3E_SOCKET_NETWORK_AVAILABLE) == 1;
