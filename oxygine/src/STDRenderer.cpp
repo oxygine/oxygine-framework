@@ -269,6 +269,7 @@ namespace oxygine
 
         _program = 0;
         _vertices.clear();
+        _transform.identity();
         resetSettings();
 
         _begin();

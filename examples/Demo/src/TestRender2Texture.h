@@ -1,7 +1,8 @@
 #pragma once
 #include "test.h"
+#include "STDMaterial.h"
 
-class TestRender2Texture: public Test
+class TestRender2Texture : public Test
 {
 public:
     spNativeTexture texture;
@@ -38,7 +39,7 @@ public:
 
     void onDown(Event* ev)
     {
-        color = Color(rand() % 255, rand() % 255, rand() % 255, 32);
+        color = Color(rand() % 255, rand() % 255, rand() % 255, 128);
         onMove(ev);
     }
 
@@ -48,28 +49,36 @@ public:
         if (!te->getPointer()->isPressed())
             return;
 
-        STDRenderer renderer(0);
+        STDRenderer& renderer = *STDRenderer::instance;
+        IVideoDriver* driver = IVideoDriver::instance;
+
 
         Rect viewport(Point(0, 0), content->getSize().cast<Point>());
         renderer.initCoordinateSystem(viewport.getWidth(), viewport.getHeight(), true);
 
-        IVideoDriver* driver = IVideoDriver::instance;
-
         driver->setRenderTarget(texture);
         driver->setViewport(viewport);
 
-        RectF destRect(te->localPosition - Vector2(16, 16), Vector2(32, 32));
-
-        //begin rendering
+#if 1
         renderer.begin(0);
+        RectF destRect(te->localPosition - Vector2(16, 16), Vector2(32, 32));
 
         ResAnim* brush = resources.getResAnim("brush");
         AnimationFrame frame = brush->getFrame(0);
         const Diffuse& df = frame.getDiffuse();
-        renderer.setTexture(df.base, 0);
-        renderer.setBlendMode(blend_alpha);
+        renderer.setTexture(df.base, 0, true);
+        renderer.setBlendMode(blend_premultiplied_alpha);
         renderer.draw(color, frame.getSrcRect(), destRect);
         renderer.end();
+#else
+        //how to render actors to texture
+        RenderState rs;
+        rs.material = STDMaterial::instance;
+        Test::instance->setVisible(true);
+        Test::instance->Actor::render(rs);
+        Test::instance->setVisible(false);
+
+#endif
 
         //restore to default render target
         driver->setRenderTarget(0);

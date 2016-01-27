@@ -94,6 +94,7 @@ namespace oxygine
     void TextField::setFont(const Font* font)
     {
         _style.font = font;
+        needRebuild();
     }
 
     void TextField::setHAlign(TextStyle::HorizontalAlign align)
