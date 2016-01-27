@@ -18,23 +18,25 @@ namespace oxygine
 {
     void saveImage(const ImageData& im, const char* path, const char* format)
     {
-#ifdef __S3E__
-        CIwImage image;
-        image.SetFormat(CIwImage::ABGR_8888);
-        image.SetWidth(im.w);
-        image.SetHeight(im.h);
-        image.SetBuffers(im.data, im.h * im.pitch);
+        file::handle h = file::open(path, "wb");
+        file::autoClose ac(h);
+        char header[18] = { 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-        if (!strcmp(format, "tga"))
-            image.SaveTga(path);
-        else if (!strcmp(format, "jpg"))
-            image.SaveJpg(path);
-        else if (!strcmp(format, "png"))
-            image.SavePng(path);
+        header[12] = im.w & 0xFF;
+        header[13] = (im.w >> 8) & 0xFF;
+        header[14] = (im.h) & 0xFF;
+        header[15] = (im.h >> 8) & 0xFF;
+        header[16] = im.bytespp * 8;
+        file::write(h, header, 18);
 
-#else
-        assert(0);
-#endif
+        const unsigned char* end = im.data + im.w * im.h * im.bytespp;
+        int line = im.w * im.bytespp;
+
+        for (int y = 0; y < im.h; ++y)
+        {
+            end -= line;
+            file::write(h, end, line);
+        }
     }
 
     void serializeImage(const ImageData& im, file::buffer& bf, const char* format)
