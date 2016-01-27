@@ -153,6 +153,264 @@ namespace oxygine
         return -1;
     }
 
+
+    ////////////////////////////////////////////////////
+    char* _parse(char* data, char** key, char** value, bool& endOfLine, bool& prmFound)
+    {
+        prmFound = false;
+        *key = NULL;
+        *value = NULL;
+
+        while ((*data == ' ') || (*data == '\r'))
+            data++;
+        if (*data == '\n')
+        {
+            endOfLine = true;
+            *data = 0;
+            data++;
+            return data;
+        }
+
+        *key = data;
+        while (*data != '\0') // we get key
+        {
+            if ((*data == ' ') || (*data == '\n'))
+            {
+                if (*data == '\n')
+                    endOfLine = true;
+                *data = 0;
+                data++;
+                return data;
+            }
+            data++;
+
+            if (*data == '=')
+            {
+                *data = 0;
+                break;
+            }
+        }
+        data++;
+
+        while ((*data == '\"') || (*data == '\r'))
+            data++;
+        *value = data;
+        prmFound = true;
+
+        while (*data != '\0') // we get value
+        {
+            if ((*data == '\"') || (*data == '\r'))
+            {
+                *data = 0;
+                data++;
+            }
+            if ((*data == ' ') || (*data == '\n'))
+            {
+                if (*data == '\n')
+                    endOfLine = true;
+                *data = 0;
+                data++;
+                return data;
+            }
+            data++;
+        }
+
+        *data = 0;
+        return data;
+    }
+
+    void ResFontBM::_createFontFromTxt(CreateResourceContext* context, char* fontData, const std::string& fontPath)
+    {
+        char* key = 0;
+        char* value = 0;
+        bool endOfLine = false;
+        bool prmFound = false;
+
+        // info block
+        int fontSize = 0;
+        while (*(fontData = _parse(fontData, &key, &value, endOfLine, prmFound)) != 0)
+        {
+            if (prmFound)
+            {
+                if (!strcmp(key, "size"))
+                    fontSize = atoi(value);
+            }
+            if (endOfLine)
+            {
+                endOfLine = false;
+                break;
+            }
+        }
+
+        // common block
+        int nPages = 0;
+        int lineHeight = 0;
+        int base = 0;
+        int tw = 0;
+        int th = 0;
+        while (*(fontData = _parse(fontData, &key, &value, endOfLine, prmFound)) != 0)
+        {
+            if (prmFound)
+            {
+                if (!strcmp(key, "lineHeight"))
+                    lineHeight = atoi(value);
+                else if (!strcmp(key, "base"))
+                    base = atoi(value);
+                else if (!strcmp(key, "scaleW"))
+                    tw = atoi(value);
+                else if (!strcmp(key, "scaleH"))
+                    th = atoi(value);
+                else if (!strcmp(key, "pages"))
+                    nPages = atoi(value);
+            }
+            if (endOfLine)
+            {
+                endOfLine = false;
+                break;
+            }
+        }
+
+        char tail[255];
+        char head[255];
+        path::split(fontPath.c_str(), head, tail);
+
+        // page blocks
+        for (int i = 0; i < nPages; i++)
+        {
+            while (*(fontData = _parse(fontData, &key, &value, endOfLine, prmFound)) != 0)
+            {
+                if (prmFound)
+                {
+                    if (!strcmp(key, "file"))
+                        addPage(tw, th, head, value);
+                }
+                if (endOfLine)
+                {
+                    endOfLine = false;
+                    break;
+                }
+            }
+        }
+
+        // create font
+        if (!tw)
+            load(0);
+
+        fontSize = abs(fontSize);
+        Font* font = new Font();
+        font->init(getName().c_str(), fontSize, fontSize, lineHeight + fontSize - base);
+        _font = font;
+
+        if (context)
+        {
+            float scale = context->walker.getMeta().attribute("sf").as_float(1.0f) / context->walker.getScaleFactor();
+            _font->setScale(scale);
+        }
+
+        // chars block
+        int numChars = 0;
+        while (*(fontData = _parse(fontData, &key, &value, endOfLine, prmFound)) != 0)
+        {
+            if (prmFound)
+            {
+                if (!strcmp(key, "count"))
+                    numChars = atoi(value);
+            }
+            if (endOfLine)
+            {
+                endOfLine = false;
+                break;
+            }
+        }
+
+
+
+        // chars blocks
+        for (int i = 0; i < numChars; i++)
+        {
+            int charID = -1;
+            int xpos = 0;
+            int ypos = 0;
+            int width = 0;
+            int height = 0;
+            int xoffset = 0;
+            int yoffset = 0;
+            int xadvance = 0;
+            int page_ = 0;
+
+            while (*(fontData = _parse(fontData, &key, &value, endOfLine, prmFound)) != 0)
+            {
+                if (prmFound)
+                {
+                    if (!strcmp(key, "id"))
+                        charID = atoi(value);
+                    else if (!strcmp(key, "x"))
+                        xpos = atoi(value);
+                    else if (!strcmp(key, "y"))
+                        ypos = atoi(value);
+                    else if (!strcmp(key, "width"))
+                        width = atoi(value);
+                    else if (!strcmp(key, "height"))
+                        height = atoi(value);
+                    else if (!strcmp(key, "xoffset"))
+                        xoffset = atoi(value);
+                    else if (!strcmp(key, "yoffset"))
+                        yoffset = atoi(value);
+                    else if (!strcmp(key, "xadvance"))
+                        xadvance = atoi(value);
+                    else if (!strcmp(key, "page"))
+                        page_ = atoi(value);
+                }
+                if (endOfLine)
+                {
+                    endOfLine = false;
+                    break;
+                }
+            }
+
+            spTexture t = _pages[page_].texture;
+            float iw = 1.0f / t->getWidth();
+            float ih = 1.0f / t->getHeight();
+
+            glyph gl;
+            gl.src = RectF(xpos * iw, ypos * ih, width * iw, height * ih);
+            gl.sw = width;
+            gl.sh = height;
+            gl.offset_x = xoffset;
+            gl.offset_y = yoffset - base;
+            gl.advance_x = xadvance;
+            gl.advance_y = 0;
+
+            int code = 0;
+            ucs2_to_utf8(charID, (unsigned char*)&code);
+            gl.ch = code;
+            gl.texture = _pages[page_].texture;
+
+            _font->addGlyph(gl);
+        }
+
+        _font->sortGlyphs();
+    }
+    /////////////////////////////////////////////////////////
+
+    void ResFontBM::addPage(int tw, int th, const char* head, const char* textureFile)
+    {
+        page p;
+        if (*head)
+        {
+            p.file = head;
+            p.file += "//";
+        }
+        p.file += textureFile;
+        p.texture = IVideoDriver::instance->createTexture();
+        p.texture->setName(p.file);
+
+        if (tw)
+            p.texture->init(0, tw, th, TF_UNDEFINED);
+
+        _pages.push_back(p);
+    }
+
     void ResFontBM::_createFont(CreateResourceContext* context, bool sd, bool bmc)
     {
         if (sd)
@@ -170,17 +428,21 @@ namespace oxygine
             {
                 _file = *context->prebuilt_folder + getName() + ".fnt";
             }
-            else
-            {
-
-            }
-
-
         }
 
         std::string path = _file;
         file::buffer fb;
         file::read(path.c_str(), fb);
+
+        if (fb.empty())
+            return;
+
+        if (!(fb[0] == '<' && fb[1] == '?' && fb[2] == 'x'))
+        {
+            _createFontFromTxt(context, reinterpret_cast<char*>(fb.getData()), path);
+            return;
+        }
+        /////////////////////////////////////////////////
 
         pugi::xml_document doc;
         doc.load_buffer_inplace(&fb.data[0], fb.data.size());
@@ -203,38 +465,19 @@ namespace oxygine
         int th = common.attribute("scaleH").as_int();
 
 
+        char folder[255];
+        char tail[255];
+        path::split(path.c_str(), folder, tail);
+
         for (pugi::xml_node page_node = pages.child("page"); page_node; page_node = page_node.next_sibling("page"))
         {
-            page p;
-
             const char* textureFile = page_node.attribute("file").value();
-
-            char tail[255];
-            char head[255];
-            path::split(path.c_str(), head, tail);
-            if (*head)
-            {
-                p.file = head;
-                p.file += "//";
-            }
-            p.file += textureFile;
-
-            p.texture = IVideoDriver::instance->createTexture();
-            p.texture->setName(p.file);
-
-            if (tw)
-            {
-                p.texture->init(0, tw, th, TF_UNDEFINED);
-            }
-
-            _pages.push_back(p);
+            addPage(tw, th, folder, textureFile);
         }
 
 
         if (!tw)
-        {
             load(0);
-        }
 
 
 

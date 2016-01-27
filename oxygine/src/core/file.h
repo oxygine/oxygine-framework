@@ -40,6 +40,7 @@ namespace oxygine
             bool empty() const { return data.empty(); }
 
             const void* getData() const {if (data.empty()) return 0; return &data[0];}
+            void* getData() { if (data.empty()) return 0; return &data[0]; }
             unsigned int getSize() const {return (unsigned int)data.size();}
 
             std::string getString() const {return std::string((char*)&data[0], size());}

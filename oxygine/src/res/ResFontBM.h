@@ -36,13 +36,14 @@ namespace oxygine
             spNativeTexture texture;
         };
 
+        void addPage(int tw, int th, const char* head, const char* file);
+
         void _loadPage(const page& p, LoadResourcesContext*);
         void _load(LoadResourcesContext*);
         void _unload();
         void _restore(Restorable*, void*);
         void _createFont(CreateResourceContext* context, bool sd, bool bmc);
-
-
+        void _createFontFromTxt(CreateResourceContext* context, char* fontData, const std::string& fontPath);
 
         typedef std::vector<page> pages;
         pages _pages;
