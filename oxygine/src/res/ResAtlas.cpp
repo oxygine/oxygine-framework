@@ -37,15 +37,17 @@ namespace oxygine
     };
 
 
-    void apply_atlas(atlas_data& ad)
+    void apply_atlas(atlas_data& ad, bool linear)
     {
         if (!ad.texture)
             return;
 
         MemoryTexture mt;
-        const Rect& bounds = ad.atlas.getBounds();
-        int w = nextPOT(bounds.getWidth());
-        int h = nextPOT(bounds.getHeight());
+        Rect bounds = ad.atlas.getBounds();
+
+        int w = nextPOT(bounds.getRight());
+        int h = nextPOT(bounds.getBottom());
+
         mt.init(ad.mt.lock().getRect(Rect(0, 0, w, h)));
 
         ImageData image_data = mt.lock();
@@ -53,15 +55,10 @@ namespace oxygine
         ad.mt.unlock();
 
         ad.texture->apply();
-
-        /*
-        char str[255];
-        sprintf(str, "%d.png", ad.texture.get());
-        saveImage(image_data, str, "png");
-        */
+        ad.texture->setLinearFilter(linear);
     }
 
-    void next_atlas(int w, int h, TextureFormat tf, atlas_data& ad, const char* name = 0)
+    void next_atlas(int w, int h, TextureFormat tf, atlas_data& ad, const char* name)
     {
         ad.mt.init(w, h, tf);
         ad.mt.fill_zero();
@@ -518,7 +515,7 @@ namespace oxygine
                         bool s = ad.atlas.add(&ad.mt, src, dest);
                         if (s == false)
                         {
-                            apply_atlas(ad);
+                            apply_atlas(ad, _linearFilter);
                             next_atlas(w, h, tf, ad, walker.getCurrentFolder().c_str());
                             s = ad.atlas.add(&ad.mt, src, dest);
                             OX_ASSERT(s);
@@ -579,7 +576,7 @@ namespace oxygine
 
         }
 
-        apply_atlas(ad);
+        apply_atlas(ad, _linearFilter);
 
         for (std::vector<ResAnim*>::iterator i = anims.begin(); i != anims.end(); ++i)
         {

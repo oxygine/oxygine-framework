@@ -180,7 +180,10 @@ namespace oxygine
                 srcRect.pos = rect.pos + offset;
                 srcRect.size = Point(src.w, src.h);
 
-                _bounds.unite(srcRect);
+                if (_bounds.isEmpty())
+                    _bounds = srcRect;
+                else
+                    _bounds.unite(srcRect);
 
                 if (dest)
                     dest->updateRegion(srcRect.pos.x, srcRect.pos.y, src);

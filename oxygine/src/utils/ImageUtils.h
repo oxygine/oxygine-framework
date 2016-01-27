@@ -5,10 +5,9 @@ namespace oxygine
 {
     class ImageData;
     /**
-    ImageData should be TF_R8G8B8A8
-    supported formats = "jpg", "png", "tga"
+    supported formats = "tga"
     */
-    void saveImage(const ImageData& im, const char* path, const char* format);
+    void saveImage(const ImageData& im, const char* path, const char* format = "tga");
 
     /**
     supported formats = "jpg"
