@@ -58,11 +58,21 @@ class font_Processor(process.Process):
         file_name = el.getAttribute("file")
 
         meta = walker.root_meta
-
-        font_doc = context._open_xml(context.src_data + walker.getPath("file"))
-
-        font_info = font_doc.getElementsByTagName("info")[0]
-        size = -int(int(font_info.getAttribute("size")) * walker.scale_factor)
+        
+        path = context.src_data + walker.getPath("file")
+        try:
+            font_doc = context._open_xml(path)
+            font_info = font_doc.getElementsByTagName("info")[0]
+            size = int(font_info.getAttribute("size"))
+        except:
+            data = open(path, "r").read()            
+            pos = data.find("size=") + 5
+            end = data.find(" ", pos)        
+            st = data[pos:end]
+            size = int(st)
+        
+        size = int(abs(size) * walker.scale_factor)            
+        
         meta.setAttribute("size", str(size))
         meta.setAttribute("sf", str(1))
 
