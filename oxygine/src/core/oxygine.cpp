@@ -377,8 +377,6 @@ namespace oxygine
 #endif
 
 #endif
-
-            file::init(desc.companyName, desc.appName);
             init2();
         }
 
@@ -388,6 +386,8 @@ namespace oxygine
 #ifdef OXYGINE_QT
             setlocale(LC_ALL, "POSIX");
 #endif
+
+            file::init(desc.companyName, desc.appName);
 
 #ifdef OXYGINE_SDL
             int missing = initGLExtensions(SDL_GL_GetProcAddress);
