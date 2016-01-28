@@ -76,11 +76,12 @@ class alphaData(object):
 
 class frame(object):
 
-    def __init__(self, image, bbox, image_element, rs, adata):
+    def __init__(self, image, bbox, image_element, rs, adata, extend):
 
         self.image = image
         self.image_element = image_element
         self.adata = adata
+        self.extend = extend
 
         self.node = None
         self.resanim = rs
@@ -324,6 +325,14 @@ def processRS(context, walker):
     rows = as_int(image_el.getAttribute("rows"))
     frame_height = as_int(image_el.getAttribute("frame_height"))
     border = as_int(image_el.getAttribute("border"))
+
+    trim = as_bool(image_el.getAttribute("trim"), True)
+    extend = as_bool(image_el.getAttribute("extend"), True)
+    
+    if not extend:
+        pass
+    
+
     # sq = as_float(image_el.getAttribute("scale_quality"), 1)
     # next.scale_quality *= sq
 
@@ -429,7 +438,6 @@ def processRS(context, walker):
                     frame_image = frame_image.crop(
                         (0, 0, frame_size[0], frame_size[1]))
 
-            trim = as_bool(image_el.getAttribute("trim"), True)
 
             adata = None
 
@@ -447,15 +455,16 @@ def processRS(context, walker):
             if not frame_bbox:
                 frame_bbox = (0, 0, 0, 0)
 
-            # note: neither of these variables are used
-            w = frame_bbox[2] - frame_bbox[0]
-            h = frame_bbox[3] - frame_bbox[1]
-
             frame_image = frame_image.crop(frame_bbox)
 
-            fr = frame(frame_image, frame_bbox, image_el, resAnim, adata)
+            fr = frame(frame_image, frame_bbox, image_el, resAnim, adata, extend)
+            
             if border:
                 fr.border_left = fr.border_right = fr.border_top = fr.border_bottom = border
+                
+                
+            if not extend:
+                fr.border_left = fr.border_right = fr.border_top = fr.border_bottom = 0
 
             resAnim.frames.append(fr)
 
@@ -517,7 +526,9 @@ class atlas_Processor(process.Process):
                     p += 8 - v
                 return p
             sz = frame.image.size
-            return align_pixel(sz[0] + frame.border_left + frame.border_right), align_pixel(sz[1] + frame.border_top + frame.border_bottom)
+            if frame.extend:
+                return align_pixel(sz[0] + frame.border_left + frame.border_right), align_pixel(sz[1] + frame.border_top + frame.border_bottom)
+            return sz
 
         def get_original_frame_size(frame):
             sz = frame.image.size
@@ -552,17 +563,18 @@ class atlas_Processor(process.Process):
                 sz = fr.image.size
                 rect = bbox(x, y, sz[0], sz[1])
 
-                part = fr.image.crop(bbox(0, 0,     sz[0], 1))
-                image.paste(part,    bbox(x, y - 1, sz[0], 1))
+                if fr.extend:
+                    part = fr.image.crop(bbox(0, 0,     sz[0], 1))
+                    image.paste(part,    bbox(x, y - 1, sz[0], 1))
 
-                part = fr.image.crop(bbox(0, sz[1] - 1, sz[0], 1))
-                image.paste(part,    bbox(x, y + sz[1], sz[0], 1))
+                    part = fr.image.crop(bbox(0, sz[1] - 1, sz[0], 1))
+                    image.paste(part,    bbox(x, y + sz[1], sz[0], 1))
 
-                part = fr.image.crop(bbox(0, 0,     1, sz[1]))
-                image.paste(part,    bbox(x - 1, y,     1, sz[1]))
+                    part = fr.image.crop(bbox(0, 0,     1, sz[1]))
+                    image.paste(part,    bbox(x - 1, y,     1, sz[1]))
 
-                part = fr.image.crop(bbox(sz[0] - 1, 0,  1, sz[1]))
-                image.paste(part,    bbox(x + sz[0],  y,  1, sz[1]))
+                    part = fr.image.crop(bbox(sz[0] - 1, 0,  1, sz[1]))
+                    image.paste(part,    bbox(x + sz[0],  y,  1, sz[1]))
 
                 image.paste(fr.image, rect)
 

@@ -154,9 +154,9 @@ namespace oxygine
         //return a.size.y < b.size.y;
     }
 
-    bool Atlas2::add(Texture* dest, const ImageData& src, Rect& srcRect)
+    bool Atlas2::add(Texture* dest, const ImageData& src, Rect& srcRect, const Point& offset_)
     {
-        Point offset(2, 2);
+        Point offset = offset_;
         if (dest)
         {
             if (src.w == dest->getWidth())

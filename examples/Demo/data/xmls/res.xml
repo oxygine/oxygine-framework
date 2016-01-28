@@ -42,8 +42,8 @@
 		<image file="score_table.png"/>
 	</atlas>
 
-	<atlas>
-		<image file="tiled.png"/>		
+	<atlas> 
+		<image file="tiled.png" trim="false" extend="false"/>
 	</atlas>	
 	
 	<set load = "false" /> <!--do not load next atlasses by default-->

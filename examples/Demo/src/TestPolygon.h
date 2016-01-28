@@ -19,8 +19,16 @@ public:
 
         ResAnim* rs = resources.getResAnim("tiled");
 
-        //access to texture
+
         //ResAnim "tiled" has only single frame and uses own separate atlas texture
+        //also it should have options trim=extend=false
+        /*
+        <atlas>
+            <image file="tiled.png" trim="false" extend="false"/>
+        </atlas>
+        */
+
+        //need access to texture
         AnimationFrame frame = rs->getFrame(0);
         spNativeTexture texture = frame.getDiffuse().base;
 

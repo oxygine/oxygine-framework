@@ -60,7 +60,7 @@ namespace oxygine
         void init(int w, int h, int skipSize = 3);
         void clean();
 
-        bool add(Texture* dest, const ImageData& src, Rect& srcRect);
+        bool add(Texture* dest, const ImageData& src, Rect& srcRect, const Point& offset);
 
         const Rect& getBounds() const { return _bounds; }
 

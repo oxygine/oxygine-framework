@@ -388,6 +388,7 @@ namespace oxygine
 
         int w = node.attribute("width").as_int(defaultAtlasWidth);
         int h = node.attribute("height").as_int(defaultAtlasHeight);
+
         const char* format = node.attribute("format").as_string("8888");
 
         loadBase(node);
@@ -427,6 +428,10 @@ namespace oxygine
             }
 
 
+            bool trim = child_node.attribute("trim").as_bool(true);
+            bool extend = child_node.attribute("extend").as_bool(true);
+
+            Point offset = extend ? Point(2, 2) : Point(0, 0);
 
             MemoryTexture mt;
             ImageData im;
@@ -494,15 +499,10 @@ namespace oxygine
 
                         HitTestData adata;
                         ImageData src;
-                        Rect bounds;
-                        makeAlpha(srcImage_, bounds, _hitTestBuffer, adata, walker.getAlphaHitTest());
+                        Rect bounds(0, 0, im.w, im.h);
+                        if (trim)
+                            makeAlpha(srcImage_, bounds, _hitTestBuffer, adata, walker.getAlphaHitTest());
                         src = srcImage_.getRect(bounds);
-
-
-                        //mt.init(src.w + 4, src.h + 4, src.format);
-                        //mt.fill_zero();
-
-
 
                         Rect dest(0, 0, 0, 0);
 
@@ -512,30 +512,34 @@ namespace oxygine
                             next_atlas(w, h, tf, ad, atlas_id.c_str());
                         }
 
-                        bool s = ad.atlas.add(&ad.mt, src, dest);
+                        bool s = ad.atlas.add(&ad.mt, src, dest, offset);
                         if (s == false)
                         {
                             apply_atlas(ad, _linearFilter);
                             next_atlas(w, h, tf, ad, walker.getCurrentFolder().c_str());
-                            s = ad.atlas.add(&ad.mt, src, dest);
+                            s = ad.atlas.add(&ad.mt, src, dest, offset);
                             OX_ASSERT(s);
                         }
 
-                        //duplicate image edges
-                        MemoryTexture& mt = ad.mt;
-                        ImageData tmp;
+                        if (extend)
+                        {
+                            //duplicate image edges
+                            MemoryTexture& mt = ad.mt;
+                            ImageData tmp;
 
-                        tmp = mt.lock(Rect(dest.pos.x, dest.pos.y - 1,    src.w, 1));
-                        operations::copy(src.getRect(Rect(0, 0, src.w, 1)),         tmp);
+                            tmp = mt.lock(Rect(dest.pos.x, dest.pos.y - 1, src.w, 1));
+                            operations::copy(src.getRect(Rect(0, 0, src.w, 1)), tmp);
 
-                        tmp = mt.lock(Rect(dest.pos.x, dest.pos.y + src.h, src.w, 1));
-                        operations::copy(src.getRect(Rect(0, src.h - 1, src.w, 1)), tmp);
+                            tmp = mt.lock(Rect(dest.pos.x, dest.pos.y + src.h, src.w, 1));
+                            operations::copy(src.getRect(Rect(0, src.h - 1, src.w, 1)), tmp);
 
-                        tmp = mt.lock(Rect(dest.pos.x - 1, dest.pos.y,    1, src.h));
-                        operations::copy(src.getRect(Rect(0, 0, 1, src.h)),         tmp);
+                            tmp = mt.lock(Rect(dest.pos.x - 1, dest.pos.y, 1, src.h));
+                            operations::copy(src.getRect(Rect(0, 0, 1, src.h)), tmp);
 
-                        tmp = mt.lock(Rect(dest.pos.x + src.w, dest.pos.y, 1, src.h));
-                        operations::copy(src.getRect(Rect(src.w - 1, 0, 1, src.h)), tmp);
+                            tmp = mt.lock(Rect(dest.pos.x + src.w, dest.pos.y, 1, src.h));
+                            operations::copy(src.getRect(Rect(src.w - 1, 0, 1, src.h)), tmp);
+                        }
+
 
                         //operations::copy(src.getRect(Rect(0, 0, 1, 1)), mt.lock(&Rect(dest.pos.x - 1, dest.pos.y - 1, 1, 1)));
                         //operations::copy(src.getRect(Rect(src.w - 1, 0, 1, 1)), mt.lock(&Rect(dest.pos.x + src.w, dest.pos.y - 1, 1, 1)));
