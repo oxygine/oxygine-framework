@@ -107,15 +107,21 @@ if (OX_HAVE_LIBPNG)
 		set(LIBPNG libz libpng16)
 		set(CORE_LIBS ${CORE_LIBS} ${LIBPNG})
 	else()
-		find_package(PNG REQUIRED)
+		find_package(PNG)
+
+        if (PNG_FOUND)
+
+		include_directories(
+			${PNG_INCLUDE_DIR}
+		)
+            else(PNG_FOUND)
+            		include_directories(${THIRD_PARTY}/libpng)
+		set(LIBPNG ${libprefix}png)
+                        endif()
 		set (CORE_LIBS
 			${CORE_LIBS}
 			${PNG_LIBRARIES}
 		)
-		include_directories(
-			${PNG_INCLUDE_DIR}
-		)
-
 		set(OXYGINE_INCLUDE_DIRS
 			${OXYGINE_INCLUDE_DIRS}
 			${PNG_INCLUDE_DIR}
