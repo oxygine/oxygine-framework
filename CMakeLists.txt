@@ -262,6 +262,16 @@ set(OXYGINE_JS_LIBRARIES
 	${OXYGINE_JS_LIBRARIES}
 	PARENT_SCOPE)
 
+if (MINGW)
+    # workaround for with pthreads.h and time.h from mingw collide
+    include(CheckStructHasMember)
+
+    CHECK_STRUCT_HAS_MEMBER ("struct timespec" tv_sec time.h HAVE_STRUCT_TIMESPEC)
+    if (HAVE_STRUCT_TIMESPEC)
+        ADD_DEFINITIONS(-D_TIMESPEC_DEFINED=1)
+    endif()
+endif()
+
 message(STATUS "SDL includes: ${SDL2_INCLUDE_DIR}")
 message(STATUS "Libs:     ${CORE_LIBS}")
 message(STATUS "Platform: ${PLATFORM}")
