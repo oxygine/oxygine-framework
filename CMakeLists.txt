@@ -94,7 +94,7 @@ endif()
 if (OX_HAVE_LIBPNG)
 	set(OX_DEFINITIONS	${OX_DEFINITIONS}
 		-DOX_HAVE_LIBPNG)
-	if (MSVC)
+	if ((MSVC) OR (MINGW))
 		include_directories(${THIRD_PARTY}/libpng)
 		set(LIBPNG ${libprefix}png)
 		if (MSVC_VERSION EQUAL "1900")
