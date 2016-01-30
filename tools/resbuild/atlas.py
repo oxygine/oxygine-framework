@@ -2,8 +2,6 @@
 
 from __future__ import unicode_literals, print_function
 
-import Image
-import ImageDraw
 
 # SCALE = 50
 # OFFSET = 5
@@ -146,6 +144,11 @@ class Atlas(object):
         return res
 
     def save(self):
+
+        import Image
+        import ImageDraw
+
+
         im = Image.new("RGBA", (self.w * SCALE, self.h * SCALE))
 
         draw = ImageDraw.Draw(im)
