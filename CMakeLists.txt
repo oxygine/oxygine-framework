@@ -242,11 +242,19 @@ if (NOT MSVC)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 ")
 endif(NOT MSVC)
 
+if (MINGW)
+    # workaround for pthread.h and time.h from mingw colliding
+    include(CheckStructHasMember)
+
+    CHECK_STRUCT_HAS_MEMBER ("struct timespec" tv_sec time.h HAVE_STRUCT_TIMESPEC)
+    if (HAVE_STRUCT_TIMESPEC)
+        set(OX_DEFINITIONS	${OX_DEFINITIONS} -D_TIMESPEC_DEFINED=1)
+    endif()
+endif()
 
 add_definitions(${OX_DEFINITIONS})
 include_directories(${OXYGINE_INCLUDE_DIRS})
 add_library(oxygine-framework STATIC ${SOURCES})
-
 
 set(OXYGINE_LIBRARY_DIRS
 	${OXYGINE_LIBRARY_DIRS}
@@ -267,16 +275,6 @@ set(OXYGINE_INCLUDE_DIRS
 set(OXYGINE_JS_LIBRARIES
 	${OXYGINE_JS_LIBRARIES}
 	PARENT_SCOPE)
-
-if (MINGW)
-    # workaround for with pthreads.h and time.h from mingw collide
-    include(CheckStructHasMember)
-
-    CHECK_STRUCT_HAS_MEMBER ("struct timespec" tv_sec time.h HAVE_STRUCT_TIMESPEC)
-    if (HAVE_STRUCT_TIMESPEC)
-        ADD_DEFINITIONS(-D_TIMESPEC_DEFINED=1)
-    endif()
-endif()
 
 message(STATUS "SDL includes: ${SDL2_INCLUDE_DIR}")
 message(STATUS "Libs:     ${CORE_LIBS}")
