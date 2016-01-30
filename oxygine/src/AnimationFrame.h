@@ -61,6 +61,8 @@ namespace oxygine
         void            setDiffuse(const Diffuse& d) { _diffuse = d; }
         void            setSize(const Vector2& size) {_frameSize = size;}
         void            setHitTestData(const HitTestData& ad) { _hittest = ad; }
+        void            setRow(int v) {_row = v;}
+        void            setColumn(int v) {_column = v;}
 
         void            flipX();
         void            flipY();

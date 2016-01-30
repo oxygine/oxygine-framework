@@ -70,15 +70,6 @@ namespace oxygine
         changeAnimFrame(f);
     }
 
-    void Sprite::setRow(int row, int column)
-    {
-        const ResAnim* rs = getResAnim();
-        if (column == -1)
-            column = getColumn();
-        setAnimFrame(rs, column, row);
-
-    }
-
 
     extern int HIT_TEST_DOWNSCALE;
 
@@ -150,11 +141,22 @@ namespace oxygine
             animFrameChanged(_frame);
     }
 
-    void Sprite::setColumn(int column, int row)
+    void Sprite::setColumn(int column)
     {
         const ResAnim* rs = getResAnim();
-        if (row == -1)
-            row = getRow();
+        setAnimFrame(rs, column, getRow());
+    }
+
+    void Sprite::setRow(int row)
+    {
+        const ResAnim* rs = getResAnim();
+        setAnimFrame(rs, getColumn(), row);
+
+    }
+
+    void Sprite::setColumnRow(int column, int row)
+    {
+        const ResAnim* rs = getResAnim();
         setAnimFrame(rs, column, row);
     }
 
@@ -264,6 +266,9 @@ namespace oxygine
                 node.append_attribute("row").set_value(_frame.getRow());
         }
 
+        setAttr(node, "flipX", isFlippedX(), false);
+        setAttr(node, "flipY", isFlippedY(), false);
+
         node.set_name("Sprite");
     }
 
@@ -275,8 +280,9 @@ namespace oxygine
         const char* res = node.attribute("resanim").as_string(0);
         if (res)
         {
-            ResAnim* rs = safeCast<ResAnim*>(data->factory->getResAnim(res));
-            setResAnim(rs, node.attribute("col").as_int(0), node.attribute("row").as_int(0));
+            setAnimFrame(data->factory->getFrame(res, node.attribute("column").as_int(0), node.attribute("row").as_int(0)));
         }
+
+        setFlipped(node.attribute("flipX").as_bool(false), node.attribute("flipY").as_bool(false));
     }
 }

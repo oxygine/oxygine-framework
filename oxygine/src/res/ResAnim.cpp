@@ -80,6 +80,8 @@ namespace oxygine
     {
         _columns = columns;
         _frames.swap(frames);
+        for (size_t i = 0; i < _frames.size(); ++i)
+            _frames[i].setResAnim(this);
         _scaleFactor = scaleFactor;
         _appliedScale = appliedScale;
     }

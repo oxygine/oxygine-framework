@@ -226,7 +226,9 @@ namespace oxygine
         void addChild(Actor* actor);//avoid conversion to spActor
         void attachTo(spActor parent);
         void attachTo(Actor* parent);//avoid conversion to spActor
+        /**Remove one child*/
         void removeChild(spActor actor);
+        /**Removes all children from Actor*/
         void removeChildren();
 
 
