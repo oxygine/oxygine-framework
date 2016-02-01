@@ -158,7 +158,9 @@ def gen2(xml_res_file, dest_folder, mappings):
     doc = minidom.parse(xml_res_file)
     root = doc.documentElement
 
-    folder = os.path.split(__file__)[0] + "/gen_view_code/templates"
+    folder = os.path.dirname(os.path.abspath(__file__)) + "/gen_view_code/templates"
+    print(folder)
+
     env = Environment(trim_blocks=True, lstrip_blocks=True,
                       loader=FileSystemLoader(folder))
 

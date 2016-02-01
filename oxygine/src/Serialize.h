@@ -20,7 +20,7 @@ namespace oxygine
         virtual spActor     create(const char* type) const;
         virtual Resource*   getResource(const char* id) const {return 0;}
         virtual ResAnim*    getResAnim(const char* id) const {return safeCast<ResAnim*>(getResource(id));}
-        virtual AnimationFrame getFrame(const char* id, int col, int row) const {return getResAnim(id)->getFrame(col, row);}
+        virtual AnimationFrame getFrame(const char* id, int col, int row) const {ResAnim* rs = getResAnim(id);  if (rs) return rs->getFrame(col, row); return AnimationFrame();}
         virtual ResFont*    getResFont(const char* id) const {return safeCast<ResFont*>(getResource(id));}
     };
 

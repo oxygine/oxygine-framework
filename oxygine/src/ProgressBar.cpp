@@ -62,6 +62,7 @@ namespace oxygine
     {
         _originalFrame = f;
         _update();
+        _Sprite::animFrameChanged(f);
     }
 
     void ProgressBar::_update()
