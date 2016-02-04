@@ -91,6 +91,11 @@ namespace oxygine
         needRebuild();
     }
 
+    const Font* TextField::getFont() const
+    {
+        return _style.font;
+    }
+
     void TextField::setFont(const Font* font)
     {
         _style.font = font;
@@ -346,6 +351,8 @@ namespace oxygine
         setAttr(node, "halign", _style.hAlign, def.hAlign);
         setAttr(node, "multiline", _style.multiline, def.multiline);
         setAttr(node, "breakLongWords", _style.breakLongWords, def.breakLongWords);
+        if (_style.font)
+            node.append_attribute("font").set_value(_style.font->getName().c_str());
         node.set_name("TextField");
     }
 
@@ -362,6 +369,10 @@ namespace oxygine
         _style.breakLongWords = node.attribute("breakLongWords").as_bool(def.breakLongWords);
         _style.fontSize2Scale = node.attribute("fontsize2scale").as_int(def.fontSize2Scale);
         _style.linesOffset = node.attribute("linesOffset").as_int(def.linesOffset);
+        const char* fnt = node.attribute("font").as_string(0);
+        if (fnt)
+            _style.font = data->factory->getResFont(fnt)->getFont();
+
         needRebuild();
         setText(node.attribute("text").as_string());
     }
