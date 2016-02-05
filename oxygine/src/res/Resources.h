@@ -129,8 +129,8 @@ namespace oxygine
 
 
         resources _resources;
-        //resources _owned;
         resources _fastAccessResources;
+
 
         typedef std::vector< registeredResource > registeredResources;
         static registeredResources _registeredResources;

@@ -12457,6 +12457,27 @@ namespace pugi
 	{
 		return query.evaluate_node(*this);
 	}
+	
+	pugi::xml_attribute find_next_attribute(const pugi::xml_node &node, pugi::xml_attribute& attr, const char *name)
+	{
+		pugi::xml_attribute current = attr;
+
+		while (!current.empty())
+		{
+			if (!strcmp(current.name(), name))
+			{
+				attr = current.next_attribute();
+				return current;
+			}
+			current = current.next_attribute();
+		}
+
+		current = node.attribute(name);
+		if (!current.empty())
+			attr = current;
+
+		return current;
+	}
 }
 
 #endif
