@@ -54,6 +54,7 @@ namespace oxygine
             _nfsWrite.setPath(SDL_AndroidGetInternalStoragePath());
 #elif __APPLE__
             _nfsWrite.setPath(getSupportFolder().c_str());
+#elif OXYGINE_EDITOR
 #else
             if (company && app && *company && *app)
             {

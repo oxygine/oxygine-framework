@@ -63,11 +63,12 @@ namespace oxygine
         cleanup();
     }
 
-    void ResFontBM::init(const char* path, const char* file, bool premultipliedAlpha, bool signedDistanceFont)
+
+    void ResFontBM::init(const char* path, bool premultipliedAlpha)
     {
         _premultipliedAlpha = premultipliedAlpha;
-        _file = std::string(path) + "/" + file;
-        _createFont(0, signedDistanceFont, false);
+        _file = path;
+        _createFont(0, false, false);
     }
 
     void ResFontBM::cleanup()

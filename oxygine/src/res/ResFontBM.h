@@ -23,7 +23,7 @@ namespace oxygine
         ~ResFontBM();
 
         /**use it only if you want create font without Resources*/
-        void init(const char* path, const char* file, bool premultipliedAlpha = true, bool signedDistanceFont = false);
+        void init(const char* fntPath, bool premultipliedAlpha = true);
 
         void cleanup();
 

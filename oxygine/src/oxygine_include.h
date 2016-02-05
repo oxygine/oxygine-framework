@@ -28,6 +28,8 @@
 #   ifndef NDEBUG
 #       define OX_DEBUG 1
 #   endif // DEBUG  
+#elif OXYGINE_EDITOR
+#   define OXYGINE_FILESYSTEM_USE_STDIO 1
 #else
 #   define OXYGINE_SDL 1
 #   ifdef _WIN32

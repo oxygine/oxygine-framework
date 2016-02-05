@@ -383,7 +383,7 @@ namespace oxygine
 
         void init2()
         {
-#ifdef OXYGINE_QT
+#ifdef OXYGINE_EDITOR
             setlocale(LC_ALL, "POSIX");
 #endif
 
@@ -537,7 +537,9 @@ namespace oxygine
             //sleep(1000/50);
         }
 
-#ifndef __S3E__
+#ifdef __S3E__
+#elif OXYGINE_EDITOR
+#else
         void SDL_handleEvent(SDL_Event& event, bool& done)
         {
             Input* input = &Input::instance;
@@ -817,11 +819,8 @@ namespace oxygine
             }
 
             return Point(width, height);
-#elif OXYGINE_QT
-            if (!_window)
-            {
-                return _qtFixedSize;
-            }
+#elif OXYGINE_EDITOR
+            return _qtFixedSize;
 #elif OXYGINE_SDL
             int w = 0;
             int h = 0;
