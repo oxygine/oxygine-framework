@@ -45,15 +45,16 @@ namespace oxygine
         oxglGetShaderiv(shader, GL_INFO_LOG_LENGTH, &length);
         if (length)
         {
-            std::vector<char> bf;
-            bf.resize(length);
-            oxglGetShaderInfoLog(shader, (int)bf.size(), NULL, &bf.front());
-            log::messageln("shader compiled: %s", &bf.front());
-
             GLint success;
             oxglGetShaderiv(shader, GL_COMPILE_STATUS, &success);
             if (success != GL_TRUE)
             {
+
+                std::vector<char> bf;
+                bf.resize(length);
+                oxglGetShaderInfoLog(shader, (int)bf.size(), NULL, &bf.front());
+
+                log::messageln("shader build error: %s", &bf.front());
                 OX_ASSERT(!"shader build error");
                 exit(1);
             }
@@ -69,18 +70,22 @@ namespace oxygine
         const char* sources[16];
         const char** ptr = &sources[0];
 
+        bool gles = false;
 
-#ifndef __S3E__
-#   ifndef EMSCRIPTEN
+#ifdef __S3E__
+        gles = true;
+#elif OXYGINE_SDL
         int profile = 0;
         SDL_GL_GetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, &profile);
 
-        if (profile == SDL_GL_CONTEXT_PROFILE_ES)
-        {
-        }
-        else
-        {
+        gles = profile == SDL_GL_CONTEXT_PROFILE_ES;
+#else
+#endif
 
+
+#ifndef   EMSCRIPTEN
+        if (!gles)
+        {
             log::messageln("not gles version");
 
             static const char nonGLES[] =
@@ -89,13 +94,8 @@ namespace oxygine
                 "#define highp\n";
 
             *ptr = nonGLES;
-            ptr++;
-
+			ptr++;
         }
-
-#   else
-        *ptr = "precision float mediump;";
-#   endif
 #endif
 
 

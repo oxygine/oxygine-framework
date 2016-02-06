@@ -208,6 +208,8 @@ namespace oxygine
 
 #if __S3E__
             return (s3eFileDelete(buff) == S3E_RESULT_SUCCESS ? status_ok : status_error);
+#elif OXYGINE_EDITOR
+            return status_error;
 #elif _WIN32
             return DeleteFileA(buff) ? status_ok : status_error;
 #else
@@ -257,6 +259,8 @@ namespace oxygine
 
 #if __S3E__
             return (s3eFileRename(buffSrc, buffDest) == S3E_RESULT_SUCCESS ? status_ok : status_error);
+#elif OXYGINE_EDITOR
+            return status_error;
 #elif _WIN32
             return MoveFileA(buffSrc, buffDest) ? status_ok : status_error;
 #else

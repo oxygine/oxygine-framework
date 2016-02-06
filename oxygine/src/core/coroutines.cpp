@@ -3,7 +3,7 @@
 #if __S3E__
 #define OXYGINE_COROUTINES
 #include "IwFibre.h"
-#elif OXYGINE_QT
+#elif OXYGINE_EDITOR
 #elif OXYGINE_SDL
 #ifndef __APPLE__
 //#include "greenlet.h"

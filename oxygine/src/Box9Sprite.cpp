@@ -120,6 +120,7 @@ namespace oxygine
             if (!attr.empty())
                 _horzMode = (StretchMode)attr.as_uint();
         }
+        _Sprite::animFrameChanged(f);
     }
 
     RectF Box9Sprite::getDestRect() const
