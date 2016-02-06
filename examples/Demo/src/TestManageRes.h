@@ -19,9 +19,12 @@ public:
 #endif
 
 
-        for (int i = 0; i < resources.getCount(); ++i)
+        Resources::resources items;
+        resources.collect(items);
+
+        for (size_t i = 0; i < items.size(); ++i)
         {
-            ResAnim* ra = dynamic_cast<ResAnim*>(resources.get(i));
+            ResAnim* ra = dynamic_cast<ResAnim*>(items[i].get());
             if (!ra)
                 continue;
             if (ra->getName().find("_") != string::npos)
@@ -37,10 +40,6 @@ public:
             {
                 sprite->setPosition(0, 0);
                 sprite->setPriority(-1);
-            }
-            else
-            {
-                //sprite->addEventHandler(new DragHandler);
             }
         }
 

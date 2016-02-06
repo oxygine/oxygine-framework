@@ -7,6 +7,7 @@
 #include "closure/closure.h"
 #include "core/Object.h"
 #include "Resource.h"
+#include <unordered_map>
 
 namespace pugi
 {
@@ -71,8 +72,8 @@ namespace oxygine
         Resource* get(const std::string& id, error_policy ep = ep_show_error) const;
 
         /** returns resource by index */
-        Resource* get(int index) const {return _fastAccessResources[index].get();}
-        int       getCount() const {return (int)_fastAccessResources.size();}
+        //Resource* get(int index) const {return _fastAccessResources.at(index).get();}
+        //int       getCount() const {return (int)_fastAccessResources.size();}
 
         Resource* operator[](const std::string& id) { return get(id); }
 
@@ -91,10 +92,11 @@ namespace oxygine
         template<class T>
         T* getT(const std::string& id, error_policy ep = ep_show_error) const { return safeCast<T*>(get(id, ep)); }
 
-        /**sorting manually added resources*/
-        void sort();
         /**debug function. prints all loaded resources*/
-        void print();
+        void print() const;
+
+        /**collects all resources into vector*/
+        void collect(resources&);
 
 
         resources& _getResources();
@@ -129,7 +131,8 @@ namespace oxygine
 
 
         resources _resources;
-        resources _fastAccessResources;
+        typedef std::unordered_map<std::string, spResource> resourcesMap;
+        resourcesMap _fastAccessResources;
 
 
         typedef std::vector< registeredResource > registeredResources;

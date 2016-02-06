@@ -299,8 +299,11 @@ namespace oxygine
             }
         }
 
-        sort();
         FS_LOG("xml loaded");
+    }
+
+    void Resources::collect(resources&)
+    {
     }
 
     void Resources::add(Resource* r)
@@ -308,35 +311,21 @@ namespace oxygine
         OX_ASSERT(r);
         if (!r)
             return;
-        /*
-        OX_ASSERT(_resources[r->getName()] == 0);
-
-        _resources[r->getName()] = r;
-        */
 
         //todo insert to correct place
         r->setName(lower(r->getName()));
-        _fastAccessResources.push_back(r);
-
-        //if (own)
-        //  _owned.push_back(r);
-        //OX_ASSERT(0);
+        _fastAccessResources[r->getName()] = r;
     }
 
 
-    void Resources::print()
+    void Resources::print() const
     {
         log::message("resources:\n");
-        for (resources::iterator i = _fastAccessResources.begin(); i != _fastAccessResources.end(); ++i)
+        for (resourcesMap::const_iterator i = _fastAccessResources.cbegin(); i != _fastAccessResources.cend(); ++i)
         {
-            spResource res = *i;
+            spResource res = i->second;
             log::message("%s\n", res->getName().c_str());
         }
-    }
-
-    void Resources::sort()
-    {
-        std::sort(_fastAccessResources.begin(), _fastAccessResources.end(), ObjectBasePredicate());
     }
 
     Resources::resources& Resources::_getResources()
@@ -348,13 +337,11 @@ namespace oxygine
     {
         std::string id = lower(id_);
 
-        resources::const_iterator it = std::lower_bound(_fastAccessResources.begin(), _fastAccessResources.end(),
-                                       id.c_str(), ObjectBasePredicate());
+        resourcesMap::const_iterator it = _fastAccessResources.find(id);
 
         if (it != _fastAccessResources.end())
         {
-            if ((*it)->getName() == id)
-                return (*it).get();
+            return it->second.get();
         }
 
         handleErrorPolicy(ep, "can't find resource: '%s' in '%s'", id.c_str(), _name.c_str());
