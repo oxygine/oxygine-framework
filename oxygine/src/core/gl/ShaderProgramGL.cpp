@@ -74,8 +74,6 @@ namespace oxygine
 
 #ifdef __S3E__
         gles = true;
-#elif   EMSCRIPTEN
-        gles = true;
 #elif OXYGINE_SDL
         int profile = 0;
         SDL_GL_GetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, &profile);
@@ -84,13 +82,10 @@ namespace oxygine
 #else
 #endif
 
-        if (gles)
-        {
-            *ptr = "precision float mediump;";
-        }
-        else
-        {
 
+#ifndef   EMSCRIPTEN
+        if (!gles)
+        {
             log::messageln("not gles version");
 
             static const char nonGLES[] =
@@ -99,8 +94,9 @@ namespace oxygine
                 "#define highp\n";
 
             *ptr = nonGLES;
+			ptr++;
         }
-        ptr++;
+#endif
 
 
         if (prepend)
