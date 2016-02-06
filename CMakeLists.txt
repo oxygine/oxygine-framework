@@ -17,7 +17,7 @@ if (EMSCRIPTEN) #don't need SDL2
 else()
 	if(WIN32)
 		set(ENV{SDL2DIR} ${CMAKE_CURRENT_SOURCE_DIR}/../SDL/include)
-		set(CORE_LIBS ${CORE_LIBS} SDL2 SDL2main)
+		set(CORE_LIBS ${CORE_LIBS} SDL2main SDL2)
 	else(WIN32)
 		find_package(CURL)
 	endif()
@@ -94,7 +94,7 @@ endif()
 if (OX_HAVE_LIBPNG)
 	set(OX_DEFINITIONS	${OX_DEFINITIONS}
 		-DOX_HAVE_LIBPNG)
-	if ((MSVC) OR (MINGW))
+	if (MSVC)
 		include_directories(${THIRD_PARTY}/libpng)
 		set(LIBPNG ${libprefix}png)
 		if (MSVC_VERSION EQUAL "1900")
@@ -103,6 +103,7 @@ if (OX_HAVE_LIBPNG)
 		set(CORE_LIBS ${CORE_LIBS} ${LIBPNG})
 	elseif(EMSCRIPTEN)
 		include_directories(${THIRD_PARTY}/libpng)
+		set(LIBPNG ${libprefix}png)
 		set(LIBPNG libz libpng16)
 		set(CORE_LIBS ${CORE_LIBS} ${LIBPNG})
 	else()
@@ -193,9 +194,14 @@ if (FORCE_GLES)
 endif(FORCE_GLES)
 
 
-set(CORE_LIBS 	
-	oxygine-framework	
+if (MINGW) 
+	set(CORE_LIBS ${CORE_LIBS}	mingw32)
+endif(MINGW)
+
+
+set(CORE_LIBS 
 	${CORE_LIBS}
+	oxygine-framework	
 	${OPENGL_LIBRARIES}		
 )
 
@@ -230,10 +236,6 @@ if (NOT MSVC)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 ")
 endif(NOT MSVC)
 
-
-if (MINGW) 
-	set(CORE_LIBS  mingw32 ${CORE_LIBS})
-endif(MINGW)
 
 add_definitions(${OX_DEFINITIONS})
 include_directories(${OXYGINE_INCLUDE_DIRS})
