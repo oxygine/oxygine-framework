@@ -94,7 +94,7 @@ endif()
 if (OX_HAVE_LIBPNG)
 	set(OX_DEFINITIONS	${OX_DEFINITIONS}
 		-DOX_HAVE_LIBPNG)
-	if ((MSVC) OR (MINGW))
+	if (MSVC)
 		include_directories(${THIRD_PARTY}/libpng)
 		set(LIBPNG ${libprefix}png)
 		if (MSVC_VERSION EQUAL "1900")
@@ -107,21 +107,15 @@ if (OX_HAVE_LIBPNG)
 		set(LIBPNG libz libpng16)
 		set(CORE_LIBS ${CORE_LIBS} ${LIBPNG})
 	else()
-		find_package(PNG)
-
-        if (PNG_FOUND)
-
-		include_directories(
-			${PNG_INCLUDE_DIR}
-		)
-            else(PNG_FOUND)
-            		include_directories(${THIRD_PARTY}/libpng)
-		set(LIBPNG ${libprefix}png)
-                        endif()
+		find_package(PNG REQUIRED)
 		set (CORE_LIBS
 			${CORE_LIBS}
 			${PNG_LIBRARIES}
 		)
+		include_directories(
+			${PNG_INCLUDE_DIR}
+		)
+
 		set(OXYGINE_INCLUDE_DIRS
 			${OXYGINE_INCLUDE_DIRS}
 			${PNG_INCLUDE_DIR}
@@ -242,19 +236,11 @@ if (NOT MSVC)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 ")
 endif(NOT MSVC)
 
-if (MINGW)
-    # workaround for pthread.h and time.h from mingw colliding
-    include(CheckStructHasMember)
-
-    CHECK_STRUCT_HAS_MEMBER ("struct timespec" tv_sec time.h HAVE_STRUCT_TIMESPEC)
-    if (HAVE_STRUCT_TIMESPEC)
-        set(OX_DEFINITIONS	${OX_DEFINITIONS} -D_TIMESPEC_DEFINED=1)
-    endif()
-endif()
 
 add_definitions(${OX_DEFINITIONS})
 include_directories(${OXYGINE_INCLUDE_DIRS})
 add_library(oxygine-framework STATIC ${SOURCES})
+
 
 set(OXYGINE_LIBRARY_DIRS
 	${OXYGINE_LIBRARY_DIRS}
