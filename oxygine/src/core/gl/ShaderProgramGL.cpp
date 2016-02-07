@@ -94,7 +94,7 @@ namespace oxygine
                 "#define highp\n";
 
             *ptr = nonGLES;
-			ptr++;
+            ptr++;
         }
 #endif
 

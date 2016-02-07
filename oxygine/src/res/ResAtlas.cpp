@@ -154,9 +154,8 @@ namespace oxygine
             ra = rs;
         }
 
-        context.resources->add(ra);
-
         ra->setName(_Resource::extractID(context.walker.getNode(), "", std::string("!atlas:") + *context.xml_name));
+        context.resources->add(ra);
         setNode(ra, context.walker.getNode());
 
         return ra;
@@ -575,7 +574,7 @@ namespace oxygine
 
                 ra->init(frames, columns, walker.getScaleFactor(), 1.0f / walker.getScaleFactor());
                 ra->setParent(this);
-                context.resources->add(ra);
+                context.resources->add(ra, context.options->shortenIDS);
             }
 
         }
@@ -801,7 +800,7 @@ namespace oxygine
 
                 ra->init(frames, columns, walker.getScaleFactor(), 1.0f / frame_scale);
                 ra->setParent(this);
-                context.resources->add(ra);
+                context.resources->add(ra, context.options->shortenIDS);
             }
         }
     }

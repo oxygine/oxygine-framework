@@ -23,6 +23,17 @@ namespace oxygine
     class CreateResourceContext;
     class LoadResourcesContext;
 
+    class ResourcesLoadOptions
+    {
+    public:
+        ResourcesLoadOptions() : loadCompletely(true), useLoadCounter(false), loadContext(0), shortenIDS(false) {};
+
+        bool loadCompletely;
+        bool useLoadCounter;
+        bool shortenIDS;
+        std::string prebuilFolder;
+        LoadResourcesContext* loadContext;
+    };
 
     class Resources: public _Resource
     {
@@ -38,13 +49,14 @@ namespace oxygine
         static void registerResourceType(createResourceCallback creationCallback, const char* resTypeID);
         static void unregisterResourceType(const char* resTypeID);
 
-
         Resources();
         ~Resources();
 
-        /**Loads resources from xml file.
+        /**
+        DEPRECATED, USE load method
+        Loads resources from xml file.
         @param xml file path
-        @param used for multithreading loading
+        @param used for multi threading loading
         @param should be each resource loaded completely includes internal heavy data (atlasses/textures/buffers) or load only their definition. Could be overloaded in xml: <your_res_type ... load = "false"/>
         @param use load counter internally
         @param use not standard folder with prebuilt resources (atlasses, fonts, etc)
@@ -53,21 +65,27 @@ namespace oxygine
                      bool load_completely = true, bool use_load_counter = false,
                      const std::string& prebuilt_folder = "");
 
-        /**Adds your own Resource and becomes resource owner if Own is true. Owned resource will be deleted from destructor by calling 'delete'.*/
-        void add(Resource* r);
 
-        /**Calls Resource::load for each resoure in the list*/
+        /**Loads resources from xml file. Load could be called multiple times for different xml files.
+        @param xml file paths
+        @param options
+        */
+        void load(const std::string& xmlFile, const ResourcesLoadOptions& opt = ResourcesLoadOptions());
+
+        /**Adds Resource*/
+        void add(Resource* r, bool accessByShortenID = false);
+
+        /**Calls Resource::load for each resource in the list*/
         void load(LoadResourcesContext* context = 0, ResLoadedCallback cb = ResLoadedCallback());
 
         /**Unloads data from memory, all resources handles remain valid*/
         void unload();
 
-        /**Completely deletes all resources*/
+        /**Completely deletes all loaded resources*/
         void free();
 
         /** get resource by id, no case sensitive
         @param resource id
-        @param if showError is true and resource is missing warning/assert will appear
         */
         Resource* get(const std::string& id, error_policy ep = ep_show_error) const;
 
@@ -79,13 +97,11 @@ namespace oxygine
 
         /** get resource by id
         @param resource id
-        @param if safe is true and resource is missing warning/assert will appear
         */
         ResAnim* getResAnim(const std::string& id, error_policy ep = ep_show_error) const;
 
         /** get animation resource by id
         @param resource id
-        @param if safe is true and resource is missing warning/assert will appear
         */
         ResFont* getResFont(const std::string& id, error_policy ep = ep_show_error) const;
 
@@ -98,6 +114,7 @@ namespace oxygine
         /**collects all resources into vector*/
         void collect(resources&);
 
+        void addShortIDS();
 
         resources& _getResources();
 
@@ -132,7 +149,7 @@ namespace oxygine
 
         resources _resources;
         typedef std::unordered_map<std::string, spResource> resourcesMap;
-        resourcesMap _fastAccessResources;
+        resourcesMap _resourcesMap;
 
 
         typedef std::vector< registeredResource > registeredResources;
