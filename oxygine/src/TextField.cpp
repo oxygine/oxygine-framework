@@ -370,8 +370,11 @@ namespace oxygine
         _style.fontSize2Scale = node.attribute("fontsize2scale").as_int(def.fontSize2Scale);
         _style.linesOffset = node.attribute("linesOffset").as_int(def.linesOffset);
         const char* fnt = node.attribute("font").as_string(0);
-        if (fnt)
-            _style.font = data->factory->getResFont(fnt)->getFont();
+        if (fnt && *fnt)
+        {
+            ResFont* font = data->factory->getResFont(fnt);
+            _style.font = font->getFont();
+        }
 
         needRebuild();
         setText(node.attribute("text").as_string());
