@@ -107,6 +107,7 @@ namespace oxygine
     static core::init_desc desc;
     Point _qtFixedSize(0, 0);
 
+    spEventDispatcher _dispatcher;
 
 #ifdef __S3E__
 
@@ -238,6 +239,11 @@ namespace oxygine
         {
             Input::instance.__removeFromDebugList();
 
+
+            if (!_dispatcher)
+                _dispatcher = new EventDispatcher;
+
+
             log::messageln("initialize oxygine");
             if (desc_ptr)
                 desc = *desc_ptr;
@@ -318,9 +324,19 @@ namespace oxygine
             SDL_Init(SDL_INIT_VIDEO);
 
 
-            SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
-            SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 6);
-            SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
+            if (desc.mode24bpp)
+            {
+                SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
+                SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
+                SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
+            }
+            else
+            {
+                SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
+                SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 6);
+                SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
+            }
+
             SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 0);
             SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 0);
             SDL_GL_SetAttribute(SDL_GL_RETAINED_BACKING, 0);
@@ -353,6 +369,11 @@ namespace oxygine
             if (desc.fullscreen)
                 flags |= SDL_WINDOW_FULLSCREEN;
 
+            {
+                Event ev(EVENT_PRECREATEWINDOW);
+                _dispatcher->dispatchEvent(&ev);
+            }
+
             log::messageln("creating window %d %d", desc.w, desc.h);
 
             _window = SDL_CreateWindow(desc.title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, desc.w, desc.h, flags);
@@ -383,6 +404,9 @@ namespace oxygine
 
         void init2()
         {
+            if (!_dispatcher)
+                _dispatcher = new EventDispatcher;
+
 #ifdef OXYGINE_EDITOR
             setlocale(LC_ALL, "POSIX");
 #endif
@@ -412,6 +436,8 @@ namespace oxygine
             IVideoDriver::instance->setDefaultSettings();
 
             CHECKGL();
+
+
 
             STDRenderer::initialize();
 
@@ -449,6 +475,11 @@ namespace oxygine
         bool hasFocus()
         {
             return focus;
+        }
+
+        spEventDispatcher getDispatcher()
+        {
+            return _dispatcher;
         }
 
 
@@ -555,122 +586,131 @@ namespace oxygine
             if (!stage)
                 stage = getStage();
 
-            Event ev(Input::event_platform);
-            ev.userData = &event;
-            Input::instance.dispatchEvent(&ev);
-
-            switch (event.type)
+            //deprecated
             {
-                case SDL_QUIT:
-                    done = true;
-                    break;
-                case SDL_WINDOWEVENT:
+                Event ev(Input::event_platform);
+                ev.userData = &event;
+                Input::instance.dispatchEvent(&ev);
+            }
+
+
+            Event ev(EVENT_SYSTEM);
+            ev.userData = &event;
+            _dispatcher->dispatchEvent(&ev);
+
+            if (!ev.stopsPropagation)
+                switch (event.type)
                 {
-                    /*
-                    if (event.window.event == SDL_WINDOWEVENT_ENTER)
-                    active = false;
-                    if (event.window.event == SDL_WINDOWEVENT_LEAVE)
-                    active = true;
-                    */
-
-                    if (event.window.event == SDL_WINDOWEVENT_MINIMIZED)
-                        active = false;
-                    if (event.window.event == SDL_WINDOWEVENT_RESTORED)
-                        active = true;
-
-                    bool newFocus = focus;
-                    if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST)
-                        newFocus = false;
-                    if (event.window.event == SDL_WINDOWEVENT_FOCUS_GAINED)
-                        newFocus = true;
-                    if (focus != newFocus)
+                    case SDL_QUIT:
+                        done = true;
+                        break;
+                    case SDL_WINDOWEVENT:
                     {
-                        focus = newFocus;
+                        /*
+                        if (event.window.event == SDL_WINDOWEVENT_ENTER)
+                        active = false;
+                        if (event.window.event == SDL_WINDOWEVENT_LEAVE)
+                        active = true;
+                        */
+
+                        if (event.window.event == SDL_WINDOWEVENT_MINIMIZED)
+                            active = false;
+                        if (event.window.event == SDL_WINDOWEVENT_RESTORED)
+                            active = true;
+
+                        bool newFocus = focus;
+                        if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST)
+                            newFocus = false;
+                        if (event.window.event == SDL_WINDOWEVENT_FOCUS_GAINED)
+                            newFocus = true;
+                        if (focus != newFocus)
+                        {
+                            focus = newFocus;
 #if HANDLE_FOCUS_LOST
 
-                        if (focus)
-                            focusAcquired();
+                            if (focus)
+                                focusAcquired();
 
-                        log::messageln("focus: %d", (int)focus);
-                        Event ev(focus ? Stage::ACTIVATE : Stage::DEACTIVATE);
-                        if (stage)
-                            stage->dispatchEvent(&ev);
+                            log::messageln("focus: %d", (int)focus);
+                            Event ev(focus ? Stage::ACTIVATE : Stage::DEACTIVATE);
+                            if (stage)
+                                stage->dispatchEvent(&ev);
 
-                        if (!focus)
-                            focusLost();
+                            if (!focus)
+                                focusLost();
 #endif
-                    }
-                    //log::messageln("SDL_SYSWMEVENT %d", (int)event.window.event);
-                    break;
-                }
-                case SDL_MOUSEWHEEL:
-                    input->sendPointerWheelEvent(stage, event.wheel.y, &input->_pointerMouse);
-                    break;
-                case SDL_KEYDOWN:
-                {
-                    KeyEvent ev(KeyEvent::KEY_DOWN, &event.key);
-                    stage->dispatchEvent(&ev);
-                } break;
-                case SDL_KEYUP:
-                {
-                    KeyEvent ev(KeyEvent::KEY_UP, &event.key);
-                    stage->dispatchEvent(&ev);
-                } break;
-
-                case SDL_MOUSEMOTION:
-                    if (!_useTouchAPI)
-                        input->sendPointerMotionEvent(stage, (float)event.motion.x, (float)event.motion.y, 1.0f, &input->_pointerMouse);
-                    break;
-                case SDL_MOUSEBUTTONDOWN:
-                case SDL_MOUSEBUTTONUP:
-                {
-                    if (!_useTouchAPI)
-                    {
-                        MouseButton b = MouseButton_Left;
-                        switch (event.button.button)
-                        {
-                            case 1: b = MouseButton_Left; break;
-                            case 2: b = MouseButton_Middle; break;
-                            case 3: b = MouseButton_Right; break;
                         }
-
-                        input->sendPointerButtonEvent(stage, b, (float)event.button.x, (float)event.button.y, 1.0f,
-                                                      event.type == SDL_MOUSEBUTTONDOWN ? TouchEvent::TOUCH_DOWN : TouchEvent::TOUCH_UP, &input->_pointerMouse);
+                        //log::messageln("SDL_SYSWMEVENT %d", (int)event.window.event);
+                        break;
                     }
-                }
-                break;
-                case SDL_FINGERMOTION:
-                {
-                    if (_useTouchAPI)
+                    case SDL_MOUSEWHEEL:
+                        input->sendPointerWheelEvent(stage, event.wheel.y, &input->_pointerMouse);
+                        break;
+                    case SDL_KEYDOWN:
                     {
-                        //log::messageln("SDL_FINGERMOTION");
-                        Vector2 pos = convertTouch(event);
-                        PointerState* ps = input->getTouchByID((int)event.tfinger.fingerId);
-                        if (ps)
-                            input->sendPointerMotionEvent(stage,
-                                                          pos.x, pos.y, event.tfinger.pressure, ps);
-                    }
-                }
-
-                break;
-                case SDL_FINGERDOWN:
-                case SDL_FINGERUP:
-                {
-                    if (_useTouchAPI)
+                        KeyEvent ev(KeyEvent::KEY_DOWN, &event.key);
+                        stage->dispatchEvent(&ev);
+                    } break;
+                    case SDL_KEYUP:
                     {
-                        //log::messageln("SDL_FINGER");
-                        Vector2 pos = convertTouch(event);
-                        PointerState* ps = input->getTouchByID((int)event.tfinger.fingerId);
-                        if (ps)
-                            input->sendPointerButtonEvent(stage,
-                                                          MouseButton_Touch,
-                                                          pos.x, pos.y, event.tfinger.pressure,
-                                                          event.type == SDL_FINGERDOWN ? TouchEvent::TOUCH_DOWN : TouchEvent::TOUCH_UP,
-                                                          ps);
+                        KeyEvent ev(KeyEvent::KEY_UP, &event.key);
+                        stage->dispatchEvent(&ev);
+                    } break;
+
+                    case SDL_MOUSEMOTION:
+                        if (!_useTouchAPI)
+                            input->sendPointerMotionEvent(stage, (float)event.motion.x, (float)event.motion.y, 1.0f, &input->_pointerMouse);
+                        break;
+                    case SDL_MOUSEBUTTONDOWN:
+                    case SDL_MOUSEBUTTONUP:
+                    {
+                        if (!_useTouchAPI)
+                        {
+                            MouseButton b = MouseButton_Left;
+                            switch (event.button.button)
+                            {
+                                case 1: b = MouseButton_Left; break;
+                                case 2: b = MouseButton_Middle; break;
+                                case 3: b = MouseButton_Right; break;
+                            }
+
+                            input->sendPointerButtonEvent(stage, b, (float)event.button.x, (float)event.button.y, 1.0f,
+                                                          event.type == SDL_MOUSEBUTTONDOWN ? TouchEvent::TOUCH_DOWN : TouchEvent::TOUCH_UP, &input->_pointerMouse);
+                        }
                     }
+                    break;
+                    case SDL_FINGERMOTION:
+                    {
+                        if (_useTouchAPI)
+                        {
+                            //log::messageln("SDL_FINGERMOTION");
+                            Vector2 pos = convertTouch(event);
+                            PointerState* ps = input->getTouchByID((int)event.tfinger.fingerId);
+                            if (ps)
+                                input->sendPointerMotionEvent(stage,
+                                                              pos.x, pos.y, event.tfinger.pressure, ps);
+                        }
+                    }
+
+                    break;
+                    case SDL_FINGERDOWN:
+                    case SDL_FINGERUP:
+                    {
+                        if (_useTouchAPI)
+                        {
+                            //log::messageln("SDL_FINGER");
+                            Vector2 pos = convertTouch(event);
+                            PointerState* ps = input->getTouchByID((int)event.tfinger.fingerId);
+                            if (ps)
+                                input->sendPointerButtonEvent(stage,
+                                                              MouseButton_Touch,
+                                                              pos.x, pos.y, event.tfinger.pressure,
+                                                              event.type == SDL_FINGERDOWN ? TouchEvent::TOUCH_DOWN : TouchEvent::TOUCH_UP,
+                                                              ps);
+                        }
+                    }
+                    break;
                 }
-                break;
-            }
 
         }
 #endif
@@ -750,6 +790,8 @@ namespace oxygine
             SDL_DestroyWindow(_window);
             SDL_Quit();
 #endif
+
+            _dispatcher = 0;
         }
 
         void execute(const char* str)
