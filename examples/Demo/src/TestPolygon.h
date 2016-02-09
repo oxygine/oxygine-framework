@@ -17,25 +17,16 @@ public:
         poly->addTween(Actor::TweenRotation(MATH_PI * 2), 16000, -1);
         poly->setPosition(content->getSize() / 2);
 
-        ResAnim* rs = resources.getResAnim("tiled");
-
-
         //ResAnim "tiled" has only single frame and uses own separate atlas texture
-        //also it should have options trim=extend=false
+        //it should have options trim=extend=false
+        //and atlas with option clamp2edge=false to allow tiling
         /*
-        <atlas>
-            <image file="tiled.png" trim="false" extend="false"/>
+        <atlas clamp2edge="false">
+        <image file="tiled.png" trim="false" extend="false"/>
         </atlas>
         */
 
-        //need access to texture
-        AnimationFrame frame = rs->getFrame(0);
-        spNativeTexture texture = frame.getDiffuse().base;
-
-        //by default all textures has mode "clamp to edge"
-        //disable it and allow tiling
-        texture->setClamp2Edge(false);
-
+        ResAnim* rs = resources.getResAnim("tiled");
         poly->setResAnim(rs);
 
         update(_num);

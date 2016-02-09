@@ -22,7 +22,7 @@ namespace oxygine
         enum options
         {
             opt_singleR2T = 1,
-            opt_fullscreen = 1,
+            opt_fullscreen = 1 << 1,
         };
 
         int _options;

@@ -79,7 +79,7 @@ namespace oxygine
         _hook = hook;
     }
 
-    void load_texture_internal(const std::string& file, spNativeTexture nt, bool linearFilter, LoadResourcesContext* load_context)
+    void load_texture_internal(const std::string& file, spNativeTexture nt, bool linearFilter, bool clamp2edge, LoadResourcesContext* load_context)
     {
         ImageData im;
         spMemoryTexture mt = new MemoryTexture;
@@ -96,10 +96,11 @@ namespace oxygine
         opt.src = mt;
         opt.dest = nt;
         opt.linearFilter = linearFilter;
+        opt.clamp2edge = clamp2edge;
         load_context->createTexture(opt);
     }
 
-    void load_texture(const std::string& file, spNativeTexture nt, bool linearFilter, LoadResourcesContext* load_context)
+    void load_texture(const std::string& file, spNativeTexture nt, bool linearFilter, bool clamp2edge, LoadResourcesContext* load_context)
     {
         if (_hook)
         {
@@ -107,7 +108,7 @@ namespace oxygine
             return;
         }
 
-        load_texture_internal(file, nt, linearFilter, load_context);
+        load_texture_internal(file, nt, linearFilter, clamp2edge, load_context);
     }
 
 
@@ -194,14 +195,14 @@ namespace oxygine
             atlas& atl = *i;
             if (atl.base.get() == texture)
             {
-                load_texture(atl.base_path, atl.base, _linearFilter , &RestoreResourcesContext::instance);
+                load_texture(atl.base_path, atl.base, _linearFilter, _clamp2edge, &RestoreResourcesContext::instance);
                 atl.base->reg(CLOSURE(this, &ResAtlas::_restore), 0);
                 break;
             }
 
             if (atl.alpha.get() == texture)
             {
-                load_texture(atl.alpha_path, atl.alpha, _linearFilter, &RestoreResourcesContext::instance);
+                load_texture(atl.alpha_path, atl.alpha, _linearFilter, _clamp2edge, &RestoreResourcesContext::instance);
                 atl.alpha->reg(CLOSURE(this, &ResAtlas::_restore), 0);
                 break;
             }
@@ -216,12 +217,12 @@ namespace oxygine
             if (!load_context->isNeedProceed(atl.base))
                 continue;
 
-            load_texture(atl.base_path, atl.base, _linearFilter, load_context);
+            load_texture(atl.base_path, atl.base, _linearFilter, _clamp2edge, load_context);
             atl.base->reg(CLOSURE(this, &ResAtlas::_restore), 0);
 
             if (atl.alpha)
             {
-                load_texture(atl.alpha_path, atl.alpha, _linearFilter, load_context);
+                load_texture(atl.alpha_path, atl.alpha, _linearFilter, _clamp2edge, load_context);
                 atl.alpha->reg(CLOSURE(this, &ResAtlas::_restore), 0);
             }
         }
