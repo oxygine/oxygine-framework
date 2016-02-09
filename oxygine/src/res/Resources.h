@@ -7,7 +7,11 @@
 #include "closure/closure.h"
 #include "core/Object.h"
 #include "Resource.h"
+#ifdef __S3E__
+#include <map>
+#else
 #include <unordered_map>
+#endif
 
 namespace pugi
 {
@@ -148,7 +152,11 @@ namespace oxygine
 
 
         resources _resources;
+#ifdef __S3E__
+        typedef std::map<std::string, spResource> resourcesMap;
+#else
         typedef std::unordered_map<std::string, spResource> resourcesMap;
+#endif
         resourcesMap _resourcesMap;
 
 

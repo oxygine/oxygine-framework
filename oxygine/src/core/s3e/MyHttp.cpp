@@ -87,7 +87,7 @@ void MyHttp::get(const string& url)
     _http = new CIwHTTP;
     //_http->SetRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-    if (!isNetworkAvaible())
+    if (!isNetworkAvailable())
     {
         //it is too dangerous call onError from there
         //do it at next update
@@ -116,7 +116,7 @@ void MyHttp::post(const string& url, const char* data, int size)
     _http = new CIwHTTP;
     _http->SetRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-    if (!isNetworkAvaible())
+    if (!isNetworkAvailable())
     {
         //it is too dangerous call onError from there
         //do it at next update
@@ -298,7 +298,7 @@ public:
 
 void makeSingleHttpAsyncGetRequest(const char* url)
 {
-    if (!isNetworkAvaible())
+    if (!isNetworkAvailable())
         return;
 
     SingleHttpAsyncRequest* r = new SingleHttpAsyncRequest;
@@ -307,7 +307,7 @@ void makeSingleHttpAsyncGetRequest(const char* url)
 
 void makeSingleHttpAsyncPostRequest(const char* url, const char* data, int size)
 {
-    if (!isNetworkAvaible())
+    if (!isNetworkAvailable())
         return;
 
     SingleHttpAsyncRequest* r = new SingleHttpAsyncRequest;
