@@ -37,7 +37,7 @@ namespace oxygine
     };
 
 
-    void apply_atlas(atlas_data& ad, bool linear)
+    void apply_atlas(atlas_data& ad, bool linear, bool clamp2edge)
     {
         if (!ad.texture)
             return;
@@ -56,6 +56,7 @@ namespace oxygine
 
         ad.texture->apply();
         ad.texture->setLinearFilter(linear);
+        ad.texture->setClamp2Edge(clamp2edge);
     }
 
     void next_atlas(int w, int h, TextureFormat tf, atlas_data& ad, const char* name)
@@ -515,7 +516,7 @@ namespace oxygine
                         bool s = ad.atlas.add(&ad.mt, src, dest, offset);
                         if (s == false)
                         {
-                            apply_atlas(ad, _linearFilter);
+                            apply_atlas(ad, _linearFilter, _clamp2edge);
                             next_atlas(w, h, tf, ad, walker.getCurrentFolder().c_str());
                             s = ad.atlas.add(&ad.mt, src, dest, offset);
                             OX_ASSERT(s);
@@ -580,7 +581,7 @@ namespace oxygine
 
         }
 
-        apply_atlas(ad, _linearFilter);
+        apply_atlas(ad, _linearFilter, _clamp2edge);
 
         for (std::vector<ResAnim*>::iterator i = anims.begin(); i != anims.end(); ++i)
         {

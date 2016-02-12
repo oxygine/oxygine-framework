@@ -30,6 +30,7 @@
 #   endif // DEBUG  
 #elif OXYGINE_EDITOR
 #   define OXYGINE_FILESYSTEM_USE_STDIO 1
+#   include <qglobal.h>
 #else
 #   define OXYGINE_SDL 1
 #   ifdef _WIN32
@@ -73,7 +74,7 @@ namespace oxygine { namespace log { void error(const char* format, ...); } }
 
 //assert without log::error
 #ifdef OXYGINE_QT
-#   define OX_ASSERT_NL(x) {assert(x);}
+#   define OX_ASSERT_NL(x) {Q_ASSERT(x);}
 #elif EMSCRIPTEN
 #   define OX_ASSERT_NL(x)
 #else

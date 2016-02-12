@@ -661,6 +661,8 @@ namespace oxygine
 
         _transform = tr;
         _flags &= ~flag_transformDirty;
+
+        const_cast<Actor*>(this)->transformUpdated();
     }
 
     bool Actor::isOn(const Vector2& localPosition)
@@ -1310,7 +1312,7 @@ namespace oxygine
     {
         Transform t;
         t.identity();
-        while (child != parent)
+        while (child && child != parent)
         {
             t = t * child->getTransform();
             child = child->getParent();
@@ -1323,7 +1325,7 @@ namespace oxygine
     {
         Transform t;
         t.identity();
-        while (child.get() != parent)
+        while (child && (child.get() != parent))
         {
             t = t * child->getTransform();
             child = child->getParent();

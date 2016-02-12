@@ -314,6 +314,7 @@ namespace oxygine
         void removedFromStage();
         virtual void onAdded2Stage() {}
         virtual void onRemovedFromStage() {}
+        virtual void transformUpdated() {}
 
 
         typedef intrusive_list<spActor> children;

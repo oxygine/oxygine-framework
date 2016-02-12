@@ -25,6 +25,7 @@ namespace oxygine
         blend_alpha,
         blend_add,
         blend_multiply,
+        blend_inverse,
     };
 
 
