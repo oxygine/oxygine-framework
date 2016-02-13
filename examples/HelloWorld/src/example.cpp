@@ -16,7 +16,7 @@ public:
 
     MainActor()
     {
-        //create simple Sprite
+        //create button Sprite
         spSprite button = new Sprite();
 
         //setup it:
@@ -27,7 +27,7 @@ public:
         Vector2 pos = getStage()->getSize() / 2 - button->getSize() / 2;
         button->setPosition(pos);
 
-        //handle click to button
+        //register  click handler to button
         EventCallback cb = CLOSURE(this, &MainActor::buttonClicked);
         button->addEventListener(TouchEvent::CLICK, cb);
 
@@ -42,11 +42,9 @@ public:
 
         //attach button as child to current actor
         addChild(button);
-
         _button = button;
 
 
-        //second part
 
         //create TextField Actor
         spTextField text = new TextField();
@@ -125,6 +123,8 @@ public:
 };
 //declare spMainActor as intrusive_ptr holder of MainActor
 typedef oxygine::intrusive_ptr<MainActor> spMainActor;
+//you could use DECLARE_SMART preprocessor definition it does the same:
+//DECLARE_SMART(MainActor, spMainActor)
 
 void example_preinit() {}
 
@@ -136,7 +136,7 @@ void example_init()
 
 
     //lets create our client code simple actor
-    //spMainActor was defined above as smart intrusive pointer (read more: http://www.boost.org/doc/libs/1_57_0/libs/smart_ptr/intrusive_ptr.html)
+    //spMainActor was defined above as smart intrusive pointer (read more: http://www.boost.org/doc/libs/1_60_0/libs/smart_ptr/intrusive_ptr.html)
     spMainActor actor = new MainActor;
 
     //and add it to Stage as child
