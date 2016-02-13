@@ -48,7 +48,7 @@ namespace oxygine
             void resize(Aligner& rd);
             void finalPass(Aligner& rd);
             void drawChildren(DrawContext& dc);
-            virtual const Symbol* getSymbol(int& pos) const;
+            virtual Symbol* getSymbol(int& pos);
 
             virtual void draw(DrawContext& dc);
 
@@ -73,7 +73,7 @@ namespace oxygine
             void _finalPass(Aligner& rd);
             void draw(DrawContext& dc);
 
-            const Symbol* getSymbol(int& pos) const OVERRIDE;
+            Symbol* getSymbol(int& pos) OVERRIDE;
 
 #ifdef OX_DEBUG
             std::string _text;//only for debug

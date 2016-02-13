@@ -195,7 +195,7 @@ namespace oxygine
         return _style.breakLongWords;
     }
 
-    const text::Symbol* TextField::getSymbolAt(int pos) const
+    text::Symbol* TextField::getSymbolAt(int pos) const
     {
         return const_cast<TextField*>(this)->getRootNode()->getSymbol(pos);
     }

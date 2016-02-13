@@ -37,7 +37,7 @@ namespace oxygine
         TextStyle::HorizontalAlign  getHAlign() const;
         bool                        getMultiline() const;
         bool                        getBreakLongWords() const;
-        const text::Symbol*         getSymbolAt(int pos) const;
+        text::Symbol*               getSymbolAt(int pos) const;
 
         /**Overwrites TextStyle Vertical align*/
         void setVAlign(TextStyle::VerticalAlign align);
