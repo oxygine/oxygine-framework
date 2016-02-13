@@ -412,6 +412,11 @@ namespace oxygine
         _flags |= flag_transformDirty | flag_transformInvertDirty;
     }
 
+    void Actor::setAnchorInPixels(float x, float y)
+    {
+        setAnchorInPixels(Vector2(x, y));
+    }
+
     void Actor::setPosition(const Vector2& pos)
     {
         if (_pos == pos)
