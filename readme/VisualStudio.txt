@@ -1,7 +1,7 @@
 1. Start from readme.txt
 
-Ff you are using Oxygine All-In-One version with SDL included you could skip #2
-just go to any example and open it
+If you are using the Oxygine All-In-One version with SDL included, you can skip #2
+and just go to any example and open it right away
 
 2. There are prebuilt example solutions for VS2010+
 =================================================================================================
@@ -13,25 +13,23 @@ just go to any example and open it
     //#define SDL_AUDIO_DRIVER_XAUDIO2    1
   - Go to folder SDL\VisualC\ 
   - Open SDL.sln and build it in Release configration
-  - Goto golder SDL\VisualC\Win32\Release\
+  - Go to folder SDL\VisualC\Win32\Release\
   - and copy SDL2.lib, SDL2main.lib and SDL2.dll to oxygine-framework/libs
 
-- Go to oxygine-framework\examples and choose any example. For example "Demo"
-- Open solution located in oxygine-framework\examples\Demo\proj.win32\
-- Try to build Demo
-- Copy all dlls from  oxygine-framework\oxygine\third_party\win32\dlls\
-   and SDL2.dll from oxygine-framework/libs 
-   to  oxygine-framework\examples\Demo\data\   
-- Working directory of Demo project should point to "../data" folder (right mouse click on Demo -> project->properties->ConfigurationProperties->Debugging->WorkingDirectory)
+- Go to oxygine-framework\examples and choose any example, for example "Demo"
+- Open the solution located in oxygine-framework\examples\Demo\proj.win32\
+- Try to build the Demo
+- Copy all dlls from oxygine-framework\oxygine\third_party\win32\dlls\
+   and SDL2.dll from oxygine-framework/libs
+   to: oxygine-framework\examples\Demo\data\
+- The working directory of the Demo project should point to the "../data" folder (right mouse-click on the "Demo" Project -> Properties -> "Configuration Properties" -> Debugging -> "Working Directory")
 - ready! run!
 =================================================================================================
 
-3. You could generate your own Solution anywhere
+3. You can generate your own Solution anywhere you want:
 - You need Python 2.7 installed
 - you need to run this script
   oxygine-framework\tools\gen_template.py
 
 example:
 	python gen_template.py MyProject -t win32 -d path/to/MyProject/
-	
-
