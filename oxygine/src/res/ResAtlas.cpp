@@ -334,7 +334,7 @@ namespace oxygine
                 pd.getPixel(srcLine, p);
 
 
-                if (p.a > 10)
+                if (p.a > 5)
                 {
                     hasAlpha = true;
 
@@ -532,23 +532,36 @@ namespace oxygine
                             OX_ASSERT(s);
                         }
 
+                        //extend = false;
                         if (extend)
                         {
                             //duplicate image edges
                             MemoryTexture& mt = ad.mt;
                             ImageData tmp;
 
-                            tmp = mt.lock(Rect(dest.pos.x, dest.pos.y - 1, src.w, 1));
-                            operations::copy(src.getRect(Rect(0, 0, src.w, 1)), tmp);
+                            if (bounds.getY() == 0)
+                            {
+                                tmp = mt.lock(Rect(dest.pos.x, dest.pos.y - 1, src.w, 1));
+                                operations::copy(src.getRect(Rect(0, 0, src.w, 1)), tmp);
+                            }
 
-                            tmp = mt.lock(Rect(dest.pos.x, dest.pos.y + src.h, src.w, 1));
-                            operations::copy(src.getRect(Rect(0, src.h - 1, src.w, 1)), tmp);
+                            if (bounds.getHeight() == im.h)
+                            {
+                                tmp = mt.lock(Rect(dest.pos.x, dest.pos.y + src.h, src.w, 1));
+                                operations::copy(src.getRect(Rect(0, src.h - 1, src.w, 1)), tmp);
+                            }
 
-                            tmp = mt.lock(Rect(dest.pos.x - 1, dest.pos.y, 1, src.h));
-                            operations::copy(src.getRect(Rect(0, 0, 1, src.h)), tmp);
+                            if (bounds.getX() == 0)
+                            {
+                                tmp = mt.lock(Rect(dest.pos.x - 1, dest.pos.y, 1, src.h));
+                                operations::copy(src.getRect(Rect(0, 0, 1, src.h)), tmp);
+                            }
 
-                            tmp = mt.lock(Rect(dest.pos.x + src.w, dest.pos.y, 1, src.h));
-                            operations::copy(src.getRect(Rect(src.w - 1, 0, 1, src.h)), tmp);
+                            if (bounds.getWidth() == im.w)
+                            {
+                                tmp = mt.lock(Rect(dest.pos.x + src.w, dest.pos.y, 1, src.h));
+                                operations::copy(src.getRect(Rect(src.w - 1, 0, 1, src.h)), tmp);
+                            }
                         }
 
 
