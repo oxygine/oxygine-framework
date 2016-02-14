@@ -11,6 +11,7 @@
 #include "core/Mem2Native.h"
 #include "core/VideoDriver.h"
 #include <stdint.h>
+#include "utils/stringUtils.h"
 
 extern "C"
 {
@@ -51,6 +52,15 @@ namespace oxygine
         mt.init(ad.mt.lock().getRect(Rect(0, 0, w, h)));
 
         ImageData image_data = mt.lock();
+
+#if 0
+        static int n = 0;
+        n++;
+        char name[255];
+        safe_sprintf(name, "test%d.tga", n);
+        saveImage(image_data, name);
+#endif
+
         ad.texture->init(image_data, false);
         ad.mt.unlock();
 
