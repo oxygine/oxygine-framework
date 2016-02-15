@@ -68,7 +68,6 @@ public:
         addButton("r2t", "Render to Texture");
         addButton("t2p", "Texel to Pixel");
         addButton("edges", "Edges");
-
         addButton("touches", "Touches");
         addButton("sliding", "Sliding Actor");
         addButton("box9sprite", "Box9 Sprite");
