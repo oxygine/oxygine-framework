@@ -3,7 +3,7 @@
 =================================================================================================
 How to build. Steps:
 - Install Android NDK (https://developer.android.com/tools/sdk/ndk/index.html) and set it up
-- Install Android SDK (https://developer.android.com/sdk/index.html) - version 16
+- Install Android SDK Tools (https://developer.android.com/intl/ru/sdk/index.html#Other), launch SDK Manager and install Android SDK v16
 - Install apache-ant (http://ant.apache.org/bindownload.cgi)
 - Install JDK version 6/7
 - Configure environment variables properly:

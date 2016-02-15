@@ -189,6 +189,32 @@ namespace oxygine
             }
             *dest = 0;
         }
+
+        std::string extractFileName(const std::string& path)
+        {
+            size_t pos = path.find_last_of("\\/") + 1;
+            std::string name = path.substr(pos, path.size() - pos);
+            return name;
+        }
+
+        std::string extractBaseFileName(const std::string& filename)
+        {
+            size_t pos = filename.find_first_of('.');
+            if (pos == std::string::npos)
+                pos = filename.size();
+            std::string name = filename.substr(0, pos);
+            return name;
+        }
+
+        std::string extractFileExt(const std::string& filename)
+        {
+            size_t pos = filename.find_first_of(".");
+            if (pos == std::string::npos)
+                return "";
+            pos += 1;
+            std::string name = filename.substr(pos, filename.size() - pos);
+            return name;
+        }
     }
 
     const char* getNextCode(int& code, const char* utf8str)

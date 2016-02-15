@@ -72,13 +72,13 @@ namespace oxygine
             }
         }
 
-        const Symbol* Node::getSymbol(int& pos) const
+        Symbol* Node::getSymbol(int& pos)
         {
             Node* node = _firstChild;
             while (node)
             {
                 int num = 0;
-                const Symbol* res = node->getSymbol(pos);
+                Symbol* res = node->getSymbol(pos);
                 if (res)
                     return res;
                 node = node->_nextSibling;
@@ -134,9 +134,9 @@ namespace oxygine
             }
         }
 
-        const Symbol* TextNode::getSymbol(int& pos) const
+        Symbol* TextNode::getSymbol(int& pos)
         {
-            if ((int)_data.size() < pos)
+            if ((int)_data.size() > pos)
                 return &_data[pos];
             pos -= _data.size();
             return Node::getSymbol(pos);

@@ -39,7 +39,7 @@ public:
             float angle = scalar::randFloat(0, (float)MATH_PI * 2);
             sprite->setRotation(angle);
             sprite->addTween(Actor::TweenRotation(MATH_PI * 2 + angle), 30000, -1);
-            sprite->setScale(scalar::randFloat(1.0f, 1.5f));
+            sprite->setScale(scalar::randFloat(0.8f, 1.2f));
             sprite->setAnchor(0.5f, 0.5f);
 
             sprite->addEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &DragTest::onMouseDown));

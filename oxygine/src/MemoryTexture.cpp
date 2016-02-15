@@ -28,9 +28,6 @@ extern "C"
 namespace oxygine
 {
 
-    typedef bool (*cbLoadImageFromBuffer)(MemoryTexture& mt, void* data, int nSize, bool premultiplied, TextureFormat format);
-
-
 
     bool loadImageNotSupported(MemoryTexture& mt, void* data, int nSize, bool premultiplied, TextureFormat format)
     {
@@ -493,6 +490,18 @@ namespace oxygine
     cbLoadImageFromBuffer _loadJpegImage = loadImageNotSupported;
 #endif
 
+
+
+
+    void setJpegLoader(cbLoadImageFromBuffer cb)
+    {
+        _loadJpegImage = cb;
+    }
+
+    void setPngLoader(cbLoadImageFromBuffer cb)
+    {
+        _loadPngImage = cb;
+    }
 
     bool loadPngImage(MemoryTexture& mt, void* pData, int nDatalen, bool premultiplied, TextureFormat format)
     {

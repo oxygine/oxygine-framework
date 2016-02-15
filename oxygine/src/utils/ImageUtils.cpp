@@ -1,7 +1,7 @@
 #include "ImageUtils.h"
 #include "core/ImageData.h"
-
-#include "png.h"
+#include "MemoryTexture.h"
+//#include "png.h"
 extern "C"
 {
 #ifdef OX_HAVE_LIBJPEG
@@ -16,8 +16,14 @@ extern "C"
 
 namespace oxygine
 {
-    void saveImage(const ImageData& im, const char* path, const char* format)
+    void saveImage(const ImageData& im_, const char* path, const char* format)
     {
+        MemoryTexture src;
+        src.init(im_);
+        MemoryTexture dest;
+        src.convert(dest, TF_B8G8R8A8);
+        const ImageData& im = dest.lock();
+
         file::handle h = file::open(path, "wb");
         file::autoClose ac(h);
         char header[18] = { 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };

@@ -1,5 +1,6 @@
 #pragma once
 #include "oxygine_include.h"
+#include "../EventDispatcher.h"
 #include "math/Vector2.h"
 #include <string>
 
@@ -107,9 +108,18 @@ namespace oxygine
         bool isActive();
         bool hasFocus();
 
+
 #ifdef OXYGINE_SDL
         SDL_GLContext   getGLContext();
         SDL_Window*     getWindow();
 #endif
+
+        enum
+        {
+            EVENT_SYSTEM = sysEventID('c', 'S', 'y'), //events from SDL
+            EVENT_PRECREATEWINDOW = sysEventID('c', 'P', 'W'),//dispatched before creating window/context
+        };
+
+        spEventDispatcher getDispatcher();
     }
 }

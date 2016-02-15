@@ -57,4 +57,8 @@ namespace oxygine
         size_t _offset;//buffer offset
         std::vector<unsigned char> _buffer;
     };
+
+    typedef bool (*cbLoadImageFromBuffer)(MemoryTexture& mt, void* data, int nSize, bool premultiplied, TextureFormat format);
+    void setJpegLoader(cbLoadImageFromBuffer);
+    void setPngLoader(cbLoadImageFromBuffer);
 }

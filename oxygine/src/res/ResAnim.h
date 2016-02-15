@@ -20,6 +20,7 @@ namespace oxygine
         ResAnim(Resource* atlas = 0);
         ~ResAnim();
 
+        void init(const std::string& file, int columns = 1, int rows = 1, float scaleFactor = 1.0f);
         void init(MemoryTexture* original, int columns = 1, int rows = 1, float scaleFactor = 1.0f);
         void init(animationFrames& frames, int columns, float scaleFactor = 1.0f, float appliedScale = 1.0f);
         /**creates animation frames from NativeTexture*/

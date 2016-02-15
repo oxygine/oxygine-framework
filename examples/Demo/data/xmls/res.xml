@@ -42,7 +42,7 @@
 		<image file="score_table.png"/>
 	</atlas>
 
-	<atlas> 
+	<atlas clamp2edge="false"> 
 		<image file="tiled.png" trim="false" extend="false"/>
 	</atlas>	
 	

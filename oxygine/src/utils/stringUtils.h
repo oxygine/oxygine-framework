@@ -19,6 +19,18 @@ namespace oxygine
         void splitExt(const char* src, char* destHead, char* destTail);
 
         void normalize(const char* src, char* dest);
+
+        /**some/file/path.png   ->  path.png*/
+        std::string extractFileName(const std::string& path);
+
+        /**
+        name.png             ->  name
+        some/file/path.png   ->  some/file/path
+        */
+        std::string extractBaseFileName(const std::string& filename);
+
+        /**some/file/path.png   ->  png*/
+        std::string extractFileExt(const std::string& filename);
     }
 
     std::string lower(const std::string& str);

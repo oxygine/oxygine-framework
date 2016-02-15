@@ -413,6 +413,10 @@ namespace oxygine
                 case blend_multiply:
                     _driver->setBlendFunc(IVideoDriver::BT_DST_COLOR, IVideoDriver::BT_ONE_MINUS_SRC_ALPHA);
                     break;
+                case blend_inverse:
+                    _driver->setBlendFunc(IVideoDriver::BT_ONE_MINUS_DST_COLOR, IVideoDriver::BT_ZERO);
+                    break;
+
                 //case blend_sub:
                 //_driver->setBlendFunc(IVideoDriver::BT_ONE, IVideoDriver::BT_ONE);
                 //glBlendEquation(GL_FUNC_REVERSE_SUBTRACT);

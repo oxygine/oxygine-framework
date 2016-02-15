@@ -401,5 +401,7 @@ namespace oxygine
         _Sprite::deserialize(data);
         _direction = (direction)data->node.attribute("direction").as_int();
         _progress = data->node.attribute("progress").as_float(1.0f);
+
+        _update();
     }
 }

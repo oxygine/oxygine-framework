@@ -66,7 +66,7 @@ void run()
     Point size = core::getDisplaySize();
     getStage()->setSize(size);
 
-    //DebugActor is a helper actor node. It shows FPS, memory usage and other useful stuff
+    //DebugActor is a helper actor node. It shows FPS, memory usage and other useful stuff, also it initializes some default resourcess
     DebugActor::show();
 
     //initialize this example stuff. see example.cpp

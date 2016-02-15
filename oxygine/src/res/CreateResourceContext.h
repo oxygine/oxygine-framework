@@ -6,15 +6,17 @@
 
 namespace oxygine
 {
-
     class Resources;
+
     /**internal class*/
-
-
     class XmlWalker
     {
     public:
-        XmlWalker(const std::string* xmlFolder, const std::string& path, float scaleFactor, bool load, bool alpha, pugi::xml_node xml, pugi::xml_node meta);
+        XmlWalker(const std::string* xmlFolder,
+                  const std::string& path,
+                  float scaleFactor,
+                  bool load, bool alpha,
+                  pugi::xml_node xml, pugi::xml_node meta);
 
         bool empty() const {return _root.empty();}
 
@@ -55,26 +57,22 @@ namespace oxygine
         bool _alphaHitTest;
     };
 
+    class ResourcesLoadOptions;
+
     class CreateResourceContext//todo rename
     {
     public:
-        CreateResourceContext(): resources(0), xml_name(0), prebuilt_folder(0),
+        CreateResourceContext() : resources(0), xml_name(0), prebuilt_folder(0), options(0),
             walker(0, "", 1.0f, true, false, pugi::xml_node(), pugi::xml_node())
         {
-
         }
 
         Resources* resources;
-        //float scale_factor;
-
         XmlWalker walker;
 
-        //pugi::xml_node node;
-        //pugi::xml_node meta;
-
         const std::string* xml_name;
-        //const string *folder;
         const std::string* prebuilt_folder;
+        const ResourcesLoadOptions* options;
     };
 
     DECLARE_SMART(MemoryTexture, spMemoryTexture);

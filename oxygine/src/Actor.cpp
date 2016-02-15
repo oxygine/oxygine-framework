@@ -412,6 +412,11 @@ namespace oxygine
         _flags |= flag_transformDirty | flag_transformInvertDirty;
     }
 
+    void Actor::setAnchorInPixels(float x, float y)
+    {
+        setAnchorInPixels(Vector2(x, y));
+    }
+
     void Actor::setPosition(const Vector2& pos)
     {
         if (_pos == pos)
@@ -661,6 +666,8 @@ namespace oxygine
 
         _transform = tr;
         _flags &= ~flag_transformDirty;
+
+        const_cast<Actor*>(this)->transformUpdated();
     }
 
     bool Actor::isOn(const Vector2& localPosition)
@@ -1310,7 +1317,7 @@ namespace oxygine
     {
         Transform t;
         t.identity();
-        while (child != parent)
+        while (child && child != parent)
         {
             t = t * child->getTransform();
             child = child->getParent();
@@ -1323,7 +1330,7 @@ namespace oxygine
     {
         Transform t;
         t.identity();
-        while (child.get() != parent)
+        while (child && (child.get() != parent))
         {
             t = t * child->getTransform();
             child = child->getParent();

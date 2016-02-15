@@ -2,6 +2,7 @@
 #include "oxygine_include.h"
 #include "Vector2.h"
 #include <algorithm>
+#include <limits>
 
 namespace oxygine
 {
@@ -15,6 +16,15 @@ namespace oxygine
         RectT(): pos(0, 0), size(0, 0) {}
         RectT(const point2& Pos, const point2& Size): pos(Pos), size(Size) {}
         RectT(T x, T y, T w, T h): pos(x, y), size(w, h) {}
+
+        static const RectT invalidated()
+        {
+            return RectT(
+                       std::numeric_limits<T>::max() / 2,
+                       std::numeric_limits<T>::max() / 2,
+                       -std::numeric_limits<T>::max(),
+                       -std::numeric_limits<T>::max());
+        }
 
         bool operator == (const RectT& r) const
         {
@@ -77,6 +87,12 @@ namespace oxygine
 
             size.x = std::max(rbA.x, rbB.x) - pos.x;
             size.y = std::max(rbA.y, rbB.y) - pos.y;
+        }
+
+        void unite(const point2& p)
+        {
+            RectT r(p, point2(0, 0));
+            unite(r);
         }
 
         point2 getCenter() const {return pos + size / 2;}

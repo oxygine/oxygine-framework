@@ -85,6 +85,12 @@ namespace oxygine
         needRebuild();
     }
 
+    void TextField::setKerning(int kerning)
+    {
+        _style.kerning = kerning;
+        needRebuild();
+    }
+
     void TextField::setFontSize2Scale(int scale2size)
     {
         _style.fontSize2Scale = scale2size;
@@ -195,7 +201,12 @@ namespace oxygine
         return _style.breakLongWords;
     }
 
-    const text::Symbol* TextField::getSymbolAt(int pos) const
+    int TextField::getKerning() const
+    {
+        return _style.kerning;
+    }
+
+    text::Symbol* TextField::getSymbolAt(int pos) const
     {
         return const_cast<TextField*>(this)->getRootNode()->getSymbol(pos);
     }
@@ -347,6 +358,7 @@ namespace oxygine
             node.append_attribute("text").set_value(_text.c_str());
         setAttr(node, "fontsize2scale", _style.fontSize2Scale, def.fontSize2Scale);
         setAttr(node, "linesOffset", _style.linesOffset, def.linesOffset);
+        setAttr(node, "kerning", _style.kerning, def.kerning);
         setAttr(node, "valign", _style.vAlign, def.vAlign);
         setAttr(node, "halign", _style.hAlign, def.hAlign);
         setAttr(node, "multiline", _style.multiline, def.multiline);
@@ -369,9 +381,13 @@ namespace oxygine
         _style.breakLongWords = node.attribute("breakLongWords").as_bool(def.breakLongWords);
         _style.fontSize2Scale = node.attribute("fontsize2scale").as_int(def.fontSize2Scale);
         _style.linesOffset = node.attribute("linesOffset").as_int(def.linesOffset);
+        _style.kerning = node.attribute("kerning").as_int(def.kerning);
         const char* fnt = node.attribute("font").as_string(0);
-        if (fnt)
-            _style.font = data->factory->getResFont(fnt)->getFont();
+        if (fnt && *fnt)
+        {
+            ResFont* font = data->factory->getResFont(fnt);
+            _style.font = font->getFont();
+        }
 
         needRebuild();
         setText(node.attribute("text").as_string());

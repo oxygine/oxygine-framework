@@ -157,6 +157,7 @@ namespace oxygine
         void setAnchor(const Vector2& anchor);
         void setAnchor(float ax, float ay);
         void setAnchorInPixels(const Vector2& anchor);
+        void setAnchorInPixels(float x, float y);
         void setPosition(const Vector2& pos);
         void setPosition(float x, float y);
         void setX(float x);
@@ -314,6 +315,7 @@ namespace oxygine
         void removedFromStage();
         virtual void onAdded2Stage() {}
         virtual void onRemovedFromStage() {}
+        virtual void transformUpdated() {}
 
 
         typedef intrusive_list<spActor> children;

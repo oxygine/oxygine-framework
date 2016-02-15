@@ -117,21 +117,11 @@ namespace oxygine
 
     void Resources::free()
     {
-        /*
-        for (resources::iterator i = _owned.begin(); i != _owned.end(); ++i)
-        {
-            Resource *res = (*i);
-            delete res;
-        }
-        _owned.clear();
-        */
-        _fastAccessResources.clear();
+        _resourcesMap.clear();
         _resources.clear();
 
         for (size_t i = 0; i < _docs.size(); ++i)
-        {
             delete _docs[i];
-        }
         _docs.clear();
 
         __freeName();
@@ -176,33 +166,26 @@ namespace oxygine
         }
     };
 
-
-    void Resources::loadXML(
-        const std::string& xml_name,
-        LoadResourcesContext* load_context,
-        bool load_completely, bool use_load_counter,
-        const std::string& prebuilt_folder_)
+    void Resources::load(const std::string& xmlFile, const ResourcesLoadOptions& opt)
     {
-
-
-        _name = xml_name;
-        _loadCounter = load_completely ? 1 : 0;
+        _name = xmlFile;
+        _loadCounter = opt.loadCompletely ? 1 : 0;
 
 
         FS_LOG("step0");
         file::buffer fb;
-        file::read(xml_name.c_str(), fb);
+        file::read(xmlFile.c_str(), fb);
 
         FS_LOG("step1");
 
 
-        updateName(xml_name);
+        updateName(xmlFile);
 
         char destHead[255];
         char destTail[255];
-        path::split(xml_name.c_str(), destHead, destTail);
+        path::split(xmlFile.c_str(), destHead, destTail);
 
-        std::string prebuilt_folder = prebuilt_folder_ + "/" + destTail + ".ox/";
+        std::string prebuilt_folder = opt.prebuilFolder + "/" + destTail + ".ox/";
         if (prebuilt_folder[0] == '/')
         {
             prebuilt_folder.erase(prebuilt_folder.begin());
@@ -225,7 +208,7 @@ namespace oxygine
 
         if (!fb.data.size())
         {
-            OX_ASSERT(fb.data.size()  && "can't find xml file");
+            OX_ASSERT(fb.data.size() && "can't find xml file");
             return;
         }
 
@@ -240,22 +223,21 @@ namespace oxygine
         if (!resources_meta.empty())
         {
             int metaVersion = resources_meta.attribute("version").as_int(0);
-            OX_ASSERT(metaVersion <= 2  && "Please rebuild xmls with latest 'oxyresbuild' tool");
+            OX_ASSERT(metaVersion <= 2 && "Please rebuild xmls with latest 'oxyresbuild' tool");
         }
 
 
         std::string id;
-        //string file;
-        std::string rect_str;
 
         FS_LOG("loading xml resources");
 
         std::string xmlFolder = destHead;
-        XmlWalker walker(&xmlFolder, "", 1.0f, load_completely, true, resources, resources_meta);
+        XmlWalker walker(&xmlFolder, "", 1.0f, opt.loadCompletely, true, resources, resources_meta);
 
         while (true)
         {
             CreateResourceContext context;
+            context.options = &opt;
             context.walker = walker.next();
             if (context.walker.empty())
                 break;
@@ -274,7 +256,7 @@ namespace oxygine
             registeredResource& r = *i;
 
 
-            context.xml_name = &xml_name;
+            context.xml_name = &xmlFile;
             context.resources = this;
 
             std::string prebuilt_xml_folder = prebuilt_folder + type + "/";
@@ -284,59 +266,86 @@ namespace oxygine
             FS_LOG("resource: %s ", name);
             Resource* res = r.cb(context);
             OX_ASSERT(res);
-            res->setUseLoadCounter(use_load_counter);
+            res->setUseLoadCounter(opt.useLoadCounter);
 
             if (res)
             {
-                bool load = context.walker.getLoad();
-
-                //res-> = child;
-                if (load)
-                    res->load(load_context);
+                if (context.walker.getLoad())
+                    res->load(opt.loadContext);
                 res->setParent(this);
                 _resources.push_back(res);
-                //_owned.push_back(res);
             }
         }
 
-        sort();
         FS_LOG("xml loaded");
     }
 
-    void Resources::add(Resource* r)
+    void Resources::loadXML(
+        const std::string& xml_name,
+        LoadResourcesContext* load_context,
+        bool load_completely, bool use_load_counter,
+        const std::string& prebuilt_folder_)
+    {
+        ResourcesLoadOptions opt;
+        opt.loadContext = load_context;
+        opt.loadCompletely = load_completely;
+        opt.useLoadCounter = use_load_counter;
+        opt.prebuilFolder = prebuilt_folder_;
+        load(xml_name, opt);
+    }
+
+    void Resources::addShortIDS()
+    {
+
+    }
+
+    void Resources::collect(resources&)
+    {
+
+    }
+
+    void Resources::add(Resource* r, bool accessByShortenID)
     {
         OX_ASSERT(r);
         if (!r)
             return;
-        /*
-        OX_ASSERT(_resources[r->getName()] == 0);
 
-        _resources[r->getName()] = r;
-        */
+        std::string name = lower(r->getName());
+        r->setName(name);
+        _resourcesMap[name] = r;
 
-        //todo insert to correct place
-        r->setName(lower(r->getName()));
-        _fastAccessResources.push_back(r);
-
-        //if (own)
-        //  _owned.push_back(r);
-        //OX_ASSERT(0);
-    }
-
-
-    void Resources::print()
-    {
-        log::message("resources:\n");
-        for (resources::iterator i = _fastAccessResources.begin(); i != _fastAccessResources.end(); ++i)
+        if (accessByShortenID)
         {
-            spResource res = *i;
-            log::message("%s\n", res->getName().c_str());
+            std::string shortName = path::extractFileName(name);
+            _resourcesMap[shortName] = r;
         }
     }
 
-    void Resources::sort()
+
+    void Resources::print() const
     {
-        std::sort(_fastAccessResources.begin(), _fastAccessResources.end(), ObjectBasePredicate());
+        log::message("resources:\n");
+#ifdef __S3E__
+        for (resourcesMap::const_iterator i = _resourcesMap.begin(); i != _resourcesMap.end(); ++i)
+#else
+        for (resourcesMap::const_iterator i = _resourcesMap.cbegin(); i != _resourcesMap.cend(); ++i)
+#endif
+
+        {
+            spResource res = i->second;
+            log::message("%s\n", res->getName().c_str());
+        }
+
+        /*
+        unsigned n = _resourcesMap.bucket_count();
+
+        for (unsigned i=0; i<n; ++i) {
+            log::message("bucket %d: ", i);
+            for (auto it = _resourcesMap.begin(i); it!=_resourcesMap.end(i); ++it)
+                log::message("%s, ", it->first.c_str());
+            log::messageln(" ");
+        }
+        */
     }
 
     Resources::resources& Resources::_getResources()
@@ -348,13 +357,11 @@ namespace oxygine
     {
         std::string id = lower(id_);
 
-        resources::const_iterator it = std::lower_bound(_fastAccessResources.begin(), _fastAccessResources.end(),
-                                       id.c_str(), ObjectBasePredicate());
+        resourcesMap::const_iterator it = _resourcesMap.find(id);
 
-        if (it != _fastAccessResources.end())
+        if (it != _resourcesMap.end())
         {
-            if ((*it)->getName() == id)
-                return (*it).get();
+            return it->second.get();
         }
 
         handleErrorPolicy(ep, "can't find resource: '%s' in '%s'", id.c_str(), _name.c_str());

@@ -11,6 +11,7 @@
 #include "core/Mem2Native.h"
 #include "core/VideoDriver.h"
 #include <stdint.h>
+#include "utils/stringUtils.h"
 
 extern "C"
 {
@@ -37,7 +38,7 @@ namespace oxygine
     };
 
 
-    void apply_atlas(atlas_data& ad, bool linear)
+    void apply_atlas(atlas_data& ad, bool linear, bool clamp2edge)
     {
         if (!ad.texture)
             return;
@@ -51,11 +52,21 @@ namespace oxygine
         mt.init(ad.mt.lock().getRect(Rect(0, 0, w, h)));
 
         ImageData image_data = mt.lock();
+
+#if 0
+        static int n = 0;
+        n++;
+        char name[255];
+        safe_sprintf(name, "test%d.tga", n);
+        saveImage(image_data, name);
+#endif
+
         ad.texture->init(image_data, false);
         ad.mt.unlock();
 
         ad.texture->apply();
         ad.texture->setLinearFilter(linear);
+        ad.texture->setClamp2Edge(clamp2edge);
     }
 
     void next_atlas(int w, int h, TextureFormat tf, atlas_data& ad, const char* name)
@@ -79,7 +90,7 @@ namespace oxygine
         _hook = hook;
     }
 
-    void load_texture_internal(const std::string& file, spNativeTexture nt, bool linearFilter, LoadResourcesContext* load_context)
+    void load_texture_internal(const std::string& file, spNativeTexture nt, bool linearFilter, bool clamp2edge, LoadResourcesContext* load_context)
     {
         ImageData im;
         spMemoryTexture mt = new MemoryTexture;
@@ -96,10 +107,11 @@ namespace oxygine
         opt.src = mt;
         opt.dest = nt;
         opt.linearFilter = linearFilter;
+        opt.clamp2edge = clamp2edge;
         load_context->createTexture(opt);
     }
 
-    void load_texture(const std::string& file, spNativeTexture nt, bool linearFilter, LoadResourcesContext* load_context)
+    void load_texture(const std::string& file, spNativeTexture nt, bool linearFilter, bool clamp2edge, LoadResourcesContext* load_context)
     {
         if (_hook)
         {
@@ -107,7 +119,7 @@ namespace oxygine
             return;
         }
 
-        load_texture_internal(file, nt, linearFilter, load_context);
+        load_texture_internal(file, nt, linearFilter, clamp2edge, load_context);
     }
 
 
@@ -154,9 +166,8 @@ namespace oxygine
             ra = rs;
         }
 
-        context.resources->add(ra);
-
         ra->setName(_Resource::extractID(context.walker.getNode(), "", std::string("!atlas:") + *context.xml_name));
+        context.resources->add(ra);
         setNode(ra, context.walker.getNode());
 
         return ra;
@@ -195,14 +206,14 @@ namespace oxygine
             atlas& atl = *i;
             if (atl.base.get() == texture)
             {
-                load_texture(atl.base_path, atl.base, _linearFilter , &RestoreResourcesContext::instance);
+                load_texture(atl.base_path, atl.base, _linearFilter, _clamp2edge, &RestoreResourcesContext::instance);
                 atl.base->reg(CLOSURE(this, &ResAtlas::_restore), 0);
                 break;
             }
 
             if (atl.alpha.get() == texture)
             {
-                load_texture(atl.alpha_path, atl.alpha, _linearFilter, &RestoreResourcesContext::instance);
+                load_texture(atl.alpha_path, atl.alpha, _linearFilter, _clamp2edge, &RestoreResourcesContext::instance);
                 atl.alpha->reg(CLOSURE(this, &ResAtlas::_restore), 0);
                 break;
             }
@@ -217,12 +228,12 @@ namespace oxygine
             if (!load_context->isNeedProceed(atl.base))
                 continue;
 
-            load_texture(atl.base_path, atl.base, _linearFilter, load_context);
+            load_texture(atl.base_path, atl.base, _linearFilter, _clamp2edge, load_context);
             atl.base->reg(CLOSURE(this, &ResAtlas::_restore), 0);
 
             if (atl.alpha)
             {
-                load_texture(atl.alpha_path, atl.alpha, _linearFilter, load_context);
+                load_texture(atl.alpha_path, atl.alpha, _linearFilter, _clamp2edge, load_context);
                 atl.alpha->reg(CLOSURE(this, &ResAtlas::_restore), 0);
             }
         }
@@ -323,7 +334,7 @@ namespace oxygine
                 pd.getPixel(srcLine, p);
 
 
-                if (p.a > 10)
+                if (p.a > 5)
                 {
                     hasAlpha = true;
 
@@ -515,29 +526,42 @@ namespace oxygine
                         bool s = ad.atlas.add(&ad.mt, src, dest, offset);
                         if (s == false)
                         {
-                            apply_atlas(ad, _linearFilter);
+                            apply_atlas(ad, _linearFilter, _clamp2edge);
                             next_atlas(w, h, tf, ad, walker.getCurrentFolder().c_str());
                             s = ad.atlas.add(&ad.mt, src, dest, offset);
                             OX_ASSERT(s);
                         }
 
+                        //extend = false;
                         if (extend)
                         {
                             //duplicate image edges
                             MemoryTexture& mt = ad.mt;
                             ImageData tmp;
 
-                            tmp = mt.lock(Rect(dest.pos.x, dest.pos.y - 1, src.w, 1));
-                            operations::copy(src.getRect(Rect(0, 0, src.w, 1)), tmp);
+                            if (bounds.getY() == 0)
+                            {
+                                tmp = mt.lock(Rect(dest.pos.x, dest.pos.y - 1, src.w, 1));
+                                operations::copy(src.getRect(Rect(0, 0, src.w, 1)), tmp);
+                            }
 
-                            tmp = mt.lock(Rect(dest.pos.x, dest.pos.y + src.h, src.w, 1));
-                            operations::copy(src.getRect(Rect(0, src.h - 1, src.w, 1)), tmp);
+                            if (bounds.getHeight() == im.h)
+                            {
+                                tmp = mt.lock(Rect(dest.pos.x, dest.pos.y + src.h, src.w, 1));
+                                operations::copy(src.getRect(Rect(0, src.h - 1, src.w, 1)), tmp);
+                            }
 
-                            tmp = mt.lock(Rect(dest.pos.x - 1, dest.pos.y, 1, src.h));
-                            operations::copy(src.getRect(Rect(0, 0, 1, src.h)), tmp);
+                            if (bounds.getX() == 0)
+                            {
+                                tmp = mt.lock(Rect(dest.pos.x - 1, dest.pos.y, 1, src.h));
+                                operations::copy(src.getRect(Rect(0, 0, 1, src.h)), tmp);
+                            }
 
-                            tmp = mt.lock(Rect(dest.pos.x + src.w, dest.pos.y, 1, src.h));
-                            operations::copy(src.getRect(Rect(src.w - 1, 0, 1, src.h)), tmp);
+                            if (bounds.getWidth() == im.w)
+                            {
+                                tmp = mt.lock(Rect(dest.pos.x + src.w, dest.pos.y, 1, src.h));
+                                operations::copy(src.getRect(Rect(src.w - 1, 0, 1, src.h)), tmp);
+                            }
                         }
 
 
@@ -575,12 +599,12 @@ namespace oxygine
 
                 ra->init(frames, columns, walker.getScaleFactor(), 1.0f / walker.getScaleFactor());
                 ra->setParent(this);
-                context.resources->add(ra);
+                context.resources->add(ra, context.options->shortenIDS);
             }
 
         }
 
-        apply_atlas(ad, _linearFilter);
+        apply_atlas(ad, _linearFilter, _clamp2edge);
 
         for (std::vector<ResAnim*>::iterator i = anims.begin(); i != anims.end(); ++i)
         {
@@ -801,7 +825,7 @@ namespace oxygine
 
                 ra->init(frames, columns, walker.getScaleFactor(), 1.0f / frame_scale);
                 ra->setParent(this);
-                context.resources->add(ra);
+                context.resources->add(ra, context.options->shortenIDS);
             }
         }
     }

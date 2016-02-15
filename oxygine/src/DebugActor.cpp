@@ -68,6 +68,12 @@ namespace oxygine
         getStage()->addChild(DebugActor::instance);
     }
 
+    void DebugActor::hide()
+    {
+        if (DebugActor::instance)
+            DebugActor::instance->detach();
+    }
+
     void DebugActor::release()
     {
         instance = 0;
@@ -282,7 +288,7 @@ namespace oxygine
         s << "update=" << getStage()->_statUpdate << "ms ";
         s << "render=" << getStage()->_statRender << "ms ";
         s << "textures=" << NativeTexture::created << " ";
-        s << "\nlisteners=" << getStage()->getListenersCount() << "";
+        //s << "\nlisteners=" << getStage()->getListenersCount() << "";
 
         if (!_debugText.empty())
         {

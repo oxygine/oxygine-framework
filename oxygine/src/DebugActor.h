@@ -22,6 +22,7 @@ namespace oxygine
         static Resources* resSystem;
         static void initialize();
         static void show();
+        static void hide();
         static void release();
         static std::string getDefaultName() { return "debug_actor"; }
 

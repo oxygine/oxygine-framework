@@ -33,11 +33,12 @@ namespace oxygine
         const Font*                 getFont() const;
         int                         getFontSize2Scale() const;
         int                         getLinesOffset() const;
+        int                         getKerning() const;
         TextStyle::VerticalAlign    getVAlign() const;
         TextStyle::HorizontalAlign  getHAlign() const;
         bool                        getMultiline() const;
         bool                        getBreakLongWords() const;
-        const text::Symbol*         getSymbolAt(int pos) const;
+        text::Symbol*               getSymbolAt(int pos) const;
 
         /**Overwrites TextStyle Vertical align*/
         void setVAlign(TextStyle::VerticalAlign align);
@@ -50,6 +51,8 @@ namespace oxygine
         void setBreakLongWords(bool val);
         /**Overwrites TextStyle linesOffset*/
         void setLinesOffset(int offset);
+        /**Overwrites TextStyle kerning*/
+        void setKerning(int kerning);
         /**Overwrites TextStyle scale2Size.*/
         void setFontSize2Scale(int scale2size);
         /**Overwrites TextStyle font.*/

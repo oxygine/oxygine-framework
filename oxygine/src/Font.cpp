@@ -32,12 +32,13 @@ namespace oxygine
         _size = realSize;
         _baselineDistance = baselineDistance;
         _lineHeight = lineHeight;
-        _glyphs.reserve(200);
+        //_glyphs.reserve(200);
     }
 
     void Font::addGlyph(const glyph& gl)
     {
-        _glyphs.push_back(gl);
+        _glyphs.insert(gl);
+        //_glyphs.push_back(gl);
     }
 
     bool glyphFindPred(const glyph& g, int code)
@@ -50,19 +51,14 @@ namespace oxygine
         return ob1.ch < ob2.ch;
     }
 
-    void Font::sortGlyphs()
-    {
-        std::sort(_glyphs.begin(), _glyphs.end(), glyphsComparePred);
-    }
-
     const glyph* Font::findGlyph(int code) const
     {
-        glyphs::const_iterator it = std::lower_bound(_glyphs.begin(), _glyphs.end(), code, glyphFindPred);
+        glyph g;
+        g.ch = code;
+        glyphs::const_iterator it = _glyphs.find(g);
         if (it != _glyphs.end())
         {
-            const glyph& g = *it;
-            if (g.ch == code)
-                return &g;
+            return &(*it);
         }
 
         return 0;
@@ -78,11 +74,7 @@ namespace oxygine
         Font* fn = const_cast<Font*>(this);
         if (fn->loadGlyph(code, gl))
         {
-            glyphs::iterator it = std::lower_bound(fn->_glyphs.begin(), fn->_glyphs.end(), code, glyphFindPred);
-            fn->_glyphs.insert(it, gl);
-
-            //fn->addGlyph(gl);
-            //fn->sortGlyphs();
+            fn->_glyphs.insert(gl);
             g = findGlyph(code);
             OX_ASSERT(g);
         }

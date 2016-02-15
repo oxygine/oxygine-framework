@@ -52,6 +52,15 @@ namespace oxygine
         init(frames, columns, scaleFactor);
     }
 
+    void ResAnim::init(const std::string& file, int columns, int rows, float scaleFactor)
+    {
+        file::buffer bf;
+        file::read(file.c_str(), bf);
+        MemoryTexture mt;
+        mt.init(bf, true);
+        init(&mt, columns, rows, scaleFactor);
+    }
+
     void ResAnim::init(MemoryTexture* original, int columns, int rows, float scaleFactor)
     {
         _scaleFactor = scaleFactor;

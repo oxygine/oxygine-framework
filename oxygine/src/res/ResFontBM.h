@@ -12,6 +12,7 @@ namespace oxygine
 
     DECLARE_SMART(NativeTexture, spNativeTexture);
 
+
     class ResFontBM: public ResFont
     {
     public:
@@ -22,8 +23,8 @@ namespace oxygine
         ResFontBM();
         ~ResFontBM();
 
-        /**use it only if you want create font without Resources*/
-        void init(const char* fntPath, bool premultipliedAlpha = true);
+        /**loads "fnt" font from file, supported XML and text format*/
+        void init(const char* fntPath, bool premultipliedAlpha = false);
 
         void cleanup();
 
