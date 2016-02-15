@@ -16,7 +16,7 @@ public:
         spWebImage image2 = new WebImage;
         image2->load("http://oxygine.org/img/madewith.png");
         image2->setSize(100, 100);
-        image2->setPosition(image1->getPosition() + Vector2(image1->getWidth() + 10, 0));
+        image2->setPosition(image2->getPosition() + Vector2(image2->getWidth() + 10, 0));
         image2->attachTo(content);
 
         //Testing http GET request with redirect
