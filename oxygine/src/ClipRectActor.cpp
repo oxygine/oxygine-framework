@@ -46,7 +46,7 @@ namespace oxygine
     {
         _Actor::serialize(data);
         pugi::xml_node node = data->node;
-        node.set_name("Sprite");
+        node.set_name("ClipRectActor");
     }
 
     void ClipRectActor::deserialize(const deserializedata* data)
