@@ -9,8 +9,8 @@ spTest Test::instance;
 
 void Test::init()
 {
-    //mount additional file system with inner path "ext"
-    //it would be used for searching path in data/ext
+    //Mount additional file system with inner path "ext"
+    //Used for searching files in data/ext
     extfs.setPath(file::fs().getFullPath("ext").c_str());
     file::mount(&extfs);
 
@@ -20,7 +20,7 @@ void Test::init()
 
     HttpRequestTask::init();
 
-    //load logo from oxygine server
+    //Load logo from oxygine server
     spWebImage sp = new WebImage;
     sp->load("http://oxygine.org/test/logo.png");
     sp->setInputEnabled(false);
@@ -80,7 +80,7 @@ spButton createButtonHelper(spButton button, const std::string& txt, EventCallba
     button->setResAnim(Test::resourcesUI.getResAnim("button"));
     button->addEventListener(TouchEvent::CLICK, cb);
 
-    //create Actor with Text and it to button as child
+    //Create Actor with Text and add it to button as child
     spTextField text = createText(txt);
     text->setSize(button->getSize());
     text->attachTo(button);

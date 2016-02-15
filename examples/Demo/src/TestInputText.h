@@ -12,7 +12,7 @@ public:
     TextWithBackground(const string& defText)
     {
         text = new TextField;
-        //text won't handle any touch event
+        //Don't handle input events on this Actor
         text->setInputEnabled(false);
 
         TextStyle style;
