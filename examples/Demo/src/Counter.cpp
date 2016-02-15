@@ -32,7 +32,7 @@ public:
 
     spTween add()
     {
-        OX_ASSERT(!_running;
+        OX_ASSERT(!_running);
 
         _running = true;
         int next = (_current + 1) % 10;
