@@ -408,7 +408,7 @@ namespace oxygine
                 _dispatcher = new EventDispatcher;
 
 #ifdef OXYGINE_EDITOR
-            setlocale(LC_ALL, "POSIX");
+            //setlocale(LC_ALL, "POSIX");
 #endif
 
             file::init(desc.companyName, desc.appName);
