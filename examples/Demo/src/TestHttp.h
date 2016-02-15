@@ -13,18 +13,18 @@ public:
     TestHttp()
     {
         //Testing http GET request
-        spWebImage image2 = new WebImage;
-        image2->load("http://oxygine.org/img/madewith.png");
-        image2->setSize(100, 100);
-        image2->setPosition(image2->getPosition() + Vector2(image2->getWidth() + 10, 0));
-        image2->attachTo(content);
+        spWebImage image1 = new WebImage;
+        image1->load("http://oxygine.org/img/madewith.png");
+        image1->setSize(100, 100);
+        image1->setPosition(image1->getPosition() + Vector2(image1->getWidth() + 10, 0));
+        image1->attachTo(content);
 
         //Testing http GET request with redirect
-        spWebImage image1 = new WebImage;
-        image1->load("http://graph.facebook.com/1373973107/picture?type=normal&return_ssl_resources=0");
-        image1->setSize(100, 100);
-        image1->setPosition(getStage()->getSize() / 2);
-        image1->attachTo(content);
+        spWebImage image2 = new WebImage;
+        image2->load("http://graph.facebook.com/1373973107/picture?type=normal&return_ssl_resources=0");
+        image2->setSize(100, 100);
+        image2->setPosition(getStage()->getSize() / 2);
+        image2->attachTo(content);
 
         //Testing loading a file in memory
         spHttpRequestTask task = HttpRequestTask::create();
