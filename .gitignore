@@ -55,3 +55,5 @@ oxygine/SDL/android/extension/bin/
 *.pdb
 */Debug_v*
 build
+/examples/Demo/proj.cmake/mingw
+/examples/Demo/proj.marmalade/build_demo_vc*

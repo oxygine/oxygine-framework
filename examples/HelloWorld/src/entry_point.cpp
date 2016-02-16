@@ -1,8 +1,8 @@
 /**
-	Attention!
-	This file initializes the Oxygine engine.
-	If you just started here and don't understand the code completely, feel free to come back later.
-	You can start from example.cpp and example.h, which main functions are called from here.
+    Attention!
+    This file initializes the Oxygine engine.
+    If you just started here and don't understand the code completely, feel free to come back later.
+    You can start from example.cpp and example.h, which main functions are called from here.
 */
 #include "core/oxygine.h"
 #include "Stage.h"
@@ -17,7 +17,7 @@ using namespace oxygine;
 // This function is called each frame
 int mainloop()
 {
-	// It gets passed to our example game implementation
+    // It gets passed to our example game implementation
     example_update();
 
     // Update our stage
@@ -34,9 +34,9 @@ int mainloop()
         core::swapDisplayBuffers();
     }
 
-	// Update engine-internal components
-	// If input events are available, they are passed to Stage::instance.handleEvent
-	// If the function returns true, it means that the user requested the application to terminate
+    // Update engine-internal components
+    // If input events are available, they are passed to Stage::instance.handleEvent
+    // If the function returns true, it means that the user requested the application to terminate
     bool done = core::update();
 
     return done ? 1 : 0;
@@ -52,7 +52,7 @@ void run()
     desc.title = "Oxygine Application";
 
 #if OXYGINE_SDL || OXYGINE_EMSCRIPTEN
-	// The initial window size can be set up here on SDL builds
+    // The initial window size can be set up here on SDL builds
     desc.w = 960;
     desc.h = 640;
     // Marmalade settings can be modified from the emulator's menu
@@ -68,10 +68,10 @@ void run()
     Point size = core::getDisplaySize();
     getStage()->setSize(size);
 
-    //DebugActor is a helper actor node. It shows FPS, memory usage and other useful stuff, also it initializes some default resourcess
+    // DebugActor is a helper actor node. It shows FPS, memory usage and other useful stuff
     DebugActor::show();
 
-	// Initializes our example game. See example.cpp
+    // Initializes our example game. See example.cpp
     example_init();
 
 #ifdef EMSCRIPTEN
@@ -90,20 +90,22 @@ void run()
         if (done)
             break;
     }
-    // If we get here, the user has requested the Application to terminate.
-
-    // We dump and log all our created objects that have not been freed yet
+    /*
+     If we get here, the user has requested the Application to terminate.
+     We dump and log all our created objects that have not been freed yet
+    */
     ObjectBase::dumpCreatedObjects();
 
-	/*
-	Let's clean up everything right now and call ObjectBase::dumpObjects() again.
-	We need to free all allocated resources and delete all created actors.
-	All actors/sprites are smart-pointer objects and don't need to be removed by hand.
-	But now we want to delete it by hand.
-	*/
+    /*
+    Let's clean up everything right now and call ObjectBase::dumpObjects() again.
+    We need to free all allocated resources and delete all created actors.
+    All actors/sprites are smart-pointer objects and don't need to be removed by hand.
+    But now we want to delete it by hand.
+    */
 
     // See example.cpp for the shutdown function implementation
     example_destroy();
+
 
     //renderer.cleanup();
 
@@ -115,7 +117,7 @@ void run()
     ObjectBase::dumpCreatedObjects();
 
     ObjectBase::__stopTracingLeaks();
-    // end
+    //end
 }
 
 #ifdef __S3E__

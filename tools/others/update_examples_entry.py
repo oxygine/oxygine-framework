@@ -15,7 +15,6 @@ items = (
     examples + "Game/Part5",
     examples + "HelloWorld",
     examples + "Match3",
-    examples + "TutorialResources",
     parent + "oxygine-frame/examples/example1",
     parent + "oxygine-frame/examples/example2",
     parent + "oxygine-magicparticles/example/MPHello",

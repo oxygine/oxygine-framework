@@ -1,8 +1,8 @@
 /**
-	Attention!
-	This file initializes the Oxygine engine.
-	If you just started here and don't understand the code completely, feel free to come back later.
-	You can start from example.cpp and example.h, which main functions are called from here.
+    Attention!
+    This file initializes the Oxygine engine.
+    If you just started here and don't understand the code completely, feel free to come back later.
+    You can start from example.cpp and example.h, which main functions are called from here.
 */
 #include "core/oxygine.h"
 #include "Stage.h"
@@ -97,11 +97,11 @@ void run()
     ObjectBase::dumpCreatedObjects();
 
     /*
-	Let's clean up everything right now and call ObjectBase::dumpObjects() again.
-	We need to free all allocated resources and delete all created actors.
-	All actors/sprites are smart-pointer objects and don't need to be removed by hand.
-	But now we want to delete it by hand.
-	*/
+    Let's clean up everything right now and call ObjectBase::dumpObjects() again.
+    We need to free all allocated resources and delete all created actors.
+    All actors/sprites are smart-pointer objects and don't need to be removed by hand.
+    But now we want to delete it by hand.
+    */
 
     // See example.cpp for the shutdown function implementation
     example_destroy();
@@ -134,11 +134,11 @@ int main(int argc, char* argv[])
 #include "SDL_main.h"
 extern "C"
 {
-int main(int argc, char* argv[])
-{
-    run();
-    return 0;
-}
+    int main(int argc, char* argv[])
+    {
+        run();
+        return 0;
+    }
 };
 #endif
 
