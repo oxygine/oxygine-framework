@@ -37,11 +37,11 @@ public:
         _sprite = sprite;
 
         Test::toggle tg[] =
-                {
-                        Test::toggle("switch to TILING_FULL", Box9Sprite::TILING_FULL),
-                        Test::toggle("switch to TILING", Box9Sprite::TILING),
-                        Test::toggle("switch to STRETCHING", Box9Sprite::STRETCHING),
-                };
+        {
+            Test::toggle("switch to TILING_FULL", Box9Sprite::TILING_FULL),
+            Test::toggle("switch to TILING", Box9Sprite::TILING),
+            Test::toggle("switch to STRETCHING", Box9Sprite::STRETCHING),
+        };
         addToggle("ver. mode", tg, 3);
         addToggle("hor. mode", tg, 3);
     }
