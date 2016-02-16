@@ -96,8 +96,10 @@ namespace oxygine
         void oxFileClose(oxHandle* file)
         {
             if (file)
+            {
                 _openedFiles--;
-            oxFileClose_(file);
+                oxFileClose_(file);
+            }
         }
 
 
