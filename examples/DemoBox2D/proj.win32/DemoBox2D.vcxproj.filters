@@ -163,7 +163,7 @@
       <Filter>box2d</Filter>
     </ClCompile>
     <ClCompile Include="../src/Box2DDebugDraw.cpp">
-      <Filter>box2d</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -309,7 +309,7 @@
       <Filter>box2d</Filter>
     </ClInclude>
     <ClInclude Include="../src/Box2DDebugDraw.h">
-      <Filter>box2d</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

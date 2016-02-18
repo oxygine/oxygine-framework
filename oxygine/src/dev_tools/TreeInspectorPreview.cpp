@@ -39,15 +39,6 @@ namespace oxygine
 
     void TreeInspectorPreview::init(spActor item)
     {
-        //_item = item;
-
-        //STDMaterial mt;
-        ////mt.getRenderer()->
-        //mt.apply(0);
-        //mt.getRenderer()
-
-
-
         STDRenderer r_(&_videoCache);
         STDMaterial mat(&r_);
 
