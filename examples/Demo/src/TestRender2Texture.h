@@ -59,7 +59,7 @@ public:
         driver->setRenderTarget(texture);
         driver->setViewport(viewport);
 
-#if 1
+#if 0
         renderer.begin(0);
         RectF destRect(te->localPosition - Vector2(16, 16), Vector2(32, 32));
 
@@ -72,12 +72,16 @@ public:
         renderer.end();
 #else
         //how to render actors to texture
+        Material::setCurrent(0);
+
+        spActor actor = new ManageResTest;
+        actor->setScale(0.5f);
+
         RenderState rs;
         rs.material = STDMaterial::instance;
-        Test::instance->setVisible(true);
-        Test::instance->Actor::render(rs);
-        Test::instance->setVisible(false);
-
+        actor->setAlpha(64);
+        actor->render(rs);
+        Material::setCurrent(0);
 #endif
 
         //restore to default render target

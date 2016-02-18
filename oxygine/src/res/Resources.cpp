@@ -299,8 +299,17 @@ namespace oxygine
 
     }
 
-    void Resources::collect(resources&)
+    void Resources::collect(resources& r)
     {
+#ifdef __S3E__
+        for (resourcesMap::const_iterator i = _resourcesMap.begin(); i != _resourcesMap.end(); ++i)
+#else
+        for (resourcesMap::const_iterator i = _resourcesMap.cbegin(); i != _resourcesMap.cend(); ++i)
+#endif
+        {
+            spResource res = i->second;
+            r.push_back(res);
+        }
 
     }
 
