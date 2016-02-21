@@ -234,12 +234,13 @@ namespace oxygine
     {
         _VStyleActor::serialize(data);
 
-        pugi::xml_node node = data->node;
-        node.remove_attribute("size");
+        pugi::xml_node node = data->node;        
 
         const ResAnim* rs = getResAnim();
         if (rs)
         {
+            node.remove_attribute("size");
+
             Resource* r = rs->getParent();
             const char* hint = "";
             if (r)
@@ -278,7 +279,7 @@ namespace oxygine
 
         pugi::xml_node node = data->node;
         const char* res = node.attribute("resanim").as_string(0);
-        if (res)
+        if (res && *res)
         {
             setAnimFrame(data->factory->getFrame(res, node.attribute("column").as_int(0), node.attribute("row").as_int(0)));
         }
