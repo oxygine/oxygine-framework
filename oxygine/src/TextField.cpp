@@ -386,7 +386,8 @@ namespace oxygine
         if (fnt && *fnt)
         {
             ResFont* font = data->factory->getResFont(fnt);
-            _style.font = font->getFont();
+            if (font)
+                _style.font = font->getFont();
         }
 
         needRebuild();

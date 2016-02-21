@@ -234,7 +234,7 @@ namespace oxygine
     {
         _VStyleActor::serialize(data);
 
-        pugi::xml_node node = data->node;        
+        pugi::xml_node node = data->node;
 
         const ResAnim* rs = getResAnim();
         if (rs)
