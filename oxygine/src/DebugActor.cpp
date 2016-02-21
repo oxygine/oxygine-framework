@@ -74,6 +74,12 @@ namespace oxygine
             DebugActor::instance->detach();
     }
 
+    void DebugActor::setCorner(int corner)
+    {
+        if (DebugActor::instance)
+            DebugActor::instance->setCornerPosition(corner);
+    }
+
     void DebugActor::release()
     {
         instance = 0;
