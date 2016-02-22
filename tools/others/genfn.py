@@ -38,7 +38,20 @@ funcs = ["glShaderSource",
          "glBindBuffer",
          "glGenBuffers",
          "glBufferData",
-         "glDeleteBuffers"]
+         "glDeleteBuffers"
+         "glGetProgramInfoLog",
+         "glGetProgramiv",
+         "glGenerateMipmap",
+         "glStencilOpSeparate",
+         "glGenRenderbuffers",
+         "glBindRenderbuffer",
+         "glRenderbufferStorage",
+         "glFramebufferRenderbuffer",
+         "glDeleteRenderbuffers",
+         "glDeleteShader",
+         "glDeleteBuffers",
+         "glGetProgramInfoLog"
+         ]
 
 
 # GLAPI void APIENTRY glDeleteProgram (GLuint program);

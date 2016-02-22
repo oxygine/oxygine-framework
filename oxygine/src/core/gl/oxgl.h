@@ -56,7 +56,17 @@ extern "C"
     extern PFNGLBINDBUFFERPROC _glBindBuffer;
     extern PFNGLGENBUFFERSPROC _glGenBuffers;
     extern PFNGLBUFFERDATAPROC _glBufferData;
+    extern PFNGLGETPROGRAMIVPROC _glGetProgramiv;
+    extern PFNGLGENERATEMIPMAPPROC _glGenerateMipmap;
+    extern PFNGLSTENCILOPSEPARATEPROC _glStencilOpSeparate;
+    extern PFNGLGENRENDERBUFFERSPROC _glGenRenderbuffers;
+    extern PFNGLBINDRENDERBUFFERPROC _glBindRenderbuffer;
+    extern PFNGLRENDERBUFFERSTORAGEPROC _glRenderbufferStorage;
+    extern PFNGLFRAMEBUFFERRENDERBUFFERPROC _glFramebufferRenderbuffer;
+    extern PFNGLDELETERENDERBUFFERSPROC _glDeleteRenderbuffers;
+    extern PFNGLDELETESHADERPROC _glDeleteShader;
     extern PFNGLDELETEBUFFERSPROC _glDeleteBuffers;
+    extern PFNGLGETPROGRAMINFOLOGPROC _glGetProgramInfoLog;
 }
 
 #elif __ANDROID__
@@ -111,7 +121,6 @@ extern "C"
 #define PASTER(x,y) x ## y
 #define EVALUATOR(x,y)  PASTER(x,y)
 #define DECLARE_GLEXT(y)  EVALUATOR(GLPREF,y)
-
 #define oxglShaderSource DECLARE_GLEXT(glShaderSource)
 #define oxglUseProgram DECLARE_GLEXT(glUseProgram)
 #define oxglVertexAttribPointer DECLARE_GLEXT(glVertexAttribPointer)
@@ -143,7 +152,17 @@ extern "C"
 #define oxglBindBuffer DECLARE_GLEXT(glBindBuffer)
 #define oxglGenBuffers DECLARE_GLEXT(glGenBuffers)
 #define oxglBufferData DECLARE_GLEXT(glBufferData)
+#define oxglGetProgramiv DECLARE_GLEXT(glGetProgramiv)
+#define oxglGenerateMipmap DECLARE_GLEXT(glGenerateMipmap)
+#define oxglStencilOpSeparate DECLARE_GLEXT(glStencilOpSeparate)
+#define oxglGenRenderbuffers DECLARE_GLEXT(glGenRenderbuffers)
+#define oxglBindRenderbuffer DECLARE_GLEXT(glBindRenderbuffer)
+#define oxglRenderbufferStorage DECLARE_GLEXT(glRenderbufferStorage)
+#define oxglFramebufferRenderbuffer DECLARE_GLEXT(glFramebufferRenderbuffer)
+#define oxglDeleteRenderbuffers DECLARE_GLEXT(glDeleteRenderbuffers)
+#define oxglDeleteShader DECLARE_GLEXT(glDeleteShader)
 #define oxglDeleteBuffers DECLARE_GLEXT(glDeleteBuffers)
+#define oxglGetProgramInfoLog DECLARE_GLEXT(glGetProgramInfoLog)
 
 
 //#undef PASTER
