@@ -67,7 +67,9 @@ extern "C"
 #endif
 
 
-#if !SDL_VIDEO_OPENGL
+#if EMSCRIPTEN
+#define HANDLE_FOCUS_LOST 0
+#elif !SDL_VIDEO_OPENGL
 #define HANDLE_FOCUS_LOST 1
 #else
 #define HANDLE_FOCUS_LOST 0

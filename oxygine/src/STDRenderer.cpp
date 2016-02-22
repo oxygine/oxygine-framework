@@ -583,9 +583,14 @@ namespace oxygine
 
     void STDRenderer::beginElementRendering(bool basePremultiplied)
     {
-        unsigned int shaderFlags = _shaderFlags;
+        if (_alpha)
+        {
+            drawBatch();
+            _shaderFlags &= ~UberShaderProgram::SEPARATE_ALPHA;
+            _alpha = 0;
+        }
 
-        _alpha = 0;
+        unsigned int shaderFlags = _shaderFlags;
 
         if (basePremultiplied)
             shaderFlags &= ~UberShaderProgram::ALPHA_PREMULTIPLY;

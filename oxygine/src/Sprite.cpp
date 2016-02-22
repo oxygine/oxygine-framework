@@ -281,9 +281,14 @@ namespace oxygine
         const char* res = node.attribute("resanim").as_string(0);
         if (res && *res)
         {
-            setAnimFrame(data->factory->getFrame(res, node.attribute("column").as_int(0), node.attribute("row").as_int(0)));
+            int col = node.attribute("column").as_int(0);
+            int row = node.attribute("row").as_int(0);
+            AnimationFrame frame = data->factory->getFrame(res, col, row);
+            setAnimFrame(frame);
         }
 
         setFlipped(node.attribute("flipX").as_bool(false), node.attribute("flipY").as_bool(false));
+
+        setBlendMode(blend_premultiplied_alpha);
     }
 }
