@@ -4,8 +4,10 @@ from __future__ import unicode_literals, print_function
 
 try:
     import Image
+    import ImageChops
 except ImportError:
     from PIL import Image
+    from PIL import ImageChops
 
 import os
 import struct
@@ -14,6 +16,9 @@ import base64
 from . import atlas
 from . import process
 
+
+def isImagesIdentical(im1, im2):
+    return ImageChops.difference(im1, im2).getbbox() is None
 
 def as_int(attr, df=0):
     if not attr:
@@ -87,6 +92,7 @@ class frame(object):
         self.resanim = rs
         self.border_top = self.border_left = 2
         self.border_right = self.border_bottom = 1
+        self.identicalWith = None
 
         if not bbox:
             bbox = (0, 0, 1, 1)
@@ -214,6 +220,8 @@ def pack(st, frames, sw, sh):
 
     not_packed = []
     for fr in frames:
+        if fr.identicalWith:
+            continue
         ns = st.get_size(fr)
         node = atl.add(ns[0], ns[1], fr)
         if not node:
@@ -466,6 +474,14 @@ def processRS(context, walker):
             if not extend:
                 fr.border_left = fr.border_right = fr.border_top = fr.border_bottom = 0
 
+            for f in resAnim.frames:
+                if isImagesIdentical(f.image, fr.image):                    
+                    fr.identicalWith = f
+                    
+                    if f.identicalWith:
+                        fr.identicalWith = f.identicalWith
+                        
+
             resAnim.frames.append(fr)
 
     return resAnim
@@ -691,7 +707,10 @@ class atlas_Processor(process.Process):
                 image_frames_el.setAttribute("debug_image", anim.name)
 
             data = ""
-            for fr in anim.frames:
+            for item in anim.frames:
+                fr = item
+                if item.identicalWith:
+                    fr = item.identicalWith
                 data += "%d,%d,%d,%d,%d,%d,%d;" % (fr.atlas_id,
                                                    fr.node.rect.x + fr.border_left, fr.node.rect.y + fr.border_top,
                                                    fr.bbox[0], fr.bbox[1],
