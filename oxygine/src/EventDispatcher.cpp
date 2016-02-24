@@ -153,33 +153,28 @@ namespace oxygine
             return;
 
 
-        size_t size = _listeners->size();
-        listenerbase* copy = (listenerbase*)alloca(sizeof(listenerbase) * size);
+        const size_t size = _listeners->size();
+
+        unsigned int index_of [size]; //VLA
 
         size_t num = 0;
+
         for (size_t i = 0; i != size; ++i)
         {
             listener& ls = _listeners->at(i);
             if (ls.type != event->type)
                 continue;
 
-            new(copy + num) listenerbase(ls);
-            ++num;
+            index_of [ num ++ ] = i;
         }
 
         for (size_t i = 0; i != num; ++i)
         {
-            listenerbase& ls = copy[i];
+            listener & ls = (*_listeners) [index_of [i]];
             event->currentTarget = this;
             ls.cb(event);
             if (event->stopsImmediatePropagation)
                 break;
-        }
-
-        for (size_t i = 0; i != num; ++i)
-        {
-            listenerbase& ls = copy[i];
-            ls.~listenerbase();
         }
     }
 }
