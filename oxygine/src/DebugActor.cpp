@@ -32,6 +32,8 @@
 
 #ifdef __S3E__
 #include "s3eMemory.h"
+#elif __APPLE__
+#include "core/ios/ios.h"
 #endif
 
 namespace oxygine
@@ -294,6 +296,11 @@ namespace oxygine
         s << "update=" << getStage()->_statUpdate << "ms ";
         s << "render=" << getStage()->_statRender << "ms ";
         s << "textures=" << NativeTexture::created << " ";
+#ifdef __APPLE__
+        size_t mem;
+        iosGetMemoryUsage(mem);
+        s << "memory=" << mem/1024 << "kb ";
+#endif
         //s << "\nlisteners=" << getStage()->getListenersCount() << "";
 
         if (!_debugText.empty())
