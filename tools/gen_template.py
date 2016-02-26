@@ -357,7 +357,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Oxygine project generator")
     parser.add_argument("-t", "--type", help="Target platform",
-                        choices=platforms, default="all")
+                        choices=platforms, default="win32")
 
     parser.add_argument(
         "-s", "--src", help="folder with already created source files", default="")
