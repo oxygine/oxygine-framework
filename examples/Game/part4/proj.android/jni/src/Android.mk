@@ -6,7 +6,7 @@ LOCAL_MODULE := main
 #SDK_ROOT points to folder with SDL and oxygine-framework
 LOCAL_SRC_FILES := ../../../../../../..//SDL/src/main/android/SDL_android_main.c
 
-LOCAL_SRC_FILES += ../../../src/Enemy.cpp ../../../src/Game.cpp ../../../src/GameMenu.cpp ../../../src/GameScene.cpp ../../../src/Joystick.cpp ../../../src/MainMenuScene.cpp ../../../src/MyButton.cpp ../../../src/Player.cpp ../../../src/Rocket.cpp ../../../src/Scene.cpp ../../../src/Unit.cpp ../../../src/entry_point.cpp ../../../src/example.cpp ../../../src/res.cpp 
+LOCAL_SRC_FILES += ../../../src/Enemy.cpp ../../../src/Game.cpp ../../../src/GameMenu.cpp ../../../src/GameScene.cpp ../../../src/Joystick.cpp ../../../src/MainMenuScene.cpp ../../../src/MyButton.cpp ../../../src/Player.cpp ../../../src/Rocket.cpp ../../../src/Scene.cpp ../../../src/Unit.cpp ../../../src/main.cpp ../../../src/example.cpp ../../../src/res.cpp
 
 
 LOCAL_STATIC_LIBRARIES := oxygine-framework_static

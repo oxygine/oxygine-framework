@@ -215,7 +215,7 @@ def _run(args):
             # 0405A0091872139000BA6557 /* xmls in Resources */ = {isa =
             # PBXBuildFile; fileRef = 0405A0051872139000BA6557 /* xmls */; };
 
-            # 04A57D601871FF9F0068B1E5 /* entry_point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04A57D3A1871FF9F0068B1E5 /* entry_point.cpp */; };
+            # 04A57D601871FF9F0068B1E5 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04A57D3A1871FF9F0068B1E5 /* main.cpp */; };
             # 04A57D621871FF9F0068B1E5 /* example.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04A57D3C1871FF9F0068B1E5 /* example.cpp */; };
             # 04A57D651871FF9F0068B1E5 /* test.cpp in Sources */ = {isa =
             # PBXBuildFile; fileRef = 04A57D401871FF9F0068B1E5 /* test.cpp */;
@@ -227,7 +227,7 @@ def _run(args):
             values[
                 "PBXBuildFile"] += process(tm, relto, abs_data, data_files, fn)
 
-            # 04A57D3A1871FF9F0068B1E5 /* entry_point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = entry_point.cpp; path = ../../src/entry_point.cpp; sourceTree = "<group>"; };
+            # 04A57D3A1871FF9F0068B1E5 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../../src/main.cpp; sourceTree = "<group>"; };
             # 04A57D3C1871FF9F0068B1E5 /* example.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = example.cpp; path = ../../src/example.cpp; sourceTree = "<group>"; };
             # 04A57D3E1871FF9F0068B1E5 /* example.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = example.h; path = ../../src/example.h; sourceTree = "<group>"; };
             # 04A57D401871FF9F0068B1E5 /* test.cpp */ = {isa =
@@ -251,7 +251,7 @@ def _run(args):
             values["PBXFileReference"] = process(
                 tm, relto, args.src, files, fn)
 
-            # 04A57D3A1871FF9F0068B1E5 /* entry_point.cpp */,
+            # 04A57D3A1871FF9F0068B1E5 /* main.cpp */,
             # 04A57D3C1871FF9F0068B1E5 /* example.cpp */,
             # 04A57D3E1871FF9F0068B1E5 /* example.h */,
             # 04A57D401871FF9F0068B1E5 /* test.cpp */,
@@ -280,7 +280,7 @@ def _run(args):
                 tm, relto, abs_data, data_files, fn)
 
             # 04A57D621871FF9F0068B1E5 /* example.cpp in Sources */,
-            # 04A57D601871FF9F0068B1E5 /* entry_point.cpp in Sources */,
+            # 04A57D601871FF9F0068B1E5 /* main.cpp in Sources */,
             # 04A57D651871FF9F0068B1E5 /* test.cpp in Sources */,
             values["PBXSourcesBuildPhase"] = process(
                 tm, relto, args.src, cpp_files, fn)

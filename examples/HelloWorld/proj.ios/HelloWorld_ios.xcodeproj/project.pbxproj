@@ -25,7 +25,7 @@
 		04E9AD3F1876FE84006A7317 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04E9AD3E1876FE84006A7317 /* Images.xcassets */; };
 		922B9F8F1BBB2FB100B1401E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 922B9F8E1BBB2FB100B1401E /* LaunchScreen.storyboard */; settings = {ASSET_TAGS = (); }; };
 
-		2DC477AC10D6C07B3FE008F6 /* ../src/entry_point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360377333740D8A2FD15BBE6 /* ../src/entry_point.cpp */; };
+		2DC477AC10D6C07B3FE008F6 /* ../src/main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360377333740D8A2FD15BBE6 /* ../src/main.cpp */; };
 		DA49ED8903C628BA578C8670 /* ../src/example.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BF9628FC8D38F9748F0CDEB /* ../src/example.cpp */; };
 		C8860D93875589970329DCCD /* ../data/fonts in Sources */ = {isa = PBXBuildFile; fileRef = 4DA100C319512824B7570663 /* ../data/fonts */; };
 		1E839D002B2BA83FC83A695A /* ../data/images in Sources */ = {isa = PBXBuildFile; fileRef = 04FE4D4FB640E0DF92DFB865 /* ../data/images */; };
@@ -83,7 +83,7 @@
 		04E9AD3E1876FE84006A7317 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name =Images.xcassets; path = HelloWorld/Images.xcassets; sourceTree = "<group>"; };
 		922B9F8F1BBB2FB100B1401E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 922B9F8E1BBB2FB100B1401E /* LaunchScreen.storyboard */; settings = {ASSET_TAGS = (); }; };
 
-		360377333740D8A2FD15BBE6 /* ../src/entry_point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = entry_point.cpp; path = ../src/entry_point.cpp; sourceTree = "<group>"; };
+		360377333740D8A2FD15BBE6 /* ../src/main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../src/main.cpp; sourceTree = "<group>"; };
 		0BF9628FC8D38F9748F0CDEB /* ../src/example.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = example.cpp; path = ../src/example.cpp; sourceTree = "<group>"; };
 		F6123B1E6FE4471A00F49751 /* ../src/example.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = example.h; path = ../src/example.h; sourceTree = "<group>"; };
 		4DA100C319512824B7570663 /* ../data/fonts */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = fonts; path = ../data/fonts; sourceTree = "<group>"; };
@@ -189,7 +189,7 @@
 		04998D4417F8A9ED003441C3 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				360377333740D8A2FD15BBE6 /* entry_point.cpp */, 
+				360377333740D8A2FD15BBE6 /* main.cpp */,
 				0BF9628FC8D38F9748F0CDEB /* example.cpp */, 
 				F6123B1E6FE4471A00F49751 /* example.h */, 
 
@@ -302,7 +302,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2DC477AC10D6C07B3FE008F6 /* entry_point.cpp */, 
+				2DC477AC10D6C07B3FE008F6 /* main.cpp */,
 				DA49ED8903C628BA578C8670 /* example.cpp */, 
 
 			);

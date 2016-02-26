@@ -117,7 +117,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="../src/Game.cpp" /><ClCompile Include="../src/Joystick.cpp" /><ClCompile Include="../src/Player.cpp" /><ClCompile Include="../src/Unit.cpp" /><ClCompile Include="../src/entry_point.cpp" /><ClCompile Include="../src/example.cpp" /><ClCompile Include="../src/res.cpp" />
+    <ClCompile Include="../src/Game.cpp" /><ClCompile Include="../src/Joystick.cpp" /><ClCompile Include="../src/Player.cpp" /><ClCompile Include="../src/Unit.cpp" /><ClCompile Include="../src/main.cpp" /><ClCompile Include="../src/example.cpp" /><ClCompile Include="../src/res.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="../src/Game.h" /><ClInclude Include="../src/Joystick.h" /><ClInclude Include="../src/Player.h" /><ClInclude Include="../src/Unit.h" /><ClInclude Include="../src/example.h" /><ClInclude Include="../src/res.h" />
