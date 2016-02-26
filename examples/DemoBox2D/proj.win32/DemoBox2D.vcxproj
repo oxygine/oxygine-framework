@@ -115,7 +115,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="../src/Box2DDebugDraw.cpp" />
-    <ClCompile Include="../src/entry_point.cpp" />
+    <ClCompile Include="../src/main.cpp" />
     <ClCompile Include="../src/example.cpp" />
     <ClCompile Include="..\box2d\Box2D\Collision\b2BroadPhase.cpp" />
     <ClCompile Include="..\box2d\Box2D\Collision\b2CollideCircle.cpp" />

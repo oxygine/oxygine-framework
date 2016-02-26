@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-
 import os
 import io
 import glob
@@ -215,7 +214,7 @@ def _run(args):
             # 0405A0091872139000BA6557 /* xmls in Resources */ = {isa =
             # PBXBuildFile; fileRef = 0405A0051872139000BA6557 /* xmls */; };
 
-            # 04A57D601871FF9F0068B1E5 /* entry_point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04A57D3A1871FF9F0068B1E5 /* entry_point.cpp */; };
+            # 04A57D601871FF9F0068B1E5 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04A57D3A1871FF9F0068B1E5 /* main.cpp */; };
             # 04A57D621871FF9F0068B1E5 /* example.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04A57D3C1871FF9F0068B1E5 /* example.cpp */; };
             # 04A57D651871FF9F0068B1E5 /* test.cpp in Sources */ = {isa =
             # PBXBuildFile; fileRef = 04A57D401871FF9F0068B1E5 /* test.cpp */;
@@ -227,7 +226,7 @@ def _run(args):
             values[
                 "PBXBuildFile"] += process(tm, relto, abs_data, data_files, fn)
 
-            # 04A57D3A1871FF9F0068B1E5 /* entry_point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = entry_point.cpp; path = ../../src/entry_point.cpp; sourceTree = "<group>"; };
+            # 04A57D3A1871FF9F0068B1E5 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../../src/main.cpp; sourceTree = "<group>"; };
             # 04A57D3C1871FF9F0068B1E5 /* example.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = example.cpp; path = ../../src/example.cpp; sourceTree = "<group>"; };
             # 04A57D3E1871FF9F0068B1E5 /* example.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = example.h; path = ../../src/example.h; sourceTree = "<group>"; };
             # 04A57D401871FF9F0068B1E5 /* test.cpp */ = {isa =
@@ -251,7 +250,7 @@ def _run(args):
             values["PBXFileReference"] = process(
                 tm, relto, args.src, files, fn)
 
-            # 04A57D3A1871FF9F0068B1E5 /* entry_point.cpp */,
+            # 04A57D3A1871FF9F0068B1E5 /* main.cpp */,
             # 04A57D3C1871FF9F0068B1E5 /* example.cpp */,
             # 04A57D3E1871FF9F0068B1E5 /* example.h */,
             # 04A57D401871FF9F0068B1E5 /* test.cpp */,
@@ -280,7 +279,7 @@ def _run(args):
                 tm, relto, abs_data, data_files, fn)
 
             # 04A57D621871FF9F0068B1E5 /* example.cpp in Sources */,
-            # 04A57D601871FF9F0068B1E5 /* entry_point.cpp in Sources */,
+            # 04A57D601871FF9F0068B1E5 /* main.cpp in Sources */,
             # 04A57D651871FF9F0068B1E5 /* test.cpp in Sources */,
             values["PBXSourcesBuildPhase"] = process(
                 tm, relto, args.src, cpp_files, fn)
@@ -356,20 +355,20 @@ def _run(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="oxygine projects template generator")
-    parser.add_argument("-t", "--type", help="choose your IDE/build tools",
+        description="Oxygine project generator")
+    parser.add_argument("-t", "--type", help="Target platform",
                         choices=platforms, default="win32")
 
     parser.add_argument(
         "-s", "--src", help="folder with already created source files", default="")
 
     parser.add_argument(
-        "-d", "--dest", help="destination location", default=".")
+        "-d", "--dest", help="Destination folder", default=".")
 
-    parser.add_argument("--hello", help="generates full copy of HelloWorld example. It includes all platforms, data and src folder",
+    parser.add_argument("--hello", help="Generates a full copy of the HelloWorld example targeting all platforms",
                         action="store_true", default=False)
 
-    parser.add_argument("name")
+    parser.add_argument("name", help="Name of the project")
 
     args = parser.parse_args()
     run(args)

@@ -28,5 +28,5 @@ def copy(item, name):
     shutil.copyfile(demo + name, item + "/" + name)
 
 for item in items:
-    copy(item, "src/entry_point.cpp")
+    copy(item, "src/main.cpp")
     # copy(item, "data/app.icf")

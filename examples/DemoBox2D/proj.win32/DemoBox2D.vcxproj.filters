@@ -18,7 +18,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="../src/entry_point.cpp">
+    <ClCompile Include="../src/main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="../src/example.cpp">

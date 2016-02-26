@@ -128,7 +128,7 @@ typedef oxygine::intrusive_ptr<MainActor> spMainActor;
 
 void example_preinit() {}
 
-//called from entry_point.cpp
+//called from main.cpp
 void example_init()
 {
     //load xml file with resources definition
@@ -144,12 +144,12 @@ void example_init()
 }
 
 
-//called each frame from entry_point.cpp
+//called each frame from main.cpp
 void example_update()
 {
 }
 
-//called each frame from entry_point.cpp
+//called each frame from main.cpp
 void example_destroy()
 {
     //free previously loaded resources

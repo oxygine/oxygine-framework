@@ -58,3 +58,4 @@ oxygine/SDL/android/extension/bin/
 build
 /examples/Demo/proj.cmake/mingw
 **/proj.marmalade/build_demo_vc*
+.DS_Store

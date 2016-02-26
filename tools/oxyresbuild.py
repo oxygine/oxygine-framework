@@ -14,21 +14,21 @@ def str2bool(v):
 def get_parser():
     import argparse
     parser = argparse.ArgumentParser(
-        description="oxyresbuild is being used to processing and optimizing "
-        "xml resources file. It generated <xml-name>.ox folder with "
-        "meta.xml file inside. Meta file has optimized information "
-        "about resources, atlasses."
+        description="oxyresbuild is a tool for optimizing xml resource files."
+        "It generates a <xml-name>.ox folder with a"
+        "meta.xml file inside. The meta file has optimized information "
+        "about resources including atlasses."
     )
     parser.add_argument(
-        "--src_data", help="root data folder contains all resources",
+        "--src_data", help="The data folder containing all the resources",
         default="."
     )
     parser.add_argument(
-        "--dest_data", help="destination data folder for generated files",
+        "--dest_data", help="Destination data folder",
         default="."
     )
     parser.add_argument(
-        "-x", "--xml", help="xml file to process", default=".", required=True)
+        "-x", "--xml", help="The xml file to process", default=".", required=True)
     parser.add_argument("-mw", "--max_width",
                         help="max atlas width", type=int, default=2048)
     parser.add_argument("-mh", "--max_height",
@@ -38,19 +38,19 @@ def get_parser():
         "Value > 1 - upscale, Value < 1 - downscale. Should be used "
         "with --resize", type=float, default=1.0
     )
-    parser.add_argument("-r", "--resize", help="Resize images by scale value",
+    parser.add_argument("-r", "--resize", help="Resize images by a scale value",
                         action="store_true", default=False)
     parser.add_argument("-us", "--upscale",
-                        help="allow upscale. good option for very HD "
+                        help="allow upscale (Recommended for HD resources)"
                         "displays with texture compression",
                         action="store_true", default=False)
-    parser.add_argument("-c", "--compression", help="type of images "
-                        "compression. default is pure rgba8888 packed to png",
+    parser.add_argument("-c", "--compression", help="type of image "
+                        "compression. Defaults to pure rgba8888 packed to png",
                         choices=["pvrtc", "pvrtc2", "etc1", "no"], default="")
-    parser.add_argument("--npot", help="not power of two atlasses",
+    parser.add_argument("--npot", help="Atlasses dimensions are not power of twos",
                         action="store_true", default=False)
     parser.add_argument("-q", "--quality", help="select quality to "
-                        "compressed textures (default is not best)",
+                        "compressed textures (default is fast)",
                         choices=["default", "fast", "best"], default="default")
     parser.add_argument("-d", "--dither", help="added dithering to "
                         "compressed textures (pvr option)",
@@ -61,16 +61,16 @@ def get_parser():
         "-v", "--verbosity", help="verbosity level. 1 - only errors, "
         "2 - normal. Default value is 2", type=int, default=2)
     parser.add_argument("--hash", help="enables creating md5 hash lists for "
-                        "some special files",
+                        "certain special files",
                         action="store_true", default=False)
     parser.add_argument("--debug", help="debug mode",
                         action="store_true", default=False)
-    parser.add_argument("--no_hit_test", help="disables generation "
+    parser.add_argument("--no_hit_test", help="disables generation of"
                         "hit_test data by default",
                         action="store_true", default=False)
     parser.add_argument("--nopng", help="stores images without "
                         "packing to png. TGA will be used if "
-                        "compressiong disabled.",
+                        "compressiong is disabled.",
                         action="store_true", default=False)
     return parser
 

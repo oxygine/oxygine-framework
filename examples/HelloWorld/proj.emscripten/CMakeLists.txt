@@ -9,7 +9,7 @@ link_directories(${OXYGINE_LIBRARY_DIRS})
 SET(CMAKE_EXECUTABLE_SUFFIX ".html")
 set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} " -std=c++11")
 
-add_executable(HelloWorld ../src/entry_point.cpp ../src/example.cpp  ../src/example.h )
+add_executable(HelloWorld ../src/main.cpp ../src/example.cpp  ../src/example.h )
 
 if (CMAKE_BUILD_TYPE STREQUAL Debug)
 	SET(linkFlags "-g4 ")

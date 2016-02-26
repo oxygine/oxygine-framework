@@ -27,7 +27,7 @@
 
 		2DC477AC10D6C07B3FE008F6 /* ../src/Board.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360377333740D8A2FD15BBE6 /* ../src/Board.cpp */; };
 		DA49ED8903C628BA578C8670 /* ../src/Jewel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BF9628FC8D38F9748F0CDEB /* ../src/Jewel.cpp */; };
-		C8860D93875589970329DCCD /* ../src/entry_point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DA100C319512824B7570663 /* ../src/entry_point.cpp */; };
+		C8860D93875589970329DCCD /* ../src/main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DA100C319512824B7570663 /* ../src/main.cpp */; };
 		1E839D002B2BA83FC83A695A /* ../src/example.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04FE4D4FB640E0DF92DFB865 /* ../src/example.cpp */; };
 		3A631A475DE035FC53ADE5EA /* ../src/shared.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F3B12E3C9D554D9FE28101D /* ../src/shared.cpp */; };
 		CD59C69314E9E74CD0A11E03 /* ../data/fonts in Sources */ = {isa = PBXBuildFile; fileRef = F6123B1E6FE4471A00F49751 /* ../data/fonts */; };
@@ -88,7 +88,7 @@
 
 		360377333740D8A2FD15BBE6 /* ../src/Board.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Board.cpp; path = ../src/Board.cpp; sourceTree = "<group>"; };
 		0BF9628FC8D38F9748F0CDEB /* ../src/Jewel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Jewel.cpp; path = ../src/Jewel.cpp; sourceTree = "<group>"; };
-		4DA100C319512824B7570663 /* ../src/entry_point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = entry_point.cpp; path = ../src/entry_point.cpp; sourceTree = "<group>"; };
+		4DA100C319512824B7570663 /* ../src/main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../src/main.cpp; sourceTree = "<group>"; };
 		04FE4D4FB640E0DF92DFB865 /* ../src/example.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = example.cpp; path = ../src/example.cpp; sourceTree = "<group>"; };
 		7F3B12E3C9D554D9FE28101D /* ../src/shared.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = shared.cpp; path = ../src/shared.cpp; sourceTree = "<group>"; };
 		2CE4BD5BB9DEF92439C0AB58 /* ../src/Board.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Board.h; path = ../src/Board.h; sourceTree = "<group>"; };
@@ -200,7 +200,7 @@
 			children = (
 				360377333740D8A2FD15BBE6 /* Board.cpp */, 
 				0BF9628FC8D38F9748F0CDEB /* Jewel.cpp */, 
-				4DA100C319512824B7570663 /* entry_point.cpp */, 
+				4DA100C319512824B7570663 /* main.cpp */,
 				04FE4D4FB640E0DF92DFB865 /* example.cpp */, 
 				7F3B12E3C9D554D9FE28101D /* shared.cpp */, 
 				2CE4BD5BB9DEF92439C0AB58 /* Board.h */, 
@@ -319,7 +319,7 @@
 			files = (
 				2DC477AC10D6C07B3FE008F6 /* Board.cpp */, 
 				DA49ED8903C628BA578C8670 /* Jewel.cpp */, 
-				C8860D93875589970329DCCD /* entry_point.cpp */, 
+				C8860D93875589970329DCCD /* main.cpp */,
 				1E839D002B2BA83FC83A695A /* example.cpp */, 
 				3A631A475DE035FC53ADE5EA /* shared.cpp */, 
 

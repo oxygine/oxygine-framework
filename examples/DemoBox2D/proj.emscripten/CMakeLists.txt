@@ -15,7 +15,7 @@ file(GLOB_RECURSE BOX2DSRC
 
 include_directories(../box2d)
 
-add_executable(DemoBox2D ${BOX2DSRC} ../src/Box2DDebugDraw.cpp ../src/entry_point.cpp ../src/example.cpp  ../src/Box2DDebugDraw.h ../src/example.h )
+add_executable(DemoBox2D ${BOX2DSRC} ../src/Box2DDebugDraw.cpp ../src/main.cpp ../src/example.cpp  ../src/Box2DDebugDraw.h ../src/example.h )
 
 
 

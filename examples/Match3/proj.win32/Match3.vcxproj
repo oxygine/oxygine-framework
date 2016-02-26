@@ -117,7 +117,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="../src/Board.cpp" /><ClCompile Include="../src/Jewel.cpp" /><ClCompile Include="../src/entry_point.cpp" /><ClCompile Include="../src/example.cpp" /><ClCompile Include="../src/shared.cpp" />
+    <ClCompile Include="../src/Board.cpp" /><ClCompile Include="../src/Jewel.cpp" /><ClCompile Include="../src/main.cpp" /><ClCompile Include="../src/example.cpp" /><ClCompile Include="../src/shared.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="../src/Board.h" /><ClInclude Include="../src/Jewel.h" /><ClInclude Include="../src/example.h" /><ClInclude Include="../src/shared.h" />

@@ -16,7 +16,7 @@
 		049B57321871FBE900EF3C66 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 049B57311871FBE900EF3C66 /* Cocoa.framework */; };
 		049B574A1871FBE900EF3C66 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 049B57491871FBE900EF3C66 /* Images.xcassets */; };
 		1E839D002B2BA83FC83A695A /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 04FE4D4FB640E0DF92DFB865 /* fonts */; };
-		2DC477AC10D6C07B3FE008F6 /* entry_point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360377333740D8A2FD15BBE6 /* entry_point.cpp */; };
+		2DC477AC10D6C07B3FE008F6 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360377333740D8A2FD15BBE6 /* main.cpp */; };
 		3A631A475DE035FC53ADE5EA /* images in Resources */ = {isa = PBXBuildFile; fileRef = 7F3B12E3C9D554D9FE28101D /* images */; };
 		DA49ED8903C628BA578C8670 /* example.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BF9628FC8D38F9748F0CDEB /* example.cpp */; };
 		EFF139F8BA484314F7AAF645 /* res.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5DE458993031811A4C7D28C1 /* res.xml */; };
@@ -93,7 +93,7 @@
 		04A57D7E1872012A0068B1E5 /* SDL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SDL.xcodeproj; path = "../../../..//SDL/Xcode/SDL/SDL.xcodeproj"; sourceTree = "<group>"; };
 		04FE4D4FB640E0DF92DFB865 /* fonts */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = fonts; path = ../data/fonts; sourceTree = "<group>"; };
 		0BF9628FC8D38F9748F0CDEB /* example.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = example.cpp; path = ../src/example.cpp; sourceTree = "<group>"; };
-		360377333740D8A2FD15BBE6 /* entry_point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = entry_point.cpp; path = ../src/entry_point.cpp; sourceTree = "<group>"; };
+		360377333740D8A2FD15BBE6 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../src/main.cpp; sourceTree = "<group>"; };
 		5DE458993031811A4C7D28C1 /* res.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wtf; name = res.xml; path = ../data/res.xml; sourceTree = "<group>"; };
 		7F3B12E3C9D554D9FE28101D /* images */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = images; path = ../data/images; sourceTree = "<group>"; };
 		BA41FC88D76540A6905224D6 /* example.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = example.h; path = ../src/example.h; sourceTree = "<group>"; };
@@ -186,7 +186,7 @@
 		04A57D391871FF8B0068B1E5 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				360377333740D8A2FD15BBE6 /* entry_point.cpp */,
+				360377333740D8A2FD15BBE6 /* main.cpp */,
 				0BF9628FC8D38F9748F0CDEB /* example.cpp */,
 				BA41FC88D76540A6905224D6 /* example.h */,
 			);
@@ -320,7 +320,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2DC477AC10D6C07B3FE008F6 /* entry_point.cpp in Sources */,
+				2DC477AC10D6C07B3FE008F6 /* main.cpp in Sources */,
 				DA49ED8903C628BA578C8670 /* example.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

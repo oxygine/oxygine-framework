@@ -66,7 +66,7 @@
 		9271CEA71BAB66780085E667 /* b2Rope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9271CE781BAB66780085E667 /* b2Rope.cpp */; };
 		C8860D93875589970329DCCD /* example.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DA100C319512824B7570663 /* example.cpp */; };
 		CD59C69314E9E74CD0A11E03 /* res.xml in Resources */ = {isa = PBXBuildFile; fileRef = F6123B1E6FE4471A00F49751 /* res.xml */; };
-		DA49ED8903C628BA578C8670 /* entry_point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BF9628FC8D38F9748F0CDEB /* entry_point.cpp */; };
+		DA49ED8903C628BA578C8670 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BF9628FC8D38F9748F0CDEB /* main.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -139,7 +139,7 @@
 		04A57D761871FFEB0068B1E5 /* oxygine_macosx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = oxygine_macosx.xcodeproj; path = "../../..//oxygine/SDL/macosx/oxygine_macosx/oxygine_macosx.xcodeproj"; sourceTree = "<group>"; };
 		04A57D7E1872012A0068B1E5 /* SDL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SDL.xcodeproj; path = "../../../..//SDL/Xcode/SDL/SDL.xcodeproj"; sourceTree = "<group>"; };
 		04FE4D4FB640E0DF92DFB865 /* fonts */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = fonts; path = ../data/fonts; sourceTree = "<group>"; };
-		0BF9628FC8D38F9748F0CDEB /* entry_point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = entry_point.cpp; path = ../src/entry_point.cpp; sourceTree = "<group>"; };
+		0BF9628FC8D38F9748F0CDEB /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../src/main.cpp; sourceTree = "<group>"; };
 		360377333740D8A2FD15BBE6 /* Box2DDebugDraw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Box2DDebugDraw.cpp; path = ../src/Box2DDebugDraw.cpp; sourceTree = "<group>"; };
 		4DA100C319512824B7570663 /* example.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = example.cpp; path = ../src/example.cpp; sourceTree = "<group>"; };
 		5DE458993031811A4C7D28C1 /* Box2DDebugDraw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Box2DDebugDraw.h; path = ../src/Box2DDebugDraw.h; sourceTree = "<group>"; };
@@ -330,7 +330,7 @@
 			children = (
 				92908F7419C9ECAC0088BCA9 /* box2d */,
 				360377333740D8A2FD15BBE6 /* Box2DDebugDraw.cpp */,
-				0BF9628FC8D38F9748F0CDEB /* entry_point.cpp */,
+				0BF9628FC8D38F9748F0CDEB /* main.cpp */,
 				4DA100C319512824B7570663 /* example.cpp */,
 				5DE458993031811A4C7D28C1 /* Box2DDebugDraw.h */,
 				BA41FC88D76540A6905224D6 /* example.h */,
@@ -647,7 +647,7 @@
 				9271CE971BAB66780085E667 /* b2EdgeAndCircleContact.cpp in Sources */,
 				9271CE861BAB66780085E667 /* b2BlockAllocator.cpp in Sources */,
 				9271CE871BAB66780085E667 /* b2Draw.cpp in Sources */,
-				DA49ED8903C628BA578C8670 /* entry_point.cpp in Sources */,
+				DA49ED8903C628BA578C8670 /* main.cpp in Sources */,
 				9271CEA51BAB66780085E667 /* b2WeldJoint.cpp in Sources */,
 				9271CE851BAB66780085E667 /* b2PolygonShape.cpp in Sources */,
 				9271CE931BAB66780085E667 /* b2ChainAndPolygonContact.cpp in Sources */,
