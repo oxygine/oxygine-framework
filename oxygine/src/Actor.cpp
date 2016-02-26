@@ -156,6 +156,12 @@ namespace oxygine
         if (!getVisible())
             stream << " invisible";
 
+        if (!getTouchEnabled())
+            stream << " touchEnabled=false";
+
+        if (!getTouchChildrenEnabled())
+            stream << " touchChildrenEnabled=false";
+
         if (getAlpha() != 255)
             stream << " alpha=" << (int)getAlpha();
 

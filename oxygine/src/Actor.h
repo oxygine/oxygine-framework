@@ -142,8 +142,10 @@ namespace oxygine
         pointer_index       getPressed() const;
         /**returns touch id if actor is moused overred*/
         pointer_index       getOvered() const;
-        bool                getInputEnabled() const {return (_flags & flag_touchEnabled) != 0;}
-        bool                getInputChildrenEnabled() const {return (_flags & flag_touchChildrenEnabled) != 0;}
+        bool                getInputEnabled() const { return (_flags & flag_touchEnabled) != 0; }
+        bool                getInputChildrenEnabled() const { return (_flags & flag_touchChildrenEnabled) != 0; }
+        bool                getTouchEnabled() const { return (_flags & flag_touchEnabled) != 0; }
+        bool                getTouchChildrenEnabled() const { return (_flags & flag_touchChildrenEnabled) != 0; }
         bool                getChildrenRelative() const {return (_flags & flag_childrenRelative) != 0;;}
         UpdateCallback      getCallbackDoUpdate() const {return _cbDoUpdate;}
         Material*           getMaterial() { return _material; }
