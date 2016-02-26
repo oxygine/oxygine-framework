@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-
 import os
 import io
 import glob
@@ -356,20 +355,20 @@ def _run(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="oxygine projects template generator")
-    parser.add_argument("-t", "--type", help="choose your IDE/build tools",
-                        choices=platforms, default="win32")
+        description="Oxygine project generator")
+    parser.add_argument("-t", "--type", help="Target platform",
+                        choices=platforms, default="all")
 
     parser.add_argument(
         "-s", "--src", help="folder with already created source files", default="")
 
     parser.add_argument(
-        "-d", "--dest", help="destination location", default=".")
+        "-d", "--dest", help="Destination folder", default=".")
 
-    parser.add_argument("--hello", help="generates full copy of HelloWorld example. It includes all platforms, data and src folder",
+    parser.add_argument("--hello", help="Generates a full copy of the HelloWorld example targeting all platforms",
                         action="store_true", default=False)
 
-    parser.add_argument("name")
+    parser.add_argument("name", help="Name of the project")
 
     args = parser.parse_args()
     run(args)
