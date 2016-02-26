@@ -12,4 +12,6 @@ namespace oxygine
     class MemoryTexture;
 
     bool nsImageLoad(MemoryTexture& mt, void* pData, int nDatalen, bool premultiplied, TextureFormat format);
+    
+    void iosGetMemoryUsage(size_t &a);
 }

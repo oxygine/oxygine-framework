@@ -356,6 +356,7 @@ namespace oxygine
 #if TARGET_OS_IPHONE
             flags |= SDL_WINDOW_BORDERLESS;
             flags |= SDL_WINDOW_ALLOW_HIGHDPI;
+            flags |= SDL_WINDOW_FULLSCREEN;
 #endif
 
             //SDL_DisplayMode mode;
