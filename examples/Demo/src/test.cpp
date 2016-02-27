@@ -23,7 +23,7 @@ void Test::init()
     //Load logo from oxygine server
     spWebImage sp = new WebImage;
     sp->load("http://oxygine.org/test/logo.png");
-    sp->setInputEnabled(false);
+    sp->setTouchEnabled(false);
     sp->attachTo(getStage());
     sp->setPriority(10);
     sp->setAlpha(128);

@@ -28,8 +28,8 @@ public:
         toggle dr[] = {toggle("driver=null", 0, new VideoDriverNull), toggle("driver=default", 0, 0)};
         addToggle("driver", dr, 2);
 
-        content->setInputEnabled(false);
-        content->setInputChildrenEnabled(false);
+        content->setTouchEnabled(false);
+        content->setTouchChildrenEnabled(false);
     }
 
     void toggleClicked(string id, const toggle* data)
