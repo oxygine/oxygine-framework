@@ -589,14 +589,6 @@ namespace oxygine
             if (!stage)
                 stage = getStage();
 
-            //deprecated
-            {
-                Event ev(Input::event_platform);
-                ev.userData = &event;
-                Input::instance.dispatchEvent(&ev);
-            }
-
-
             Event ev(EVENT_SYSTEM);
             ev.userData = &event;
             _dispatcher->dispatchEvent(&ev);
