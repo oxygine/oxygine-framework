@@ -51,7 +51,7 @@ public:
         contacts = new Actor;
         contacts->attachTo(content);
         contacts->setPriority(10000);
-        contacts->setInputChildrenEnabled(false);
+        contacts->setTouchChildrenEnabled(false);
     }
 
     void doUpdate(const UpdateState& us)
@@ -205,7 +205,7 @@ public:
             dragging->attachTo(ball->getParent());
             dragging->setColor(Color::Red);
             dragging->setAnchor(0, 0);
-            dragging->setInputEnabled(false);
+            dragging->setTouchEnabled(false);
             drag.start(touchedBy, dragging.get(), dragging->getSize() / 2);
         }
     }

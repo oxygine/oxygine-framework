@@ -40,7 +40,7 @@ namespace oxygine
         void updateText();
         static InputText* _active;
 
-        void _onPlatform(Event* event);
+        void _onSysEvent(Event* event);
 
 #ifndef __S3E__
         int _onSDLEvent(SDL_Event* event);

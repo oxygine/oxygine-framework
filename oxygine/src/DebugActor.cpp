@@ -299,7 +299,7 @@ namespace oxygine
 #ifdef __APPLE__
         size_t mem;
         iosGetMemoryUsage(mem);
-        s << "memory=" << mem/1024 << "kb ";
+        s << "memory=" << mem / 1024 << "kb ";
 #endif
         //s << "\nlisteners=" << getStage()->getListenersCount() << "";
 

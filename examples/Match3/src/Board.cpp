@@ -36,7 +36,7 @@ void Board::init(int w, int h)
     _view->setSize(_size.x * JewelSize.x, _size.y * JewelSize.y);
 
     _view->addEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &Board::touched));
-    _view->setInputChildrenEnabled(false);
+    _view->setTouchChildrenEnabled(false);
 
     _view->setCallbackDoUpdate(CLOSURE(this, &Board::update));
 }

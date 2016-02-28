@@ -1,7 +1,7 @@
 #include "InputText.h"
 #include "TextField.h"
 #include "utils/stringUtils.h"
-#include "Input.h"
+#include "core/oxygine.h"
 
 #ifndef __S3E__
 #include "SDL_keyboard.h"
@@ -49,7 +49,7 @@ namespace oxygine
 
         _textActor = ta;
 
-        Input::instance.addEventListener(Input::event_platform, CLOSURE(this, &InputText::_onPlatform));
+        core::getDispatcher()->addEventListener(core::EVENT_SYSTEM, CLOSURE(this, &InputText::_onSysEvent));
 
 #ifndef __S3E__
         SDL_StartTextInput();
@@ -89,7 +89,7 @@ namespace oxygine
 #ifndef __S3E__
         SDL_StopTextInput();
 #endif
-        Input::instance.removeEventListeners(this);
+        core::getDispatcher()->removeEventListeners(this);
 
         _active = 0;
         _textActor = 0;
@@ -97,7 +97,7 @@ namespace oxygine
         releaseRef();
     }
 
-    void InputText::_onPlatform(Event* event)
+    void InputText::_onSysEvent(Event* event)
     {
 #ifndef __S3E__
         _onSDLEvent((SDL_Event*)event->userData);

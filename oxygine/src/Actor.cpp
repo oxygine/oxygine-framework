@@ -1158,8 +1158,8 @@ namespace oxygine
         setAttrV2(node, "size", getSize(), Vector2(0, 0));
         setAttr(node, "rotation", getRotation(), 0.0f);
         setAttr(node, "visible", getVisible(), true);
-        setAttr(node, "input", getInputEnabled(), true);
-        setAttr(node, "inputch", getInputChildrenEnabled(), true);
+        setAttr(node, "input", getTouchEnabled(), true);
+        setAttr(node, "inputch", getTouchChildrenEnabled(), true);
         setAttr(node, "alpha", getAlpha(), (unsigned char)255);
         setAttrV2(node, "anchor", getAnchor(), Vector2(0, 0));
 

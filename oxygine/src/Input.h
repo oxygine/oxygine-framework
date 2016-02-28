@@ -12,18 +12,13 @@ namespace oxygine
 
     const int MAX_TOUCHES = 8;
 
-    class Input: public EventDispatcher
+    class Input: public Object
     {
     public:
         static Input instance;
 
         Input();
         ~Input();
-
-        enum
-        {
-            event_platform = sysEventID('I', 'P', 'L')
-        };
 
         void cleanup();
 

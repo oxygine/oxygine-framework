@@ -27,7 +27,7 @@ public:
 
         sprite->addEventListener(TouchEvent::OVER, CLOSURE(this, &TestAlphaHitTest::onEvent));
         sprite->addEventListener(TouchEvent::OUT, CLOSURE(this, &TestAlphaHitTest::onEvent));
-        sprite->setInputChildrenEnabled(false);
+        sprite->setTouchChildrenEnabled(false);
 
         txt = new TextField;
         txt->attachTo(content);
