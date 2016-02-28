@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+PROGDIR=`dirname $0`
+PROGDIR=`cd $PROGDIR && pwd -P`
+python $PROGDIR/gen_template.py "$@" 
