@@ -18,7 +18,15 @@ from . import process
 
 
 def isImagesIdentical(im1, im2):
-    return ImageChops.difference(im1, im2).getbbox() is None
+    if im1.size[0] == 0 or im1.size[1] == 0:
+        return False
+    
+    if im2.size[0] == 0 or im2.size[1] == 0:
+        return False    
+
+    bbox = ImageChops.difference(im1, im2).getbbox()
+    r = bbox is None
+    return r
 
 def as_int(attr, df=0):
     if not attr:
