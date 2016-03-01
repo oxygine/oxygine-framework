@@ -29,6 +29,7 @@ oxygine/SDL/android/lib/gen/
 .idea
 oxygine/SDL/android/lib/bin/
 examples/*/data-ram/
+.gradle/
 examples/*/proj.android/libs/
 oxygine/SDL/android/lib/src/org/libsdl/app/SDLActivity.java
 oxygine-framework-with-sdl.zip
