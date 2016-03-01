@@ -551,13 +551,13 @@ namespace oxygine
                                 operations::copy(src.getRect(Rect(0, src.h - 1, src.w, 1)), tmp);
                             }
 
-                            if (bounds.getX() == 0)
+                            if (bounds.getX() == 0 && dest.pos.x != 0)
                             {
                                 tmp = mt.lock(Rect(dest.pos.x - 1, dest.pos.y, 1, src.h));
                                 operations::copy(src.getRect(Rect(0, 0, 1, src.h)), tmp);
                             }
 
-                            if (bounds.getWidth() == im.w)
+                            if (bounds.getWidth() == im.w && dest.getRight() != mt.getWidth())
                             {
                                 tmp = mt.lock(Rect(dest.pos.x + src.w, dest.pos.y, 1, src.h));
                                 operations::copy(src.getRect(Rect(src.w - 1, 0, 1, src.h)), tmp);

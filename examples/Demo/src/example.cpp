@@ -26,6 +26,7 @@
 #include "TestTouches.h"
 #include "TestColorFont.h"
 #include "TestTweenAlphaFade.h"
+#include "TestEdges.h"
 
 #ifdef __S3E__
 #include "s3eKeyboard.h"
@@ -131,6 +132,7 @@ public:
         if (id == "tweenshine") showTest(new TestTweenShine);
         if (id == "multicolorfont") showTest(new TestColorFont);
         if (id == "tweenfade") showTest(new TestTweenAlphaFade);
+        if (id == "edges") showTest(new TestEdges);
         if (id == "openbrowser")
         {
             core::execute("http://oxygine.org/");
