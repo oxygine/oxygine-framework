@@ -3,16 +3,16 @@
 #include "Event.h"
 namespace oxygine
 {
-	class EmscSyncFsEvent:public Event
-	{
-	public:
-		enum 
-		{
-			EVENT = sysEventID('E', 'S', 'F')
-		};
-	};
+    class EmscSyncFsEvent: public Event
+    {
+    public:
+        enum
+        {
+            EVENT = sysEventID('E', 'S', 'F')
+        };
+    };
 
 
-	/**will dispatch EmscSyncFsEvent to core::dispatcher*/
-	void emscSyncFS(bool read);
+    /**will dispatch EmscSyncFsEvent to core::dispatcher*/
+    void emscSyncFS(bool read);
 }
