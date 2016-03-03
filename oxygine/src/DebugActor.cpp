@@ -55,10 +55,7 @@ namespace oxygine
 
         file::mount(&zp);
         resSystem = new Resources;
-        resSystem->loadXML("system/res.xml", 0, true, false, "system");
-        //
-
-        //log::messageln("initialized DebugActor");
+        resSystem->loadXML2("system/res.xml", ResourcesLoadOptions().prebuiltFolder("system"));
     }
 
     void DebugActor::show()

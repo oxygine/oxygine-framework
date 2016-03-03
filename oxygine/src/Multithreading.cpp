@@ -145,11 +145,6 @@ namespace oxygine
         }
     }
 
-    void ThreadLoading::setUpdateSize(int s)
-    {
-        _m2n.setUpdateSize(s);
-    }
-
     void ThreadLoading::start(spActor parent)
     {
         {
@@ -161,11 +156,4 @@ namespace oxygine
         pthread_create(&_thread, 0, _staticThreadFunc, this);
         //_thread = s3eThreadCreate(_staticThreadFunc, this);
     }
-
-    /*
-    void ThreadLoading::stop()
-    {
-
-    }
-    */
 }

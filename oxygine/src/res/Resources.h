@@ -30,13 +30,22 @@ namespace oxygine
     class ResourcesLoadOptions
     {
     public:
-        ResourcesLoadOptions() : loadCompletely(true), useLoadCounter(false), loadContext(0), shortenIDS(false) {};
+        ResourcesLoadOptions() : _loadCompletely(true), _useLoadCounter(false), _shortenIDS(false) {};
 
-        bool loadCompletely;
-        bool useLoadCounter;
-        bool shortenIDS;
-        std::string prebuilFolder;
-        LoadResourcesContext* loadContext;
+		//load only Resources definitions. Skips internal heavy data (atlasses/textures/buffers). Could be overridden in xml: <your_res_type ... load = "false"/>
+		ResourcesLoadOptions& dontLoadAll(bool v = false) { _loadCompletely = v; return *this; }
+
+		//use load counter internally
+		ResourcesLoadOptions& useLoadCounter(bool v = true) { _useLoadCounter = v; return *this; }
+
+		//use not standard folder with prebuilt resources (atlasses, fonts, etc)
+		ResourcesLoadOptions& prebuiltFolder(const std::string &folder) {_prebuilFolder = folder; return *this; }
+
+
+        bool _loadCompletely;
+        bool _useLoadCounter;
+        bool _shortenIDS;
+        std::string _prebuilFolder;
     };
 
     class Resources: public _Resource
@@ -57,7 +66,7 @@ namespace oxygine
         ~Resources();
 
         /**
-        DEPRECATED, USE load method
+        DEPRECATED, USE loadXML2 method
         Loads resources from xml file.
         @param xml file path
         @param used for multi threading loading
@@ -65,6 +74,7 @@ namespace oxygine
         @param use load counter internally
         @param use not standard folder with prebuilt resources (atlasses, fonts, etc)
         */
+		OXYGINE_DEPRECATED
         void loadXML(const std::string& file, LoadResourcesContext* load_context = 0,
                      bool load_completely = true, bool use_load_counter = false,
                      const std::string& prebuilt_folder = "");
@@ -74,13 +84,17 @@ namespace oxygine
         @param xml file paths
         @param options
         */
-        void load(const std::string& xmlFile, const ResourcesLoadOptions& opt = ResourcesLoadOptions());
+        void loadXML2(const std::string& xmlFile, const ResourcesLoadOptions& opt = ResourcesLoadOptions());
+
+		//use loadXML2, later it will be renamed to loadXML
+		OXYGINE_DEPRECATED
+		void load(const std::string& xmlFile, const ResourcesLoadOptions& opt = ResourcesLoadOptions());
 
         /**Adds Resource*/
         void add(Resource* r, bool accessByShortenID = false);
 
         /**Calls Resource::load for each resource in the list*/
-        void load(LoadResourcesContext* context = 0, ResLoadedCallback cb = ResLoadedCallback());
+        void load(ResLoadedCallback cb = ResLoadedCallback());
 
         /**Unloads data from memory, all resources handles remain valid*/
         void unload();

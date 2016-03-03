@@ -43,16 +43,13 @@ namespace oxygine
         if (!ad.texture)
             return;
 
-        MemoryTexture mt;
+        spMemoryTexture mt = new MemoryTexture;
         Rect bounds = ad.atlas.getBounds();
 
         int w = nextPOT(bounds.getRight());
         int h = nextPOT(bounds.getBottom());
 
-        mt.init(ad.mt.lock().getRect(Rect(0, 0, w, h)));
-
-        ImageData image_data = mt.lock();
-
+        mt->init(ad.mt.lock().getRect(Rect(0, 0, w, h)));
 #if 0
         static int n = 0;
         n++;
@@ -61,12 +58,12 @@ namespace oxygine
         saveImage(image_data, name);
 #endif
 
-        ad.texture->init(image_data, false);
-        ad.mt.unlock();
-
-        ad.texture->apply();
-        ad.texture->setLinearFilter(linear);
-        ad.texture->setClamp2Edge(clamp2edge);
+		CreateTextureTask task;
+		task.linearFilter = linear;
+		task.clamp2edge = clamp2edge;
+		task.src = mt;
+		task.dest = ad.texture;
+		LoadResourcesContext::get()->createTexture(task);
     }
 
     void next_atlas(int w, int h, TextureFormat tf, atlas_data& ad, const char* name)
@@ -599,7 +596,7 @@ namespace oxygine
 
                 ra->init(frames, columns, walker.getScaleFactor(), 1.0f / walker.getScaleFactor());
                 ra->setParent(this);
-                context.resources->add(ra, context.options->shortenIDS);
+                context.resources->add(ra, context.options->_shortenIDS);
             }
 
         }
@@ -825,7 +822,7 @@ namespace oxygine
 
                 ra->init(frames, columns, walker.getScaleFactor(), 1.0f / frame_scale);
                 ra->setParent(this);
-                context.resources->add(ra, context.options->shortenIDS);
+                context.resources->add(ra, context.options->_shortenIDS);
             }
         }
     }

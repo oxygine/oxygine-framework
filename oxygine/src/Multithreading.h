@@ -39,10 +39,6 @@ namespace oxygine
         void load();
         void unload();
 
-
-        /**Changes size of updated Texture rectangle each frame. Use it only for tests*/
-        void setUpdateSize(int s);
-
     private:
         static void* _staticThreadFunc(void* t);
         virtual void _threadFunc();

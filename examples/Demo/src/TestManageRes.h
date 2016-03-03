@@ -15,7 +15,6 @@ public:
 #ifdef EMSCRIPTEN
 #else
         addButton("mt", "Multithreading loading");
-        addButton("mt_slow", "MT loading (slow demo)");
 #endif
 
 
@@ -96,11 +95,10 @@ public:
             spThreadLoading l = new ThreadLoading;
             l->addEventListener(ThreadLoading::COMPLETE, CLOSURE(this, &ManageResTest::_loaded));
 
-            addRef();//protect Test instance from automatic delete if you close it to fast
+            addRef();//protect Test instance from automatic delete if you close it too fast
 
             l->add(&resources);
-            if (id == "mt_slow")
-                l->setUpdateSize(128);
+
             l->start(getStage());
         }
     }

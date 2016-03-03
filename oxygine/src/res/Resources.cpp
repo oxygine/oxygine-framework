@@ -82,9 +82,9 @@ namespace oxygine
         return getT<ResFont>(id, ep);
     }
 
-    void Resources::load(LoadResourcesContext* context, ResLoadedCallback cb)
+    void Resources::load(ResLoadedCallback cb)
     {
-        _Resource::load(context);
+        _Resource::load(0);
         //if (cb)
         //  cb(thi)
     }
@@ -166,10 +166,15 @@ namespace oxygine
         }
     };
 
-    void Resources::load(const std::string& xmlFile, const ResourcesLoadOptions& opt)
+	void Resources::load(const std::string& xmlFile, const ResourcesLoadOptions& opt)
+	{
+		loadXML2(xmlFile, opt);
+	}
+
+    void Resources::loadXML2(const std::string& xmlFile, const ResourcesLoadOptions& opt)
     {
         _name = xmlFile;
-        _loadCounter = opt.loadCompletely ? 1 : 0;
+        _loadCounter = opt._loadCompletely ? 1 : 0;
 
 
         FS_LOG("step0");
@@ -185,7 +190,7 @@ namespace oxygine
         char destTail[255];
         path::split(xmlFile.c_str(), destHead, destTail);
 
-        std::string prebuilt_folder = opt.prebuilFolder + "/" + destTail + ".ox/";
+        std::string prebuilt_folder = opt._prebuilFolder + "/" + destTail + ".ox/";
         if (prebuilt_folder[0] == '/')
         {
             prebuilt_folder.erase(prebuilt_folder.begin());
@@ -232,7 +237,7 @@ namespace oxygine
         FS_LOG("loading xml resources");
 
         std::string xmlFolder = destHead;
-        XmlWalker walker(&xmlFolder, "", 1.0f, opt.loadCompletely, true, resources, resources_meta);
+        XmlWalker walker(&xmlFolder, "", 1.0f, opt._loadCompletely, true, resources, resources_meta);
 
         while (true)
         {
@@ -266,12 +271,12 @@ namespace oxygine
             FS_LOG("resource: %s ", name);
             Resource* res = r.cb(context);
             OX_ASSERT(res);
-            res->setUseLoadCounter(opt.useLoadCounter);
+            res->setUseLoadCounter(opt._useLoadCounter);
 
             if (res)
             {
                 if (context.walker.getLoad())
-                    res->load(opt.loadContext);
+                    res->load(0);
                 res->setParent(this);
                 _resources.push_back(res);
             }
@@ -287,11 +292,10 @@ namespace oxygine
         const std::string& prebuilt_folder_)
     {
         ResourcesLoadOptions opt;
-        opt.loadContext = load_context;
-        opt.loadCompletely = load_completely;
-        opt.useLoadCounter = use_load_counter;
-        opt.prebuilFolder = prebuilt_folder_;
-        load(xml_name, opt);
+        opt._loadCompletely = load_completely;
+        opt._useLoadCounter = use_load_counter;
+        opt._prebuilFolder = prebuilt_folder_;
+        loadXML2(xml_name, opt);
     }
 
     void Resources::addShortIDS()
