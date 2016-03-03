@@ -166,12 +166,8 @@ namespace oxygine
         }
     };
 
-    void Resources::load(const std::string& xmlFile, const ResourcesLoadOptions& opt)
-    {
-        loadXML2(xmlFile, opt);
-    }
 
-    void Resources::loadXML2(const std::string& xmlFile, const ResourcesLoadOptions& opt)
+    void Resources::loadXML(const std::string& xmlFile, const ResourcesLoadOptions& opt)
     {
         _name = xmlFile;
         _loadCounter = opt._loadCompletely ? 1 : 0;
@@ -284,25 +280,7 @@ namespace oxygine
 
         FS_LOG("xml loaded");
     }
-
-    void Resources::loadXML(
-        const std::string& xml_name,
-        LoadResourcesContext* load_context,
-        bool load_completely, bool use_load_counter,
-        const std::string& prebuilt_folder_)
-    {
-        ResourcesLoadOptions opt;
-        opt._loadCompletely = load_completely;
-        opt._useLoadCounter = use_load_counter;
-        opt._prebuilFolder = prebuilt_folder_;
-        loadXML2(xml_name, opt);
-    }
-
-    void Resources::addShortIDS()
-    {
-
-    }
-
+	
     void Resources::collect(resources& r)
     {
 #ifdef __S3E__

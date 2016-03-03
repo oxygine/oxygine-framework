@@ -55,7 +55,7 @@ namespace oxygine
 
         file::mount(&zp);
         resSystem = new Resources;
-        resSystem->loadXML2("system/res.xml", ResourcesLoadOptions().prebuiltFolder("system"));
+        resSystem->loadXML("system/res.xml", ResourcesLoadOptions().prebuiltFolder("system"));
     }
 
     void DebugActor::show()

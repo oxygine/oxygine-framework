@@ -64,30 +64,12 @@ namespace oxygine
 
         Resources();
         ~Resources();
-
-        /**
-        DEPRECATED, USE loadXML2 method
-        Loads resources from xml file.
-        @param xml file path
-        @param used for multi threading loading
-        @param should be each resource loaded completely includes internal heavy data (atlasses/textures/buffers) or load only their definition. Could be overloaded in xml: <your_res_type ... load = "false"/>
-        @param use load counter internally
-        @param use not standard folder with prebuilt resources (atlasses, fonts, etc)
-        */
-        void loadXML(const std::string& file, LoadResourcesContext* load_context = 0,
-                     bool load_completely = true, bool use_load_counter = false,
-                     const std::string& prebuilt_folder = "");
-
-
+		
         /**Loads resources from xml file. Load could be called multiple times for different xml files.
         @param xml file paths
         @param options
         */
-        void loadXML2(const std::string& xmlFile, const ResourcesLoadOptions& opt = ResourcesLoadOptions());
-
-        //use loadXML2, later it will be renamed to loadXML
-        OXYGINE_DEPRECATED
-        void load(const std::string& xmlFile, const ResourcesLoadOptions& opt = ResourcesLoadOptions());
+        void loadXML(const std::string& xmlFile, const ResourcesLoadOptions& opt = ResourcesLoadOptions());
 
         /**Adds Resource*/
         void add(Resource* r, bool accessByShortenID = false);
@@ -130,8 +112,6 @@ namespace oxygine
 
         /**collects all resources into vector*/
         void collect(resources&);
-
-        void addShortIDS();
 
         resources& _getResources();
 
