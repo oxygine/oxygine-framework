@@ -11,7 +11,7 @@ namespace oxygine
         return ((size_t*)(&pt))[0];
     }
 
-#if 1
+#if 0
 #define  LOGDN(format, ...)  log::messageln("ThreadMessages(%lu)::" format, threadID(), __VA_ARGS__)
 #else
 #define  LOGDN(...)  ((void)0)
@@ -91,45 +91,13 @@ namespace oxygine
         _waitMessage();
     }
 
-
-    void ThreadMessages::_gotMessage()
-    {
-        if (_last.cb)
-        {
-            LOGDN("running callback for %d", _last._id);
-            _last.cb(_last);
-            _last.cb = 0;
-        }
-
-#ifndef __S3E__
-        if (_last.cbFunction)
-        {
-            LOGDN("running callback function for %d", _last._id);
-            _last.cbFunction();
-            _last.cbFunction = std::function< void() >();
-        }
-#endif
-
-        LOGDN("_gotMessage id=%d", _last._id);
-
-        if (!_last.msgid)
-        {
-            _replyLast(0);
-        }
-    }
-
     void ThreadMessages::get(message& ev)
     {
         MutexPthreadLock lock(_mutex);
         LOGDN("get");
 
         _waitMessage();
-
-        ev = _events.front();
-        _events.erase(_events.begin());
-        _last = ev;
-
-        _gotMessage();
+        _popMessage(ev);
     }
 
     bool ThreadMessages::empty()
@@ -152,12 +120,42 @@ namespace oxygine
         _events.clear();
     }
 
+    void ThreadMessages::_popMessage(message& res)
+    {
+        _last = _events.front();
+        _events.erase(_events.begin());
+
+        if (_last.cb)
+        {
+            LOGDN("running callback for %d", _last._id);
+            _last.cb(_last);
+            _last.cb = 0;
+        }
+
+#ifndef __S3E__
+        if (_last.cbFunction)
+        {
+            LOGDN("running callback function for %d", _last._id);
+            _last.cbFunction();
+            _last.cbFunction = std::function< void() >();
+        }
+#endif
+
+        LOGDN("_gotMessage id=%d, msgid=%d", _last._id, _last.msgid);
+
+        if (!_last.msgid)
+        {
+            _replyLast(0);
+        }
+
+        res = _last;
+    }
+
     bool ThreadMessages::peek(peekMessage& ev, bool del)
     {
         if (!ev.num)
             return false;
 
-        bool has = false;
 
         MutexPthreadLock lock(_mutex);
         if (ev.num == -1)
@@ -169,19 +167,14 @@ namespace oxygine
 
         if (!_events.empty() && ev.num > 0)
         {
-            has = true;
-
-            static_cast<message&>(ev) = _events.front();
             if (del)
-            {
-                _events.erase(_events.begin());
-                _last = ev;
-                _gotMessage();
-            }
+                _popMessage(ev);
             ev.num--;
+
+            return true;
         }
 
-        return has;
+        return false;
     }
 
     void ThreadMessages::_replyLast(void* val)
@@ -214,6 +207,8 @@ namespace oxygine
 
     void* ThreadMessages::send(int msgid, void* arg1, void* arg2)
     {
+        OX_ASSERT(msgid);
+
         message ev;
         ev.msgid = msgid;
         ev.arg1 = arg1;
@@ -241,6 +236,8 @@ namespace oxygine
     void ThreadMessages::_pushMessageWaitReply(message& msg)
     {
         msg._id = ++_id;
+        LOGDN("_pushMessage id=%d msgid=%d", msg._id, msg.msgid);
+
         _waitReplyID = msg._id;
         _events.push_back(msg);
         pthread_cond_signal(&_cond);

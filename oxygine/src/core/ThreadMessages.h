@@ -92,7 +92,7 @@ namespace oxygine
 
         void _pushMessage(message&);
         void _pushMessageWaitReply(message&);
-        void _gotMessage();
+        void _popMessage(message&);
         void _replyLast(void* val);
         unsigned int _id;
         unsigned int _waitReplyID;
