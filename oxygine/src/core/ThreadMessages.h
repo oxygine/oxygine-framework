@@ -59,15 +59,25 @@ namespace oxygine
         bool    empty();
         size_t  size();
 
+
+        //blocking
         void wait();
+        //blocking
         void get(message& ev);
+
         bool peek(peekMessage& ev, bool del);
         void clear();
 
+        //blocking, sends message and waiting reply from other thread
         void* send(int msgid, void* arg1, void* arg2);
+        //blocking, sends callback and waiting until it is done
+        void sendCallback(void* arg1, void* arg2, callback cb, void* cbData);
+
+        //async, sends post message
         void post(int msgid, void* arg1, void* arg2);
+        //async, sends post callback
         void postCallback(int msgid, void* arg1, void* arg2, callback cb, void* cbData);
-        void* sendCallback(int msgid, void* arg1, void* arg2, callback cb, void* cbData);
+
         void removeCallback(int msgid, callback cb, void* cbData);
 
 #ifndef __S3E__
@@ -81,8 +91,8 @@ namespace oxygine
         void _waitReply();
 
         void _pushMessage(message&);
-        void _pushMessageWithReply(message&);
-
+        void _pushMessageWaitReply(message&);
+        void _gotMessage();
         void _replyLast(void* val);
         unsigned int _id;
         unsigned int _waitReplyID;

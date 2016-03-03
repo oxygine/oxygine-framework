@@ -1,17 +1,32 @@
 #include "ThreadMessages.h"
 #include "log.h"
 #include "pthread.h"
+#include "Mutex.h"
+
 namespace oxygine
 {
-#if 0
-#define  LOGDN(...)  log::messageln(__VA_ARGS__)
-#define  LOGD(...)  log::message(__VA_ARGS__)
+    static size_t threadID()
+    {
+        pthread_t pt = pthread_self();
+        return ((size_t*)(&pt))[0];
+    }
+
+#if 1
+#define  LOGDN(format, ...)  log::messageln("ThreadMessages(%lu)::" format, threadID(), __VA_ARGS__)
 #else
 #define  LOGDN(...)  ((void)0)
-#define  LOGD(...)  ((void)0)
 #endif
 
 
+    void addtime(timespec& ts, int ms)
+    {
+        ts.tv_nsec += ms * 1000000;
+        while (ts.tv_nsec >= 1000000000)
+        {
+            ts.tv_nsec -= 1000000000;
+            ++ts.tv_sec;
+        }
+    }
 
 
     void mywait(pthread_cond_t* cond, pthread_mutex_t* mutex)
@@ -43,7 +58,7 @@ namespace oxygine
         pthread_mutex_unlock(&_mutex);
     }
 
-    ThreadMessages::ThreadMessages(): _id(0), _waitReplyID(0), _result(0)
+    ThreadMessages::ThreadMessages(): _id(0), _waitReplyID(-1), _result(0)
     {
         pthread_cond_init(&_cond, 0);
 
@@ -65,6 +80,7 @@ namespace oxygine
     void ThreadMessages::_waitMessage()
     {
         _replyLast(0);
+
         while (_events.empty())
             pthread_cond_wait(&_cond, &_mutex);
     }
@@ -75,28 +91,45 @@ namespace oxygine
         _waitMessage();
     }
 
-    void addtime(timespec& ts, int ms)
+
+    void ThreadMessages::_gotMessage()
     {
-        ts.tv_nsec += ms * 1000000;
-        while (ts.tv_nsec >= 1000000000)
+        if (_last.cb)
         {
-            ts.tv_nsec -= 1000000000;
-            ++ts.tv_sec;
+            LOGDN("running callback for %d", _last._id);
+            _last.cb(_last);
+            _last.cb = 0;
+        }
+
+#ifndef __S3E__
+        if (_last.cbFunction)
+        {
+            LOGDN("running callback function for %d", _last._id);
+            _last.cbFunction();
+            _last.cbFunction = std::function< void() >();
+        }
+#endif
+
+        LOGDN("_gotMessage id=%d", _last._id);
+
+        if (!_last.msgid)
+        {
+            _replyLast(0);
         }
     }
-
 
     void ThreadMessages::get(message& ev)
     {
         MutexPthreadLock lock(_mutex);
-        LOGDN("ThreadMessages::get");
+        LOGDN("get");
 
         _waitMessage();
 
         ev = _events.front();
         _events.erase(_events.begin());
         _last = ev;
-        LOGDN("ThreadMessages::get received msgid=%d id=%d", _last.msgid, _last._id);
+
+        _gotMessage();
     }
 
     bool ThreadMessages::empty()
@@ -130,16 +163,21 @@ namespace oxygine
         if (ev.num == -1)
             ev.num = (int) _events.size();
 
+        LOGDN("peeking message");
+
         _replyLast(0);
 
         if (!_events.empty() && ev.num > 0)
         {
+            has = true;
+
             static_cast<message&>(ev) = _events.front();
             if (del)
+            {
                 _events.erase(_events.begin());
-            has = true;
-            _last = ev;
-
+                _last = ev;
+                _gotMessage();
+            }
             ev.num--;
         }
 
@@ -148,41 +186,11 @@ namespace oxygine
 
     void ThreadMessages::_replyLast(void* val)
     {
-        LOGDN("ThreadMessages::_replyLast");
-
-        if (_last.cb)
+        if (_last._id == _waitReplyID)
         {
-            LOGDN("ThreadMessages::running callback");
-            _last.cb(_last);
-            _last.cb = 0;
-        }
-
-#ifndef __S3E__
-        if (_last.cbFunction)
-        {
-            LOGDN("ThreadMessages::running callback function");
-            _last.cbFunction();
-            _last.cbFunction = std::function< void() >();
-        }
-#endif
-
-        if (_waitReplyID == _last._id)
-        {
-            LOGDN("ThreadMessages::_replyLast not replied yet");
             _result = val;
-
-
-            LOGDN("ThreadMessages::_replyLast pre _waitReplyID = %d, _last._id = %d, _last.msgid=%d", _waitReplyID, _last._id, _last.msgid);
-
-            if (_waitReplyID && _last._id == _waitReplyID)
-            {
-                LOGDN("ThreadMessages::_replyLast pthread_cond_signal _waitReplyID = %d, _last._id = %d, _last.msgid=%d", _waitReplyID, _last._id, _last.msgid);
-                pthread_cond_signal(&_cond);
-            }
-            else
-            {
-                LOGDN("ThreadMessages::_replyLast else _waitReplyID = %d, _last._id = %d, _last.msgid=%d", _waitReplyID, _last._id, _last.msgid);
-            }
+            LOGDN("replying to %d", _waitReplyID);
+            pthread_cond_signal(&_cond);
         }
     }
 
@@ -211,48 +219,35 @@ namespace oxygine
         ev.arg1 = arg1;
         ev.arg2 = arg2;
 
-
         MutexPthreadLock lock(_mutex);
-        _pushMessageWithReply(ev);
-
-        LOGDN("ThreadMessages::send msgid=%d pthread_cond_signal.. _waitReplyID=%d", msgid, _waitReplyID);
-        _waitReply();
-
-        LOGDN("ThreadMessages::send msgid=%d done", msgid);
-
-
+        _pushMessageWaitReply(ev);
 
         return _result;
     }
 
-    void* ThreadMessages::sendCallback(int msgid, void* arg1, void* arg2, callback cb, void* cbData)
+    void ThreadMessages::sendCallback(void* arg1, void* arg2, callback cb, void* cbData)
     {
         message ev;
-        ev.msgid = msgid;
+        ev.msgid = 0;
         ev.arg1 = arg1;
         ev.arg2 = arg2;
         ev.cb = cb;
         ev.cbData = cbData;
 
         MutexPthreadLock lock(_mutex);
-        _pushMessageWithReply(ev);
-        LOGDN("ThreadMessages::sendCallback msgid=%d pthread_cond_signal.. _waitReplyID=%d", msgid, _waitReplyID);
-
-        _waitReply();
-
-        LOGDN("ThreadMessages::sendCallback msgid=%d done", msgid);
-
-
-
-        return _result;
+        _pushMessageWaitReply(ev);
     }
 
-    void ThreadMessages::_pushMessageWithReply(message& msg)
+    void ThreadMessages::_pushMessageWaitReply(message& msg)
     {
         msg._id = ++_id;
         _waitReplyID = msg._id;
         _events.push_back(msg);
         pthread_cond_signal(&_cond);
+
+        LOGDN("waiting reply %d", _waitReplyID);
+        _waitReply();
+        LOGDN("waiting reply  %d - done", msg._id);
     }
 
     void ThreadMessages::_pushMessage(message& msg)

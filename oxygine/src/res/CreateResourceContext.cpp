@@ -224,7 +224,7 @@ namespace oxygine
 
     void MTLoadingResourcesContext::createTexture(const CreateTextureTask& opt)
     {
-        core::getMainThreadMessages().sendCallback(0, 0, 0, copyTexture, (void*)&opt);
+        core::getMainThreadMessages().sendCallback(0, 0, copyTexture, (void*)&opt);
     }
 
     bool MTLoadingResourcesContext::isNeedProceed(spNativeTexture t)
