@@ -76,6 +76,12 @@
 		9264E5BD1B8358D80049F91F /* json-forwards.h in Headers */ = {isa = PBXBuildFile; fileRef = 9264E5BA1B8358D80049F91F /* json-forwards.h */; };
 		9264E5BE1B8358D80049F91F /* json.h in Headers */ = {isa = PBXBuildFile; fileRef = 9264E5BB1B8358D80049F91F /* json.h */; };
 		9264E5BF1B8358D80049F91F /* jsoncpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9264E5BC1B8358D80049F91F /* jsoncpp.cpp */; };
+		929AF5661C88AA4000D276ED /* ThreadLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929AF5641C88AA4000D276ED /* ThreadLoader.cpp */; };
+		929AF5671C88AA4000D276ED /* ThreadLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 929AF5651C88AA4000D276ED /* ThreadLoader.h */; };
+		929AF56C1C88AD5600D276ED /* ResAtlasGeneric.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929AF5681C88AD5600D276ED /* ResAtlasGeneric.cpp */; };
+		929AF56D1C88AD5600D276ED /* ResAtlasGeneric.h in Headers */ = {isa = PBXBuildFile; fileRef = 929AF5691C88AD5600D276ED /* ResAtlasGeneric.h */; };
+		929AF56E1C88AD5600D276ED /* ResAtlasPrebuilt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 929AF56A1C88AD5600D276ED /* ResAtlasPrebuilt.cpp */; };
+		929AF56F1C88AD5600D276ED /* ResAtlasPrebuilt.h in Headers */ = {isa = PBXBuildFile; fileRef = 929AF56B1C88AD5600D276ED /* ResAtlasPrebuilt.h */; };
 		92CE26621A589401003901D6 /* ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 92CE26601A589401003901D6 /* ios.h */; };
 		92CE26631A589401003901D6 /* ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 92CE26611A589401003901D6 /* ios.mm */; };
 		92E0C9A01B2491C200F0DB21 /* cdecode.c in Sources */ = {isa = PBXBuildFile; fileRef = 92E0C99E1B2491C200F0DB21 /* cdecode.c */; };
@@ -162,8 +168,6 @@
 		C3E8704A16EBC8EB00052915 /* vector4.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FA716EBC8EB00052915 /* vector4.h */; };
 		C3E8704B16EBC8EB00052915 /* MemoryTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3E86FA816EBC8EB00052915 /* MemoryTexture.cpp */; };
 		C3E8704C16EBC8EB00052915 /* MemoryTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FA916EBC8EB00052915 /* MemoryTexture.h */; };
-		C3E8704D16EBC8EB00052915 /* Multithreading.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3E86FAA16EBC8EB00052915 /* Multithreading.cpp */; };
-		C3E8704E16EBC8EB00052915 /* Multithreading.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FAB16EBC8EB00052915 /* Multithreading.h */; };
 		C3E8705316EBC8EB00052915 /* PointerState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3E86FB016EBC8EB00052915 /* PointerState.cpp */; };
 		C3E8705416EBC8EB00052915 /* PointerState.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FB116EBC8EB00052915 /* PointerState.h */; };
 		C3E8705516EBC8EB00052915 /* ProgressBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3E86FB216EBC8EB00052915 /* ProgressBar.cpp */; };
@@ -308,6 +312,12 @@
 		9264E5BA1B8358D80049F91F /* json-forwards.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "json-forwards.h"; path = "../../../src/json/json-forwards.h"; sourceTree = "<group>"; };
 		9264E5BB1B8358D80049F91F /* json.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = json.h; path = ../../../src/json/json.h; sourceTree = "<group>"; };
 		9264E5BC1B8358D80049F91F /* jsoncpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsoncpp.cpp; path = ../../../src/json/jsoncpp.cpp; sourceTree = "<group>"; };
+		929AF5641C88AA4000D276ED /* ThreadLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ThreadLoader.cpp; path = ../../../src/ThreadLoader.cpp; sourceTree = "<group>"; };
+		929AF5651C88AA4000D276ED /* ThreadLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ThreadLoader.h; path = ../../../src/ThreadLoader.h; sourceTree = "<group>"; };
+		929AF5681C88AD5600D276ED /* ResAtlasGeneric.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResAtlasGeneric.cpp; sourceTree = "<group>"; };
+		929AF5691C88AD5600D276ED /* ResAtlasGeneric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResAtlasGeneric.h; sourceTree = "<group>"; };
+		929AF56A1C88AD5600D276ED /* ResAtlasPrebuilt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResAtlasPrebuilt.cpp; sourceTree = "<group>"; };
+		929AF56B1C88AD5600D276ED /* ResAtlasPrebuilt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResAtlasPrebuilt.h; sourceTree = "<group>"; };
 		92CE26601A589401003901D6 /* ios.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ios.h; path = ../../../src/core/ios/ios.h; sourceTree = "<group>"; };
 		92CE26611A589401003901D6 /* ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ios.mm; path = ../../../src/core/ios/ios.mm; sourceTree = "<group>"; };
 		92E0C99E1B2491C200F0DB21 /* cdecode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cdecode.c; sourceTree = "<group>"; };
@@ -397,8 +407,6 @@
 		C3E86FA716EBC8EB00052915 /* vector4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vector4.h; sourceTree = "<group>"; };
 		C3E86FA816EBC8EB00052915 /* MemoryTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MemoryTexture.cpp; path = ../../../src/MemoryTexture.cpp; sourceTree = "<group>"; };
 		C3E86FA916EBC8EB00052915 /* MemoryTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MemoryTexture.h; path = ../../../src/MemoryTexture.h; sourceTree = "<group>"; };
-		C3E86FAA16EBC8EB00052915 /* Multithreading.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Multithreading.cpp; path = ../../../src/Multithreading.cpp; sourceTree = "<group>"; };
-		C3E86FAB16EBC8EB00052915 /* Multithreading.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Multithreading.h; path = ../../../src/Multithreading.h; sourceTree = "<group>"; };
 		C3E86FB016EBC8EB00052915 /* PointerState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PointerState.cpp; path = ../../../src/PointerState.cpp; sourceTree = "<group>"; };
 		C3E86FB116EBC8EB00052915 /* PointerState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PointerState.h; path = ../../../src/PointerState.h; sourceTree = "<group>"; };
 		C3E86FB216EBC8EB00052915 /* ProgressBar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ProgressBar.cpp; path = ../../../src/ProgressBar.cpp; sourceTree = "<group>"; };
@@ -409,7 +417,6 @@
 		C3E86FB816EBC8EB00052915 /* pugixml.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = pugixml.hpp; sourceTree = "<group>"; };
 		C3E86FB916EBC8EB00052915 /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
 		C3E86FBA16EBC8EB00052915 /* RenderState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RenderState.h; path = ../../../src/RenderState.h; sourceTree = "<group>"; };
-		C3E86FBC16EBC8EB00052915 /* .oxbuild */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .oxbuild; sourceTree = "<group>"; };
 		C3E86FBD16EBC8EB00052915 /* CreateResourceContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateResourceContext.h; sourceTree = "<group>"; };
 		C3E86FBE16EBC8EB00052915 /* ResAnim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResAnim.cpp; sourceTree = "<group>"; };
 		C3E86FBF16EBC8EB00052915 /* ResAnim.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResAnim.h; sourceTree = "<group>"; };
@@ -564,6 +571,8 @@
 		C3E86F5316EBC8C200052915 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				929AF5641C88AA4000D276ED /* ThreadLoader.cpp */,
+				929AF5651C88AA4000D276ED /* ThreadLoader.h */,
 				9264E5B91B8358B00049F91F /* json */,
 				CEC2D0001C47288E00450163 /* Material.cpp */,
 				CEC2D0011C47288E00450163 /* Material.h */,
@@ -644,8 +653,6 @@
 				C3E86F9D16EBC8EB00052915 /* math */,
 				C3E86FA816EBC8EB00052915 /* MemoryTexture.cpp */,
 				C3E86FA916EBC8EB00052915 /* MemoryTexture.h */,
-				C3E86FAA16EBC8EB00052915 /* Multithreading.cpp */,
-				C3E86FAB16EBC8EB00052915 /* Multithreading.h */,
 				C3E86FB016EBC8EB00052915 /* PointerState.cpp */,
 				C3E86FB116EBC8EB00052915 /* PointerState.h */,
 				C3E86FB216EBC8EB00052915 /* ProgressBar.cpp */,
@@ -771,8 +778,11 @@
 		C3E86FBB16EBC8EB00052915 /* res */ = {
 			isa = PBXGroup;
 			children = (
+				929AF5681C88AD5600D276ED /* ResAtlasGeneric.cpp */,
+				929AF5691C88AD5600D276ED /* ResAtlasGeneric.h */,
+				929AF56A1C88AD5600D276ED /* ResAtlasPrebuilt.cpp */,
+				929AF56B1C88AD5600D276ED /* ResAtlasPrebuilt.h */,
 				049B64AA1803054300EC333E /* CreateResourceContext.cpp */,
-				C3E86FBC16EBC8EB00052915 /* .oxbuild */,
 				C3E86FBD16EBC8EB00052915 /* CreateResourceContext.h */,
 				C3E86FBE16EBC8EB00052915 /* ResAnim.cpp */,
 				C3E86FBF16EBC8EB00052915 /* ResAnim.h */,
@@ -871,6 +881,7 @@
 				C3E86FFF16EBC8EB00052915 /* Actor.h in Headers */,
 				C3E8700116EBC8EB00052915 /* AnimationFrame.h in Headers */,
 				C3E8700316EBC8EB00052915 /* Blocking.h in Headers */,
+				929AF5671C88AA4000D276ED /* ThreadLoader.h in Headers */,
 				C3E8700516EBC8EB00052915 /* Box9Sprite.h in Headers */,
 				C3E8700716EBC8EB00052915 /* Button.h in Headers */,
 				C3E8700916EBC8EB00052915 /* ClipRectActor.h in Headers */,
@@ -924,6 +935,7 @@
 				C3E8704416EBC8EB00052915 /* Color.h in Headers */,
 				C3E8704516EBC8EB00052915 /* matrix.h in Headers */,
 				C3E8704616EBC8EB00052915 /* Rect.h in Headers */,
+				929AF56F1C88AD5600D276ED /* ResAtlasPrebuilt.h in Headers */,
 				C3E8704716EBC8EB00052915 /* ScalarMath.h in Headers */,
 				C3E8704816EBC8EB00052915 /* vector2.h in Headers */,
 				C3E8704916EBC8EB00052915 /* vector3.h in Headers */,
@@ -931,7 +943,6 @@
 				0472E37617F8A2D30016A832 /* ioapi.h in Headers */,
 				0472E37817F8A2D30016A832 /* ioapi_mem.h in Headers */,
 				C3E8704C16EBC8EB00052915 /* MemoryTexture.h in Headers */,
-				C3E8704E16EBC8EB00052915 /* Multithreading.h in Headers */,
 				C3E8705416EBC8EB00052915 /* PointerState.h in Headers */,
 				C3E8705616EBC8EB00052915 /* ProgressBar.h in Headers */,
 				04AEC314182BD98D006413A9 /* UberShaderProgram.h in Headers */,
@@ -967,6 +978,7 @@
 				92214D6519F14A2F00A4459A /* Polygon.h in Headers */,
 				C3E8708516EBC8EB00052915 /* UpdateState.h in Headers */,
 				C3E8708716EBC8EB00052915 /* AtlasTool.h in Headers */,
+				929AF56D1C88AD5600D276ED /* ResAtlasGeneric.h in Headers */,
 				C3E8708916EBC8EB00052915 /* ImageUtils.h in Headers */,
 				C3E8708A16EBC8EB00052915 /* intrusive_list.h in Headers */,
 				C3E8708C16EBC8EB00052915 /* stringUtils.h in Headers */,
@@ -1084,7 +1096,6 @@
 				C3E8704016EBC8EB00052915 /* Input.cpp in Sources */,
 				C3E8704216EBC8EB00052915 /* AffineTransform.cpp in Sources */,
 				C3E8704B16EBC8EB00052915 /* MemoryTexture.cpp in Sources */,
-				C3E8704D16EBC8EB00052915 /* Multithreading.cpp in Sources */,
 				0472E37F17F8A2EC0016A832 /* MaskedSprite.cpp in Sources */,
 				CEC2D00E1C47288E00450163 /* TweenGlow.cpp in Sources */,
 				04AEC313182BD98D006413A9 /* UberShaderProgram.cpp in Sources */,
@@ -1094,7 +1105,9 @@
 				C3E8705516EBC8EB00052915 /* ProgressBar.cpp in Sources */,
 				923A9E991A1FCBB700A6F08E /* STDRenderer.cpp in Sources */,
 				C3E8705816EBC8EB00052915 /* pugixml.cpp in Sources */,
+				929AF5661C88AA4000D276ED /* ThreadLoader.cpp in Sources */,
 				C3E8705C16EBC8EB00052915 /* ResAnim.cpp in Sources */,
+				929AF56C1C88AD5600D276ED /* ResAtlasGeneric.cpp in Sources */,
 				C3E8705E16EBC8EB00052915 /* ResAtlas.cpp in Sources */,
 				9223E3191A52D6B800B2770B /* WebImage.cpp in Sources */,
 				C3E8706016EBC8EB00052915 /* ResBuffer.cpp in Sources */,
@@ -1129,6 +1142,7 @@
 				C3E8709116EBC8EB00052915 /* winnie_alloc.cpp in Sources */,
 				048AD0AA197D2444001963EF /* TextField.cpp in Sources */,
 				C38EC26F1709649300568283 /* DeveloperMenu.cpp in Sources */,
+				929AF56E1C88AD5600D276ED /* ResAtlasPrebuilt.cpp in Sources */,
 				92214D6419F14A2F00A4459A /* Polygon.cpp in Sources */,
 				9240B4091ADFB856005F9C5B /* TweenAnim.cpp in Sources */,
 				C38EC2711709649300568283 /* TexturesInspector.cpp in Sources */,

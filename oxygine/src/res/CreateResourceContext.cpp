@@ -3,26 +3,25 @@
 #include "MemoryTexture.h"
 #include "core/ThreadMessages.h"
 #include "core/oxygine.h"
+#include "pthread.h"
 
 namespace oxygine
 {
-#ifdef _MSC_VER
-    __declspec(thread) bool _isMainThread = false;
-#else
-    thread_local bool _isMainThread = false;
-#endif
+    static pthread_t _selfThread;
 
 
     void LoadResourcesContext::init()
     {
-        _isMainThread = true;
+        _selfThread = pthread_self();
     }
 
     LoadResourcesContext* LoadResourcesContext::get()
     {
+        bool isMainThread = pthread_equal(_selfThread, pthread_self());
+        
         LoadResourcesContext* mtcontext = &MTLoadingResourcesContext::instance;
         LoadResourcesContext* scontext = &SingleThreadResourcesContext::instance;
-        return _isMainThread ? scontext : mtcontext;
+        return isMainThread ? scontext : mtcontext;
     }
 
     CreateTextureTask::CreateTextureTask(): linearFilter(true), clamp2edge(true)
