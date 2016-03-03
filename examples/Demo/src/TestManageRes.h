@@ -2,6 +2,7 @@
 #include "test.h"
 #include "ThreadLoader.h"
 #include "pthread.h"
+#include "core/oxygine.h"
 
 #ifdef EMSCRIPTEN
 #include <emscripten.h>
@@ -12,6 +13,16 @@ void* myThreadFunc(void* t)
 {
     Test* test = (Test*)t;
     resources.load();
+
+#ifndef __S3E__
+
+    //sync with game thread and show notification
+    core::getMainThreadMessages().postCallback([ = ]()
+    {
+        test->notify("loaded");
+    });
+
+#endif
 
     return 0;
 }
