@@ -1,9 +1,8 @@
 #pragma once
 #include "oxygine_include.h"
-#include "core/file.h"
-#include <map>
 #include "Resource.h"
 #include "ResAnim.h"
+#include "CreateResourceContext.h"
 
 namespace oxygine
 {
@@ -58,22 +57,4 @@ namespace oxygine
 
     typedef void(*load_texture_hook)(const std::string& file, spNativeTexture nt, LoadResourcesContext* load_context);
     void set_load_texture_hook(load_texture_hook);
-
-
-    class ResAtlasGeneric : public ResAtlas
-    {
-    public:
-
-        //protected:
-        void loadAtlas(CreateResourceContext& context);
-    };
-
-    class ResAtlasPrebuilt : public ResAtlas
-    {
-    public:
-
-        ResAtlasPrebuilt(CreateResourceContext& context);
-
-    protected:
-    };
 }

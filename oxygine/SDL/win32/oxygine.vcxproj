@@ -169,13 +169,15 @@
     <ClCompile Include="..\..\src\minizip\ioapi.c" />
     <ClCompile Include="..\..\src\minizip\ioapi_mem.c" />
     <ClCompile Include="..\..\src\minizip\unzip.c" />
-    <ClCompile Include="..\..\src\Multithreading.cpp" />
+    <ClCompile Include="..\..\src\ThreadLoader.cpp" />
     <ClCompile Include="..\..\src\PointerState.cpp" />
     <ClCompile Include="..\..\src\Polygon.cpp" />
     <ClCompile Include="..\..\src\ProgressBar.cpp" />
     <ClCompile Include="..\..\src\res\CreateResourceContext.cpp" />
     <ClCompile Include="..\..\src\res\ResAnim.cpp" />
     <ClCompile Include="..\..\src\res\ResAtlas.cpp" />
+    <ClCompile Include="..\..\src\res\ResAtlasGeneric.cpp" />
+    <ClCompile Include="..\..\src\res\ResAtlasPrebuilt.cpp" />
     <ClCompile Include="..\..\src\res\ResBuffer.cpp" />
     <ClCompile Include="..\..\src\res\ResFont.cpp" />
     <ClCompile Include="..\..\src\res\ResFontBM.cpp" />
@@ -278,7 +280,7 @@
     <ClInclude Include="..\..\src\minizip\ioapi.h" />
     <ClInclude Include="..\..\src\minizip\ioapi_mem.h" />
     <ClInclude Include="..\..\src\minizip\unzip.h" />
-    <ClInclude Include="..\..\src\Multithreading.h" />
+    <ClInclude Include="..\..\src\ThreadLoader.h" />
     <ClInclude Include="..\..\src\oxygine-framework.h" />
     <ClInclude Include="..\..\src\oxygine_include.h" />
     <ClInclude Include="..\..\src\PointerState.h" />
@@ -289,6 +291,8 @@
     <ClInclude Include="..\..\src\res\CreateResourceContext.h" />
     <ClInclude Include="..\..\src\res\ResAnim.h" />
     <ClInclude Include="..\..\src\res\ResAtlas.h" />
+    <ClInclude Include="..\..\src\res\ResAtlasGeneric.h" />
+    <ClInclude Include="..\..\src\res\ResAtlasPrebuilt.h" />
     <ClInclude Include="..\..\src\res\ResBuffer.h" />
     <ClInclude Include="..\..\src\res\ResFont.h" />
     <ClInclude Include="..\..\src\res\ResFontBM.h" />

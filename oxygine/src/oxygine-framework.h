@@ -23,7 +23,7 @@
 #include "Input.h"
 #include "InputText.h"
 #include "MemoryTexture.h"
-#include "Multithreading.h"
+#include "ThreadLoader.h"
 #include "PointerState.h"
 #include "ProgressBar.h"
 #include "RenderState.h"

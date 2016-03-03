@@ -21,7 +21,7 @@
     </Filter>
     <Filter Include="src\winnie_alloc">
       <UniqueIdentifier>{fa541539-b6e5-433e-b100-978d94de0a0d}</UniqueIdentifier>
-    </Filter>    
+    </Filter>
     <Filter Include="src\res">
       <UniqueIdentifier>{18bec777-8592-44da-9495-72a4cdb72f88}</UniqueIdentifier>
     </Filter>
@@ -65,7 +65,7 @@
     </ClCompile>
     <ClCompile Include="..\..\src\winnie_alloc\winnie_alloc.cpp">
       <Filter>src\winnie_alloc</Filter>
-    </ClCompile>    
+    </ClCompile>
     <ClCompile Include="..\..\src\res\ResAnim.cpp">
       <Filter>src\res</Filter>
     </ClCompile>
@@ -240,9 +240,6 @@
     <ClCompile Include="..\..\src\MemoryTexture.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Multithreading.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\PointerState.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -336,6 +333,15 @@
     <ClCompile Include="..\..\src\Material.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\res\ResAtlasGeneric.cpp">
+      <Filter>src\res</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\res\ResAtlasPrebuilt.cpp">
+      <Filter>src\res</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\ThreadLoader.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\closure\closure.h">
@@ -391,7 +397,7 @@
     </ClInclude>
     <ClInclude Include="..\..\src\winnie_alloc\winnie_alloc_config.h">
       <Filter>src\winnie_alloc</Filter>
-    </ClInclude>    
+    </ClInclude>
     <ClInclude Include="..\..\src\res\CreateResourceContext.h">
       <Filter>src\res</Filter>
     </ClInclude>
@@ -596,9 +602,6 @@
     <ClInclude Include="..\..\src\MemoryTexture.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Multithreading.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\oxygine-framework.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -723,6 +726,15 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Material.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\res\ResAtlasGeneric.h">
+      <Filter>src\res</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\res\ResAtlasPrebuilt.h">
+      <Filter>src\res</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\ThreadLoader.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

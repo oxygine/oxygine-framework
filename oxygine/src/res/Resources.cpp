@@ -166,10 +166,10 @@ namespace oxygine
         }
     };
 
-	void Resources::load(const std::string& xmlFile, const ResourcesLoadOptions& opt)
-	{
-		loadXML2(xmlFile, opt);
-	}
+    void Resources::load(const std::string& xmlFile, const ResourcesLoadOptions& opt)
+    {
+        loadXML2(xmlFile, opt);
+    }
 
     void Resources::loadXML2(const std::string& xmlFile, const ResourcesLoadOptions& opt)
     {

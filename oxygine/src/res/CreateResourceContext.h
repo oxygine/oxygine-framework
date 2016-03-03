@@ -30,7 +30,8 @@ namespace oxygine
         bool                getAlphaHitTest() const { return _alphaHitTest; }
         const char*         getType() const {return _root.name();}
 
-        void            checkSetAttributes();
+        void                checkSetAttributes();
+        void                setXmlFolder(const std::string* ptr) { _xmlFolder = ptr; }
 
 
         XmlWalker       next();
@@ -59,7 +60,7 @@ namespace oxygine
 
     class ResourcesLoadOptions;
 
-    class CreateResourceContext//todo rename
+    class CreateResourceContext
     {
     public:
         CreateResourceContext() : resources(0), xml_name(0), prebuilt_folder(0), options(0),

@@ -1,38 +1,32 @@
 #pragma once
 #include "oxygine_include.h"
-#include "Actor.h"
-#include "core/Mem2Native.h"
-#include "res/Resource.h"
+#include "EventDispatcher.h"
 #include "pthread.h"
+#include "core/ThreadMessages.h"
 
 namespace oxygine
 {
-    DECLARE_SMART(ThreadLoading, spThreadLoading);
+    DECLARE_SMART(ThreadLoader, spThreadLoader);
     class Resources;
     class Resource;
-    class LoadResourcesContextMT;
 
-    class ThreadLoading: public Actor
+    class ThreadLoader: public EventDispatcher
     {
     public:
-        DECLARE_COPYCLONE_NEW(ThreadLoading);
-
         enum
         {
             COMPLETE = sysEventID('T', 'L', 'C'),
         };
 
-        ThreadLoading();
-        ~ThreadLoading();
-
-        //float getProgress() const;
+        ThreadLoader();
+        ~ThreadLoader();
 
         bool isCompleted();
+
         virtual void add(Resources* res);
         virtual void add(Resource* res);
 
-        /**Adds self to 'parent' actor as child and starts loading thread. Removes self automatically from 'parent' when loading is completed*/
-        void start(spActor parent);
+        void start();
         //void stop();
 
         /**Loads resources from current thread WITHOUT creating new (for debug)*/
@@ -42,13 +36,8 @@ namespace oxygine
     private:
         static void* _staticThreadFunc(void* t);
         virtual void _threadFunc();
-        void doUpdate(const UpdateState& us);
-
-        Mem2Native _m2n;
-        Mutex _m;
 
         pthread_t _thread;
-        //void *_thread;
         volatile bool _threadDone;
 
         typedef std::list<Resources*> resources;
