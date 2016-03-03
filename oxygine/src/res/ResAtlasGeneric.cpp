@@ -370,25 +370,25 @@ namespace oxygine
                             MemoryTexture& mt = ad.mt;
                             ImageData tmp;
 
-                            if (bounds.getY() == 0)
+                            if (bounds.getY() == 0 && dest.pos.y != 0)
                             {
                                 tmp = mt.lock(Rect(dest.pos.x, dest.pos.y - 1, src.w, 1));
                                 operations::copy(src.getRect(Rect(0, 0, src.w, 1)), tmp);
                             }
 
-                            if (bounds.getHeight() == im.h)
+                            if (bounds.getHeight() == im.h && dest.getBottom() != mt.getHeight())
                             {
                                 tmp = mt.lock(Rect(dest.pos.x, dest.pos.y + src.h, src.w, 1));
                                 operations::copy(src.getRect(Rect(0, src.h - 1, src.w, 1)), tmp);
                             }
 
-                            if (bounds.getX() == 0)
+                            if (bounds.getX() == 0 && dest.pos.x != 0)
                             {
                                 tmp = mt.lock(Rect(dest.pos.x - 1, dest.pos.y, 1, src.h));
                                 operations::copy(src.getRect(Rect(0, 0, 1, src.h)), tmp);
                             }
 
-                            if (bounds.getWidth() == im.w)
+                            if (bounds.getWidth() == im.w && dest.getRight() != mt.getWidth())
                             {
                                 tmp = mt.lock(Rect(dest.pos.x + src.w, dest.pos.y, 1, src.h));
                                 operations::copy(src.getRect(Rect(src.w - 1, 0, 1, src.h)), tmp);

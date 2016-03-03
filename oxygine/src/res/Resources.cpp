@@ -280,7 +280,7 @@ namespace oxygine
 
         FS_LOG("xml loaded");
     }
-	
+
     void Resources::collect(resources& r)
     {
 #ifdef __S3E__

@@ -274,9 +274,17 @@ def pck(st, frames):
             sq += size[0] * size[1]
             min_w = max(min_w, size[0])
             min_h = max(min_h, size[1])
+        
+        max_w = st.max_w    
+        max_h = st.max_h
+        
+        if st.square:
+            min_w = min_h = max(min_w, min_h)
+            max_w = max_h = max(max_w, max_h)
+            
 
-        sizes_w = list(get_pow2list(st.npot, min_w, st.max_w))
-        sizes_h = list(get_pow2list(st.npot, min_h, st.max_h))
+        sizes_w = list(get_pow2list(st.npot, min_w, max_w))
+        sizes_h = list(get_pow2list(st.npot, min_h, max_h))
 
         for sw in sizes_w:
             for sh in sizes_h:

@@ -1,4 +1,8 @@
 1. Start from readme.txt
+
+step by step video tutorial:
+http://www.youtube.com/watch?v=d8eHHr_KHgQ
+
 2a. Examples folder have configured android project
 =================================================================================================
 How to build. Steps:

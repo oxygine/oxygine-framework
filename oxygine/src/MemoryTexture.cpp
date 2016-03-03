@@ -761,6 +761,8 @@ namespace oxygine
         if (pRect)
         {
             rect = *pRect;
+            OX_ASSERT(rect.getX() >= 0);
+            OX_ASSERT(rect.getY() >= 0);
             OX_ASSERT(rect.getX() + rect.getWidth() <= _image.w);
             OX_ASSERT(rect.getY() + rect.getHeight() <= _image.h);
         }

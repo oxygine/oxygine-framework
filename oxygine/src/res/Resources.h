@@ -64,7 +64,7 @@ namespace oxygine
 
         Resources();
         ~Resources();
-		
+
         /**Loads resources from xml file. Load could be called multiple times for different xml files.
         @param xml file paths
         @param options

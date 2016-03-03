@@ -18,7 +18,7 @@ namespace oxygine
     LoadResourcesContext* LoadResourcesContext::get()
     {
         bool isMainThread = pthread_equal(_selfThread, pthread_self());
-        
+
         LoadResourcesContext* mtcontext = &MTLoadingResourcesContext::instance;
         LoadResourcesContext* scontext = &SingleThreadResourcesContext::instance;
         return isMainThread ? scontext : mtcontext;
