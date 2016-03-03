@@ -4,6 +4,7 @@
 #include "utils/AtlasTool.h"
 #include "core/VideoDriver.h"
 #include "Resources.h"
+#include <stdint.h>
 
 namespace oxygine
 {
