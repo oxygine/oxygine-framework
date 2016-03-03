@@ -107,6 +107,7 @@ public:
         }
 
         int dur = 2000;
+
         if (id == "TweenAnim")
         {
             _addTween(createTween(TweenAnim(resources.getResAnim("anim")), dur / 4, 10));
@@ -119,8 +120,10 @@ public:
 
         if (id == "TweenRotationGlobalEase")
         {
-            _addTween(createTween2(Actor::TweenRotation(_sprite->getRotation() + (float)MATH_PI * 2),
-                                   TweenOptions(500).loops(10)));
+            spTween tween = _sprite->addTween(
+                                Actor::TweenRotation(_sprite->getRotation() + (float)MATH_PI * 2),
+                                TweenOptions(500).loops(10).globalEase(_ease));
+            tween->addEventListener(TweenEvent::DONE, CLOSURE(this, &TweensTest::tweenDone));
         }
 
         if (id == "TweenPosition")
@@ -161,15 +164,6 @@ public:
         if (id == "complete")
         {
             _sprite->removeTweens(true);
-            /*
-            spTween t = _sprite->getFirstTween();
-            while(t)
-            {
-                spTween next = t->getNextSibling();
-                t->complete();//removes self from actor
-                t = next;
-            }
-            */
         }
 
     }
