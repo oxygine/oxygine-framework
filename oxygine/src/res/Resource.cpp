@@ -17,8 +17,10 @@ namespace oxygine
 
     void Resource::load(LoadResourcesContext* context /* = 0 */)
     {
+        LoadResourcesContext* getContext();
+
         if (!context)
-            context = &SingleThreadResourcesContext::instance;
+            context = LoadResourcesContext::get();
 
         if (_loadCounter == 0)
             _load(context);

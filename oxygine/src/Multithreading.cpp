@@ -43,26 +43,6 @@ namespace oxygine
     }
 #endif
 
-    class Mem2Native;
-    class LoadResourcesContextMT: public LoadResourcesContext
-    {
-    public:
-        LoadResourcesContextMT(Mem2Native* m2n): _m2n(m2n) {}
-        ~LoadResourcesContextMT() {}
-
-        void createTexture(const CreateTextureTask& opt) OVERRIDE
-        {
-            _m2n->push(opt);
-        }
-
-        bool isNeedProceed(spNativeTexture t)
-        {
-            return t->getHandle() == 0;
-        }
-
-    private:
-        Mem2Native* _m2n;
-    };
 
     void ThreadLoading::copyFrom(const ThreadLoading& src, cloneOptions opt)
     {
@@ -85,12 +65,6 @@ namespace oxygine
         //  pthread_join(_thread, 0);
     }
 
-    /*
-    float ThreadLoading::getProgress() const
-    {
-        return 0;
-    }
-    */
 
     void ThreadLoading::add(Resources* res)
     {
@@ -114,14 +88,13 @@ namespace oxygine
     void* ThreadLoading::_staticThreadFunc(void* t)
     {
         ThreadLoading* This = (ThreadLoading*)t;
-        LoadResourcesContextMT ctx(&This->_m2n);
-        This->_threadFunc(&ctx);
+        This->_threadFunc();
         return 0;
     }
 
     void ThreadLoading::load()
     {
-        _threadFunc(0);
+        _threadFunc();
     }
 
     void ThreadLoading::unload()
@@ -139,19 +112,19 @@ namespace oxygine
         }
     }
 
-    void ThreadLoading::_threadFunc(LoadResourcesContextMT* ctx)
+    void ThreadLoading::_threadFunc()
     {
         for (resources::iterator i = _resources.begin(); i != _resources.end(); ++i)
         {
             Resources* res = *i;
-            res->load(ctx);
+            res->load();
         }
 
         for (ress::iterator i = _ress.begin(); i != _ress.end(); ++i)
         {
             Resource* res = *i;
             //log::messageln("loading res: %s", res->getName().c_str());
-            res->load(ctx);
+            res->load();
         }
 
         MutexAutoLock k(_m);

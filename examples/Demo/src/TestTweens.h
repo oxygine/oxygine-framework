@@ -17,6 +17,8 @@ public:
         addButton("ease", "ease: Linear");
         addButton("TweenAnim", "Add TweenAnim");
         addButton("TweenRotation", "Add TweenRotation");
+        addButton("TweenRotationGlobalEase", "Add TweenRotation with GlobalEase");
+
         addButton("TweenScale", "Add TweenScale");
         addButton("TweenPosition", "Add TweenPosition");
         addButton("TweenColor", "Add TweenColor");
@@ -109,10 +111,18 @@ public:
         {
             _addTween(createTween(TweenAnim(resources.getResAnim("anim")), dur / 4, 10));
         }
+
         if (id == "TweenRotation")
         {
             _addTween(createTween(Actor::TweenRotation(_sprite->getRotation() + (float)MATH_PI * 2), dur, 1));
         }
+
+        if (id == "TweenRotationGlobalEase")
+        {
+            _addTween(createTween2(Actor::TweenRotation(_sprite->getRotation() + (float)MATH_PI * 2),
+                                   TweenOptions(500).loops(10)));
+        }
+
         if (id == "TweenPosition")
         {
             _addTween(createTween(Actor::TweenPosition(_sprite->getPosition() + Vector2(0, -200)), dur, 1, true));

@@ -13,54 +13,6 @@ namespace oxygine
 
 
 
-    MutexPthreadLock::MutexPthreadLock(pthread_mutex_t& m, bool lock) : _mutex(m), _locked(lock)
-    {
-        if (_locked)
-            pthread_mutex_lock(&_mutex);
-    }
-
-    MutexPthreadLock::~MutexPthreadLock()
-    {
-        pthread_mutex_unlock(&_mutex);
-    }
-
-    ThreadMessages::ThreadMessages(): _id(0), _waitReplyID(0)
-    {
-        pthread_cond_init(&_cond, 0);
-
-        pthread_mutexattr_t attr;
-        pthread_mutexattr_init(&attr);
-        pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
-
-        pthread_mutex_init(&_mutex, &attr);
-
-        _events.reserve(10);
-    }
-
-    ThreadMessages::~ThreadMessages()
-    {
-        pthread_mutex_destroy(&_mutex);
-        pthread_cond_destroy(&_cond);
-    }
-
-    void ThreadMessages::wait()
-    {
-        MutexPthreadLock lock(_mutex);
-        _replyLast(0);
-        while (_events.empty())
-            pthread_cond_wait(&_cond, &_mutex);
-    }
-
-    void addtime(timespec& ts, int ms)
-    {
-        ts.tv_nsec += ms * 1000000;
-        while (ts.tv_nsec >= 1000000000)
-        {
-            ts.tv_nsec -= 1000000000;
-            ++ts.tv_sec;
-        }
-    }
-
 
     void mywait(pthread_cond_t* cond, pthread_mutex_t* mutex)
     {
@@ -79,18 +31,67 @@ namespace oxygine
 #endif
     }
 
+
+    MutexPthreadLock::MutexPthreadLock(pthread_mutex_t& m, bool lock) : _mutex(m), _locked(lock)
+    {
+        if (_locked)
+            pthread_mutex_lock(&_mutex);
+    }
+
+    MutexPthreadLock::~MutexPthreadLock()
+    {
+        pthread_mutex_unlock(&_mutex);
+    }
+
+    ThreadMessages::ThreadMessages(): _id(0), _waitReplyID(0), _result(0)
+    {
+        pthread_cond_init(&_cond, 0);
+
+        pthread_mutexattr_t attr;
+        pthread_mutexattr_init(&attr);
+        pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
+
+        pthread_mutex_init(&_mutex, &attr);
+
+        _events.reserve(10);
+    }
+
+    ThreadMessages::~ThreadMessages()
+    {
+        pthread_mutex_destroy(&_mutex);
+        pthread_cond_destroy(&_cond);
+    }
+
+    void ThreadMessages::_waitMessage()
+    {
+        _replyLast(0);
+        while (_events.empty())
+            pthread_cond_wait(&_cond, &_mutex);
+    }
+
+    void ThreadMessages::wait()
+    {
+        MutexPthreadLock lock(_mutex);
+        _waitMessage();
+    }
+
+    void addtime(timespec& ts, int ms)
+    {
+        ts.tv_nsec += ms * 1000000;
+        while (ts.tv_nsec >= 1000000000)
+        {
+            ts.tv_nsec -= 1000000000;
+            ++ts.tv_sec;
+        }
+    }
+
+
     void ThreadMessages::get(message& ev)
     {
         MutexPthreadLock lock(_mutex);
         LOGDN("ThreadMessages::get");
 
-        _replyLast(0);
-
-        while (_events.empty())
-        {
-            LOGDN("ThreadMessages::get pthread_cond_wait");
-            mywait(&_cond, &_mutex);
-        }
+        _waitMessage();
 
         ev = _events.front();
         _events.erase(_events.begin());
@@ -148,25 +149,28 @@ namespace oxygine
     void ThreadMessages::_replyLast(void* val)
     {
         LOGDN("ThreadMessages::_replyLast");
-        if (!_last._replied)
-        {
-            LOGDN("ThreadMessages::_replyLast not replied yet");
-            _last._replied = true;
-            _last._result = val;
 
-            if (_last.cb)
-            {
-                LOGDN("ThreadMessages::running callback");
-                _last.cb(_last);
-            }
+        if (_last.cb)
+        {
+            LOGDN("ThreadMessages::running callback");
+            _last.cb(_last);
+            _last.cb = 0;
+        }
 
 #ifndef __S3E__
-            if (_last.cbFunction)
-            {
-                LOGDN("ThreadMessages::running callback function");
-                _last.cbFunction();
-            }
+        if (_last.cbFunction)
+        {
+            LOGDN("ThreadMessages::running callback function");
+            _last.cbFunction();
+            _last.cbFunction = std::function< void() >();
+        }
 #endif
+
+        if (_waitReplyID == _last._id)
+        {
+            LOGDN("ThreadMessages::_replyLast not replied yet");
+            _result = val;
+
 
             LOGDN("ThreadMessages::_replyLast pre _waitReplyID = %d, _last._id = %d, _last.msgid=%d", _waitReplyID, _last._id, _last.msgid);
 
@@ -189,6 +193,17 @@ namespace oxygine
     }
 
 
+    void ThreadMessages::_waitReply()
+    {
+        while (_last._id != _waitReplyID)
+        {
+            //LOGDN("ThreadMessages::send msgid=%d waiting reply...", msgid);
+            mywait(&_cond, &_mutex);
+        }
+
+        _waitReplyID = 0;// ?
+    }
+
     void* ThreadMessages::send(int msgid, void* arg1, void* arg2)
     {
         message ev;
@@ -198,32 +213,53 @@ namespace oxygine
 
 
         MutexPthreadLock lock(_mutex);
-        ev._id = ++_id;
-
-        _waitReplyID = ev._id;
-        _events.push_back(ev);
+        _pushMessageWithReply(ev);
 
         LOGDN("ThreadMessages::send msgid=%d pthread_cond_signal.. _waitReplyID=%d", msgid, _waitReplyID);
-        pthread_cond_signal(&_cond);
-
-
-        if (_last._replied)
-        {
-            LOGDN("ThreadMessages::send msgid=%d already replied", msgid);
-        }
-
-        while (!_last._replied || _last._id != _waitReplyID)
-        {
-            LOGDN("ThreadMessages::send msgid=%d waiting reply...", msgid);
-            mywait(&_cond, &_mutex);
-        }
+        _waitReply();
 
         LOGDN("ThreadMessages::send msgid=%d done", msgid);
 
-        _waitReplyID = 0;
-        _last._replied = false;
 
-        return _last._result;
+
+        return _result;
+    }
+
+    void* ThreadMessages::sendCallback(int msgid, void* arg1, void* arg2, callback cb, void* cbData)
+    {
+        message ev;
+        ev.msgid = msgid;
+        ev.arg1 = arg1;
+        ev.arg2 = arg2;
+        ev.cb = cb;
+        ev.cbData = cbData;
+
+        MutexPthreadLock lock(_mutex);
+        _pushMessageWithReply(ev);
+        LOGDN("ThreadMessages::sendCallback msgid=%d pthread_cond_signal.. _waitReplyID=%d", msgid, _waitReplyID);
+
+        _waitReply();
+
+        LOGDN("ThreadMessages::sendCallback msgid=%d done", msgid);
+
+
+
+        return _result;
+    }
+
+    void ThreadMessages::_pushMessageWithReply(message& msg)
+    {
+        msg._id = ++_id;
+        _waitReplyID = msg._id;
+        _events.push_back(msg);
+        pthread_cond_signal(&_cond);
+    }
+
+    void ThreadMessages::_pushMessage(message& msg)
+    {
+        msg._id = ++_id;
+        _events.push_back(msg);
+        pthread_cond_signal(&_cond);
     }
 
     void ThreadMessages::post(int msgid, void* arg1, void* arg2)
@@ -234,9 +270,7 @@ namespace oxygine
         ev.arg2 = arg2;
 
         MutexPthreadLock lock(_mutex);
-        ev._id = ++_id;
-        _events.push_back(ev);
-        pthread_cond_signal(&_cond);
+        _pushMessage(ev);
     }
 
     void ThreadMessages::postCallback(int msgid, void* arg1, void* arg2, callback cb, void* cbData)
@@ -249,9 +283,7 @@ namespace oxygine
         ev.cbData = cbData;
 
         MutexPthreadLock lock(_mutex);
-        ev._id = ++_id;
-        _events.push_back(ev);
-        pthread_cond_signal(&_cond);
+        _pushMessage(ev);
     }
 
     void ThreadMessages::removeCallback(int msgid, callback cb, void* cbData)
@@ -266,7 +298,6 @@ namespace oxygine
                 break;
             }
         }
-
     }
 
 #ifndef __S3E__
@@ -281,9 +312,7 @@ namespace oxygine
         ev.cbFunction = f;
 
         MutexPthreadLock lock(_mutex);
-        ev._id = ++_id;
-        _events.push_back(ev);
-        pthread_cond_signal(&_cond);
+        _pushMessage(ev);
     }
 #endif
 }

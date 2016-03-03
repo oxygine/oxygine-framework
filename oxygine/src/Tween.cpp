@@ -10,7 +10,7 @@ namespace oxygine
 		_loopsDone(0),
         _percent(0),
         _status(status_not_started),
-        _elapsed(0), _twoSides(false), _ease(ease_linear), _detach(false), _delay(0), _client(0)
+        _elapsed(0), _twoSides(false), _ease(ease_linear), _detach(false), _delay(0), _client(0), _globalEase(ease_linear)
     {
 
     }
@@ -49,6 +49,7 @@ namespace oxygine
 		_twoSides = opt._twoSides;
 		_delay = opt._delay;
 		_detach = opt._detach;
+		_globalEase = opt._globalEase;
 
 		if (_duration <= 0)
 		{
@@ -147,10 +148,17 @@ namespace oxygine
                 if (_duration)
                 {
                     timeMS localElapsed = _elapsed - _delay;
+					
+					if (_globalEase != ease_linear)
+					{
+						float p = localElapsed / float(_duration * _loops);						
+						timeMS nv = calcEase(_globalEase, std::min(p, 1.0f)) * _duration * _loops;;
+						localElapsed = nv;
+					}
 
-                    int loopsDone = localElapsed / _duration;
+					int loopsDone = localElapsed / _duration;					
+					_percent = _calcEase(((float)(localElapsed - loopsDone * _duration)) / _duration);
 
-                    _percent = _calcEase(((float)(localElapsed - loopsDone * _duration)) / _duration);
 					while(_loopsDone < loopsDone)
 					{
 						_loopDone(actor, us);

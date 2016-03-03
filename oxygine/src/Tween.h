@@ -107,6 +107,7 @@ namespace oxygine
         timeMS      getDuration() const { return _duration; }
         timeMS      getElapsed() const { return _elapsed; }
         EASE        getEase() const { return _ease; }
+        EASE        getGlobalEase() const { return _globalEase; }
         timeMS      getDelay() const { return _delay; }
         Actor*      getClient() const { return _client; }
         float       getPercent() const { return _percent; }
@@ -125,6 +126,8 @@ namespace oxygine
         void addDoneCallback(const EventCallback& cb);
         /**set Easing function*/
         void setEase(EASE ease) { _ease = ease; }
+        /**set Global Easing functiont */
+        void setGlobalEase(EASE ease) { _globalEase = ease; }
         /**set Delay before starting tween*/
         void setDelay(timeMS delay) { _delay = delay; }
         /** loops = -1 means infinity repeat cycles*/
@@ -174,6 +177,7 @@ namespace oxygine
         int _loops;
         int _loopsDone;
         EASE _ease;
+        EASE _globalEase;
         bool _twoSides;
 
         float _percent;

@@ -31,7 +31,7 @@ namespace oxygine
         typedef void (*callback)(const message& m);
         struct message
         {
-            message(): msgid(0), arg1(0), arg2(0), cb(0), cbData(0), _id(0), _result(0), _replied(false) {}
+            message(): msgid(0), arg1(0), arg2(0), cb(0), cbData(0), _id(0) {}
 
             int     msgid;
             void*   arg1;
@@ -44,8 +44,6 @@ namespace oxygine
 #endif
 
             unsigned int _id;
-            void*   _result;
-            bool    _replied;
         };
 
         struct peekMessage: public message
@@ -69,6 +67,7 @@ namespace oxygine
         void* send(int msgid, void* arg1, void* arg2);
         void post(int msgid, void* arg1, void* arg2);
         void postCallback(int msgid, void* arg1, void* arg2, callback cb, void* cbData);
+        void* sendCallback(int msgid, void* arg1, void* arg2, callback cb, void* cbData);
         void removeCallback(int msgid, callback cb, void* cbData);
 
 #ifndef __S3E__
@@ -78,9 +77,17 @@ namespace oxygine
         void reply(void* val);
 
     private:
+        void _waitMessage();
+        void _waitReply();
+
+        void _pushMessage(message&);
+        void _pushMessageWithReply(message&);
+
         void _replyLast(void* val);
         unsigned int _id;
         unsigned int _waitReplyID;
+        void*   _result;
+
         typedef std::vector<message> messages;
         messages _events;
         message _last;

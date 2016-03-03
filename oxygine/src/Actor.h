@@ -57,17 +57,19 @@ namespace oxygine
     class TweenOptions
     {
     public:
-        explicit TweenOptions(timeMS duration = 500) : _duration(duration), _delay(0), _ease(Tween::ease_linear), _loops(1), _twoSides(false), _detach(false) {}
+        explicit TweenOptions(timeMS duration = 500) : _duration(duration), _delay(0), _ease(Tween::ease_linear), _globalEase(Tween::ease_linear), _loops(1), _twoSides(false), _detach(false) {}
         TweenOptions& duration(timeMS duration) { _duration = duration; return *this; }
         TweenOptions& delay(timeMS delay) { _delay = delay; return *this; }
         TweenOptions& loops(int loops) { _loops = loops; return *this; }
         TweenOptions& twoSides(bool enabled = true) { _twoSides = enabled; return *this; }
         TweenOptions& ease(Tween::EASE ease) { _ease = ease; return *this; }
         TweenOptions& detach(bool detach_ = true) { _detach = detach_; return *this; }
+        TweenOptions& globalEase(Tween::EASE ease) { _globalEase = ease; return *this; }
 
         timeMS  _duration;
         timeMS  _delay;
         Tween::EASE _ease;
+        Tween::EASE _globalEase;
         int     _loops;
         bool    _twoSides;
         bool    _detach;

@@ -96,6 +96,9 @@ namespace oxygine
     class LoadResourcesContext
     {
     public:
+        static LoadResourcesContext* get();
+        static void init();
+
         virtual ~LoadResourcesContext() {}
 
 
@@ -108,7 +111,15 @@ namespace oxygine
     public:
         static SingleThreadResourcesContext instance;
         void createTexture(const CreateTextureTask& opt) OVERRIDE;
-        bool isNeedProceed(spNativeTexture t);
+        bool isNeedProceed(spNativeTexture t) OVERRIDE;
+    };
+
+    class MTLoadingResourcesContext : public LoadResourcesContext
+    {
+    public:
+        static MTLoadingResourcesContext instance;
+        void createTexture(const CreateTextureTask& opt) OVERRIDE;
+        bool isNeedProceed(spNativeTexture t) OVERRIDE;
     };
 
     class RestoreResourcesContext: public LoadResourcesContext

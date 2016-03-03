@@ -413,16 +413,21 @@ namespace oxygine
 
     void DebugActor::onEvent(Event* ev)
     {
+        TouchEvent* te = safeCast<TouchEvent*>(ev);
         spActor actor = safeSpCast<Actor>(ev->target);
         spColorRectSprite cr = new ColorRectSprite;
         cr->setTouchEnabled(false);
-        //cr->setAlpha(100);
         cr->setColor(Color(rand() % 255, rand() % 255, rand() % 255, 0));
         cr->setSize(actor->getSize());
         cr->addTween(ColorRectSprite::TweenColor(Color(Color::White, 200)), 700, 1, true, 0, Tween::ease_inCubic)->setDetachActor(true);
         actor->addChild(cr);
         std::string dmp = actor->dump(0);
-        log::messageln("touched actor:\n%s", dmp.c_str());
+        log::messageln("touched actor '%s' local pos: (%.0f,%.0f), pos: (%.0f,%.0f)\n%s",
+                       actor->getName().c_str(),
+                       te->localPosition.x, te->localPosition.y,
+                       te->position.x, te->position.y,
+                       dmp.c_str());
+
         actor = actor->getParent();
         while (actor)
         {

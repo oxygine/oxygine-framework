@@ -401,6 +401,7 @@ namespace oxygine
 #endif
 
 #endif
+            LoadResourcesContext::init();
             init2();
         }
 

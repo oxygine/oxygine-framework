@@ -1,9 +1,26 @@
 #include "CreateResourceContext.h"
 #include "core/NativeTexture.h"
 #include "MemoryTexture.h"
+#include "core/ThreadMessages.h"
+#include "core/oxygine.h"
 
 namespace oxygine
 {
+    thread_local bool _isMainThread = false;
+
+
+    void LoadResourcesContext::init()
+    {
+        _isMainThread = true;
+    }
+
+    LoadResourcesContext* LoadResourcesContext::get()
+    {
+        LoadResourcesContext* mtcontext = &MTLoadingResourcesContext::instance;
+        LoadResourcesContext* scontext = &SingleThreadResourcesContext::instance;
+        return _isMainThread ? scontext : mtcontext;
+    }
+
     CreateTextureTask::CreateTextureTask(): linearFilter(true), clamp2edge(true)
     {
     }
@@ -169,6 +186,48 @@ namespace oxygine
     }
 
     bool SingleThreadResourcesContext::isNeedProceed(spNativeTexture t)
+    {
+        return t->getHandle() == 0;
+    }
+
+
+    MTLoadingResourcesContext MTLoadingResourcesContext::instance;
+
+    void copyTexture(const ThreadMessages::message& msg)
+    {
+        const CreateTextureTask* task = (const CreateTextureTask*)msg.cbData;
+
+
+        MemoryTexture* src = task->src.get();
+        NativeTexture* dest = task->dest.get();
+
+        bool done = false;
+
+        if (isCompressedFormat(src->getFormat()))
+        {
+            dest->init(src->lock(), false);
+            done = true;
+        }
+        else
+        {
+
+            Rect textureRect(0, 0, src->getWidth(), src->getHeight());
+
+            if (dest->getHandle() == 0)
+                dest->init(textureRect.getWidth(), textureRect.getHeight(), src->getFormat());
+
+            dest->updateRegion(0, 0, src->lock());
+        }
+
+        task->ready();
+    }
+
+    void MTLoadingResourcesContext::createTexture(const CreateTextureTask& opt)
+    {
+        core::getMainThreadMessages().sendCallback(0, 0, 0, copyTexture, (void*)&opt);
+    }
+
+    bool MTLoadingResourcesContext::isNeedProceed(spNativeTexture t)
     {
         return t->getHandle() == 0;
     }

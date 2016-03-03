@@ -45,7 +45,7 @@ namespace oxygine
 
     private:
         static void* _staticThreadFunc(void* t);
-        virtual void _threadFunc(LoadResourcesContextMT* ctx);
+        virtual void _threadFunc();
         void doUpdate(const UpdateState& us);
 
         Mem2Native _m2n;
