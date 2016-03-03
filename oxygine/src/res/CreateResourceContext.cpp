@@ -6,7 +6,11 @@
 
 namespace oxygine
 {
+#ifdef _MSC_VER
+    __declspec(thread) bool _isMainThread = false;
+#else
     thread_local bool _isMainThread = false;
+#endif
 
 
     void LoadResourcesContext::init()

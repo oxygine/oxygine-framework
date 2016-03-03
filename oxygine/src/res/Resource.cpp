@@ -17,8 +17,6 @@ namespace oxygine
 
     void Resource::load(LoadResourcesContext* context /* = 0 */)
     {
-        LoadResourcesContext* getContext();
-
         if (!context)
             context = LoadResourcesContext::get();
 
