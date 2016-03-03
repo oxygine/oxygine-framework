@@ -41,6 +41,9 @@ namespace oxygine
         //use not standard folder with prebuilt resources (atlasses, fonts, etc)
         ResourcesLoadOptions& prebuiltFolder(const std::string& folder) {_prebuilFolder = folder; return *this; }
 
+        //use load counter internally
+        ResourcesLoadOptions& shortenIDS(bool v = true) { _shortenIDS = v; return *this; }
+
 
         bool _loadCompletely;
         bool _useLoadCounter;
