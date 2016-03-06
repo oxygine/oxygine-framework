@@ -288,7 +288,5 @@ namespace oxygine
         }
 
         setFlipped(node.attribute("flipX").as_bool(false), node.attribute("flipY").as_bool(false));
-
-        setBlendMode(blend_premultiplied_alpha);
     }
 }

@@ -55,8 +55,8 @@ namespace oxygine
         _Actor::serialize(data);
         if (_vstyle.getColor() != Color(0xffffffff))
             data->node.append_attribute("color").set_value(color2hex(_vstyle.getColor()).c_str());
-        //if (_vstyle.getBlendMode() != )
-        //data->node.append_attribute("blend").set_value(color2hex(_vstyle.getColor()).c_str());
+        if (_vstyle.getBlendMode() != blend_premultiplied_alpha)
+            data->node.append_attribute("blend").set_value(_vstyle.getBlendMode());
 
         data->node.set_name("VStyleActor");
     }
@@ -65,6 +65,7 @@ namespace oxygine
     {
         _Actor::deserialize(data);
         setColor(hex2color(data->node.attribute("color").as_string("ffffffff")));
+        setBlendMode((blend_mode)(data->node.attribute("blend").as_int(blend_premultiplied_alpha)));
     }
 
     const Color& VStyleActor::getColor() const

@@ -756,6 +756,9 @@ namespace oxygine
 
         void release()
         {
+            Event ev(EVENT_EXIT);
+            _dispatcher->dispatchEvent(&ev);
+
             Material::setCurrent(0);
             STDRenderer::release();
             delete STDMaterial::instance;
