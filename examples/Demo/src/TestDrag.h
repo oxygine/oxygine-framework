@@ -74,7 +74,7 @@ public:
                     c->setAnchor(0.5f, 0.5f);
                     c->setResAnim(resources.getResAnim("snow"));
                     c->addTween(Actor::TweenAlpha(0), 300)->setDetachActor(true);
-                    Vector2 pos = convert_local2global(a, content, contact);
+                    Vector2 pos = convert_local2stage(a, contact, content);
                     c->setPosition(pos);
                     c->attachTo(contacts);
                 }

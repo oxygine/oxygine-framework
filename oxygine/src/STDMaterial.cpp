@@ -98,7 +98,7 @@ namespace oxygine
         spSprite mask = sprite->getMask();
         if (mask && mask->getAnimFrame().getDiffuse().base)
         {
-            Transform t = getGlobalTransform(mask);
+            Transform t = mask->computeGlobalTransform();
 
             RectF maskDest = mask->getDestRect();
             RectF maskSrc = mask->getSrcRect();

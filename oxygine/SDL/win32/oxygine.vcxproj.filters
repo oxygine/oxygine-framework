@@ -737,6 +737,9 @@
     <ClInclude Include="..\..\src\ThreadLoader.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\math\OBBox.h">
+      <Filter>src\math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />

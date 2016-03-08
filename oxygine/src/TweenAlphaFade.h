@@ -18,7 +18,7 @@ namespace oxygine
         spNativeTexture _rt;
         unsigned char _a;
         bool _fadeIn;
-
+        Rect _screen;
         enum options
         {
             opt_singleR2T = 1,
@@ -41,9 +41,7 @@ namespace oxygine
 
         Rect getScreenRect(Actor& actor)
         {
-            RectF screen;
-            screen.pos = actor._getStage()->local2global(convert_local2stage(&actor, Vector2(0, 0)));
-            screen.size = actor._getStage()->local2global(convert_local2stage(&actor, actor.getSize())) - screen.pos;
+            RectF screen = actor.computeBounds(actor.computeGlobalTransform());
             screen.size += Vector2(1, 1);
 
             return screen.cast<Rect>();
@@ -61,13 +59,6 @@ namespace oxygine
 
         void restore(Restorable* r, void* userData)
         {
-            Rect screen = getScreenRect(*_actor);
-            _rt = IVideoDriver::instance->createTexture();
-            _rt->init(screen.getWidth(), screen.getHeight(), TF_R8G8B8A8, true);
-
-            _rt->reg(CLOSURE(this, &TweenAlphaFade::restore), 0);
-
-
             render2texture();
         }
 
@@ -89,9 +80,10 @@ namespace oxygine
             IVideoDriver* driver = IVideoDriver::instance;
 
 
+            Rect display(Point(0, 0), core::getDisplaySize());
 
             Actor& actor = *_actor;
-            Rect screen = getScreenRect(actor);
+            Rect screen;
 
             if (_options & opt_fullscreen)
             {
@@ -99,11 +91,26 @@ namespace oxygine
                 screen.pos = Point(0, 0);
                 screen.size = core::getDisplaySize();
             }
+            else
+            {
+                screen = getScreenRect(actor);
+                screen.clip(display);
+            }
 
+            _screen = screen;
 
-            if (_rt->getWidth() < screen.getWidth() ||
-                    _rt->getHeight() < screen.getHeight())
+            if (!_rt)
+            {
+                _rt = IVideoDriver::instance->createTexture();
                 _rt->init(screen.getWidth(), screen.getHeight(), TF_R8G8B8A8, true);
+                _rt->reg(CLOSURE(this, &TweenAlphaFade::restore), 0);
+            }
+
+            if (_rt->getWidth() < screen.getWidth() || _rt->getHeight() < screen.getHeight())
+            {
+                _rt->init(screen.getWidth(), screen.getHeight(), TF_R8G8B8A8, true);
+                _rt->reg(CLOSURE(this, &TweenAlphaFade::restore), 0);
+            }
 
             driver->setRenderTarget(_rt);
 
@@ -123,27 +130,18 @@ namespace oxygine
 
             renderer->initCoordinateSystem(vp.getWidth(), vp.getHeight(), true);
 
+            rs.transform = _actor->getParent()->computeGlobalTransform();
             if (_options & opt_fullscreen)
             {
-                rs.transform = getGlobalTransform(_actor->getParent());
                 mat->render(&actor, rs);
             }
             else
             {
-                AffineTransform copy = actor.getTransform();
-
-                AffineTransform transform;
-                transform.identity();
-                Vector2 gpos = actor._getStage()->local2global(convert_local2stage(&actor, Vector2(0, 0)));
-                Vector2 offset = gpos - screen.pos.cast<Vector2>();
-                transform.translate(offset);
-                transform.scale(actor.getScale());
-                actor.setTransform(transform);
-
+                AffineTransform offset;
+                offset.identity();
+                offset.translate(-screen.pos);
+                rs.transform = rs.transform * offset;
                 mat->render(&actor, rs);
-
-                //restore original transform
-                actor.setTransform(copy);
             }
 
             mat->finish();
@@ -166,7 +164,7 @@ namespace oxygine
         {
             STDMaterial* mat = STDMaterial::instance;
             STDRenderer* renderer = mat->getRenderer();
-            Rect sr = getScreenRect(*actor);
+            Rect sr = _screen;//getScreenRect(*actor);
             if (_options & opt_fullscreen)
             {
                 sr.pos = Point(0, 0);

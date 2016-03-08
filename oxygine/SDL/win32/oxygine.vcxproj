@@ -276,6 +276,7 @@
     <ClInclude Include="..\..\src\MaskedRenderer.h" />
     <ClInclude Include="..\..\src\MaskedSprite.h" />
     <ClInclude Include="..\..\src\Material.h" />
+    <ClInclude Include="..\..\src\math\OBBox.h" />
     <ClInclude Include="..\..\src\MemoryTexture.h" />
     <ClInclude Include="..\..\src\minizip\ioapi.h" />
     <ClInclude Include="..\..\src\minizip\ioapi_mem.h" />

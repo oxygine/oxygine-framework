@@ -11,37 +11,29 @@ public:
     TestTweenAlphaFade()
     {
         spSprite sprite = new Sprite;
-        //Vector2 pos(0, 0);
-        //sprite->setPosition(pos);
         sprite->setResAnim(resources.getResAnim("t2p"));
         sprite->attachTo(content);
-        //float scale = 1.0f / getStage()->getScaleX();
-        //sprite->setScale(scale);
-        //Vector2 displaySpriteSize = sprite->getSize() * scale;
-        //sprite->setPosition((content->getSize() - displaySpriteSize) / 2.0f);
-        //*/
 
-        sprite->setPosition(100.8f, 100.5f);
-        sprite->setScale(1.5f);
-        sprite->setAnchor(0.5f, 0.5f);
-        sprite->setRotationDegrees(45);
+        sprite->setPosition(200.8f, 150);
         sprite->addEventListener(TouchEvent::CLICK,
                                  CLOSURE(this, &TestTweenAlphaFade::onClick));
 
-        spSprite child = new Sprite;
-        //child->attachTo(sprite);
-        child->setScale(1.0f / 1.5f);
-        child->setResAnim(resources.getResAnim("t2p"));
+        spSprite anim = new Sprite;
+        //anim->attachTo(sprite);
+        //anim->setScale(1.0f / 1.5f);
+        anim->setPosition(sprite->getSize() / 2);
+        anim->setAnchor(0.5f, 0.5f);
+        anim->setScale(10);
+        anim->setResAnim(resources.getResAnim("anim"));
+        anim->addTween(TweenAnim(resources.getResAnim("anim")), 1500, -1);
 
 
-        //sprite->addTween(Actor::TweenX(0), 10000, -1, true);
-        sprite->addTween(TweenAnim(resources.getResAnim("anim")), 500, -1);
         _test = sprite;
     }
 
     void onClick(Event*)
     {
-        _test->addTween(TweenAlphaFade(false, false), 5500, 1, true);
+        _test->addTween(TweenAlphaFade(false, 0), 5500, 1, true);
     }
 
     void clicked(string id)

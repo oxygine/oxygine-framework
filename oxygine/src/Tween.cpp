@@ -152,7 +152,7 @@ namespace oxygine
 					if (_globalEase != ease_linear)
 					{
 						float p = localElapsed / float(_duration * _loops);						
-						timeMS nv = calcEase(_globalEase, std::min(p, 1.0f)) * _duration * _loops;;
+						timeMS nv = static_cast<timeMS>(calcEase(_globalEase, std::min(p, 1.0f)) * _duration * _loops);
 						localElapsed = nv;
 					}
 
