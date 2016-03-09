@@ -17,6 +17,8 @@ namespace oxygine
         timeMS  getTime() const;
         int     getPauseCounter() const;
         int     getFixedStep() const;
+        int     getLastDT() const;
+        timeMS  getLastUpdateTime() const;
         float   getMultiplier() const;
 
         void    setFixedStep(float stepMS);
@@ -39,6 +41,7 @@ namespace oxygine
         float   _multiplier;
         float   _fixedStep;
 
+        int    _lastDT;
         timeMS _lastUpdateTime;
     };
 }

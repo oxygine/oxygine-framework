@@ -14,26 +14,27 @@ public:
         sprite->setResAnim(resources.getResAnim("t2p"));
         sprite->attachTo(content);
 
-        sprite->setPosition(200.8f, 150);
+        sprite->setPosition(getStage()->getSize() / 2);
         sprite->addEventListener(TouchEvent::CLICK,
                                  CLOSURE(this, &TestTweenAlphaFade::onClick));
 
         spSprite anim = new Sprite;
-        //anim->attachTo(sprite);
-        //anim->setScale(1.0f / 1.5f);
+        anim->attachTo(sprite);
+        anim->addTween(Actor::TweenScale(3), 4000, -1, true);
         anim->setPosition(sprite->getSize() / 2);
         anim->setAnchor(0.5f, 0.5f);
         anim->setScale(10);
         anim->setResAnim(resources.getResAnim("anim"));
         anim->addTween(TweenAnim(resources.getResAnim("anim")), 1500, -1);
 
-
+        sprite->addTween(Actor::TweenRotationDegrees(360), 10000, -1);
+        sprite->setAnchor(0.5f, 0.5f);
         _test = sprite;
     }
 
     void onClick(Event*)
     {
-        _test->addTween(TweenAlphaFade(false, 0), 5500, 1, true);
+        _test->addTween(TweenAlphaFade(false), 5500, 1, true);
     }
 
     void clicked(string id)

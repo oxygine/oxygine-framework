@@ -24,7 +24,7 @@ namespace oxygine
     Clock::Clock():
         _counter(0), _destTime(0), _srcTime(0),
         _multiplier(1.0f), _fixedStep(0),
-        _lastUpdateTime(-1)
+        _lastUpdateTime(-1), _lastDT(0)
     {
     }
 
@@ -41,6 +41,16 @@ namespace oxygine
     int Clock::getFixedStep() const
     {
         return (int)_fixedStep;
+    }
+
+    int Clock::getLastDT() const
+    {
+        return _lastDT;
+    }
+
+    timeMS  Clock::getLastUpdateTime() const
+    {
+        return _lastUpdateTime;
     }
 
     void Clock::setMultiplier(float m)
@@ -94,6 +104,7 @@ namespace oxygine
         _destTime += dt;
 
         _lastUpdateTime = time;
+        _lastDT = dt;
 
         //if (_fixedStep > 0)
         //  printf("ticks: %d\n", int((_destTime - _srcTime)/_fixedStep));
