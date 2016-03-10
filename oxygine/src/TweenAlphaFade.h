@@ -50,6 +50,7 @@ namespace oxygine
 
             screen = actor.computeBounds(actor.computeGlobalTransform()).cast<Rect>();
             screen.size += Point(1, 1);
+            screen.expand(Point(18, 18), Point(18, 18));
             screen.clip(display);
 
             return screen.cast<Rect>();
@@ -93,19 +94,29 @@ namespace oxygine
             Actor& actor = *_actor;
             _screen = getScreenRect(actor);
 
+            bool c = false;
             if (!_rt)
             {
                 _rt = IVideoDriver::instance->createTexture();
                 _rt->init(_screen.getWidth(), _screen.getHeight(), TF_R8G8B8A8, true);
-                _rt->reg(CLOSURE(this, &TweenPostProcess::restore), 0);
+                c = true;
             }
 
             if (_rt->getWidth() < _screen.getWidth() || _rt->getHeight() < _screen.getHeight())
             {
                 _rt->init(_screen.getWidth(), _screen.getHeight(), TF_R8G8B8A8, true);
-                _rt->reg(CLOSURE(this, &TweenPostProcess::restore), 0);
+                c = true;
             }
+
+            if (c)
+                rtCreated();
+
             return true;
+        }
+
+        virtual void rtCreated()
+        {
+            _rt->reg(CLOSURE(this, &TweenPostProcess::restore), 0);
         }
 
         virtual void render2texture()
@@ -194,12 +205,48 @@ namespace oxygine
         }
     };
 
-    class TweenGlow : public TweenAlphaFade
+    class TweenGlow : public TweenPostProcess
     {
     public:
         static ShaderProgram* shaderBlurV;
         static ShaderProgram* shaderBlurH;
+        static ShaderProgram* shaderBlit;
+
+        spNativeTexture _rt2;
+
+        TweenGlow(): TweenPostProcess(0) {}
 
         void render2texture() OVERRIDE;
+        void rtCreated() OVERRIDE;
+
+
+        void render(Actor* actor, const RenderState& rs)
+        {
+            STDMaterial* mat = STDMaterial::instance;
+            STDRenderer* renderer = mat->getRenderer();
+
+            RectF src(0, 0,
+                      _screen.getWidth() / (float)_rt->getWidth() / 4,
+                      _screen.getHeight() / (float)_rt->getHeight() / 4);
+            RectF dest = _screen.cast<RectF>();
+
+            renderer->setBlendMode(blend_premultiplied_alpha);
+            AffineTransform tr;
+            tr.identity();
+            //tr.scale(Vector2(4, 4));
+            renderer->setTransform(tr);
+            renderer->beginElementRendering(true);
+            Color color = Color(Color::White).premultiplied();
+            renderer->drawElement(_rt, color.rgba(), src, dest);
+            renderer->drawBatch();
+
+
+            RenderState r = rs;
+            r.material = mat;
+            actor->setMaterial(_prev);
+            actor->render(r);
+            actor->setMaterial(this);
+
+        }
     };
 }

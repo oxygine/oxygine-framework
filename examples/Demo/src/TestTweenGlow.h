@@ -1,6 +1,6 @@
 #pragma once
 #include "test.h"
-#include "TweenGlow.h"
+#include "TweenAlphaFade.h"
 #undef OUT
 
 
@@ -11,34 +11,25 @@ public:
     TestTweenGlow()
     {
         spSprite sprite = new Sprite;
-        //Vector2 pos(0, 0);
-        //sprite->setPosition(pos);
         sprite->setResAnim(resources.getResAnim("t2p"));
         sprite->attachTo(content);
-        //float scale = 1.0f / getStage()->getScaleX();
-        //sprite->setScale(scale);
-        //Vector2 displaySpriteSize = sprite->getSize() * scale;
-        //sprite->setPosition((content->getSize() - displaySpriteSize) / 2.0f);
-        //*/
 
-        sprite->setPosition(100.8f, 100.5f);
-        sprite->setScale(1.5f);
-        sprite->addEventListener(TouchEvent::CLICK,
-                                 CLOSURE(this, &TestTweenGlow::onClick));
+        sprite->setPosition(getStage()->getSize() / 2);
 
-        spSprite child = new Sprite;
-        child->attachTo(sprite);
-        child->setScale(1.0f / 1.5f);
-        child->setResAnim(resources.getResAnim("t2p"));
+        spSprite anim = new Sprite;
+        anim->attachTo(sprite);
+        anim->addTween(Actor::TweenScale(6), 4000, -1, true);
+        anim->setPosition(sprite->getSize() / 2);
+        anim->setAnchor(0.5f, 0.5f);
+        anim->setScale(10);
+        anim->setResAnim(resources.getResAnim("anim"));
+        anim->addTween(TweenAnim(resources.getResAnim("anim")), 1500, -1);
 
+        sprite->addTween(Actor::TweenRotationDegrees(360), 10000, -1);
+        sprite->setAnchor(0.5f, 0.5f);
 
-        sprite->addTween(Actor::TweenX(-130), 10000, -1, true);
+        sprite->addTween(TweenGlow(), 55000, 1, true);
         _test = sprite;
-    }
-
-    void onClick(Event*)
-    {
-        _test->addTween(TweenAlphaFade(false), 5500, 1, true);
     }
 
     void clicked(string id)

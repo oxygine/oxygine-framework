@@ -39,6 +39,7 @@ extern "C"
     extern PFNGLATTACHSHADERPROC _glAttachShader;
     extern PFNGLCOMPILESHADERPROC _glCompileShader;
     extern PFNGLBINDATTRIBLOCATIONPROC _glBindAttribLocation;
+    extern PFNGLGETATTRIBLOCATIONPROC _glGetAttribLocation;
     extern PFNGLLINKPROGRAMPROC _glLinkProgram;
     extern PFNGLUNIFORM1IPROC _glUniform1i;
     extern PFNGLUNIFORM2FVPROC _glUniform2fv;
@@ -135,6 +136,7 @@ extern "C"
 #define oxglAttachShader DECLARE_GLEXT(glAttachShader)
 #define oxglCompileShader DECLARE_GLEXT(glCompileShader)
 #define oxglBindAttribLocation DECLARE_GLEXT(glBindAttribLocation)
+#define oxglGetAttribLocation DECLARE_GLEXT(glGetAttribLocation)
 #define oxglLinkProgram DECLARE_GLEXT(glLinkProgram)
 #define oxglUniform1i DECLARE_GLEXT(glUniform1i)
 #define oxglUniform2fv DECLARE_GLEXT(glUniform2fv)

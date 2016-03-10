@@ -53,8 +53,15 @@ extern "C"
     {}
     GLAPI void APIENTRY def_glCompileShader(GLuint shader)
     {}
+
     GLAPI void APIENTRY def_glBindAttribLocation(GLuint program, GLuint index, const GLchar* name)
     {}
+
+    GLAPI GLint APIENTRY def_glGetAttribLocation(GLuint program, const GLchar* name)
+    {
+        return 0;
+    }
+
     GLAPI void APIENTRY def_glLinkProgram(GLuint program)
     {}
     GLAPI void APIENTRY def_glUniform1i(GLint location, GLint v0)
@@ -133,6 +140,7 @@ extern "C"
     PFNGLATTACHSHADERPROC _glAttachShader = 0;
     PFNGLCOMPILESHADERPROC _glCompileShader = 0;
     PFNGLBINDATTRIBLOCATIONPROC _glBindAttribLocation = 0;
+    PFNGLGETATTRIBLOCATIONPROC _glGetAttribLocation = 0;
     PFNGLLINKPROGRAMPROC _glLinkProgram = 0;
     PFNGLUNIFORM1IPROC _glUniform1i = 0;
     PFNGLUNIFORM2FVPROC _glUniform2fv = 0;
@@ -184,6 +192,7 @@ int initGLExtensions(myGetProcAdress func)
     GETFUNC(_glAttachShader, def_glAttachShader, PFNGLATTACHSHADERPROC, "glAttachShader");
     GETFUNC(_glCompileShader, def_glCompileShader, PFNGLCOMPILESHADERPROC, "glCompileShader");
     GETFUNC(_glBindAttribLocation, def_glBindAttribLocation, PFNGLBINDATTRIBLOCATIONPROC, "glBindAttribLocation");
+    GETFUNC(_glGetAttribLocation, def_glGetAttribLocation, PFNGLGETATTRIBLOCATIONPROC, "glGetAttribLocation");
     GETFUNC(_glLinkProgram, def_glLinkProgram, PFNGLLINKPROGRAMPROC, "glLinkProgram");
     GETFUNC(_glUniform1i, def_glUniform1i, PFNGLUNIFORM1IPROC, "glUniform1i");
     GETFUNC(_glUniform2fv, def_glUniform2fv, PFNGLUNIFORM2FVPROC, "glUniform2fv");

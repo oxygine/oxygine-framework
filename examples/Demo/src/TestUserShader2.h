@@ -41,8 +41,7 @@ public:
 
         //link into 1 shader program
         unsigned int pr = ShaderProgramGL::createProgram(vs, ps, static_cast<const VertexDeclarationGL*>(IVideoDriver::instance->getVertexDeclaration(vertexPCT2T2::FORMAT)));
-        _lightShader = new ShaderProgramGL();
-        _lightShader->init(pr);
+        _lightShader = new ShaderProgramGL(pr);
 
         //set shader and apply samplers uniforms
         driver->setShaderProgram(_lightShader);

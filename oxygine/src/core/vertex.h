@@ -77,13 +77,11 @@ namespace oxygine
         return offset;
     }
 
-    struct vertexP2T2
+    struct vertexPT2
     {
-        float x, y;
+        enum { FORMAT = VERTEX_POSITION | VERTEX_NUM_TEXCOORDS(1) | VERTEX_TEXCOORD_SIZE(0, 2) };
+        float x, y, z;
         float u, v;
-
-        Vector2& getPos() {return *((Vector2*)&x);}
-        Vector2& getUV() {return *((Vector2*)&u);}
     };
 
     struct vertexP2C

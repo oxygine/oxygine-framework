@@ -80,10 +80,10 @@ namespace oxygine
 
             int vs = ShaderProgramGL::createShader(GL_VERTEX_SHADER, data, prepend, append);
 
-            ShaderProgramGL* pgl = new ShaderProgramGL;
+
             VideoDriverGLES20* driver = ((VideoDriverGLES20*)IVideoDriver::instance);
             const VertexDeclarationGL* decl = driver->getVertexDeclaration(bformat);
-            pgl->init(ShaderProgramGL::createProgram(vs, fs, decl));
+            ShaderProgramGL* pgl = new ShaderProgramGL(ShaderProgramGL::createProgram(vs, fs, decl));
 
 
             CHECKGL();

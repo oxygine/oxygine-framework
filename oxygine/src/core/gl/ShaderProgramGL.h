@@ -7,10 +7,8 @@ namespace oxygine
     class ShaderProgramGL: public ShaderProgram
     {
     public:
-        ShaderProgramGL();
+        ShaderProgramGL(GLuint p);
         ~ShaderProgramGL();
-
-        void init(GLuint p);
 
         unsigned int    getID() const;
         int             getUniformLocation(const char* id) const;

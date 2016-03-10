@@ -8,7 +8,7 @@
 
 namespace oxygine
 {
-    ShaderProgramGL::ShaderProgramGL(): _program(0)
+    ShaderProgramGL::ShaderProgramGL(GLuint p) : _program(p)
     {
 
     }
@@ -18,12 +18,6 @@ namespace oxygine
         if (_program)
             oxglDeleteProgram(_program);
         CHECKGL();
-    }
-
-
-    void ShaderProgramGL::init(GLuint p)
-    {
-        _program = p;
     }
 
     unsigned int ShaderProgramGL::getID() const
