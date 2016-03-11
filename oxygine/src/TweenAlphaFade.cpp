@@ -8,7 +8,7 @@
 namespace oxygine
 {
 
-    TweenPostProcess::TweenPostProcess(int opt) : _actor(0), _prev(0), _options(opt)
+    TweenPostProcess::TweenPostProcess(int opt) : _actor(0), _prev(0), _options(opt), _format(TF_R4G4B4A4)
     {
     }
 
@@ -81,13 +81,13 @@ namespace oxygine
         if (!_rt)
         {
             _rt = IVideoDriver::instance->createTexture();
-            _rt->init(_screen.getWidth(), _screen.getHeight(), TF_R8G8B8A8, true);
+            _rt->init(_screen.getWidth(), _screen.getHeight(), TF_R4G4B4A4, true);
             c = true;
         }
 
         if (_rt->getWidth() < _screen.getWidth() || _rt->getHeight() < _screen.getHeight())
         {
-            _rt->init(_screen.getWidth(), _screen.getHeight(), TF_R8G8B8A8, true);
+            _rt->init(_screen.getWidth(), _screen.getHeight(), TF_R4G4B4A4, true);
             c = true;
         }
 
@@ -140,7 +140,7 @@ namespace oxygine
         mat->Material::render(_actor, rs);
 
         mat->finish();
-        driver->setRenderTarget(0);
+        //driver->setRenderTarget(0);
     }
 
     void TweenPostProcess::update(Actor& actor, float p, const UpdateState& us)
@@ -194,6 +194,10 @@ namespace oxygine
 
     void TweenGlow::render2texture()
     {
+
+        GLint prevFBO = 0;
+        glGetIntegerv(GL_FRAMEBUFFER_BINDING, &prevFBO);
+
         TweenPostProcess::render2texture();
         const VertexDeclarationGL* decl = static_cast<const VertexDeclarationGL*>(IVideoDriver::instance->getVertexDeclaration(vertexPCT2::FORMAT));
 
@@ -237,8 +241,6 @@ namespace oxygine
         }
 
 
-        GLint prevFBO = 0;
-        glGetIntegerv(GL_FRAMEBUFFER_BINDING, &prevFBO);
 
         Rect vp = _screen;
         vp.pos = Point(0, 0);
@@ -256,6 +258,7 @@ namespace oxygine
         /*
 
         oxglBindFramebuffer(GL_FRAMEBUFFER, safeCast<NativeTextureGLES*>(_rt2.get())->getFboID());
+        driver->clear(0);
         driver->setViewport(Rect(0, 0, w / 2, h / 2));
         driver->setShaderProgram(shaderBlit);
         driver->setUniformInt("s_texture", 0);
@@ -275,6 +278,7 @@ namespace oxygine
 
 
         oxglBindFramebuffer(GL_FRAMEBUFFER, safeCast<NativeTextureGLES*>(_rt.get())->getFboID());
+        driver->clear(0);
         driver->setViewport(Rect(0, 0, w / 2, h / 2));
         driver->setShaderProgram(shaderBlit);
         driver->setUniformInt("s_texture", 0);
@@ -296,9 +300,9 @@ namespace oxygine
 
 
         oxglBindFramebuffer(GL_FRAMEBUFFER, safeCast<NativeTextureGLES*>(_rt2.get())->getFboID());
+        driver->clear(0);
 
         driver->setViewport(Rect(0, 0, w, h));
-        driver->clear(0);
         driver->setShaderProgram(shaderBlurH);
         driver->setUniform("step", 1.0f / _rt->getWidth());
         driver->setUniformInt("s_texture", 0);
@@ -318,11 +322,9 @@ namespace oxygine
 
 
         oxglBindFramebuffer(GL_FRAMEBUFFER, safeCast<NativeTextureGLES*>(_rt.get())->getFboID());
-
+        driver->clear(0);
 
         driver->setViewport(Rect(0, 0, w, h));
-        driver->clear(Color::Red);
-
         driver->setShaderProgram(shaderBlurV);
         driver->setUniform("step", 1.0f / _rt2->getHeight());
         driver->setUniformInt("s_texture", 0);
@@ -348,6 +350,6 @@ namespace oxygine
         TweenPostProcess::rtCreated();
         _rt2 = IVideoDriver::instance->createTexture();
         //_rt2->init(_screen.getWidth() / 2, _screen.getHeight() / 2, TF_R8G8B8A8, true);
-        _rt2->init(_screen.getWidth(), _screen.getHeight(), TF_R8G8B8A8, true);
+        _rt2->init(_screen.getWidth(), _screen.getHeight(), TF_R4G4B4A4, true);
     }
 }

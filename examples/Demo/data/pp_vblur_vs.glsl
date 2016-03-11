@@ -5,8 +5,23 @@ attribute  vec2 uv;
  
 uniform mediump float step;
 
+
 varying mediump vec2 v_texCoord;
-varying mediump vec2 v_blurTexCoords[14];
+varying mediump vec2 v_blurTexCoords0;
+varying mediump vec2 v_blurTexCoords1;
+varying mediump vec2 v_blurTexCoords2;
+varying mediump vec2 v_blurTexCoords3;
+varying mediump vec2 v_blurTexCoords4;
+varying mediump vec2 v_blurTexCoords5;
+varying mediump vec2 v_blurTexCoords6;
+varying mediump vec2 v_blurTexCoords7;
+varying mediump vec2 v_blurTexCoords8;
+varying mediump vec2 v_blurTexCoords9;
+varying mediump vec2 v_blurTexCoords10;
+varying mediump vec2 v_blurTexCoords11;
+varying mediump vec2 v_blurTexCoords12;
+varying mediump vec2 v_blurTexCoords13;
+ 
  
 void main()
 {
@@ -14,18 +29,18 @@ void main()
     mediump float z = step;
 
     v_texCoord = uv;
-    v_blurTexCoords[ 0] = v_texCoord + vec2(0.0, -z * 7.0);
-    v_blurTexCoords[ 1] = v_texCoord + vec2(0.0, -z * 6.0);
-    v_blurTexCoords[ 2] = v_texCoord + vec2(0.0, -z * 5.0);
-    v_blurTexCoords[ 3] = v_texCoord + vec2(0.0, -z * 4.0);
-    v_blurTexCoords[ 4] = v_texCoord + vec2(0.0, -z * 3.0);
-    v_blurTexCoords[ 5] = v_texCoord + vec2(0.0, -z * 2.0);
-    v_blurTexCoords[ 6] = v_texCoord + vec2(0.0, -z);
-    v_blurTexCoords[ 7] = v_texCoord + vec2(0.0,  z);
-    v_blurTexCoords[ 8] = v_texCoord + vec2(0.0,  z * 2.0);
-    v_blurTexCoords[ 9] = v_texCoord + vec2(0.0,  z * 3.0);
-    v_blurTexCoords[10] = v_texCoord + vec2(0.0,  z * 4.0);
-    v_blurTexCoords[11] = v_texCoord + vec2(0.0,  z * 5.0);
-    v_blurTexCoords[12] = v_texCoord + vec2(0.0,  z * 6.0);
-    v_blurTexCoords[13] = v_texCoord + vec2(0.0,  z * 7.0);
+    v_blurTexCoords0 = v_texCoord + vec2(0.0, -z * 7.0);
+    v_blurTexCoords1 = v_texCoord + vec2(0.0, -z * 6.0);
+    v_blurTexCoords2 = v_texCoord + vec2(0.0, -z * 5.0);
+    v_blurTexCoords3 = v_texCoord + vec2(0.0, -z * 4.0);
+    v_blurTexCoords4 = v_texCoord + vec2(0.0, -z * 3.0);
+    v_blurTexCoords5 = v_texCoord + vec2(0.0, -z * 2.0);
+    v_blurTexCoords6 = v_texCoord + vec2(0.0, -z);
+    v_blurTexCoords7 = v_texCoord + vec2(0.0,  z);
+    v_blurTexCoords8 = v_texCoord + vec2(0.0,  z * 2.0);
+    v_blurTexCoords9 = v_texCoord + vec2(0.0,  z * 3.0);
+    v_blurTexCoords10 = v_texCoord + vec2(0.0,  z * 4.0);
+    v_blurTexCoords11 = v_texCoord + vec2(0.0,  z * 5.0);
+    v_blurTexCoords12 = v_texCoord + vec2(0.0,  z * 6.0);
+    v_blurTexCoords13 = v_texCoord + vec2(0.0,  z * 7.0);
 }

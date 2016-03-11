@@ -13,6 +13,7 @@ namespace oxygine
     {
     public:
         typedef Actor type;
+        TextureFormat _format;
 
         Actor* _actor;
         Material* _prev;
