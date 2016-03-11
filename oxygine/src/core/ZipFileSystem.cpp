@@ -62,8 +62,6 @@ namespace oxygine
                 entry.pos = pos;
                 entry.zp = zp;
 
-                //strcpy(entry.name, entry.name);
-
                 _files.push_back(entry);
 
             }
@@ -177,6 +175,7 @@ namespace oxygine
 
             zpitem item;
             item.handle = zp;
+            strcpy(item.name, name);
             _zps.push_back(item);
 
             read(zp);

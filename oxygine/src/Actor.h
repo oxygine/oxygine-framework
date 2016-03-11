@@ -324,6 +324,8 @@ namespace oxygine
         virtual void onAdded2Stage() {}
         virtual void onRemovedFromStage() {}
         virtual void transformUpdated() {}
+        virtual bool getBounds(RectF&) const { return false; }
+        void calcBounds2(RectF& bounds, const Transform& transform) const;
 
 
         typedef intrusive_list<spActor> children;

@@ -7,6 +7,186 @@
 
 namespace oxygine
 {
+
+    TweenPostProcess::TweenPostProcess(int opt) : _actor(0), _prev(0), _options(opt)
+    {
+    }
+
+    TweenPostProcess::~TweenPostProcess()
+    {
+        if (_actor)
+            _actor->setMaterial(0);
+        if (_rt)
+            _rt->release();
+        _rt = 0;
+    }
+
+
+    Rect TweenPostProcess::getScreenRect(const Actor& actor) const
+    {
+        Rect screen;
+
+        Rect display(Point(0, 0), core::getDisplaySize());
+
+        if (_options & opt_fullscreen)
+            return display;
+
+        screen = actor.computeBounds(actor.computeGlobalTransform()).cast<Rect>();
+        screen.size += Point(1, 1);
+        Point ext(25, 25);
+        screen.expand(ext, ext);
+        screen.clip(display);
+
+        return screen.cast<Rect>();
+    }
+
+    void TweenPostProcess::init(Actor& actor)
+    {
+        _actor = &actor;
+        _prev = _actor->getMaterial();
+        actor.setMaterial(this);
+
+        restore(0, 0);
+    }
+
+    void TweenPostProcess::restore(Restorable* r, void* userData)
+    {
+        render2texture();
+    }
+
+    void TweenPostProcess::done(Actor& actor)
+    {
+        actor.setMaterial(0);
+        if (_rt)
+            _rt->release();
+        _rt = 0;
+        _actor = 0;
+    }
+
+    bool TweenPostProcess::begin()
+    {
+        if (!STDRenderer::isReady())
+            return false;
+
+        Material::setCurrent(0);
+        IVideoDriver* driver = IVideoDriver::instance;
+
+
+        Rect display(Point(0, 0), core::getDisplaySize());
+
+        Actor& actor = *_actor;
+        _screen = getScreenRect(actor);
+
+        bool c = false;
+        if (!_rt)
+        {
+            _rt = IVideoDriver::instance->createTexture();
+            _rt->init(_screen.getWidth(), _screen.getHeight(), TF_R8G8B8A8, true);
+            c = true;
+        }
+
+        if (_rt->getWidth() < _screen.getWidth() || _rt->getHeight() < _screen.getHeight())
+        {
+            _rt->init(_screen.getWidth(), _screen.getHeight(), TF_R8G8B8A8, true);
+            c = true;
+        }
+
+        if (c)
+            rtCreated();
+
+        return true;
+    }
+
+    void TweenPostProcess::rtCreated()
+    {
+        _rt->reg(CLOSURE(this, &TweenPostProcess::restore), 0);
+    }
+
+    void TweenPostProcess::render2texture()
+    {
+        if (!begin())
+            return;
+
+        IVideoDriver* driver = IVideoDriver::instance;
+        driver->setRenderTarget(_rt);
+
+        Rect vp = _screen;
+        vp.pos = Point(0, 0);
+        driver->setViewport(vp);
+        driver->clear(0);
+
+
+        RenderState rs;
+        STDMaterial* mat = STDMaterial::instance;
+        STDRenderer* renderer = mat->getRenderer();
+        rs.material = mat;
+
+        RectF clip = vp.cast<RectF>();
+        rs.clip = &clip;
+
+        renderer->initCoordinateSystem(vp.getWidth(), vp.getHeight(), true);
+
+        rs.transform = _actor->getParent()->computeGlobalTransform();
+        _rtTransform = _actor->computeGlobalTransform().inverted();
+
+        if (!(_options & opt_fullscreen))
+        {
+            AffineTransform offset;
+            offset.identity();
+            offset.translate(-_screen.pos);
+            rs.transform = rs.transform * offset;
+        }
+
+        mat->Material::render(_actor, rs);
+
+        mat->finish();
+        driver->setRenderTarget(0);
+    }
+
+    void TweenPostProcess::update(Actor& actor, float p, const UpdateState& us)
+    {
+        if (!(_options & opt_singleR2T))
+            render2texture();
+    }
+
+    void TweenPostProcess::apply(Material* prev)
+    {
+
+    }
+
+
+    TweenAlphaFade::TweenAlphaFade(bool fadeIn, int opt) : TweenPostProcess(opt), _fadeIn(fadeIn), _a(0)
+    {
+    }
+
+    void TweenAlphaFade::update(Actor& actor, float p, const UpdateState& us)
+    {
+        TweenPostProcess::update(actor, p, us);
+        _a = lerp(_fadeIn ? 0 : 255, _fadeIn ? 255 : 0, p);
+    }
+
+    void TweenAlphaFade::render(Actor* actor, const RenderState& rs)
+    {
+        STDMaterial* mat = STDMaterial::instance;
+        STDRenderer* renderer = mat->getRenderer();
+
+        RectF src(0, 0,
+                  _screen.getWidth() / (float)_rt->getWidth(),
+                  _screen.getHeight() / (float)_rt->getHeight());
+        RectF dest = _screen.cast<RectF>();
+
+        renderer->setBlendMode(blend_premultiplied_alpha);
+        AffineTransform tr = _rtTransform * _actor->computeGlobalTransform();
+
+        renderer->setTransform(tr);
+        renderer->beginElementRendering(true);
+        Color color = Color(Color::White).withAlpha(_a).premultiplied();
+        renderer->drawElement(_rt, color.rgba(), src, dest);
+        renderer->drawBatch();
+    }
+
+
+
     ShaderProgram* TweenGlow::shaderBlurV = 0;
     ShaderProgram* TweenGlow::shaderBlurH = 0;
     ShaderProgram* TweenGlow::shaderBlit = 0;
@@ -73,6 +253,7 @@ namespace oxygine
         IVideoDriver* driver = IVideoDriver::instance;
 
         driver->setState(IVideoDriver::STATE_BLEND, 0);
+        /*
 
         oxglBindFramebuffer(GL_FRAMEBUFFER, safeCast<NativeTextureGLES*>(_rt2.get())->getFboID());
         driver->setViewport(Rect(0, 0, w / 2, h / 2));
@@ -111,7 +292,7 @@ namespace oxygine
         w /= 2;
         h /= 2;
 
-
+        */
 
 
         oxglBindFramebuffer(GL_FRAMEBUFFER, safeCast<NativeTextureGLES*>(_rt2.get())->getFboID());
@@ -166,6 +347,7 @@ namespace oxygine
     {
         TweenPostProcess::rtCreated();
         _rt2 = IVideoDriver::instance->createTexture();
-        _rt2->init(_rt->getWidth() / 2, _rt->getHeight() / 2, TF_R8G8B8A8, true);
+        //_rt2->init(_screen.getWidth() / 2, _screen.getHeight() / 2, TF_R8G8B8A8, true);
+        _rt2->init(_screen.getWidth(), _screen.getHeight(), TF_R8G8B8A8, true);
     }
 }

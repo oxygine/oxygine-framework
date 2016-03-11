@@ -138,25 +138,27 @@ namespace oxygine
 
 
 
-    void calcBounds2(const Actor* actor, RectF& bounds, const Transform& transform)
+    void Actor::calcBounds2(RectF& bounds, const Transform& transform) const
     {
-        const Actor* c = actor->getFirstChild().get();
+        const Actor* c = getFirstChild().get();
         while (c)
         {
             if (c->getVisible())
             {
                 Transform tr = c->getTransform() * transform;
-                calcBounds2(c, bounds, tr);
+                c->calcBounds2(bounds, tr);
             }
             c = c->getNextSibling().get();
         }
 
-        const RectF& rect = actor->getDestRect();
-
-        bounds.unite(transform.transform(rect.getLeftTop()));
-        bounds.unite(transform.transform(rect.getRightTop()));
-        bounds.unite(transform.transform(rect.getRightBottom()));
-        bounds.unite(transform.transform(rect.getLeftBottom()));
+        RectF rect;
+        if (getBounds(rect))
+        {
+            bounds.unite(transform.transform(rect.getLeftTop()));
+            bounds.unite(transform.transform(rect.getRightTop()));
+            bounds.unite(transform.transform(rect.getRightBottom()));
+            bounds.unite(transform.transform(rect.getLeftBottom()));
+        }
     }
 
     RectF Actor::computeBounds(const Transform& transform) const
@@ -167,7 +169,7 @@ namespace oxygine
             -std::numeric_limits<float>::max(),
             -std::numeric_limits<float>::max());
 
-        calcBounds2(this, bounds, transform);
+        calcBounds2(bounds, transform);
 
         return bounds;
     }

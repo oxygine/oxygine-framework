@@ -28,16 +28,11 @@ namespace oxygine
     }
 
 
-    RectF getBounds(Actor* a)
-    {
-        return RectF(a->getPosition(), a->getSize());
-    }
-
     RectF TreeInspector::calcBounds(Actor* actor)
     {
         OX_ASSERT(actor);
 
-        RectF r = getBounds(actor);
+        RectF r(actor->getPosition(), actor->getSize());
 
         spActor c = actor->getFirstChild();
         while (c)

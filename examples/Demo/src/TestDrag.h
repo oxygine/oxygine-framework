@@ -1,6 +1,7 @@
 #pragma once
 #include "test.h"
 #include "Draggable.h"
+#include "TweenAlphaFade.h"
 class DraggableSprite: public Sprite
 {
 public:
@@ -52,6 +53,9 @@ public:
         contacts->attachTo(content);
         contacts->setPriority(10000);
         contacts->setTouchChildrenEnabled(false);
+        contacts->setVisible(false);
+
+        content->addTween(TweenGlow(), 100, -1);
     }
 
     void doUpdate(const UpdateState& us)

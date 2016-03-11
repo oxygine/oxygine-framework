@@ -49,7 +49,9 @@ namespace oxygine
             {
                 unzFile handle;
                 std::vector<char> data;
-                zpitem(): handle(0) {}
+                char name[255];
+
+                zpitem() : handle(0) { name[0] = 0; }
             };
             typedef std::vector<zpitem> zips;
             zips _zps;
