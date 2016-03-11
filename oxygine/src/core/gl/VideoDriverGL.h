@@ -7,6 +7,7 @@
 namespace oxygine
 {
     class VertexDeclarationGL;
+    DECLARE_SMART(NativeTextureGLES, spNativeTextureGLES);
 
     /**intermediate gl driver with some shared gl code*/
     class VideoDriverGL: public IVideoDriver
@@ -36,8 +37,7 @@ namespace oxygine
         void setDebugStats(bool enable) {_traceStats = enable;}
 
         void _begin(const Rect& viewport, const Color* clearColor);
-        GLint _prevFBO;
-        spNativeTexture _rt;
+        spNativeTextureGLES _rt;
 
         mutable VertexDeclarations<VertexDeclarationGL> _vdeclarations;
         bool _traceStats;

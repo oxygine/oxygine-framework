@@ -31,6 +31,7 @@ namespace oxygine
 
         TweenPostProcess(int opt);
         ~TweenPostProcess();
+
         Rect getScreenRect(const Actor& actor) const;
         void init(Actor& actor);
         void restore(Restorable* r, void* userData);

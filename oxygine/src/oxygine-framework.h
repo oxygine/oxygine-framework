@@ -75,7 +75,6 @@
 //#include "core/gl/oxgl.h"
 //#include "core/gl/VertexDeclarationGL.h"
 //#include "core/gl/VideoDriverGL.h"
-//#include "core/gl/VideoDriverGLES11.h"
 //#include "core/gl/VideoDriverGLES20.h"
 
 //dev_tools/

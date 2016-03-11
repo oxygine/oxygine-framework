@@ -4,6 +4,7 @@
 
 namespace oxygine
 {
+    DECLARE_SMART(NativeTextureGLES, spNativeTextureGLES);
     class NativeTextureGLES : public NativeTexture
     {
     public:
@@ -32,7 +33,7 @@ namespace oxygine
 
     protected:
         void* _getRestorableObject() {return this;}
-        friend class VideoDriverGLES11;
+        friend class VideoDriverGL;
         friend class VideoDriverGLES20;
         NativeTextureGLES();
 

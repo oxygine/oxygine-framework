@@ -6,10 +6,13 @@
 
 namespace oxygine
 {
-    VideoDriverGL::VideoDriverGL(): _prevFBO(0), _batches(0), _triangles(0),
+    VideoDriverGL::VideoDriverGL(): _batches(0), _triangles(0),
         _traceStats(true)
     {
-
+        _rt = new NativeTextureGLES;
+        GLint fbo = 0;
+        glGetIntegerv(GL_FRAMEBUFFER_BINDING, &fbo);
+        _rt->_fbo = fbo;
     }
 
     void    VideoDriverGL::getStats(Stats& s) const
@@ -135,18 +138,19 @@ namespace oxygine
 
     void VideoDriverGL::setRenderTarget(spNativeTexture rt)
     {
-        _rt = rt;
+        _rt = safeSpCast<NativeTextureGLES>(rt);
+        /*
         if (!rt)
         {
             oxglBindFramebuffer(GL_FRAMEBUFFER, _prevFBO);
             CHECKGL();
             return;
         }
+        */
 
-        glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_prevFBO);
 
-        NativeTextureGLES* gl = safeCast<NativeTextureGLES*>(rt.get());
-        oxglBindFramebuffer(GL_FRAMEBUFFER, gl->getFboID());
+
+        oxglBindFramebuffer(GL_FRAMEBUFFER, _rt->getFboID());
         CHECKGL();
     }
 

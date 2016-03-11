@@ -56,10 +56,12 @@ public:
         Rect viewport(Point(0, 0), content->getSize().cast<Point>());
         renderer.initCoordinateSystem(viewport.getWidth(), viewport.getHeight(), true);
 
+        spNativeTexture previousRT = driver->getRenderTarget();
+
         driver->setRenderTarget(texture);
         driver->setViewport(viewport);
 
-#if 0
+#if 1
         renderer.begin(0);
         RectF destRect(te->localPosition - Vector2(16, 16), Vector2(32, 32));
 
@@ -85,6 +87,6 @@ public:
 #endif
 
         //restore to default render target
-        driver->setRenderTarget(0);
+        driver->setRenderTarget(previousRT);
     }
 };
