@@ -532,10 +532,29 @@ namespace oxygine
         if (_parent)
         {
             Actor* parent = _parent;
-            addRef();
-            parent->removeChild(this);
-            parent->addChild(this);
-            releaseRef();
+
+            spActor me = this;
+
+            parent->_children.remove(me);
+
+            Actor* sibling = parent->_children._last.get();
+
+            //try to insert at the end of list first
+            if (sibling && sibling->getPriority() > _zOrder)
+            {
+                sibling = sibling->intr_list::_prev.get();
+                while (sibling)
+                {
+                    if (sibling->getPriority() <= _zOrder)
+                        break;
+                    sibling = sibling->intr_list::_prev.get();
+                }
+            }
+
+            if (sibling)
+                parent->_children.insert_after(me, spActor(sibling));
+            else
+                parent->_children.prepend(me);
         }
     }
 

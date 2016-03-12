@@ -242,4 +242,36 @@ namespace oxygine
     }
 
     std::string ease2String(Tween::EASE ease);
+
+
+
+
+
+
+    DECLARE_SMART(TweenObj, spTweenObj);
+    class TweenObj : public Object
+    {
+    public:
+        typedef Actor type;
+
+        virtual void init(Actor&) {}
+        virtual void done(Actor&) {}
+        virtual void update(Actor&, float p, const UpdateState& us) {}
+    };
+
+
+    class TweenProxy
+    {
+    public:
+        typedef Actor type;
+
+        TweenProxy(spTweenObj o) { _obj = o; }
+        void init(Actor& a) { _obj->init(a); }
+        void done(Actor& a) { _obj->done(a); }
+        void update(Actor& a, float p, const UpdateState& us) { _obj->update(a, p, us); }
+
+        spTweenObj _obj;
+    };
 }
+
+

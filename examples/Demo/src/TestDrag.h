@@ -55,7 +55,7 @@ public:
         contacts->setTouchChildrenEnabled(false);
         contacts->setVisible(false);
 
-        content->addTween(TweenGlow(Color::GreenYellow), 5000, -1, true);
+        content->addTween(TweenOutline(Color::GreenYellow), TweenOptions(5000).loops(-1).twoSides());
     }
 
     void doUpdate(const UpdateState& us)

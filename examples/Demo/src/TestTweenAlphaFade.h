@@ -34,7 +34,7 @@ public:
 
     void onClick(Event*)
     {
-        _test->addTween(TweenAlphaFade(false, TweenAlphaFade::opt_singleR2T), 5500, 1, true);
+        _test->addTween(TweenAlphaFade(false), 5500, 1, true);
     }
 
     void clicked(string id)

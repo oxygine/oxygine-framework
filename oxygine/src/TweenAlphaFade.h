@@ -9,27 +9,42 @@
 
 namespace oxygine
 {
-    class TweenPostProcess: public Material
+    class PostProcessOptions
+    {
+    public:
+        enum flags
+        {
+            singleR2T = 1,
+            fullscreen = 1 << 1,
+        };
+
+        int _flags;
+    };
+
+    class TweenOutline : public TweenProxy
+    {
+    public:
+        TweenOutline(const Color& color, const PostProcessOptions& opt = PostProcessOptions());
+    };
+
+    class TweenAlphaFade: public TweenProxy
+    {
+    public:
+        TweenAlphaFade(bool fadeIn, const PostProcessOptions& opt = PostProcessOptions());
+    };
+
+    /*
+    class TweenPostProcess: public Tween, public Material
     {
     public:
         typedef Actor type;
-        TextureFormat _format;
+
+        PostProcess _pp;
 
         Actor* _actor;
         Material* _prev;
         float _progress;
 
-        spNativeTexture _rt;
-        Transform _rtTransform;
-        Rect _screen;
-
-        enum options
-        {
-            opt_singleR2T = 1,
-            opt_fullscreen = 1 << 1,
-        };
-
-        int _options;
 
         TweenPostProcess(int opt);
         ~TweenPostProcess();
@@ -57,7 +72,7 @@ namespace oxygine
         void render(Actor* actor, const RenderState& rs);
     };
 
-    class TweenGlow : public TweenPostProcess
+    class TweenOutline : public TweenPostProcess
     {
     public:
         static ShaderProgram* shaderBlurV;
@@ -68,7 +83,7 @@ namespace oxygine
         spNativeTexture _rt2;
         Color _color;
 
-        TweenGlow(const Color& color): TweenPostProcess(0), _downsample(1), _color(color) {}
+        TweenOutline(const Color& color): TweenPostProcess(0), _downsample(1), _color(color) {}
 
         void render2texture() OVERRIDE;
         void rtCreated() OVERRIDE;
@@ -80,18 +95,18 @@ namespace oxygine
             STDRenderer* renderer = mat->getRenderer();
 
             RectF src(0, 0,
-                      _screen.getWidth() / (float)_rt->getWidth() / _downsample,
-                      _screen.getHeight() / (float)_rt->getHeight() / _downsample);
-            RectF dest = _screen.cast<RectF>();
+                      _pp._screen.getWidth() / (float)_pp._rt->getWidth() / _downsample,
+                        _pp._screen.getHeight() / (float)_pp._rt->getHeight() / _downsample);
+            RectF dest = _pp._screen.cast<RectF>();
 
             renderer->setBlendMode(blend_premultiplied_alpha);
 
-            AffineTransform tr;
-            tr.identity();
+
+            AffineTransform tr = _pp._rtTransform * _actor->computeGlobalTransform();
             renderer->setTransform(tr);
             renderer->beginElementRendering(true);
             Color color = Color(Color::White).withAlpha(255).premultiplied();
-            renderer->drawElement(_rt, color.rgba(), src, dest);
+            renderer->drawElement(_pp._rt, color.rgba(), src, dest);
             renderer->drawBatch();
 
 
@@ -101,5 +116,5 @@ namespace oxygine
             actor->render(r);
             actor->setMaterial(this);
         }
-    };
+    };*/
 }

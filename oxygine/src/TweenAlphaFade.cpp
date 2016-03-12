@@ -7,8 +7,162 @@
 
 namespace oxygine
 {
+    class PostProcess
+    {
+    public:
 
-    TweenPostProcess::TweenPostProcess(int opt) : _actor(0), _prev(0), _options(opt), _format(TF_R4G4B4A4), _progress(0.0f)
+        static ShaderProgram* shaderBlurV;
+        static ShaderProgram* shaderBlurH;
+        static ShaderProgram* shaderBlit;
+
+        PostProcess(const PostProcessOptions& opt);
+        ~PostProcess();
+
+        void free();
+
+        void update(Actor* actor);
+        Rect getScreenRect(const Actor& actor) const;
+
+        Point _extend;
+        spNativeTexture _rt;
+        TextureFormat _format;
+        Transform _rtTransform;
+        Rect _screen;
+
+        PostProcessOptions _options;
+    };
+
+
+
+
+    ShaderProgram* PostProcess::shaderBlurV = 0;
+    ShaderProgram* PostProcess::shaderBlurH = 0;
+    ShaderProgram* PostProcess::shaderBlit = 0;
+
+
+    class TweenPostProcess : public TweenObj, public Material
+    {
+    public:
+        TweenPostProcess(const PostProcessOptions& opt);
+        ~TweenPostProcess();
+
+    protected:
+        void init(Actor& actor) OVERRIDE;
+        void update(Actor& actor, float p, const UpdateState& us) OVERRIDE;
+        void done(Actor& actor) OVERRIDE;
+
+        PostProcess _pp;
+        float _progress;
+        Actor* _actor;
+        Material* _prevMaterial;
+    };
+
+    class TweenOutlineImpl : public TweenPostProcess
+    {
+    public:
+        TweenOutlineImpl(const Color&, const PostProcessOptions& opt) : TweenPostProcess(opt) {}
+    };
+
+    class TweenAlphaFadeImpl : public TweenPostProcess
+    {
+    public:
+        TweenAlphaFadeImpl(bool fadeIn, const PostProcessOptions& opt): TweenPostProcess(opt), _fadeIn(fadeIn) {}
+
+        bool _fadeIn;
+    };
+
+    PostProcess::PostProcess(const PostProcessOptions& opt): _options(opt), _format(TF_R4G4B4A4), _extend(2, 2)
+    {
+    }
+
+    PostProcess::~PostProcess()
+    {
+        if (_rt)
+            _rt->release();
+    }
+
+    void PostProcess::free()
+    {
+        if (_rt)
+            _rt->release();
+        _rt = 0;
+    }
+
+    Rect PostProcess::getScreenRect(const Actor& actor) const
+    {
+        Rect screen;
+
+        Rect display(Point(0, 0), core::getDisplaySize());
+
+        if (_options._flags & PostProcessOptions::fullscreen)
+            return display;
+
+        screen = actor.computeBounds(actor.computeGlobalTransform()).cast<Rect>();
+        screen.size += Point(1, 1);
+        screen.expand(_extend, _extend);
+
+        if (!(_options._flags & PostProcessOptions::singleR2T))
+            screen.clip(display);
+
+        return screen.cast<Rect>();
+    }
+
+    void PostProcess::update(Actor* actor)
+    {
+        _screen = getScreenRect(*actor);
+
+        bool c = false;
+        if (!_rt)
+        {
+            _rt = IVideoDriver::instance->createTexture();
+            _rt->init(_screen.getWidth(), _screen.getHeight(), _format, true);
+            c = true;
+        }
+
+        if (_rt->getWidth() < _screen.getWidth() || _rt->getHeight() < _screen.getHeight())
+        {
+            _rt->init(_screen.getWidth(), _screen.getHeight(), _format, true);
+            c = true;
+        }
+
+        OX_ASSERT(actor->_getStage());
+
+        _rtTransform = actor->computeGlobalTransform().inverted();
+    }
+
+
+    TweenPostProcess::TweenPostProcess(const PostProcessOptions& opt) : _pp(opt), _prevMaterial(0), _actor(0)
+    {
+    }
+
+    TweenPostProcess::~TweenPostProcess()
+    {
+        if (_actor)
+            _actor->setMaterial(_prevMaterial);
+    }
+
+    void TweenPostProcess::init(Actor& actor)
+    {
+        _actor = &actor;
+        _prevMaterial = _actor->getMaterial();
+        _actor->setMaterial(this);
+    }
+
+    void TweenPostProcess::update(Actor& actor, float p, const UpdateState& us)
+    {
+        _pp.update(_actor);
+        _progress = p;
+
+    }
+
+    void TweenPostProcess::done(Actor& actor)
+    {
+        _actor->setMaterial(_prevMaterial);
+    }
+
+    /*
+
+    TweenPostProcess::TweenPostProcess(int opt) : _actor(0), _prev(0), _progress(0.0f), _pp(opt)
     {
     }
 
@@ -16,29 +170,11 @@ namespace oxygine
     {
         if (_actor)
             _actor->setMaterial(0);
-        if (_rt)
-            _rt->release();
-        _rt = 0;
+
     }
 
 
-    Rect TweenPostProcess::getScreenRect(const Actor& actor) const
-    {
-        Rect screen;
 
-        Rect display(Point(0, 0), core::getDisplaySize());
-
-        if (_options & opt_fullscreen)
-            return display;
-
-        screen = actor.computeBounds(actor.computeGlobalTransform()).cast<Rect>();
-        screen.size += Point(1, 1);
-        Point ext(25, 25);
-        screen.expand(ext, ext);
-        screen.clip(display);
-
-        return screen.cast<Rect>();
-    }
 
     void TweenPostProcess::init(Actor& actor)
     {
@@ -57,9 +193,7 @@ namespace oxygine
     void TweenPostProcess::done(Actor& actor)
     {
         actor.setMaterial(0);
-        if (_rt)
-            _rt->release();
-        _rt = 0;
+        _pp.free();
         _actor = 0;
     }
 
@@ -74,23 +208,7 @@ namespace oxygine
 
         Rect display(Point(0, 0), core::getDisplaySize());
 
-        Actor& actor = *_actor;
-        _screen = getScreenRect(actor);
-
-        bool c = false;
-        if (!_rt)
-        {
-            _rt = IVideoDriver::instance->createTexture();
-            _rt->init(_screen.getWidth(), _screen.getHeight(), _format, true);
-            c = true;
-        }
-
-        if (_rt->getWidth() < _screen.getWidth() || _rt->getHeight() < _screen.getHeight())
-        {
-            _rt->init(_screen.getWidth(), _screen.getHeight(), _format, true);
-            c = true;
-        }
-
+        _pp.update(_actor);
         if (c)
             rtCreated();
 
@@ -127,7 +245,7 @@ namespace oxygine
         renderer->initCoordinateSystem(vp.getWidth(), vp.getHeight(), true);
 
         rs.transform = _actor->getParent()->computeGlobalTransform();
-        _rtTransform = _actor->computeGlobalTransform().inverted();
+
 
         if (!(_options & opt_fullscreen))
         {
@@ -178,7 +296,7 @@ namespace oxygine
         RectF dest = _screen.cast<RectF>();
 
         renderer->setBlendMode(blend_premultiplied_alpha);
-        AffineTransform tr = _rtTransform * _actor->computeGlobalTransform();
+        AffineTransform tr = _pp._rtTransform * _actor->computeGlobalTransform();
 
         renderer->setTransform(tr);
         renderer->beginElementRendering(true);
@@ -188,10 +306,6 @@ namespace oxygine
     }
 
 
-
-    ShaderProgram* TweenGlow::shaderBlurV = 0;
-    ShaderProgram* TweenGlow::shaderBlurH = 0;
-    ShaderProgram* TweenGlow::shaderBlit = 0;
 
 
     void pass(spNativeTexture srcTexture, const Rect& srcRect, spNativeTexture destTexture, const Rect& destRect, const Color& color = Color::White)
@@ -221,7 +335,7 @@ namespace oxygine
         driver->setTexture(0, 0);
     }
 
-    void TweenGlow::render2texture()
+    void TweenOutline::render2texture()
     {
 
         IVideoDriver* driver = IVideoDriver::instance;
@@ -285,7 +399,7 @@ namespace oxygine
 
         _downsample = 1;
 
-#if 0
+    #if 0
         driver->setShaderProgram(shaderBlit);
         pass(_rt, Rect(0, 0, w, h), _rt2, Rect(0, 0, w / 2, h / 2));
 
@@ -293,13 +407,13 @@ namespace oxygine
         h /= 2;
         _downsample *= 2;
         pass(_rt2, Rect(0, 0, w, h), _rt, Rect(0, 0, w / 2, h / 2));
-#endif
+    #endif
 
-#if 0
+    #if 0
         w /= 2;
         h /= 2;
         _downsample *= 2;
-#endif
+    #endif
 
 
         Rect rc(0, 0, w, h);
@@ -323,7 +437,7 @@ namespace oxygine
         //pass(_rt, rc, _rt2, rc);
 
 
-#if 0
+    #if 0
         driver->setShaderProgram(shaderBlurH);
         driver->setUniform("step", 1.0f / _rt->getWidth());
         pass(_rt, rc, _rt2, rc);
@@ -331,7 +445,7 @@ namespace oxygine
         driver->setShaderProgram(shaderBlurV);
         driver->setUniform("step", 1.0f / _rt2->getHeight());
         pass(_rt2, rc, _rt, rc);
-#endif
+    #endif
 
 
 
@@ -339,11 +453,22 @@ namespace oxygine
         driver->setRenderTarget(prevRT);
     }
 
-    void TweenGlow::rtCreated()
+    void TweenOutline::rtCreated()
     {
         TweenPostProcess::rtCreated();
         _rt2 = IVideoDriver::instance->createTexture();
         //_rt2->init(_screen.getWidth() / 2, _screen.getHeight() / 2, TF_R8G8B8A8, true);
         _rt2->init(_screen.getWidth(), _screen.getHeight(), _format, true);
+    }
+    */
+
+
+
+    TweenAlphaFade::TweenAlphaFade(bool fadeIn, const PostProcessOptions& opt): TweenProxy(new TweenAlphaFadeImpl(fadeIn, opt))
+    {
+    }
+
+    TweenOutline::TweenOutline(const Color& color, const PostProcessOptions& opt) : TweenProxy(new TweenOutlineImpl(color, opt))
+    {
     }
 }
