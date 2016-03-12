@@ -6,6 +6,7 @@ attribute vec2 uv;
 uniform mediump float step;
 
 
+varying mediump vec4 v_color;
 varying mediump vec2 v_texCoord;
 varying mediump vec2 v_blurTexCoords0;
 varying mediump vec2 v_blurTexCoords1;
@@ -28,7 +29,7 @@ void main()
     gl_Position = vec4(position.xy, 0, 1.0);
     mediump float z = step;
 
-
+    v_color = color;
     v_texCoord = uv;
     v_blurTexCoords0 = v_texCoord + vec2(-z * 7.0, 0.0);
     v_blurTexCoords1 = v_texCoord + vec2(-z * 6.0, 0.0);

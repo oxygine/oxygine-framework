@@ -17,10 +17,12 @@ namespace oxygine
 
         Actor* _actor;
         Material* _prev;
+        float _progress;
 
         spNativeTexture _rt;
         Transform _rtTransform;
         Rect _screen;
+
         enum options
         {
             opt_singleR2T = 1,
@@ -64,8 +66,9 @@ namespace oxygine
 
         int _downsample;
         spNativeTexture _rt2;
+        Color _color;
 
-        TweenGlow(): TweenPostProcess(0), _downsample(1) {}
+        TweenGlow(const Color& color): TweenPostProcess(0), _downsample(1), _color(color) {}
 
         void render2texture() OVERRIDE;
         void rtCreated() OVERRIDE;

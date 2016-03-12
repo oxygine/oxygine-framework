@@ -8,7 +8,7 @@
 namespace oxygine
 {
 
-    TweenPostProcess::TweenPostProcess(int opt) : _actor(0), _prev(0), _options(opt), _format(TF_R4G4B4A4)
+    TweenPostProcess::TweenPostProcess(int opt) : _actor(0), _prev(0), _options(opt), _format(TF_R4G4B4A4), _progress(0.0f)
     {
     }
 
@@ -146,6 +146,7 @@ namespace oxygine
 
     void TweenPostProcess::update(Actor& actor, float p, const UpdateState& us)
     {
+        _progress = p;
         if (!(_options & opt_singleR2T))
             render2texture();
     }
@@ -193,7 +194,7 @@ namespace oxygine
     ShaderProgram* TweenGlow::shaderBlit = 0;
 
 
-    void pass(spNativeTexture srcTexture, const Rect& srcRect, spNativeTexture destTexture, const Rect& destRect)
+    void pass(spNativeTexture srcTexture, const Rect& srcRect, spNativeTexture destTexture, const Rect& destRect, const Color& color = Color::White)
     {
         IVideoDriver* driver = IVideoDriver::instance;
 
@@ -213,7 +214,7 @@ namespace oxygine
         fillQuadT(v,
                   dst,
                   RectF(-1, -1, 2, 2),
-                  AffineTransform::getIdentity(), 0);
+                  AffineTransform::getIdentity(), color.rgba());
 
 
         driver->draw(IVideoDriver::PT_TRIANGLE_STRIP, decl, v, sizeof(v));
@@ -282,18 +283,23 @@ namespace oxygine
 
         driver->setState(IVideoDriver::STATE_BLEND, 0);
 
-        /*
+        _downsample = 1;
+
+#if 0
         driver->setShaderProgram(shaderBlit);
         pass(_rt, Rect(0, 0, w, h), _rt2, Rect(0, 0, w / 2, h / 2));
 
         w /= 2;
         h /= 2;
+        _downsample *= 2;
         pass(_rt2, Rect(0, 0, w, h), _rt, Rect(0, 0, w / 2, h / 2));
+#endif
 
+#if 0
         w /= 2;
         h /= 2;
-        _downsample = 4;
-        */
+        _downsample *= 2;
+#endif
 
 
         Rect rc(0, 0, w, h);
@@ -301,11 +307,32 @@ namespace oxygine
         driver->setShaderProgram(shaderBlurH);
         driver->setUniform("step", 1.0f / _rt->getWidth());
         pass(_rt, rc, _rt2, rc);
+        //pass(_rt2, rc, _rt, rc);
 
+
+
+        //Color c = Color::lerp(Color(Color::White), Color(Color::Black), _progress).premultiplied();
+        int alpha = lerp(255, 0, _progress);
+
+        Color c = _color.withAlpha(alpha).premultiplied();
+
+        driver->setShaderProgram(shaderBlurV);
+        driver->setUniform("step", 1.0f / _rt2->getHeight());
+        pass(_rt2, rc, _rt, rc, c);
+
+        //pass(_rt, rc, _rt2, rc);
+
+
+#if 0
+        driver->setShaderProgram(shaderBlurH);
+        driver->setUniform("step", 1.0f / _rt->getWidth());
+        pass(_rt, rc, _rt2, rc);
 
         driver->setShaderProgram(shaderBlurV);
         driver->setUniform("step", 1.0f / _rt2->getHeight());
         pass(_rt2, rc, _rt, rc);
+#endif
+
 
 
 
