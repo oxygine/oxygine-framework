@@ -552,7 +552,10 @@ namespace oxygine
             }
 
             if (sibling)
-                parent->_children.insert_after(me, spActor(sibling));
+            {
+                spActor s = sibling;
+                parent->_children.insert_after(me, s);
+            }
             else
                 parent->_children.prepend(me);
         }

@@ -87,6 +87,8 @@ namespace oxygine
     }
 
 
+    void renderPostProcessItems();
+
     IVideoDriver::Stats _videoStats;
 
     static ThreadMessages _threadMessages;
@@ -227,6 +229,7 @@ namespace oxygine
             return 0;
         }
 #endif
+
 
 
         void updateUIMessages()
@@ -522,7 +525,6 @@ namespace oxygine
             return STDRenderer::isReady();
         }
 
-
         bool  beginRendering(window w)
         {
 #ifdef OXYGINE_SDL
@@ -534,7 +536,13 @@ namespace oxygine
 
             CHECKGL();
 
-            return STDRenderer::isReady();
+            bool ready = STDRenderer::isReady();
+            if (ready)
+            {
+                renderPostProcessItems();
+            }
+
+            return ready;
         }
 
         void swapDisplayBuffers(window w)
