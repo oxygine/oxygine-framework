@@ -1,7 +1,7 @@
 #pragma once
 #include "test.h"
 #include "Draggable.h"
-#include "TweenAlphaFade.h"
+#include "TweenOutline.h"
 class DraggableSprite: public Sprite
 {
 public:

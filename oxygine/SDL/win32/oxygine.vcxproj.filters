@@ -327,9 +327,6 @@
     <ClCompile Include="..\..\src\TweenAlphaFade.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\TweenGlow.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\Material.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -340,6 +337,12 @@
       <Filter>src\res</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\ThreadLoader.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\PostProcess.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\TweenOutline.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -620,9 +623,6 @@
     <ClInclude Include="..\..\src\Sprite.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\TextActor.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\TextStyle.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -722,9 +722,6 @@
     <ClInclude Include="..\..\src\TweenAlphaFade.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\TweenGlow.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\Material.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -739,6 +736,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\math\OBBox.h">
       <Filter>src\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\PostProcess.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\TweenOutline.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

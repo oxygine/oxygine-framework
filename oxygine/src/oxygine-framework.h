@@ -33,7 +33,6 @@
 #include "Sprite.h"
 #include "MaskedSprite.h"
 #include "TextField.h"
-#include "TextActor.h"//deprecated
 #include "TextStyle.h"
 #include "Tween.h"
 #include "TweenQueue.h"

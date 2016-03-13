@@ -169,6 +169,7 @@
     <ClCompile Include="..\..\src\minizip\ioapi.c" />
     <ClCompile Include="..\..\src\minizip\ioapi_mem.c" />
     <ClCompile Include="..\..\src\minizip\unzip.c" />
+    <ClCompile Include="..\..\src\PostProcess.cpp" />
     <ClCompile Include="..\..\src\ThreadLoader.cpp" />
     <ClCompile Include="..\..\src\PointerState.cpp" />
     <ClCompile Include="..\..\src\Polygon.cpp" />
@@ -198,7 +199,7 @@
     <ClCompile Include="..\..\src\Tween.cpp" />
     <ClCompile Include="..\..\src\TweenAlphaFade.cpp" />
     <ClCompile Include="..\..\src\TweenAnim.cpp" />
-    <ClCompile Include="..\..\src\TweenGlow.cpp" />
+    <ClCompile Include="..\..\src\TweenOutline.cpp" />
     <ClCompile Include="..\..\src\TweenQueue.cpp" />
     <ClCompile Include="..\..\src\utils\cdecode.c" />
     <ClCompile Include="..\..\src\utils\stringUtils.cpp" />
@@ -281,6 +282,7 @@
     <ClInclude Include="..\..\src\minizip\ioapi.h" />
     <ClInclude Include="..\..\src\minizip\ioapi_mem.h" />
     <ClInclude Include="..\..\src\minizip\unzip.h" />
+    <ClInclude Include="..\..\src\PostProcess.h" />
     <ClInclude Include="..\..\src\ThreadLoader.h" />
     <ClInclude Include="..\..\src\oxygine-framework.h" />
     <ClInclude Include="..\..\src\oxygine_include.h" />
@@ -308,7 +310,6 @@
     <ClInclude Include="..\..\src\Sprite.h" />
     <ClInclude Include="..\..\src\STDMaterial.h" />
     <ClInclude Include="..\..\src\STDRenderer.h" />
-    <ClInclude Include="..\..\src\TextActor.h" />
     <ClInclude Include="..\..\src\TextField.h" />
     <ClInclude Include="..\..\src\TextStyle.h" />
     <ClInclude Include="..\..\src\text_utils\Aligner.h" />
@@ -319,7 +320,7 @@
     <ClInclude Include="..\..\src\TweenAlphaFade.h" />
     <ClInclude Include="..\..\src\TweenAnim.h" />
     <ClInclude Include="..\..\src\Tweener.h" />
-    <ClInclude Include="..\..\src\TweenGlow.h" />
+    <ClInclude Include="..\..\src\TweenOutline.h" />
     <ClInclude Include="..\..\src\TweenQueue.h" />
     <ClInclude Include="..\..\src\UpdateState.h" />
     <ClInclude Include="..\..\src\utils\cdecode.h" />

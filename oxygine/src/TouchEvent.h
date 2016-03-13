@@ -1,5 +1,6 @@
 #pragma once
 #include "Event.h"
+#undef OUT
 namespace oxygine
 {
     typedef char pointer_index;

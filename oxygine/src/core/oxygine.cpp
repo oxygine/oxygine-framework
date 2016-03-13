@@ -23,6 +23,7 @@
 #include "gl/oxgl.h"
 #include "winnie_alloc/winnie_alloc.h"
 #include "ThreadMessages.h"
+#include "PostProcess.h"
 
 #ifdef __S3E__
 #include "s3e.h"
@@ -85,9 +86,6 @@ namespace oxygine
         void init(const char* company, const char* app);
         void free();
     }
-
-
-    void renderPostProcessItems();
 
     IVideoDriver::Stats _videoStats;
 
@@ -505,6 +503,7 @@ namespace oxygine
         void reset()
         {
             log::messageln("core::reset()");
+            clearPostProcessItems();
             Restorable::releaseAll();
             STDRenderer::reset();
             IVideoDriver::instance->reset();
@@ -539,7 +538,7 @@ namespace oxygine
             bool ready = STDRenderer::isReady();
             if (ready)
             {
-                renderPostProcessItems();
+                updatePortProcessItems();
             }
 
             return ready;
@@ -764,6 +763,8 @@ namespace oxygine
 
         void release()
         {
+            clearPostProcessItems();
+
             Event ev(EVENT_EXIT);
             _dispatcher->dispatchEvent(&ev);
 
