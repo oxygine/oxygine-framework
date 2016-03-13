@@ -1,9 +1,11 @@
 #include "PostProcess.h"
 #include "Actor.h"
 #include "core/gl/VertexDeclarationGL.h"
+#include "core/gl/ShaderProgramGL.h"
 #include "core/oxygine.h"
 #include "RenderState.h"
 #include "STDMaterial.h"
+#include "core/file.h"
 
 namespace oxygine
 {
@@ -11,7 +13,69 @@ namespace oxygine
     ShaderProgram* PostProcess::shaderBlurH = 0;
     ShaderProgram* PostProcess::shaderBlit = 0;
 
+    void PostProcess::initShaders()
+    {
+        if (PostProcess::shaderBlurH)
+            return;
 
+        const VertexDeclarationGL* decl = static_cast<const VertexDeclarationGL*>(IVideoDriver::instance->getVertexDeclaration(vertexPCT2::FORMAT));
+
+        file::buffer vs_h;
+        file::buffer vs_v;
+        file::buffer fs_blur;
+        file::read("pp_hblur_vs.glsl", vs_h);
+        file::read("pp_vblur_vs.glsl", vs_v);
+        file::read("pp_rast_fs.glsl", fs_blur);
+
+        vs_h.push_back(0);
+        vs_v.push_back(0);
+        fs_blur.push_back(0);
+
+
+        unsigned int h = ShaderProgramGL::createShader(GL_VERTEX_SHADER, (const char*)&vs_h.front(), "", "");
+        unsigned int v = ShaderProgramGL::createShader(GL_VERTEX_SHADER, (const char*)&vs_v.front(), "", "");
+        unsigned int ps = ShaderProgramGL::createShader(GL_FRAGMENT_SHADER, (const char*)&fs_blur.front(), "", "");
+
+
+        IVideoDriver* driver = IVideoDriver::instance;
+
+        shaderBlurV = new ShaderProgramGL(ShaderProgramGL::createProgram(v, ps, decl));
+        driver->setShaderProgram(shaderBlurV);
+        driver->setUniformInt("s_texture", 0);
+
+        shaderBlurH = new ShaderProgramGL(ShaderProgramGL::createProgram(h, ps, decl));
+        driver->setShaderProgram(shaderBlurH);
+        driver->setUniformInt("s_texture", 0);
+
+
+        file::buffer vs_blit;
+        file::buffer fs_blit;
+        file::read("pp_blit_vs.glsl", vs_blit);
+        file::read("pp_blit_fs.glsl", fs_blit);
+
+        vs_blit.push_back(0);
+        fs_blit.push_back(0);
+
+
+        unsigned int vs = ShaderProgramGL::createShader(GL_VERTEX_SHADER, (const char*)&vs_blit.front(), "", "");
+        unsigned int fs = ShaderProgramGL::createShader(GL_FRAGMENT_SHADER, (const char*)&fs_blit.front(), "", "");
+
+        shaderBlit = new ShaderProgramGL(ShaderProgramGL::createProgram(vs, fs, decl));
+        driver->setShaderProgram(shaderBlit);
+        driver->setUniformInt("s_texture", 0);
+    }
+
+    void PostProcess::freeShaders()
+    {
+        delete shaderBlit;
+        shaderBlit = 0;
+
+        delete shaderBlurH;
+        shaderBlurH = 0;
+
+        delete shaderBlurV;
+        shaderBlurV = 0;
+    }
 
     const int ALIGN_SIZE = 256;
     const int TEXTURE_LIVE = 3000;
@@ -92,7 +156,11 @@ namespace oxygine
         w = alignTextureSize(w);
         h = alignTextureSize(h);
         if (isGood(current, w, h, tf))
+        {
+            current->setUserData((void*)getTimeMS());
             return current;
+        }
+
 
         spNativeTexture result;
 
@@ -180,6 +248,7 @@ namespace oxygine
         if (!postProcessItems.empty())
         {
             IVideoDriver* driver = IVideoDriver::instance;
+            driver->setState(IVideoDriver::STATE_BLEND, 0);
             spNativeTexture prevRT = driver->getRenderTarget();
 
             for (size_t i = 0; i < postProcessItems.size(); ++i)

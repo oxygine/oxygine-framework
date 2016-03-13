@@ -41,6 +41,9 @@ namespace oxygine
         static ShaderProgram* shaderBlurH;
         static ShaderProgram* shaderBlit;
 
+        static void initShaders();
+        static void freeShaders();
+
         PostProcess(const PostProcessOptions& opt);
         ~PostProcess();
 

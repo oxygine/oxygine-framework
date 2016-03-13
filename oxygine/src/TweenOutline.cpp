@@ -4,8 +4,7 @@
 #include "RenderState.h"
 
 #include "core/gl/VertexDeclarationGL.h"
-#include "core/gl/ShaderProgramGL.h"
-#include "core/file.h"
+
 
 
 namespace oxygine
@@ -52,61 +51,14 @@ namespace oxygine
 
         void _renderPP() OVERRIDE
         {
-            IVideoDriver* driver = IVideoDriver::instance;
-
-            const VertexDeclarationGL* decl = static_cast<const VertexDeclarationGL*>(IVideoDriver::instance->getVertexDeclaration(vertexPCT2::FORMAT));
-
-            if (!PostProcess::shaderBlurH)
-            {
-                file::buffer vs_h;
-                file::buffer vs_v;
-                file::buffer fs_blur;
-                file::read("pp_hblur_vs.glsl", vs_h);
-                file::read("pp_vblur_vs.glsl", vs_v);
-                file::read("pp_rast_fs.glsl", fs_blur);
-
-                vs_h.push_back(0);
-                vs_v.push_back(0);
-                fs_blur.push_back(0);
-
-
-                unsigned int h = ShaderProgramGL::createShader(GL_VERTEX_SHADER, (const char*)&vs_h.front(), "", "");
-                unsigned int v = ShaderProgramGL::createShader(GL_VERTEX_SHADER, (const char*)&vs_v.front(), "", "");
-                unsigned int ps = ShaderProgramGL::createShader(GL_FRAGMENT_SHADER, (const char*)&fs_blur.front(), "", "");
-
-
-                PostProcess::shaderBlurV = new ShaderProgramGL(ShaderProgramGL::createProgram(v, ps, decl));
-                driver->setShaderProgram(PostProcess::shaderBlurV);
-                driver->setUniformInt("s_texture", 0);
-
-                PostProcess::shaderBlurH = new ShaderProgramGL(ShaderProgramGL::createProgram(h, ps, decl));
-                driver->setShaderProgram(PostProcess::shaderBlurH);
-                driver->setUniformInt("s_texture", 0);
-
-
-                file::buffer vs_blit;
-                file::buffer fs_blit;
-                file::read("pp_blit_vs.glsl", vs_blit);
-                file::read("pp_blit_fs.glsl", fs_blit);
-
-                vs_blit.push_back(0);
-                fs_blit.push_back(0);
-
-
-                unsigned int vs = ShaderProgramGL::createShader(GL_VERTEX_SHADER, (const char*)&vs_blit.front(), "", "");
-                unsigned int fs = ShaderProgramGL::createShader(GL_FRAGMENT_SHADER, (const char*)&fs_blit.front(), "", "");
-
-                PostProcess::shaderBlit = new ShaderProgramGL(ShaderProgramGL::createProgram(vs, fs, decl));
-                driver->setShaderProgram(PostProcess::shaderBlit);
-                driver->setUniformInt("s_texture", 0);
-            }
-
+            PostProcess::initShaders();
 
             int w = _pp._screen.size.x;
             int h = _pp._screen.size.y;
 
 
-            driver->setState(IVideoDriver::STATE_BLEND, 0);
+            IVideoDriver* driver = IVideoDriver::instance;
+            const VertexDeclarationGL* decl = static_cast<const VertexDeclarationGL*>(IVideoDriver::instance->getVertexDeclaration(vertexPCT2::FORMAT));
 
             _downsample = 1;
 

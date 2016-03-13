@@ -26,7 +26,7 @@
 #include "TestTouches.h"
 #include "TestColorFont.h"
 #include "TestTweenAlphaFade.h"
-#include "TestTweenGlow.h"
+#include "TestTweenPostProcessing.h"
 
 #ifdef __S3E__
 #include "s3eKeyboard.h"
@@ -82,7 +82,7 @@ public:
         addButton("openbrowser", "Open Browser");
         addButton("http", "Http requests");
         addButton("tweenfade", "Tween Alpha Fade");
-        addButton("tweenglow", "Tween Glow");
+        addButton("tweenpp", "Post Processing Tweens");
 
         _color = Color::Red;
         _txtColor = Color::White;
@@ -133,7 +133,7 @@ public:
         if (id == "tweenshine") showTest(new TestTweenShine);
         if (id == "multicolorfont") showTest(new TestColorFont);
         if (id == "tweenfade") showTest(new TestTweenAlphaFade);
-        if (id == "tweenglow") showTest(new TestTweenGlow);
+        if (id == "tweenpp") showTest(new TestTweenPostProcessing);
         if (id == "openbrowser")
         {
             core::execute("http://oxygine.org/");

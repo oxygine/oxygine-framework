@@ -4,11 +4,11 @@
 #undef OUT
 
 
-class TestTweenGlow : public Test
+class TestTweenPostProcessing : public Test
 {
 public:
     spActor _test;
-    TestTweenGlow()
+    TestTweenPostProcessing()
     {
         spSprite sprite = new Sprite;
         sprite->setResAnim(resources.getResAnim("t2p"));

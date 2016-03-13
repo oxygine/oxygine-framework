@@ -505,6 +505,7 @@ namespace oxygine
             log::messageln("core::reset()");
             clearPostProcessItems();
             Restorable::releaseAll();
+            PostProcess::freeShaders();
             STDRenderer::reset();
             IVideoDriver::instance->reset();
             log::messageln("core::reset() done");
@@ -764,6 +765,7 @@ namespace oxygine
         void release()
         {
             clearPostProcessItems();
+            PostProcess::freeShaders();
 
             Event ev(EVENT_EXIT);
             _dispatcher->dispatchEvent(&ev);
