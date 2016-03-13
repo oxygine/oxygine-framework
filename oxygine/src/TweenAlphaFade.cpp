@@ -8,18 +8,20 @@
 
 namespace oxygine
 {
+    const int ALIGN_SIZE = 256;
+    const int TEXTURE_LIVE = 3000;
+    const int MAX_FREE_TEXTURES = 3;
+
     using namespace std;
 
     DECLARE_SMART(TweenPostProcess, spTweenPostProcess);
 
     vector<spTweenPostProcess> postProcessItems;
 
-    int next256(int v)
+    int alignTextureSize(int v)
     {
-        const int M = 64;//256
-
-        int n = (v - 1) / M;
-        return (n + 1) * M;
+        int n = (v - 1) / ALIGN_SIZE;
+        return (n + 1) * ALIGN_SIZE;
     }
 
     class NTP
@@ -32,14 +34,14 @@ namespace oxygine
 
         bool operator()(const spNativeTexture& t1, const spNativeTexture& t2) const
         {
-            if (t1->getFormat() > _tf)
+            if (t1->getFormat() < _tf)
                 return true;
-            if (t1->getWidth() > _w)
+            if (t1->getWidth() < _w)
                 return true;
-            return t1->getHeight() > _h;
+            return t1->getHeight() < _h;
         }
 
-        static bool comparePred2(const spNativeTexture& t2, const spNativeTexture& t1)
+        static bool cmp(const spNativeTexture& t2, const spNativeTexture& t1)
         {
             if (t1->getFormat() > t2->getFormat())
                 return true;
@@ -52,45 +54,66 @@ namespace oxygine
     class RTManager
     {
     public:
-        RTManager(): _started(false) {}
-
-        spNativeTexture get(int w, int h, TextureFormat tf)
+        RTManager()
         {
-            w = next256(w);
-            h = next256(h);
+            //get(10, 15, TF_R8G8B8A8);
+            //get(10, 15, TF_R8G8B8A8);
+        }
 
-            spNativeTexture texture;
-            free::iterator it = lower_bound(_free.begin(), _free.end(), texture, NTP(w, h, tf));
-            for (size_t i = 0; i < _free.size(); ++i)
+        void print()
+        {
+            log::messageln("print");
+            for (size_t i = 0, sz = _free.size(); i < sz; ++i)
             {
                 spNativeTexture t = _free[i];
-                if (!(t->getWidth() >= w && t->getHeight() >= h && t->getFormat() == tf))
-                    continue;
-
-                texture = t;
-                _free.erase(_free.begin() + i);
-                break;
+                log::messageln("texture %d %d", t->getWidth(), t->getHeight());
             }
+        }
+        bool isGood(const spNativeTexture& t, int w, int h, TextureFormat tf)
+        {
+            if (!t)
+                return false;
 
-            if (!texture)
+            if (t->getFormat() == tf &&
+                    t->getWidth() >= w && t->getHeight() >= h &&
+                    t->getWidth() <= (w + ALIGN_SIZE) && t->getHeight() <= (h + ALIGN_SIZE))
+                return true;
+            return false;
+        }
+
+        spNativeTexture get(spNativeTexture current, int w, int h, TextureFormat tf)
+        {
+            w = alignTextureSize(w);
+            h = alignTextureSize(h);
+            if (isGood(current, w, h, tf))
+                return current;
+
+            spNativeTexture result;
+
+            free::iterator it = lower_bound(_free.begin(), _free.end(), result, NTP(w, h, tf));
+            if (it != _free.end())
             {
-                texture = IVideoDriver::instance->createTexture();
-                texture->init(w, h, tf, true);
+                spNativeTexture& t = *it;
+                if (isGood(t, w, h, tf))
+                {
+                    result = t;
+                    _free.erase(it);
+                }
             }
 
-            rt r;
-            r.texture = texture;
-            r.tm = getTimeMS();
-            _rts.push_back(r);
-
-
-            if (_started)
+            if (!result)
             {
-                _started = true;
-                //core::getMainThreadMessages().postCallback()
+                //if texture wasn't found create it
+                result = IVideoDriver::instance->createTexture();
+                result->init(w, h, tf, true);
             }
 
-            return texture;
+            result->setUserData((void*)getTimeMS());
+            _rts.push_back(result);
+
+            //print();
+
+            return result;
         }
 
 
@@ -98,25 +121,43 @@ namespace oxygine
         void update()
         {
             timeMS tm = getTimeMS();
-            for (size_t i = 0; i < _rts.size(); ++i)
+            for (size_t i = 0, sz = _rts.size(); i < sz; ++i)
             {
-                rt& r = _rts[i];
-                if (r.texture->_ref_counter == 1)
+                spNativeTexture& texture = _rts[i];
+                if (texture->_ref_counter == 1)
                 {
-                    free::iterator it = lower_bound(_free.begin(), _free.end(), r.texture, NTP::comparePred2);
-                    _free.insert(it, r.texture);
+                    free::iterator it = lower_bound(_free.begin(), _free.end(), texture, NTP::cmp);
+                    _free.insert(it, texture);
                     _rts.erase(_rts.begin() + i);
-                    i--;
+                    --i;
+                    --sz;
                     continue;
                 }
-                if (r.tm + 3000 < tm)
-                {
-                    //r.texture->release();
-                }
+            }
 
+            for (size_t i = 0, sz = _free.size(); i < sz; ++i)
+            {
+                spNativeTexture& t = _free[i];
+                timeMS createTime = (timeMS)t->getUserData();
+                if (createTime + TEXTURE_LIVE > tm)
+                    continue;
+                _free.erase(_free.begin() + i);
+                --i;
+                --sz;
+            }
+
+            if (_free.size() > MAX_FREE_TEXTURES)
+            {
+                _free.erase(_free.begin(), _free.begin() + _free.size() - MAX_FREE_TEXTURES);
             }
         }
 
+        void reset()
+        {
+            _free.clear();
+            _rts.clear();
+        }
+        /*
         spNativeTexture abc(spNativeTexture t)
         {
             return t;
@@ -124,7 +165,7 @@ namespace oxygine
             //return
             for (size_t i = 0; i < _rts.size(); ++i)
             {
-                rt& r = _rts[i];
+                spNativeTexture& r = _rts[i];
                 if (r.texture == t)
                 {
                     _free.push_back(r.texture);
@@ -135,24 +176,15 @@ namespace oxygine
             }
 
             return t;
-        }
+        }*/
 
     protected:
-        struct rt
-        {
-            rt(): free(true), tm(0) {}
-            bool free;
-            spNativeTexture texture;
-            timeMS tm;
-        };
 
-        typedef std::vector<rt> rts;
+        typedef std::vector<spNativeTexture> rts;
         rts _rts;
 
         typedef std::vector<spNativeTexture> free;
         free _free;
-
-        bool _started;
     };
 
     RTManager rtm;
@@ -180,7 +212,7 @@ namespace oxygine
         Point _extend;
         spNativeTexture _rt;
         TextureFormat _format;
-        Transform _rtTransform;
+        Transform _transform;
         Rect _screen;
 
         PostProcessOptions _options;
@@ -275,14 +307,10 @@ namespace oxygine
 
     PostProcess::~PostProcess()
     {
-        //if (_rt)
-        //   _rt->release();
     }
 
     void PostProcess::free()
     {
-        //if (_rt)
-        //    _rt->release();
         _rt = 0;
     }
 
@@ -292,14 +320,14 @@ namespace oxygine
 
         Rect display(Point(0, 0), core::getDisplaySize());
 
-        if (_options._flags & PostProcessOptions::fullscreen)
+        if (_options._flags & PostProcessOptions::flag_fullscreen)
             return display;
 
         screen = actor.computeBounds(actor.computeGlobalTransform()).cast<Rect>();
         screen.size += Point(1, 1);
         screen.expand(_extend, _extend);
 
-        if (!(_options._flags & PostProcessOptions::singleR2T))
+        if (!(_options._flags & PostProcessOptions::flag_singleR2T))
             screen.clip(display);
 
         return screen.cast<Rect>();
@@ -310,10 +338,10 @@ namespace oxygine
         _screen = getScreenRect(*actor);
 
         OX_ASSERT(actor->_getStage());
-        _rt = getRTManager().get(_screen.getWidth(), _screen.getHeight(), _format);
+        _rt = getRTManager().get(_rt, _screen.getWidth(), _screen.getHeight(), _format);
 
 
-        _rtTransform = actor->computeGlobalTransform().inverted();
+        _transform = actor->computeGlobalTransform().inverted();
 
 
 
@@ -341,7 +369,7 @@ namespace oxygine
         rs.transform = actor->getParent()->computeGlobalTransform();
 
 
-        if (!(_options._flags & PostProcessOptions::fullscreen))
+        if (!(_options._flags & PostProcessOptions::flag_fullscreen))
         {
             AffineTransform offset;
             offset.identity();
@@ -371,9 +399,8 @@ namespace oxygine
 
     void TweenPostProcess::renderPP()
     {
-        if (_pp._options._flags & PostProcessOptions::singleR2T)
+        if (_pp._options._flags & PostProcessOptions::flag_singleR2T && _pp._rt)
             return;
-
 
         _pp.update(_actor);
         _renderPP();
@@ -422,12 +449,13 @@ namespace oxygine
             RectF src(0, 0,
             _pp._screen.getWidth() / (float)_pp._rt->getWidth() / _downsample,
             _pp._screen.getHeight() / (float)_pp._rt->getHeight() / _downsample);
+
             RectF dest = _pp._screen.cast<RectF>();
 
             renderer->setBlendMode(blend_premultiplied_alpha);
 
 
-            AffineTransform tr = _pp._rtTransform * _actor->computeGlobalTransform();
+            AffineTransform tr = _pp._transform * _actor->computeGlobalTransform();
             renderer->setTransform(tr);
             renderer->beginElementRendering(true);
             Color color = Color(Color::White).withAlpha(255).premultiplied();
@@ -504,9 +532,9 @@ namespace oxygine
 
 
             spNativeTexture rt = _pp._rt;
-            spNativeTexture rt2 = getRTManager().get(w, h, _pp._format);
+            spNativeTexture rt2 = getRTManager().get(0, w, h, _pp._format);
 
-#if 1
+#if 0
             driver->setShaderProgram(PostProcess::shaderBlit);
             pass(rt, Rect(0, 0, w, h), rt2, Rect(0, 0, w / 2, h / 2));
 
@@ -515,7 +543,7 @@ namespace oxygine
             _downsample *= 2;
 #endif
 
-#if 1
+#if 0
 
             rt = getRTManager().get(w / 2, h / 2, _pp._format);
             _pp._rt = rt;
@@ -565,7 +593,7 @@ namespace oxygine
             RectF dest = _pp._screen.cast<RectF>();
 
             renderer->setBlendMode(blend_premultiplied_alpha);
-            AffineTransform tr = _pp._rtTransform * _actor->computeGlobalTransform();
+            AffineTransform tr = _pp._transform * _actor->computeGlobalTransform();
 
             renderer->setTransform(tr);
             renderer->beginElementRendering(true);

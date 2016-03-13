@@ -16,4 +16,5 @@
 	
 	<set path = "system/fonts" />
 	<font file="system.fnt" version="7"/>	
+	<font file="mono.fnt" version="7"/>	
 </resources>

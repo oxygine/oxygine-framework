@@ -28,7 +28,7 @@ public:
         sprite->addTween(Actor::TweenRotationDegrees(360), 10000, -1);
         sprite->setAnchor(0.5f, 0.5f);
 
-//        sprite->addTween(TweenOutline(Color::Blue), 55000, 1, true);
+        sprite->addTween(TweenOutline(Color::Blue, PostProcessOptions().fullscreen().singleRender()), 55000, 1, true);
         _test = sprite;
     }
 

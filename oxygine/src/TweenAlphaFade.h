@@ -12,13 +12,20 @@ namespace oxygine
     class PostProcessOptions
     {
     public:
-        enum flags
+        enum
         {
-            singleR2T = 1,
-            fullscreen = 1 << 1,
+            flag_singleR2T = 1,
+            flag_fullscreen = 1 << 1,
         };
 
+        PostProcessOptions(int flags = 0): _flags(flags), _downscale(1) {}
+        PostProcessOptions& fullscreen(bool enable = true) { _flags = enable ? (_flags | flag_fullscreen) : (_flags  & (~flag_fullscreen)); return *this; }
+        PostProcessOptions& singleRender(bool enable = true) { _flags = enable ? (_flags | flag_singleR2T) : (_flags  & (~flag_singleR2T)); return *this; }
+        //loops -(2, 3, 4, ...),  final size: 2^loops
+        PostProcessOptions& downscale(int loops = 2) { _downscale = loops; return *this; }
+
         int _flags;
+        int _downscale;
     };
 
     class TweenOutline : public TweenProxy

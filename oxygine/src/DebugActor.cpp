@@ -29,6 +29,7 @@
 
 #include <stdio.h>
 #include <stdarg.h>
+#include <iomanip>
 
 #ifdef __S3E__
 #include "s3eMemory.h"
@@ -120,7 +121,7 @@ namespace oxygine
         TextStyle st;
         st.font = NULL;
 
-        if (ResFont* fnt = resSystem->getResFont("system"))
+        if (ResFont* fnt = resSystem->getResFont("mono"))
         {
             st.font = fnt->getFont();
         }
@@ -128,6 +129,7 @@ namespace oxygine
         OX_ASSERT(st.font != NULL);
 
         st.vAlign = TextStyle::VALIGN_TOP;
+        st.hAlign = TextStyle::HALIGN_LEFT;
         //st.color = Color(rand()%255, rand()%255, rand()%255, 255);
         st.color = Color(Color::Black, 255);
         st.multiline = true;
@@ -135,7 +137,7 @@ namespace oxygine
         setHeight(45);
 
         _bg = new ColorRectSprite;
-        _bg->setColor(Color(Color::White, 64));
+        _bg->setColor(Color(Color::White, 180));
         _bg->setSize(getSize());
         _bg->setTouchEnabled(false);
         addChild(_bg);
@@ -157,7 +159,7 @@ namespace oxygine
 
         _text = new TextField;
         addChild(_text);
-        _text->setPosition(2, 5);
+        _text->setPosition(2, 7);
         _text->setTouchEnabled(false);
         _text->setStyle(st);
         _text->setWidth(getWidth());
@@ -252,6 +254,19 @@ namespace oxygine
 
     extern IVideoDriver::Stats _videoStats;
 
+    std::string aligned(int v, int width)
+    {
+        char str[32];
+        str[0] = '%';
+        str[1] = width + 48;
+        str[2] = 'd';
+        str[3] = 0;
+        char rs[32];
+        safe_sprintf(rs, str, v);
+
+        return rs;
+    }
+
     void DebugActor::doUpdate(const UpdateState& us)
     {
         static int fps = 0;
@@ -288,11 +303,13 @@ namespace oxygine
         s << "objects=" << (int)ObjectBase::__getCreatedObjects().size() << std::endl;
 #endif
 #ifdef OXYGINE_TRACE_VIDEO_STATS
-        s << "batches=" << _videoStats.batches << " triangles=" << _videoStats.triangles << std::endl;
+        s << "batches=" << aligned(_videoStats.batches, 3) << " triangles=" << aligned(_videoStats.triangles, 3) << std::endl;
 #endif
-        s << "update=" << getStage()->_statUpdate << "ms ";
-        s << "render=" << getStage()->_statRender << "ms ";
-        s << "textures=" << NativeTexture::created << " ";
+
+        s << "update=" << aligned(getStage()->_statUpdate, 2) << "ms ";
+        s << "render=" << aligned(getStage()->_statRender, 2) << "ms ";
+        s << "textures=" << aligned(NativeTexture::created, 2) << " ";
+
 #ifdef __APPLE__
         size_t mem;
         iosGetMemoryUsage(mem);

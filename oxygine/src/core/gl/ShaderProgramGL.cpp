@@ -80,7 +80,7 @@ namespace oxygine
 #ifndef   EMSCRIPTEN
         if (!gles)
         {
-            log::messageln("not gles version");
+            //log::messageln("not gles version");
 
             static const char nonGLES[] =
                 "#define lowp\n"
