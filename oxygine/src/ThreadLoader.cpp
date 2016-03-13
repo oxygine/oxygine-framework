@@ -60,7 +60,7 @@ namespace oxygine
     }
 
 
-    void threadDone(const ThreadMessages::message& msg)
+    void threadDone(const ThreadDispatcher::message& msg)
     {
         ThreadLoader* tl = (ThreadLoader*)msg.cbData;
 
@@ -84,7 +84,7 @@ namespace oxygine
             res->load();
         }
 
-        core::getMainThreadMessages().postCallback(0, 0, 0, threadDone, this);
+        core::getMainThreadDispatcher().postCallback(0, 0, 0, threadDone, this);
     }
 
     void ThreadLoader::start()

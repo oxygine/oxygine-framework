@@ -6,7 +6,7 @@
 #include "NativeTexture.h"
 #include "MemoryTexture.h"
 #include "Mutex.h"
-#include "ThreadMessages.h"
+#include "ThreadDispatcher.h"
 #include "res/CreateResourceContext.h"
 
 namespace oxygine
@@ -38,6 +38,6 @@ namespace oxygine
         CreateTextureTask* _opt;
 
         std::vector<unsigned char> _buffer;
-        ThreadMessages _messages;//todo, use global messages
+        ThreadDispatcher _messages;//todo, use global messages
     };
 }

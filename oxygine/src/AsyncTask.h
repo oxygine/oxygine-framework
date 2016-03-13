@@ -1,5 +1,5 @@
 #pragma once
-#include "core/ThreadMessages.h"
+#include "core/ThreadDispatcher.h"
 #include "EventDispatcher.h"
 #include "Event.h"
 
@@ -61,7 +61,7 @@ namespace oxygine
         virtual void _onError() {}
         virtual void _onComplete() {}
         virtual void _onFinal(bool error) {}
-        virtual void _onCustom(const ThreadMessages::message&) {};
+        virtual void _onCustom(const ThreadDispatcher::message&) {};
         virtual void _finalize(bool error) {}
 
         enum { customID = sysEventID('s', 'c', 's') };
@@ -71,10 +71,10 @@ namespace oxygine
 
         void _complete();
         void _error();
-        void _custom(const ThreadMessages::message& m) { _onCustom(m); }
+        void _custom(const ThreadDispatcher::message& m) { _onCustom(m); }
 
 
-        static void threadCB(const ThreadMessages::message&);
-        void _threadCB(const ThreadMessages::message&);
+        static void threadCB(const ThreadDispatcher::message&);
+        void _threadCB(const ThreadDispatcher::message&);
     };
 }

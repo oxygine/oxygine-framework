@@ -22,7 +22,7 @@
 
 #include "gl/oxgl.h"
 #include "winnie_alloc/winnie_alloc.h"
-#include "ThreadMessages.h"
+#include "ThreadDispatcher.h"
 #include "PostProcess.h"
 
 #ifdef __S3E__
@@ -89,8 +89,8 @@ namespace oxygine
 
     IVideoDriver::Stats _videoStats;
 
-    static ThreadMessages _threadMessages;
-    static ThreadMessages _uiMessages;
+    static ThreadDispatcher _threadMessages;
+    static ThreadDispatcher _uiMessages;
     Mutex mutexAlloc;
 
     bool _useTouchAPI = false;
@@ -232,7 +232,7 @@ namespace oxygine
 
         void updateUIMessages()
         {
-            ThreadMessages::peekMessage msg;
+            ThreadDispatcher::peekMessage msg;
             while (_uiMessages.peek(msg, true)) {}
         }
 
@@ -721,7 +721,7 @@ namespace oxygine
 
         bool update()
         {
-            ThreadMessages::peekMessage msg;
+            ThreadDispatcher::peekMessage msg;
             while (_threadMessages.peek(msg, true)) {}
 
 #ifdef __S3E__
@@ -841,12 +841,12 @@ namespace oxygine
 #endif
         }
 
-        ThreadMessages& getMainThreadMessages()
+        ThreadDispatcher& getMainThreadDispatcher()
         {
             return _threadMessages;
         }
 
-        ThreadMessages& getUiThreadMessages()
+        ThreadDispatcher& getUiThreadMessages()
         {
             return _uiMessages;
         }

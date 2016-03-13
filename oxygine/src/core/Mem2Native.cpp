@@ -113,7 +113,7 @@ namespace oxygine
         //update only one texture per frame
         if (_prev == Point(0, 0))
         {
-            ThreadMessages::peekMessage ev;
+            ThreadDispatcher::peekMessage ev;
             if (_messages.peek(ev, true))
             {
                 CreateTextureTask* opt = (CreateTextureTask*)ev.arg1;

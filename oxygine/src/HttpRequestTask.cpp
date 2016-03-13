@@ -78,7 +78,7 @@ namespace oxygine
         dispatchEvent(&event);
     }
 
-    void HttpRequestTask::_onCustom(const ThreadMessages::message& msg)
+    void HttpRequestTask::_onCustom(const ThreadDispatcher::message& msg)
     {
         dispatchProgress((int)(size_t)msg.arg1, (int)(size_t)msg.arg2);
     }

@@ -15,7 +15,7 @@ typedef int window;
 /**main oxygine namespace*/
 namespace oxygine
 {
-    class ThreadMessages;
+    class ThreadDispatcher;
 
     void* fastAlloc(size_t size);
     void fastFree(void* data);
@@ -102,8 +102,11 @@ namespace oxygine
         /** Returns display size in pixels*/
         Point getDisplaySize();
 
-        ThreadMessages& getMainThreadMessages();
-        ThreadMessages& getUiThreadMessages();
+        ThreadDispatcher& getMainThreadDispatcher();
+        ThreadDispatcher& getUiThreadMessages();
+
+        OXYGINE_DEPRECATED
+        inline ThreadDispatcher& getMainThreadMessages() {return getMainThreadDispatcher();}
 
         bool isActive();
         bool hasFocus();

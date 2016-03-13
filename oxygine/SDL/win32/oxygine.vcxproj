@@ -144,7 +144,7 @@
     <ClCompile Include="..\..\src\core\STDFileSystem.cpp" />
     <ClCompile Include="..\..\src\core\system_data.cpp" />
     <ClCompile Include="..\..\src\core\Texture.cpp" />
-    <ClCompile Include="..\..\src\core\ThreadMessages.cpp" />
+    <ClCompile Include="..\..\src\core\ThreadDispatcher.cpp" />
     <ClCompile Include="..\..\src\core\UberShaderProgram.cpp" />
     <ClCompile Include="..\..\src\core\VideoDriver.cpp" />
     <ClCompile Include="..\..\src\core\ZipFileSystem.cpp" />
@@ -250,7 +250,7 @@
     <ClInclude Include="..\..\src\core\STDFileSystem.h" />
     <ClInclude Include="..\..\src\core\system_data.h" />
     <ClInclude Include="..\..\src\core\Texture.h" />
-    <ClInclude Include="..\..\src\core\ThreadMessages.h" />
+    <ClInclude Include="..\..\src\core\ThreadDispatcher.h" />
     <ClInclude Include="..\..\src\core\UberShaderProgram.h" />
     <ClInclude Include="..\..\src\core\vertex.h" />
     <ClInclude Include="..\..\src\core\VertexDeclaration.h" />

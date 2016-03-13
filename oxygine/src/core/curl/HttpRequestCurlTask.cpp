@@ -1,6 +1,6 @@
 #include "HttpRequestCurlTask.h"
 #include "core/oxygine.h"
-#include "core/ThreadMessages.h"
+#include "core/ThreadDispatcher.h"
 #include "SDL.h"
 #include "pthread.h"
 
@@ -9,7 +9,7 @@ namespace oxygine
     CURLM* multi_handle = 0;
     static pthread_t _thread;
 
-    static ThreadMessages _messages;
+    static ThreadDispatcher _messages;
     //ThreadMessages _main;
 
     spHttpRequestTask HttpRequestTask::create()
@@ -20,7 +20,7 @@ namespace oxygine
     const unsigned int ID_DONE = sysEventID('C', 'D', 'N');
     const unsigned int ID_PROGRESS = sysEventID('C', 'P', 'R');
 
-    void mainThreadFunc(const ThreadMessages::message& msg)
+    void mainThreadFunc(const ThreadDispatcher::message& msg)
     {
         switch (msg.msgid)
         {
@@ -81,7 +81,7 @@ namespace oxygine
                 static int i = 0;
                 //log::messageln("upd---------%d - %d", getTimeMS(), ++i);
 
-                ThreadMessages::peekMessage tmsg;
+                ThreadDispatcher::peekMessage tmsg;
                 if (_messages.peek(tmsg, true))
                 {
                     curl_multi_add_handle(multi_handle, (CURL*)tmsg.arg1);
@@ -127,7 +127,7 @@ namespace oxygine
                     if (msg->msg == CURLMSG_DONE)
                     {
                         curl_multi_remove_handle(multi_handle, msg->easy_handle);
-                        core::getMainThreadMessages().postCallback(ID_DONE, msg->easy_handle, (void*)msg->data.result, mainThreadFunc, 0);
+                        core::getMainThreadDispatcher().postCallback(ID_DONE, msg->easy_handle, (void*)msg->data.result, mainThreadFunc, 0);
                     }
                 }
             }
@@ -158,7 +158,7 @@ namespace oxygine
 
     size_t HttpRequestTaskCURL::_cbXRefInfoFunction(curl_off_t dltotal, curl_off_t dlnow)
     {
-        core::getMainThreadMessages().postCallback(ID_PROGRESS, (void*)dltotal, (void*)dlnow, mainThreadFunc, this);
+        core::getMainThreadDispatcher().postCallback(ID_PROGRESS, (void*)dltotal, (void*)dlnow, mainThreadFunc, this);
 
         return 0;
     }

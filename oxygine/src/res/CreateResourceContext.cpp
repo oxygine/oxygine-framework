@@ -1,23 +1,23 @@
 #include "CreateResourceContext.h"
 #include "core/NativeTexture.h"
 #include "MemoryTexture.h"
-#include "core/ThreadMessages.h"
+#include "core/ThreadDispatcher.h"
 #include "core/oxygine.h"
 #include "pthread.h"
 
 namespace oxygine
 {
-    static pthread_t _selfThread;
+    static pthread_t _mainThread;
 
 
     void LoadResourcesContext::init()
     {
-        _selfThread = pthread_self();
+        _mainThread = pthread_self();
     }
 
     LoadResourcesContext* LoadResourcesContext::get()
     {
-        bool isMainThread = pthread_equal(_selfThread, pthread_self());
+        bool isMainThread = pthread_equal(_mainThread, pthread_self()) != 0;
 
         LoadResourcesContext* mtcontext = &MTLoadingResourcesContext::instance;
         LoadResourcesContext* scontext = &SingleThreadResourcesContext::instance;
@@ -196,7 +196,7 @@ namespace oxygine
 
     MTLoadingResourcesContext MTLoadingResourcesContext::instance;
 
-    void copyTexture(const ThreadMessages::message& msg)
+    void copyTexture(const ThreadDispatcher::message& msg)
     {
         const CreateTextureTask* task = (const CreateTextureTask*)msg.cbData;
 
@@ -227,7 +227,7 @@ namespace oxygine
 
     void MTLoadingResourcesContext::createTexture(const CreateTextureTask& opt)
     {
-        core::getMainThreadMessages().sendCallback(0, 0, copyTexture, (void*)&opt);
+        core::getMainThreadDispatcher().sendCallback(0, 0, copyTexture, (void*)&opt);
     }
 
     bool MTLoadingResourcesContext::isNeedProceed(spNativeTexture t)

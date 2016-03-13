@@ -56,7 +56,7 @@ namespace oxygine
         //async
         void progress(int loaded, int total);
 
-        void _onCustom(const ThreadMessages::message& msg);
+        void _onCustom(const ThreadDispatcher::message& msg);
         void dispatchProgress(int loaded, int total);
 
         virtual void _setFileName(const std::string& name) {}

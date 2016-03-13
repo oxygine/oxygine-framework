@@ -2,7 +2,7 @@
 #include "oxygine_include.h"
 #include "EventDispatcher.h"
 #include "pthread.h"
-#include "core/ThreadMessages.h"
+#include "core/ThreadDispatcher.h"
 
 namespace oxygine
 {

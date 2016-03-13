@@ -1,4 +1,4 @@
-#include "ThreadMessages.h"
+#include "ThreadDispatcher.h"
 #include "log.h"
 #include "pthread.h"
 #include "Mutex.h"
@@ -58,7 +58,7 @@ namespace oxygine
         pthread_mutex_unlock(&_mutex);
     }
 
-    ThreadMessages::ThreadMessages(): _id(0), _waitReplyID(-1), _result(0)
+    ThreadDispatcher::ThreadDispatcher(): _id(0), _result(0)
     {
         pthread_cond_init(&_cond, 0);
 
@@ -71,13 +71,13 @@ namespace oxygine
         _events.reserve(10);
     }
 
-    ThreadMessages::~ThreadMessages()
+    ThreadDispatcher::~ThreadDispatcher()
     {
         pthread_mutex_destroy(&_mutex);
         pthread_cond_destroy(&_cond);
     }
 
-    void ThreadMessages::_waitMessage()
+    void ThreadDispatcher::_waitMessage()
     {
         _replyLast(0);
 
@@ -85,13 +85,13 @@ namespace oxygine
             pthread_cond_wait(&_cond, &_mutex);
     }
 
-    void ThreadMessages::wait()
+    void ThreadDispatcher::wait()
     {
         MutexPthreadLock lock(_mutex);
         _waitMessage();
     }
 
-    void ThreadMessages::get(message& ev)
+    void ThreadDispatcher::get(message& ev)
     {
         MutexPthreadLock lock(_mutex);
         LOGDN("get");
@@ -100,34 +100,34 @@ namespace oxygine
         _popMessage(ev);
     }
 
-    bool ThreadMessages::empty()
+    bool ThreadDispatcher::empty()
     {
         MutexPthreadLock lock(_mutex);
         bool v = _events.empty();
         return v;
     }
 
-    size_t ThreadMessages::size()
+    size_t ThreadDispatcher::size()
     {
         MutexPthreadLock lock(_mutex);
         size_t v = _events.size();
         return v;
     }
 
-    void ThreadMessages::clear()
+    void ThreadDispatcher::clear()
     {
         MutexPthreadLock lock(_mutex);
         _events.clear();
     }
 
-    void ThreadMessages::_popMessage(message& res)
+    void ThreadDispatcher::_popMessage(message& res)
     {
         _last = _events.front();
         _events.erase(_events.begin());
 
         if (_last.cb)
         {
-            LOGDN("running callback for %d", _last._id);
+            LOGDN("running callback for id=%d", _last._id);
             _last.cb(_last);
             _last.cb = 0;
         }
@@ -135,7 +135,7 @@ namespace oxygine
 #ifndef __S3E__
         if (_last.cbFunction)
         {
-            LOGDN("running callback function for %d", _last._id);
+            LOGDN("running callback function for id=%d", _last._id);
             _last.cbFunction();
             _last.cbFunction = std::function< void() >();
         }
@@ -151,7 +151,7 @@ namespace oxygine
         res = _last;
     }
 
-    bool ThreadMessages::peek(peekMessage& ev, bool del)
+    bool ThreadDispatcher::peek(peekMessage& ev, bool del)
     {
         if (!ev.num)
             return false;
@@ -177,35 +177,45 @@ namespace oxygine
         return false;
     }
 
-    void ThreadMessages::_replyLast(void* val)
+    void ThreadDispatcher::_replyLast(void* val)
     {
-        if (_last._id == _waitReplyID)
+        _replyingTo = _last._id;
+        _result = val;
+
+        while (_last.need_reply)
         {
-            _result = val;
-            LOGDN("replying to %d", _waitReplyID);
-            pthread_cond_signal(&_cond);
+            LOGDN("replying to id=%d", _last._id);
+
+            //pthread_cond_signal(&_cond);
+            pthread_cond_broadcast(&_cond);
+            mywait(&_cond, &_mutex);
         }
     }
 
-    void ThreadMessages::reply(void* val)
+
+
+    void ThreadDispatcher::_waitReply(int id)
+    {
+        do
+        {
+            LOGDN("ThreadMessages::waiting reply... _replyingTo=%d  myid=%d", _replyingTo, id);
+            pthread_cond_signal(&_cond);
+            mywait(&_cond, &_mutex);
+        }
+        while (_replyingTo != id);
+
+        _last.need_reply = false;
+        pthread_cond_signal(&_cond);
+    }
+
+    void ThreadDispatcher::reply(void* val)
     {
         MutexPthreadLock lock(_mutex);
         _replyLast(val);
     }
 
 
-    void ThreadMessages::_waitReply()
-    {
-        while (_last._id != _waitReplyID)
-        {
-            //LOGDN("ThreadMessages::send msgid=%d waiting reply...", msgid);
-            mywait(&_cond, &_mutex);
-        }
-
-        _waitReplyID = 0;// ?
-    }
-
-    void* ThreadMessages::send(int msgid, void* arg1, void* arg2)
+    void* ThreadDispatcher::send(int msgid, void* arg1, void* arg2)
     {
         OX_ASSERT(msgid);
 
@@ -220,7 +230,7 @@ namespace oxygine
         return _result;
     }
 
-    void ThreadMessages::sendCallback(void* arg1, void* arg2, callback cb, void* cbData)
+    void ThreadDispatcher::sendCallback(void* arg1, void* arg2, callback cb, void* cbData)
     {
         message ev;
         ev.msgid = 0;
@@ -233,28 +243,26 @@ namespace oxygine
         _pushMessageWaitReply(ev);
     }
 
-    void ThreadMessages::_pushMessageWaitReply(message& msg)
+    void ThreadDispatcher::_pushMessageWaitReply(message& msg)
     {
         msg._id = ++_id;
-        LOGDN("_pushMessage id=%d msgid=%d", msg._id, msg.msgid);
+        msg.need_reply = true;
+        LOGDN("_pushMessageWaitReply id=%d msgid=%d", msg._id, msg.msgid);
 
-        _waitReplyID = msg._id;
+
         _events.push_back(msg);
-        pthread_cond_signal(&_cond);
-
-        LOGDN("waiting reply %d", _waitReplyID);
-        _waitReply();
+        _waitReply(msg._id);
         LOGDN("waiting reply  %d - done", msg._id);
     }
 
-    void ThreadMessages::_pushMessage(message& msg)
+    void ThreadDispatcher::_pushMessage(message& msg)
     {
         msg._id = ++_id;
         _events.push_back(msg);
         pthread_cond_signal(&_cond);
     }
 
-    void ThreadMessages::post(int msgid, void* arg1, void* arg2)
+    void ThreadDispatcher::post(int msgid, void* arg1, void* arg2)
     {
         message ev;
         ev.msgid = msgid;
@@ -265,7 +273,7 @@ namespace oxygine
         _pushMessage(ev);
     }
 
-    void ThreadMessages::postCallback(int msgid, void* arg1, void* arg2, callback cb, void* cbData)
+    void ThreadDispatcher::postCallback(int msgid, void* arg1, void* arg2, callback cb, void* cbData)
     {
         message ev;
         ev.msgid = msgid;
@@ -278,7 +286,7 @@ namespace oxygine
         _pushMessage(ev);
     }
 
-    void ThreadMessages::removeCallback(int msgid, callback cb, void* cbData)
+    void ThreadDispatcher::removeCallback(int msgid, callback cb, void* cbData)
     {
         MutexPthreadLock lock(_mutex);
         for (messages::iterator i = _events.begin(); i != _events.end(); ++i)
@@ -293,7 +301,7 @@ namespace oxygine
     }
 
 #ifndef __S3E__
-    void ThreadMessages::postCallback(const std::function<void()>& f)
+    void ThreadDispatcher::postCallback(const std::function<void()>& f)
     {
         message ev;
         ev.msgid = 0;
@@ -305,6 +313,15 @@ namespace oxygine
 
         MutexPthreadLock lock(_mutex);
         _pushMessage(ev);
+    }
+
+    void ThreadDispatcher::sendCallback(const std::function<void()>& f)
+    {
+        message ev;
+        ev.cbFunction = f;
+
+        MutexPthreadLock lock(_mutex);
+        _pushMessageWaitReply(ev);
     }
 #endif
 }

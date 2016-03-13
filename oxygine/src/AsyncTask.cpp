@@ -29,12 +29,12 @@ namespace oxygine
             _run();
     }
 
-    void AsyncTask::threadCB(const ThreadMessages::message& msg)
+    void AsyncTask::threadCB(const ThreadDispatcher::message& msg)
     {
         ((AsyncTask*)msg.cbData)->_threadCB(msg);
     }
 
-    void AsyncTask::_threadCB(const ThreadMessages::message& msg)
+    void AsyncTask::_threadCB(const ThreadDispatcher::message& msg)
     {
         switch (msg.msgid)
         {
@@ -89,7 +89,7 @@ namespace oxygine
         {
             if (msgid != customID)
                 addRef();
-            core::getMainThreadMessages().postCallback(msgid, arg1, arg2, AsyncTask::threadCB, this);
+            core::getMainThreadDispatcher().postCallback(msgid, arg1, arg2, AsyncTask::threadCB, this);
             return true;
         }
 
