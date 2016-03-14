@@ -32,14 +32,17 @@ namespace oxygine
 
         void* userData;
         spObject userDataObject;
+        int listenerID;
 
         spEventDispatcher target; //The event target
         spEventDispatcher currentTarget;// The object that is actively processing the Event object with an event listener.
 
-        Event(eventType Type, bool Bubbles = false) : userData(0), type(Type), phase(phase_target), bubbles(Bubbles), stopsImmediatePropagation(false), stopsPropagation(false) {}
+        Event(eventType Type, bool Bubbles = false) : listenerID(0), userData(0), type(Type), phase(phase_target), bubbles(Bubbles), stopsImmediatePropagation(false), stopsPropagation(false) {}
         virtual ~Event() {}
 
         void stopPropagation() { stopsPropagation = true; }
         void stopImmediatePropagation() { stopsPropagation = stopsImmediatePropagation = true; }
+        //removes EventCallback from EventDispatcher
+        void removeListener() { currentTarget->removeEventListener(listenerID); }
     };
 }

@@ -171,6 +171,7 @@ namespace oxygine
         {
             listenerbase& ls = copy[i];
             event->currentTarget = this;
+            event->listenerID = ls.id;
             ls.cb(event);
             if (event->stopsImmediatePropagation)
                 break;

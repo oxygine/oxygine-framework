@@ -45,12 +45,12 @@ namespace oxygine
         struct listenerbase
         {
             EventCallback cb;
+            int id;
         };
 
         struct listener : public listenerbase
         {
             eventType type;
-            int id;
         };
 
         int _lastID;
