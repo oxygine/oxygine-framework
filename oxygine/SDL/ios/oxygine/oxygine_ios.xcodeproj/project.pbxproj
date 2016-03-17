@@ -208,9 +208,7 @@
 		C3E8707516EBC8EB00052915 /* Node.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FD816EBC8EB00052915 /* Node.h */; };
 		C3E8707616EBC8EB00052915 /* TextBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3E86FD916EBC8EB00052915 /* TextBuilder.cpp */; };
 		C3E8707716EBC8EB00052915 /* TextBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FDA16EBC8EB00052915 /* TextBuilder.h */; };
-		C3E8707916EBC8EB00052915 /* TextActor.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FDC16EBC8EB00052915 /* TextActor.h */; };
 		C3E8707A16EBC8EB00052915 /* TextStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FDD16EBC8EB00052915 /* TextStyle.h */; };
-		C3E8708416EBC8EB00052915 /* Tweener.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FEA16EBC8EB00052915 /* Tweener.h */; };
 		C3E8708516EBC8EB00052915 /* UpdateState.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FEB16EBC8EB00052915 /* UpdateState.h */; };
 		C3E8708616EBC8EB00052915 /* AtlasTool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3E86FEE16EBC8EB00052915 /* AtlasTool.cpp */; };
 		C3E8708716EBC8EB00052915 /* AtlasTool.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FEF16EBC8EB00052915 /* AtlasTool.h */; };
@@ -451,9 +449,7 @@
 		C3E86FD816EBC8EB00052915 /* Node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Node.h; sourceTree = "<group>"; };
 		C3E86FD916EBC8EB00052915 /* TextBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextBuilder.cpp; sourceTree = "<group>"; };
 		C3E86FDA16EBC8EB00052915 /* TextBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextBuilder.h; sourceTree = "<group>"; };
-		C3E86FDC16EBC8EB00052915 /* TextActor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextActor.h; path = ../../../src/TextActor.h; sourceTree = "<group>"; };
 		C3E86FDD16EBC8EB00052915 /* TextStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextStyle.h; path = ../../../src/TextStyle.h; sourceTree = "<group>"; };
-		C3E86FEA16EBC8EB00052915 /* Tweener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tweener.h; path = ../../../src/Tweener.h; sourceTree = "<group>"; };
 		C3E86FEB16EBC8EB00052915 /* UpdateState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UpdateState.h; path = ../../../src/UpdateState.h; sourceTree = "<group>"; };
 		C3E86FEE16EBC8EB00052915 /* AtlasTool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AtlasTool.cpp; sourceTree = "<group>"; };
 		C3E86FEF16EBC8EB00052915 /* AtlasTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtlasTool.h; sourceTree = "<group>"; };
@@ -672,9 +668,7 @@
 				C3E86FD216EBC8EB00052915 /* Sprite.cpp */,
 				C3E86FD316EBC8EB00052915 /* Sprite.h */,
 				C3E86FD416EBC8EB00052915 /* text_utils */,
-				C3E86FDC16EBC8EB00052915 /* TextActor.h */,
 				C3E86FDD16EBC8EB00052915 /* TextStyle.h */,
-				C3E86FEA16EBC8EB00052915 /* Tweener.h */,
 				C3E86FEB16EBC8EB00052915 /* UpdateState.h */,
 				C3E86FEC16EBC8EB00052915 /* utils */,
 				C3E86FF516EBC8EB00052915 /* VisualStyle.cpp */,
@@ -980,9 +974,7 @@
 				C3E8707516EBC8EB00052915 /* Node.h in Headers */,
 				92CE26621A589401003901D6 /* ios.h in Headers */,
 				C3E8707716EBC8EB00052915 /* TextBuilder.h in Headers */,
-				C3E8707916EBC8EB00052915 /* TextActor.h in Headers */,
 				C3E8707A16EBC8EB00052915 /* TextStyle.h in Headers */,
-				C3E8708416EBC8EB00052915 /* Tweener.h in Headers */,
 				92214D6519F14A2F00A4459A /* Polygon.h in Headers */,
 				C3E8708516EBC8EB00052915 /* UpdateState.h in Headers */,
 				C3E8708716EBC8EB00052915 /* AtlasTool.h in Headers */,
