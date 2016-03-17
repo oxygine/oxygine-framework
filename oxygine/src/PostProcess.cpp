@@ -157,7 +157,7 @@ namespace oxygine
         h = alignTextureSize(h);
         if (isGood(current, w, h, tf))
         {
-            current->setUserData((void*)getTimeMS());
+            current->setUserData((void*)(size_t)getTimeMS());
             return current;
         }
 
@@ -182,7 +182,7 @@ namespace oxygine
             result->init(w, h, tf, true);
         }
 
-        result->setUserData((void*)getTimeMS());
+        result->setUserData((void*)(size_t)getTimeMS());
         _rts.push_back(result);
 
         //print();
