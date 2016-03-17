@@ -212,7 +212,7 @@ namespace oxygine
         for (size_t i = 0, sz = _free.size(); i < sz; ++i)
         {
             spNativeTexture& t = _free[i];
-            timeMS createTime = (timeMS)t->getUserData();
+            timeMS createTime = (timeMS)(size_t)t->getUserData();
             if (createTime + TEXTURE_LIVE > tm)
                 continue;
             _free.erase(_free.begin() + i);
