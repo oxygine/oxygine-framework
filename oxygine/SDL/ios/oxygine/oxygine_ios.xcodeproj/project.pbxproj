@@ -47,8 +47,6 @@
 		04AEC314182BD98D006413A9 /* UberShaderProgram.h in Headers */ = {isa = PBXBuildFile; fileRef = 04AEC312182BD98D006413A9 /* UberShaderProgram.h */; };
 		04B3A71918A65668004C67E3 /* InputText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04B3A71718A65668004C67E3 /* InputText.cpp */; };
 		04B3A71A18A65668004C67E3 /* InputText.h in Headers */ = {isa = PBXBuildFile; fileRef = 04B3A71818A65668004C67E3 /* InputText.h */; };
-		04D6FB4C1851914000A5403A /* ThreadMessages.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04D6FB4A1851914000A5403A /* ThreadMessages.cpp */; };
-		04D6FB4D1851914000A5403A /* ThreadMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = 04D6FB4B1851914000A5403A /* ThreadMessages.h */; };
 		92214D6419F14A2F00A4459A /* Polygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92214D6219F14A2F00A4459A /* Polygon.cpp */; };
 		92214D6519F14A2F00A4459A /* Polygon.h in Headers */ = {isa = PBXBuildFile; fileRef = 92214D6319F14A2F00A4459A /* Polygon.h */; };
 		9223E30E1A518CC400B2770B /* HttpRequestCocoaTask.mm in Sources */ = {isa = PBXBuildFile; fileRef = 9223E30D1A518CC400B2770B /* HttpRequestCocoaTask.mm */; };
@@ -73,6 +71,12 @@
 		9240B4081ADFB856005F9C5B /* Property.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240B4051ADFB856005F9C5B /* Property.h */; };
 		9240B4091ADFB856005F9C5B /* TweenAnim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9240B4061ADFB856005F9C5B /* TweenAnim.cpp */; };
 		9240B40A1ADFB856005F9C5B /* TweenAnim.h in Headers */ = {isa = PBXBuildFile; fileRef = 9240B4071ADFB856005F9C5B /* TweenAnim.h */; };
+		9250AFB01C9B14950060A168 /* PostProcess.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9250AFAC1C9B14950060A168 /* PostProcess.cpp */; };
+		9250AFB11C9B14950060A168 /* PostProcess.h in Headers */ = {isa = PBXBuildFile; fileRef = 9250AFAD1C9B14950060A168 /* PostProcess.h */; };
+		9250AFB21C9B14950060A168 /* TweenOutline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9250AFAE1C9B14950060A168 /* TweenOutline.cpp */; };
+		9250AFB31C9B14950060A168 /* TweenOutline.h in Headers */ = {isa = PBXBuildFile; fileRef = 9250AFAF1C9B14950060A168 /* TweenOutline.h */; };
+		9250AFB61C9B14C30060A168 /* ThreadDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9250AFB41C9B14C30060A168 /* ThreadDispatcher.cpp */; };
+		9250AFB71C9B14C30060A168 /* ThreadDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 9250AFB51C9B14C30060A168 /* ThreadDispatcher.h */; };
 		9264E5BD1B8358D80049F91F /* json-forwards.h in Headers */ = {isa = PBXBuildFile; fileRef = 9264E5BA1B8358D80049F91F /* json-forwards.h */; };
 		9264E5BE1B8358D80049F91F /* json.h in Headers */ = {isa = PBXBuildFile; fileRef = 9264E5BB1B8358D80049F91F /* json.h */; };
 		9264E5BF1B8358D80049F91F /* jsoncpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9264E5BC1B8358D80049F91F /* jsoncpp.cpp */; };
@@ -204,9 +208,7 @@
 		C3E8707516EBC8EB00052915 /* Node.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FD816EBC8EB00052915 /* Node.h */; };
 		C3E8707616EBC8EB00052915 /* TextBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3E86FD916EBC8EB00052915 /* TextBuilder.cpp */; };
 		C3E8707716EBC8EB00052915 /* TextBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FDA16EBC8EB00052915 /* TextBuilder.h */; };
-		C3E8707916EBC8EB00052915 /* TextActor.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FDC16EBC8EB00052915 /* TextActor.h */; };
 		C3E8707A16EBC8EB00052915 /* TextStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FDD16EBC8EB00052915 /* TextStyle.h */; };
-		C3E8708416EBC8EB00052915 /* Tweener.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FEA16EBC8EB00052915 /* Tweener.h */; };
 		C3E8708516EBC8EB00052915 /* UpdateState.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FEB16EBC8EB00052915 /* UpdateState.h */; };
 		C3E8708616EBC8EB00052915 /* AtlasTool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3E86FEE16EBC8EB00052915 /* AtlasTool.cpp */; };
 		C3E8708716EBC8EB00052915 /* AtlasTool.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FEF16EBC8EB00052915 /* AtlasTool.h */; };
@@ -236,8 +238,6 @@
 		CEC2D00B1C47288E00450163 /* STDMaterial.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC2D0031C47288E00450163 /* STDMaterial.h */; };
 		CEC2D00C1C47288E00450163 /* TweenAlphaFade.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEC2D0041C47288E00450163 /* TweenAlphaFade.cpp */; };
 		CEC2D00D1C47288E00450163 /* TweenAlphaFade.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC2D0051C47288E00450163 /* TweenAlphaFade.h */; };
-		CEC2D00E1C47288E00450163 /* TweenGlow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEC2D0061C47288E00450163 /* TweenGlow.cpp */; };
-		CEC2D00F1C47288E00450163 /* TweenGlow.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC2D0071C47288E00450163 /* TweenGlow.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -282,8 +282,6 @@
 		04AEC312182BD98D006413A9 /* UberShaderProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UberShaderProgram.h; sourceTree = "<group>"; };
 		04B3A71718A65668004C67E3 /* InputText.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = InputText.cpp; path = ../../../src/InputText.cpp; sourceTree = "<group>"; };
 		04B3A71818A65668004C67E3 /* InputText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InputText.h; path = ../../../src/InputText.h; sourceTree = "<group>"; };
-		04D6FB4A1851914000A5403A /* ThreadMessages.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ThreadMessages.cpp; sourceTree = "<group>"; };
-		04D6FB4B1851914000A5403A /* ThreadMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadMessages.h; sourceTree = "<group>"; };
 		92214D6219F14A2F00A4459A /* Polygon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Polygon.cpp; path = ../../../src/Polygon.cpp; sourceTree = "<group>"; };
 		92214D6319F14A2F00A4459A /* Polygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Polygon.h; path = ../../../src/Polygon.h; sourceTree = "<group>"; };
 		9223E30C1A518CA100B2770B /* HttpRequestCocoaTask.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HttpRequestCocoaTask.h; path = ../../../src/core/ios/HttpRequestCocoaTask.h; sourceTree = "<group>"; };
@@ -309,6 +307,12 @@
 		9240B4051ADFB856005F9C5B /* Property.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Property.h; path = ../../../src/Property.h; sourceTree = "<group>"; };
 		9240B4061ADFB856005F9C5B /* TweenAnim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TweenAnim.cpp; path = ../../../src/TweenAnim.cpp; sourceTree = "<group>"; };
 		9240B4071ADFB856005F9C5B /* TweenAnim.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweenAnim.h; path = ../../../src/TweenAnim.h; sourceTree = "<group>"; };
+		9250AFAC1C9B14950060A168 /* PostProcess.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PostProcess.cpp; path = ../../../src/PostProcess.cpp; sourceTree = "<group>"; };
+		9250AFAD1C9B14950060A168 /* PostProcess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PostProcess.h; path = ../../../src/PostProcess.h; sourceTree = "<group>"; };
+		9250AFAE1C9B14950060A168 /* TweenOutline.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TweenOutline.cpp; path = ../../../src/TweenOutline.cpp; sourceTree = "<group>"; };
+		9250AFAF1C9B14950060A168 /* TweenOutline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweenOutline.h; path = ../../../src/TweenOutline.h; sourceTree = "<group>"; };
+		9250AFB41C9B14C30060A168 /* ThreadDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ThreadDispatcher.cpp; sourceTree = "<group>"; };
+		9250AFB51C9B14C30060A168 /* ThreadDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadDispatcher.h; sourceTree = "<group>"; };
 		9264E5BA1B8358D80049F91F /* json-forwards.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "json-forwards.h"; path = "../../../src/json/json-forwards.h"; sourceTree = "<group>"; };
 		9264E5BB1B8358D80049F91F /* json.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = json.h; path = ../../../src/json/json.h; sourceTree = "<group>"; };
 		9264E5BC1B8358D80049F91F /* jsoncpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = jsoncpp.cpp; path = ../../../src/json/jsoncpp.cpp; sourceTree = "<group>"; };
@@ -445,9 +449,7 @@
 		C3E86FD816EBC8EB00052915 /* Node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Node.h; sourceTree = "<group>"; };
 		C3E86FD916EBC8EB00052915 /* TextBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextBuilder.cpp; sourceTree = "<group>"; };
 		C3E86FDA16EBC8EB00052915 /* TextBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextBuilder.h; sourceTree = "<group>"; };
-		C3E86FDC16EBC8EB00052915 /* TextActor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextActor.h; path = ../../../src/TextActor.h; sourceTree = "<group>"; };
 		C3E86FDD16EBC8EB00052915 /* TextStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextStyle.h; path = ../../../src/TextStyle.h; sourceTree = "<group>"; };
-		C3E86FEA16EBC8EB00052915 /* Tweener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tweener.h; path = ../../../src/Tweener.h; sourceTree = "<group>"; };
 		C3E86FEB16EBC8EB00052915 /* UpdateState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UpdateState.h; path = ../../../src/UpdateState.h; sourceTree = "<group>"; };
 		C3E86FEE16EBC8EB00052915 /* AtlasTool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AtlasTool.cpp; sourceTree = "<group>"; };
 		C3E86FEF16EBC8EB00052915 /* AtlasTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtlasTool.h; sourceTree = "<group>"; };
@@ -478,8 +480,6 @@
 		CEC2D0031C47288E00450163 /* STDMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STDMaterial.h; path = ../../../src/STDMaterial.h; sourceTree = "<group>"; };
 		CEC2D0041C47288E00450163 /* TweenAlphaFade.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TweenAlphaFade.cpp; path = ../../../src/TweenAlphaFade.cpp; sourceTree = "<group>"; };
 		CEC2D0051C47288E00450163 /* TweenAlphaFade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweenAlphaFade.h; path = ../../../src/TweenAlphaFade.h; sourceTree = "<group>"; };
-		CEC2D0061C47288E00450163 /* TweenGlow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TweenGlow.cpp; path = ../../../src/TweenGlow.cpp; sourceTree = "<group>"; };
-		CEC2D0071C47288E00450163 /* TweenGlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweenGlow.h; path = ../../../src/TweenGlow.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -571,6 +571,10 @@
 		C3E86F5316EBC8C200052915 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				9250AFAC1C9B14950060A168 /* PostProcess.cpp */,
+				9250AFAD1C9B14950060A168 /* PostProcess.h */,
+				9250AFAE1C9B14950060A168 /* TweenOutline.cpp */,
+				9250AFAF1C9B14950060A168 /* TweenOutline.h */,
 				929AF5641C88AA4000D276ED /* ThreadLoader.cpp */,
 				929AF5651C88AA4000D276ED /* ThreadLoader.h */,
 				9264E5B91B8358B00049F91F /* json */,
@@ -598,8 +602,6 @@
 				923663681A4756C500EB65B3 /* TweenQueue.h */,
 				CEC2D0041C47288E00450163 /* TweenAlphaFade.cpp */,
 				CEC2D0051C47288E00450163 /* TweenAlphaFade.h */,
-				CEC2D0061C47288E00450163 /* TweenGlow.cpp */,
-				CEC2D0071C47288E00450163 /* TweenGlow.h */,
 				923A9E931A1FCBB700A6F08E /* MaskedRenderer.cpp */,
 				923A9E941A1FCBB700A6F08E /* MaskedRenderer.h */,
 				923A9E951A1FCBB700A6F08E /* STDRenderer.cpp */,
@@ -666,9 +668,7 @@
 				C3E86FD216EBC8EB00052915 /* Sprite.cpp */,
 				C3E86FD316EBC8EB00052915 /* Sprite.h */,
 				C3E86FD416EBC8EB00052915 /* text_utils */,
-				C3E86FDC16EBC8EB00052915 /* TextActor.h */,
 				C3E86FDD16EBC8EB00052915 /* TextStyle.h */,
-				C3E86FEA16EBC8EB00052915 /* Tweener.h */,
 				C3E86FEB16EBC8EB00052915 /* UpdateState.h */,
 				C3E86FEC16EBC8EB00052915 /* utils */,
 				C3E86FF516EBC8EB00052915 /* VisualStyle.cpp */,
@@ -691,8 +691,8 @@
 		C3E86F6816EBC8EB00052915 /* core */ = {
 			isa = PBXGroup;
 			children = (
-				04D6FB4A1851914000A5403A /* ThreadMessages.cpp */,
-				04D6FB4B1851914000A5403A /* ThreadMessages.h */,
+				9250AFB41C9B14C30060A168 /* ThreadDispatcher.cpp */,
+				9250AFB51C9B14C30060A168 /* ThreadDispatcher.h */,
 				04AEC311182BD98D006413A9 /* UberShaderProgram.cpp */,
 				04AEC312182BD98D006413A9 /* UberShaderProgram.h */,
 				04967C4B180B3D7400D66EFA /* Restorable.cpp */,
@@ -879,6 +879,7 @@
 				0472E35817F8A1A80016A832 /* file.h in Headers */,
 				0472E35C17F8A1A80016A832 /* log.h in Headers */,
 				C3E86FFF16EBC8EB00052915 /* Actor.h in Headers */,
+				9250AFB31C9B14950060A168 /* TweenOutline.h in Headers */,
 				C3E8700116EBC8EB00052915 /* AnimationFrame.h in Headers */,
 				C3E8700316EBC8EB00052915 /* Blocking.h in Headers */,
 				929AF5671C88AA4000D276ED /* ThreadLoader.h in Headers */,
@@ -943,6 +944,7 @@
 				0472E37617F8A2D30016A832 /* ioapi.h in Headers */,
 				0472E37817F8A2D30016A832 /* ioapi_mem.h in Headers */,
 				C3E8704C16EBC8EB00052915 /* MemoryTexture.h in Headers */,
+				9250AFB11C9B14950060A168 /* PostProcess.h in Headers */,
 				C3E8705416EBC8EB00052915 /* PointerState.h in Headers */,
 				C3E8705616EBC8EB00052915 /* ProgressBar.h in Headers */,
 				04AEC314182BD98D006413A9 /* UberShaderProgram.h in Headers */,
@@ -953,6 +955,7 @@
 				C3E8705B16EBC8EB00052915 /* CreateResourceContext.h in Headers */,
 				C3E8705D16EBC8EB00052915 /* ResAnim.h in Headers */,
 				9240B4081ADFB856005F9C5B /* Property.h in Headers */,
+				9250AFB71C9B14C30060A168 /* ThreadDispatcher.h in Headers */,
 				CEC2D00B1C47288E00450163 /* STDMaterial.h in Headers */,
 				C3E8705F16EBC8EB00052915 /* ResAtlas.h in Headers */,
 				C3E8706116EBC8EB00052915 /* ResBuffer.h in Headers */,
@@ -968,13 +971,10 @@
 				C3E8707116EBC8EB00052915 /* Sprite.h in Headers */,
 				C3E8707316EBC8EB00052915 /* Aligner.h in Headers */,
 				0472E36117F8A1A80016A832 /* system_data.h in Headers */,
-				04D6FB4D1851914000A5403A /* ThreadMessages.h in Headers */,
 				C3E8707516EBC8EB00052915 /* Node.h in Headers */,
 				92CE26621A589401003901D6 /* ios.h in Headers */,
 				C3E8707716EBC8EB00052915 /* TextBuilder.h in Headers */,
-				C3E8707916EBC8EB00052915 /* TextActor.h in Headers */,
 				C3E8707A16EBC8EB00052915 /* TextStyle.h in Headers */,
-				C3E8708416EBC8EB00052915 /* Tweener.h in Headers */,
 				92214D6519F14A2F00A4459A /* Polygon.h in Headers */,
 				C3E8708516EBC8EB00052915 /* UpdateState.h in Headers */,
 				C3E8708716EBC8EB00052915 /* AtlasTool.h in Headers */,
@@ -1005,7 +1005,6 @@
 				C3EE216417BECD7200715678 /* VideoDriverGL.h in Headers */,
 				04B3A71A18A65668004C67E3 /* InputText.h in Headers */,
 				C38704A717C0C71700015CA8 /* VideoDriverGLES20.h in Headers */,
-				CEC2D00F1C47288E00450163 /* TweenGlow.h in Headers */,
 				CEC2D00D1C47288E00450163 /* TweenAlphaFade.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1081,6 +1080,7 @@
 				C3E8701F16EBC8EB00052915 /* Mutex.cpp in Sources */,
 				C3E8702116EBC8EB00052915 /* NativeTexture.cpp in Sources */,
 				C3E8702316EBC8EB00052915 /* Object.cpp in Sources */,
+				9250AFB61C9B14C30060A168 /* ThreadDispatcher.cpp in Sources */,
 				04B3A71918A65668004C67E3 /* InputText.cpp in Sources */,
 				C3E8702816EBC8EB00052915 /* oxygine.cpp in Sources */,
 				04967C4D180B3D7400D66EFA /* Restorable.cpp in Sources */,
@@ -1097,7 +1097,6 @@
 				C3E8704216EBC8EB00052915 /* AffineTransform.cpp in Sources */,
 				C3E8704B16EBC8EB00052915 /* MemoryTexture.cpp in Sources */,
 				0472E37F17F8A2EC0016A832 /* MaskedSprite.cpp in Sources */,
-				CEC2D00E1C47288E00450163 /* TweenGlow.cpp in Sources */,
 				04AEC313182BD98D006413A9 /* UberShaderProgram.cpp in Sources */,
 				C3E8705316EBC8EB00052915 /* PointerState.cpp in Sources */,
 				9223E31C1A530E8A00B2770B /* HttpRequestTask.cpp in Sources */,
@@ -1122,7 +1121,6 @@
 				C3E8706E16EBC8EB00052915 /* SlidingActor.cpp in Sources */,
 				C3E8707016EBC8EB00052915 /* Sprite.cpp in Sources */,
 				C3E8707216EBC8EB00052915 /* Aligner.cpp in Sources */,
-				04D6FB4C1851914000A5403A /* ThreadMessages.cpp in Sources */,
 				C3E8707416EBC8EB00052915 /* Node.cpp in Sources */,
 				9236636D1A4756C500EB65B3 /* Tween.cpp in Sources */,
 				9236636F1A4756C500EB65B3 /* TweenQueue.cpp in Sources */,
@@ -1138,6 +1136,7 @@
 				048AD0CB19B1FD74001963EF /* Stage.cpp in Sources */,
 				C3E8708F16EBC8EB00052915 /* system_alloc.cpp in Sources */,
 				0472E35917F8A1A80016A832 /* FileSystem.cpp in Sources */,
+				9250AFB21C9B14950060A168 /* TweenOutline.cpp in Sources */,
 				9223E30E1A518CC400B2770B /* HttpRequestCocoaTask.mm in Sources */,
 				C3E8709116EBC8EB00052915 /* winnie_alloc.cpp in Sources */,
 				048AD0AA197D2444001963EF /* TextField.cpp in Sources */,
@@ -1149,6 +1148,7 @@
 				C38EC2731709649300568283 /* TreeInspector.cpp in Sources */,
 				92E0C9A01B2491C200F0DB21 /* cdecode.c in Sources */,
 				0467086E192796E500D71824 /* Serialize.cpp in Sources */,
+				9250AFB01C9B14950060A168 /* PostProcess.cpp in Sources */,
 				C38EC2751709649300568283 /* TreeInspectorLine.cpp in Sources */,
 				C38EC2771709649300568283 /* TreeInspectorPage.cpp in Sources */,
 				C38EC2791709649300568283 /* TreeInspectorPreview.cpp in Sources */,

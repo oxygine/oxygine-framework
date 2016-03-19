@@ -157,7 +157,7 @@ namespace oxygine
         h = alignTextureSize(h);
         if (isGood(current, w, h, tf))
         {
-            current->setUserData((void*)getTimeMS());
+            current->setUserData((void*)(size_t)getTimeMS());
             return current;
         }
 
@@ -182,7 +182,7 @@ namespace oxygine
             result->init(w, h, tf, true);
         }
 
-        result->setUserData((void*)getTimeMS());
+        result->setUserData((void*)(size_t)getTimeMS());
         _rts.push_back(result);
 
         //print();
@@ -212,7 +212,7 @@ namespace oxygine
         for (size_t i = 0, sz = _free.size(); i < sz; ++i)
         {
             spNativeTexture& t = _free[i];
-            timeMS createTime = (timeMS)t->getUserData();
+            timeMS createTime = (timeMS)(size_t)t->getUserData();
             if (createTime + TEXTURE_LIVE > tm)
                 continue;
             _free.erase(_free.begin() + i);
