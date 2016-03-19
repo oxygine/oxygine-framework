@@ -37,6 +37,8 @@ namespace oxygine
 
     void STDMaterial::render(ClipRectActor* actor, const RenderState& parentRS)
     {
+        //Material::render(actor, parentRS);
+        //return;
         Material::setCurrent(this);
 
         RenderState rs = parentRS;
@@ -64,7 +66,7 @@ namespace oxygine
                                    int(clippedRect.size.x + 0.01f),
                                    int(clippedRect.size.y + 0.01f));
 
-                if (!_renderer->getDriver()->getRenderTarget())
+                if (!_renderer->getDriver()->getRenderTarget()->getHandle())
                 {
                     Point vp_size = core::getDisplaySize();
                     gl_rect.pos.y = vp_size.y - gl_rect.getBottom();

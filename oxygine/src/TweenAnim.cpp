@@ -25,7 +25,11 @@ namespace oxygine
 
     void TweenAnim::init(Sprite& actor)
     {
-
+        if (!_resAnim)
+        {
+            _resAnim = actor.getResAnim();
+            _end = _resAnim->getColumns() - 1;
+        }
     }
 
 

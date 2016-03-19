@@ -20,7 +20,7 @@ namespace oxygine
     public:
         typedef Sprite type;
 
-        /**Row/Column mode. Plays single row*/
+        /**Row/Column mode. Plays single row. if resanim == 0 will be used current*/
         TweenAnim(const ResAnim* resAnim, int row = 0);
 
         /**Frames mode. Play animation in interval [start, end]*/

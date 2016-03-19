@@ -17,4 +17,7 @@ set astyle=d:\dropbox\tools\AStyle.exe
 %astyle% d:\oxygine-billing\examples\*.cpp d:\oxygine-billing\examples\*.h %options%
 %astyle% d:\oxygine-billing\src\*.cpp d:\oxygine-billing\src\*.h %options%
 
+%astyle% d:\oxygine-facebook\example\*.cpp d:\oxygine-facebook\example\*.h %options%
+%astyle% d:\oxygine-facebook\src\*.cpp d:\oxygine-facebook\src\*.h %options%
+
 %astyle% d:\oxygine-editor\editor\src\*.cpp d:\oxygine-editor\editor\src\*.h %options%
