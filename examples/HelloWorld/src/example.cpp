@@ -90,10 +90,10 @@ public:
         spSprite sprite = new Sprite();
         addChild(sprite);
 
-        int duration = 500;//500 ms
+        int duration = 600;//ms
         int loops = -1;//infinity loops
 
-        //animation has 7 columns, check 'res.xml'
+        //animation has 8 columns - frames, check 'res.xml'
         ResAnim* animation = gameResources.getResAnim("anim");
 
         //add animation tween to sprite
@@ -110,7 +110,7 @@ public:
         spTweenQueue tweenQueue = new TweenQueue();
         tweenQueue->setDelay(1500);
         //first, move sprite to dest position
-        tweenQueue->add(Sprite::TweenPosition(destPos), 1500, 1);
+        tweenQueue->add(Sprite::TweenPosition(destPos), 2500, 1);
         //then fade it out smoothly
         tweenQueue->add(Sprite::TweenAlpha(0), 500, 1);
 

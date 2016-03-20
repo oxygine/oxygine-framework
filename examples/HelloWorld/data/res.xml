@@ -2,7 +2,7 @@
 <resources>
 	<set path = "images" />
 	<atlas>
-		<image file="anim.png" cols = "7" />
+		<image file="anim.png" cols = "8" />
 		<image file="button.png"/>		
 	</atlas>
 	

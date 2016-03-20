@@ -13,7 +13,7 @@
 		
 		<image file="flower.png"/>
 		
-		<image id="anim" file="anim1.png" cols = "7" /> <!-- 'id' is optional -->
+		<image id="anim" file="anim1.png" cols = "8" /> <!-- 'id' is optional -->
 		<image file="batterfly.png"/>
 		<image file="bg.png" data-custom = "custom user data per xml resource defined in xml"/>
 		<image file="grad.png"/>

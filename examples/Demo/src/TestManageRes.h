@@ -17,7 +17,7 @@ void* myThreadFunc(void* t)
 #ifndef __S3E__
 
     //sync with game thread and show notification
-    core::getMainThreadMessages().postCallback([ = ]()
+    core::getMainThreadDispatcher().postCallback([ = ]()
     {
         test->notify("loaded");
     });

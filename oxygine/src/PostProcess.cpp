@@ -288,7 +288,7 @@ namespace oxygine
         vertexPCT2 v[4];
 
 
-        RectF dst = srcRect.cast<RectF>() / Vector2(srcTexture->getWidth(), srcTexture->getHeight());
+        RectF dst = srcRect.cast<RectF>() / Vector2((float)srcTexture->getWidth(), (float)srcTexture->getHeight());
         fillQuadT(v,
                   dst,
                   RectF(-1, -1, 2, 2),
