@@ -253,6 +253,8 @@ namespace oxygine
     {
         if (!postProcessItems.empty())
         {
+            Material::setCurrent(0);
+
             IVideoDriver* driver = IVideoDriver::instance;
             driver->setState(IVideoDriver::STATE_BLEND, 0);
             spNativeTexture prevRT = driver->getRenderTarget();
