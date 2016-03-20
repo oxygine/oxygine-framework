@@ -34,7 +34,6 @@
     <ClInclude Include="../src/TestUserShader2.h" />
     <ClInclude Include="../src/example.h" />
     <ClInclude Include="../src/test.h" />
-    <ClInclude Include="..\src\TestTweenAlphaFade.h" />
     <ClInclude Include="..\src\TestEdges.h" />
     <ClInclude Include="..\src\TestTweenPostProcessing.h" />
   </ItemGroup>

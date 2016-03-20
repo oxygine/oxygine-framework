@@ -25,7 +25,6 @@
 #include "TestTweenShine.h"
 #include "TestTouches.h"
 #include "TestColorFont.h"
-#include "TestTweenAlphaFade.h"
 #include "TestTweenPostProcessing.h"
 
 #ifdef __S3E__
@@ -81,8 +80,7 @@ public:
         addButton("inputtext", "Input Text");
         addButton("openbrowser", "Open Browser");
         addButton("http", "Http requests");
-        addButton("tweenfade", "Tween Alpha Fade");
-        addButton("tweenpp", "Post Processing Tweens");
+		addButton("tweenpp", "Post Processing Tweens");
 
         _color = Color::Red;
         _txtColor = Color::White;
@@ -132,7 +130,6 @@ public:
         if (id == "tweentext") showTest(new TestTweenText);
         if (id == "tweenshine") showTest(new TestTweenShine);
         if (id == "multicolorfont") showTest(new TestColorFont);
-        if (id == "tweenfade") showTest(new TestTweenAlphaFade);
         if (id == "tweenpp") showTest(new TestTweenPostProcessing);
         if (id == "openbrowser")
         {
