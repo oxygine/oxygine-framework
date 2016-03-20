@@ -33,31 +33,25 @@ namespace oxygine
         return i;
     }
 
-    void printShaderInfoLog(GLuint shader)
+    GLint ShaderProgramGL::getShaderInfoLog(GLuint shader, std::vector<char>& log)
     {
         GLint length = 0;
+        GLint success = GL_TRUE;
         oxglGetShaderiv(shader, GL_INFO_LOG_LENGTH, &length);
         if (length)
         {
-            GLint success;
             oxglGetShaderiv(shader, GL_COMPILE_STATUS, &success);
             if (success != GL_TRUE)
             {
-
-                std::vector<char> bf;
-                bf.resize(length);
-                oxglGetShaderInfoLog(shader, (int)bf.size(), NULL, &bf.front());
-
-                log::messageln("shader build error: %s", &bf.front());
-                OX_ASSERT(!"shader build error");
-                exit(1);
+                log.resize(length);
+                oxglGetShaderInfoLog(shader, (int)log.size(), NULL, &log.front());
             }
         }
 
-        CHECKGL();
+        return success;
     }
 
-    unsigned int ShaderProgramGL::createShader(unsigned int type, const char* data, const char* prepend, const char* append)
+    unsigned int ShaderProgramGL::createShader(unsigned int type, const char* data, const char* prepend, const char* append, error_policy ep)
     {
         GLuint shader = oxglCreateShader(type);
 
@@ -111,9 +105,23 @@ namespace oxygine
         int num = (int)(ptr - sources);
         oxglShaderSource(shader, num, sources, 0);
         oxglCompileShader(shader);
-        printShaderInfoLog(shader);
+        
+        if(ep == ep_show_error || ep == ep_show_warning)
+        {
+            std::vector<char> log;
+            GLint status = getShaderInfoLog(shader, log);
+            if(status != GL_TRUE)
+            {
+                log::messageln("shader build error: %s", &log.front());
+                if(ep == ep_show_error)
+                {
+                    OX_ASSERT(!"shader build error");
+                    exit(1);
+                }
+            }
 
-        CHECKGL();
+            CHECKGL();
+        }
 
         return shader;
     }

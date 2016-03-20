@@ -13,8 +13,9 @@ namespace oxygine
         unsigned int    getID() const;
         int             getUniformLocation(const char* id) const;
 
-        static unsigned int createShader(unsigned int type, const char* data, const char* prepend, const char* append);
+        static unsigned int createShader(unsigned int type, const char* data, const char* prepend, const char* append, error_policy ep = ep_show_error );
         static unsigned int createProgram(int vs, int fs, const VertexDeclarationGL* decl);
+        static GLint getShaderInfoLog(GLuint shader, std::vector<char>& log);
 
     private:
         GLuint _program;
