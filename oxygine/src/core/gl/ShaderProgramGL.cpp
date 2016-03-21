@@ -38,9 +38,13 @@ namespace oxygine
         GLint length = 0;
         GLint success = GL_TRUE;
         oxglGetShaderiv(shader, GL_INFO_LOG_LENGTH, &length);
-        str.resize(length);
-
-        oxglGetShaderInfoLog(shader, (int)str.size(), NULL, &str.front());
+        if (length)
+        {
+            str.resize(length);
+            oxglGetShaderInfoLog(shader, (int)str.size(), NULL, &str.front());
+        }
+        else
+            str.clear();
 
         GLint status = GL_TRUE;
         oxglGetShaderiv(shader, GL_COMPILE_STATUS, &status);
