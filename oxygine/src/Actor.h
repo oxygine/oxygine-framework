@@ -247,7 +247,8 @@ namespace oxygine
         /**Dispatches an event into the event flow. The event target is the EventDispatcher object upon which the dispatchEvent() method is called.*/
         void dispatchEvent(Event* event);
 
-        virtual void updateState() {}
+        virtual void updateStateOvered() {}
+        virtual void updateStatePressed() {}
 
         spTween addTween(spTween);
         spTween addTween2(spTween, const TweenOptions& opt);

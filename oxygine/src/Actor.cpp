@@ -288,7 +288,7 @@ namespace oxygine
         _pressed = 0;
         _getStage()->removeEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onGlobalTouchUpEvent));
 
-        updateState();
+        updateStatePressed();
     }
 
     void Actor::_onGlobalTouchUpEvent(Event* ev)
@@ -323,7 +323,7 @@ namespace oxygine
         up.localPosition = convert_stage2local(this, te->localPosition, _getStage());
         dispatchEvent(&up);
 
-        updateState();
+        updateStateOvered();
     }
 
     void Actor::dispatchEvent(Event* event)
@@ -334,7 +334,7 @@ namespace oxygine
             if (!_overred)
             {
                 _overred = te->index;
-                updateState();
+                updateStateOvered();
 
                 TouchEvent over = *te;
                 over.type = TouchEvent::OVER;
@@ -353,7 +353,7 @@ namespace oxygine
                 _pressed = te->index;
                 _getStage()->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onGlobalTouchUpEvent));
 
-                updateState();
+                updateStatePressed();
             }
         }
 

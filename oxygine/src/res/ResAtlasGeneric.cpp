@@ -189,7 +189,7 @@ namespace oxygine
         ad.atlas.init(w, h);
 
 
-        if (_atlasses.size() > _current)
+        if ((int)_atlasses.size() > _current)
             ad.texture = _atlasses[_current].base;
         else
         {

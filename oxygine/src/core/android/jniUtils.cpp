@@ -1,7 +1,7 @@
 #include "jniUtils.h"
 #include "jniHelper.h"
 #include "core/log.h"
-#include "core/ThreadMessages.h"
+#include "core/ThreadDispatcher.h"
 
 using namespace oxygine;
 
@@ -235,6 +235,6 @@ extern "C"
     JNIEXPORT void JNICALL Java_org_oxygine_lib_Utils_runOnGameThread
     (JNIEnv* env, jclass clazz, jobject object)
     {
-        core::getMainThreadMessages().postCallback(0, env->NewGlobalRef(object), 0, runTask, 0);
+        core::getMainThreadDispatcher().postCallback(0, env->NewGlobalRef(object), 0, runTask, 0);
     }
 }
