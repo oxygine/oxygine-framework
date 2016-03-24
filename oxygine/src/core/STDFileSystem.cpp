@@ -213,7 +213,8 @@ namespace oxygine
 #elif OXYGINE_EDITOR
             return status_error;
 #elif _WIN32
-            return DeleteFileA(buff) ? status_ok : status_error;
+            std::wstring wsPath = utf8tows(buff);
+            return DeleteFileW(wsPath.c_str()) ? status_ok : status_error;
 #else
             return (::remove(buff) != -1 ? status_ok : status_error);
 #endif
@@ -264,7 +265,9 @@ namespace oxygine
 #elif OXYGINE_EDITOR
             return status_error;
 #elif _WIN32
-            return MoveFileA(buffSrc, buffDest) ? status_ok : status_error;
+            std::wstring s = utf8tows(buffSrc);
+            std::wstring d = utf8tows(buffDest);
+            return MoveFileW(s.c_str(), d.c_str()) ? status_ok : status_error;
 #else
             return (::rename(buffSrc, buffDest) != -1 ? status_ok : status_error);
 #endif

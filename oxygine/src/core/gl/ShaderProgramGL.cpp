@@ -41,7 +41,7 @@ namespace oxygine
         if (length)
         {
             str.resize(length);
-            oxglGetShaderInfoLog(shader, (int)str.size(), NULL, &str.front());
+            oxglGetShaderInfoLog(shader, (int)str.size(), NULL, &str[0]);
         }
         else
             str.clear();
