@@ -55,6 +55,9 @@ namespace oxygine
         atlasses _atlasses;
     };
 
-    typedef void(*load_texture_hook)(const std::string& file, spNativeTexture nt, LoadResourcesContext* load_context);
+    typedef void(*load_texture_hook)(const std::string& file, spNativeTexture nt, bool linearFilter, bool clamp2edge, LoadResourcesContext* load_context);
     void set_load_texture_hook(load_texture_hook);
+
+    class LoadResourcesContext;
+    void load_texture_internal(const std::string& file, spNativeTexture nt, bool linearFilter, bool clamp2edge, LoadResourcesContext* load_context);
 }

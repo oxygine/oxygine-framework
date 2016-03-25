@@ -97,28 +97,22 @@ namespace oxygine
             float scaleFactor = resanim->getScaleFactor();
 
             pugi::xml_attribute attr = resanim->getAttribute("guideX1");
-            if (!attr.empty())
-                _guideX[0] = attr.as_float() * scaleFactor;
+            _guideX[0] = attr.as_float(0) * scaleFactor;
 
             attr = resanim->getAttribute("guideX2");
-            if (!attr.empty())
-                _guideX[1] = attr.as_float() * scaleFactor;
+            _guideX[1] = attr.as_float(0) * scaleFactor;
 
             attr = resanim->getAttribute("guideY1");
-            if (!attr.empty())
-                _guideY[0] = attr.as_float() * scaleFactor;
+            _guideY[0] = attr.as_float(0) * scaleFactor;
 
             attr = resanim->getAttribute("guideY2");
-            if (!attr.empty())
-                _guideY[1] = attr.as_float() * scaleFactor;
+            _guideY[1] = attr.as_float(0) * scaleFactor;
 
             attr = resanim->getAttribute("vertical");
-            if (!attr.empty())
-                _vertMode = (StretchMode)attr.as_uint();
+            _vertMode = (StretchMode)attr.as_uint(STRETCHING);
 
             attr = resanim->getAttribute("horizontal");
-            if (!attr.empty())
-                _horzMode = (StretchMode)attr.as_uint();
+            _horzMode = (StretchMode)attr.as_uint(STRETCHING);
         }
         _Sprite::animFrameChanged(f);
     }
