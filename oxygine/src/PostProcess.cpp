@@ -398,7 +398,7 @@ namespace oxygine
 
     TweenPostProcess::~TweenPostProcess()
     {
-        if (_actor)
+        if (_actor && _actor->getMaterial())
             _actor->setMaterial(_prevMaterial);
     }
 
@@ -432,7 +432,8 @@ namespace oxygine
 
     void TweenPostProcess::done(Actor& actor)
     {
-        _actor->setMaterial(_prevMaterial);
+		if (_actor->getMaterial())
+			_actor->setMaterial(_prevMaterial);
     }
 
 }
