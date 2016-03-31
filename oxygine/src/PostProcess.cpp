@@ -56,8 +56,8 @@ namespace oxygine
 
         file::buffer vs_blit;
         file::buffer fs_blit;
-        file::read("pp_blit_vs.glsl", vs_blit);
-        file::read("pp_blit_fs.glsl", fs_blit);
+        zp.read("system/pp_blit_vs.glsl", vs_blit);
+        zp.read("system/pp_blit_fs.glsl", fs_blit);
 
         vs_blit.push_back(0);
         fs_blit.push_back(0);
