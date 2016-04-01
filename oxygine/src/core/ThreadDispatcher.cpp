@@ -100,6 +100,38 @@ namespace oxygine
         _popMessage(ev);
     }
 
+
+    void ThreadDispatcher::get2(message& ev)
+    {
+        {
+            MutexPthreadLock lock(_mutex);
+            LOGDN("get2");
+            _waitMessage();
+
+            _last = _events.front();
+            _events.erase(_events.begin());
+        }
+
+
+        if (_last.cb)
+        {
+            LOGDN("running callback for id=%d", _last._id);
+            _last.cb(_last);
+            _last.cb = 0;
+        }
+
+#ifndef __S3E__
+        if (_last.cbFunction)
+        {
+            LOGDN("running callback function for id=%d", _last._id);
+            _last.cbFunction();
+            _last.cbFunction = std::function< void() >();
+        }
+#endif
+
+    }
+
+
     bool ThreadDispatcher::empty()
     {
         MutexPthreadLock lock(_mutex);

@@ -66,6 +66,9 @@ namespace oxygine
         //blocking
         void get(message& ev);
 
+        //test
+        void get2(message& ev);
+
         bool peek(peekMessage& ev, bool del);
         void clear();
 
@@ -100,6 +103,7 @@ namespace oxygine
         void _pushMessage(message&);
         void _pushMessageWaitReply(message&);
         void _popMessage(message&);
+        void _popMessageNoCB(message&);
         void _replyLast(void* val);
         unsigned int _id;
         void*   _result;

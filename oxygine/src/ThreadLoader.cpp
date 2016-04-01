@@ -12,8 +12,8 @@ namespace oxygine
 
     ThreadLoader::~ThreadLoader()
     {
-        //if (!pthread_equal(_thread, pthread_self()))
-        //  pthread_join(_thread, 0);
+        if (!pthread_equal(_thread, pthread_self()))
+            pthread_join(_thread, 0);
     }
 
 
@@ -25,6 +25,11 @@ namespace oxygine
     void ThreadLoader::add(Resource* res)
     {
         _ress.push_back(res);
+    }
+
+    void ThreadLoader::add(std::function< void() > v)
+    {
+        _funcs.push_back(v);
     }
 
     bool ThreadLoader::isCompleted()
@@ -84,6 +89,11 @@ namespace oxygine
             res->load();
         }
 
+        for (funcs::iterator i = _funcs.begin(); i != _funcs.end(); ++i)
+        {
+            (*i)();
+        }
+
         core::getMainThreadDispatcher().postCallback(0, 0, 0, threadDone, this);
     }
 
@@ -91,6 +101,10 @@ namespace oxygine
     {
         _threadDone = false;
         addRef();
-        pthread_create(&_thread, 0, _staticThreadFunc, this);
+
+        pthread_attr_t attr;
+        pthread_attr_init(&attr);
+        pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
+        pthread_create(&_thread, &attr, _staticThreadFunc, this);
     }
 }

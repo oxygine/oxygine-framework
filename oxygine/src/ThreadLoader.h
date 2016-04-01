@@ -3,6 +3,7 @@
 #include "EventDispatcher.h"
 #include "pthread.h"
 #include "core/ThreadDispatcher.h"
+#include <functional>
 
 namespace oxygine
 {
@@ -26,6 +27,8 @@ namespace oxygine
         virtual void add(Resources* res);
         virtual void add(Resource* res);
 
+        virtual void add(std::function< void() >);
+
         void start();
         //void stop();
 
@@ -45,5 +48,8 @@ namespace oxygine
 
         typedef std::list<Resource*> ress;
         ress _ress;
+
+        typedef std::list<std::function<void()> > funcs;
+        funcs _funcs;
     };
 }
