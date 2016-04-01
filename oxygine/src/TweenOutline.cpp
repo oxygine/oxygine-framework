@@ -95,7 +95,8 @@ namespace oxygine
             pass(rt, rc, rt2, rc);
 
 
-            int alpha = lerp(255, 0, _progress);
+            int alpha = lerp(0, 255, _progress);
+            //log::messageln("tween alpha %d", alpha);
 
             Color c = _color.withAlpha(alpha).premultiplied();
 

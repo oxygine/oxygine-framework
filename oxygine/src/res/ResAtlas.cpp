@@ -46,7 +46,7 @@ namespace oxygine
     {
         if (_hook)
         {
-            _hook(file, nt, load_context);
+            _hook(file, nt, linearFilter, clamp2edge, load_context);
             return;
         }
 

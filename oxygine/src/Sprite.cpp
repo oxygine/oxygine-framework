@@ -78,6 +78,9 @@ namespace oxygine
         if (!Actor::isOn(localPosition))
             return false;
 
+        if (_extendedIsOn)
+            return true;
+
         const HitTestData& ad = _frame.getHitTestData();
         if (!ad.data)
             return true;
