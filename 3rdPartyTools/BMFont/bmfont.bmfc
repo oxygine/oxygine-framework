@@ -4,12 +4,12 @@ fileVersion=1
 # font settings
 fontName=Arial
 fontFile=
-charSet=177
+charSet=0
 fontSize=-32
 aa=1
 scaleH=100
 useSmoothing=1
-isBold=1
+isBold=0
 isItalic=0
 useUnicode=1
 disableBoxChars=1
@@ -26,8 +26,8 @@ paddingRight=0
 paddingLeft=0
 spacingHoriz=1
 spacingVert=1
-useFixedHeight=1
-forceZero=1
+useFixedHeight=0
+forceZero=0
 
 # output file
 outWidth=512
