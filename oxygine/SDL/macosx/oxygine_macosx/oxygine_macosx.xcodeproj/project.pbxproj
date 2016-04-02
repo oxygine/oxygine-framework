@@ -190,6 +190,8 @@
 		04B3A72018A6594D004C67E3 /* InputText.h in Headers */ = {isa = PBXBuildFile; fileRef = 04B3A71E18A6594D004C67E3 /* InputText.h */; };
 		92214D5E19F149BC00A4459A /* Polygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92214D5C19F149BC00A4459A /* Polygon.cpp */; };
 		92214D5F19F149BC00A4459A /* Polygon.h in Headers */ = {isa = PBXBuildFile; fileRef = 92214D5D19F149BC00A4459A /* Polygon.h */; };
+		922553401CAFA59F00333A1E /* TweenGlow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9225533E1CAFA59F00333A1E /* TweenGlow.cpp */; };
+		922553411CAFA59F00333A1E /* TweenGlow.h in Headers */ = {isa = PBXBuildFile; fileRef = 9225533F1CAFA59F00333A1E /* TweenGlow.h */; };
 		923663581A47561500EB65B3 /* Serializable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 923663511A47561500EB65B3 /* Serializable.cpp */; };
 		923663591A47561500EB65B3 /* Serializable.h in Headers */ = {isa = PBXBuildFile; fileRef = 923663521A47561500EB65B3 /* Serializable.h */; };
 		9236635A1A47561500EB65B3 /* TouchEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 923663531A47561500EB65B3 /* TouchEvent.h */; };
@@ -432,6 +434,8 @@
 		04B3A71E18A6594D004C67E3 /* InputText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InputText.h; path = ../../../src/InputText.h; sourceTree = "<group>"; };
 		92214D5C19F149BC00A4459A /* Polygon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Polygon.cpp; path = ../../../src/Polygon.cpp; sourceTree = "<group>"; };
 		92214D5D19F149BC00A4459A /* Polygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Polygon.h; path = ../../../src/Polygon.h; sourceTree = "<group>"; };
+		9225533E1CAFA59F00333A1E /* TweenGlow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TweenGlow.cpp; path = ../../../src/TweenGlow.cpp; sourceTree = "<group>"; };
+		9225533F1CAFA59F00333A1E /* TweenGlow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweenGlow.h; path = ../../../src/TweenGlow.h; sourceTree = "<group>"; };
 		923663511A47561500EB65B3 /* Serializable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Serializable.cpp; path = ../../../src/Serializable.cpp; sourceTree = "<group>"; };
 		923663521A47561500EB65B3 /* Serializable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Serializable.h; path = ../../../src/Serializable.h; sourceTree = "<group>"; };
 		923663531A47561500EB65B3 /* TouchEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TouchEvent.h; path = ../../../src/TouchEvent.h; sourceTree = "<group>"; };
@@ -516,6 +520,8 @@
 		049B55901871F21000EF3C66 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				9225533E1CAFA59F00333A1E /* TweenGlow.cpp */,
+				9225533F1CAFA59F00333A1E /* TweenGlow.h */,
 				92F3F33E1CA3BD5400425D52 /* PostProcess.cpp */,
 				92F3F33F1CA3BD5400425D52 /* PostProcess.h */,
 				92F3F3401CA3BD5400425D52 /* TweenOutline.cpp */,
@@ -886,6 +892,7 @@
 				049B56A11871F21E00EF3C66 /* pixel.h in Headers */,
 				049B56FA1871F21E00EF3C66 /* ResBuffer.h in Headers */,
 				049B56AD1871F21E00EF3C66 /* STDFileSystem.h in Headers */,
+				922553411CAFA59F00333A1E /* TweenGlow.h in Headers */,
 				049B56851871F21E00EF3C66 /* VertexDeclarationGL.h in Headers */,
 				049B56B91871F21E00EF3C66 /* VideoDriver.h in Headers */,
 				049B56C31871F21E00EF3C66 /* TreeInspector.h in Headers */,
@@ -1065,6 +1072,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				049B56CF1871F21E00EF3C66 /* Font.cpp in Sources */,
+				922553401CAFA59F00333A1E /* TweenGlow.cpp in Sources */,
 				049B56E51871F21E00EF3C66 /* unzip.c in Sources */,
 				049B56EB1871F21E00EF3C66 /* PointerState.cpp in Sources */,
 				9240B4101ADFBB3C005F9C5B /* TweenAnim.cpp in Sources */,
