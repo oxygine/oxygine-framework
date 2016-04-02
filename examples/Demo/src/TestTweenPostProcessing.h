@@ -1,6 +1,8 @@
 #pragma once
 #include "test.h"
 #include "TweenAlphaFade.h"
+#include "TweenOutline.h"
+#include "TweenGlow.h"
 #undef OUT
 
 
@@ -12,27 +14,50 @@ public:
     int _type;
 
     spActor _test;
+
+    spSprite createAnim(bool tween = true)
+    {
+        spSprite anim = new Sprite;
+        anim->setAnchor(0.5f, 0.5f);
+        anim->setResAnim(resources.getResAnim("anim"));
+
+        anim->addTween(TweenAnim(resources.getResAnim("anim")), 1000, -1);
+        if (tween)
+            anim->addTween(Actor::TweenScale(3), 4000, -1, true);
+        return anim;
+    }
+
     TestTweenPostProcessing()
     {
         spSprite sprite = new Sprite;
         sprite->setResAnim(resources.getResAnim("t2p"));
         sprite->attachTo(content);
-
         sprite->setPosition(getStage()->getSize() / 2);
-
-        spSprite anim = new Sprite;
-        anim->attachTo(sprite);
-        anim->addTween(Actor::TweenScale(3), 4000, -1, true);
-        anim->setPosition(sprite->getSize() / 2);
-        anim->setAnchor(0.5f, 0.5f);
-        anim->setResAnim(resources.getResAnim("anim"));
-        anim->addTween(TweenAnim(resources.getResAnim("anim")), 1500, -1);
-
         sprite->addTween(Actor::TweenRotationDegrees(360), 30000, -1);
         sprite->setAnchor(0.5f, 0.5f);
-
-
         _test = sprite;
+
+
+        spSprite anim;
+
+        anim = createAnim(false);
+        anim->addTween(Actor::TweenRotation(MATH_PI * 2), 15000, -1, true);
+        anim->addTween(Actor::TweenX(sprite->getWidth()), 10000, -1, true);
+        anim->addTween(Actor::TweenY(sprite->getHeight()), 12000, -1, true);
+        anim->attachTo(sprite);
+
+
+        anim = createAnim();
+        anim->setPosition(sprite->getSize() / 2);
+        anim->attachTo(sprite);
+
+        anim = createAnim(false);
+        anim->setPosition(0, sprite->getHeight() / 2);
+        anim->attachTo(sprite);
+
+        anim = createAnim(false);
+        anim->setPosition(sprite->getWidth(), sprite->getHeight() / 2);
+        anim->attachTo(sprite);
 
 
         _fullscreen = false;
@@ -50,8 +75,8 @@ public:
 
         toggle t2[] =
         {
-            toggle("render: dynamic", 0),
-            toggle("render: single", 1),
+            toggle("render: dynamic", 1),
+            toggle("render: static", 0),
         };
 
         addToggle("mode.rn", t2, 2);
@@ -61,10 +86,12 @@ public:
         {
             toggle("tween: Outline", 1),
             toggle("tween: AlphaFade", 0),
+            //toggle("tween: Glow", 2),
         };
 
         addToggle("type", t3, 2);
 
+        //_type = 2;
         addTween();
     }
 
@@ -79,8 +106,11 @@ public:
         spTween t;
         if (_type == 0)
             t = _test->addTween(TweenOutline(Color::YellowGreen, opt), 5000, -1, true, 0, Tween::ease_inOutCubic);
-        else
+        if (_type == 1)
             t = _test->addTween(TweenAlphaFade(true, opt), 5000, -1, true, 0, Tween::ease_inOutCubic);
+        if (_type == 2)
+            t = _test->addTween(TweenGlow(Color::YellowGreen, opt), 5000, -1, true, 0, Tween::ease_inOutCubic);
+
 
         t->setName("pp");
     }

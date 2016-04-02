@@ -1,4 +1,4 @@
-#include "TweenOutline.h"
+#include "TweenGlow.h"
 #include "STDMaterial.h"
 #include "Actor.h"
 #include "RenderState.h"
@@ -12,18 +12,26 @@ namespace oxygine
 
 
 
-    class TweenOutlineImpl : public TweenPostProcess
+    class TweenGlowImpl : public TweenPostProcess
     {
     public:
         Color _color;
         int _downsample;
 
-        TweenOutlineImpl(const Color& c, const PostProcessOptions& opt) : TweenPostProcess(opt), _color(c), _downsample(1) {}
+        TweenGlowImpl(const Color& c, const PostProcessOptions& opt) : TweenPostProcess(opt), _color(c), _downsample(1) {}
 
         void render(Actor* actor, const RenderState& rs) OVERRIDE
         {
             STDMaterial* mat = STDMaterial::instance;
             STDRenderer* renderer = mat->getRenderer();
+
+
+            RenderState r = rs;
+            r.material = mat;
+            actor->setMaterial(_prevMaterial);
+            actor->render(r);
+            actor->setMaterial(this);
+
 
             RectF src(0, 0,
             _pp._screen.getWidth() / (float)_pp._rt->getWidth() / _downsample,
@@ -38,15 +46,10 @@ namespace oxygine
             renderer->setTransform(tr);
             renderer->beginElementRendering(true);
             Color color = Color(Color::White).withAlpha(255).premultiplied();
+            color = Color::White;
+            renderer->setBlendMode(blend_add);
             renderer->drawElement(_pp._rt, color.rgba(), src, dest);
             renderer->drawBatch();
-
-
-            RenderState r = rs;
-            r.material = mat;
-            actor->setMaterial(_prevMaterial);
-            actor->render(r);
-            actor->setMaterial(this);
         }
 
         void _renderPP() OVERRIDE
@@ -98,12 +101,7 @@ namespace oxygine
             int alpha = lerp(0, 255, _progress);
             //log::messageln("tween alpha %d", alpha);
 
-            Color c;
-            if (_pp._options._flags & PostProcessOptions::flag_singleR2T)
-                c = _color;
-            else
-                c = _color.withAlpha(alpha).premultiplied();
-
+            Color c = _color.withAlpha(64).premultiplied();
             driver->setShaderProgram(PostProcess::shaderBlurV);
             driver->setUniform("step", 1.0f / rt2->getHeight());
 
@@ -112,7 +110,7 @@ namespace oxygine
     };
 
 
-    TweenOutline::TweenOutline(const Color& color, const PostProcessOptions& opt) : TweenProxy(new TweenOutlineImpl(color, opt))
+    TweenGlow::TweenGlow(const Color& color, const PostProcessOptions& opt) : TweenProxy(new TweenGlowImpl(color, opt))
     {
     }
 }

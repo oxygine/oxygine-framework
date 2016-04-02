@@ -53,9 +53,9 @@ public:
         contacts->attachTo(content);
         contacts->setPriority(10000);
         contacts->setTouchChildrenEnabled(false);
-        contacts->setVisible(false);
+        //contacts->setVisible(false);
 
-        content->addTween(TweenOutline(Color::GreenYellow), TweenOptions(5000).loops(-1).twoSides());
+        //content->addTween(TweenOutline(Color::GreenYellow), TweenOptions(5000).loops(-1).twoSides());
     }
 
     void doUpdate(const UpdateState& us)

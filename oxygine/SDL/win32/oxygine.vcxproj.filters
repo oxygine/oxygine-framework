@@ -345,6 +345,9 @@
     <ClCompile Include="..\..\src\core\ThreadDispatcher.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\TweenGlow.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\closure\closure.h">
@@ -742,6 +745,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\core\ThreadDispatcher.h">
       <Filter>src\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\TweenGlow.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
