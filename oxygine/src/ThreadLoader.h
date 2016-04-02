@@ -27,7 +27,9 @@ namespace oxygine
         virtual void add(Resources* res);
         virtual void add(Resource* res);
 
+#ifndef __S3E__
         virtual void add(std::function< void() >);
+#endif
 
         void start();
         //void stop();
@@ -49,7 +51,9 @@ namespace oxygine
         typedef std::list<Resource*> ress;
         ress _ress;
 
+#ifndef __S3E__
         typedef std::list<std::function<void()> > funcs;
         funcs _funcs;
+#endif
     };
 }
