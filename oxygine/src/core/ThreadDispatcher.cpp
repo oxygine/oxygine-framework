@@ -31,19 +31,23 @@ namespace oxygine
 
     void mywait(pthread_cond_t* cond, pthread_mutex_t* mutex)
     {
-#ifdef __S3E__
+        /*
+        #ifdef __S3E__
         timespec ts;
         clock_gettime(CLOCK_REALTIME, &ts);
         addtime(ts, 300);
         pthread_cond_timedwait(cond, mutex, &ts);
-#elif __ANDROID__
+        #elif __ANDROID__
         timespec ts;
         clock_gettime(CLOCK_REALTIME, &ts);
         addtime(ts, 500);
         pthread_cond_timedwait(cond, mutex, &ts);
-#else
+        #else
         pthread_cond_wait(cond, mutex);
-#endif
+        #endif
+        */
+
+        pthread_cond_wait(cond, mutex);
     }
 
 
@@ -93,26 +97,22 @@ namespace oxygine
 
     void ThreadDispatcher::get(message& ev)
     {
-        MutexPthreadLock lock(_mutex);
-        LOGDN("get");
-
-        _waitMessage();
-        _popMessage(ev);
-    }
-
-
-    void ThreadDispatcher::get2(message& ev)
-    {
         {
             MutexPthreadLock lock(_mutex);
-            LOGDN("get2");
+            LOGDN("get");
+
             _waitMessage();
 
             _last = _events.front();
             _events.erase(_events.begin());
+            ev = _last;
         }
+        _runCallbacks();
+    }
 
 
+    void ThreadDispatcher::_runCallbacks()
+    {
         if (_last.cb)
         {
             LOGDN("running callback for id=%d", _last._id);
@@ -128,7 +128,6 @@ namespace oxygine
             _last.cbFunction = std::function< void() >();
         }
 #endif
-
     }
 
 
@@ -157,29 +156,7 @@ namespace oxygine
         _last = _events.front();
         _events.erase(_events.begin());
 
-        if (_last.cb)
-        {
-            LOGDN("running callback for id=%d", _last._id);
-            _last.cb(_last);
-            _last.cb = 0;
-        }
-
-#ifndef __S3E__
-        if (_last.cbFunction)
-        {
-            LOGDN("running callback function for id=%d", _last._id);
-            _last.cbFunction();
-            _last.cbFunction = std::function< void() >();
-        }
-#endif
-
         LOGDN("_gotMessage id=%d, msgid=%d", _last._id, _last.msgid);
-
-        if (!_last.msgid)
-        {
-            _replyLast(0);
-        }
-
         res = _last;
     }
 
@@ -189,24 +166,28 @@ namespace oxygine
             return false;
 
 
-        MutexPthreadLock lock(_mutex);
-        if (ev.num == -1)
-            ev.num = (int) _events.size();
-
-        LOGDN("peeking message");
-
-        _replyLast(0);
-
-        if (!_events.empty() && ev.num > 0)
+        bool ret = false;
         {
-            if (del)
-                _popMessage(ev);
-            ev.num--;
+            MutexPthreadLock lock(_mutex);
+            if (ev.num == -1)
+                ev.num = (int)_events.size();
 
-            return true;
+            LOGDN("peeking message");
+
+            _replyLast(0);
+
+            if (!_events.empty() && ev.num > 0)
+            {
+                if (del)
+                    _popMessage(ev);
+                ev.num--;
+                ret = true;
+            }
         }
 
-        return false;
+        _runCallbacks();
+
+        return ret;
     }
 
     void ThreadDispatcher::_replyLast(void* val)
@@ -243,6 +224,7 @@ namespace oxygine
     void ThreadDispatcher::reply(void* val)
     {
         MutexPthreadLock lock(_mutex);
+        OX_ASSERT(_last.need_reply);
         _replyLast(val);
     }
 
@@ -265,7 +247,6 @@ namespace oxygine
     void ThreadDispatcher::sendCallback(void* arg1, void* arg2, callback cb, void* cbData)
     {
         message ev;
-        ev.msgid = 0;
         ev.arg1 = arg1;
         ev.arg2 = arg2;
         ev.cb = cb;
@@ -318,6 +299,18 @@ namespace oxygine
         _pushMessage(ev);
     }
 
+    void ThreadDispatcher::postCallback(void* arg1, void* arg2, callback cb, void* cbData)
+    {
+        message ev;
+        ev.arg1 = arg1;
+        ev.arg2 = arg2;
+        ev.cb = cb;
+        ev.cbData = cbData;
+
+        MutexPthreadLock lock(_mutex);
+        _pushMessage(ev);
+    }
+
     void ThreadDispatcher::removeCallback(int msgid, callback cb, void* cbData)
     {
         MutexPthreadLock lock(_mutex);
@@ -336,11 +329,6 @@ namespace oxygine
     void ThreadDispatcher::postCallback(const std::function<void()>& f)
     {
         message ev;
-        ev.msgid = 0;
-        ev.arg1 = 0;
-        ev.arg2 = 0;
-        ev.cb = 0;
-        ev.cbData = 0;
         ev.cbFunction = f;
 
         MutexPthreadLock lock(_mutex);
