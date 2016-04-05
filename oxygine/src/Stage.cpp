@@ -169,7 +169,7 @@ namespace oxygine
     {
         //initialize projection and view matrix
         Matrix proj;
-        Matrix::orthoLH(proj, (float)viewport.getWidth(), (float)viewport.getHeight(), 0, 1);
+        Matrix::orthoLH(proj, (float)viewport.getWidth(), (float)viewport.getHeight(), 0.2f, 10000);
         Matrix view = makeViewMatrix(viewport.getWidth(), viewport.getHeight());
         render(&clearColor, viewport, view, proj);
     }
