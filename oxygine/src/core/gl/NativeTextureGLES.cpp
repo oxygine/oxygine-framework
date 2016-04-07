@@ -188,8 +188,6 @@ namespace oxygine
             glTexImage2D(GL_TEXTURE_2D, 0, p.format, src.w, src.h, 0, p.format, p.type, src.data);
         }
 
-        _vram = src.h * src.pitch;
-
         OX_ASSERT(sysMemCopy == false);
 
         init((nativeTextureHandle)id, src.w, src.h, src.format);
