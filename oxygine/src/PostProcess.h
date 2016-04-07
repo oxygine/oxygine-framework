@@ -74,10 +74,11 @@ namespace oxygine
 
         void renderPP();
 
-    protected:
+
         void init(Actor& actor) OVERRIDE;
         void update(Actor& actor, float p, const UpdateState& us) OVERRIDE;
         void done(Actor& actor) OVERRIDE;
+    protected:
         virtual void _renderPP() {}
 
 
