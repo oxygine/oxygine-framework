@@ -350,7 +350,7 @@ namespace oxygine
         _transform = actor->computeGlobalTransform().inverted();
 
 
-
+        Material::setCurrent(0);
 
         IVideoDriver* driver = IVideoDriver::instance;
 

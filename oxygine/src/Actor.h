@@ -423,6 +423,8 @@ namespace oxygine
     RectF getActorTransformedDestRect(Actor* actor, const Transform& tr);
 
     void    changeParentAndSavePosition(spActor mutualParent, spActor actor, spActor newParent);
+    /**changes actor parent but with the same position on the screen*/
+    void    reattachActor(spActor actor, spActor newParent, spActor root = 0);
 
 
     /** A TweenDummy class

@@ -1436,6 +1436,36 @@ namespace oxygine
     }
 
 
+    void decompose(const Transform& t, Vector2& pos, float& angle, Vector2& scale)
+    {
+        scale.x = sqrtf(t.a * t.a + t.c * t.c);
+        scale.y = sqrtf(t.b * t.b + t.d * t.d);
+
+        angle = -atan2(t.c, t.a);
+        float an = angle / MATH_PI * 180;
+        pos.x = t.x;
+        pos.y = t.y;
+    }
+
+    void    reattachActor(spActor actor, spActor newParent, spActor root)
+    {
+        Transform t1 = actor->computeGlobalTransform(root.get());
+        Transform t2 = newParent->computeGlobalTransform(root.get());
+        t2.invert();
+        Transform r = t1 * t2;
+
+        Vector2 pos;
+        Vector2 scale;
+        float angle;
+
+        decompose(r, pos, angle, scale);
+        actor->attachTo(newParent);
+        actor->setPosition(pos);
+        actor->setRotation(angle);
+        actor->setScale(scale);
+    }
+
+
     RectF getActorTransformedDestRect(Actor* actor, const Transform& tr)
     {
         RectF rect = actor->getDestRect();
