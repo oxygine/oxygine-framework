@@ -223,12 +223,17 @@ namespace oxygine
 
         virtual bool isOn(const Vector2& localPosition);
         /**Returns true if actor is child or located deeper in current subtree*/
-        bool isDescendant(spActor actor);
+        bool isDescendant(const spActor& actor) const;
 
-        /**Inserts the specified actor before "where" actor as a child*/
+        /**DEPRECATED, use insertSiblingBefore Inserts the specified actor before "where" actor as a child*/
+        OXYGINE_DEPRECATED
         void insertChildBefore(spActor actor, spActor where);
-        /**Inserts the specified actor after "where" actor as a child*/
+        /**DEPRECATED, use insertSiblingAfter Inserts the specified actor after "where" actor as a child*/
+        OXYGINE_DEPRECATED
         void insertChildAfter(spActor actor, spActor where);
+
+        void insertSiblingBefore(spActor);
+        void insertSiblingAfter(spActor);
         void prependChild(spActor actor);
         void prependChild(Actor* actor);
         void addChild(spActor actor);

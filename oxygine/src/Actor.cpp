@@ -762,9 +762,9 @@ namespace oxygine
         return false;
     }
 
-    bool Actor::isDescendant(spActor actor)
+    bool Actor::isDescendant(const spActor& actor) const
     {
-        Actor* act = actor.get();
+        const Actor* act = actor.get();
         while (act)
         {
             if (act == this)
@@ -878,6 +878,30 @@ namespace oxygine
         setParent(actor.get(), this);
     }
 
+    void Actor::insertSiblingBefore(spActor actor)
+    {
+        OX_ASSERT(actor != this);
+        OX_ASSERT(actor);
+        OX_ASSERT(_parent);
+        if (!_parent)
+            return;
+        actor->detach();
+        _parent->_children.insert_before(actor, spActor(this));
+        setParent(actor.get(), _parent);
+    }
+
+    void Actor::insertSiblingAfter(spActor actor)
+    {
+        OX_ASSERT(actor != this);
+        OX_ASSERT(actor);
+        OX_ASSERT(_parent);
+        if (!_parent)
+            return;
+        actor->detach();
+        _parent->_children.insert_after(actor, spActor(this));
+        setParent(actor.get(), _parent);
+    }
+
     void Actor::attachTo(spActor parent)
     {
         OX_ASSERT(parent != this);
@@ -921,9 +945,12 @@ namespace oxygine
 
 
         if (sibling)
-            insertChildAfter(actor, sibling);
+            sibling->insertSiblingAfter(actor);
         else
-            insertChildBefore(actor, 0);
+        {
+            _children.append(spActor(actor));
+            setParent(actor, this);
+        }
     }
 
     void Actor::prependChild(spActor actor)
@@ -934,7 +961,7 @@ namespace oxygine
     void Actor::prependChild(Actor* actor)
     {
         if (getFirstChild())
-            insertChildBefore(actor, getFirstChild());
+            getFirstChild()->insertSiblingBefore(actor);
         else
             addChild(actor);
     }
