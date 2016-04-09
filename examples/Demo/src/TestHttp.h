@@ -78,7 +78,7 @@ public:
 
     void onError(Event* event)
     {
-        HttpRequestTask* task = safeCast<HttpRequestTask*>(event->currentTarget.get());
+        //HttpRequestTask* task = safeCast<HttpRequestTask*>(event->currentTarget.get());
         //OX_ASSERT(task->_ref_counter == 2);
     }
 
