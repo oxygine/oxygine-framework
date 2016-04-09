@@ -102,7 +102,7 @@ namespace oxygine
         _actor->_getStage()->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Draggable::onEvent));
 
         Vector2 src = pointer->getPosition().cast<Vector2>();
-        Vector2 pos = convert_stage2local(actor->getParent(), src);
+        Vector2 pos = actor->getParent()->stage2local(src);
         actor->setPosition(pos - localPosition);
 
         startDrag(localPosition);
@@ -128,7 +128,7 @@ namespace oxygine
             Actor* client = _dragClient;
 
 
-            Vector2 localPos = convert_stage2local(client, position);
+            Vector2 localPos = client->stage2local(position);
 
             Vector2 dragOffset = localPos - _dragPos;
 

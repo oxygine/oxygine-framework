@@ -301,7 +301,7 @@ namespace oxygine
 
         TouchEvent up = *te;
         up.bubbles = false;
-        up.localPosition = convert_stage2local(this, te->localPosition, _getStage());
+        up.localPosition = stage2local(te->localPosition, _getStage());
         dispatchEvent(&up);
     }
 
@@ -320,7 +320,7 @@ namespace oxygine
         TouchEvent up = *te;
         up.type = TouchEvent::OUT;
         up.bubbles = false;
-        up.localPosition = convert_stage2local(this, te->localPosition, _getStage());
+        up.localPosition = stage2local(te->localPosition, _getStage());
         dispatchEvent(&up);
 
         updateStateOvered();
@@ -1055,6 +1055,17 @@ namespace oxygine
         const AffineTransform& t = getTransform();
         return t.transform(local);
     }
+
+    Vector2 Actor::local2stage(const Vector2& pos, Actor* stage) const
+    {
+        return convert_local2stage(this, pos, stage);
+    }
+
+    Vector2 Actor::stage2local(const Vector2& pos, Actor* stage) const
+    {
+        return convert_stage2local(this, pos, stage);
+    }
+
 
     bool Actor::prepareRender(RenderState& rs, const RenderState& parentRS)
     {

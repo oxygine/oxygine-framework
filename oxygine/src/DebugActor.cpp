@@ -421,7 +421,7 @@ namespace oxygine
     void DebugActor::onDAEvent(Event* ev)
     {
         TouchEvent* t = safeCast<TouchEvent*>(ev);
-        Vector2 loc = convert_stage2local(this, t->localPosition, _getStage());
+        Vector2 loc = stage2local(t->localPosition, _getStage());
         setAlpha(isOn(loc) ? 64 : 255);
     }
 

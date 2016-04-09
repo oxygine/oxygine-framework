@@ -285,6 +285,10 @@ namespace oxygine
         //converts local position to parent space
         Vector2 local2global(const Vector2& pos) const;
 
+        //converts local position to Stage
+        Vector2 local2stage(const Vector2& pos, Actor* stage = 0) const;
+        //converts global position (position in Stage space) to local space
+        Vector2 stage2local(const Vector2& pos, Actor* stage = 0) const;
 
         typedef Property2Args<float, Vector2, const Vector2&, Actor, &Actor::getPosition, &Actor::setPosition>  TweenPosition;
         typedef Property<float, float, Actor, &Actor::getX, &Actor::setX>                                       TweenX;
@@ -307,7 +311,7 @@ namespace oxygine
         /**Returns detailed actor information. Used for debug purposes. */
         virtual std::string dump(const dumpOptions& opt) const;
 
-        /**Returns Stage where Actor attached to. Use if for multi stage (window) mode*/
+        /**Returns Stage where Actor attached to. Used for multi stage (window) mode*/
         Stage*              _getStage();
 
         void setNotPressed();
@@ -420,9 +424,13 @@ namespace oxygine
     OXYGINE_DEPRECATED
     Transform getGlobalTransform2(spActor child, Actor* parent = 0);
 
+
     RectF getActorTransformedDestRect(Actor* actor, const Transform& tr);
 
+    //deprecated, use reattachActor
+    OXYGINE_DEPRECATED
     void    changeParentAndSavePosition(spActor mutualParent, spActor actor, spActor newParent);
+
     /**changes actor parent but with the same position on the screen*/
     void    reattachActor(spActor actor, spActor newParent, spActor root = 0);
 
