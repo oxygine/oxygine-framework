@@ -75,7 +75,7 @@ namespace oxygine { namespace log { void error(const char* format, ...); } }
 //assert without log::error
 #ifdef OXYGINE_QT
 #   define OX_ASSERT_NL(x) {Q_ASSERT(x);}
-#elif EMSCRIPTEN
+#elif !OX_DEBUG || EMSCRIPTEN
 #   define OX_ASSERT_NL(x)
 #else
 #   define OX_ASSERT_NL(x) {assert(x);}
