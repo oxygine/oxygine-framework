@@ -37,7 +37,17 @@ namespace oxygine
 
         if (type == TouchEvent::TOUCH_UP)
         {
-            _ids[ps->getIndex() - 1] = 0;
+			// Remove id and compact the array:
+			//  - stop on first copied zero id
+			//  - if end is reached, zero the last element
+			int i = ps->getIndex() - 1;
+			while (i < MAX_TOUCHES - 1) {
+				if ((_ids[i] = _ids[i + 1]) == 0)
+					break;
+				++i;
+			}
+			if (i == MAX_TOUCHES - 1)
+	            _ids[i] = 0;
         }
     }
 
@@ -92,12 +102,12 @@ namespace oxygine
     }
 
 #ifndef __S3E__
-    int Input::touchID2index(int id)
+    int Input::touchID2index(int64_t id)
     {
         id += 1;//id could be = 0 ?
         for (int i = 0; i < MAX_TOUCHES; ++i)
         {
-            int& d = _ids[i];
+            int64_t& d = _ids[i];
             int index = i + 1;
             if (d == 0)
             {
@@ -112,9 +122,9 @@ namespace oxygine
         return -1;
     }
 
-    PointerState* Input::getTouchByID(int id)
+    PointerState* Input::getTouchByID(int64_t id)
     {
-        int i = touchID2index(id);
+        int64_t i = touchID2index(id);
         if (i == -1)
             return 0;
         return getTouchByIndex(i);
