@@ -951,7 +951,7 @@ namespace oxygine
         else
         {
             spActor t = actor;
-            _children.append(t);
+            _children.prepend(t);
             setParent(actor, this);
         }
     }
