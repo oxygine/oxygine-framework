@@ -105,10 +105,12 @@ namespace oxygine
         NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
         HttpRequests *cls = [[HttpRequests alloc] init];
         _session = [NSURLSession sessionWithConfiguration:config delegate:cls delegateQueue:[[NSOperationQueue alloc] init]];
+		[_session retain];
     }
     
     void HttpRequestTask::release()
     {
+		[_session release];
         _session = 0;
     }
     
