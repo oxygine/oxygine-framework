@@ -41,20 +41,18 @@ namespace oxygine
             //  - stop on first copied zero id
             //  - if end is reached, zero the last element
             int i = ps->getIndex() - 1;
-            int nextIndex = i + 1;
-
             while (i < MAX_TOUCHES - 1)
             {
-                if ((_ids[i] = _ids[nextIndex]) == 0)
+                if ((_ids[i] = _ids[i + 1]) == 0)
                     break;
-                _pointers[i] = _pointers[nextIndex];
-                _pointers[i]._index = nextIndex;
+                _pointers[i] = _pointers[i + 1];
+                _pointers[i]._index = i + 1;
                 ++i;
             }
             if (i == MAX_TOUCHES - 1)
             {
                 _ids[i] = 0;
-                _pointers[i].init(nextIndex);
+                _pointers[i].init(i + 1);
             }
         }
     }
@@ -132,7 +130,7 @@ namespace oxygine
 
     PointerState* Input::getTouchByID(int64_t id)
     {
-        int i = touchID2index(id);
+        int64_t i = touchID2index(id);
         if (i == -1)
             return 0;
         return getTouchByIndex(i);
