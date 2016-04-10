@@ -130,7 +130,7 @@ namespace oxygine
 
     PointerState* Input::getTouchByID(int64_t id)
     {
-        int64_t i = touchID2index(id);
+        int i = touchID2index(id);
         if (i == -1)
             return 0;
         return getTouchByIndex(i);
