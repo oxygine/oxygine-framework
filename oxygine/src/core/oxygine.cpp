@@ -691,7 +691,7 @@ namespace oxygine
                         {
                             //log::messageln("SDL_FINGERMOTION");
                             Vector2 pos = convertTouch(event);
-                            PointerState* ps = input->getTouchByID((int)event.tfinger.fingerId);
+                            PointerState* ps = input->getTouchByID((int64_t)event.tfinger.fingerId);
                             if (ps)
                                 input->sendPointerMotionEvent(stage,
                                                               pos.x, pos.y, event.tfinger.pressure, ps);
@@ -706,7 +706,7 @@ namespace oxygine
                         {
                             //log::messageln("SDL_FINGER");
                             Vector2 pos = convertTouch(event);
-                            PointerState* ps = input->getTouchByID((int)event.tfinger.fingerId);
+                            PointerState* ps = input->getTouchByID((int64_t)event.tfinger.fingerId);
                             if (ps)
                                 input->sendPointerButtonEvent(stage,
                                                               MouseButton_Touch,
