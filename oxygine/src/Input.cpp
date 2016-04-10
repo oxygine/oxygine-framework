@@ -44,10 +44,14 @@ namespace oxygine
 			while (i < MAX_TOUCHES - 1) {
 				if ((_ids[i] = _ids[i + 1]) == 0)
 					break;
+				_pointers[i] = _pointers[i + 1];
+				_pointers[i]._index = i + 1;
 				++i;
 			}
-			if (i == MAX_TOUCHES - 1)
+			if (i == MAX_TOUCHES - 1) {
 	            _ids[i] = 0;
+				_pointers[i].init(i + 1);
+			}
         }
     }
 
