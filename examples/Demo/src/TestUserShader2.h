@@ -82,9 +82,9 @@ public:
         driver->setTexture(0, _base);
 
         if (indices <= STDRenderer::indices8.size())
-            driver->draw(IVideoDriver::PT_TRIANGLES, _vdecl, &_vertices.front(), count, &STDRenderer::indices8.front(), indices, false);
+            driver->draw(IVideoDriver::PT_TRIANGLES, _vdecl, &_vertices.front(), (unsigned int)count, &STDRenderer::indices8.front(), (unsigned int)indices, false);
         else
-            driver->draw(IVideoDriver::PT_TRIANGLES, _vdecl, &_vertices.front(), count, &STDRenderer::indices16.front(), indices, true);
+            driver->draw(IVideoDriver::PT_TRIANGLES, _vdecl, &_vertices.front(), (unsigned int)count, &STDRenderer::indices16.front(), (unsigned int)indices, true);
 
         _vertices.clear();
     }

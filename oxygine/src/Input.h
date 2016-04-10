@@ -26,8 +26,8 @@ namespace oxygine
         PointerState* getTouchByIndex(int index);
 
 #ifndef __S3E__
-        int touchID2index(int id);
-        PointerState* getTouchByID(int id);
+        int touchID2index(int64_t id);
+        PointerState* getTouchByID(int64_t id);
 #endif
 
 
@@ -35,7 +35,7 @@ namespace oxygine
         PointerState _pointers[MAX_TOUCHES];
         PointerState _pointerMouse;
 
-        int _ids[MAX_TOUCHES + 1];
+        int64_t _ids[MAX_TOUCHES + 1];
 
 
         void sendPointerButtonEvent(spStage, MouseButton button, float x, float y, float pressure, int type, PointerState*);

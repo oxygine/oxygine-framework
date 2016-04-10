@@ -86,7 +86,7 @@ public:
     void slideBegin(Event* event)
     {
         notify("slideBegin");
-        SlidingActor::SlidingEvent* sd = safeCast<SlidingActor::SlidingEvent*>(event);
+        //SlidingActor::SlidingEvent* sd = safeCast<SlidingActor::SlidingEvent*>(event);
     }
 
     void snap()

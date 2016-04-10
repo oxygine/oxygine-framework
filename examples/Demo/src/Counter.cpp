@@ -22,7 +22,7 @@ public:
     void setActor(int n, spActor a)
     {
         _sprites[n] = a;
-        a->setUserData((void*)n);
+        a->setUserData((void*)(intptr_t)n);
     }
 
     int getCurrent() const

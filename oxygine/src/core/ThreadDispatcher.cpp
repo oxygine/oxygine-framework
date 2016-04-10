@@ -5,16 +5,17 @@
 
 namespace oxygine
 {
+#if 0
     static size_t threadID()
     {
         pthread_t pt = pthread_self();
         return ((size_t*)(&pt))[0];
     }
-
-#if 0
 #define  LOGDN(format, ...)  log::messageln("ThreadMessages(%lu)::" format, threadID(), __VA_ARGS__)
+
 #else
 #define  LOGDN(...)  ((void)0)
+
 #endif
 
 
