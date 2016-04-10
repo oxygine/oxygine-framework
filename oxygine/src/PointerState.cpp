@@ -4,16 +4,16 @@ namespace oxygine
 {
     PointerState::PointerState(): _index(0)
     {
-		init(_index);
+        init(_index);
     }
 
-	void PointerState::init(int pointerIndex)
-	{
-		_index = pointerIndex;
-		for (int i = 0; i < MouseButton_Count; ++i)
-			_isPressed[i] = false;
-		_position.setZero();
-	}
+    void PointerState::init(int pointerIndex)
+    {
+        _index = pointerIndex;
+        for (int i = 0; i < MouseButton_Count; ++i)
+            _isPressed[i] = false;
+        _position.setZero();
+    }
 
     bool isFriend22(Actor* actor, Actor* max_parent, Actor* checkParent)
     {
