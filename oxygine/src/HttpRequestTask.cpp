@@ -12,7 +12,7 @@ namespace oxygine
     void HttpRequestTask::init() {}
     void HttpRequestTask::release() {}
 #endif
-    HttpRequestTask::HttpRequestTask() : _loaded(0)
+    HttpRequestTask::HttpRequestTask() : _loaded(0), _cacheEnabled(true)
     {
 
     }
@@ -39,6 +39,11 @@ namespace oxygine
         _setFileName(name);
     }
 
+	void HttpRequestTask::setCacheEnabled(bool enabled)
+	{
+		_cacheEnabled = enabled;
+		_setCacheEnabled(enabled);
+	}
 
     const std::vector<unsigned char>&   HttpRequestTask::getPostData() const
     {
