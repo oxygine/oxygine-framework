@@ -886,7 +886,8 @@ namespace oxygine
         if (!_parent)
             return;
         actor->detach();
-        _parent->_children.insert_before(actor, spActor(this));
+        spActor t = this;
+        _parent->_children.insert_before(actor, t);
         setParent(actor.get(), _parent);
     }
 
@@ -898,7 +899,8 @@ namespace oxygine
         if (!_parent)
             return;
         actor->detach();
-        _parent->_children.insert_after(actor, spActor(this));
+        spActor t = this;
+        _parent->_children.insert_after(actor, t);
         setParent(actor.get(), _parent);
     }
 
@@ -948,7 +950,8 @@ namespace oxygine
             sibling->insertSiblingAfter(actor);
         else
         {
-            _children.append(spActor(actor));
+            spActor t = actor;
+            _children.append(t);
             setParent(actor, this);
         }
     }
