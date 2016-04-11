@@ -416,7 +416,8 @@ namespace oxygine
 
         if (scalar::abs(det) < T(0.0001))
         {
-            return out.identity();
+            out.identity();
+            return out;
         }
 
         det = T(1) / (det);

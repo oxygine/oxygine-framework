@@ -27,7 +27,7 @@ namespace oxygine
         /**Returns current text style*/
         const TextStyle&            getStyle() const {return _style;}
         /**Returns text bounds*/
-        const Rect&                 getTextRect();
+        const Rect&                 getTextRect() const;
         /**Returns current text*/
         const std::string&          getText() const { return _text; }
         const Font*                 getFont() const;
@@ -39,6 +39,9 @@ namespace oxygine
         bool                        getMultiline() const;
         bool                        getBreakLongWords() const;
         text::Symbol*               getSymbolAt(int pos) const;
+
+
+        bool getBounds(RectF&) const OVERRIDE;
 
         /**Overwrites TextStyle Vertical align*/
         void setVAlign(TextStyle::VerticalAlign align);

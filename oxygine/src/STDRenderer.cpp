@@ -235,6 +235,11 @@ namespace oxygine
         setViewProjTransform(view, proj);
     }
 
+    void STDRenderer::setViewProjTransform(const Matrix& viewProj)
+    {
+        _vp = viewProj;
+    }
+
     void STDRenderer::setViewProjTransform(const Matrix& view, const Matrix& proj)
     {
         _vp = view * proj;

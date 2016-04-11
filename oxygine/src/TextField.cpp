@@ -211,11 +211,18 @@ namespace oxygine
         return const_cast<TextField*>(this)->getRootNode()->getSymbol(pos);
     }
 
-    const Rect& TextField::getTextRect()
+    const Rect& TextField::getTextRect() const
     {
-        getRootNode();
+        const_cast<TextField*>(this)->getRootNode();
         return _textRect;
     }
+
+    bool TextField::getBounds(RectF& r) const
+    {
+        r = getTextRect().cast<RectF>();
+        return true;
+    }
+
 
     text::Node* TextField::getRootNode()
     {
