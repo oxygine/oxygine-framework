@@ -109,7 +109,6 @@ namespace oxygine
 			NSURLSessionConfiguration* config = [NSURLSessionConfiguration defaultSessionConfiguration];
 			_sessionConfigCommonInit(config);
 			__defaultSession = [NSURLSession sessionWithConfiguration:config delegate:_cls delegateQueue:nil];
-			[__defaultSession retain];
 		}
 		return __defaultSession;
 	}
@@ -125,7 +124,6 @@ namespace oxygine
 			config.HTTPCookieStorage = nil;
 			
 			__ephemeralSession = [NSURLSession sessionWithConfiguration:config delegate:_cls delegateQueue:nil];
-			[__ephemeralSession retain];
 		}
 		return __ephemeralSession;
 	}
@@ -144,14 +142,9 @@ namespace oxygine
 		if (--_httpRequestTaskInitialized)
 			return;
 		
-		[__defaultSession release];
-		__defaultSession = NULL;
-		
-		[__ephemeralSession release];
-		__ephemeralSession = NULL;
-		
-		[_cls release];
-		_cls = NULL;
+		__defaultSession = nil;
+		__ephemeralSession = nil;
+		_cls = nil;
     }
     
     spHttpRequestTask HttpRequestTask::create()
