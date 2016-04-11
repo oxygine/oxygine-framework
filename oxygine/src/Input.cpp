@@ -108,12 +108,12 @@ namespace oxygine
     }
 
 #ifndef __S3E__
-    int Input::touchID2index(int64_t id)
+    int Input::touchID2index(int64 id)
     {
         id += 1;//id could be = 0 ?
         for (int i = 0; i < MAX_TOUCHES; ++i)
         {
-            int64_t& d = _ids[i];
+            int64& d = _ids[i];
             int index = i + 1;
             if (d == 0)
             {
@@ -128,7 +128,7 @@ namespace oxygine
         return -1;
     }
 
-    PointerState* Input::getTouchByID(int64_t id)
+    PointerState* Input::getTouchByID(int64 id)
     {
         int i = touchID2index(id);
         if (i == -1)
