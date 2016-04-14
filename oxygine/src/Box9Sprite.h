@@ -43,6 +43,7 @@ namespace oxygine
     protected:
         void sizeChanged(const Vector2& size);
         void animFrameChanged(const AnimationFrame& f);
+        void changeAnimFrame(const AnimationFrame& f) OVERRIDE;
 
         bool _prepared;
 

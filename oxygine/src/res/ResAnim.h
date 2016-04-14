@@ -34,6 +34,7 @@ namespace oxygine
         int                     getColumns() const {return _columns;}
         int                     getRows() const {return (int)_frames.size() / _columns;}
         int                     getTotalFrames() const {return (int)_frames.size();}
+        int                     getFrameRate() const { return _framerate; }
         const AnimationFrame&   getFrame(int col, int row) const;
         /**returns frame by index ignoring cols and rows*/
         const AnimationFrame&   getFrame(int index) const;
@@ -45,6 +46,7 @@ namespace oxygine
         float                   getHeight() const;
 
         void setFrame(int col, int row, const AnimationFrame& frame);
+        void setFrameRate(int v) { _framerate = v; }
 
         operator const AnimationFrame& ();
 
@@ -57,6 +59,7 @@ namespace oxygine
         Resource*   _atlas;
         float       _scaleFactor;
         float       _appliedScale;
+        int         _framerate;
 
         animationFrames _frames;
     };

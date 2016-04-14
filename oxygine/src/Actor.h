@@ -323,6 +323,9 @@ namespace oxygine
 
         bool internalRender(RenderState& rs, const RenderState& parentRS);
 
+        /**recursively removes all event listeners and added tweens*/
+        void clean();
+
 
     protected:
 

@@ -39,11 +39,11 @@ namespace oxygine
         _setFileName(name);
     }
 
-	void HttpRequestTask::setCacheEnabled(bool enabled)
-	{
-		_cacheEnabled = enabled;
-		_setCacheEnabled(enabled);
-	}
+    void HttpRequestTask::setCacheEnabled(bool enabled)
+    {
+        _cacheEnabled = enabled;
+        _setCacheEnabled(enabled);
+    }
 
     const std::vector<unsigned char>&   HttpRequestTask::getPostData() const
     {

@@ -213,6 +213,11 @@ namespace oxygine
             write(ac.getHandle(), data, size);
         }
 
+        unsigned int size(handle fh_)
+        {
+            fileHandle* fh = (fileHandle*)fh_;
+            return fh->getSize();
+        }
 
 
         bool exists(const char* file_)

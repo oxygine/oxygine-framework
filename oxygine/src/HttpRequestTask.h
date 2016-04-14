@@ -40,7 +40,7 @@ namespace oxygine
         const std::vector<unsigned char>&   getResponse() const;
         const std::vector<unsigned char>&   getPostData() const;
         const std::string&                  getFileName() const;
-		bool                                getCacheEnabled() const;
+        bool                                getCacheEnabled() const;
 
         /**swap version of getResponse if you want to modify result buffer inplace*/
         void getResponseSwap(std::vector<unsigned char>&);
@@ -48,7 +48,7 @@ namespace oxygine
         void setPostData(const std::vector<unsigned char>& data);
         void setUrl(const std::string& url);
         void setFileName(const std::string& name);
-		void setCacheEnabled(bool enabled);
+        void setCacheEnabled(bool enabled);
 
 
     protected:
@@ -64,12 +64,12 @@ namespace oxygine
         virtual void _setFileName(const std::string& name) {}
         virtual void _setUrl(const std::string& url) {}
         virtual void _setPostData(const std::vector<unsigned char>& data) {}
-		virtual void _setCacheEnabled(bool enabled) {}
+        virtual void _setCacheEnabled(bool enabled) {}
 
         int _loaded;
         std::string _url;
         std::string _fname;
-		bool _cacheEnabled;
+        bool _cacheEnabled;
         std::vector<unsigned char> _response;
         std::vector<unsigned char> _postData;
 

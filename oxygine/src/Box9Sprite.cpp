@@ -87,6 +87,13 @@ namespace oxygine
         return Actor::isOn(localPosition);
     }
 
+    void Box9Sprite::changeAnimFrame(const AnimationFrame& f)
+    {
+        Vector2 size = getSize();
+        _Sprite::changeAnimFrame(f);
+        setSize(size);
+    }
+
     void Box9Sprite::animFrameChanged(const AnimationFrame& f)
     {
         _prepared = false;
@@ -100,13 +107,13 @@ namespace oxygine
             _guideX[0] = attr.as_float(0) * scaleFactor;
 
             attr = resanim->getAttribute("guideX2");
-            _guideX[1] = attr.as_float(0) * scaleFactor;
+            _guideX[1] = attr.as_float(resanim->getWidth()) * scaleFactor;
 
             attr = resanim->getAttribute("guideY1");
             _guideY[0] = attr.as_float(0) * scaleFactor;
 
             attr = resanim->getAttribute("guideY2");
-            _guideY[1] = attr.as_float(0) * scaleFactor;
+            _guideY[1] = attr.as_float(resanim->getHeight()) * scaleFactor;
 
             attr = resanim->getAttribute("vertical");
             _vertMode = (StretchMode)attr.as_uint(STRETCHING);

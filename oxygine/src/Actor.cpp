@@ -1149,6 +1149,19 @@ namespace oxygine
         return true;
     }
 
+    void Actor::clean()
+    {
+        removeTweens();
+        removeAllEventListeners();
+
+        spActor child = getFirstChild();
+        while (child)
+        {
+            child->clean();
+            child = child->getNextSibling();
+        }
+    }
+
     void Actor::render(const RenderState& parentRS)
     {
         RenderState rs = parentRS;

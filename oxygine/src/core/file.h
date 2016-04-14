@@ -77,6 +77,9 @@ namespace oxygine
         /**Is file exists?*/
         bool exists(const char* file);
 
+        /**returns opened file size*/
+        unsigned int size(handle);
+
         /**Deletes file*/
         bool deleteFile(const char* path, error_policy ep = ep_show_warning);
 
