@@ -205,6 +205,9 @@ namespace oxygine
         stream << " id='" << getObjectID() << "'";
         stream << "\n";
 
+        if (getUserData())
+            stream << " userData=" << (size_t)getUserData();
+
         if (!getVisible())
             stream << " invisible";
 
