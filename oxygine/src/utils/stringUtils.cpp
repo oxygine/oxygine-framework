@@ -190,6 +190,13 @@ namespace oxygine
             *dest = 0;
         }
 
+        std::string normalize(const std::string& pth)
+        {
+            char path[512];
+            normalize(pth.c_str(), path);
+            return path;
+        }
+
         std::string extractFileName(const std::string& path)
         {
             size_t pos = path.find_last_of("\\/") + 1;

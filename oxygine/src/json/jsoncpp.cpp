@@ -3103,6 +3103,7 @@ namespace Json
             default:
                 JSON_FAIL_MESSAGE("Type is not convertible to string");
         }
+		return "";
     }
 
 #ifdef JSON_USE_CPPTL
@@ -3138,6 +3139,7 @@ namespace Json
                 break;
         }
         JSON_FAIL_MESSAGE("Value is not convertible to Int.");
+		return 0;
     }
 
     Value::UInt Value::asUInt() const
@@ -3162,6 +3164,7 @@ namespace Json
                 break;
         }
         JSON_FAIL_MESSAGE("Value is not convertible to UInt.");
+		return 0;
     }
 
 #if defined(JSON_HAS_INT64)
@@ -3187,6 +3190,7 @@ namespace Json
                 break;
         }
         JSON_FAIL_MESSAGE("Value is not convertible to Int64.");
+		return 0;
     }
 
     Value::UInt64 Value::asUInt64() const
@@ -3210,6 +3214,7 @@ namespace Json
                 break;
         }
         JSON_FAIL_MESSAGE("Value is not convertible to UInt64.");
+		return 0;
     }
 #endif // if defined(JSON_HAS_INT64)
 
@@ -3253,6 +3258,7 @@ namespace Json
                 break;
         }
         JSON_FAIL_MESSAGE("Value is not convertible to double.");
+		return 0.0;
     }
 
     float Value::asFloat() const
@@ -3277,6 +3283,7 @@ namespace Json
                 break;
         }
         JSON_FAIL_MESSAGE("Value is not convertible to float.");
+		return 0.0f;
     }
 
     bool Value::asBool() const
@@ -3298,6 +3305,7 @@ namespace Json
                 break;
         }
         JSON_FAIL_MESSAGE("Value is not convertible to bool.");
+		return false;
     }
 
     bool Value::isConvertibleTo(ValueType other) const
