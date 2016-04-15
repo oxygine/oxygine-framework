@@ -92,6 +92,8 @@ namespace oxygine { namespace log { void error(const char* format, ...); } }
 
 #define OXYGINE_RENDERER 4
 
+#define OXYGINE_VERSION 2
+
 #ifdef __GNUC__
 #   define OXYGINE_DEPRECATED __attribute__((deprecated))
 #elif defined(_MSC_VER)
