@@ -1208,7 +1208,7 @@
 				SDKROOT = iphoneos;
 				SDL = ../../../../../SDL/;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				THIRD_PARTY = ../../../third_party/macosx/;
+				THIRD_PARTY = ../../../third_party/ios/;
 			};
 			name = Debug;
 		};
@@ -1244,7 +1244,7 @@
 				SDKROOT = iphoneos;
 				SDL = ../../../../../SDL/;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				THIRD_PARTY = ../../../third_party/macosx/;
+				THIRD_PARTY = ../../../third_party/ios/;
 			};
 			name = Release;
 		};
