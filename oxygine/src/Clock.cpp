@@ -104,7 +104,7 @@ namespace oxygine
         _destTime += dt;
 
         _lastUpdateTime = time;
-        _lastDT = dt;
+        _lastDT = static_cast<int>(dt);
 
         //if (_fixedStep > 0)
         //  printf("ticks: %d\n", int((_destTime - _srcTime)/_fixedStep));
