@@ -42,6 +42,7 @@
 #include "VisualStyle.h"
 #include "Serialize.h"
 #include "STDRenderer.h"
+#include "WebImage.h"
 
 //closure/
 #include "closure/closure.h"
@@ -68,6 +69,8 @@
 #include "core/vertex.h"
 #include "core/VertexDeclaration.h"
 #include "core/VideoDriver.h"
+#include "core/STDFileSystem.h"
+
 
 //core/gl/
 //#include "core/gl/NativeTextureGLES.h"
