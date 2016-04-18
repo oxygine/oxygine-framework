@@ -18,6 +18,20 @@ include_directories(../box2d)
 
 target_link_libraries(DemoBox2D ${OXYGINE_CORE_LIBS})
 
+
+
+
 if (WIN32) #disable console mode for VC++
 	set_target_properties(DemoBox2D PROPERTIES WIN32_EXECUTABLE TRUE)
 endif(WIN32)
+
+
+
+if (EMSCRIPTEN)
+	SET(CMAKE_EXECUTABLE_SUFFIX ".html")
+	set(linkFlags "${linkFlags} -s NO_EXIT_RUNTIME=1 -s FULL_ES2=1 -s WARN_ON_UNDEFINED_SYMBOLS=1 --memory-init-file 0 -s TOTAL_MEMORY=50331648")
+
+	set_target_properties(DemoBox2D PROPERTIES LINK_FLAGS "${linkFlags}")
+
+	em_link_pre_js(DemoBox2D  ${OXYGINE_JS_LIBRARIES}  ${CMAKE_CURRENT_SOURCE_DIR}/data.js)
+endif(EMSCRIPTEN)

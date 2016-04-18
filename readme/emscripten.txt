@@ -25,9 +25,9 @@ How to build. Steps:
 
 
 - Select any example from examples folder. For example "Demo"
-- Go to folder oxygine-framework/examples/Demo/proj.emscripten
-- run: build
-- Go to new created build folder and open Demo.html with Browser
+- Go to folder oxygine-framework/examples/Demo/proj.cmake
+- run: build_emsc.bat
+- Go to new created "build_emsc" folder and open Demo.html with Browser
 
 
 2b. You could generate your own emscipten build configuration
@@ -37,4 +37,4 @@ How to build. Steps:
   oxygine-framework\tools\gen_template.py
 
 example:
-	python gen_template.py MyProject -t emscripten -d path/to/MyProject/
+	python gen_template.py MyProject -t cmake -d path/to/MyProject/
