@@ -22,7 +22,7 @@ examples/*/proj.win32/ipch/
 oxygine/SDL/win32/Release*
 oxygine/SDL/win32/Debug*
 oxygine/system_data/data/
-examples/*/proj.emscripten/data.js
+**/data.js
 oxygine/system_data/system.zip
 examples/Game/*/proj.emscripten/data.js
 oxygine/SDL/android/lib/gen/
@@ -56,6 +56,8 @@ oxygine/SDL/android/extension/bin/
 *.exp
 *.pdb
 */Debug_v*
+**/build_emsc/
+**/build_emsc_release/
 build
 /examples/Demo/proj.cmake/mingw
 **/proj.marmalade/build_demo_vc*

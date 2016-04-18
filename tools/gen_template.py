@@ -16,7 +16,7 @@ if sys.version_info[0] >= 3:
     unicode = str
 
 
-platforms = ("win32", "android", "macosx", "ios", "cmake", "emscripten", "all")
+platforms = ("win32", "android", "macosx", "ios", "cmake", "all")
 
 
 def relpath(a, b):
