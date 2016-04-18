@@ -75,6 +75,7 @@ namespace oxygine
         virtual void            getViewport(Rect& r) const = 0;
         virtual bool            getScissorRect(Rect&) const = 0;
         virtual spNativeTexture getRenderTarget() const = 0;
+        virtual ShaderProgram*  getShaderProgram() const = 0;
         virtual const VertexDeclaration* getVertexDeclaration(bvertex_format) const = 0;
 
         virtual void setScissorRect(const Rect*) = 0;
@@ -110,6 +111,7 @@ namespace oxygine
         void getStats(Stats& s) const;
         void getViewport(Rect& r) const;
         bool getScissorRect(Rect&) const;
+        ShaderProgram*  getShaderProgram() const { return 0; }
         spNativeTexture getRenderTarget() const;
 
         const VertexDeclaration*    getVertexDeclaration(bvertex_format) const;

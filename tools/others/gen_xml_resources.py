@@ -26,6 +26,10 @@ def gen_xml(args):
     wildcard = "*.*"
     path = args.data + "/" + args.images
     filelist = glob.glob(path + "/" + args.wildcard)
+    filelist = glob.glob(path + "/*.jpeg")
+    filelist.extend(glob.glob(path + "/*.jpg"))
+    filelist.extend(glob.glob(path + "/*.tga"))
+    filelist.extend(glob.glob(path + "/*.png"))
     print(filelist)
     print(path)
 
@@ -64,14 +68,14 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="generates xml file with image resources")
     parser.add_argument(
-        "-d", "--data", help="root data folder", default=".", required=True)
+        "-d", "--data", help="root data folder", default=".")
     parser.add_argument("-s", "--sfactor", help="scale factor", default=1)
     parser.add_argument(
         "-i", "--images", help="folder with images. path relative to --data", default=".")
     parser.add_argument(
         "-o", "--out", help="output xml file name", default="out.xml")
     parser.add_argument("-w", "--wildcard",
-                        help="default is '*.png'", default="*.png")
+                        help="default is '*.png'", default="(*.png,*.jpg)")
     parser.add_argument("-l", "--load", help="preload files?",
                         action="store_true", default=True)
     parser.add_argument("-a", "--atlasses", help="separate atlasses for each file?",

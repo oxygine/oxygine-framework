@@ -222,7 +222,15 @@ namespace oxygine
             std::string name = filename.substr(pos, filename.size() - pos);
             return name;
         }
+
+        std::string extractFolder(const std::string& path)
+        {
+            size_t pos = path.find_last_of("\\/") + 1;
+            std::string name = path.substr(0, pos);
+            return name;
+        }
     }
+
 
     const char* getNextCode(int& code, const char* utf8str)
     {

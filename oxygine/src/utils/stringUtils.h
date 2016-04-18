@@ -32,6 +32,9 @@ namespace oxygine
 
         /**some/file/path.png   ->  png*/
         std::string extractFileExt(const std::string& filename);
+
+        /**some/file/path.png   ->  some/file/*/
+        std::string extractFolder(const std::string& filename);
     }
 
     std::string lower(const std::string& str);

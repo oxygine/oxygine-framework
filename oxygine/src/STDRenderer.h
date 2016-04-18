@@ -40,6 +40,7 @@ namespace oxygine
 
         const Matrix&   getViewProjection() const { return _vp; }
         IVideoDriver*   getDriver();
+        unsigned int    getShaderFlags() const { return _shaderFlags; }
 
 
         void setDriver(IVideoDriver*);

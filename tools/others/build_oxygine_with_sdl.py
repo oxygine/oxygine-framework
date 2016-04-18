@@ -72,8 +72,9 @@ export("oxygine-framework", "oxygine-framework")
 buildzip("oxygine-framework.zip")
 
 # ALL IN ONE
-cmd = "hg archive -R ../../../SDL %s" % (SDL_dest, )
-os.system(cmd)
+#cmd = "hg archive -R ../../../SDL %s" % (SDL_dest, )
+#os.system(cmd)
+export("SDL", "SDL")
 export("oxygine-sound", "oxygine-sound")
 export("oxygine-flow", "oxygine-flow")
 
