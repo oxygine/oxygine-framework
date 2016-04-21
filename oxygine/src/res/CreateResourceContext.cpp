@@ -15,13 +15,16 @@ namespace oxygine
         _mainThread = pthread_self();
     }
 
+    bool isMainThread()
+    {
+        return pthread_equal(_mainThread, pthread_self()) != 0;
+    }
+
     LoadResourcesContext* LoadResourcesContext::get()
     {
-        bool isMainThread = pthread_equal(_mainThread, pthread_self()) != 0;
-
         LoadResourcesContext* mtcontext = &MTLoadingResourcesContext::instance;
         LoadResourcesContext* scontext = &SingleThreadResourcesContext::instance;
-        return isMainThread ? scontext : mtcontext;
+        return isMainThread() ? scontext : mtcontext;
     }
 
     CreateTextureTask::CreateTextureTask(): linearFilter(true), clamp2edge(true)

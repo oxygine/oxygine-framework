@@ -6,6 +6,8 @@
 
 namespace oxygine
 {
+    bool isMainThread();
+
     class Resources;
 
     /**internal class*/
