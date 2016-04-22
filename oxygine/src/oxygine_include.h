@@ -6,7 +6,13 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-// Round everything to whole pixels during rendering.
+
+#if __APPLE__
+#include <TargetConditionals.h>
+#endif
+
+
+//Round everything to whole pixels during rendering.
 // Helps to avoid artifacts in pixel art games
 // when using textures with linearFilter="false"
 // and fractional sprite coordinates or sprite scaling.
