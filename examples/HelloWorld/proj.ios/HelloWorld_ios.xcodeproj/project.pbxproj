@@ -30,7 +30,6 @@
 		C8860D93875589970329DCCD /* ../data/fonts in Sources */ = {isa = PBXBuildFile; fileRef = 4DA100C319512824B7570663 /* ../data/fonts */; };
 		1E839D002B2BA83FC83A695A /* ../data/images in Sources */ = {isa = PBXBuildFile; fileRef = 04FE4D4FB640E0DF92DFB865 /* ../data/images */; };
 		3A631A475DE035FC53ADE5EA /* ../data/res.xml in Sources */ = {isa = PBXBuildFile; fileRef = 7F3B12E3C9D554D9FE28101D /* ../data/res.xml */; };
-		CD59C69314E9E74CD0A11E03 /* ../data/xmls in Sources */ = {isa = PBXBuildFile; fileRef = F6123B1E6FE4471A00F49751 /* ../data/xmls */; };
 
 /* End PBXBuildFile section */
 
@@ -86,11 +85,10 @@
 
 		360377333740D8A2FD15BBE6 /* ../src/example.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = example.cpp; path = ../src/example.cpp; sourceTree = "<group>"; };
 		0BF9628FC8D38F9748F0CDEB /* ../src/main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../src/main.cpp; sourceTree = "<group>"; };
-		5DE458993031811A4C7D28C1 /* ../src/example.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = example.h; path = ../src/example.h; sourceTree = "<group>"; };
+		F6123B1E6FE4471A00F49751 /* ../src/example.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = example.h; path = ../src/example.h; sourceTree = "<group>"; };
 		4DA100C319512824B7570663 /* ../data/fonts */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = fonts; path = ../data/fonts; sourceTree = "<group>"; };
 		04FE4D4FB640E0DF92DFB865 /* ../data/images */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = images; path = ../data/images; sourceTree = "<group>"; };
 		7F3B12E3C9D554D9FE28101D /* ../data/res.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wtf; name = res.xml; path = ../data/res.xml; sourceTree = "<group>"; };
-		F6123B1E6FE4471A00F49751 /* ../data/xmls */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = xmls; path = ../data/xmls; sourceTree = "<group>"; };
 
 /* End PBXFileReference section */
 
@@ -175,7 +173,6 @@
 				4DA100C319512824B7570663 /* fonts */, 
 				04FE4D4FB640E0DF92DFB865 /* images */, 
 				7F3B12E3C9D554D9FE28101D /* res.xml */, 
-				F6123B1E6FE4471A00F49751 /* xmls */, 
 
 			);
 			name = "Supporting Files";
@@ -194,7 +191,7 @@
 			children = (
 				360377333740D8A2FD15BBE6 /* example.cpp */, 
 				0BF9628FC8D38F9748F0CDEB /* main.cpp */, 
-				5DE458993031811A4C7D28C1 /* example.h */, 
+				F6123B1E6FE4471A00F49751 /* example.h */, 
 
 			);
 			name = src;
@@ -294,7 +291,6 @@
 								C8860D93875589970329DCCD /* fonts */, 
 				1E839D002B2BA83FC83A695A /* images */, 
 				3A631A475DE035FC53ADE5EA /* res.xml */, 
-				CD59C69314E9E74CD0A11E03 /* xmls */, 
 
 			);
 			runOnlyForDeploymentPostprocessing = 0;
