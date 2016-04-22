@@ -15,11 +15,14 @@
 		0405A00118720D2200BA6557 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04059FF11872031A00BA6557 /* libpng.a */; };
 		049B57321871FBE900EF3C66 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 049B57311871FBE900EF3C66 /* Cocoa.framework */; };
 		049B574A1871FBE900EF3C66 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 049B57491871FBE900EF3C66 /* Images.xcassets */; };
-		1E839D002B2BA83FC83A695A /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 04FE4D4FB640E0DF92DFB865 /* fonts */; };
-		2DC477AC10D6C07B3FE008F6 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360377333740D8A2FD15BBE6 /* main.cpp */; };
-		3A631A475DE035FC53ADE5EA /* images in Resources */ = {isa = PBXBuildFile; fileRef = 7F3B12E3C9D554D9FE28101D /* images */; };
-		DA49ED8903C628BA578C8670 /* example.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BF9628FC8D38F9748F0CDEB /* example.cpp */; };
-		EFF139F8BA484314F7AAF645 /* res.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5DE458993031811A4C7D28C1 /* res.xml */; };
+		2DC477AC10D6C07B3FE008F6 /* ../src/example.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360377333740D8A2FD15BBE6 /* ../src/example.cpp */; };
+		DA49ED8903C628BA578C8670 /* ../src/main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BF9628FC8D38F9748F0CDEB /* ../src/main.cpp */; };
+		C8860D93875589970329DCCD /* ../data/fonts in Sources */ = {isa = PBXBuildFile; fileRef = 4DA100C319512824B7570663 /* ../data/fonts */; };
+		1E839D002B2BA83FC83A695A /* ../data/images in Sources */ = {isa = PBXBuildFile; fileRef = 04FE4D4FB640E0DF92DFB865 /* ../data/images */; };
+		3A631A475DE035FC53ADE5EA /* ../data/res.xml in Sources */ = {isa = PBXBuildFile; fileRef = 7F3B12E3C9D554D9FE28101D /* ../data/res.xml */; };
+		CD59C69314E9E74CD0A11E03 /* ../data/xmls in Sources */ = {isa = PBXBuildFile; fileRef = F6123B1E6FE4471A00F49751 /* ../data/xmls */; };
+
+		
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,26 +80,28 @@
 /* Begin PBXFileReference section */
 		04059FEC187202A200BA6557 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		04059FEE187202AC00BA6557 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
-		04059FF01872031A00BA6557 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = "../../..//oxygine/third_party/macosx/libraries/libjpeg.a"; sourceTree = "<group>"; };
-		04059FF11872031A00BA6557 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = "../../..//oxygine/third_party/macosx/libraries/libpng.a"; sourceTree = "<group>"; };
-		04059FF4187203A600BA6557 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = "../../..//oxygine/third_party/ios/libraries/libjpeg.a"; sourceTree = "<group>"; };
-		04059FF5187203A600BA6557 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = "../../..//oxygine/third_party/ios/libraries/libpng.a"; sourceTree = "<group>"; };
-		049B572E1871FBE900EF3C66 /* HelloWorld_macosx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloWorld_macosx.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		04059FF01872031A00BA6557 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = ../../..//oxygine/third_party/macosx/libraries/libjpeg.a; sourceTree = "<group>"; };
+		04059FF11872031A00BA6557 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = ../../..//oxygine/third_party/macosx/libraries/libpng.a; sourceTree = "<group>"; };
+		04059FF4187203A600BA6557 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = ../../..//oxygine/third_party/ios/libraries/libjpeg.a; sourceTree = "<group>"; };
+		04059FF5187203A600BA6557 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = ../../..//oxygine/third_party/ios/libraries/libpng.a; sourceTree = "<group>"; };
+		049B572E1871FBE900EF3C66 /* demo_macosx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloWorld_macosx.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		049B57311871FBE900EF3C66 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		049B57341871FBE900EF3C66 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		049B57351871FBE900EF3C66 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		049B57361871FBE900EF3C66 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		049B57391871FBE900EF3C66 /* HelloWorld_macosx-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HelloWorld_macosx-Info.plist"; sourceTree = "<group>"; };
+		049B57391871FBE900EF3C66 /* demo_macosx-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "HelloWorld_macosx-Info.plist"; sourceTree = "<group>"; };
 		049B57491871FBE900EF3C66 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = HelloWorld/Images.xcassets; sourceTree = "<group>"; };
 		049B57501871FBE900EF3C66 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		04A57D761871FFEB0068B1E5 /* oxygine_macosx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = oxygine_macosx.xcodeproj; path = "../../..//oxygine/SDL/macosx/oxygine_macosx/oxygine_macosx.xcodeproj"; sourceTree = "<group>"; };
-		04A57D7E1872012A0068B1E5 /* SDL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SDL.xcodeproj; path = "../../../..//SDL/Xcode/SDL/SDL.xcodeproj"; sourceTree = "<group>"; };
-		04FE4D4FB640E0DF92DFB865 /* fonts */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = fonts; path = ../data/fonts; sourceTree = "<group>"; };
-		0BF9628FC8D38F9748F0CDEB /* example.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = example.cpp; path = ../src/example.cpp; sourceTree = "<group>"; };
-		360377333740D8A2FD15BBE6 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../src/main.cpp; sourceTree = "<group>"; };
-		5DE458993031811A4C7D28C1 /* res.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wtf; name = res.xml; path = ../data/res.xml; sourceTree = "<group>"; };
-		7F3B12E3C9D554D9FE28101D /* images */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = images; path = ../data/images; sourceTree = "<group>"; };
-		BA41FC88D76540A6905224D6 /* example.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = example.h; path = ../src/example.h; sourceTree = "<group>"; };
+		360377333740D8A2FD15BBE6 /* ../src/example.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = example.cpp; path = ../src/example.cpp; sourceTree = "<group>"; };
+		0BF9628FC8D38F9748F0CDEB /* ../src/main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../src/main.cpp; sourceTree = "<group>"; };
+		5DE458993031811A4C7D28C1 /* ../src/example.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = example.h; path = ../src/example.h; sourceTree = "<group>"; };
+		4DA100C319512824B7570663 /* ../data/fonts */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = fonts; path = ../data/fonts; sourceTree = "<group>"; };
+		04FE4D4FB640E0DF92DFB865 /* ../data/images */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = images; path = ../data/images; sourceTree = "<group>"; };
+		7F3B12E3C9D554D9FE28101D /* ../data/res.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wtf; name = res.xml; path = ../data/res.xml; sourceTree = "<group>"; };
+		F6123B1E6FE4471A00F49751 /* ../data/xmls */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = xmls; path = ../data/xmls; sourceTree = "<group>"; };
+
+		04A57D761871FFEB0068B1E5 /* oxygine_macosx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = oxygine_macosx.xcodeproj; path = ../../..//oxygine/SDL/macosx/oxygine_macosx/oxygine_macosx.xcodeproj; sourceTree = "<group>"; };
+		04A57D7E1872012A0068B1E5 /* SDL.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SDL.xcodeproj; path = ../../../..//SDL/Xcode/SDL/SDL.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,12 +177,21 @@
 			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
+		049B57371871FBE900EF3C66 /* demo */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = demo;
+			sourceTree = "<group>";
+		};
 		049B57381871FBE900EF3C66 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				04FE4D4FB640E0DF92DFB865 /* fonts */,
-				7F3B12E3C9D554D9FE28101D /* images */,
-				5DE458993031811A4C7D28C1 /* res.xml */,
+				4DA100C319512824B7570663 /* fonts */, 
+				04FE4D4FB640E0DF92DFB865 /* images */, 
+				7F3B12E3C9D554D9FE28101D /* res.xml */, 
+				F6123B1E6FE4471A00F49751 /* xmls */, 
+
 				049B57391871FBE900EF3C66 /* HelloWorld_macosx-Info.plist */,
 			);
 			name = "Supporting Files";
@@ -186,9 +200,10 @@
 		04A57D391871FF8B0068B1E5 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				360377333740D8A2FD15BBE6 /* main.cpp */,
-				0BF9628FC8D38F9748F0CDEB /* example.cpp */,
-				BA41FC88D76540A6905224D6 /* example.h */,
+				360377333740D8A2FD15BBE6 /* example.cpp */, 
+				0BF9628FC8D38F9748F0CDEB /* main.cpp */, 
+				5DE458993031811A4C7D28C1 /* example.h */, 
+
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -306,9 +321,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1E839D002B2BA83FC83A695A /* fonts in Resources */,
-				3A631A475DE035FC53ADE5EA /* images in Resources */,
-				EFF139F8BA484314F7AAF645 /* res.xml in Resources */,
+				C8860D93875589970329DCCD /* fonts */, 
+				1E839D002B2BA83FC83A695A /* images */, 
+				3A631A475DE035FC53ADE5EA /* res.xml */, 
+				CD59C69314E9E74CD0A11E03 /* xmls */, 
+
 				049B574A1871FBE900EF3C66 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -320,8 +337,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2DC477AC10D6C07B3FE008F6 /* main.cpp in Sources */,
-				DA49ED8903C628BA578C8670 /* example.cpp in Sources */,
+				2DC477AC10D6C07B3FE008F6 /* example.cpp */, 
+				DA49ED8903C628BA578C8670 /* main.cpp */, 
+
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -376,7 +394,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "../../..//oxygine/src ../../../..//SDL/include";
-				VALID_ARCHS = x86_64;
+				VALID_ARCHS = "x86_64";
 			};
 			name = Debug;
 		};
@@ -410,7 +428,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				USER_HEADER_SEARCH_PATHS = "../../..//oxygine/src ../../../..//SDL/include";
-				VALID_ARCHS = x86_64;
+				VALID_ARCHS = "x86_64";
 			};
 			name = Release;
 		};
