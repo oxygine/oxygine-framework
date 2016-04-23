@@ -21,3 +21,4 @@ set astyle=d:\dropbox\tools\AStyle.exe
 %astyle% d:\oxygine-facebook\src\*.cpp d:\oxygine-facebook\src\*.h %options%
 
 %astyle% d:\oxygine-editor\editor\src\*.cpp d:\oxygine-editor\editor\src\*.h %options%
+%astyle% d:\oxygine-editor\examples\*.cpp d:\oxygine-editor\examples\*.h %options%

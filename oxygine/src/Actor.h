@@ -344,6 +344,7 @@ namespace oxygine
         typedef intrusive_list<spActor> children;
         static void setParent(Actor* actor, Actor* parent);
         static children& getChildren(spActor& actor) { return actor->_children; }
+        static unsigned short& _getFlags(Actor* actor) { return actor->_flags; }
 
         void _onGlobalTouchUpEvent(Event*);
         void _onGlobalTouchMoveEvent(Event*);
@@ -380,7 +381,8 @@ namespace oxygine
             flag_touchChildrenEnabled   = 1 << 6,
             flag_cull                   = 1 << 7,
             flag_fastTransform          = 1 << 8,
-            flag_last                   = flag_fastTransform
+            flag_reserved               = 1 << 9,
+            flag_last                   = flag_reserved
         };
 
         mutable unsigned short _flags;
