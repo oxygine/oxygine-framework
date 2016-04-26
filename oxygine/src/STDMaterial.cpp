@@ -148,6 +148,9 @@ namespace oxygine
 #endif
         {
             _renderer->setBlendMode(sprite->getBlendMode());
+#ifndef EMSCRIPTEN
+            _renderer->setTexture(df.base, df.alpha, df.premultiplied);//preload
+#endif
 
             _renderer->setTransform(rs.transform);
             _renderer->draw(rs.getFinalColor(sprite->getColor()), frame.getSrcRect(), frame.getDestRect());
