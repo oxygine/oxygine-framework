@@ -21,6 +21,10 @@ namespace oxygine
     {
         log::messageln("HttpRequestEmscriptenTask::_onload");
         _response.assign((char*)data, (char*)data + size);
+        if (!_fname.empty())
+        {
+            file::write(_fname.c_str(), data, size);
+        }
         onComplete();
         releaseRef();
     }
