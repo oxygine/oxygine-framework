@@ -113,4 +113,8 @@ namespace oxygine
         UberShaderProgram* _uberShader;
         unsigned int _shaderFlags;
     };
+
+
+    typedef void(*render_texture_hook)(const spNativeTexture& nt);
+    void set_render_texture_hook(render_texture_hook);
 }

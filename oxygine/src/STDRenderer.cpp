@@ -34,6 +34,20 @@ namespace oxygine
     std::vector<unsigned char> STDRenderer::uberShaderBody;
 
 
+
+    void nullTextureHook(const spNativeTexture&)
+    {
+    }
+
+    render_texture_hook _renderTextureHook = nullTextureHook;
+
+
+
+    void set_render_texture_hook(render_texture_hook h)
+    {
+        _renderTextureHook = h;
+    }
+
     template<class V, class XY>
     void fillQuad(V* v, const RectF& uv, XY* positions, const Color& color)
     {
@@ -457,6 +471,9 @@ namespace oxygine
 
     void STDRenderer::setTexture(const spNativeTexture& base_, const spNativeTexture& alpha, bool basePremultiplied)
     {
+        _renderTextureHook(base_);
+        _renderTextureHook(alpha);
+
         spNativeTexture base = base_;
         if (base == 0 || base->getHandle() == 0)
             base = white;
@@ -537,6 +554,7 @@ namespace oxygine
     {
         ShaderProgram* prog = _uberShader->getShaderProgram(_shaderFlags)->program;
         setShader(prog);
+
 
         _uberShader->apply(_driver, _base, _alpha);
 
