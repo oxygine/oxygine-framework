@@ -26,7 +26,7 @@ namespace oxygine
         {
             ERROR = sysEventID('A', 'T', 'E'),
             PROGRESS = sysEventID('A', 'T', 'P'),
-            COMPLETE = sysEventID('A', 'T', 'C')
+            COMPLETE = Event::COMPLETE,
         };
 
         enum status

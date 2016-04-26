@@ -22,7 +22,7 @@ namespace oxygine
     public:
         enum
         {
-            DONE = sysEventID('T', 'W', 'D')
+            DONE = Event::COMPLETE,
         };
 
         TweenEvent(Tween* tween_, const UpdateState* us_) : Event(DONE, false), tween(tween_), us(us_) {}
