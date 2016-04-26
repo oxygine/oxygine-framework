@@ -42,6 +42,10 @@ namespace oxygine
     render_texture_hook _renderTextureHook = nullTextureHook;
 
 
+    render_texture_hook get_render_texture_hook()
+    {
+        return _renderTextureHook;
+    }
 
     void set_render_texture_hook(render_texture_hook h)
     {
