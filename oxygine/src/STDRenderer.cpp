@@ -608,6 +608,42 @@ namespace oxygine
         _uberShader = pr;
     }
 
+    void STDRenderer::beginSDFont(float contrast, float offset, const Color& outlineColor, float outlineOffset)
+    {
+        if (_alpha)
+        {
+            drawBatch();
+            _shaderFlags &= ~UberShaderProgram::SEPARATE_ALPHA;
+            _alpha = 0;
+        }
+
+        unsigned int shaderFlags = _shaderFlags;
+        shaderFlags |= UberShaderProgram::SDF;
+
+        if (_shaderFlags != shaderFlags)
+        {
+            drawBatch();
+        }
+
+        _shaderFlags = shaderFlags;
+
+        ShaderProgram* prog = _uberShader->getShaderProgram(_shaderFlags)->program;
+        setShader(prog);
+
+        Vector4 c;
+        c = Vector4(outlineColor.getRedF(), outlineColor.getGreenF(), outlineColor.getBlueF(), outlineColor.getAlphaF());
+        _driver->setUniform("sdf_outline_color", &c, 1);
+
+        c = Vector4(offset, contrast, outlineOffset, contrast);
+        _driver->setUniform("sdf_params", &c, 1);
+    }
+
+    void STDRenderer::endSDFont()
+    {
+        drawBatch();
+        _shaderFlags &= ~UberShaderProgram::SDF;
+    }
+
     void STDRenderer::beginElementRendering(bool basePremultiplied)
     {
         if (_alpha)

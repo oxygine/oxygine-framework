@@ -18,7 +18,7 @@ namespace oxygine
     }
     */
 
-    Font::Font() : _size(0), _baselineDistance(0), _scale(1.0f)
+    Font::Font() : _size(0), _baselineDistance(0), _scale(1.0f), _sdf(false)
     {
     }
 
@@ -26,9 +26,10 @@ namespace oxygine
     {
     }
 
-    void Font::init(const char* name, int realSize, int baselineDistance, int lineHeight)
+    void Font::init(const char* name, int realSize, int baselineDistance, int lineHeight, bool sdf)
     {
         setName(name);
+        _sdf = sdf;
         _size = realSize;
         _baselineDistance = baselineDistance;
         _lineHeight = lineHeight;
@@ -100,5 +101,10 @@ namespace oxygine
     int Font::getLineHeight() const
     {
         return _lineHeight;
+    }
+
+    bool Font::isSDF() const
+    {
+        return _sdf;
     }
 }

@@ -46,7 +46,7 @@ namespace oxygine
         Font();
         ~Font();
 
-        void init(const char* name, int size, int baselineDistance, int lineHeight);
+        void init(const char* name, int size, int baselineDistance, int lineHeight, bool sdf = false);
 
         void addGlyph(const glyph& g);
         void sortGlyphs() {}
@@ -58,6 +58,7 @@ namespace oxygine
         int             getSize() const;
         float           getScale() const;
         int             getLineHeight() const;
+        bool            isSDF() const;
 
     protected:
         const glyph* findGlyph(int code) const;
@@ -72,6 +73,7 @@ namespace oxygine
         glyphs _glyphs;
 
         float _scale;
+        bool _sdf;
 
         int _size;
         int _baselineDistance;

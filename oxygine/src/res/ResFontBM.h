@@ -31,6 +31,8 @@ namespace oxygine
 
         const Font* getFont(const char* name = 0, int size = 0) const OVERRIDE;
 
+        bool isSignedDistance() const { return _sdf; }
+
     private:
         struct page
         {
@@ -50,6 +52,7 @@ namespace oxygine
         typedef std::vector<page> pages;
         pages _pages;
         Font* _font;
+        bool _sdf;
 
         TextureFormat _format;
 

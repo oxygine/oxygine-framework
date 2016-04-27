@@ -174,10 +174,36 @@ namespace oxygine
 
         _renderer->setBlendMode(tf->getBlendMode());
         _renderer->setTransform(rs.transform);
-        _renderer->beginElementRendering(true);
+
+
+        if (tf->getFont()->isSDF())
+        {
+            float scale = sqrtf(rs.transform.a * rs.transform.a + rs.transform.c * rs.transform.c);
+            if (tf->getFontSize2Scale())
+                scale = scale * tf->getFontSize2Scale() / tf->getFont()->getSize();
+
+            float contrast = 3.0 + 30 * scale / 3.7f;
+            float offset = 0.35f + 0.05f * scale / 3.7f;
+            offset = 0.35f;
+
+
+            if (scale < 1.0f)
+            {
+                contrast /= 2;
+                offset = 0.25;
+            }
+
+            float outline = offset - tf->getOutline();
+            _renderer->beginSDFont(contrast, offset, tf->getOutlineColor(), outline);
+        }
+        else
+            _renderer->beginElementRendering(true);
+
         dc.renderer = _renderer;
 
         root->draw(dc);
+
+        _renderer->endSDFont();
     }
 
     void STDMaterial::doRender(ColorRectSprite* sprite, const RenderState& rs)
