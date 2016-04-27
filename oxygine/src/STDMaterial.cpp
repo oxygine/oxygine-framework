@@ -187,9 +187,10 @@ namespace oxygine
             offset = 0.35f;
 
 
-            if (scale < 1.0f)
+            if (scale < 0.7f)
             {
-                contrast /= 2;
+                contrast /= 1.5f;
+                //contrast = 3;
                 offset = 0.25;
             }
 

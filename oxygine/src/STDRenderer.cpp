@@ -642,6 +642,9 @@ namespace oxygine
     {
         drawBatch();
         _shaderFlags &= ~UberShaderProgram::SDF;
+
+        ShaderProgram* prog = _uberShader->getShaderProgram(_shaderFlags)->program;
+        setShader(prog);
     }
 
     void STDRenderer::beginElementRendering(bool basePremultiplied)

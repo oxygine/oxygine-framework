@@ -343,7 +343,7 @@ namespace oxygine
     {
         _screen = getScreenRect(*actor);
 
-        OX_ASSERT(actor->_getStage());
+//        OX_ASSERT(actor->_getStage());
         _rt = getRTManager().get(_rt, _screen.getWidth(), _screen.getHeight(), _format);
 
 
