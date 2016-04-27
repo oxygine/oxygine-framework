@@ -66,8 +66,8 @@ namespace oxygine
 
             const TextStyle& st = getStyle();
             _scale = st.font->getScale();
-            if (st.fontSize2Scale)
-                _scale = st.font->getSize() / float(st.fontSize2Scale);
+            if (st.fontSize)
+                _scale = st.font->getSize() / float(st.fontSize);
 
             width = int(width * _scale);
             height = int(height * _scale);

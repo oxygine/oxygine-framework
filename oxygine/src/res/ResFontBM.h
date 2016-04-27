@@ -25,6 +25,7 @@ namespace oxygine
 
         /**loads "fnt" font from file, supported XML and text format*/
         void init(const char* fntPath, bool premultipliedAlpha = false);
+        void initSD(const char* fntPath, int downsample);
 
         void cleanup();
 
@@ -43,8 +44,8 @@ namespace oxygine
         void _load(LoadResourcesContext*);
         void _unload();
         void _restore(Restorable*, void*);
-        void _createFont(CreateResourceContext* context, bool sd, bool bmc);
-        void _createFontFromTxt(CreateResourceContext* context, char* fontData, const std::string& fontPath);
+        void _createFont(CreateResourceContext* context, bool sd, bool bmc, int downsample);
+        void _createFontFromTxt(CreateResourceContext* context, char* fontData, const std::string& fontPath, int downsample);
 
         typedef std::vector<page> pages;
         pages _pages;

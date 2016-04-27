@@ -17,7 +17,7 @@ namespace oxygine
         ResFontBM* font = 0;
 
         font = new ResFontBM();
-        font->_createFont(&context, false, false);
+        font->_createFont(&context, false, false, 1);
         setNode(font, context.walker.getNode());
         context.resources->add(font);
 
@@ -31,7 +31,7 @@ namespace oxygine
         ResFontBM* font = 0;
 
         font = new ResFontBM();
-        font->_createFont(&context, false, true);
+        font->_createFont(&context, false, true, 1);
         setNode(font, context.walker.getNode());
         context.resources->add(font);
 
@@ -45,7 +45,7 @@ namespace oxygine
         ResFontBM* font = 0;
 
         font = new ResFontBM();
-        font->_createFont(&context, true, false);
+        font->_createFont(&context, true, false, 1);
         setNode(font, context.walker.getNode());
 
         //context.meta = context.meta.next_sibling();
@@ -68,7 +68,14 @@ namespace oxygine
     {
         _premultipliedAlpha = premultipliedAlpha;
         _file = path;
-        _createFont(0, false, false);
+        _createFont(0, false, false, 1);
+    }
+
+    void ResFontBM::initSD(const char* fntPath, int downsample)
+    {
+        _premultipliedAlpha = true;
+        _file = fntPath;
+        _createFont(0, true, false, downsample);
     }
 
     void ResFontBM::cleanup()
@@ -220,7 +227,7 @@ namespace oxygine
         return data;
     }
 
-    void ResFontBM::_createFontFromTxt(CreateResourceContext* context, char* fontData, const std::string& fontPath)
+    void ResFontBM::_createFontFromTxt(CreateResourceContext* context, char* fontData, const std::string& fontPath, int downsample)
     {
         char* key = 0;
         char* value = 0;
@@ -270,6 +277,12 @@ namespace oxygine
                 break;
             }
         }
+
+        tw /= downsample;
+        th /= downsample;
+        lineHeight /= downsample;
+        base /= downsample;
+        fontSize /= downsample;
 
         char tail[255];
         char head[255];
@@ -370,16 +383,16 @@ namespace oxygine
             }
 
             spTexture t = _pages[page_].texture;
-            float iw = 1.0f / t->getWidth();
-            float ih = 1.0f / t->getHeight();
+            float iw = 1.0f / t->getWidth() / downsample;
+            float ih = 1.0f / t->getHeight() / downsample;
 
             glyph gl;
             gl.src = RectF(xpos * iw, ypos * ih, width * iw, height * ih);
-            gl.sw = width;
-            gl.sh = height;
-            gl.offset_x = xoffset;
-            gl.offset_y = yoffset - base;
-            gl.advance_x = xadvance;
+            gl.sw = width / downsample;
+            gl.sh = height / downsample;
+            gl.offset_x = xoffset / downsample;
+            gl.offset_y = yoffset / downsample - base;
+            gl.advance_x = xadvance / downsample;
             gl.advance_y = 0;
 
             int code = 0;
@@ -412,7 +425,7 @@ namespace oxygine
         _pages.push_back(p);
     }
 
-    void ResFontBM::_createFont(CreateResourceContext* context, bool sd, bool bmc)
+    void ResFontBM::_createFont(CreateResourceContext* context, bool sd, bool bmc, int downsample)
     {
         if (sd)
             _format = TF_L8;
@@ -440,7 +453,7 @@ namespace oxygine
 
         if (!(fb[0] == '<' && fb[1] == '?' && fb[2] == 'x'))
         {
-            _createFontFromTxt(context, reinterpret_cast<char*>(fb.getData()), path);
+            _createFontFromTxt(context, reinterpret_cast<char*>(fb.getData()), path, downsample);
             return;
         }
         /////////////////////////////////////////////////
@@ -453,17 +466,23 @@ namespace oxygine
         pugi::xml_node info = root.child("info");
 
         //<info face="Century Gothic" size="-24" bold="0" italic="0" charset="" unicode="1" stretchH="100" smooth="1" aa="1" padding="0,0,0,0" spacing="1,1" outline="0"/>
-        int fontSize = info.attribute("size").as_int();
+        int fontSize = info.attribute("size").as_int() / downsample;
+
+
 
 
         pugi::xml_node common = info.next_sibling("common");
-        int lineHeight = common.attribute("lineHeight").as_int();
-        int base = common.attribute("base").as_int();
+        int lineHeight = common.attribute("lineHeight").as_int() / downsample;
+        int base = common.attribute("base").as_int() / downsample;
 
         pugi::xml_node pages = common.next_sibling("pages");
 
         int tw = common.attribute("scaleW").as_int();
         int th = common.attribute("scaleH").as_int();
+
+
+        tw /= downsample;
+        th /= downsample;
 
 
         char folder[255];
@@ -479,7 +498,6 @@ namespace oxygine
 
         if (!tw)
             load(0);
-
 
 
         fontSize = abs(fontSize);
@@ -537,16 +555,16 @@ namespace oxygine
             }
 
             spTexture t = _pages[page].texture;
-            float iw = 1.0f / t->getWidth();
-            float ih = 1.0f / t->getHeight();
+            float iw = 1.0f / t->getWidth() / downsample;
+            float ih = 1.0f / t->getHeight() / downsample;
 
             glyph gl;
             gl.src = RectF(xpos * iw, ypos * ih, width * iw, height * ih);
-            gl.sw = width;
-            gl.sh = height;
-            gl.offset_x = xoffset;
-            gl.offset_y = yoffset - base;
-            gl.advance_x = xadvance;
+            gl.sw = width / downsample;
+            gl.sh = height / downsample;
+            gl.offset_x = xoffset / downsample;
+            gl.offset_y = yoffset / downsample - base;
+            gl.advance_x = xadvance / downsample;
             gl.advance_y = 0;
 
             int code = 0;

@@ -34,20 +34,29 @@ namespace oxygine
             linesOffset(0),
             kerning(0),
             multiline(false),
-            fontSize2Scale(0),
-            breakLongWords(false) {}
+            fontSize(0),
+            breakLongWords(false),
+            outline(0) {}
 
         const Font* font;
 
         HorizontalAlign hAlign;
         VerticalAlign vAlign;
 
-        int linesOffset;//distance offset between lines
-        int kerning;
+        int linesOffset;//vertical distance offset between lines
+        int kerning;//horizontal distance
         bool multiline;
         bool breakLongWords;//works with multiline flag. breakLongWords = false doesn't allow to break too long words
         Color color;
-        int fontSize2Scale;
+
+        Color outlineColor;//works only with SD fonts
+        float outline;//works only with SD fonts
+
+        union
+        {
+            int fontSize;
+            int fontSize2Scale;//DEPRECATED, use fontSize
+        };
     };
 
     std::string dumpStyle(const TextStyle& s, bool onlydiff);
