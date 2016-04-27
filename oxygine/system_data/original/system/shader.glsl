@@ -74,8 +74,8 @@ lowp vec4 get_base_sdf()
      
     lowp float b =   min((tx - sdf_params.z) * sdf_params.w, 1.0);
     lowp float a = clamp((tx - sdf_params.x) * sdf_params.y, 0.0, 1.0);
-
-    return lowp vec4(sdf_outline_color + (result_color - sdf_outline_color)*a) * b;
+	lowp vec4 res = vec4(sdf_outline_color + (result_color - sdf_outline_color)*a) * b;
+    return res;
 }
 
 lowp vec4 get_color()
