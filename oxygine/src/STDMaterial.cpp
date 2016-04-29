@@ -183,16 +183,18 @@ namespace oxygine
                 scale = scale * tf->getFontSize2Scale() / tf->getFont()->getSize();
 
             float contrast = 3.0 + 30 * scale / 3.7f;
-            float offset = 0.35f + 0.05f * scale / 3.7f;
-            offset = 0.35f;
+            float offset = 0.5f + 0.05f * scale / 3.7f;
+            offset = 0.5f;
 
 
-            if (scale < 0.7f)
-            {
-                contrast /= 1.5f;
-                //contrast = 3;
-                offset = 0.25;
-            }
+            if (0)
+                if (scale < 0.7f)
+                {
+                    contrast /= 1.5f;
+                    //contrast = 3;
+                    offset = 0.25;
+                }
+
 
             float outline = offset - tf->getOutline();
             _renderer->beginSDFont(contrast, offset, tf->getOutlineColor(), outline);

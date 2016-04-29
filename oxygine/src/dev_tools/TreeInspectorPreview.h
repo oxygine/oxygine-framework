@@ -147,6 +147,8 @@ namespace oxygine
                 const cached_batch& b = *i;
                 if (!b.program)
                     break;
+                if (!b.vdecl)
+                    break;
 
                 size_t num = b.vertices.size() / b.vdecl->size;
 

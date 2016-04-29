@@ -196,7 +196,10 @@ namespace oxygine
         va_end(args);
 
         if (DebugActor::instance)
+        {
             DebugActor::instance->_debugText += buff;
+            DebugActor::instance->_debugText += "\n";
+        }
     }
 
     void DebugActor::_btnClicked(Event* ev)
