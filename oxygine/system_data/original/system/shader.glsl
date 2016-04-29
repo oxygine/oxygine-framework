@@ -72,9 +72,15 @@ lowp vec4 get_base_sdf()
 {
 	lowp float tx = texture2D(base_texture, result_uv).r;
      
+#if 0     
     lowp float b =   min((tx - sdf_params.z) * sdf_params.w, 1.0);
     lowp float a = clamp((tx - sdf_params.x) * sdf_params.y, 0.0, 1.0);
-	lowp vec4 res = vec4(sdf_outline_color + (result_color - sdf_outline_color)*a) * b;
+	lowp vec4 res = vec4(sdf_outline_color.rgb + (result_color.rgb - sdf_outline_color.rgb)*a) * b;
+#else
+	lowp float a = min((tx - sdf_params.x) * sdf_params.y, 1.0);
+	lowp vec4 res = result_color * a;
+
+#endif
     return res;
 }
 
