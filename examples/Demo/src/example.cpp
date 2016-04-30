@@ -25,6 +25,7 @@
 #include "TestTweenShine.h"
 #include "TestTouches.h"
 #include "TestColorFont.h"
+#include "TestSignedDistanceFont.h"
 #include "TestTweenPostProcessing.h"
 
 #ifdef __S3E__
@@ -75,6 +76,7 @@ public:
         addButton("usershader", "User Shader");
         addButton("usershader2", "User Shader2");
         addButton("multicolorfont", "Outer Font Color");
+        addButton("sdf", "Signed Distance Font");
         addButton("mask", "Mask");
         addButton("polygon", "Polygon");
         addButton("inputtext", "Input Text");
@@ -130,6 +132,7 @@ public:
         if (id == "tweentext") showTest(new TestTweenText);
         if (id == "tweenshine") showTest(new TestTweenShine);
         if (id == "multicolorfont") showTest(new TestColorFont);
+        if (id == "sdf") showTest(new TestSignedDistanceFont);
         if (id == "tweenpp") showTest(new TestTweenPostProcessing);
         if (id == "openbrowser")
         {

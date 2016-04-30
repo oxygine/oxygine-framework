@@ -434,6 +434,8 @@ namespace oxygine
         if (context)
         {
             pugi::xml_node node = context->walker.getNode();
+
+            downsample = node.attribute("downsample").as_int(1);
             _premultipliedAlpha = node.attribute("premultiplied_alpha").as_bool(_premultipliedAlpha);
 
             _file = context->walker.getPath("file");

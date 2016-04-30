@@ -145,6 +145,7 @@
     <ClInclude Include="../src/example.h" />
     <ClInclude Include="../src/test.h" />
     <ClInclude Include="..\src\TestEdges.h" />
+    <ClInclude Include="..\src\TestSignedDistanceFont.h" />
     <ClInclude Include="..\src\TestTweenPostProcessing.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

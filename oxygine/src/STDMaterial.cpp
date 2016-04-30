@@ -186,7 +186,7 @@ namespace oxygine
 
             float contrast = 3.0 + scale * 8;
             float offset = tf->getWeight();
-            float outline = tf->getOutline();
+            float outline = tf->getWeight() - tf->getOutline();
 
             _renderer->beginSDFont(contrast, offset, tf->getOutlineColor(), outline);
             root->draw(dc);

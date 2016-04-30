@@ -36,7 +36,7 @@ namespace oxygine
             multiline(false),
             fontSize(0),
             breakLongWords(false),
-            outline(1.0f),
+            outline(0.0f),
             weight(0.5f) {}
 
         const Font* font;
@@ -58,7 +58,7 @@ namespace oxygine
         };
 
 
-        float outline;//works only with SD fonts, disabled by default = 1.0f, 0.0 - max outline
+        float outline;//works only with SD fonts, disabled by default = 0.0f, 0.5 - max outline
         Color outlineColor;//works only with SD fonts
         float weight;//works only with SD fonts, font weight, default = 0.5f,  0.0 - bold, 1.0 - thin
     };
