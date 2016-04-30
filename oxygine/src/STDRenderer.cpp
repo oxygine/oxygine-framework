@@ -620,6 +620,9 @@ namespace oxygine
         unsigned int shaderFlags = _shaderFlags;
         shaderFlags |= UberShaderProgram::SDF;
 
+        if (outlineOffset < offset)
+            shaderFlags |= UberShaderProgram::SDF_OUTLINE;
+
         if (_shaderFlags != shaderFlags)
         {
             drawBatch();
@@ -641,7 +644,7 @@ namespace oxygine
     void STDRenderer::endSDFont()
     {
         drawBatch();
-        _shaderFlags &= ~UberShaderProgram::SDF;
+        _shaderFlags &= ~(UberShaderProgram::SDF | UberShaderProgram::SDF_OUTLINE);
 
         ShaderProgram* prog = _uberShader->getShaderProgram(_shaderFlags)->program;
         setShader(prog);

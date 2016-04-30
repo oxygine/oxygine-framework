@@ -67,7 +67,11 @@ namespace oxygine
                 strcat(prepend, "#define MASK\n");
 
             if (flags & SDF)
+            {
                 strcat(prepend, "#define SDF\n");
+                if (flags & SDF_OUTLINE)
+                    strcat(prepend, "#define SDF_OUTLINE\n");
+            }
 
             char* end = prepend + strlen(prepend);
             strcat(prepend, "#define program_main_ps main\n");

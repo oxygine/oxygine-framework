@@ -36,7 +36,8 @@ namespace oxygine
             multiline(false),
             fontSize(0),
             breakLongWords(false),
-            outline(0) {}
+            outline(1.0f),
+            weight(0.5f) {}
 
         const Font* font;
 
@@ -49,14 +50,17 @@ namespace oxygine
         bool breakLongWords;//works with multiline flag. breakLongWords = false doesn't allow to break too long words
         Color color;
 
-        Color outlineColor;//works only with SD fonts
-        float outline;//works only with SD fonts
 
         union
         {
             int fontSize;
             int fontSize2Scale;//DEPRECATED, use fontSize
         };
+
+
+        float outline;//works only with SD fonts, disabled by default = 1.0f, 0.0 - max outline
+        Color outlineColor;//works only with SD fonts
+        float weight;//works only with SD fonts, font weight, default = 0.5f,  0.0 - bold, 1.0 - thin
     };
 
     std::string dumpStyle(const TextStyle& s, bool onlydiff);

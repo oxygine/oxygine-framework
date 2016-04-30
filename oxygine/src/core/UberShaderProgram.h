@@ -60,6 +60,7 @@ namespace oxygine
             MASK_R_CHANNEL = 1 << 2,
             MASK = 1 << 3,
             SDF = 1 << 4,
+            SDF_OUTLINE = 1 << 1,//same as SEPARATE_ALPHA
             _SIZE = 1 << 5
         };
 

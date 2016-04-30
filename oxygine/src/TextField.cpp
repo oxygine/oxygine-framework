@@ -117,9 +117,15 @@ namespace oxygine
     {
         _style.outlineColor = c;
     }
+
     void TextField::setOutline(float v)
     {
         _style.outline = v;
+    }
+
+    void TextField::setWeight(float v)
+    {
+        _style.weight = v;
     }
 
     void TextField::setHAlign(TextStyle::HorizontalAlign align)
@@ -190,6 +196,11 @@ namespace oxygine
         return _style.fontSize;
     }
 
+    int            TextField::getFontSize() const
+    {
+        return _style.fontSize;
+    }
+
     int TextField::getLinesOffset() const
     {
         return _style.linesOffset;
@@ -228,6 +239,11 @@ namespace oxygine
     float TextField::getOutline() const
     {
         return _style.outline;
+    }
+
+    float TextField::getWeight() const
+    {
+        return _style.weight;
     }
 
     text::Symbol* TextField::getSymbolAt(int pos) const

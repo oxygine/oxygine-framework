@@ -31,7 +31,10 @@ namespace oxygine
         /**Returns current text*/
         const std::string&          getText() const { return _text; }
         const Font*                 getFont() const;
+        /**deprecated use getFontSize*/
+        OXYGINE_DEPRECATED
         int                         getFontSize2Scale() const;
+        int                         getFontSize() const;
         int                         getLinesOffset() const;
         int                         getKerning() const;
         TextStyle::VerticalAlign    getVAlign() const;
@@ -41,6 +44,7 @@ namespace oxygine
         text::Symbol*               getSymbolAt(int pos) const;
         const Color&                getOutlineColor() const;
         float                       getOutline() const;
+        float                       getWeight() const;
 
 
         bool getBounds(RectF&) const OVERRIDE;
@@ -71,6 +75,8 @@ namespace oxygine
         void setOutlineColor(const Color&);
         /**Overwrites TextStyle outline. works only with SD font*/
         void setOutline(float v);
+        /**Overwrites TextStyle outline. works only with SD font*/
+        void setWeight(float w);
 
         void setStyle(const TextStyle& st);
         /**Changes text utf-8 string*/
