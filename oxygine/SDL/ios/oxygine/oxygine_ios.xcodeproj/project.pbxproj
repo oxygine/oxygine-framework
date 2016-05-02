@@ -1202,7 +1202,7 @@
 					"$(THIRD_PARTY)/libpng",
 					"$(THIRD_PARTY)/libjpeg",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MACOSX_DEPLOYMENT_TARGET = "";
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1238,7 +1238,7 @@
 					"$(THIRD_PARTY)/libpng",
 					"$(THIRD_PARTY)/libjpeg",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MACOSX_DEPLOYMENT_TARGET = "";
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
