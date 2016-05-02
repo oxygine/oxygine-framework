@@ -29,7 +29,7 @@ def gen(path, project=""):
         os.system(cmd)
 
 
-if 0:
+if 1:
     gen("Demo")
     gen("DemoBox2D")
     gen("Game/part1", "GamePart1")
