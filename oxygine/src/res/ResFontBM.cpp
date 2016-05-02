@@ -47,6 +47,7 @@ namespace oxygine
         font = new ResFontBM();
         font->_createFont(&context, true, false, 1);
         setNode(font, context.walker.getNode());
+        context.resources->add(font);
 
         //context.meta = context.meta.next_sibling();
 
@@ -428,6 +429,7 @@ namespace oxygine
 
     void ResFontBM::_createFont(CreateResourceContext* context, bool sd, bool bmc, int downsample)
     {
+        _sdf = sd;
         if (sd)
             _format = TF_L8;
 

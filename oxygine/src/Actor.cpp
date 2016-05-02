@@ -1504,6 +1504,18 @@ namespace oxygine
         pos.y = t.y;
     }
 
+    void setDecomposedTransform(spActor& actor, const Transform& t)
+    {
+        Vector2 pos;
+        Vector2 scale;
+        float angle;
+
+        decompose(t, pos, angle, scale);
+        actor->setPosition(pos);
+        actor->setRotation(angle);
+        actor->setScale(scale);
+    }
+
     void    reattachActor(spActor actor, spActor newParent, spActor root)
     {
         Transform t1 = actor->computeGlobalTransform(root.get());

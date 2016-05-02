@@ -444,6 +444,8 @@ namespace oxygine
     /**changes actor parent but with the same position on the screen*/
     void    reattachActor(spActor actor, spActor newParent, spActor root = 0);
 
+    void decompose(const Transform& t, Vector2& pos, float& angle, Vector2& scale);
+    void setDecomposedTransform(spActor& a, const Transform& t);
 
     /** A TweenDummy class
      *  doing nothing, could be used for calling your callback after timeout
