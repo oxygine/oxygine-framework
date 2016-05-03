@@ -37,6 +37,7 @@ namespace oxygine
             fontSize(0),
             breakLongWords(false),
             outline(0.0f),
+            outlineColor(Color::Black),
             weight(0.5f) {}
 
         const Font* font;

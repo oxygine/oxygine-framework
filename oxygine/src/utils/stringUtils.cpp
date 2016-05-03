@@ -206,7 +206,7 @@ namespace oxygine
 
         std::string extractBaseFileName(const std::string& filename)
         {
-            size_t pos = filename.find_first_of('.');
+            size_t pos = filename.find_last_of('.');
             if (pos == std::string::npos)
                 pos = filename.size();
             std::string name = filename.substr(0, pos);
@@ -215,7 +215,7 @@ namespace oxygine
 
         std::string extractFileExt(const std::string& filename)
         {
-            size_t pos = filename.find_first_of(".");
+            size_t pos = filename.find_last_of(".");
             if (pos == std::string::npos)
                 return "";
             pos += 1;
