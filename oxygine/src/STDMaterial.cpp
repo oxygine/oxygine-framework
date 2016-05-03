@@ -184,7 +184,7 @@ namespace oxygine
             if (tf->getFontSize())
                 scale = scale * tf->getFontSize() / tf->getFont()->getSize();
 
-            float contrast = 3.0 + scale * 8;
+            float contrast = 3.0f + scale * 8.0f;
             float offset = tf->getWeight();
             float outline = tf->getWeight() - tf->getOutline();
 
