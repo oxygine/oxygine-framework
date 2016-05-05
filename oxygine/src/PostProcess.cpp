@@ -234,6 +234,11 @@ namespace oxygine
 
     void RenderTargetsManager::reset()
     {
+        for (size_t i = 0; i < _rts.size(); ++i)
+        {
+            _rts[i]->release();
+        }
+
         _free.clear();
         _rts.clear();
     }

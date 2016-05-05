@@ -27,6 +27,8 @@ namespace oxygine
 
 
     spNativeTexture STDRenderer::white;
+    spNativeTexture STDRenderer::invisible;
+
     std::vector<unsigned char> STDRenderer::indices8;
     std::vector<unsigned short> STDRenderer::indices16;
     size_t STDRenderer::maxVertices = 0;
@@ -148,6 +150,11 @@ namespace oxygine
         if (white)
             white->release();
         white = 0;
+
+        if (invisible)
+            invisible->release();
+        invisible = 0;
+
         delete instance;
         instance = 0;
     }
@@ -158,6 +165,11 @@ namespace oxygine
         if (white)
             white->release();
         white = 0;
+
+        if (invisible)
+            invisible->release();
+        invisible = 0;
+
         uberShader.release();
     }
 
@@ -179,6 +191,13 @@ namespace oxygine
         white->setName("!renderer. white");
         white->init(im, false);
         white->setLinearFilter(false);
+
+
+        memwhite.fill_zero();
+        invisible = IVideoDriver::instance->createTexture();
+        invisible->setName("!renderer. invisible");
+        invisible->init(im, false);
+        invisible->setLinearFilter(false);
 
         setDefaultSettings();
         _restored = true;

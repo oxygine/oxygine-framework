@@ -215,6 +215,8 @@ namespace oxygine
         void setTouchEnabled(bool enabled) { _flags &= ~flag_touchEnabled; if (enabled) _flags |= flag_touchEnabled; }
         /**Enables/Disables Touch events for children of Actor.*/
         void setTouchChildrenEnabled(bool enabled) { _flags &= ~flag_touchChildrenEnabled; if (enabled) _flags |= flag_touchChildrenEnabled; }
+        /**setTouchEnabled + setTouchChildrenEnabled*/
+        void setTouchEnabled(bool enabled, bool childrenEnabled) { setTouchEnabled(enabled); setTouchChildrenEnabled(childrenEnabled); }
 
         /**Sets callback which would be called each Actor::update cycle before doUpdate. Use it if you don't want inherit from Actor and overload Actor::doUpdate.*/
         void setCallbackDoUpdate(UpdateCallback cb) {_cbDoUpdate = cb;}

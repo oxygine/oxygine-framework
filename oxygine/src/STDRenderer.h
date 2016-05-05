@@ -26,6 +26,8 @@ namespace oxygine
 
         /**White 4x4 Texture*/
         static spNativeTexture white;
+        static spNativeTexture invisible;
+
         static UberShaderProgram uberShader;
         static std::vector<unsigned char> uberShaderBody;
 

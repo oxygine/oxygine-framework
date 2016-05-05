@@ -145,6 +145,7 @@ namespace oxygine
     {
         TextStyle::HorizontalAlign halign = _style.hAlign;
         TextStyle::VerticalAlign valign = _style.vAlign;
+        int size = _style.fontSize;
         _style = st;
 
         if (st.hAlign == TextStyle::HALIGN_DEFAULT)
@@ -152,6 +153,9 @@ namespace oxygine
 
         if (st.vAlign == TextStyle::VALIGN_DEFAULT)
             _style.vAlign = valign;
+
+        if (st.fontSize == 0)
+            _style.fontSize = size;
 
         needRebuild();
     }
