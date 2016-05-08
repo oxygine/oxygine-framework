@@ -10,7 +10,7 @@ namespace oxygine
     class Actor;
     class EventState;
 
-    const int MAX_TOUCHES = 8;
+    const int MAX_TOUCHES = 17;
 
     class Input: public Object
     {
