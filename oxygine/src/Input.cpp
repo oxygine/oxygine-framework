@@ -37,23 +37,7 @@ namespace oxygine
 
         if (type == TouchEvent::TOUCH_UP)
         {
-            // Remove id and compact the array:
-            //  - stop on first copied zero id
-            //  - if end is reached, zero the last element
-            int i = ps->getIndex() - 1;
-            while (i < MAX_TOUCHES - 1)
-            {
-                if ((_ids[i] = _ids[i + 1]) == 0)
-                    break;
-                _pointers[i] = _pointers[i + 1];
-                _pointers[i]._index = i + 1;
-                ++i;
-            }
-            if (i == MAX_TOUCHES - 1)
-            {
-                _ids[i] = 0;
-                _pointers[i].init(i + 1);
-            }
+            _ids[ps->getIndex() - 1] = 0;
         }
     }
 
@@ -110,20 +94,27 @@ namespace oxygine
 #ifndef __S3E__
     int Input::touchID2index(int64 id)
     {
-        id += 1;//id could be = 0 ?
+        // We can't be sure that SDL's fingerId is not 0,
+        // but 0 is reserved for empty slot, so increment id by one:
+        id += 1;
+        
+        int firstEmptySlotIndex = -1;
         for (int i = 0; i < MAX_TOUCHES; ++i)
         {
             int64& d = _ids[i];
-            int index = i + 1;
-            if (d == 0)
-            {
-                d = id;
-                return index;
-            }
 
             if (d == id)
-                return index;
+                return i + 1;
+            
+            if (d == 0 && firstEmptySlotIndex == -1)
+                firstEmptySlotIndex = i;
         }
+        
+        if (firstEmptySlotIndex != -1) {
+            _ids[firstEmptySlotIndex] = id;
+            return firstEmptySlotIndex + 1;
+        }
+        
         //log::warning("can't find touch id %d", id);
         return -1;
     }
