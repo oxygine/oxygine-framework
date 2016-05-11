@@ -42,7 +42,15 @@ namespace oxygine
 
         void stopPropagation() { stopsPropagation = true; }
         void stopImmediatePropagation() { stopsPropagation = stopsImmediatePropagation = true; }
-        //removes EventCallback from EventDispatcher
+
+        /**
+        removes self from EventDispatcher, usage example
+        actor->addEventListener(...buttonClicked...);
+        void buttonClicked(Event* ev)
+        {
+            ev->removeListener();
+        }
+        */
         void removeListener() { currentTarget->removeEventListener(listenerID); }
     };
 }
