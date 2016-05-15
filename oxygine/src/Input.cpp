@@ -97,7 +97,7 @@ namespace oxygine
         // We can't be sure that SDL's fingerId is not 0,
         // but 0 is reserved for empty slot, so increment id by one:
         id += 1;
-        
+
         int firstEmptySlotIndex = -1;
         for (int i = 0; i < MAX_TOUCHES; ++i)
         {
@@ -105,16 +105,17 @@ namespace oxygine
 
             if (d == id)
                 return i + 1;
-            
+
             if (d == 0 && firstEmptySlotIndex == -1)
                 firstEmptySlotIndex = i;
         }
-        
-        if (firstEmptySlotIndex != -1) {
+
+        if (firstEmptySlotIndex != -1)
+        {
             _ids[firstEmptySlotIndex] = id;
             return firstEmptySlotIndex + 1;
         }
-        
+
         //log::warning("can't find touch id %d", id);
         return -1;
     }
