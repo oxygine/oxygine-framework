@@ -224,7 +224,7 @@ namespace oxygine
         if (!resources_meta.empty())
         {
             int metaVersion = resources_meta.attribute("version").as_int(0);
-            OX_ASSERT(metaVersion <= 2 && "Please rebuild xmls with latest 'oxyresbuild' tool");
+            OX_ASSERT(metaVersion <= 2 && "Incompatible atlas format. Please rebuild xmls with latest 'oxyresbuild' tool or delete .ox folder from data.");
         }
 
 
