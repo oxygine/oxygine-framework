@@ -58,6 +58,12 @@ def gen_xml(args):
     if not args.atlasses:
         write("\t</atlas>\n")
 
+
+    filelist = glob.glob(path + "/*.ogg")
+    for file in filelist:
+        name = os.path.split(file)[1]
+        write("\t\t<sound file='%s'/>\n" % (name))
+
     write("</resources>\n")
     dest.close()
 
