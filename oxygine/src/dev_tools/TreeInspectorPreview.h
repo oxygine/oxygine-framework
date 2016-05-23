@@ -22,7 +22,7 @@ namespace oxygine
     public:
         struct cached_batch
         {
-            cached_batch(): program(0), vdecl(0), indicesShortType(false), numVertices(0), numIndices(0), blendSrc(IVideoDriver::BT_ONE), blendDest(IVideoDriver::BT_ONE)
+            cached_batch(): program(0), vdecl(0), numVertices(0), numIndices(0), blendSrc(IVideoDriver::BT_ONE), blendDest(IVideoDriver::BT_ONE)
             {
                 memset(states, 0, sizeof(states));
             }
@@ -34,12 +34,11 @@ namespace oxygine
             const VertexDeclaration* vdecl;
             PRIMITIVE_TYPE pt;
             std::vector<char> vertices;
-            std::vector<char> indices;
+            std::vector<unsigned short> indices;
             int numVertices;
             int numIndices;
             unsigned int states[STATE_NUM];
             BLEND_TYPE blendSrc, blendDest;
-            bool indicesShortType;
         };
 
         typedef std::vector<cached_batch> batches;
@@ -111,14 +110,14 @@ namespace oxygine
 
         }
 
-        void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData,  unsigned int numVertices, const void* indicesData, unsigned int numIndices, bool indicesShortType)
+        void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData,  unsigned int numVertices, const unsigned short* indicesData, unsigned int numIndices)
         {
             current().vdecl = decl;
             current().pt = pt;
             current().numVertices = numVertices;
             current().numIndices = numIndices;
             current().vertices.assign((const char*)verticesData, (const char*)verticesData + decl->size * numVertices);
-            current().indices.assign((const char*)indicesData, (const char*)indicesData + numIndices * (indicesShortType ? 2 : 1));
+            current().indices.assign(indicesData, indicesData + numIndices);
 
             const vertexPCT2* v = (const vertexPCT2*)(&current().vertices.front());
             if (_batches.size() == 1)
@@ -169,7 +168,7 @@ namespace oxygine
                 for (int i = 0; i < STATE_NUM; ++i)
                     instance->setState((STATE)i, b.states[i]);
                 if (b.numIndices)
-                    instance->draw(b.pt, b.vdecl, &modified.front(), b.numVertices, &b.indices.front(), b.numIndices, b.indicesShortType);
+                    instance->draw(b.pt, b.vdecl, &modified.front(), b.numVertices, &b.indices.front(), b.numIndices);
                 else
                     instance->draw(b.pt, b.vdecl, &modified.front(), b.numVertices);
             }

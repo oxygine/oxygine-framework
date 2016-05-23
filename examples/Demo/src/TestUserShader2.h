@@ -80,11 +80,7 @@ public:
         size_t indices = (count * 3) / 2;
 
         driver->setTexture(0, _base);
-
-        if (indices <= STDRenderer::indices8.size())
-            driver->draw(IVideoDriver::PT_TRIANGLES, _vdecl, &_vertices.front(), (unsigned int)count, &STDRenderer::indices8.front(), (unsigned int)indices, false);
-        else
-            driver->draw(IVideoDriver::PT_TRIANGLES, _vdecl, &_vertices.front(), (unsigned int)count, &STDRenderer::indices16.front(), (unsigned int)indices, true);
+        driver->draw(IVideoDriver::PT_TRIANGLES, _vdecl, &_vertices.front(), (unsigned int)count, &STDRenderer::indices16.front(), (unsigned int)indices);
 
         _vertices.clear();
     }

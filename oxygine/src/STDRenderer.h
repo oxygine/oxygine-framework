@@ -30,8 +30,6 @@ namespace oxygine
 
         static UberShaderProgram uberShader;
         static std::vector<unsigned char> uberShaderBody;
-
-        static std::vector<unsigned char> indices8;
         static std::vector<unsigned short> indices16;
         static size_t maxVertices;
 

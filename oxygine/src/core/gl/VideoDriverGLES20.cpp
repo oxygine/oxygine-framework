@@ -133,7 +133,7 @@ namespace oxygine
         CHECKGL();
     }
 
-    void VideoDriverGLES20::draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl_, const void* vdata, unsigned int verticesDataSize, const void* indicesData, unsigned int numIndices, bool indicesShortType)
+    void VideoDriverGLES20::draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl_, const void* vdata, unsigned int verticesDataSize, const unsigned short* indicesData, unsigned int numIndices)
     {
         const VertexDeclarationGL* decl = static_cast<const VertexDeclarationGL*>(decl_);
 
@@ -147,7 +147,7 @@ namespace oxygine
             el++;
         }
 
-        glDrawElements(getPT(pt), numIndices, indicesShortType ? GL_UNSIGNED_SHORT : GL_UNSIGNED_BYTE, indicesData);
+        glDrawElements(getPT(pt), numIndices, GL_UNSIGNED_SHORT, indicesData);
 
         el = decl->elements;
         for (int i = 0; i < decl->numElements; ++i)
