@@ -66,7 +66,12 @@ namespace oxygine
 
     void TweenQueue::complete(timeMS deltaTime)
     {
-        OX_ASSERT("Tween::complete is not supported for TweenQueue");
+        UpdateState us;
+        us.dt = deltaTime;
+        while (_status != status_done)
+        {
+            update(*_client, us);
+        }
     }
 
     void TweenQueue::_start(Actor& actor)

@@ -40,8 +40,9 @@ namespace oxygine
         template<class GS>
         spTween add(const GS& gs, timeMS duration, int loops = 1, bool twoSides = false, timeMS delay = 0, Tween::EASE ease = Tween::ease_linear);
 
-    private:
         void complete(timeMS deltaTime);
+
+    private:
         void _start(Actor& actor);
         void _update(Actor& actor, const UpdateState& us);
 
