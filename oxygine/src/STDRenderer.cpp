@@ -184,6 +184,8 @@ namespace oxygine
         invisible->init(im, false);
         invisible->setLinearFilter(false);
 
+        IVideoDriver::instance->restore();
+
         setDefaultSettings();
         _restored = true;
     }

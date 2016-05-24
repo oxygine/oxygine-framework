@@ -10,6 +10,8 @@
 #include "../ZipFileSystem.h"
 #include "../system_data.h"
 
+#include "STDRenderer.h"
+
 #if OXYGINE_SDL
 #include "SDL_config.h"
 #endif
@@ -21,8 +23,10 @@
 
 namespace oxygine
 {
+    GLuint ib = 0;
     VideoDriverGLES20::VideoDriverGLES20(): _programID(0), _p(0)
     {
+
     }
 
     VideoDriverGLES20::~VideoDriverGLES20()
@@ -35,6 +39,14 @@ namespace oxygine
     {
         //_us.restore();
         setDefaultSettings();
+
+        if (!ib)
+        {
+            oxglGenBuffers(1, &ib);
+            oxglBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ib);
+            oxglBufferData(GL_ELEMENT_ARRAY_BUFFER, STDRenderer::indices16.size() * sizeof(unsigned short), &STDRenderer::indices16.front(), GL_STATIC_DRAW);
+            oxglBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+        }
     }
 
     bool VideoDriverGLES20::isReady() const
@@ -49,6 +61,7 @@ namespace oxygine
 
     void VideoDriverGLES20::reset()
     {
+        int q = 0;
         //_currentProgram = 0;
     }
 
@@ -138,6 +151,10 @@ namespace oxygine
         const VertexDeclarationGL* decl = static_cast<const VertexDeclarationGL*>(decl_);
 
         const unsigned char* verticesData = (const unsigned char*)vdata;
+
+        //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ib);
+        if (indicesData != &STDRenderer::indices16.front())
+            int q = 0;
 
         const VertexDeclarationGL::Element* el = decl->elements;
         for (int i = 0; i < decl->numElements; ++i)

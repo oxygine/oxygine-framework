@@ -17,20 +17,24 @@ public:
     Content() : driver(0) { setName("content"); }
     IVideoDriver* driver;
 
-    /*
+
     void render(const RenderState& parentRS)
     {
+        if (!driver)
+        {
+            Actor::render(parentRS);
+            return;
+        }
+        IVideoDriver* prev = IVideoDriver::instance;
 
-        parentRS.renderer->drawBatch();
+        IVideoDriver::instance = driver;
+        STDRenderer::instance->setDriver(driver);
+        Actor::render(parentRS);
+        STDRenderer::instance->setDriver(prev);
 
-        RenderState rs = parentRS;
-        STDRenderer renderer(driver ? driver : IVideoDriver::instance);
-        renderer.Renderer::begin(parentRS.renderer);
-        rs.renderer = &renderer;
-        Actor::render(rs);
-        renderer.end();
+        IVideoDriver::instance = prev;
     }
-    */
+
 };
 
 DECLARE_SMART(Test, spTest);
