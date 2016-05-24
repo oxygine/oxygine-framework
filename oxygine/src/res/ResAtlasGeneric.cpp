@@ -160,8 +160,10 @@ namespace oxygine
         spMemoryTexture mt = new MemoryTexture;
         Rect bounds = ad.atlas.getBounds();
 
-        int w = nextPOT(bounds.getRight());
-        int h = nextPOT(bounds.getBottom());
+        //int w = nextPOT(bounds.getRight());
+        //int h = nextPOT(bounds.getBottom());
+        int w = bounds.getRight();
+        int h = bounds.getBottom();
 
         mt->init(ad.mt.lock().getRect(Rect(0, 0, w, h)));
 #if 0

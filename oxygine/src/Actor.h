@@ -65,14 +65,17 @@ namespace oxygine
         TweenOptions& ease(Tween::EASE ease) { _ease = ease; return *this; }
         TweenOptions& detach(bool detach_ = true) { _detach = detach_; return *this; }
         TweenOptions& globalEase(Tween::EASE ease) { _globalEase = ease; return *this; }
+        TweenOptions& doneCallback(const EventCallback& cb) { _callback = cb; return *this; }
 
-        timeMS  _duration;
-        timeMS  _delay;
-        Tween::EASE _ease;
-        Tween::EASE _globalEase;
-        int     _loops;
-        bool    _twoSides;
-        bool    _detach;
+
+        EventCallback   _callback;
+        timeMS          _duration;
+        timeMS          _delay;
+        Tween::EASE     _ease;
+        Tween::EASE     _globalEase;
+        int             _loops;
+        bool            _twoSides;
+        bool            _detach;
     };
 
     class Actor : public EventDispatcher, public intrusive_list_item<spActor>, public Serializable

@@ -69,7 +69,7 @@ namespace oxygine
         virtual void clear(const Color& color) = 0;
         virtual void begin(const Rect& viewport, const Color* color) = 0;
         virtual void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData, unsigned int verticesDataSize) = 0;
-        virtual void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData, unsigned int verticesDataSize, const void* indicesData, unsigned int numIndices, bool indicesShortType) = 0;
+        virtual void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData, unsigned int verticesDataSize, const unsigned short* indicesData, unsigned int numIndices) = 0;
 
         virtual void            getStats(Stats& s) const = 0;
         virtual void            getViewport(Rect& r) const = 0;
@@ -117,7 +117,7 @@ namespace oxygine
         const VertexDeclaration*    getVertexDeclaration(bvertex_format) const;
 
         void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData, unsigned int verticesDataSize) {}
-        void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData, unsigned int verticesDataSize, const void* indicesData, unsigned int indicesDataSize, bool indicesShortType) {}
+        void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData, unsigned int verticesDataSize, const unsigned short* indicesData, unsigned int indicesDataSize) {}
 
 
         void setUniformInt(const char* id, int v) {}

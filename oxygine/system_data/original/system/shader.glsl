@@ -104,9 +104,9 @@ lowp vec4 get_color()
 	lowp vec4 mask = texture2D(mask_texture, uv2);
 
 #ifdef MASK_R_CHANNEL
-	lowp float mask_alpha = mask.r;	
+	lowp float mask_alpha = mask.r + 0.001;	
 #else
-	lowp float mask_alpha = mask.a;
+	lowp float mask_alpha = mask.a + 0.001;
 #endif
 
 	base = base * mask_alpha;

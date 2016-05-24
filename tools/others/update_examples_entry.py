@@ -20,6 +20,7 @@ items = (
     parent + "oxygine-magicparticles/example/MPHello",
     parent + "oxygine-pipeline/example/game/project/",
     parent + "oxygine-sound/examples/SoundDemo/",
+    parent + "oxygine-flow/examples/HelloFlow/",
 )
 
 

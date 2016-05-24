@@ -29,7 +29,6 @@ namespace oxygine
     spNativeTexture STDRenderer::white;
     spNativeTexture STDRenderer::invisible;
 
-    std::vector<unsigned char> STDRenderer::indices8;
     std::vector<unsigned short> STDRenderer::indices16;
     size_t STDRenderer::maxVertices = 0;
     UberShaderProgram STDRenderer::uberShader;
@@ -97,21 +96,8 @@ namespace oxygine
 
     void STDRenderer::initialize()
     {
-        indices8.reserve(60 * 4);
-        for (int t = 0; t < 60; t += 1)
-        {
-            int i = t * 4;
-            indices8.push_back(i + 0);
-            indices8.push_back(i + 1);
-            indices8.push_back(i + 2);
-
-            indices8.push_back(i + 2);
-            indices8.push_back(i + 1);
-            indices8.push_back(i + 3);
-        }
-
-        indices16.reserve(12000 * 6);
-        for (int t = 0; t < 12000; t += 1)
+        indices16.reserve(3000 * 6);
+        for (int t = 0; t < 3000; t += 1)
         {
             int i = t * 4;
             indices16.push_back(i + 0);
@@ -143,7 +129,6 @@ namespace oxygine
 
     void STDRenderer::release()
     {
-        indices8.clear();
         indices16.clear();
         uberShader.release();
         uberShaderBody.clear();
@@ -231,10 +216,7 @@ namespace oxygine
         size_t count = _vertices.size() / _vdecl->size;
         size_t indices = (count * 3) / 2;
 
-        if (indices <= indices8.size())
-            getDriver()->draw(IVideoDriver::PT_TRIANGLES, _vdecl, &_vertices.front(), (unsigned int)count, &indices8.front(), (unsigned int)indices, false);
-        else
-            getDriver()->draw(IVideoDriver::PT_TRIANGLES, _vdecl, &_vertices.front(), (unsigned int)count, &indices16.front(), (unsigned int)indices, true);
+        getDriver()->draw(IVideoDriver::PT_TRIANGLES, _vdecl, &_vertices.front(), (unsigned int)count, &indices16.front(), (unsigned int)indices);
 
         _vertices.clear();
     }

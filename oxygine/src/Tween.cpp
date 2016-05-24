@@ -50,6 +50,7 @@ namespace oxygine
 		_delay = opt._delay;
 		_detach = opt._detach;
 		_globalEase = opt._globalEase;
+		_cbDone = opt._callback;
 
 		if (_duration <= 0)
 		{
