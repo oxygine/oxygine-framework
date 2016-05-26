@@ -153,7 +153,7 @@ namespace oxygine
     template <class T>
     void MatrixT<T>::transpose()
     {
-        transpose(this, *this);
+        transpose(*this, *this);
     }
 
     template <class T>

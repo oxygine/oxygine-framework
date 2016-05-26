@@ -57,6 +57,9 @@ namespace oxygine
 
     void SlidingActor::snap()
     {
+        if (!_content)
+            return;
+
         updateDragBounds();
         _drag.snapClient2Bounds();
         _sliding = false;
