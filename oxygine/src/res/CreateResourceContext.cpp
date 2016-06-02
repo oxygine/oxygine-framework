@@ -12,12 +12,18 @@ namespace oxygine
 
     void LoadResourcesContext::init()
     {
+#ifndef OX_NO_MT
         _mainThread = pthread_self();
+#endif
     }
 
     bool isMainThread()
     {
+#ifdef OX_NO_MT
+        return true;
+#else
         return pthread_equal(_mainThread, pthread_self()) != 0;
+#endif
     }
 
     LoadResourcesContext* LoadResourcesContext::get()
