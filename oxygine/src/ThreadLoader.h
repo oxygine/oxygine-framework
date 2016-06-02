@@ -40,7 +40,10 @@ namespace oxygine
 
     private:
         static void* _staticThreadFunc(void* t);
+		static void threadDone(const ThreadDispatcher::message& msg);
         virtual void _threadFunc();
+
+		void loaded(Event*);
 
         pthread_t _thread;
         volatile bool _threadDone;

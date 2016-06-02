@@ -66,13 +66,11 @@ namespace oxygine
     }
 
 
-    void threadDone(const ThreadDispatcher::message& msg)
+    void ThreadLoader::threadDone(const ThreadDispatcher::message& msg)
     {
         ThreadLoader* tl = (ThreadLoader*)msg.cbData;
 
-        Event ev(ThreadLoader::COMPLETE, true);
-        tl->dispatchEvent(&ev);
-        tl->releaseRef();
+		tl->loaded(0);
     }
 
     void ThreadLoader::_threadFunc()
@@ -100,14 +98,26 @@ namespace oxygine
         core::getMainThreadDispatcher().postCallback(0, 0, 0, threadDone, this);
     }
 
+	void ThreadLoader::loaded(Event*)
+	{
+		Event ev(ThreadLoader::COMPLETE, true);
+		dispatchEvent(&ev);
+		releaseRef();
+	}
+
     void ThreadLoader::start()
     {
-        _threadDone = false;
-        addRef();
+		_threadDone = false;
+		addRef();
 
-        pthread_attr_t attr;
-        pthread_attr_init(&attr);
-        pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
-        pthread_create(&_thread, &attr, _staticThreadFunc, this);
+#ifdef OX_NO_MT
+		getStage()->addTween(TweenDummy(), 100)->addDoneCallback(CLOSURE(this, &ThreadLoader::loaded));
+#else	
+
+		pthread_attr_t attr;
+		pthread_attr_init(&attr);
+		pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
+		pthread_create(&_thread, &attr, _staticThreadFunc, this);
+#endif
     }
 }
