@@ -3,6 +3,7 @@
 #include "res/Resources.h"
 #include "res/Resource.h"
 #include "core/oxygine.h"
+#include "Stage.h"
 
 namespace oxygine
 {
@@ -70,11 +71,12 @@ namespace oxygine
     {
         ThreadLoader* tl = (ThreadLoader*)msg.cbData;
 
-		tl->loaded(0);
+        tl->loaded(0);
     }
 
-    void ThreadLoader::_threadFunc()
+    void ThreadLoader::_load()
     {
+
         for (resources::iterator i = _resources.begin(); i != _resources.end(); ++i)
         {
             Resources* res = *i;
@@ -95,29 +97,35 @@ namespace oxygine
         }
 #endif
 
+    }
+
+    void ThreadLoader::_threadFunc()
+    {
+        _load();
         core::getMainThreadDispatcher().postCallback(0, 0, 0, threadDone, this);
     }
 
-	void ThreadLoader::loaded(Event*)
-	{
-		Event ev(ThreadLoader::COMPLETE, true);
-		dispatchEvent(&ev);
-		releaseRef();
-	}
+    void ThreadLoader::loaded(Event*)
+    {
+        Event ev(ThreadLoader::COMPLETE, true);
+        dispatchEvent(&ev);
+        releaseRef();
+    }
 
     void ThreadLoader::start()
     {
-		_threadDone = false;
-		addRef();
+        _threadDone = false;
+        addRef();
 
 #ifdef OX_NO_MT
-		getStage()->addTween(TweenDummy(), 100)->addDoneCallback(CLOSURE(this, &ThreadLoader::loaded));
-#else	
+        _load();
+        getStage()->addTween(TweenDummy(), 100)->addDoneCallback(CLOSURE(this, &ThreadLoader::loaded));
+#else
 
-		pthread_attr_t attr;
-		pthread_attr_init(&attr);
-		pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
-		pthread_create(&_thread, &attr, _staticThreadFunc, this);
+        pthread_attr_t attr;
+        pthread_attr_init(&attr);
+        pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
+        pthread_create(&_thread, &attr, _staticThreadFunc, this);
 #endif
     }
 }
