@@ -29,7 +29,7 @@ namespace oxygine
             };
 
             FileSystem(bool readonly);
-            ~FileSystem();
+            virtual ~FileSystem();
 
             void setPrefix(const char* str);
 

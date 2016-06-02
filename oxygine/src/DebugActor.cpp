@@ -49,11 +49,12 @@ namespace oxygine
         if (resSystem)
             return;
 
-        spActor a = new MaskedSprite;
+        log::messageln("DebugActor::initialize");
 
         zp.setPrefix("system/");
         zp.add(system_data, system_size);
 
+        //file::ZipFileSystem zp;
         file::mount(&zp);
         resSystem = new Resources;
         resSystem->loadXML("system/res.xml", ResourcesLoadOptions().prebuiltFolder("system"));
@@ -62,6 +63,7 @@ namespace oxygine
     void DebugActor::show()
     {
         initialize();
+
         if (!DebugActor::instance)
             DebugActor::instance = new DebugActor;
 
