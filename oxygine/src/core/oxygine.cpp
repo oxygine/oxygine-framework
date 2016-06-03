@@ -242,6 +242,25 @@ namespace oxygine
         {
             Input::instance.__removeFromDebugList();
 
+            std::string t;
+
+#ifdef OX_DEBUG
+            t += "OX_DEBUG ";
+#endif
+
+#ifdef NDEBUG
+            t += "NDEBUG ";
+#endif
+
+#ifdef _DEBUG
+            t += "_DEBUG ";
+#endif
+
+#ifdef DEBUG
+            t += "DEBUG ";
+#endif
+
+            log::messageln("build settings %s", t.c_str());
 
             if (!_dispatcher)
                 _dispatcher = new EventDispatcher;
