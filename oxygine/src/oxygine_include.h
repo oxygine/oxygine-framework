@@ -31,6 +31,7 @@
 #   endif
 #elif EMSCRIPTEN
 #   define OXYGINE_EMSCRIPTEN 1
+#   define OXYGINE_SDL 1
 #   ifndef NDEBUG
 #       define OX_DEBUG 1
 #   endif // DEBUG  

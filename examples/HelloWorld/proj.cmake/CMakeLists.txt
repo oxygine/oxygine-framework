@@ -6,7 +6,8 @@ add_definitions(${OXYGINE_DEFINITIONS})
 include_directories(${OXYGINE_INCLUDE_DIRS})
 link_directories(${OXYGINE_LIBRARY_DIRS})
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OXYGINE_CXX_FLAGS}")
+
 add_executable(HelloWorld ../src/example.cpp ../src/main.cpp  ../src/example.h )
 target_link_libraries(HelloWorld ${OXYGINE_CORE_LIBS})
 
@@ -20,7 +21,9 @@ endif(WIN32)
 
 if (EMSCRIPTEN)
 	SET(CMAKE_EXECUTABLE_SUFFIX ".html")
-	set(linkFlags "${linkFlags} -s NO_EXIT_RUNTIME=1 -s FULL_ES2=1 -s WARN_ON_UNDEFINED_SYMBOLS=1 --memory-init-file 0 -s TOTAL_MEMORY=50331648")
+
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s NO_EXIT_RUNTIME=1 -s WARN_ON_UNDEFINED_SYMBOLS=1 --memory-init-file 0 -s TOTAL_MEMORY=50331648")
+	
 
 	set_target_properties(HelloWorld PROPERTIES LINK_FLAGS "${linkFlags}")
 

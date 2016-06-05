@@ -43,8 +43,8 @@
 #ifdef EMSCRIPTEN
 #include <sys/time.h>
 #include <emscripten.h>
-#include <SDL.h>
-#include <SDL_compat.h>
+//#include <SDL.h>
+//#include <SDL_compat.h>
 #include <SDL_events.h>
 #elif __ANDROID__
 #include "core/android/jniUtils.h"
@@ -94,12 +94,6 @@ namespace oxygine
     Mutex mutexAlloc;
 
     bool _useTouchAPI = false;
-
-#if EMSCRIPTEN
-    static Point _displaySize(0, 0);
-    static void* _window = 0;
-#endif
-
 
 #ifdef OXYGINE_SDL
     static SDL_Window* _window = 0;
@@ -305,37 +299,6 @@ namespace oxygine
             s3eDeviceRegister(S3E_DEVICE_UNPAUSE, applicationUnPause, 0);
             s3eDeviceRegister(S3E_DEVICE_PAUSE, applicationPause, 0);
 
-#elif EMSCRIPTEN
-            log::messageln("EMSCRIPTEN build");
-
-            if (desc.w == -1 && desc.h == -1)
-            {
-                int fs = 0;
-                emscripten_get_canvas_size(&desc.w, &desc.h, &fs);
-            }
-
-            if (SDL_Init(SDL_INIT_VIDEO) != 0)
-            {
-                log::error("Unable to initialize SDL: %s\n", SDL_GetError());
-            }
-
-            SDL_Surface* screen;
-            screen = SDL_SetVideoMode(desc.w, desc.h, 32, SDL_OPENGL);
-            _displaySize = Point(desc.w, desc.h);
-
-            emscripten_SDL_SetEventHandler(SDL_eventsHandler, 0);
-
-            int v = EM_ASM_INT(
-            {
-                var p = navigator.platform;
-                if (p == 'iPad' || p == 'iPhone' || p == 'iPod')
-                    return 1;
-                return 0;
-            }, 0);
-
-            if (v)
-                _useTouchAPI = true;
-
 #elif OXYGINE_SDL
 
             log::messageln("SDL build");
@@ -417,6 +380,22 @@ namespace oxygine
 
             SDL_GL_SetSwapInterval(desc.vsync ? 1 : 0);
 
+#ifdef EMSCRIPTEN
+            SDL_SetEventFilter(SDL_eventsHandler, 0);
+
+            int v = EM_ASM_INT(
+            {
+                var p = navigator.platform;
+                if (p == 'iPad' || p == 'iPhone' || p == 'iPod')
+                    return 1;
+                return 0;
+            }, 0);
+
+            if (v)
+                _useTouchAPI = true;
+
+#endif
+
 #if __ANDROID__ || TARGET_OS_IPHONE
             //if (SDL_GetNumTouchDevices() > 0)
             _useTouchAPI = true;
@@ -481,7 +460,7 @@ namespace oxygine
             log::messageln("oxygine initialized");
         }
 
-#if OXYGINE_SDL || EMSCRIPTEN
+#if OXYGINE_SDL
         Vector2 convertTouch(SDL_Event& ev)
         {
             Point size = getDisplaySize();
@@ -576,8 +555,6 @@ namespace oxygine
             CHECKGL();
 #if __S3E__
             IwGLSwapBuffers();
-#elif EMSCRIPTEN
-            SDL_GL_SwapBuffers();
 #elif OXYGINE_SDL
             SDL_Window* wnd = w;
             if (!wnd)
@@ -609,13 +586,10 @@ namespace oxygine
             Input* input = &Input::instance;
 
 
-#ifndef EMSCRIPTEN
             SDL_Window* wnd = SDL_GetWindowFromID(event.window.windowID);
             void* data = SDL_GetWindowData(wnd, "_");
             spStage stage = (Stage*)data;
-#else
-            spStage stage = getStage();
-#endif
+
             if (!stage)
                 stage = getStage();
 
@@ -763,7 +737,7 @@ namespace oxygine
 #endif
 
 
-#if OXYGINE_SDL || EMSCRIPTEN
+#if OXYGINE_SDL
 
             //log::messageln("update");
 
@@ -771,7 +745,7 @@ namespace oxygine
             SDL_Event event;
             while (SDL_PollEvent(&event))
             {
-#if !EMSCRIPTEN //emscripten handled events from callback
+#if !EMSCRIPTEN //emscripten build handles events from EventsFilter
                 SDL_handleEvent(event, done);
 #endif
             }
@@ -900,8 +874,6 @@ namespace oxygine
 
             SDL_GL_GetDrawableSize(_window, &w, &h);
             return Point(w, h);
-#elif EMSCRIPTEN
-            return _displaySize;
 #else
             log::warning("getDisplaySize not implemented");
             return Point(0, 0);

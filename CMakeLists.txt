@@ -61,12 +61,15 @@ set(THIRD_PARTY ${OXYGINE_ROOT}/third_party/${PLATFORM})
 if (EMSCRIPTEN)
 	set(OX_HAVE_LIBPNG 1)
 	set(OX_HAVE_HTTP 1)	
-	set(OX_USE_SDL2 0)
+	set(OX_USE_SDL2 1)
 
 	set(SOURCES ${OXYGINE_SRC}/core/emscripten/HttpRequestEmscriptenTask.cpp)
 
 
 	file(GLOB OXYGINE_JS_LIBRARIES ${OXYGINE_SRC}/core/emscripten/*.js)
+
+	set(OXYGINE_CXX_FLAGS "${OXYGINE_CXX_FLAGS} -s USE_SDL=2 -s USE_LIBPNG=1 -s USE_ZLIB=1 -s FULL_ES2=1 ")	
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -s USE_ZLIB=1")#for minizip.c
 
 elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux") 	
 	
@@ -100,6 +103,7 @@ if (OX_HAVE_LIBCURL)
 	include_directories(${THIRD_PARTY}/curl/)
 	set(OX_DEFINITIONS ${OX_DEFINITIONS} -DOX_HAVE_LIBCURL)
 endif(OX_HAVE_LIBCURL)	
+
 
 
 if (NOT OX_HAVE_HTTP)
@@ -171,18 +175,24 @@ endif(WIN32)
 
 if (OX_HAVE_LIBPNG)		
 	set(OX_DEFINITIONS	${OX_DEFINITIONS} -DOX_HAVE_LIBPNG)
-	include_directories(${THIRD_PARTY}/libpng)
-	set(LIBPNG ${libprefix}png)
 
-	if (MSVC)		
-		if (MSVC_VERSION EQUAL "1900")
-			set(LIBPNG ${LIBPNG}-2015)
-		endif()
-	elseif(EMSCRIPTEN)
-		set(LIBPNG libz libpng16)
-	endif()	
+	if (EMSCRIPTEN)
+		
+	else(EMSCRIPTEN)
 
-	set(CORE_LIBS ${CORE_LIBS} ${LIBPNG})
+		include_directories(${THIRD_PARTY}/libpng)
+		set(LIBPNG ${libprefix}png)
+
+		if (MSVC)		
+			if (MSVC_VERSION EQUAL "1900")
+				set(LIBPNG ${LIBPNG}-2015)
+			endif()
+		endif()		
+	
+		set(CORE_LIBS ${CORE_LIBS} ${LIBPNG})
+
+	endif(EMSCRIPTEN)
+
 endif(OX_HAVE_LIBPNG)
 
 
@@ -208,9 +218,10 @@ endif(NOT EMSCRIPTEN)
 
 
 if (NOT MSVC)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 ")
+	set(OXYGINE_CXX_FLAGS "${OXYGINE_CXX_FLAGS} -std=c++11 ")
 endif(NOT MSVC)
 
+set(CMAKE_CXX_FLAGS ${OXYGINE_CXX_FLAGS})
 
 add_definitions(${OX_DEFINITIONS})
 include_directories(${OXYGINE_INCLUDE_DIRS})
@@ -236,6 +247,12 @@ set(OXYGINE_INCLUDE_DIRS
 set(OXYGINE_JS_LIBRARIES
 	${OXYGINE_JS_LIBRARIES}
 	PARENT_SCOPE)
+
+set(OXYGINE_CXX_FLAGS
+	${OXYGINE_CXX_FLAGS}
+	PARENT_SCOPE)
+
+
 
 message(STATUS "SDL includes: ${SDL2_INCLUDE_DIRS}")
 message(STATUS "Libs:     ${CORE_LIBS}")
