@@ -11,6 +11,10 @@
 #include <TargetConditionals.h>
 #endif
 
+#if EMSCRIPTEN
+#include <emscripten.h>
+#endif
+
 
 //Round everything to whole pixels during rendering.
 // Helps to avoid artifacts in pixel art games
