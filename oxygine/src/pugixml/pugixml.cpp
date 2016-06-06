@@ -234,8 +234,10 @@ PUGI__NS_END
 
 // auto_ptr-like object for exception recovery
 PUGI__NS_BEGIN
-	template <typename T, typename D = void(*)(T*)> struct auto_deleter
+	template <typename T> struct auto_deleter
 	{
+		typedef void (*D)(T*);
+
 		T* data;
 		D deleter;
 
@@ -401,14 +403,6 @@ PUGI__NS_END
 #endif
 
 PUGI__NS_BEGIN
-	static const size_t xml_memory_page_size =
-	#ifdef PUGIXML_MEMORY_PAGE_SIZE
-		PUGIXML_MEMORY_PAGE_SIZE
-	#else
-		32768
-	#endif
-		;
-
 #ifdef PUGIXML_COMPACT
 	static const uintptr_t xml_memory_block_alignment = 4;
 #else
@@ -473,6 +467,14 @@ PUGI__NS_BEGIN
 		uint32_t* compact_page_marker;
 	#endif
 	};
+
+	static const size_t xml_memory_page_size =
+	#ifdef PUGIXML_MEMORY_PAGE_SIZE
+		(PUGIXML_MEMORY_PAGE_SIZE)
+	#else
+		32768
+	#endif
+		- sizeof(xml_memory_page);
 
 	struct xml_memory_string_header
 	{
@@ -4012,7 +4014,10 @@ PUGI__NS_BEGIN
 		{
 			if (!node->first_child)
 			{
-				writer.write(' ', '/', '>');
+				if ((flags & format_raw) == 0)
+					writer.write(' ');
+
+				writer.write('/', '>');
 
 				return false;
 			}
@@ -4704,6 +4709,11 @@ PUGI__NS_BEGIN
 		xml_encoding real_encoding = get_buffer_encoding(encoding, contents, size);
 
 		return load_buffer_impl(doc, doc, contents, zero_terminate_buffer(contents, size, real_encoding), options, real_encoding, true, true, out_buffer);
+	}
+
+	PUGI__FN void close_file(FILE* file)
+	{
+		fclose(file);
 	}
 
 #ifndef PUGIXML_NO_STL
@@ -6865,8 +6875,7 @@ namespace pugi
 		reset();
 
 		using impl::auto_deleter; // MSVC7 workaround
-		typedef int (*fclose_t)(FILE*); // BCC5 workaround
-		auto_deleter<FILE, fclose_t> file(fopen(path_, "rb"), fclose);
+		auto_deleter<FILE> file(fopen(path_, "rb"), impl::close_file);
 
 		return impl::load_file_impl(static_cast<impl::xml_document_struct*>(_root), file.data, options, encoding, &_buffer);
 	}
@@ -6876,8 +6885,7 @@ namespace pugi
 		reset();
 
 		using impl::auto_deleter; // MSVC7 workaround
-		typedef int (*fclose_t)(FILE*); // BCC5 workaround
-		auto_deleter<FILE, fclose_t> file(impl::open_file_wide(path_, L"rb"), fclose);
+		auto_deleter<FILE> file(impl::open_file_wide(path_, L"rb"), impl::close_file);
 
 		return impl::load_file_impl(static_cast<impl::xml_document_struct*>(_root), file.data, options, encoding, &_buffer);
 	}
@@ -6950,8 +6958,7 @@ namespace pugi
 	PUGI__FN bool xml_document::save_file(const char* path_, const char_t* indent, unsigned int flags, xml_encoding encoding) const
 	{
 		using impl::auto_deleter; // MSVC7 workaround
-		typedef int (*fclose_t)(FILE*); // BCC5 workaround
-		auto_deleter<FILE, fclose_t> file(fopen(path_, (flags & format_save_file_text) ? "w" : "wb"), fclose);
+		auto_deleter<FILE> file(fopen(path_, (flags & format_save_file_text) ? "w" : "wb"), impl::close_file);
 
 		return impl::save_file_impl(*this, file.data, indent, flags, encoding);
 	}
@@ -6959,8 +6966,7 @@ namespace pugi
 	PUGI__FN bool xml_document::save_file(const wchar_t* path_, const char_t* indent, unsigned int flags, xml_encoding encoding) const
 	{
 		using impl::auto_deleter; // MSVC7 workaround
-		typedef int (*fclose_t)(FILE*); // BCC5 workaround
-		auto_deleter<FILE, fclose_t> file(impl::open_file_wide(path_, (flags & format_save_file_text) ? L"w" : L"wb"), fclose);
+		auto_deleter<FILE> file(impl::open_file_wide(path_, (flags & format_save_file_text) ? L"w" : L"wb"), impl::close_file);
 
 		return impl::save_file_impl(*this, file.data, indent, flags, encoding);
 	}
@@ -12456,27 +12462,6 @@ namespace pugi
 	PUGI__FN xpath_node xml_node::select_single_node(const xpath_query& query) const
 	{
 		return query.evaluate_node(*this);
-	}
-	
-	pugi::xml_attribute find_next_attribute(const pugi::xml_node &node, pugi::xml_attribute& attr, const char *name)
-	{
-		pugi::xml_attribute current = attr;
-
-		while (!current.empty())
-		{
-			if (!strcmp(current.name(), name))
-			{
-				attr = current.next_attribute();
-				return current;
-			}
-			current = current.next_attribute();
-		}
-
-		current = node.attribute(name);
-		if (!current.empty())
-			attr = current;
-
-		return current;
 	}
 }
 
