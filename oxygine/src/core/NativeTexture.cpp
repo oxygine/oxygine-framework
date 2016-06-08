@@ -82,6 +82,11 @@ namespace oxygine
 
     }
 
+    void NativeTextureNull::setClamp2Edge(bool clamp2edge)
+    {
+
+    }
+
     void NativeTextureNull::setLinearFilter(bool enable)
     {
 

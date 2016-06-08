@@ -56,6 +56,7 @@ namespace oxygine
         void unlock();
         void swap(NativeTexture*);
 
+        void setClamp2Edge(bool clamp2edge);
         void setLinearFilter(bool enable);
         void updateRegion(int x, int y, const ImageData& data);
         void apply(const Rect* rect = 0);
@@ -65,5 +66,7 @@ namespace oxygine
         int getWidth() const;
         int getHeight() const;
         TextureFormat getFormat() const;
+
+        void* _getRestorableObject() { return 0; }
     };
 }
