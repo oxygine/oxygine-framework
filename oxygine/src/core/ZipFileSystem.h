@@ -4,6 +4,7 @@
 #include "FileSystem.h"
 #include "minizip/unzip.h"
 #include "core/file.h"
+#include "core/Mutex.h"
 
 namespace oxygine
 {
@@ -37,6 +38,8 @@ namespace oxygine
             const file_entry*   getEntry(int index);
             size_t              getNumEntries() const;
 
+            const char* getZipFileName(int i) const { return _zps[i].name; }
+
         private:
             void read(unzFile zp);
 
@@ -55,6 +58,8 @@ namespace oxygine
             };
             typedef std::vector<zpitem> zips;
             zips _zps;
+
+            Mutex _lock;
         };
 
         bool read(file_entry* entry, file::buffer& bf);

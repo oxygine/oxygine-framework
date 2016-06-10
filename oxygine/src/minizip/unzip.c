@@ -1498,6 +1498,34 @@ extern z_off_t ZEXPORT unztell (file)
     return (z_off_t)pfile_in_zip_read_info->stream.total_out;
 }
 
+extern z_off_t ZEXPORT unzRealTell(file, pos, size, fs)
+unzFile file;
+z_off_t* pos;
+z_off_t* size;
+voidp* fs;
+{
+	unz_s* s;
+	file_in_zip_read_info_s* pfile_in_zip_read_info;
+
+	if (file == NULL)
+		return UNZ_PARAMERROR;
+
+	s = (unz_s*)file;
+	pfile_in_zip_read_info = s->pfile_in_zip_read;
+
+	if (pfile_in_zip_read_info == NULL)
+		return UNZ_PARAMERROR;
+
+	if (pfile_in_zip_read_info->rest_read_compressed != pfile_in_zip_read_info->rest_read_uncompressed)
+		return UNZ_PARAMERROR;
+
+	*pos = pfile_in_zip_read_info->pos_in_zipfile;
+	*size = pfile_in_zip_read_info->rest_read_compressed;
+	*fs = &pfile_in_zip_read_info->z_filefunc;
+
+	return UNZ_OK;
+}
+
 
 /*
   return 1 if the end of file was reached, 0 elsewhere

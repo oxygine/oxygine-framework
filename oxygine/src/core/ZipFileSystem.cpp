@@ -167,6 +167,8 @@ namespace oxygine
             zpfs.zseek_file = ox_fseek;
             zpfs.zclose_file = ox_fclose;
             zpfs.zerror_file = ox_ferror;
+            zpfs.opaque = (void*)_zps.size();
+            //zpfs.opaque = name;
 
             unzFile zp = unzOpen2(name, &zpfs);//todo, optimize search in zip
             OX_ASSERT(zp);
@@ -309,6 +311,81 @@ namespace oxygine
             }
 
             const file_entry* _entry;
+        };
+
+        class fileHandleZipStreaming : public fileHandle
+        {
+        public:
+            file::handle _h;
+            long _pos;
+            long _size;
+
+            fileHandleZipStreaming(const file_entry* entry, const Zips& z)
+            {
+                int r = 0;
+                r = unzGoToFilePos(entry->zp, const_cast<unz_file_pos*>(&entry->pos));
+                OX_ASSERT(r == UNZ_OK);
+
+                r = unzOpenCurrentFile(entry->zp);
+                OX_ASSERT(r == UNZ_OK);
+
+
+                void* ptr;
+                r = unzRealTell(entry->zp, &_pos, &_size, &ptr);
+                OX_ASSERT(r == UNZ_OK);
+
+                zlib_filefunc_def* f = (zlib_filefunc_def*)ptr;
+                const char* ssss = z.getZipFileName((int)(size_t)f->opaque);
+
+                _h = file::open(ssss, "rb");
+                file::seek(_h, _pos, SEEK_SET);
+
+                unzCloseCurrentFile(entry->zp);
+            }
+
+            void release()
+            {
+                file::close(_h);
+                _h = 0;
+            }
+
+            unsigned int read(void* dest, unsigned int size)
+            {
+                return file::read(_h, dest, size);
+            }
+
+            unsigned int write(const void* src, unsigned int size)
+            {
+                OX_ASSERT(0);
+                return 0;
+            }
+
+            unsigned int getSize() const
+            {
+                return _size;
+            }
+
+            int          seek(unsigned int offset, int whence)
+            {
+                switch (whence)
+                {
+                    case SEEK_SET:
+                        return file::seek(_h, _pos + offset, SEEK_SET);
+                    case SEEK_CUR:
+                        return file::seek(_h, offset, SEEK_CUR);
+                    case SEEK_END:
+                        return file::seek(_h, offset, SEEK_END);
+                    default:
+                        break;
+                }
+                OX_ASSERT(0);
+                return 0;
+            }
+
+            unsigned int tell() const
+            {
+                return file::tell(_h) - _pos;
+            }
 
         };
 
@@ -329,6 +406,7 @@ namespace oxygine
             _zips.add(data);
         }
 
+
         void ZipFileSystem::reset()
         {
             _zips.reset();
@@ -339,7 +417,10 @@ namespace oxygine
             const file_entry* entry = _zips.getEntryByName(file);
             if (entry)
             {
-                fh = new fileHandleZip(entry);
+                if (*mode == '.')
+                    fh = new fileHandleZipStreaming(entry, _zips);
+                else
+                    fh = new fileHandleZip(entry);
                 return status_ok;
             }
 

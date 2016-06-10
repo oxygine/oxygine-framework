@@ -318,6 +318,9 @@ extern int ZEXPORT unzReadCurrentFile OF((unzFile file,
 */
 
 extern z_off_t ZEXPORT unztell OF((unzFile file));
+
+extern int ZEXPORT unzRealTell OF((unzFile file, z_off_t* pos, z_off_t* size, voidp* fs));
+
 /*
   Give the current position in uncompressed data
 */
