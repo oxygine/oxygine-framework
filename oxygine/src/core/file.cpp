@@ -169,15 +169,19 @@ namespace oxygine
             return fh->read(dest, destSize);
         }
 
-        void read(const char* file, buffer& dest, error_policy ep)
+        bool read(const char* file_, buffer& dest, error_policy ep)
         {
-            dest.data.clear();
+            LOGD("open file: %s %s %d", file_, mode, _openedFiles);
+            char file[512];
+            path::normalize(file_, file);
 
-            autoClose ac(open(file, "rb", ep));
-            if (ac.getHandle())
+            dest.data.clear();
+            bool ok = _nfs.read(file, dest, ep) == FileSystem::status_ok;
+            if (!ok)
             {
-                read(ac.getHandle(), dest);
+                handleErrorPolicy(ep, "can't read file: %s to buffer", file);
             }
+            return ok;
         }
 
         unsigned int read(handle fh_, buffer& dest)

@@ -2,6 +2,7 @@
 #include "utils/stringUtils.h"
 #include <string.h>
 #include <algorithm>
+#include "file.h"
 
 namespace oxygine
 {
@@ -85,6 +86,11 @@ namespace oxygine
             FUNC(open, _open, write, file, (file, mode, ep, fh));
         }
 
+        FileSystem::status FileSystem::read(const char* file, file::buffer& bf, error_policy ep)
+        {
+            FUNC(read, _read, false, file, (file, bf, ep));
+        }
+
         void FileSystem::mount(FileSystem* fs)
         {
             filesystems::iterator i = std::find(_filesystems.begin(), _filesystems.end(), fs);
@@ -100,6 +106,19 @@ namespace oxygine
                 _filesystems.erase(i);
             }
         }
+
+        /*
+        FileSystem::status FileSystem::_read(const char* file, file::buffer &bf, error_policy ep)
+        {
+            fileHandle* fh = 0;
+            status s = _open(file, "rb", ep_ignore_error, fh);
+            if (!fh)
+                return status_error;
+            fh->
+            fh->read()
+            fh->release();
+        }
+        */
 
         bool FileSystem::_isExists(const char* file)
         {

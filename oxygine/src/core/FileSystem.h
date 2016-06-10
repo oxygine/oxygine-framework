@@ -6,6 +6,8 @@ namespace oxygine
 {
     namespace file
     {
+        class buffer;
+
         class fileHandle: public ObjectBase
         {
         public:
@@ -42,12 +44,14 @@ namespace oxygine
             status deleteDirectory(const char* path);
 
             status open(const char* file, const char* mode, error_policy ep, fileHandle*& fh);
+            status read(const char* file, file::buffer& bf, error_policy ep);
 
             void mount(FileSystem* fs);
             void unmount(FileSystem* fs);
 
         protected:
             virtual status _open(const char* file, const char* mode, error_policy ep, fileHandle*&) = 0;
+            virtual status _read(const char* file, file::buffer&, error_policy ep) = 0;
             virtual bool _isExists(const char* file);
             virtual status _deleteFile(const char* file) = 0;
             virtual status _makeDirectory(const char* path) = 0;

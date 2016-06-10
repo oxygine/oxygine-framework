@@ -62,7 +62,7 @@ namespace oxygine
         unsigned int read(handle, void* dest, unsigned int size);
 
         /**Reads bytes into destination buffer with stdio flags = "rb". Clears existing buffer*/
-        void read(const char* file, buffer& dest, error_policy ep = ep_show_error);
+        bool read(const char* file, buffer& dest, error_policy ep = ep_show_error);
 
         /**Reads bytes into destination buffer with stdio flags = "wb"*/
         unsigned int read(handle, buffer& dest);

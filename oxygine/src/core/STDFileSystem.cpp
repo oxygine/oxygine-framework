@@ -105,6 +105,19 @@ namespace oxygine
 
         class STDFileSystem;
 
+        unsigned int oxGetSize(oxHandle* h)
+        {
+
+#if OXYGINE_SDL && !OXYGINE_FILESYSTEM_USE_STDIO
+            return (int)SDL_RWsize((SDL_RWops*)h);
+#else
+            oxFileSeek(h, 0, ox_FILESEEK_END);
+            unsigned int size = (unsigned int)oxFileTell(h);
+            oxFileSeek(h, 0, ox_FILESEEK_SET);
+            return size;
+#endif
+        }
+
         class fileHandleSTD: public fileHandle
         {
         public:
@@ -144,14 +157,7 @@ namespace oxygine
 
             virtual unsigned int getSize() const
             {
-#if OXYGINE_SDL && !OXYGINE_FILESYSTEM_USE_STDIO
-                return (int)SDL_RWsize((SDL_RWops*)_handle);
-#else
-                oxFileSeek(_handle, 0, ox_FILESEEK_END);
-                unsigned int size  = (unsigned int)oxFileTell(_handle);
-                oxFileSeek(_handle, 0, ox_FILESEEK_SET);
-                return size;
-#endif
+                return oxGetSize(_handle);
             }
 
         private:
@@ -189,6 +195,22 @@ namespace oxygine
             }
         }
 
+
+        FileSystem::status STDFileSystem::_read(const char* file, file::buffer& dest, error_policy ep)
+        {
+            char buff[512];
+
+            oxHandle* h = oxFileOpen(_getFullPath(file, buff), "rb");
+            if (!h)
+                return status_error;
+            unsigned int size = oxGetSize(h);
+            dest.data.resize(size);
+            if (size)
+                oxFileRead(&dest.data[0], size, 1, h);
+
+            oxFileClose(h);
+            return status_ok;
+        }
 
         FileSystem::status STDFileSystem::_open(const char* file, const char* mode, error_policy ep, fileHandle*& fh)
         {

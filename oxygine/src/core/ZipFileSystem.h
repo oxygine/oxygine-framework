@@ -33,6 +33,7 @@ namespace oxygine
 
             bool read(const char* name, file::buffer& bf);
             bool read(const file_entry* entry, file::buffer& bf);
+            bool isExists(const char* name);
 
             const file_entry*   getEntryByName(const char* name);
             const file_entry*   getEntry(int index);
@@ -82,11 +83,13 @@ namespace oxygine
 
             Zips _zips;
 
+            status _read(const char* file, file::buffer&, error_policy ep);
             status _open(const char* file, const char* mode, error_policy ep, file::fileHandle*& fh);
             status _deleteFile(const char* file);
             status _makeDirectory(const char* file);
             status _deleteDirectory(const char* file);
             status _renameFile(const char* src, const char* dest);
+            bool _isExists(const char* file);
 
         };
     }

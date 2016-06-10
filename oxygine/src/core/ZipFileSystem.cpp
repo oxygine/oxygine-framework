@@ -52,6 +52,8 @@ namespace oxygine
 
         void Zips::read(unzFile zp)
         {
+            //MutexAutoLock al(_lock);
+
             do
             {
                 unz_file_pos pos;
@@ -72,6 +74,8 @@ namespace oxygine
 
         void Zips::add(const unsigned char* data, unsigned int size)
         {
+            MutexAutoLock al(_lock);
+
             zlib_filefunc_def ff;
             fill_memory_filefunc(&ff);
 
@@ -94,6 +98,8 @@ namespace oxygine
 
         void Zips::add(std::vector<char>& data)
         {
+            MutexAutoLock al(_lock);
+
             zlib_filefunc_def ff;
             fill_memory_filefunc(&ff);
 
@@ -157,6 +163,8 @@ namespace oxygine
 
         void Zips::add(const char* name)
         {
+            MutexAutoLock al(_lock);
+
             zlib_filefunc_def zpfs;
             memset(&zpfs, 0, sizeof(zpfs));
 
@@ -195,8 +203,16 @@ namespace oxygine
             log::messageln("ZipFS, total files: %d", _files.size());
         }
 
+        bool Zips::isExists(const char* name)
+        {
+            MutexAutoLock al(_lock);
+            return getEntryByName(name) != 0;
+        }
+
         bool Zips::read(const char* name, file::buffer& bf)
         {
+            MutexAutoLock al(_lock);
+
             const file_entry* entry = getEntryByName(name);
             if (!entry)
                 return false;
@@ -205,11 +221,13 @@ namespace oxygine
 
         bool Zips::read(const file_entry* entry, file::buffer& bf)
         {
+            MutexAutoLock al(_lock);
             return readEntry(entry, bf);
         }
 
         void Zips::reset()
         {
+            MutexAutoLock al(_lock);
             for (zips::iterator i = _zps.begin(); i != _zps.end(); ++i)
             {
                 zpitem& f = *i;
@@ -260,6 +278,7 @@ namespace oxygine
         {
             return _files.size();
         }
+
 
         class fileHandleZip: public fileHandle
         {
@@ -319,8 +338,9 @@ namespace oxygine
             file::handle _h;
             long _pos;
             long _size;
+            long _cpos;
 
-            fileHandleZipStreaming(const file_entry* entry, const Zips& z)
+            fileHandleZipStreaming(const file_entry* entry, const Zips& z): _cpos(0)
             {
                 int r = 0;
                 r = unzGoToFilePos(entry->zp, const_cast<unz_file_pos*>(&entry->pos));
@@ -351,7 +371,13 @@ namespace oxygine
 
             unsigned int read(void* dest, unsigned int size)
             {
-                return file::read(_h, dest, size);
+                if (_cpos + size > _size)
+                    size = _size - _cpos;
+
+                unsigned int ret = file::read(_h, dest, size);
+                _cpos += ret;
+
+                return ret;
             }
 
             unsigned int write(const void* src, unsigned int size)
@@ -370,10 +396,13 @@ namespace oxygine
                 switch (whence)
                 {
                     case SEEK_SET:
+                        _cpos = offset;
                         return file::seek(_h, _pos + offset, SEEK_SET);
                     case SEEK_CUR:
+                        _cpos += offset;
                         return file::seek(_h, offset, SEEK_CUR);
                     case SEEK_END:
+                        _cpos = _size;
                         return file::seek(_h, offset, SEEK_END);
                     default:
                         break;
@@ -384,7 +413,7 @@ namespace oxygine
 
             unsigned int tell() const
             {
-                return file::tell(_h) - _pos;
+                return _cpos;
             }
 
         };
@@ -412,12 +441,20 @@ namespace oxygine
             _zips.reset();
         }
 
+        FileSystem::status ZipFileSystem::_read(const char* file, file::buffer& bf, error_policy ep)
+        {
+            if (_zips.read(file, bf))
+                return status_ok;
+
+            return status_error;
+        }
+
         FileSystem::status ZipFileSystem::_open(const char* file, const char* mode, error_policy ep, file::fileHandle*& fh)
         {
             const file_entry* entry = _zips.getEntryByName(file);
             if (entry)
             {
-                if (*mode == '.')
+                if (*mode == 's')
                     fh = new fileHandleZipStreaming(entry, _zips);
                 else
                     fh = new fileHandleZip(entry);
@@ -426,6 +463,11 @@ namespace oxygine
 
             handleErrorPolicy(ep, "can't find zip file entry: %s", file);
             return status_error;
+        }
+
+        bool ZipFileSystem::_isExists(const char* file)
+        {
+            return _zips.isExists(file);
         }
 
         FileSystem::status ZipFileSystem::_deleteFile(const char* file)
