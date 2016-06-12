@@ -1498,7 +1498,7 @@ extern z_off_t ZEXPORT unztell (file)
     return (z_off_t)pfile_in_zip_read_info->stream.total_out;
 }
 
-extern z_off_t ZEXPORT unzRealTell(file, pos, size, fs)
+extern int ZEXPORT unzRealTell(file, pos, size, fs)
 unzFile file;
 z_off_t* pos;
 z_off_t* size;
