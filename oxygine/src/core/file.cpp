@@ -39,8 +39,14 @@ namespace oxygine
         STDFileSystem _nfs(true);
         STDFileSystem _nfsWrite(false);
 
-        void init(const char* company, const char* app)
-        {
+		bool _fsInitialized = false;
+
+		void init(const char* company, const char* app)
+		{
+			if (_fsInitialized)
+				return;
+			_fsInitialized = true;
+
 #ifdef __S3E__
             _nfs.setPath("rom://");
             _nfsWrite.setPath("ram://");
