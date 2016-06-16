@@ -13,7 +13,7 @@
 namespace oxygine
 {
     Vector2 fitSize(const Vector2& destSize, const Vector2& src);
-    const Vector2 itemSize(128.0f, 128.0f);
+    const Vector2 itemSize(256.0f, 256.0f);
 
     class TextureLine: public Box9Sprite
     {
