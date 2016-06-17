@@ -336,8 +336,8 @@ namespace oxygine
         {
         public:
             file::handle _h;
-            long _pos;
-            long _size;
+            z_off_t _pos;
+            z_off_t _size;
             long _cpos;
 
             fileHandleZipStreaming(const file_entry* entry, const Zips& z): _cpos(0)

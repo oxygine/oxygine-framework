@@ -21,11 +21,6 @@ endif(WIN32)
 
 if (EMSCRIPTEN)
 	SET(CMAKE_EXECUTABLE_SUFFIX ".html")
-
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s NO_EXIT_RUNTIME=1 -s WARN_ON_UNDEFINED_SYMBOLS=1 --memory-init-file 0 -s TOTAL_MEMORY=50331648")
-	
-
-	set_target_properties(HelloWorld PROPERTIES LINK_FLAGS "${linkFlags}")
-
 	em_link_pre_js(HelloWorld  ${OXYGINE_JS_LIBRARIES}  ${CMAKE_CURRENT_SOURCE_DIR}/data.js)
 endif(EMSCRIPTEN)
