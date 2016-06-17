@@ -81,12 +81,6 @@ extern "C"
 
 namespace oxygine
 {
-    namespace file
-    {
-        void init(const char* company, const char* app);
-        void free();
-    }
-
     IVideoDriver::Stats _videoStats;
 
     static ThreadDispatcher _threadMessages;

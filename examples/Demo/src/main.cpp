@@ -68,7 +68,7 @@ void run()
     getStage()->setSize(size);
 
     // DebugActor is a helper actor node. It shows FPS, memory usage and other useful stuff
-    //DebugActor::show();
+    DebugActor::show();
 
     // Initializes our example game. See example.cpp
     example_init();

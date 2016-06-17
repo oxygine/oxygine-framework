@@ -138,9 +138,12 @@ int main(int argc, char* argv[])
 
 #include "SDL_main.h"
 #include "SDL.h"
+
 extern "C"
 {
     void one(void* param) { mainloop(); }
+    void oneEmsc() { mainloop(); }
+
     int main(int argc, char* argv[])
     {
 
@@ -151,21 +154,11 @@ extern "C"
         SDL_iPhoneSetAnimationCallback(core::getWindow(), 1, one, nullptr);
 #endif
 
+#if EMSCRIPTEN
+        emscripten_set_main_loop(oneEmsc, 0, 0);
+#endif
+
         return 0;
     }
 };
-#endif
-
-
-#ifdef EMSCRIPTEN
-#include <emscripten.h>
-
-void one() { mainloop(); }
-
-int main(int argc, char* argv[])
-{
-    run();
-    emscripten_set_main_loop(one, 0, 0);
-    return 0;
-}
 #endif

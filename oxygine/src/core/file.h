@@ -119,5 +119,13 @@ namespace oxygine
 
             handle _handle;
         };
+
+
+
+        /**you don't need to call "file::init" yourself. It would be called from core::init. Use it only when you need access to filesystem before core::init*/
+        void init(const char* company, const char* app);
+
+        /**for internal purposes*/
+        void free();
     }
 }
