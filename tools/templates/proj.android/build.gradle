@@ -1,0 +1,40 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.0.+'
+    }
+}
+
+apply plugin: 'com.android.application'
+
+
+
+dependencies {
+    compile(project(':oxygine-extension'))
+    compile(project(':oxygine-lib')) { exclude module: 'oxygine-extension' }
+}
+
+android {
+    enforceUniquePackageName=false
+        
+    compileSdkVersion 23
+    buildToolsVersion '23.0.2'
+
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            res.srcDirs = ['res']
+            assets.srcDirs = ['../data']
+        }
+    }
+
+    aaptOptions {
+        noCompress 'zip', 'ogg'
+        ignoreAssetsPattern "!*.dll:*.icf"
+    }
+}
