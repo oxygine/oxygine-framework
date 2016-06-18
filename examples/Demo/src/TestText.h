@@ -135,6 +135,8 @@ public:
         style.font = resourcesUI.getResFont("big")->getFont();
         style.color = Color(0xffffffff);
         style.fontSize = test.scale2size;
+        if (!style.fontSize)
+            style.fontSize = style.font->getSize();
         text->setStyle(style);
 
         text->setSize(test.size);
