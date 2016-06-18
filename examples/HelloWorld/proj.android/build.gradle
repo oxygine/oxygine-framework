@@ -12,36 +12,29 @@ apply plugin: 'com.android.application'
 
 
 dependencies {
-		compile(project(':oxygine-extension'))
-        compile(project(':oxygine-lib')) { exclude module: 'oxygine-extension' }
-    }
+    compile(project(':oxygine-extension'))
+    compile(project(':oxygine-lib')) { exclude module: 'oxygine-extension' }
+}
 
 android {
-		enforceUniquePackageName=false
+	enforceUniquePackageName=false
 		
-        compileSdkVersion 23
-        buildToolsVersion '23.0.2'
+    compileSdkVersion 23
+    buildToolsVersion '23.0.2'
 
-        task buildNative(type: Exec) {
-            commandLine 'cmd', '/c', 'build.bat'
-            standardOutput = new ByteArrayOutputStream()
 
-            ext.output = {
-                return standardOutput.toString()
-            }
-        }        
-
-        tasks.withType(JavaCompile) {
-                compileTask -> compileTask.dependsOn buildNative
+	sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            res.srcDirs = ['res']
+            assets.srcDirs = ['../data']
         }
+    }
 
-  		sourceSets {
-            main {
-                jniLibs.srcDirs = ['libs']
-                manifest.srcFile 'AndroidManifest.xml'
-                java.srcDirs = ['src']
-                res.srcDirs = ['res']
-                assets.srcDirs = ['../data']
-            }
-        }
+    aaptOptions {
+        noCompress 'zip', 'ogg'
+        ignoreAssetsPattern "!*.dll:*.icf"
+    }
 }
