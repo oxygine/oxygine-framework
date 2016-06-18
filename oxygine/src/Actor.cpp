@@ -841,46 +841,6 @@ namespace oxygine
         }
     }
 
-    void Actor::insertChildAfter(spActor actor, spActor insertAfter)
-    {
-        OX_ASSERT(actor);
-        if (!actor)
-            return;
-
-        if (insertAfter)
-        {
-            OX_ASSERT(insertAfter->getParent() == this);
-        }
-
-        actor->detach();
-
-        if (insertAfter)
-            _children.insert_after(actor, insertAfter);
-        else
-            _children.append(actor);
-        setParent(actor.get(), this);
-    }
-
-    void Actor::insertChildBefore(spActor actor, spActor insertBefore)
-    {
-        OX_ASSERT(actor);
-        if (!actor)
-            return;
-
-        if (insertBefore)
-        {
-            OX_ASSERT(insertBefore->getParent() == this);
-        }
-
-        actor->detach();
-
-        if (insertBefore)
-            _children.insert_before(actor, insertBefore);
-        else
-            _children.prepend(actor);
-        setParent(actor.get(), this);
-    }
-
     void Actor::insertSiblingBefore(spActor actor)
     {
         OX_ASSERT(actor != this);
