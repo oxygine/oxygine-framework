@@ -371,7 +371,7 @@ namespace oxygine
 
             unsigned int read(void* dest, unsigned int size)
             {
-                if (_cpos + size > _size)
+                if (_cpos + (long)size > _size)
                     size = _size - _cpos;
 
                 unsigned int ret = file::read(_h, dest, size);
