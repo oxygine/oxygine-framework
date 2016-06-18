@@ -171,17 +171,16 @@ namespace oxygine
                 while (i != (int)_data.size())
                 {
                     Symbol& s = _data[i];
-                    //wchar_t c = s.c;
-                    const glyph* gl = font->getGlyph(s.code);
-                    if (gl)
-                    {
-                        s.gl = *gl;
-                        i += rd.putSymbol(s);
-                    }
+                    if (s.code == '\n')
+                        rd.nextLine();
                     else
                     {
-                        if (s.code == '\n')
-                            rd.nextLine();
+                        const glyph* gl = font->getGlyph(s.code);
+                        if (gl)
+                        {
+                            s.gl = *gl;
+                            i += rd.putSymbol(s);
+                        }
                         else
                         {
                             gl = font->getGlyph(_defMissing);
