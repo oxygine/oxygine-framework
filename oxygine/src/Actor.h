@@ -230,13 +230,13 @@ namespace oxygine
         /**Returns true if actor is child or located deeper in current subtree*/
         bool isDescendant(const spActor& actor) const;
 
-		/**inserts sibling before 'this' actor*/
+        /**inserts sibling before 'this' actor*/
         void insertSiblingBefore(spActor);
-		/**inserts sibling after 'this' actor*/
+        /**inserts sibling after 'this' actor*/
         void insertSiblingAfter(spActor);
-		/**adds child first in list*/
+        /**adds child first in list*/
         void prependChild(spActor actor);
-		/**adds child first in list*/
+        /**adds child first in list*/
         void prependChild(Actor* actor);
         void addChild(spActor actor);
         void addChild(Actor* actor);//avoid conversion to spActor
@@ -416,7 +416,7 @@ namespace oxygine
     Vector2 convert_local2stage(const Actor* child, const Vector2& pos, const Actor* root = 0);
     Vector2 convert_stage2local(spActor child, const Vector2& pos, spActor root = 0);
     Vector2 convert_stage2local(const Actor* child, const Vector2& pos, const Actor* root = 0);
-	
+
 
     /*Tests 2 actors intersection and returns contact point in space of object1.*/
     bool testIntersection(spActor obj1, spActor obj2, spActor commonParent = 0, Vector2* contact = 0);
