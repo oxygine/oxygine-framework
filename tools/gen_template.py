@@ -312,7 +312,7 @@ def _run(args):
             print("src " + src_path)
             tp = guess_type(src_path)
 
-            if ext == ".storyboard":
+            if ext in (".storyboard", ".gradle"):
                 tp = ("text", "")
 
             if not tp[0]:

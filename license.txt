@@ -1,4 +1,4 @@
-This framework (folders: examples, oxygine, tools) is distributed under the MIT License:
+This framework is distributed under the MIT License:
 
 Copyright (c) 2011-2013 Denis Muratshin
 
