@@ -4,6 +4,7 @@
 #include "utils/stringUtils.h"
 #include "RenderState.h"
 #include "AnimationFrame.h"
+#include "res/ResFont.h"
 
 namespace oxygine
 {
@@ -166,7 +167,7 @@ namespace oxygine
             if (!_data.empty())
             {
                 int i = 0;
-                const Font* font = rd.getStyle().font;
+                const Font* font = rd.getStyle().font->getFont(0, rd.getStyle().fontSize);
 
                 while (i != (int)_data.size())
                 {

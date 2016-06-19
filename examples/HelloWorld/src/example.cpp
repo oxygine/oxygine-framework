@@ -55,7 +55,7 @@ public:
 
         //initialize text style
         TextStyle style;
-        style.font = gameResources.getResFont("main")->getFont();
+        style.font = gameResources.getResFont("main");
         style.color = Color::White;
         style.vAlign = TextStyle::VALIGN_MIDDLE;
         style.hAlign = TextStyle::HALIGN_CENTER;

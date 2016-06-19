@@ -30,7 +30,7 @@ namespace oxygine
         const Rect&                 getTextRect() const;
         /**Returns current text*/
         const std::string&          getText() const { return _text; }
-        const Font*                 getFont() const;
+        const ResFont*              getFont() const;
         /**deprecated use getFontSize*/
         OXYGINE_DEPRECATED
         int                         getFontSize2Scale() const;
@@ -69,7 +69,7 @@ namespace oxygine
         void setFontSize(int size);
 
         /**Overwrites TextStyle font.*/
-        void setFont(const Font* rs);
+        void setFont(const ResFont* rs);
 
         /**Overwrites TextStyle outlineColor. works only with SD font*/
         void setOutlineColor(const Color&);

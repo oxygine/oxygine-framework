@@ -10,6 +10,7 @@
 #include "MaskedSprite.h"
 #include "ClipRectActor.h"
 #include "core/oxygine.h"
+#include "res/ResFont.h"
 
 namespace oxygine
 {
@@ -176,13 +177,13 @@ namespace oxygine
         _renderer->setBlendMode(tf->getBlendMode());
         _renderer->setTransform(rs.transform);
 
-
-        if (tf->getFont()->isSDF())
+        int sdfSize;
+        if (tf->getFont()->isSDF(sdfSize))
         {
             float scale = sqrtf(rs.transform.a * rs.transform.a + rs.transform.c * rs.transform.c);
 
             if (tf->getFontSize())
-                scale = scale * tf->getFontSize() / tf->getFont()->getSize();
+                scale = scale * tf->getFontSize() / sdfSize;
 
             float contrast = 3.0f + scale * 8.0f;
             float offset = tf->getWeight();

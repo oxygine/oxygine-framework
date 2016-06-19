@@ -69,7 +69,7 @@ namespace oxygine
         typedef argT<TextStyle::HorizontalAlign, TextStyle::HorizontalAlign, TextField, &TextField::setHAlign> hAlign;
         typedef argT<TextStyle::VerticalAlign, TextStyle::VerticalAlign, TextField, &TextField::setVAlign> vAlign;
         typedef argT<int, int, TextField, &TextField::setFontSize> fontSize;
-        typedef argT<const Font*, const Font*, TextField, &TextField::setFont> font;
+        typedef argT<const ResFont*, const ResFont*, TextField, &TextField::setFont> font;
         typedef argT<bool, bool, TextField, &TextField::setMultiline> multiline;
 
 

@@ -27,7 +27,7 @@ namespace oxygine
         class Aligner
         {
         public:
-            Aligner();
+            Aligner(const TextStyle& style);
             ~Aligner();
 
 
@@ -49,6 +49,8 @@ namespace oxygine
         private:
             int getLineWidth()const;
             int getLineSkip()const;
+
+            const Font* _font;
 
             typedef std::vector<Symbol*> line;
 

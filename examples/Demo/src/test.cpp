@@ -61,7 +61,7 @@ spTextField createText(const std::string& txt)
     spTextField text = new TextField();
 
     TextStyle style;
-    style.font = Test::resourcesUI.getResFont("main")->getFont();
+    style.font = Test::resourcesUI.getResFont("main");
     style.color = textColor;
     style.vAlign = TextStyle::VALIGN_MIDDLE;
     style.hAlign = TextStyle::HALIGN_CENTER;

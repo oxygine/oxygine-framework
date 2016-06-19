@@ -54,6 +54,7 @@ namespace oxygine
         return font;
     }
 
+
     ResFontBM::ResFontBM(): _font(0), _format(TF_R8G8B8A8), _premultipliedAlpha(false), _sdf(false)
     {
 
@@ -64,6 +65,12 @@ namespace oxygine
         cleanup();
     }
 
+
+    bool ResFontBM::isSDF(int& size) const
+    {
+        size = _font->getSize();
+        return _sdf;
+    }
 
     void ResFontBM::init(const char* path, bool premultipliedAlpha)
     {
@@ -315,6 +322,7 @@ namespace oxygine
         fontSize = abs(fontSize);
         Font* font = new Font();
         font->init(getName().c_str(), fontSize, fontSize, lineHeight + fontSize - base, _sdf);
+        _size = fontSize;
         _font = font;
 
         if (context)
@@ -508,6 +516,7 @@ namespace oxygine
         fontSize = abs(fontSize);
         Font* font = new Font();
         font->init(getName().c_str(), fontSize, fontSize, lineHeight + fontSize - base, _sdf);
+        _size = fontSize;
         _font = font;
 
         if (context)

@@ -37,7 +37,7 @@ public:
         _txt = txt;
 
         TextStyle st;
-        st.font = font.getFont();
+        st.font = &font;
         st.vAlign = TextStyle::VALIGN_MIDDLE;
         st.hAlign = TextStyle::HALIGN_MIDDLE;
         st.color = Color::CornflowerBlue;

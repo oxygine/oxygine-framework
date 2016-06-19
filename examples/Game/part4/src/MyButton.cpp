@@ -32,7 +32,7 @@ void MyButton::setText(const string& txt)
     {
         //create TextField if it wasn't created yet
         TextStyle style;
-        style.font = res::ui.getResFont("normal")->getFont();
+        style.font = res::ui.getResFont("normal");
         style.vAlign = TextStyle::VALIGN_MIDDLE;
         style.hAlign = TextStyle::HALIGN_CENTER;
 

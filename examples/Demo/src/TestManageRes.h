@@ -74,7 +74,7 @@ public:
         text->setPosition(140.0f, (float)getHeight() - text->getHeight());
 
         TextStyle st;
-        st.font = resources.getResFont("font")->getFont();
+        st.font = resources.getResFont("font");
         st.vAlign = TextStyle::VALIGN_TOP;
         st.color = Color::CornflowerBlue;
         st.multiline = true;

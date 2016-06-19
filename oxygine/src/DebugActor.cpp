@@ -125,7 +125,7 @@ namespace oxygine
 
         if (ResFont* fnt = resSystem->getResFont("mono"))
         {
-            st.font = fnt->getFont();
+            st.font = fnt;
         }
 
         OX_ASSERT(st.font != NULL);
