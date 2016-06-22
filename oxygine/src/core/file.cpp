@@ -87,6 +87,7 @@ namespace oxygine
         void free()
         {
             _nfs.unmount(&_nfsWrite);
+            _fsInitialized = false;
         }
 
         void mount(FileSystem* fs)
