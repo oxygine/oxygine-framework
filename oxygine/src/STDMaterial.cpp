@@ -154,7 +154,7 @@ namespace oxygine
 #endif
 
             _renderer->setTransform(rs.transform);
-            _renderer->draw(rs.getFinalColor(sprite->getColor()), frame.getSrcRect(), frame.getDestRect());
+            _renderer->draw(rs.getFinalColor(sprite->getColor()), frame.getSrcRect(), sprite->getDestRect());
         }
     }
 

@@ -166,7 +166,7 @@ namespace oxygine
 #define arg_htmlText args::htmlText()
 #define arg_hAlign args::hAlign()
 #define arg_vAlign args::vAlign()
-#define arg_fontSize2Scale args::fontSize2Scale()
+#define arg_fontSize args::fontSize()
 #define arg_font args::font()
 #define arg_multiline args::multiline()
 #define arg_tcolor args::color()
