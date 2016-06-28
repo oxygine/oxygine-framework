@@ -150,6 +150,9 @@ namespace oxygine
         if (!t->getHandle())
             return false;
 
+        w = nextPOT(w);
+        h = nextPOT(h);
+
         if (t->getFormat() == tf &&
                 t->getWidth() >= w && t->getHeight() >= h &&
                 t->getWidth() <= (w + ALIGN_SIZE) && t->getHeight() <= (h + ALIGN_SIZE))
