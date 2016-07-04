@@ -753,6 +753,9 @@ namespace oxygine
 
         void release()
         {
+            _threadMessages.clear();
+            _uiMessages.clear();
+
             clearPostProcessItems();
             PostProcess::freeShaders();
 
@@ -783,6 +786,8 @@ namespace oxygine
             Resources::unregisterResourceType("bmfc_font");
             Resources::unregisterResourceType("sdfont");
             Resources::unregisterResourceType("starling");
+
+
 
 #if OXYGINE_SDL
             SDL_GL_DeleteContext(_context);

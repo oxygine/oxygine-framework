@@ -166,6 +166,11 @@ namespace oxygine
         MutexPthreadLock lock(_mutex);
 #endif
         _events.clear();
+        _last = message();
+        _id = 0;
+        _result = 0;
+        _replyingTo = 0;
+
     }
 
     void ThreadDispatcher::_popMessage(message& res)

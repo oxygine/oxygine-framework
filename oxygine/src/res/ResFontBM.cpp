@@ -97,6 +97,7 @@ namespace oxygine
         _pages.clear();
         delete _font;
         _font = 0;
+        _loadCounter = 0;
     }
 
     void ResFontBM::_restore(Restorable* r, void*)
