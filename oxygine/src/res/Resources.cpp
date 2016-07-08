@@ -344,6 +344,11 @@ namespace oxygine
         return _resources;
     }
 
+    Resources::resourcesMap& Resources::_getResourcesMap()
+    {
+        return _resourcesMap;
+    }
+
     Resource* Resources::get(const std::string& id_, error_policy ep) const
     {
         std::string id = lower(id_);

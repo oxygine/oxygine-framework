@@ -55,6 +55,12 @@ namespace oxygine
     {
     public:
         typedef std::vector<spResource> resources;
+#ifdef __S3E__
+		typedef std::map<std::string, spResource> resourcesMap;
+#else
+		typedef std::unordered_map<std::string, spResource> resourcesMap;
+#endif
+
         typedef Resource* (*createResourceCallback)(CreateResourceContext& context);
         typedef Closure<void (Resource*)> ResLoadedCallback;
 
@@ -117,6 +123,7 @@ namespace oxygine
         void collect(resources&);
 
         resources& _getResources();
+		resourcesMap& _getResourcesMap();
 
     protected:
         void updateName(const std::string& filename);
@@ -148,11 +155,6 @@ namespace oxygine
 
 
         resources _resources;
-#ifdef __S3E__
-        typedef std::map<std::string, spResource> resourcesMap;
-#else
-        typedef std::unordered_map<std::string, spResource> resourcesMap;
-#endif
         resourcesMap _resourcesMap;
 
 
