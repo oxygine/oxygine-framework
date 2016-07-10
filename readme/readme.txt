@@ -1,7 +1,7 @@
 If you are using:
 	- SDL2:
 		1. Download latest SDL2 source snapshot from http://libsdl.org/hg.php
-		2. Your folder structure should be orginized like this:
+		2. Your folder structure should be organized like this:
 			any/path/
 					/oxygine-framework
 					/SDL
