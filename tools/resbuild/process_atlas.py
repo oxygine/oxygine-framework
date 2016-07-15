@@ -185,8 +185,11 @@ def makeAlpha(a):
         res = v + multiple - rem
         return res
 
-    asmall = a.resize(
-        (int(a.size[0] / 4), int(a.size[1] / 4)), Image.ANTIALIAS)
+    try:
+        asmall = a.resize(
+            (int(a.size[0] / 4), int(a.size[1] / 4)), Image.ANTIALIAS)
+    except ValueError:
+        return None
 
     b = asmall.getextrema()
 

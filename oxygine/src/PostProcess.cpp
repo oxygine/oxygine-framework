@@ -338,6 +338,8 @@ namespace oxygine
             return display;
 
         screen = actor.computeBounds(actor.computeGlobalTransform()).cast<Rect>();
+        if (screen.getWidth() < 0)
+            int q = 0;
         screen.size += Point(1, 1);
         screen.expand(_extend, _extend);
 
@@ -350,6 +352,8 @@ namespace oxygine
     void PostProcess::update(Actor* actor)
     {
         _screen = getScreenRect(*actor);
+        if (_screen.isEmpty())
+            return;
 
 //        OX_ASSERT(actor->_getStage());
         _rt = getRTManager().get(_rt, _screen.getWidth(), _screen.getHeight(), _format);
