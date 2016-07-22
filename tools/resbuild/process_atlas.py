@@ -450,7 +450,7 @@ def processRS(context, walker):
                 resize_filter = Image.BICUBIC
 
             if context.args.resize:
-                if as_bool(image_el.getAttribute("trueds")):
+                if as_bool(image_el.getAttribute("trueds")) or (not trim and not extend):
                     frame_image = frame_image.resize(
                         (frame_size[0], frame_size[1]), resize_filter)
                 else:
