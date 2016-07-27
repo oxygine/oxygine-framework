@@ -226,6 +226,12 @@ namespace oxygine
 
         void init2();
 
+        void init0()
+        {
+            if (!_dispatcher)
+                _dispatcher = new EventDispatcher;
+        }
+
         void init(init_desc* desc_ptr)
         {
             Input::instance.__removeFromDebugList();
@@ -250,8 +256,7 @@ namespace oxygine
 
             log::messageln("build settings %s", t.c_str());
 
-            if (!_dispatcher)
-                _dispatcher = new EventDispatcher;
+            init0();
 
 
             log::messageln("initialize oxygine");
@@ -317,7 +322,7 @@ namespace oxygine
             }
 
             SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 0);
-            SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 0);
+            //SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 0);
             //SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);

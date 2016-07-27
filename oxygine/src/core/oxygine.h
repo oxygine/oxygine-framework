@@ -125,5 +125,7 @@ namespace oxygine
         };
 
         spEventDispatcher getDispatcher();
+
+		void init0();
     }
 }

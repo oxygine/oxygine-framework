@@ -20,7 +20,7 @@ namespace oxygine
         NativeTexture() {}
         virtual void init(nativeTextureHandle, int w, int h, TextureFormat tf) = 0;
         virtual void init(int w, int h, TextureFormat tf, bool renderTarget = false) = 0;
-        virtual void init(const ImageData& src, bool sysMemCopy) = 0;
+        virtual void init(const ImageData& src, bool sysMemCopy = false) = 0;
         //virtual void release() = 0;
 
         virtual ImageData lock(lock_flags, const Rect* src) = 0;
