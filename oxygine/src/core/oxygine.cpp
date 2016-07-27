@@ -526,10 +526,16 @@ namespace oxygine
 
         bool  beginRendering(window w)
         {
+            
 #ifdef OXYGINE_SDL
             SDL_Window* wnd = w;
             if (!wnd)
+            {
+                if (!focus)
+                    return false;
+                
                 wnd = _window;
+            }
             SDL_GL_MakeCurrent(wnd, _context);
 #endif
 

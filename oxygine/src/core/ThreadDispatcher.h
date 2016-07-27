@@ -106,15 +106,18 @@ namespace oxygine
         void _popMessage(message&);
         void _popMessageNoCB(message&);
         void _replyLast(void* val);
-        unsigned int _id;
-        void*   _result;
-        int _replyingTo;
-
+        
+        
+        pthread_mutex_t _mutex;
+        pthread_cond_t _cond;
+        
         typedef std::vector<message> messages;
         messages _events;
         message _last;
-        pthread_cond_t _cond;
-        pthread_mutex_t _mutex;
+        
+        void*   _result;
+        unsigned int _id;
+        int _replyingTo;
     };
 
     typedef  ThreadDispatcher ThreadMessages;
