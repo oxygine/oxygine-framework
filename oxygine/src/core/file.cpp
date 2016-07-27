@@ -102,8 +102,6 @@ namespace oxygine
 
         handle open(const char* file_, const char* mode, error_policy ep)
         {
-            if (*mode == 's')
-                ++mode;
             
 #ifdef OX_DEBUG
             if (!strstr(mode, "b"))
