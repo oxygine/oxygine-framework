@@ -50,6 +50,7 @@
 #include "core/android/jniUtils.h"
 #elif __APPLE__
 #include <TargetConditionals.h>
+#include "ios/ios.h"
 #endif
 
 #ifdef OXYGINE_SDL
@@ -521,10 +522,16 @@ namespace oxygine
 
         bool  beginRendering(window w)
         {
+            
 #ifdef OXYGINE_SDL
             SDL_Window* wnd = w;
             if (!wnd)
+            {
+                if (!focus)
+                    return false;
+                
                 wnd = _window;
+            }
             SDL_GL_MakeCurrent(wnd, _context);
 #endif
 
@@ -753,6 +760,9 @@ namespace oxygine
 
         void release()
         {
+            _threadMessages.clear();
+            _uiMessages.clear();
+
             clearPostProcessItems();
             PostProcess::freeShaders();
 
@@ -783,6 +793,8 @@ namespace oxygine
             Resources::unregisterResourceType("bmfc_font");
             Resources::unregisterResourceType("sdfont");
             Resources::unregisterResourceType("starling");
+
+
 
 #if OXYGINE_SDL
             SDL_GL_DeleteContext(_context);
@@ -908,13 +920,15 @@ namespace oxygine
         return true;
     }
 
-    std::string     getLanguage()
-    {
+	std::string     getLanguage()
+	{
 #ifdef __ANDROID__
-        return jniGetLanguage();
+		return jniGetLanguage();
+#elif __APPLE__
+		return iosGetLanguage();
 #endif
-        return "en";
-    }
+		return "en";
+	}
 
     void    sleep(timeMS time)
     {

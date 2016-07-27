@@ -328,6 +328,7 @@ namespace oxygine
         /**recursively removes all event listeners and added tweens*/
         void clean();
 
+		virtual bool getBounds(RectF&) const { return false; }
 
     protected:
 
@@ -339,8 +340,8 @@ namespace oxygine
         virtual void onAdded2Stage() {}
         virtual void onRemovedFromStage() {}
         virtual void transformUpdated() {}
-        virtual bool getBounds(RectF&) const { return false; }
-        void calcBounds2(RectF& bounds, const Transform& transform) const;
+        
+        virtual void calcBounds2(RectF& bounds, const Transform& transform) const;
 
 
         typedef intrusive_list<spActor> children;

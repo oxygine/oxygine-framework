@@ -107,6 +107,7 @@ namespace oxygine
 
     void ThreadLoader::loaded(Event*)
     {
+        _threadDone = true;
         Event ev(ThreadLoader::COMPLETE, true);
         dispatchEvent(&ev);
         releaseRef();

@@ -56,6 +56,8 @@ namespace oxygine
             int w = _pp._screen.size.x;
             int h = _pp._screen.size.y;
 
+            if (w < 0 || h < 0)
+                return;
 
             IVideoDriver* driver = IVideoDriver::instance;
             const VertexDeclarationGL* decl = static_cast<const VertexDeclarationGL*>(IVideoDriver::instance->getVertexDeclaration(vertexPCT2::FORMAT));

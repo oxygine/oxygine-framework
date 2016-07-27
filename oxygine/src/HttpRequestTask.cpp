@@ -45,6 +45,12 @@ namespace oxygine
         _setCacheEnabled(enabled);
     }
 
+    void HttpRequestTask::addHeader(const std::string& key, const std::string& value)
+    {
+        OX_ASSERT(!"not implemented");
+        _addHeader(key, value);
+    }
+
     const std::vector<unsigned char>&   HttpRequestTask::getPostData() const
     {
         return _postData;

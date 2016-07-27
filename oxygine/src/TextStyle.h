@@ -6,6 +6,8 @@
 namespace oxygine
 {
     class Font;
+    class ResFont;
+
     class TextStyle
     {
     public:
@@ -40,7 +42,7 @@ namespace oxygine
             outlineColor(Color::Black),
             weight(0.5f) {}
 
-        const Font* font;
+        const ResFont* font;
 
         HorizontalAlign hAlign;
         VerticalAlign vAlign;
@@ -65,7 +67,7 @@ namespace oxygine
 
 
 
-        TextStyle withFont(const Font* f) const { TextStyle st = *this; st.font = f; return st; }
+        TextStyle withFont(const ResFont* f) const { TextStyle st = *this; st.font = f; return st; }
 
         TextStyle alignTop() const { TextStyle st = *this; st.vAlign = VALIGN_TOP; return st; }
         TextStyle alignBottom() const { TextStyle st = *this; st.vAlign = VALIGN_BOTTOM; return st; }

@@ -187,6 +187,22 @@ namespace oxygine
                 else
                     glDisable(GL_BLEND);
                 break;
+            case STATE_CULL_FACE:
+                switch (value)
+                {
+                    case CULL_FACE_FRONT_AND_BACK:
+                        glCullFace(GL_FRONT_AND_BACK);
+                        break;
+                    case CULL_FACE_FRONT:
+                        glCullFace(GL_FRONT);
+                        break;
+                    case CULL_FACE_BACK:
+                        glCullFace(GL_BACK);
+                        break;
+                    default:
+                        break;
+                }
+                break;
             default:
                 OX_ASSERT(!"unknown state");
         }

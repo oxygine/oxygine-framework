@@ -37,7 +37,7 @@ namespace oxygine
         const float minWidth = 300.0f;
 
         TextStyle style;
-        style.font = _page->getTreeInspector()->_resSystem->getResFont("system")->getFont();
+        style.font = _page->getTreeInspector()->_resSystem->getResFont("system");
         style.multiline = true;
         style.vAlign = TextStyle::VALIGN_TOP;
         tb->setStyle(style);

@@ -31,7 +31,7 @@ namespace oxygine
 
         const Font* getFont(const char* name = 0, int size = 0) const OVERRIDE;
 
-        bool isSignedDistance() const { return _sdf; }
+        bool isSDF(int& size) const OVERRIDE;
 
     private:
         struct page

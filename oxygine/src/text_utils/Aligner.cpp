@@ -1,14 +1,15 @@
 #include "Aligner.h"
 #include "Font.h"
 #include <assert.h>
-
+#include "res/ResFont.h"
 namespace oxygine
 {
     namespace text
     {
 
-        Aligner::Aligner(): width(0), height(0), _x(0), _y(0), _lineWidth(0), bounds(0, 0, 0, 0)
+        Aligner::Aligner(const TextStyle& Style): width(0), height(0), _x(0), _y(0), _lineWidth(0), bounds(0, 0, 0, 0), style(Style)
         {
+            _font = style.font->getFont(0, style.fontSize);
             _line.reserve(50);
         }
 
@@ -65,9 +66,9 @@ namespace oxygine
             _y = 0;
 
             const TextStyle& st = getStyle();
-            _scale = st.font->getScale();
+            _scale = _font->getScale();
             if (st.fontSize)
-                _scale = st.font->getSize() / float(st.fontSize);
+                _scale = _font->getSize() / float(st.fontSize);
 
             width = int(width * _scale);
             height = int(height * _scale);
@@ -101,7 +102,7 @@ namespace oxygine
 
         int Aligner::getLineSkip() const
         {
-            return getStyle().font->getBaselineDistance() + getStyle().linesOffset;
+            return _font->getBaselineDistance() + getStyle().linesOffset;
         }
 
         void Aligner::_alignLine(line& ln)

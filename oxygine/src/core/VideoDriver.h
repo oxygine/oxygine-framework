@@ -51,9 +51,17 @@ namespace oxygine
             BT_ONE_MINUS_DST_COLOR,
         };
 
+		enum CULL_FACE_TYPE
+		{
+			CULL_FACE_FRONT_AND_BACK,
+			CULL_FACE_FRONT,
+			CULL_FACE_BACK,
+		};
+
         enum STATE
         {
             STATE_BLEND,
+			STATE_CULL_FACE,
             STATE_NUM
         };
 

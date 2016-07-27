@@ -81,7 +81,9 @@ def do(args):
 
 
 def process(values):
-    ar = values.split(" ")
+    import shlex
+    ar = shlex.split(values)
+    #ar = values.split(" ")
     args = []
     for a in ar:
         v = a.strip()

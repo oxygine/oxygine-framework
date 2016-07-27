@@ -133,7 +133,7 @@ public:
         tf->setX(content->getWidth() - tf->getWidth());
         tf->setY(y);
         tf->setMultiline(true);
-        tf->setFont(Test::resourcesUI.getResFont("big")->getFont());
+        tf->setFont(Test::resourcesUI.getResFont("big"));
         y += 200;
         return tf;
     }

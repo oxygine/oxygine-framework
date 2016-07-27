@@ -61,7 +61,12 @@ spTextField createText(const std::string& txt)
     spTextField text = new TextField();
 
     TextStyle style;
+
+#if OXYGINE_VERSION > 3
+    style.font = Test::resourcesUI.getResFont("main");
+#else
     style.font = Test::resourcesUI.getResFont("main")->getFont();
+#endif
     style.color = textColor;
     style.vAlign = TextStyle::VALIGN_MIDDLE;
     style.hAlign = TextStyle::HALIGN_CENTER;

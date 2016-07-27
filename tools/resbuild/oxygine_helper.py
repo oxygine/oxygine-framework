@@ -24,4 +24,4 @@ class helper(object):
             import oxyresbuild
             oxyresbuild.process(args)
         else:
-            os.system(self.path_process_xml + " " + args)
+            os.system("python \"{}\" {}".format(self.path_process_xml, args))

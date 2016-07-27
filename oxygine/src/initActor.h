@@ -69,7 +69,7 @@ namespace oxygine
         typedef argT<TextStyle::HorizontalAlign, TextStyle::HorizontalAlign, TextField, &TextField::setHAlign> hAlign;
         typedef argT<TextStyle::VerticalAlign, TextStyle::VerticalAlign, TextField, &TextField::setVAlign> vAlign;
         typedef argT<int, int, TextField, &TextField::setFontSize> fontSize;
-        typedef argT<const Font*, const Font*, TextField, &TextField::setFont> font;
+        typedef argT<const ResFont*, const ResFont*, TextField, &TextField::setFont> font;
         typedef argT<bool, bool, TextField, &TextField::setMultiline> multiline;
 
 
@@ -166,7 +166,7 @@ namespace oxygine
 #define arg_htmlText args::htmlText()
 #define arg_hAlign args::hAlign()
 #define arg_vAlign args::vAlign()
-#define arg_fontSize2Scale args::fontSize2Scale()
+#define arg_fontSize args::fontSize()
 #define arg_font args::font()
 #define arg_multiline args::multiline()
 #define arg_tcolor args::color()

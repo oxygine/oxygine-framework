@@ -146,7 +146,7 @@ public:
         _txt = txt;
 
         TextStyle st;
-        st.font = resources.getResFont("num_fnt_shdr")->getFont();
+        st.font = resources.getResFont("num_fnt_shdr");
         st.vAlign = TextStyle::VALIGN_MIDDLE;
         st.hAlign = TextStyle::HALIGN_MIDDLE;
         //st.color = Color::CornflowerBlue;

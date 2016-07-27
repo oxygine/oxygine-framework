@@ -13,9 +13,17 @@
 
 namespace oxygine
 {
+    std::string iosGetLanguage()
+    {
+        NSString * language = [[NSLocale preferredLanguages] objectAtIndex:0];
+        std::string lang = std::string([language UTF8String]);
+        return lang;
+    }
+    
 	namespace file
 	{
-		std::string getSupportFolder()
+        
+        std::string getSupportFolder()
 		{
             NSString* bundleID = [[NSBundle mainBundle] bundleIdentifier];
             NSFileManager*fm = [NSFileManager defaultManager];
