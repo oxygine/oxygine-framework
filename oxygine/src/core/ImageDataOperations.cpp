@@ -65,9 +65,17 @@ namespace oxygine
             applyOperation(op, src, dest);
         }
 
+
+
         void blitPremultiply(const ImageData& src, ImageData& dest)
         {
             op_premultipliedAlpha op;
+            applyOperation(op, src, dest);
+        }
+
+        void blitAlpha(const ImageData& src, ImageData& dest)
+        {
+            op_replaceAlpha op;
             applyOperation(op, src, dest);
         }
 
