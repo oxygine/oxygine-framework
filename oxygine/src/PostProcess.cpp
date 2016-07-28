@@ -150,8 +150,11 @@ namespace oxygine
         if (!t->getHandle())
             return false;
 
-        w = nextPOT(w);
-        h = nextPOT(h);
+        if (!HAVE_NPOT_RT())
+        {
+            w = nextPOT(w);
+            h = nextPOT(h);
+        }
 
         if (t->getFormat() == tf &&
                 t->getWidth() >= w && t->getHeight() >= h &&

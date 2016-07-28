@@ -88,7 +88,7 @@ namespace oxygine
         {
             if (*mode == 's')
                 ++mode;
-            
+
             LOGD("oxFileOpen %s", filename);
             oxHandle* h = oxFileOpen_(filename, mode);
             if (h)

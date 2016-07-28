@@ -119,8 +119,11 @@ namespace oxygine
 
         if (rt)
         {
-            w = nextPOT(w);
-            h = nextPOT(h);
+            if (!HAVE_NPOT_RT())
+            {
+                w = nextPOT(w);
+                h = nextPOT(h);
+            }
         }
 
         glPixel p = SurfaceFormat2GL(tf);
