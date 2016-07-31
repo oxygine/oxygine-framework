@@ -50,6 +50,7 @@
 #include "core/android/jniUtils.h"
 #elif __APPLE__
 #include <TargetConditionals.h>
+#include "ios/ios.h"
 #endif
 
 #ifdef OXYGINE_SDL
@@ -924,13 +925,15 @@ namespace oxygine
         return true;
     }
 
-    std::string     getLanguage()
-    {
+	std::string     getLanguage()
+	{
 #ifdef __ANDROID__
-        return jniGetLanguage();
+		return jniGetLanguage();
+#elif __APPLE__
+		return iosGetLanguage();
 #endif
-        return "en";
-    }
+		return "en";
+	}
 
     void    sleep(timeMS time)
     {

@@ -4,6 +4,7 @@
 #include "core/VideoDriver.h"
 #include "ResAtlasGeneric.h"
 #include "ResAtlasPrebuilt.h"
+#include "core/ImageDataOperations.h"
 
 
 #ifdef __S3E__
@@ -27,12 +28,43 @@ namespace oxygine
         spMemoryTexture mt = new MemoryTexture;
 
         LOGD("loading atlas: %s", file.c_str());
-        file::buffer bf;
-        file::read(file.c_str(), bf);
-        LOGD("atlas file loaded: %s", file.c_str());
+		
+		std::string str = file;
+		std::string alpha_file;
+
+		if (!file::exists (str.c_str ()))
+		{
+			size_t start_pos = str.find(".png");
+			if(start_pos != std::string::npos)
+			{
+				alpha_file = str;
+
+				str.replace(start_pos, 4, ".jpg");
+				alpha_file.replace(start_pos, 4, "_.jpg");
+			}
+			else return;
+		}
+
+		file::buffer bf;
+        file::read(str.c_str(), bf);
+        LOGD("atlas file loaded: %s", str.c_str());
         mt->init(bf, true, nt->getFormat());
         im = mt->lock();
         LOGD("atlas size: %d %d", im.w, im.h);
+
+		if (!alpha_file.empty () && file::exists (alpha_file.c_str ()))
+		{
+			ImageData ima;
+			spMemoryTexture mta = new MemoryTexture;
+			file::buffer bfa;
+			file::read(alpha_file.c_str(), bfa);
+			mta->init(bfa, true, nt->getFormat());
+			ima = mta->lock();
+
+			operations::blitAlpha (ima,im);
+
+			mta->unlock ();
+		}
 
         CreateTextureTask opt;
         opt.src = mt;
@@ -40,6 +72,8 @@ namespace oxygine
         opt.linearFilter = linearFilter;
         opt.clamp2edge = clamp2edge;
         load_context->createTexture(opt);
+
+
     }
 
     void load_texture(const std::string& file, spNativeTexture nt, bool linearFilter, bool clamp2edge, LoadResourcesContext* load_context)
