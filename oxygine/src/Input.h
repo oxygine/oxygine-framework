@@ -12,7 +12,7 @@ namespace oxygine
 
     const int MAX_TOUCHES = 17;
 
-    class Input: public Object
+    class Input
     {
     public:
         static Input instance;

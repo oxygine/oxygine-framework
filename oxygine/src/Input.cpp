@@ -25,9 +25,9 @@ namespace oxygine
         me.pressure = pressure;
 
         if (type == TouchEvent::TOUCH_DOWN)
-            ps->_isPressed[button] = true;
+            ps->_pressed |= 1 << button;
         else if (type == TouchEvent::TOUCH_UP)
-            ps->_isPressed[button] = false;
+            ps->_pressed &= ~(1 << button);
 
         ps->_position = p;
 
@@ -65,7 +65,6 @@ namespace oxygine
 
     Input::Input()
     {
-        addRef();
         _pointerMouse.init(MAX_TOUCHES + 1);
         for (int i = 0; i < MAX_TOUCHES; ++i)
             _pointers[i].init(i + 1);

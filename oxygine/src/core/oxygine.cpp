@@ -232,8 +232,6 @@ namespace oxygine
 
         void init(init_desc* desc_ptr)
         {
-            Input::instance.__removeFromDebugList();
-
             std::string t;
 
 #ifdef OX_DEBUG

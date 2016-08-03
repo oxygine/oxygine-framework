@@ -24,7 +24,7 @@ namespace oxygine
 
         void init(int pointerIndex);
 
-        bool            isPressed(MouseButton mb = MouseButton_Touch) const {return _isPressed[mb];}
+        bool            isPressed(MouseButton mb = MouseButton_Touch) const;
         int             getIndex() const {return _index;}
         const Vector2&  getPosition() const {return _position;}
 
@@ -32,7 +32,7 @@ namespace oxygine
         friend class Input;
 
         int _index;
-        bool _isPressed[MouseButton_Count];
+        int _pressed;
         Vector2 _position;
     };
 }

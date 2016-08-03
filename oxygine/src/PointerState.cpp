@@ -10,63 +10,12 @@ namespace oxygine
     void PointerState::init(int pointerIndex)
     {
         _index = pointerIndex;
-        for (int i = 0; i < MouseButton_Count; ++i)
-            _isPressed[i] = false;
+        _pressed = 0;
         _position.setZero();
     }
 
-    bool isFriend22(Actor* actor, Actor* max_parent, Actor* checkParent)
+    bool PointerState::isPressed(MouseButton mb) const
     {
-        if (!max_parent)
-            max_parent = actor;
-
-        Actor* parent = actor;
-        while (parent)
-        {
-            if (parent == checkParent)
-                return true;
-            Actor* copy = parent;
-            parent = parent->getParent();
-
-            if (copy == max_parent)
-                break;
-        }
-        return false;
+        return (_pressed & (1 << mb)) != 0;
     }
-    /*
-    bool checkParent(spEventHandler eh, Actor *checkIsItChild)
-    {
-        Actor *parent = eh->getFriendActor();
-        if (!parent)
-        {
-            if (eh->getClient() == checkIsItChild)
-                return true;
-            return false;
-        }
-        while (checkIsItChild)
-        {
-            if (checkIsItChild == parent)
-                return true;
-            checkIsItChild = checkIsItChild->getParent();
-        }
-        return false;
-    }
-    */
-
-    Vector2 global2local(Actor* actor, const Vector2& globalPos)
-    {
-        Vector2 pos = globalPos;
-        if (!actor)
-            return pos;
-        Actor* parent = actor->getParent();
-        if (parent)
-        {
-            pos = global2local(parent, globalPos);
-        }
-
-        pos = actor->global2local(pos);
-
-        return pos;
-    }
-
 }
