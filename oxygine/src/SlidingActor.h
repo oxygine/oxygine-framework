@@ -89,7 +89,7 @@ namespace oxygine
         int _current;
 
         timeMS _lastIterTime;
-		pointer_index _finger;
+        pointer_index _finger;
     };
 }
 

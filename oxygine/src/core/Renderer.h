@@ -24,10 +24,10 @@ namespace oxygine
         blend_premultiplied_alpha,
         blend_alpha,
         blend_add,
-		blend_screen,
+        blend_screen,
         blend_multiply,
         blend_inverse,
-		blend_erase,
+        blend_erase,
     };
 
 

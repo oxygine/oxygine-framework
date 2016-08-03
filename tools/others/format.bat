@@ -4,7 +4,7 @@ set astyle=d:\dropbox\tools\AStyle.exe
 set root=%CD%\..\..\..\
 
 echo %root%
-%astyle% %root%\oxygine-framework\oxygine\src\*.cpp d:\oxygine-framework\oxygine\src\*.h %options% --exclude=winnie_alloc --exclude=pugixml --exclude=minizip --exclude=closure --exclude=Tween.cpp
+%astyle% %root%\oxygine-framework\oxygine\src\*.cpp %root%\oxygine-framework\oxygine\src\*.h %options% --exclude=winnie_alloc --exclude=pugixml --exclude=minizip --exclude=closure --exclude=Tween.cpp
 
 %astyle% %root%\oxygine-sound\src\*.cpp %root%\oxygine-sound\src\*.h %root%\oxygine-sound\examples\*.cpp %root%\oxygine-sound\examples\*.h %options%
 %astyle% %root%\oxygine-flow\src\*.cpp %root%\oxygine-flow\src\*.h %root%\oxygine-flow\examples\*.cpp %root%\oxygine-flow\examples\*.h %options%

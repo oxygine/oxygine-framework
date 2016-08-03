@@ -44,9 +44,9 @@ namespace oxygine
 
         typedef Property<Color, const Color&, VStyleActor, &VStyleActor::getColor, &VStyleActor::setColor> TweenColor;
 
-		bool getBounds(RectF& b) const  OVERRIDE { b = getDestRect();  return true; }
+        bool getBounds(RectF& b) const  OVERRIDE { b = getDestRect();  return true; }
 
-    protected:        
+    protected:
         VisualStyle _vstyle;
     };
 

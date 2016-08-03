@@ -106,15 +106,15 @@ namespace oxygine
         void _popMessage(message&);
         void _popMessageNoCB(message&);
         void _replyLast(void* val);
-        
-        
+
+
         pthread_mutex_t _mutex;
         pthread_cond_t _cond;
-        
+
         typedef std::vector<message> messages;
         messages _events;
         message _last;
-        
+
         void*   _result;
         unsigned int _id;
         int _replyingTo;

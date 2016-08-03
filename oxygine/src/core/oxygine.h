@@ -67,7 +67,7 @@ namespace oxygine
             bool force_gles;
         };
 
-		void init0();
+        void init0();
 
         /** Initializes Oxygine*/
         void init(init_desc* desc = 0);
@@ -128,6 +128,6 @@ namespace oxygine
 
         spEventDispatcher getDispatcher();
 
-		void init0();
+        void init0();
     }
 }
