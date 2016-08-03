@@ -142,7 +142,8 @@ namespace oxygine
 
         STDMaterial& mat = *STDMaterial::instance;
         mat.apply(0);
-        mat.setViewProj(view, proj);
+        Matrix vp = view * proj;
+        mat.setViewProj(vp);
 
         timeMS t = getTimeMS();
         RenderState rs;

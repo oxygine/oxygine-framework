@@ -251,7 +251,8 @@ namespace oxygine
         //initialize projection matrix
         Matrix::orthoLH(proj, (float)width, (float)height, 0, 1);
 
-        setViewProjTransform(view, proj);
+        Matrix vp = view * proj;
+        setViewProjTransform(vp);
     }
 
     void STDRenderer::setViewProjTransform(const Matrix& viewProj)

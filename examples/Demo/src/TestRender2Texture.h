@@ -86,7 +86,7 @@ public:
         else
         {
             color = Color::White;
-            renderer.setBlendMode(blend_erase);
+            renderer.setBlendMode(blend_disabled);
         }
 
 

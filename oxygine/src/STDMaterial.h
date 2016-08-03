@@ -25,7 +25,7 @@ namespace oxygine
         void doRender(ColorRectSprite*, const RenderState& rs) OVERRIDE;
         void doRender(ProgressBar*, const RenderState& rs) OVERRIDE;
 
-        void setViewProj(const Matrix& view, const Matrix& proj);
+        void setViewProj(const Matrix& vp);
 
         STDRenderer* getRenderer() { return _renderer; }
 

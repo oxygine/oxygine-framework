@@ -31,9 +31,9 @@ namespace oxygine
         }
     }
 
-    void STDMaterial::setViewProj(const Matrix& view, const Matrix& proj)
+    void STDMaterial::setViewProj(const Matrix& vp)
     {
-        _renderer->setViewProjTransform(view, proj);
+        _renderer->setViewProjTransform(vp);
     }
 
     void STDMaterial::render(ClipRectActor* actor, const RenderState& parentRS)
