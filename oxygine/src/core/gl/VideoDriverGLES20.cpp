@@ -21,6 +21,7 @@
 
 namespace oxygine
 {
+
     VideoDriverGLES20::VideoDriverGLES20(): _programID(0), _p(0)
     {
     }
@@ -126,9 +127,7 @@ namespace oxygine
         }
 
 
-#if OXYGINE_TRACE_VIDEO_STATS
-        _debugAddPrimitives(pt, (int)(GLsizei)primitives);
-#endif
+        _debugAddPrimitives(pt, primitives);
 
         CHECKGL();
     }
@@ -157,9 +156,8 @@ namespace oxygine
         }
 
 
-#if OXYGINE_TRACE_VIDEO_STATS
         _debugAddPrimitives(pt, numIndices);
-#endif
+
         CHECKGL();
     }
 

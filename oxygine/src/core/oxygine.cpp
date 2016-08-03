@@ -81,8 +81,6 @@ extern "C"
 
 namespace oxygine
 {
-    IVideoDriver::Stats _videoStats;
-
     static ThreadDispatcher _threadMessages;
     static ThreadDispatcher _uiMessages;
     Mutex mutexAlloc;
@@ -544,6 +542,7 @@ namespace oxygine
             bool ready = STDRenderer::isReady();
             if (ready)
             {
+                IVideoDriver::_stats.start = getTimeMS();
                 updatePortProcessItems();
             }
 
@@ -574,12 +573,9 @@ namespace oxygine
                 SDL_GL_SwapWindow(wnd);
             }
 #endif
-
-            IVideoDriver::instance->getStats(_videoStats);
-            IVideoDriver::instance->swapped();
-
             CHECKGL();
 
+            IVideoDriver::_stats.duration = getTimeMS() - IVideoDriver::_stats.start;
             //sleep(1000/50);
         }
 
@@ -721,6 +717,10 @@ namespace oxygine
 
         bool update()
         {
+            timeMS duration = IVideoDriver::_stats.duration;
+            IVideoDriver::_stats = IVideoDriver::Stats();
+            IVideoDriver::_stats.duration = duration;
+
             ThreadDispatcher::peekMessage msg;
             while (_threadMessages.peek(msg, true)) {}
 

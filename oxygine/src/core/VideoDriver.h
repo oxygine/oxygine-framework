@@ -18,13 +18,6 @@ namespace oxygine
     class IVideoDriver
     {
     public:
-        class Stats
-        {
-        public:
-            Stats(): batches(0), triangles(0) {}
-            int batches;
-            int triangles;
-        };
 
         enum PRIMITIVE_TYPE
         {
@@ -35,7 +28,20 @@ namespace oxygine
             PT_TRIANGLES,
             PT_TRIANGLE_STRIP,
             PT_TRIANGLE_FAN,
+            PT_COUNT,
         };
+
+
+        class Stats
+        {
+        public:
+            Stats() : batches(0), duration(0), start(0) { memset(elements, 0, sizeof(elements)); }
+            int batches;
+            int elements[PT_COUNT];
+            timeMS start;
+            timeMS duration;
+        };
+        static Stats _stats;
 
         enum BLEND_TYPE
         {
@@ -79,7 +85,7 @@ namespace oxygine
         virtual void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData, unsigned int verticesDataSize) = 0;
         virtual void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData, unsigned int verticesDataSize, const unsigned short* indicesData, unsigned int numIndices) = 0;
 
-        virtual void            getStats(Stats& s) const = 0;
+
         virtual void            getViewport(Rect& r) const = 0;
         virtual bool            getScissorRect(Rect&) const = 0;
         virtual spNativeTexture getRenderTarget() const = 0;
@@ -102,9 +108,8 @@ namespace oxygine
         virtual void setUniform(const char* id, float v) = 0;
         virtual void setUniformInt(const char* id, int v) = 0;
 
-        virtual void setDebugStats(bool enable) = 0;
 
-        virtual void swapped() = 0;
+        void _debugAddPrimitives(PRIMITIVE_TYPE pt, int num);
     };
 
     class VideoDriverNull: public IVideoDriver
@@ -116,7 +121,6 @@ namespace oxygine
         void clear(const Color& color) {}
         void begin(const Rect& viewport, const Color* clearColor);
         bool isReady() const {return true;}
-        void getStats(Stats& s) const;
         void getViewport(Rect& r) const;
         bool getScissorRect(Rect&) const;
         ShaderProgram*  getShaderProgram() const { return 0; }
@@ -143,7 +147,6 @@ namespace oxygine
         void setTexture(int sampler, spNativeTexture);
         void setState(STATE, unsigned int value) {}
         void setBlendFunc(BLEND_TYPE src, BLEND_TYPE dest) {}
-        void swapped() {}
         void setDebugStats(bool enable) {}
 
         void reset() {}

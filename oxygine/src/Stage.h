@@ -69,7 +69,6 @@ namespace oxygine
     private:
 
         timeMS _statUpdate;
-        timeMS _statRender;
         bool    _clipOuter;
         Rect    _viewport;
 

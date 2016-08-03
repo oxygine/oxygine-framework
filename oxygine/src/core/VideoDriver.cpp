@@ -8,6 +8,17 @@ namespace oxygine
 {
     IVideoDriver* IVideoDriver::instance = 0;
 
+    void IVideoDriver::_debugAddPrimitives(PRIMITIVE_TYPE pt, int primitives)
+    {
+#if OXYGINE_TRACE_VIDEO_STATS
+        _stats.elements[pt] += primitives;
+        _stats.batches += 1;
+#endif
+
+    }
+
+    IVideoDriver::Stats IVideoDriver::_stats;
+
     spNativeTexture VideoDriverNull::createTexture()
     {
         //return new NativeTextureNull;
@@ -17,12 +28,6 @@ namespace oxygine
     void VideoDriverNull::begin(const Rect& viewport, const Color* clearColor)
     {
 
-    }
-
-    void VideoDriverNull::getStats(Stats& s) const
-    {
-        s.batches = 0;
-        s.triangles = 0;
     }
 
     void VideoDriverNull::getViewport(Rect& r) const
