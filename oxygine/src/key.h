@@ -5,13 +5,15 @@ namespace oxygine
 {
     namespace key
     {
-        /**should be called before core::update*/
-        void update();
-
         typedef int keycode;
+
+        void init();
+        void release();
 
         bool wasPressed(keycode);
         bool wasReleased(keycode);
+
+        /*could be used without key::init()**/
         bool isPressed(keycode);
     }
 }

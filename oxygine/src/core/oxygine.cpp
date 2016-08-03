@@ -5,6 +5,7 @@
 #include "res/CreateResourceContext.h"
 #include "res/Resources.h"
 
+
 #include "res/ResBuffer.h"
 #include "res/ResFontBM.h"
 #include "res/ResAtlas.h"
@@ -173,6 +174,11 @@ namespace oxygine
         return 0;
     }
 #endif
+
+    namespace key
+    {
+        void update();
+    }
 
     namespace core
     {
@@ -715,6 +721,8 @@ namespace oxygine
 
         bool update()
         {
+            key::update();
+
             timeMS duration = IVideoDriver::_stats.duration;
             IVideoDriver::_stats = IVideoDriver::Stats();
             IVideoDriver::_stats.duration = duration;
