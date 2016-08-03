@@ -40,6 +40,8 @@ namespace oxygine
         bool operator != (const VectorT3& r) const;
 
         void normalize();
+        VectorT3 normalized() const { VectorT3 t = *this; t.normalize(); return t; }
+
         void clamp(const VectorT3& min, const VectorT3& max);
         T length() const;
         T dot(const VectorT3& p)  const;

@@ -13,6 +13,12 @@ namespace oxygine
 
     }
 
+
+    ShaderProgramGL::ShaderProgramGL(GLuint vs, GLuint ps, const VertexDeclarationGL* decl)
+    {
+        _program = createProgram(vs, ps, decl);
+    }
+
     ShaderProgramGL::~ShaderProgramGL()
     {
         if (_program)
