@@ -38,7 +38,7 @@ namespace oxygine
         unreg();
     }
 
-    UberShaderProgramBase::shader* UberShaderProgram::getShaderProgram(int flags)
+    ShaderProgram* UberShaderProgram::getShaderProgram(int flags)
     {
         shader& s = _shaders[flags];
 
@@ -107,7 +107,7 @@ namespace oxygine
             CHECKGL();
         }
 
-        return &s;
+        return s.program;
     }
 
     UberShaderProgram::UberShaderProgram()

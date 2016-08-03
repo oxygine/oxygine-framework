@@ -563,7 +563,7 @@ namespace oxygine
 
     void STDRenderer::preDrawBatch()
     {
-        ShaderProgram* prog = _uberShader->getShaderProgram(_shaderFlags)->program;
+        ShaderProgram* prog = _uberShader->getShaderProgram(_shaderFlags);
         setShader(prog);
 
 
@@ -637,7 +637,7 @@ namespace oxygine
 
         _shaderFlags = shaderFlags;
 
-        ShaderProgram* prog = _uberShader->getShaderProgram(_shaderFlags)->program;
+        ShaderProgram* prog = _uberShader->getShaderProgram(_shaderFlags);
         setShader(prog);
 
         Vector4 c;
@@ -653,7 +653,7 @@ namespace oxygine
         drawBatch();
         _shaderFlags &= ~(UberShaderProgram::SDF | UberShaderProgram::SDF_OUTLINE);
 
-        ShaderProgram* prog = _uberShader->getShaderProgram(_shaderFlags)->program;
+        ShaderProgram* prog = _uberShader->getShaderProgram(_shaderFlags);
         setShader(prog);
     }
 
