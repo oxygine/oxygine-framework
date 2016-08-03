@@ -53,11 +53,6 @@ namespace oxygine
         //_currentProgram = 0;
     }
 
-    void VideoDriverGLES20::updateConstants()
-    {
-        //_currentProgram->setUniform("mat", &_matrixVP);
-    }
-
 
     void VideoDriverGLES20::begin(const Rect& viewport, const Color* clearColor)
     {
@@ -66,7 +61,8 @@ namespace oxygine
 
     void VideoDriverGLES20::clear(const Color& color)
     {
-        glClearColor(color.getRedF(), color.getGreenF(), color.getBlueF(), color.getAlphaF());
+        Vector4 c = color.toVector();
+        glClearColor(c.x, c.y, c.z, c.w);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         CHECKGL();
@@ -228,5 +224,4 @@ namespace oxygine
         oxglUniform1f(p, val);
         CHECKGL();
     }
-
 }

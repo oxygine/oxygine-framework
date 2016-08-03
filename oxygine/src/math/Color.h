@@ -1,6 +1,7 @@
 #pragma once
 #include "oxygine_include.h"
 #include "ScalarMath.h"
+#include "Vector4.h"
 
 namespace oxygine
 {
@@ -214,6 +215,8 @@ namespace oxygine
         float getGreenF() const {return g / 255.0f;}
         float getBlueF() const {return b / 255.0f;}
         float getAlphaF() const {return a / 255.0f;}
+
+        Vector4 toVector()const { return Vector4(getRedF(), getGreenF(), getBlueF(), getAlphaF()); }
 
         Color operator + (const Color& c) const
         {

@@ -17,7 +17,7 @@ namespace oxygine
         void restore();
 
         spNativeTexture createTexture();
-        //const file::buffer& getShaderBody() const {return _shaderBody;}
+
         bool isReady() const;
 
         void begin(const Rect& viewport, const Color* clearColor);
@@ -45,6 +45,5 @@ namespace oxygine
 
         int _programID;
         ShaderProgram* _p;
-        void updateConstants();
     };
 }

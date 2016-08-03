@@ -598,8 +598,7 @@ namespace oxygine
         ShaderProgram* prog = _uberShader->getShaderProgram(_shaderFlags);
         setShader(prog);
 
-        Vector4 c;
-        c = Vector4(outlineColor.getRedF(), outlineColor.getGreenF(), outlineColor.getBlueF(), outlineColor.getAlphaF());
+        Vector4 c = outlineColor.toVector();
         _driver->setUniform("sdf_outline_color", &c, 1);
 
         c = Vector4(offset, contrast, outlineOffset, contrast);

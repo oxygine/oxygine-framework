@@ -136,7 +136,8 @@ namespace oxygine
         glDisable(GL_SCISSOR_TEST);
         if (clearColor)
         {
-            glClearColor(clearColor->getRedF(), clearColor->getGreenF(), clearColor->getBlueF(), clearColor->getAlphaF());
+            Vector4 c = clearColor->toVector();
+            glClearColor(c.x, c.y, c.z, c.w);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         }
         else

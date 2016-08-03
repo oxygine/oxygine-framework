@@ -107,7 +107,7 @@ namespace oxygine
 
         int n = 0;
         int mem = 0;
-        for (std::vector<spNativeTexture>::iterator i = textures.begin(); i != textures.end(); ++i)
+        for (std::vector<spNativeTexture>::reverse_iterator i = textures.rbegin(); i != textures.rend(); ++i)
         {
             spNativeTexture t = *i;
             TextureLine* line = new TextureLine(t);
