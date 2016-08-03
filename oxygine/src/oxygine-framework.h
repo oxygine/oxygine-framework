@@ -42,6 +42,7 @@
 #include "Serialize.h"
 #include "STDRenderer.h"
 #include "WebImage.h"
+#include "key.h"
 
 //closure/
 #include "closure/closure.h"

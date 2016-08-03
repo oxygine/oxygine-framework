@@ -13,8 +13,7 @@ namespace oxygine
         MouseButton_Touch = 0,
         MouseButton_Left = 0,
         MouseButton_Middle = 1,
-        MouseButton_Right = 2,
-        MouseButton_Count
+        MouseButton_Right = 2
     };
 
     class PointerState

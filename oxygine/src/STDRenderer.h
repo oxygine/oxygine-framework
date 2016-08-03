@@ -11,6 +11,8 @@ namespace oxygine
     public:
 
         static STDRenderer* instance;
+        /**Sets default rendering OpenGL options for 2D*/
+        static void setDefaultSettings();
         /**Initializes internal classes. Called automatically from oxygine::init();*/
         static void initialize();
         /**Clears internal data*/
@@ -42,9 +44,11 @@ namespace oxygine
 
 
         void setDriver(IVideoDriver*);
+
         OXYGINE_DEPRECATED
         void setViewProjTransform(const Matrix& view, const Matrix& proj);
         void setViewProjTransform(const Matrix& viewProj);
+        void setVertexDeclaration(const VertexDeclaration* decl);
         void setUberShaderProgram(UberShaderProgram* pr);
         /**Sets blend mode. Default value is blend_premultiplied_alpha*/
         void setBlendMode(blend_mode blend);
@@ -81,9 +85,6 @@ namespace oxygine
 #endif
 
     protected:
-
-        void setVertexDeclaration(const VertexDeclaration* decl);
-
         Transform _transform;
 
         STDRenderer* _previous;
