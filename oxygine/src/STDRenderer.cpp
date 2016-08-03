@@ -420,43 +420,15 @@ namespace oxygine
         {
             drawBatch();
 
-            switch (blend)
+            if (blend == 0)
             {
-                case blend_disabled:
-                    _driver->setState(IVideoDriver::STATE_BLEND, 0);
-                    break;
-                case blend_premultiplied_alpha:
-                    _driver->setBlendFunc(IVideoDriver::BT_ONE, IVideoDriver::BT_ONE_MINUS_SRC_ALPHA);
-                    break;
-                case blend_alpha:
-                    _driver->setBlendFunc(IVideoDriver::BT_SRC_ALPHA, IVideoDriver::BT_ONE_MINUS_SRC_ALPHA);
-                    break;
-                case blend_add:
-                    _driver->setBlendFunc(IVideoDriver::BT_ONE, IVideoDriver::BT_ONE);
-                    break;
-                case blend_screen:
-                    _driver->setBlendFunc(IVideoDriver::BT_ONE, IVideoDriver::BT_ONE_MINUS_SRC_COLOR);
-                    break;
-                case blend_multiply:
-                    _driver->setBlendFunc(IVideoDriver::BT_DST_COLOR, IVideoDriver::BT_ONE_MINUS_SRC_ALPHA);
-                    break;
-                case blend_inverse:
-                    _driver->setBlendFunc(IVideoDriver::BT_ONE_MINUS_DST_COLOR, IVideoDriver::BT_ZERO);
-                    break;
-                case blend_erase:
-                    _driver->setBlendFunc(IVideoDriver::BT_ONE, IVideoDriver::BT_ZERO);
-                    break;
-
-                //case blend_sub:
-                //_driver->setBlendFunc(IVideoDriver::BT_ONE, IVideoDriver::BT_ONE);
-                //glBlendEquation(GL_FUNC_REVERSE_SUBTRACT);
-                //  break;
-                default:
-                    OX_ASSERT(!"unknown blend");
+                _driver->setState(IVideoDriver::STATE_BLEND, 0);
             }
-
-            if (_blend == blend_disabled)
+            else
             {
+                IVideoDriver::BLEND_TYPE src  = static_cast<IVideoDriver::BLEND_TYPE>(blend >> 16);
+                IVideoDriver::BLEND_TYPE dest = static_cast<IVideoDriver::BLEND_TYPE>(blend & 0xFFFF);
+                _driver->setBlendFunc(src, dest);
                 _driver->setState(IVideoDriver::STATE_BLEND, 1);
             }
             _blend = blend;
