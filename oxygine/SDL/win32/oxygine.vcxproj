@@ -303,7 +303,6 @@
     <ClInclude Include="..\..\src\res\Resource.h" />
     <ClInclude Include="..\..\src\res\Resources.h" />
     <ClInclude Include="..\..\src\res\ResStarlingAtlas.h" />
-    <ClInclude Include="..\..\src\RootActor.h" />
     <ClInclude Include="..\..\src\Serializable.h" />
     <ClInclude Include="..\..\src\Stage.h" />
     <ClInclude Include="..\..\src\Serialize.h" />
@@ -320,7 +319,6 @@
     <ClInclude Include="..\..\src\Tween.h" />
     <ClInclude Include="..\..\src\TweenAlphaFade.h" />
     <ClInclude Include="..\..\src\TweenAnim.h" />
-    <ClInclude Include="..\..\src\Tweener.h" />
     <ClInclude Include="..\..\src\TweenGlow.h" />
     <ClInclude Include="..\..\src\TweenOutline.h" />
     <ClInclude Include="..\..\src\TweenQueue.h" />

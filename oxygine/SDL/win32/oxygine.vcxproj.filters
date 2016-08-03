@@ -629,9 +629,6 @@
     <ClInclude Include="..\..\src\TextStyle.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Tweener.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\UpdateState.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -699,9 +696,6 @@
       <Filter>src\core\curl</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\oxygine_include.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\RootActor.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\TweenAnim.h">

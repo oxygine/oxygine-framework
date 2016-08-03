@@ -184,7 +184,6 @@ namespace oxygine
         invisible->init(im, false);
         invisible->setLinearFilter(false);
 
-        setDefaultSettings();
         _restored = true;
     }
 
@@ -228,20 +227,6 @@ namespace oxygine
             preDrawBatch();
             _drawBatch();
         }
-    }
-
-    void STDRenderer::setDefaultSettings()
-    {
-        /*
-        _blend = blend_disabled;
-        IVideoDriver* instance = IVideoDriver::instance;
-        instance->setState(IVideoDriver::STATE_BLEND, 0);
-        */
-        /*
-
-        instance->setState(IVideoDriver::STATE_BLEND, 1);
-        instance->setBlendFunc(IVideoDriver::BT_ONE, IVideoDriver::BT_ONE);
-        */
     }
 
     void STDRenderer::initCoordinateSystem(int width, int height, bool flipU)
