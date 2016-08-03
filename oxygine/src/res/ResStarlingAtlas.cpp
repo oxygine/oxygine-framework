@@ -25,7 +25,7 @@ namespace oxygine
         std::string xml_path = context.walker.getPath("file");
 
         file::buffer fb;
-        file::read(xml_path.c_str(), fb);
+        file::read(xml_path, fb);
 
         pugi::xml_document doc;
         doc.load_buffer_inplace(&fb.data[0], fb.data.size());
@@ -56,7 +56,7 @@ namespace oxygine
             unsigned char buff[64];
             unsigned int size = 0;
             {
-                file::autoClose ac(file::open(_imagePath.c_str(), "rb"));
+                file::autoClose ac(file::open(_imagePath, "rb"));
                 size = file::read(ac.getHandle(), buff, sizeof(buff));
             }
 
@@ -74,7 +74,7 @@ namespace oxygine
 
                 ImageData im;
                 file::buffer bf;
-                file::read(_imagePath.c_str(), bf);
+                file::read(_imagePath, bf);
 
                 mt->init(bf, true, _texture->getFormat());
                 im = mt->lock();

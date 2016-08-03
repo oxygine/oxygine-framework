@@ -28,7 +28,7 @@ namespace oxygine
 
         LOGD("loading atlas: %s", file.c_str());
         file::buffer bf;
-        file::read(file.c_str(), bf);
+        file::read(file, bf);
         LOGD("atlas file loaded: %s", file.c_str());
         mt->init(bf, true, nt->getFormat());
         im = mt->lock();

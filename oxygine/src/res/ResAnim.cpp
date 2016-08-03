@@ -55,7 +55,7 @@ namespace oxygine
     void ResAnim::init(const std::string& file, int columns, int rows, float scaleFactor)
     {
         file::buffer bf;
-        file::read(file.c_str(), bf);
+        file::read(file, bf);
         MemoryTexture mt;
         mt.init(bf, true);
         init(&mt, columns, rows, scaleFactor);

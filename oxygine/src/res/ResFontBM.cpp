@@ -121,7 +121,7 @@ namespace oxygine
         spMemoryTexture mt = new MemoryTexture;
 
         file::buffer bf;
-        file::read(p.file.c_str(), bf);
+        file::read(p.file, bf);
 
         mt->init(bf, !_premultipliedAlpha, _format);
         CreateTextureTask opt;
@@ -460,7 +460,7 @@ namespace oxygine
 
         std::string path = _file;
         file::buffer fb;
-        file::read(path.c_str(), fb);
+        file::read(path, fb);
 
         if (fb.empty())
             return;

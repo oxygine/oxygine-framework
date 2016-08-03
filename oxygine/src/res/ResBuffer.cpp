@@ -37,7 +37,7 @@ namespace oxygine
 
     void ResBuffer::_load(LoadResourcesContext*)
     {
-        file::read(_path.c_str(), _buffer);
+        file::read(_path, _buffer);
     }
 
     void ResBuffer::_unload()

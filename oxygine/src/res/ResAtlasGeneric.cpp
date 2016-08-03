@@ -289,7 +289,7 @@ namespace oxygine
 
 
             file::buffer bf;
-            file::read(walker.getPath("file").c_str(), bf);
+            file::read(walker.getPath("file"), bf);
 
             mt.init(bf, true, tf);
             im = mt.lock();
