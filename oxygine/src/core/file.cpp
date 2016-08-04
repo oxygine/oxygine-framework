@@ -108,7 +108,7 @@ namespace oxygine
                 log::warning("file::open for file '%s' should be called with 'b' (means binary) flag", file_);
 #endif
             //OX_ASSERT(_openedFiles == 0);
-            LOGD("open file: %s %s %d", file_, mode, _openedFiles);
+            LOGD("open file: %s %s", file_.c_str(), mode);
             char file[512];
             path::normalize(file_.c_str(), file);
             LOGD("q1");
@@ -129,7 +129,7 @@ namespace oxygine
 
         void close(handle h)
         {
-            LOGD("close file %x", fh);
+            LOGD("close file %x", h);
             fileHandle* fh = (fileHandle*)h;
             fh->release();
         }
@@ -146,12 +146,13 @@ namespace oxygine
             return fh->tell();
         }
 
-        bool deleteFile(const std::string& path, error_policy ep)
+        bool deleteFile(const std::string& file, error_policy ep)
         {
-            bool ok = _nfs.deleteFile(path.c_str()) == FileSystem::status_ok;
+            //std::string file = path::normalize(file_);
+            bool ok = _nfs.deleteFile(file.c_str()) == FileSystem::status_ok;
             if (!ok)
             {
-                handleErrorPolicy(ep, "can't delete file: %s", path.c_str());
+                handleErrorPolicy(ep, "can't delete file: %s", file.c_str());
             }
 
             return ok;
@@ -172,14 +173,13 @@ namespace oxygine
         {
             fileHandle* fh = (fileHandle*)h;
             OX_ASSERT(fh && dest);
-            LOGD("read file %x %d", fh, destSize);
+            LOGD("read file1 %x %d", fh, destSize);
 
             return fh->read(dest, destSize);
         }
 
         bool read(const std::string& file_, buffer& dest, error_policy ep)
         {
-            LOGD("open file: %s %s %d", file_.c_str(), mode, _openedFiles);
             char file[512];
             path::normalize(file_.c_str(), file);
 
@@ -202,7 +202,7 @@ namespace oxygine
 
             dest.data.resize(size);
             unsigned int t = fh->read(&dest.data[0], size);
-            LOGD("read file %x %d", fh, t);
+            LOGD("read file2 %x %d", fh, t);
             return t;
         }
 
