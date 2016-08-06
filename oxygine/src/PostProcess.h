@@ -61,19 +61,26 @@ namespace oxygine
         PostProcessOptions _options;
     };
 
+    class PPTask
+    {
+    public:
+        virtual ~PPTask() {}
+        virtual void addRefPP() = 0;
+        virtual void releaseRefPP() = 0;
+        virtual void renderPP() = 0;
+    };
 
     DECLARE_SMART(TweenPostProcess, spTweenPostProcess);
 
-    class TweenPostProcess : public TweenObj, public Material
+    class TweenPostProcess : public TweenObj, public Material, public PPTask
     {
     public:
         TweenPostProcess(const PostProcessOptions& opt);
         ~TweenPostProcess();
 
-        Actor* getActor() const { return _actor; }
-
-        void renderPP();
-
+        void renderPP() OVERRIDE;
+        void addRefPP() OVERRIDE;
+        void releaseRefPP() OVERRIDE;
 
         void init(Actor& actor) OVERRIDE;
         void update(Actor& actor, float p, const UpdateState& us) OVERRIDE;
@@ -115,5 +122,7 @@ namespace oxygine
     RenderTargetsManager& getRTManager();
 
     void updatePortProcessItems();
+    void addPostProcessItem(PPTask*);
+    void removePostProcessItem(PPTask*);
     void clearPostProcessItems();
 }

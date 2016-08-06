@@ -348,6 +348,9 @@
     <ClCompile Include="..\..\src\TweenGlow.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\key.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\closure\closure.h">
@@ -741,6 +744,9 @@
       <Filter>src\core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\TweenGlow.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\key.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

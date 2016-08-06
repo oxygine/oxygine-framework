@@ -199,8 +199,14 @@ namespace oxygine
 
         if (DebugActor::instance)
         {
-            DebugActor::instance->_debugText += buff;
-            DebugActor::instance->_debugText += "\n";
+            std::string& str = DebugActor::instance->_debugText;
+            str += buff;
+            str += "\n";
+
+            if (str.size() > 500)
+            {
+                str.resize(500);
+            }
         }
     }
 

@@ -91,7 +91,8 @@ namespace oxygine
 
     DECLARE_SMART(TweenPostProcess, spTweenPostProcess);
 
-    vector<spTweenPostProcess> postProcessItems;
+    class PPTask;
+    vector<PPTask*> postProcessItems;
 
     int alignTextureSize(int v)
     {
@@ -256,7 +257,24 @@ namespace oxygine
     }
 
 
+    void addPostProcessItem(PPTask* task)
+    {
+        if (find(postProcessItems.begin(), postProcessItems.end(), task) == postProcessItems.end())
+        {
+            task->addRefPP();
+            postProcessItems.push_back(task);
+        }
+    }
 
+
+    void removePostProcessItem(PPTask* t)
+    {
+        vector<PPTask*>::iterator i = std::find(postProcessItems.begin(), postProcessItems.end(), t);
+        if (i == postProcessItems.end())
+            return;
+        t->releaseRefPP();
+        postProcessItems.erase(i);
+    }
 
 
 
@@ -272,9 +290,9 @@ namespace oxygine
 
             for (size_t i = 0; i < postProcessItems.size(); ++i)
             {
-                spTweenPostProcess p = postProcessItems[i];
+                PPTask* p = postProcessItems[i];
                 p->renderPP();
-                p->getActor()->releaseRef();
+                p->releaseRefPP();
             }
 
             postProcessItems.clear();
@@ -413,6 +431,8 @@ namespace oxygine
 
     TweenPostProcess::~TweenPostProcess()
     {
+
+        removePostProcessItem(this);
         if (_actor && _actor->getMaterial())
             _actor->setMaterial(_prevMaterial);
     }
@@ -427,6 +447,16 @@ namespace oxygine
         _renderPP();
     }
 
+    void TweenPostProcess::addRefPP()
+    {
+        _actor->addRef();
+    }
+
+    void TweenPostProcess::releaseRefPP()
+    {
+        _actor->releaseRef();
+    }
+
     void TweenPostProcess::init(Actor& actor)
     {
         _actor = &actor;
@@ -437,12 +467,7 @@ namespace oxygine
     void TweenPostProcess::update(Actor& actor, float p, const UpdateState& us)
     {
         _progress = p;
-
-        if (find(postProcessItems.begin(), postProcessItems.end(), this) == postProcessItems.end())
-        {
-            _actor->addRef();
-            postProcessItems.push_back(this);
-        }
+        addPostProcessItem(this);
     }
 
     void TweenPostProcess::done(Actor& actor)
