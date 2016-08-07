@@ -105,7 +105,7 @@ namespace oxygine
 
 #ifdef OX_DEBUG
             if (!strstr(mode, "b"))
-                log::warning("file::open for file '%s' should be called with 'b' (means binary) flag", file_);
+                log::warning("file::open for file '%s' should be called with 'b' (means binary) flag", file_.c_str());
 #endif
             //OX_ASSERT(_openedFiles == 0);
             LOGD("open file: %s %s", file_.c_str(), mode);

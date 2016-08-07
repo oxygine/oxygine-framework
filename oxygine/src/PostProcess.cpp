@@ -14,11 +14,14 @@ namespace oxygine
     ShaderProgram* PostProcess::shaderBlurV = 0;
     ShaderProgram* PostProcess::shaderBlurH = 0;
     ShaderProgram* PostProcess::shaderBlit = 0;
+    bool _ppBuilt = false;
 
     void PostProcess::initShaders()
     {
-        if (PostProcess::shaderBlurH)
+        if (_ppBuilt)
             return;
+        _ppBuilt = true;
+        
 
         file::Zips zp;
         zp.add(system_data, system_size);
@@ -38,9 +41,9 @@ namespace oxygine
         fs_blur.push_back(0);
 
 
-        unsigned int h = ShaderProgramGL::createShader(GL_VERTEX_SHADER, (const char*)&vs_h.front(), "", "");
-        unsigned int v = ShaderProgramGL::createShader(GL_VERTEX_SHADER, (const char*)&vs_v.front(), "", "");
-        unsigned int ps = ShaderProgramGL::createShader(GL_FRAGMENT_SHADER, (const char*)&fs_blur.front(), "", "");
+        unsigned int h = ShaderProgramGL::createShader(GL_VERTEX_SHADER, (const char*)&vs_h.front());
+        unsigned int v = ShaderProgramGL::createShader(GL_VERTEX_SHADER, (const char*)&vs_v.front());
+        unsigned int ps = ShaderProgramGL::createShader(GL_FRAGMENT_SHADER, (const char*)&fs_blur.front());
 
 
         IVideoDriver* driver = IVideoDriver::instance;
