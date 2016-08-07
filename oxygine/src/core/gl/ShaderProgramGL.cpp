@@ -57,9 +57,9 @@ namespace oxygine
 
         return status == GL_TRUE;
     }
-    
-    
-    bool ShaderProgramGL::getProgramBuildLog(GLuint program, std::string &str)
+
+
+    bool ShaderProgramGL::getProgramBuildLog(GLuint program, std::string& str)
     {
         GLint length = 0;
         GLint success = GL_TRUE;
@@ -71,10 +71,10 @@ namespace oxygine
         }
         else
             str.clear();
-        
+
         GLint status = GL_TRUE;
         oxglGetProgramiv(program, GL_LINK_STATUS, &status);
-        
+
         return status == GL_TRUE;
 
     }
@@ -145,7 +145,7 @@ namespace oxygine
         {
             handleErrorPolicy(ep, "can't compile shader: %s", log.c_str());
         }
-        
+
         checkGLError();
 
         return shader;
@@ -162,11 +162,11 @@ namespace oxygine
             oxglBindAttribLocation(p, decl->elements[i].index, decl->elements[i].name);
 
         oxglLinkProgram(p);
-        
-        
+
+
         std::string log;
         bool success = getProgramBuildLog(p, log);
-        
+
         if (success)
         {
             //log::messageln("compiled shader: %s", log.c_str());

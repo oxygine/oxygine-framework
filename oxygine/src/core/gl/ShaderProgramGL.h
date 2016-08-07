@@ -18,7 +18,7 @@ namespace oxygine
                                          const char* prepend = "", const char* append = "", error_policy ep = ep_show_error);
         static unsigned int createProgram(int vs, int fs, const VertexDeclarationGL* decl);
         static bool getShaderBuildLog(GLuint shader, std::string& str);
-        static bool getProgramBuildLog(GLuint program, std::string &str);
+        static bool getProgramBuildLog(GLuint program, std::string& str);
 
     private:
         GLuint _program;
