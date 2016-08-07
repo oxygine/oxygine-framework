@@ -107,8 +107,9 @@ namespace oxygine
         dest cast = dynamic_cast<dest>(ptr);
         OX_ASSERT(cast && "can't cast pointer");
         return cast;
-#endif
+#else
         return static_cast<dest>(ptr);
+#endif
     }
 
     template<class T, class U>
