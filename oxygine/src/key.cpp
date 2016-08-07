@@ -1,5 +1,10 @@
 #include "key.h"
-#include "SDL.h"
+#ifdef __S3E__
+#   include "s3eKeyboard.h"
+#else
+#   include "SDL_keyboard.h"
+#endif
+
 #include <algorithm>
 
 namespace oxygine
@@ -27,6 +32,9 @@ namespace oxygine
 
         void update()
         {
+#ifdef __S3E__
+#else
+
             if (!_counter)
                 return;
 
@@ -34,27 +42,43 @@ namespace oxygine
             const Uint8* data = SDL_GetKeyboardState(&num);
             num = std::min(num, KEYS);
             memcpy(_keys, data, num);
+#endif
         }
 
 
-        bool wasPressed(keycode k)
+        bool wasPressed(keycode key)
         {
+
+#ifdef __S3E__
+            return s3eKeyboardGetState((s3eKey)key) & S3E_KEY_STATE_PRESSED;
+#else
             OX_ASSERT(_counter);
             const Uint8* data = SDL_GetKeyboardState(0);
-            return data[k] && !_keys[k];
+            return data[key] && !_keys[key];
+#endif
         }
 
         bool wasReleased(keycode key)
         {
+
+#ifdef __S3E__
+            return s3eKeyboardGetState((s3eKey)key) & S3E_KEY_STATE_RELEASED;
+#else
             OX_ASSERT(_counter);
             const Uint8* data = SDL_GetKeyboardState(0);
             return !data[key] && _keys[key];
+#endif
         }
 
-        bool isPressed(keycode k)
+        bool isPressed(keycode key)
         {
+
+#ifdef __S3E__
+            return s3eKeyboardGetState((s3eKey)key) & S3E_KEY_STATE_DOWN;
+#else
             const Uint8* data = SDL_GetKeyboardState(0);
-            return data[k] != 0;
+            return data[key] != 0;
+#endif
         }
     }
 }

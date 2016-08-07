@@ -1,6 +1,9 @@
 #pragma once
 #include "oxygine_include.h"
-#include "SDL_keyboard.h"
+#ifdef __S3E__
+#else
+#   include "SDL_keyboard.h"
+#endif
 namespace oxygine
 {
     namespace key
@@ -10,10 +13,21 @@ namespace oxygine
         void init();
         void release();
 
+        /**
+        * Indicates a key's state has changed from up to down in the last update.
+        */
         bool wasPressed(keycode);
+
+        /**
+        * Indicates a key's state has changed from down to up in the last update.
+        */
         bool wasReleased(keycode);
 
-        /*could be used without key::init()**/
+
+        /**
+        * Indicates a key is currently pressed down.
+        * could be used without key::init()
+        */
         bool isPressed(keycode);
     }
 }
