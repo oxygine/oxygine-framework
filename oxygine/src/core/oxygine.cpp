@@ -629,8 +629,8 @@ namespace oxygine
                             newFocus = true;
                         if (focus != newFocus)
                         {
-                            focus = newFocus;
 #if HANDLE_FOCUS_LOST
+                            focus = newFocus;
 
                             if (focus)
                                 focusAcquired();
