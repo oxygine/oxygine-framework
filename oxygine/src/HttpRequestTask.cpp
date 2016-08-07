@@ -77,7 +77,7 @@ namespace oxygine
         _response.clear();
         if (!_fname.empty())
         {
-            file::deleteFile(_fname.c_str(), ep_ignore_error);
+            file::deleteFile(_fname, ep_ignore_error);
         }
     }
 

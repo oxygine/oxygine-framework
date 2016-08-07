@@ -173,7 +173,7 @@ namespace oxygine
     {
         if (!_handle && !_fname.empty())
         {
-            _handle = file::open(_fname.c_str(), "wb");
+            _handle = file::open(_fname, "wb");
         }
 
         size_t size = n * l;
@@ -252,7 +252,7 @@ namespace oxygine
         {
             file::close(_handle);
             if (error)
-                file::deleteFile(_fname.c_str());
+                file::deleteFile(_fname);
         }
         _handle = 0;
     }
