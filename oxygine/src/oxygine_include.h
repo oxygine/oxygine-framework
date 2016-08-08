@@ -25,7 +25,7 @@
 
 
 #ifdef __ANDROID__
-#define HAVE_NPOT_RT()  (false)
+#define HAVE_NPOT_RT()  (true)
 #else
 #define HAVE_NPOT_RT()  (true)
 #endif

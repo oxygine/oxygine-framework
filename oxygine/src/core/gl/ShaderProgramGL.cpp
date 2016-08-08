@@ -114,6 +114,13 @@ namespace oxygine
         }
 #endif
 
+#ifdef __ANDROID__
+        *ptr = "#define ANDROID 1\n";
+        ptr++;
+#endif
+
+
+
 
         if (prepend)
         {
