@@ -135,7 +135,9 @@ namespace oxygine
         __id = ++_lastID;
 
         //OX_ASSERT(__id != 266);
+#ifdef OX_DEBUG
         OX_ASSERT(_assertCtorID != __id);
+#endif
     }
 
     ObjectBase::ObjectBase(bool assignID): __userData(0), __id(0)
@@ -177,7 +179,9 @@ namespace oxygine
 
     ObjectBase::~ObjectBase()
     {
+#ifdef OX_DEBUG
         OX_ASSERT(_assertDtorID != __id);
+#endif
 
 #ifdef OXYGINE_DEBUG_TRACE_LEAKS
         __removeFromDebugList(this);

@@ -363,10 +363,15 @@ namespace oxygine
                 unzCloseCurrentFile(entry->zp);
             }
 
+            ~fileHandleZipStreaming()
+            {
+                int q = 0;
+            }
+
             void release()
             {
                 file::close(_h);
-                _h = 0;
+                delete this;
             }
 
             unsigned int read(void* dest, unsigned int size)

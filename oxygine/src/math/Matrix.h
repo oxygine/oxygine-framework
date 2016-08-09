@@ -70,6 +70,9 @@ namespace oxygine
         static MatrixT& perspectiveFovLH(MatrixT& out, T fovy, T aspect, T znear, T zfar);
         static MatrixT& perspectiveFovRH(MatrixT& out, T fovy, T aspect, T znear, T zfar);
 
+        static MatrixT& perspectivOffCenterLH(MatrixT& out, T left, T right, T bottom, T top, T znear, T zfar);
+        static MatrixT& perspectiveOffCenterRH(MatrixT& out, T left, T right, T bottom, T top, T znear, T zfar);
+
         static MatrixT& orthoLH(MatrixT& out, T width, T height, T zNear, T zFar);
 
         static vector3& transformVec3(vector3& out, const vector3& in, const MatrixT& mat);
@@ -427,6 +430,28 @@ namespace oxygine
                   0.0f, y, 0.0f, 0.0f,
                   0.0f, 0.0f, zFar / (zFar - zNear), -1.0f,
                   0.0f, 0.0f, zFar * zNear / (zFar - zNear), 0.0f);
+        return out;
+    }
+
+    template <class T>
+    inline MatrixT<T>& MatrixT<T>::perspectivOffCenterLH(MatrixT& out, T left, T right, T bottom, T top, T znearPlane, T zfarPlane)
+    {
+        out = matrix(
+                  2 * znearPlane / (right - left), 0, 0, 0,
+                  0, 2 * znearPlane / (top - bottom), 0, 0,
+                  (left + right) / (left - right), (top + bottom) / (bottom - top), zfarPlane / (zfarPlane - znearPlane), 1,
+                  0, 0, znearPlane * zfarPlane / (znearPlane - zfarPlane), 0);
+        return out;
+    }
+
+    template <class T>
+    inline MatrixT<T>& MatrixT<T>::perspectiveOffCenterRH(MatrixT& out, T left, T right, T bottom, T top, T znearPlane, T zfarPlane)
+    {
+        out = matrix(
+                  2 * znearPlane / (right - left), 0, 0, 0,
+                  0, 2 * znearPlane / (top - bottom), 0, 0,
+                  (left + right) / (right - left), (top + bottom) / (top - bottom), zfarPlane / (znearPlane - zfarPlane), -1,
+                  0, 0, znearPlane * zfarPlane / (znearPlane - zfarPlane), 0);
         return out;
     }
 
