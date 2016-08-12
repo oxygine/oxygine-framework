@@ -42,22 +42,34 @@ static char taskKey;
 }
 
 -(void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location {
+    
     oxygine::HttpRequestCocoaTask* task = [self getTask:downloadTask remove:true];
     
-    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSHTTPURLResponse *resp = (NSHTTPURLResponse*)[downloadTask response];
     
+    int code = [resp statusCode];
+    
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
     
     std::string dest = oxygine::file::wfs().getFullPath(task->getFileName().c_str());
     NSURL *destUrl = [NSURL fileURLWithPath:[NSString stringWithUTF8String:dest.c_str()]];
     
-    //NSURL *originalUrl = [NSURL URLWithString:[downloadTaskURL lastPathComponent]];
-    //NSURL *destinationUrl = [documentsDirectory URLByAppendingPathComponent:[originalUrl lastPathComponent]];
     NSError *fileManagerError;
     
-    [fileManager removeItemAtURL:destUrl error:NULL];
-    //key line!
-    [fileManager copyItemAtURL:location toURL:destUrl error:&fileManagerError];
-    task->complete_(/* data */ nil, /* error */ false);
+    [fileManager removeItemAtURL:destUrl error:&fileManagerError];
+    
+    if (code == 200)
+    {
+        [fileManager copyItemAtURL:location toURL:destUrl error:&fileManagerError];
+    
+        task->complete_(/* data */ nil, /* error */ false);
+    }
+    else
+    {
+        task->complete_(nil, true);
+        
+    }
 }
 
 #pragma mark - NSURLSessionTaskDelegate
