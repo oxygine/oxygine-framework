@@ -106,4 +106,9 @@ namespace oxygine
     {
         log::warning("http request error: %s", _url.c_str());
     }
+    
+    void HttpRequestTask::_onComplete()
+    {
+        log::messageln("http request done: %s", _url.c_str());
+    }
 }

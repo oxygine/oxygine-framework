@@ -55,6 +55,7 @@ namespace oxygine
     protected:
         void _prerun();
         void _onError() OVERRIDE;
+        void _onComplete() OVERRIDE;
 
         //async
         void progress(int loaded, int total);
