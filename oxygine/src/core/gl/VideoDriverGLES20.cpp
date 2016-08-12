@@ -123,7 +123,7 @@ namespace oxygine
         }
 
 
-        _debugAddPrimitives(pt, primitives);
+        _debugAddPrimitives(pt, (int)primitives);
 
         CHECKGL();
     }

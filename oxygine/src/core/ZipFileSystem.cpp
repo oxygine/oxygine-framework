@@ -358,7 +358,7 @@ namespace oxygine
                 const char* ssss = z.getZipFileName((int)(size_t)f->opaque);
 
                 _h = file::open(ssss, "rb");
-                file::seek(_h, _pos, SEEK_SET);
+                file::seek(_h, static_cast<unsigned int>(_pos), SEEK_SET);
 
                 unzCloseCurrentFile(entry->zp);
             }
@@ -377,7 +377,7 @@ namespace oxygine
             unsigned int read(void* dest, unsigned int size)
             {
                 if (_cpos + (long)size > _size)
-                    size = _size - _cpos;
+                    size = (unsigned int)(_size - _cpos);
 
                 unsigned int ret = file::read(_h, dest, size);
                 _cpos += ret;
@@ -393,7 +393,7 @@ namespace oxygine
 
             unsigned int getSize() const
             {
-                return _size;
+                return (unsigned int)_size;
             }
 
             int          seek(unsigned int offset, int whence)
@@ -402,7 +402,7 @@ namespace oxygine
                 {
                     case SEEK_SET:
                         _cpos = offset;
-                        return file::seek(_h, _pos + offset, SEEK_SET);
+                        return file::seek(_h, (unsigned int)( _pos + offset), SEEK_SET);
                     case SEEK_CUR:
                         _cpos += offset;
                         return file::seek(_h, offset, SEEK_CUR);
@@ -418,7 +418,7 @@ namespace oxygine
 
             unsigned int tell() const
             {
-                return _cpos;
+                return (unsigned int)_cpos;
             }
 
         };
