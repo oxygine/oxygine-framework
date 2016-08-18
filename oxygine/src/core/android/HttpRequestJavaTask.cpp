@@ -5,9 +5,15 @@ namespace oxygine
 {
     jclass _jHttpRequestsClass = 0;
     jmethodID _jCreateRequestMethod = 0;
+    static HttpRequestTask* createTask()
+    {
+        return new HttpRequestJavaTask;
+    }
 
     void HttpRequestTask::init()
     {
+        setCustomRequests(createTask);
+
         JNIEnv* env = jniGetEnv();
         LOCAL_REF_HOLDER(env);
 

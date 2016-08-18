@@ -11,7 +11,8 @@ namespace oxygine
     {
     public:
         static spHttpRequestTask create();
-
+        typedef HttpRequestTask* (*createHttpRequestCallback)();
+        static void setCustomRequests(createHttpRequestCallback);
         static void init();
         static void release();
 
@@ -40,7 +41,7 @@ namespace oxygine
         const std::vector<unsigned char>&   getResponse() const;
         const std::vector<unsigned char>&   getPostData() const;
         const std::string&                  getFileName() const;
-        bool                                getCacheEnabled() const;
+
 
         /**swap version of getResponse if you want to modify result buffer inplace*/
         void getResponseSwap(std::vector<unsigned char>&);
@@ -50,7 +51,6 @@ namespace oxygine
         void setUrl(const std::string& url);
         void setFileName(const std::string& name);
         void setCacheEnabled(bool enabled);
-
 
     protected:
         void _prerun();

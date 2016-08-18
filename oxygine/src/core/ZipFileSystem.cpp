@@ -402,7 +402,7 @@ namespace oxygine
                 {
                     case SEEK_SET:
                         _cpos = offset;
-                        return file::seek(_h, (unsigned int)( _pos + offset), SEEK_SET);
+                        return file::seek(_h, (unsigned int)(_pos + offset), SEEK_SET);
                     case SEEK_CUR:
                         _cpos += offset;
                         return file::seek(_h, offset, SEEK_CUR);

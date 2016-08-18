@@ -4,11 +4,14 @@
 
 namespace oxygine
 {
-#if OX_NO_HTTP
+    HttpRequestTask::createHttpRequestCallback _createRequestsCallback = 0;
+
     spHttpRequestTask HttpRequestTask::create()
     {
-        return 0;
+        return _createRequestsCallback();
     }
+
+#if OX_NO_HTTP
     void HttpRequestTask::init() {}
     void HttpRequestTask::release() {}
 #endif
@@ -19,6 +22,11 @@ namespace oxygine
     HttpRequestTask::~HttpRequestTask()
     {
         log::messageln("~HttpRequestTask");
+    }
+
+    void HttpRequestTask::setCustomRequests(createHttpRequestCallback cb)
+    {
+        _createRequestsCallback = cb;
     }
 
     void HttpRequestTask::setPostData(const std::vector<unsigned char>& data)
@@ -106,7 +114,7 @@ namespace oxygine
     {
         log::warning("http request error: %s", _url.c_str());
     }
-    
+
     void HttpRequestTask::_onComplete()
     {
         log::messageln("http request done: %s", _url.c_str());

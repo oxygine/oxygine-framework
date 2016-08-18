@@ -12,7 +12,7 @@ namespace oxygine
     static ThreadDispatcher _messages;
     //ThreadMessages _main;
 
-    spHttpRequestTask HttpRequestTask::create()
+    static HttpRequestTask* createCurl()
     {
         return new HttpRequestTaskCURL;
     }
@@ -140,6 +140,7 @@ namespace oxygine
     {
         if (multi_handle)
             return;
+        setCustomRequests(createCurl);
         multi_handle = curl_multi_init();
         pthread_create(&_thread, 0, thread, 0);
     }
@@ -215,6 +216,9 @@ namespace oxygine
         curl_easy_setopt(_easy, CURLOPT_XFERINFODATA, this);
         curl_easy_setopt(_easy, CURLOPT_FOLLOWLOCATION, true);
         curl_easy_setopt(_easy, CURLOPT_NOPROGRESS, 0);
+
+        //curl_slist *header = curl_slist_append(0, "hello");
+        //curl_easy_setopt(_easy, CURLOPT_HEADER, header);
 
         if (!_postData.empty())
         {

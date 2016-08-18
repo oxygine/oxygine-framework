@@ -7,6 +7,12 @@
 using namespace oxygine;
 static char taskKey;
 
+
+static HttpRequestTask *createTask()
+{
+    return new HttpRequestCocoaTask;
+}
+
 @interface HttpRequests:NSObject<NSURLSessionDownloadDelegate, NSURLSessionTaskDelegate, NSURLSessionDataDelegate>
 {
 }
@@ -164,6 +170,7 @@ namespace oxygine
         if (_httpRequestTaskInitialized++)
             return;
         
+        setCustomRequests(createTask);
         _cls = [[HttpRequests alloc] init];
     }
     
