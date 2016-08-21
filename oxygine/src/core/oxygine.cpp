@@ -9,7 +9,7 @@
 #include "res/ResBuffer.h"
 #include "res/ResFontBM.h"
 #include "res/ResAtlas.h"
-#include "MemoryTexture.h"
+#include "Image.h"
 #include "PointerState.h"
 #include "Input.h"
 

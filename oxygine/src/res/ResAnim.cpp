@@ -1,5 +1,5 @@
 #include "ResAnim.h"
-#include "MemoryTexture.h"
+#include "Image.h"
 #include "core/NativeTexture.h"
 #include "core/VideoDriver.h"
 
@@ -56,12 +56,12 @@ namespace oxygine
     {
         file::buffer bf;
         file::read(file, bf);
-        MemoryTexture mt;
+        Image mt;
         mt.init(bf, true);
         init(&mt, columns, rows, scaleFactor);
     }
 
-    void ResAnim::init(MemoryTexture* original, int columns, int rows, float scaleFactor)
+    void ResAnim::init(Image* original, int columns, int rows, float scaleFactor)
     {
         _scaleFactor = scaleFactor;
         if (!original)

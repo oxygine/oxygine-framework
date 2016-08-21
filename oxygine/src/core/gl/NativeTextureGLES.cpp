@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "NativeTextureGLES.h"
 #include "oxgl.h"
-#include "MemoryTexture.h"
+#include "Image.h"
 #include "../NativeTexture.h"
 #include "../ImageDataOperations.h"
 #include "../file.h"
@@ -317,7 +317,7 @@ namespace oxygine
 
             //todo add EXT_unpack_subimage support
 
-            MemoryTexture mt;
+            Image mt;
             mt.init(_lockRect.getWidth(), _lockRect.getHeight(), _format);
             ImageData q = mt.lock();
             operations::copy(locked, q);
@@ -351,7 +351,7 @@ namespace oxygine
         //saveImage(data, "test1.png");
 
 
-        MemoryTexture mt;
+        Image mt;
         if (_format != data.format)
         {
             mt.init(data.w, data.h, _format);

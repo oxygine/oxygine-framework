@@ -1,6 +1,6 @@
 #include "ResAtlasGeneric.h"
 #include "core/ImageDataOperations.h"
-#include "MemoryTexture.h"
+#include "Image.h"
 #include "utils/AtlasTool.h"
 #include "core/VideoDriver.h"
 #include "Resources.h"
@@ -16,7 +16,7 @@ namespace oxygine
     struct atlas_data
     {
         spNativeTexture texture;
-        MemoryTexture mt;
+        Image mt;
         Atlas2 atlas;
     };
 
@@ -157,7 +157,7 @@ namespace oxygine
         if (!ad.texture)
             return;
 
-        spMemoryTexture mt = new MemoryTexture;
+        spImage mt = new Image;
         Rect bounds = ad.atlas.getBounds();
 
         //int w = nextPOT(bounds.getRight());
@@ -277,7 +277,7 @@ namespace oxygine
 
             Point offset = extend ? Point(2, 2) : Point(0, 0);
 
-            MemoryTexture mt;
+            Image mt;
             ImageData im;
 
             int columns = 0;
@@ -370,7 +370,7 @@ namespace oxygine
                         if (extend)
                         {
                             //duplicate image edges
-                            MemoryTexture& mt = ad.mt;
+                            Image& mt = ad.mt;
                             ImageData tmp;
 
                             if (bounds.getY() == 0 && dest.pos.y != 0)

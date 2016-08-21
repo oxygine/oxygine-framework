@@ -78,7 +78,7 @@ namespace oxygine
         const ResourcesLoadOptions* options;
     };
 
-    DECLARE_SMART(MemoryTexture, spMemoryTexture);
+    DECLARE_SMART(Image, spImage);
     DECLARE_SMART(NativeTexture, spNativeTexture);
 
 
@@ -87,7 +87,7 @@ namespace oxygine
     public:
         CreateTextureTask();
 
-        spMemoryTexture src;
+        spImage src;
         spNativeTexture dest;
         bool linearFilter;
         bool clamp2edge;

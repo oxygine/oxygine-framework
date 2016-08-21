@@ -5,7 +5,7 @@
 #include "Resources.h"
 #include "core/VideoDriver.h"
 #include "core/NativeTexture.h"
-#include "MemoryTexture.h"
+#include "Image.h"
 #include "CreateResourceContext.h"
 #include "utils/stringUtils.h"
 
@@ -70,7 +70,7 @@ namespace oxygine
             }
             else
             {
-                spMemoryTexture mt = new MemoryTexture;
+                spImage mt = new Image;
 
                 ImageData im;
                 file::buffer bf;

@@ -2,7 +2,7 @@
 #include "Font.h"
 #include <vector>
 #include "pugixml/pugixml.hpp"
-#include "MemoryTexture.h"
+#include "Image.h"
 #include "core/NativeTexture.h"
 #include "core/VideoDriver.h"
 #include "core/file.h"
@@ -118,7 +118,7 @@ namespace oxygine
         if (!load_context->isNeedProceed(p.texture))
             return;
 
-        spMemoryTexture mt = new MemoryTexture;
+        spImage mt = new Image;
 
         file::buffer bf;
         file::read(p.file, bf);

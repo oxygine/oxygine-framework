@@ -1,4 +1,4 @@
-#include "MemoryTexture.h"
+#include "Image.h"
 #include "math/Rect.h"
 #include "core/ImageDataOperations.h"
 #include "core/file.h"
@@ -29,7 +29,7 @@ namespace oxygine
 {
 
 
-    bool loadImageNotSupported(MemoryTexture& mt, void* data, int nSize, bool premultiplied, TextureFormat format)
+    bool loadImageNotSupported(Image& mt, void* data, int nSize, bool premultiplied, TextureFormat format)
     {
         return false;
     }
@@ -215,7 +215,7 @@ namespace oxygine
         }
     };
 
-    bool _initWithJpgData(MemoryTexture& mt, void* data, int nSize, bool premultiplied, TextureFormat format)
+    bool _initWithJpgData(Image& mt, void* data, int nSize, bool premultiplied, TextureFormat format)
     {
         bool bRet = false;
 
@@ -347,7 +347,7 @@ namespace oxygine
 
 
 
-    bool _initWithPngData(MemoryTexture& mt, void* pData, int nDatalen, bool premultiplied, TextureFormat format)
+    bool _initWithPngData(Image& mt, void* pData, int nDatalen, bool premultiplied, TextureFormat format)
     {
         LOGD("reading png...");
         bool bRet = false;
@@ -491,48 +491,55 @@ namespace oxygine
 #endif
 
 
+    cbLoadImageFromBuffer _loadCustomImage = loadImageNotSupported;
 
 
-    void setJpegLoader(cbLoadImageFromBuffer cb)
+
+    void setJpegImageLoader(cbLoadImageFromBuffer cb)
     {
         _loadJpegImage = cb;
     }
 
-    void setPngLoader(cbLoadImageFromBuffer cb)
+    void setPngImageLoader(cbLoadImageFromBuffer cb)
     {
         _loadPngImage = cb;
     }
 
-    bool loadPngImage(MemoryTexture& mt, void* pData, int nDatalen, bool premultiplied, TextureFormat format)
+    void setCustomImageLoader(cbLoadImageFromBuffer cb)
+    {
+        _loadCustomImage = cb;
+    }
+
+    bool loadPngImage(Image& mt, void* pData, int nDatalen, bool premultiplied, TextureFormat format)
     {
         bool s = _loadPngImage(mt, pData, nDatalen, premultiplied, format);
         return s;
     }
 
-    bool loadJpegImage(MemoryTexture& mt, void* pData, int nDatalen, bool premultiplied, TextureFormat format)
+    bool loadJpegImage(Image& mt, void* pData, int nDatalen, bool premultiplied, TextureFormat format)
     {
         bool s = _loadJpegImage(mt, pData, nDatalen, premultiplied, format);
         return s;
     }
 
 
-    MemoryTexture::MemoryTexture(): _offset(0)
+    Image::Image(): _offset(0)
     {
 
     }
 
-    MemoryTexture::~MemoryTexture()
+    Image::~Image()
     {
 
     }
 
-    void MemoryTexture::cleanup()
+    void Image::cleanup()
     {
         _buffer.clear();
         _image = ImageData();
     }
 
-    void MemoryTexture::convert(MemoryTexture& dest, TextureFormat format)
+    void Image::convert(Image& dest, TextureFormat format)
     {
         dest.init(getWidth(), getHeight(), format);
         ImageData src = lock();
@@ -541,14 +548,14 @@ namespace oxygine
         operations::blit(src, dst);
     }
 
-    void MemoryTexture::fill_zero()
+    void Image::fill_zero()
     {
         if (_buffer.empty())
             return;
         memset(&_buffer.front(), 0, _buffer.size());
     }
 
-    bool MemoryTexture::init(file::buffer& buffer, bool premultiplied, TextureFormat format)
+    bool Image::init(file::buffer& buffer, bool premultiplied, TextureFormat format)
     {
         cleanup();
 
@@ -706,12 +713,19 @@ namespace oxygine
                     break;
                 }
                 break;
+
+                case IT_UNKNOWN:
+                {
+                    if (_loadCustomImage(*this, (void*)buffer.getData(), buffer.getSize(), premultiplied, format))
+                        return true;
+                }
+                break;
                 default:
                     break;
             }
         }
 
-        log::warning("MemoryTexture. can't unpack data unknown file format");
+        log::warning("Image. can't unpack data unknown file format");
 
         init(16, 16, TF_R8G8B8A8);
         fill_zero();
@@ -719,13 +733,13 @@ namespace oxygine
         return false;
     }
 
-    void MemoryTexture::init(const ImageData& src)
+    void Image::init(const ImageData& src)
     {
         init(src.w, src.h, src.format);
         updateRegion(0, 0, src);
     }
 
-    void MemoryTexture::init(int w, int h, TextureFormat Format)
+    void Image::init(int w, int h, TextureFormat Format)
     {
         int bytesPerPixel = getBytesPerPixel(Format);
 
@@ -735,27 +749,27 @@ namespace oxygine
 
 
 
-    int MemoryTexture::getWidth() const
+    int Image::getWidth() const
     {
         return _image.w;
     }
 
-    int MemoryTexture::getHeight() const
+    int Image::getHeight() const
     {
         return _image.h;
     }
 
-    const Point& MemoryTexture::getSize() const
+    const Point& Image::getSize() const
     {
         return *((Point*)&_image.w);
     }
 
-    TextureFormat MemoryTexture::getFormat() const
+    TextureFormat Image::getFormat() const
     {
         return _image.format;
     }
 
-    ImageData MemoryTexture::lock(lock_flags, const Rect* pRect)
+    ImageData Image::lock(lock_flags, const Rect* pRect)
     {
         Rect rect(0, 0, _image.w, _image.h);
         if (pRect)
@@ -774,22 +788,22 @@ namespace oxygine
         return ImageData(rect.getWidth(), rect.getHeight(), _image.pitch, _image.format, ptr);
     }
 
-    ImageData MemoryTexture::lock(const Rect* pRect)
+    ImageData Image::lock(const Rect* pRect)
     {
         return lock(lock_read | lock_write, pRect);
     }
 
-    ImageData MemoryTexture::lock(const Rect& rect)
+    ImageData Image::lock(const Rect& rect)
     {
         return lock(lock_read | lock_write, &rect);
     }
 
-    void MemoryTexture::unlock()
+    void Image::unlock()
     {
 
     }
 
-    void MemoryTexture::updateRegion(int x, int y, const ImageData& src)
+    void Image::updateRegion(int x, int y, const ImageData& src)
     {
         Rect r(x, y, src.w, src.h);
         ImageData dest = lock(&r);
@@ -797,13 +811,13 @@ namespace oxygine
         unlock();
     }
 
-    void MemoryTexture::apply(const Rect*)
+    void Image::apply(const Rect*)
     {
 
     }
 
 
-    void MemoryTexture::swap(MemoryTexture& r)
+    void Image::swap(Image& r)
     {
         ImageData copy = _image;
         _image = r._image;

@@ -22,6 +22,7 @@
 #include "initActor.h"
 #include "Input.h"
 #include "InputText.h"
+#include "Image.h"
 #include "MemoryTexture.h"
 #include "ThreadLoader.h"
 #include "PointerState.h"

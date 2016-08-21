@@ -2,13 +2,13 @@
 #include "core/UberShaderProgram.h"
 #include "core/VertexDeclaration.h"
 #include "STDMaterial.h"
-#include "MemoryTexture.h"
+#include "Image.h"
 #include "core/file.h"
 #include "core/ZipFileSystem.h"
 #include "core/system_data.h"
 #include "math/Rect.h"
 #include "Actor.h"
-#include "MemoryTexture.h"
+#include "Image.h"
 #include "core/ImageDataOperations.h"
 #include "AnimationFrame.h"
 #include "core/VertexDeclaration.h"
@@ -165,7 +165,7 @@ namespace oxygine
 
     void STDRenderer::restore()
     {
-        MemoryTexture memwhite;
+        Image memwhite;
         memwhite.init(4, 4, TF_R8G8B8A8);
 
         oxygine::operations::op_fill fill;

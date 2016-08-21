@@ -1,5 +1,5 @@
 #include "ResAtlas.h"
-#include "MemoryTexture.h"
+#include "Image.h"
 #include "Resources.h"
 #include "core/VideoDriver.h"
 #include "ResAtlasGeneric.h"
@@ -24,7 +24,7 @@ namespace oxygine
     void load_texture_internal(const std::string& file, spNativeTexture nt, bool linearFilter, bool clamp2edge, LoadResourcesContext* load_context)
     {
         ImageData im;
-        spMemoryTexture mt = new MemoryTexture;
+        spImage mt = new Image;
 
         LOGD("loading atlas: %s", file.c_str());
         file::buffer bf;

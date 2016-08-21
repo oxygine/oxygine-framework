@@ -38,7 +38,7 @@ namespace oxygine
         if (!SIZE)
             SIZE = RECT_SIZE;
 
-        MemoryTexture* src = _opt->src.get();
+        Image* src = _opt->src.get();
         NativeTexture* dest = _opt->dest.get();
         Point& prev = _prev;
 

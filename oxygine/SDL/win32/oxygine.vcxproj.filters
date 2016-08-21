@@ -237,9 +237,6 @@
     <ClCompile Include="..\..\src\MaskedSprite.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\MemoryTexture.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\PointerState.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -349,6 +346,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\key.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Image.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -608,9 +608,6 @@
     <ClInclude Include="..\..\src\MaskedSprite.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\MemoryTexture.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\oxygine-framework.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -747,6 +744,9 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\key.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Image.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

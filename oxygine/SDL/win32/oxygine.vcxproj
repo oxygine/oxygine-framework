@@ -166,7 +166,7 @@
     <ClCompile Include="..\..\src\MaskedRenderer.cpp" />
     <ClCompile Include="..\..\src\MaskedSprite.cpp" />
     <ClCompile Include="..\..\src\Material.cpp" />
-    <ClCompile Include="..\..\src\MemoryTexture.cpp" />
+    <ClCompile Include="..\..\src\Image.cpp" />
     <ClCompile Include="..\..\src\minizip\ioapi.c" />
     <ClCompile Include="..\..\src\minizip\ioapi_mem.c" />
     <ClCompile Include="..\..\src\minizip\unzip.c" />
@@ -281,7 +281,7 @@
     <ClInclude Include="..\..\src\MaskedSprite.h" />
     <ClInclude Include="..\..\src\Material.h" />
     <ClInclude Include="..\..\src\math\OBBox.h" />
-    <ClInclude Include="..\..\src\MemoryTexture.h" />
+    <ClInclude Include="..\..\src\Image.h" />
     <ClInclude Include="..\..\src\minizip\ioapi.h" />
     <ClInclude Include="..\..\src\minizip\ioapi_mem.h" />
     <ClInclude Include="..\..\src\minizip\unzip.h" />

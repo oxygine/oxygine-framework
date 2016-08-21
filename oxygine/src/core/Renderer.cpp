@@ -1,7 +1,7 @@
 #include "Renderer.h"
 #include "math/Rect.h"
 #include "Actor.h"
-#include "MemoryTexture.h"
+#include "Image.h"
 #include "ImageDataOperations.h"
 #include "AnimationFrame.h"
 #include "VertexDeclaration.h"
