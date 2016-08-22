@@ -7,7 +7,7 @@
 #endif
 
 #include "ios.h"
-#include "MemoryTexture.h"
+#include "Image.h"
 
 #import <mach/mach.h>
 
@@ -53,7 +53,7 @@ namespace oxygine
     }
     
 #if TARGET_OS_IPHONE
-    bool nsImageLoad(MemoryTexture &mt, void * pData, int nDatalen, bool premultiplied, TextureFormat destFormat)
+    bool nsImageLoad(Image &mt, void * pData, int nDatalen, bool premultiplied, TextureFormat destFormat)
     {
         NSData *data = [NSData dataWithBytesNoCopy:pData length:nDatalen];
         UIImage *image = [UIImage imageWithData:data];
@@ -71,7 +71,7 @@ namespace oxygine
             destFormat = srcFormat;
 
         
-        MemoryTexture temp;
+        Image temp;
         temp.init(width, height, srcFormat);
         
         
@@ -106,7 +106,7 @@ namespace oxygine
         return true;
     }
 #else
-    bool nsImageLoad(MemoryTexture &mt, void * pData, int nDatalen, bool premultiplied, TextureFormat destFormat)
+    bool nsImageLoad(Image &mt, void * pData, int nDatalen, bool premultiplied, TextureFormat destFormat)
     {
         NSData *data = [NSData dataWithBytesNoCopy:pData length:nDatalen];
         NSBitmapImageRep *image = [NSBitmapImageRep imageRepWithData:data];

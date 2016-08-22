@@ -92,6 +92,8 @@
 		92CE26631A589401003901D6 /* ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 92CE26611A589401003901D6 /* ios.mm */; };
 		92E0C9A01B2491C200F0DB21 /* cdecode.c in Sources */ = {isa = PBXBuildFile; fileRef = 92E0C99E1B2491C200F0DB21 /* cdecode.c */; };
 		92E0C9A11B2491C200F0DB21 /* cdecode.h in Headers */ = {isa = PBXBuildFile; fileRef = 92E0C99F1B2491C200F0DB21 /* cdecode.h */; };
+		AD2E0A7B1D6B4F6400E77A23 /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD2E0A791D6B4F6400E77A23 /* Image.cpp */; };
+		AD2E0A7C1D6B4F6400E77A23 /* Image.h in Headers */ = {isa = PBXBuildFile; fileRef = AD2E0A7A1D6B4F6400E77A23 /* Image.h */; };
 		AD977D911D56EAD800C3C05E /* key.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD977D8F1D56EAD800C3C05E /* key.cpp */; };
 		AD977D921D56EAD800C3C05E /* key.h in Headers */ = {isa = PBXBuildFile; fileRef = AD977D901D56EAD800C3C05E /* key.h */; };
 		C38704A617C0C71700015CA8 /* VideoDriverGLES20.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C38704A417C0C71700015CA8 /* VideoDriverGLES20.cpp */; };
@@ -174,7 +176,6 @@
 		C3E8704816EBC8EB00052915 /* vector2.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FA516EBC8EB00052915 /* vector2.h */; };
 		C3E8704916EBC8EB00052915 /* vector3.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FA616EBC8EB00052915 /* vector3.h */; };
 		C3E8704A16EBC8EB00052915 /* vector4.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FA716EBC8EB00052915 /* vector4.h */; };
-		C3E8704B16EBC8EB00052915 /* MemoryTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3E86FA816EBC8EB00052915 /* MemoryTexture.cpp */; };
 		C3E8704C16EBC8EB00052915 /* MemoryTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FA916EBC8EB00052915 /* MemoryTexture.h */; };
 		C3E8705316EBC8EB00052915 /* PointerState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3E86FB016EBC8EB00052915 /* PointerState.cpp */; };
 		C3E8705416EBC8EB00052915 /* PointerState.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FB116EBC8EB00052915 /* PointerState.h */; };
@@ -331,6 +332,8 @@
 		92CE26611A589401003901D6 /* ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ios.mm; path = ../../../src/core/ios/ios.mm; sourceTree = "<group>"; };
 		92E0C99E1B2491C200F0DB21 /* cdecode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cdecode.c; sourceTree = "<group>"; };
 		92E0C99F1B2491C200F0DB21 /* cdecode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cdecode.h; sourceTree = "<group>"; };
+		AD2E0A791D6B4F6400E77A23 /* Image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Image.cpp; path = ../../../src/Image.cpp; sourceTree = "<group>"; };
+		AD2E0A7A1D6B4F6400E77A23 /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Image.h; path = ../../../src/Image.h; sourceTree = "<group>"; };
 		AD977D8F1D56EAD800C3C05E /* key.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = key.cpp; path = ../../../src/key.cpp; sourceTree = "<group>"; };
 		AD977D901D56EAD800C3C05E /* key.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = key.h; path = ../../../src/key.h; sourceTree = "<group>"; };
 		C38704A417C0C71700015CA8 /* VideoDriverGLES20.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VideoDriverGLES20.cpp; path = gl/VideoDriverGLES20.cpp; sourceTree = "<group>"; };
@@ -416,7 +419,6 @@
 		C3E86FA516EBC8EB00052915 /* vector2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vector2.h; sourceTree = "<group>"; };
 		C3E86FA616EBC8EB00052915 /* vector3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vector3.h; sourceTree = "<group>"; };
 		C3E86FA716EBC8EB00052915 /* vector4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vector4.h; sourceTree = "<group>"; };
-		C3E86FA816EBC8EB00052915 /* MemoryTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MemoryTexture.cpp; path = ../../../src/MemoryTexture.cpp; sourceTree = "<group>"; };
 		C3E86FA916EBC8EB00052915 /* MemoryTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MemoryTexture.h; path = ../../../src/MemoryTexture.h; sourceTree = "<group>"; };
 		C3E86FB016EBC8EB00052915 /* PointerState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PointerState.cpp; path = ../../../src/PointerState.cpp; sourceTree = "<group>"; };
 		C3E86FB116EBC8EB00052915 /* PointerState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PointerState.h; path = ../../../src/PointerState.h; sourceTree = "<group>"; };
@@ -577,6 +579,8 @@
 		C3E86F5316EBC8C200052915 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				AD2E0A791D6B4F6400E77A23 /* Image.cpp */,
+				AD2E0A7A1D6B4F6400E77A23 /* Image.h */,
 				C3E86F5516EBC8EB00052915 /* Actor.cpp */,
 				C3E86F5716EBC8EB00052915 /* AnimationFrame.cpp */,
 				9223E3101A5193E000B2770B /* AsyncTask.cpp */,
@@ -597,7 +601,6 @@
 				923A9E931A1FCBB700A6F08E /* MaskedRenderer.cpp */,
 				0472E37B17F8A2EC0016A832 /* MaskedSprite.cpp */,
 				CEC2D0001C47288E00450163 /* Material.cpp */,
-				C3E86FA816EBC8EB00052915 /* MemoryTexture.cpp */,
 				C3E86FB016EBC8EB00052915 /* PointerState.cpp */,
 				92214D6219F14A2F00A4459A /* Polygon.cpp */,
 				9250AFAC1C9B14950060A168 /* PostProcess.cpp */,
@@ -933,6 +936,7 @@
 				C3E8702D16EBC8EB00052915 /* Renderer.h in Headers */,
 				C3E8702F16EBC8EB00052915 /* Texture.h in Headers */,
 				C3E8703116EBC8EB00052915 /* VideoDriver.h in Headers */,
+				AD2E0A7C1D6B4F6400E77A23 /* Image.h in Headers */,
 				0472E37A17F8A2D30016A832 /* unzip.h in Headers */,
 				C3E8703716EBC8EB00052915 /* DebugActor.h in Headers */,
 				C3E8703916EBC8EB00052915 /* Draggable.h in Headers */,
@@ -1106,7 +1110,6 @@
 				0472E36017F8A1A80016A832 /* system_data.cpp in Sources */,
 				C3E8704016EBC8EB00052915 /* Input.cpp in Sources */,
 				C3E8704216EBC8EB00052915 /* AffineTransform.cpp in Sources */,
-				C3E8704B16EBC8EB00052915 /* MemoryTexture.cpp in Sources */,
 				0472E37F17F8A2EC0016A832 /* MaskedSprite.cpp in Sources */,
 				04AEC313182BD98D006413A9 /* UberShaderProgram.cpp in Sources */,
 				C3E8705316EBC8EB00052915 /* PointerState.cpp in Sources */,
@@ -1152,6 +1155,7 @@
 				9223E30E1A518CC400B2770B /* HttpRequestCocoaTask.mm in Sources */,
 				C3E8709116EBC8EB00052915 /* winnie_alloc.cpp in Sources */,
 				048AD0AA197D2444001963EF /* TextField.cpp in Sources */,
+				AD2E0A7B1D6B4F6400E77A23 /* Image.cpp in Sources */,
 				C38EC26F1709649300568283 /* DeveloperMenu.cpp in Sources */,
 				929AF56E1C88AD5600D276ED /* ResAtlasPrebuilt.cpp in Sources */,
 				92214D6419F14A2F00A4459A /* Polygon.cpp in Sources */,

@@ -6,4 +6,5 @@ namespace oxygine
 {
 
     typedef Image MemoryTexture;
+    typedef intrusive_ptr<Image> spMemoryTexture;
 }
