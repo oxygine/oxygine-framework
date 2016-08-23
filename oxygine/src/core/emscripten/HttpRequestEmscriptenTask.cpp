@@ -4,6 +4,12 @@
 
 namespace oxygine
 {
+
+    static HttpRequestTask* createTask()
+    {
+        return new HttpRequestEmscriptenTask;
+    }
+
     spHttpRequestTask HttpRequestTask::create()
     {
         return new HttpRequestEmscriptenTask;
@@ -11,7 +17,7 @@ namespace oxygine
 
     void HttpRequestTask::init()
     {
-
+        setCustomRequests(createTask);
     }
 
     void HttpRequestTask::release()
