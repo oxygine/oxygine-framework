@@ -185,12 +185,6 @@ namespace oxygine
         _cls = nil;
     }
     
-    spHttpRequestTask HttpRequestTask::create()
-    {
-        return new HttpRequestCocoaTask();
-    }
-    
-    
     HttpRequestCocoaTask::HttpRequestCocoaTask()
     {
         
