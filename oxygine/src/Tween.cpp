@@ -84,6 +84,11 @@ namespace oxygine
         return v;
     }
 
+	void Tween::remove()
+	{
+		getClient()->removeTween(this);
+	}
+
     void Tween::complete(timeMS deltaTime)
     {
         if (_loops == -1)

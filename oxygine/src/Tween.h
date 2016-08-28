@@ -143,6 +143,8 @@ namespace oxygine
         /**immediately completes tween, calls doneCallback and mark tween as completed and removes self from Actor. If tween has infinity loops (=-1) then do nothing*/
         virtual void complete(timeMS deltaTime = std::numeric_limits<int>::max() / 2);
 
+        /**removes self from Actor, complete callback not called*/
+        void remove();
 
         void start(Actor& actor);
         void update(Actor& actor, const UpdateState& us);
