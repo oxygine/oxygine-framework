@@ -123,7 +123,6 @@
 		049B56DC1871F21E00EF3C66 /* vector2.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B56111871F21D00EF3C66 /* vector2.h */; };
 		049B56DD1871F21E00EF3C66 /* vector3.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B56121871F21D00EF3C66 /* vector3.h */; };
 		049B56DE1871F21E00EF3C66 /* vector4.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B56131871F21D00EF3C66 /* vector4.h */; };
-		049B56DF1871F21E00EF3C66 /* MemoryTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B56141871F21D00EF3C66 /* MemoryTexture.cpp */; };
 		049B56E01871F21E00EF3C66 /* MemoryTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B56151871F21D00EF3C66 /* MemoryTexture.h */; };
 		049B56E11871F21E00EF3C66 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 049B56171871F21D00EF3C66 /* ioapi.c */; };
 		049B56E21871F21E00EF3C66 /* ioapi.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B56181871F21D00EF3C66 /* ioapi.h */; };
@@ -235,6 +234,8 @@
 		92F3F3491CA3BD7B00425D52 /* ThreadDispatcher.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92F3F3461CA3BD7B00425D52 /* ThreadDispatcher.cpp */; };
 		92F3F34A1CA3BD7B00425D52 /* ThreadDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 92F3F3471CA3BD7B00425D52 /* ThreadDispatcher.h */; };
 		92F3F34B1CA3BD7B00425D52 /* ThreadMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = 92F3F3481CA3BD7B00425D52 /* ThreadMessages.h */; };
+		AD14D5611D72B19600182666 /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD14D55F1D72B19600182666 /* Image.cpp */; };
+		AD14D5621D72B19600182666 /* Image.h in Headers */ = {isa = PBXBuildFile; fileRef = AD14D5601D72B19600182666 /* Image.h */; };
 		AD977D971D56F26400C3C05E /* key.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD977D951D56F26400C3C05E /* key.cpp */; };
 		AD977D981D56F26400C3C05E /* key.h in Headers */ = {isa = PBXBuildFile; fileRef = AD977D961D56F26400C3C05E /* key.h */; };
 		CEC2CFF61C47274C00450163 /* Material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEC2CFEE1C47274C00450163 /* Material.cpp */; };
@@ -365,7 +366,6 @@
 		049B56111871F21D00EF3C66 /* vector2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vector2.h; sourceTree = "<group>"; };
 		049B56121871F21D00EF3C66 /* vector3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vector3.h; sourceTree = "<group>"; };
 		049B56131871F21D00EF3C66 /* vector4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vector4.h; sourceTree = "<group>"; };
-		049B56141871F21D00EF3C66 /* MemoryTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MemoryTexture.cpp; path = ../../../src/MemoryTexture.cpp; sourceTree = "<group>"; };
 		049B56151871F21D00EF3C66 /* MemoryTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MemoryTexture.h; path = ../../../src/MemoryTexture.h; sourceTree = "<group>"; };
 		049B56171871F21D00EF3C66 /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
 		049B56181871F21D00EF3C66 /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
@@ -480,6 +480,8 @@
 		92F3F3461CA3BD7B00425D52 /* ThreadDispatcher.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ThreadDispatcher.cpp; sourceTree = "<group>"; };
 		92F3F3471CA3BD7B00425D52 /* ThreadDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadDispatcher.h; sourceTree = "<group>"; };
 		92F3F3481CA3BD7B00425D52 /* ThreadMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadMessages.h; sourceTree = "<group>"; };
+		AD14D55F1D72B19600182666 /* Image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Image.cpp; path = ../../../src/Image.cpp; sourceTree = "<group>"; };
+		AD14D5601D72B19600182666 /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Image.h; path = ../../../src/Image.h; sourceTree = "<group>"; };
 		AD977D951D56F26400C3C05E /* key.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = key.cpp; path = ../../../src/key.cpp; sourceTree = "<group>"; };
 		AD977D961D56F26400C3C05E /* key.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = key.h; path = ../../../src/key.h; sourceTree = "<group>"; };
 		CEC2CFEE1C47274C00450163 /* Material.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Material.cpp; path = ../../../src/Material.cpp; sourceTree = "<group>"; };
@@ -522,6 +524,8 @@
 		049B55901871F21000EF3C66 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				AD14D55F1D72B19600182666 /* Image.cpp */,
+				AD14D5601D72B19600182666 /* Image.h */,
 				AD977D951D56F26400C3C05E /* key.cpp */,
 				AD977D961D56F26400C3C05E /* key.h */,
 				049B55911871F21D00EF3C66 /* Actor.cpp */,
@@ -543,7 +547,6 @@
 				923A9E8D1A1FCA6600A6F08E /* MaskedRenderer.cpp */,
 				049B56071871F21D00EF3C66 /* MaskedSprite.cpp */,
 				CEC2CFEE1C47274C00450163 /* Material.cpp */,
-				049B56141871F21D00EF3C66 /* MemoryTexture.cpp */,
 				049B56211871F21D00EF3C66 /* PointerState.cpp */,
 				92214D5C19F149BC00A4459A /* Polygon.cpp */,
 				92F3F33E1CA3BD5400425D52 /* PostProcess.cpp */,
@@ -987,6 +990,7 @@
 				049B56EA1871F21E00EF3C66 /* oxygine-framework.h in Headers */,
 				049B571F1871F21E00EF3C66 /* VisualStyle.h in Headers */,
 				049B566A1871F21E00EF3C66 /* blocking.h in Headers */,
+				AD14D5621D72B19600182666 /* Image.h in Headers */,
 				923663591A47561500EB65B3 /* Serializable.h in Headers */,
 				049B56741871F21E00EF3C66 /* closure_impl.h in Headers */,
 				049B56C71871F21E00EF3C66 /* TreeInspectorPage.h in Headers */,
@@ -1091,7 +1095,6 @@
 				049B57171871F21E00EF3C66 /* AtlasTool.cpp in Sources */,
 				049B566D1871F21E00EF3C66 /* Button.cpp in Sources */,
 				049B57011871F21E00EF3C66 /* Resources.cpp in Sources */,
-				049B56DF1871F21E00EF3C66 /* MemoryTexture.cpp in Sources */,
 				92E0C9A61B24922600F0DB21 /* cdecode.c in Sources */,
 				049B56ED1871F21E00EF3C66 /* ProgressBar.cpp in Sources */,
 				049B56A31871F21E00EF3C66 /* Renderer.cpp in Sources */,
@@ -1156,6 +1159,7 @@
 				049B567E1871F21E00EF3C66 /* NativeTextureGLES.cpp in Sources */,
 				049B56AE1871F21E00EF3C66 /* system_data.cpp in Sources */,
 				049B569A1871F21E00EF3C66 /* NativeTexture.cpp in Sources */,
+				AD14D5611D72B19600182666 /* Image.cpp in Sources */,
 				049B56FF1871F21E00EF3C66 /* Resource.cpp in Sources */,
 				929AF57C1C88AF2E00D276ED /* ResAtlasPrebuilt.cpp in Sources */,
 				049B56D61871F21E00EF3C66 /* AffineTransform.cpp in Sources */,
