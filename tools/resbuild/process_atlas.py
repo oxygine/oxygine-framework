@@ -47,7 +47,7 @@ def as_bool(attr, df=False):
     return lw == "true" or lw == "1"
 
 
-def fixImage(image):
+def fixImage_unused(image):
     if image.mode != "RGBA":
         return image
 
@@ -450,7 +450,7 @@ def processRS(context, walker):
                 resize_filter = Image.BICUBIC
 
             if context.args.resize:
-                if as_bool(image_el.getAttribute("trueds")) or (not trim and not extend):
+                if as_bool(image_el.getAttribute("trueds")) or (not trim and not extend) or context.args.simple_downsample:
                     frame_image = frame_image.resize(
                         (frame_size[0], frame_size[1]), resize_filter)
                 else:
@@ -470,7 +470,9 @@ def processRS(context, walker):
 
             if image.mode == "RGBA" and trim:
                 r, g, b, a = frame_image.split()
-                a = a.point(lambda p: p - 2)
+                tt = context.args.trim_threshold
+                if tt:
+                	a = a.point(lambda p: p - tt)
 
                 if walker.hit_test:
                     adata = makeAlpha(a)
