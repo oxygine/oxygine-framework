@@ -39,7 +39,7 @@ namespace oxygine
         JNI_NOT_NULL(jRelease);
         env->CallStaticObjectMethod(_jHttpRequestsClass, jRelease);
     }
-    
+
     HttpRequestJavaTask::HttpRequestJavaTask(): _handle(0)
     {
 

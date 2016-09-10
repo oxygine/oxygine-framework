@@ -22,7 +22,7 @@ namespace oxygine
         static Resources* resSystem;
         static void initialize();
         static void show();
-		static void toggle();
+        static void toggle();
         static void hide();
         static void release();
         static void setCorner(int corner);
