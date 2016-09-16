@@ -351,6 +351,9 @@
     <ClCompile Include="..\..\src\Image.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\res\SingleResAnim.cpp">
+      <Filter>src\res</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\closure\closure.h">
@@ -748,6 +751,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\Image.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\res\SingleResAnim.h">
+      <Filter>src\res</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

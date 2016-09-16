@@ -171,6 +171,7 @@
     <ClCompile Include="..\..\src\minizip\ioapi_mem.c" />
     <ClCompile Include="..\..\src\minizip\unzip.c" />
     <ClCompile Include="..\..\src\PostProcess.cpp" />
+    <ClCompile Include="..\..\src\res\SingleResAnim.cpp" />
     <ClCompile Include="..\..\src\ThreadLoader.cpp" />
     <ClCompile Include="..\..\src\PointerState.cpp" />
     <ClCompile Include="..\..\src\Polygon.cpp" />
@@ -286,6 +287,7 @@
     <ClInclude Include="..\..\src\minizip\ioapi_mem.h" />
     <ClInclude Include="..\..\src\minizip\unzip.h" />
     <ClInclude Include="..\..\src\PostProcess.h" />
+    <ClInclude Include="..\..\src\res\SingleResAnim.h" />
     <ClInclude Include="..\..\src\ThreadLoader.h" />
     <ClInclude Include="..\..\src\oxygine-framework.h" />
     <ClInclude Include="..\..\src\oxygine_include.h" />
