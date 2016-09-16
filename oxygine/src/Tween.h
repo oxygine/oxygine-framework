@@ -35,6 +35,8 @@ namespace oxygine
     class UpdateState;
     class TweenOptions;
 
+    const int TWEEN_COMPLETE_DT = std::numeric_limits<int>::max() / 2;
+
 
     DECLARE_SMART(Tween, spTween);
 
@@ -141,7 +143,7 @@ namespace oxygine
         void setDetachActor(bool detach) { _detach = detach; }
 
         /**immediately completes tween, calls doneCallback and mark tween as completed and removes self from Actor. If tween has infinity loops (=-1) then do nothing*/
-        virtual void complete(timeMS deltaTime = std::numeric_limits<int>::max() / 2);
+        virtual void complete(timeMS deltaTime = TWEEN_COMPLETE_DT);
 
         /**removes self from Actor, complete callback not called*/
         void remove();

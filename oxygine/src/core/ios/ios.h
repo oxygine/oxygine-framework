@@ -8,7 +8,7 @@ namespace oxygine
     {
         std::string getSupportFolder();
     }
-    
+
     class Image;
 
 

@@ -70,6 +70,20 @@ namespace oxygine
         getStage()->addChild(DebugActor::instance);
     }
 
+    void DebugActor::toggle()
+    {
+        if (!DebugActor::instance)
+        {
+            show();
+            return;
+        }
+
+        if (DebugActor::instance->_getStage())
+            hide();
+        else
+            show();
+    }
+
     void DebugActor::hide()
     {
         if (DebugActor::instance)
