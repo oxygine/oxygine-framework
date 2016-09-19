@@ -1,4 +1,5 @@
 #include "SingleResAnim.h"
+#include "Image.h"
 
 namespace oxygine
 {
@@ -11,6 +12,10 @@ namespace oxygine
 
 	void SingleResAnim::init(Image* original, int columns, int rows, float scaleFactor)
 	{
-		makeAlpha
+		Rect bounds;
+		HitTestData ht;
+		const ImageData &im = original->lock();
+		makeAlpha(im, bounds, _data, ht, true);
+		int q = 0;
 	}
 }
