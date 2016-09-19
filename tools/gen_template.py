@@ -96,6 +96,7 @@ def _run(args):
 
     values["OXYGINE"] = unixpath(ox_path)
     values["ROOT"] = unixpath(root_path)
+    values["PROJECT_LC"] = name.lower()
 
     def process(template, relto, path, gl, fn=None):
         res = ""

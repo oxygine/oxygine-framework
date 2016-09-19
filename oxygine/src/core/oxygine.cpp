@@ -721,7 +721,9 @@ namespace oxygine
 
         bool update()
         {
+#ifndef OXYGINE_EDITOR
             key::update();
+#endif
 
             timeMS duration = IVideoDriver::_stats.duration;
             IVideoDriver::_stats = IVideoDriver::Stats();

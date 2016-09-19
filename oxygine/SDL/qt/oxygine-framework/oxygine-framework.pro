@@ -82,7 +82,6 @@ HEADERS +=  \
   $$SRC/PointerState.h \
   $$SRC/ProgressBar.h \
   $$SRC/RenderState.h \
-  $$SRC/RootActor.h \
   $$SRC/SlidingActor.h \
   $$SRC/Sprite.h \
   $$SRC/TextActor.h \
