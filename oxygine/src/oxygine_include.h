@@ -92,7 +92,7 @@ namespace oxygine { namespace log { void error(const char* format, ...); } }
 
 //assert without log::error
 #ifdef OXYGINE_QT
-#   define OX_ASSERT_NL(x) {Q_ASSERT(x);}
+#   define OX_ASSERT_NL(x) { if (!(x)) __asm("int3"); Q_ASSERT(x);}
 #elif !OX_DEBUG || EMSCRIPTEN
 #   define OX_ASSERT_NL(x)
 #else
