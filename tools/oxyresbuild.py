@@ -82,6 +82,7 @@ def get_parser():
 def do(args):
     p = xml_processor.XmlProcessor(args)
     p.process()
+    return p
 
 
 def process(values):
@@ -96,7 +97,7 @@ def process(values):
         args.append(v)
 
     args = get_parser().parse_args(args)
-    do(args)
+    return do(args)
 
 
 if __name__ == "__main__":

@@ -22,6 +22,6 @@ class helper(object):
             if folder not in sys.path:
                 sys.path.append(folder)
             import oxyresbuild
-            oxyresbuild.process(args)
+            return oxyresbuild.process(args)
         else:
             os.system("python \"{}\" {}".format(self.path_process_xml, args))
