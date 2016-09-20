@@ -112,6 +112,7 @@
 #include "res/Resource.h"
 #include "res/Resources.h"
 #include "res/ResStarlingAtlas.h"
+#include "res/SingleResAnim.h"
 
 //text_utils/
 #include "text_utils/Aligner.h"
