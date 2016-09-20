@@ -20,13 +20,10 @@ public:
         //create button Sprite
         spSprite button = new Sprite();
 
-		static SingleResAnim rs;
-		rs.init("images/button.png");
 
         //setup it:
         //set button.png image. Resource 'button' defined in 'res.xml'
-        //button->setResAnim(gameResources.getResAnim("button"));
-		button->setResAnim(&rs);
+        button->setResAnim(gameResources.getResAnim("button"));
 
         //centered button at screen
         Vector2 pos = getStage()->getSize() / 2 - button->getSize() / 2;
