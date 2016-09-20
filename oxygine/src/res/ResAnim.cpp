@@ -68,22 +68,8 @@ namespace oxygine
             return;
 
         spNativeTexture texture = IVideoDriver::instance->createTexture();
-        /*
-        int w2 = nextPOT(original->getWidth());
-        int h2 = nextPOT(original->getHeight());
-        if (w2 != original->getWidth() || h2 != original->getHeight())
-        {
-            texture->init(w2, h2, original->getFormat());
-            texture->updateRegion(0, 0, original->lock());
-        }
-        else
-        {
-        */
         texture->init(original->lock(), false);
-        //}
-
         texture->apply();
-
         init(texture, original->getSize(), columns, rows, scaleFactor);
     }
 
