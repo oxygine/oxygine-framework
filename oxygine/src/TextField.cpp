@@ -22,6 +22,7 @@ namespace oxygine
     {
         _flags |= flag_rebuild;
         _style.font = NULL;
+        _rtscale = 0;
 
         if (DebugActor::resSystem)
         {
@@ -252,12 +253,12 @@ namespace oxygine
 
     text::Symbol* TextField::getSymbolAt(int pos) const
     {
-        return const_cast<TextField*>(this)->getRootNode()->getSymbol(pos);
+        return const_cast<TextField*>(this)->getRootNode(1)->getSymbol(pos);
     }
 
     const Rect& TextField::getTextRect() const
     {
-        const_cast<TextField*>(this)->getRootNode();
+        const_cast<TextField*>(this)->getRootNode(1);
         return _textRect;
     }
 
@@ -268,9 +269,9 @@ namespace oxygine
     }
 
 
-    text::Node* TextField::getRootNode()
+    text::Node* TextField::getRootNode(float scale)
     {
-        if ((_flags & flag_rebuild) && _style.font)
+        if ((_flags & flag_rebuild || _rtscale != scale) && _style.font)
         {
             delete _root;
 
@@ -286,7 +287,8 @@ namespace oxygine
                 _root = new text::TextNode(_text.c_str());
             }
 
-            text::Aligner rd(_style);
+            _rtscale = scale;
+            text::Aligner rd(_style, scale);
 
             rd.width = (int)getWidth();
             rd.height = (int)getHeight();

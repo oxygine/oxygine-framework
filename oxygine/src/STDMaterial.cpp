@@ -160,7 +160,10 @@ namespace oxygine
 
     void STDMaterial::doRender(TextField* tf, const RenderState& rs)
     {
-        text::Node* root = tf->getRootNode();
+
+        float scale = sqrtf(rs.transform.a * rs.transform.a + rs.transform.c * rs.transform.c);
+
+        text::Node* root = tf->getRootNode(scale);
         if (!root)
             return;
 
@@ -180,7 +183,6 @@ namespace oxygine
         int sdfSize;
         if (tf->getFont()->isSDF(sdfSize))
         {
-            float scale = sqrtf(rs.transform.a * rs.transform.a + rs.transform.c * rs.transform.c);
 
             if (tf->getFontSize())
                 scale = scale * tf->getFontSize() / sdfSize;

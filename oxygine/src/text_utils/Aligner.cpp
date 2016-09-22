@@ -6,9 +6,13 @@ namespace oxygine
 {
     namespace text
     {
+#define GSCALE 1
 
-        Aligner::Aligner(const TextStyle& Style): width(0), height(0), _x(0), _y(0), _lineWidth(0), bounds(0, 0, 0, 0), style(Style)
+        Aligner::Aligner(const TextStyle& Style, float gscale): width(0), height(0), _x(0), _y(0), _lineWidth(0), bounds(0, 0, 0, 0), style(Style), _globalScale(gscale)
         {
+#ifdef GSCALE
+            style.fontSize = style.fontSize  * _globalScale;
+#endif
             _font = style.font->getFont(0, style.fontSize);
             _line.reserve(50);
         }
@@ -69,6 +73,9 @@ namespace oxygine
             _scale = _font->getScale();
             if (st.fontSize)
                 _scale = _font->getSize() / float(st.fontSize);
+#ifdef GSCALE
+            _scale =  _globalScale;
+#endif
 
             width = int(width * _scale);
             height = int(height * _scale);

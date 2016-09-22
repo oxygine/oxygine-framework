@@ -27,7 +27,7 @@ namespace oxygine
         class Aligner
         {
         public:
-            Aligner(const TextStyle& style);
+            Aligner(const TextStyle& style, float gscale);
             ~Aligner();
 
 
@@ -60,6 +60,7 @@ namespace oxygine
             void _nextLine(line& ln);
 
             float _scale;
+            float _globalScale;
             int _x, _y;
             line _line;
             int _lineWidth;

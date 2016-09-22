@@ -102,7 +102,7 @@ namespace oxygine
         std::string dump(const dumpOptions& options) const;
         void doRender(RenderState const& parentRenderState);
 
-        text::Node* getRootNode();
+        text::Node* getRootNode(float scale);
     protected:
         enum
         {
@@ -114,6 +114,7 @@ namespace oxygine
 
         text::Node* _root;
         Rect _textRect;
+        float _rtscale;
 
 
         void needRebuild();
