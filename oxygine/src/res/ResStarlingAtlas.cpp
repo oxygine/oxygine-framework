@@ -70,15 +70,13 @@ namespace oxygine
             }
             else
             {
-                spImage mt = new Image;
+                RefHolder<Image> mt;
 
-                ImageData im;
                 file::buffer bf;
                 file::read(_imagePath, bf);
 
-                mt->init(bf, true, _texture->getFormat());
-                im = mt->lock();
-                _texture->init(mt->lock(), false);
+                mt.init(bf, true, _texture->getFormat());
+                _texture->init(mt.lock(), false);
             }
         }
 
