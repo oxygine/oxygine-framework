@@ -100,6 +100,9 @@ namespace oxygine
 
         OX_ASSERT(_client);
 
+		if (!_client)
+			return;
+
 //OX_ASSERT(!"not implemented");
 
 //not started yet because has delay
