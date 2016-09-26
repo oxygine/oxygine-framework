@@ -1,6 +1,8 @@
 #pragma once
+#include "oxygine_include.h"
 #include "STDRenderer.h"
 #include "Material.h"
+
 namespace oxygine
 {
     class ClipRectActor;

@@ -11,6 +11,7 @@ namespace oxygine
         enum
         {
             /**ABGR(LE) colors table*/
+            Zero                 = 0x00000000,
             AliceBlue            = 0xF0F8FFFF,
             AntiqueWhite         = 0xFAEBD7FF,
             Aqua                 = 0x00FFFFFF,

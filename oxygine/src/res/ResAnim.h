@@ -24,7 +24,7 @@ namespace oxygine
         virtual void init(Image* original, int columns = 1, int rows = 1, float scaleFactor = 1.0f);
         void init(animationFrames& frames, int columns, float scaleFactor = 1.0f, float appliedScale = 1.0f);
         /**creates animation frames from NativeTexture*/
-        void init(spNativeTexture texture, const Point& originalSize, int columns, int rows, float scaleFactor);
+        void init(spNativeTexture texture, const Point& originalSize, int columns = 1, int rows = 1, float scaleFactor = 1.0f);
 
         /*adds additional column. use it only if rows = 1*/
         //void addFrame(const AnimationFrame &frame);
