@@ -278,7 +278,7 @@ namespace oxygine
         return _result;
     }
 
-    void ThreadDispatcher::sendCallback(void* arg1, void* arg2, callback cb, void* cbData)
+    void ThreadDispatcher::sendCallback(void* arg1, void* arg2, callback cb, void* cbData, bool highPriority)
     {
         message ev;
         ev.arg1 = arg1;
@@ -289,17 +289,20 @@ namespace oxygine
 #ifndef OX_NO_MT
         MutexPthreadLock lock(_mutex);
 #endif
-        _pushMessageWaitReply(ev);
+        _pushMessageWaitReply(ev, highPriority);
     }
 
-    void ThreadDispatcher::_pushMessageWaitReply(message& msg)
+    void ThreadDispatcher::_pushMessageWaitReply(message& msg, bool highPriority)
     {
         msg._id = ++_id;
         msg.need_reply = true;
         LOGDN("_pushMessageWaitReply id=%d msgid=%d", msg._id, msg.msgid);
 
+        if (highPriority)
+            _events.insert(_events.begin(), msg);
+        else
+            _events.push_back(msg);
 
-        _events.push_back(msg);
         _waitReply(msg._id);
         LOGDN("waiting reply  %d - done", msg._id);
     }
@@ -392,4 +395,14 @@ namespace oxygine
         _pushMessageWaitReply(ev);
     }
 #endif
+
+    std::vector<ThreadDispatcher::message>& ThreadDispatcher::lockMessages()
+    {
+        pthread_mutex_lock(&_mutex);
+        return _events;
+    }
+    void ThreadDispatcher::unlockMessages()
+    {
+        pthread_mutex_unlock(&_mutex);
+    }
 }
