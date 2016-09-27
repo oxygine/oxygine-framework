@@ -290,10 +290,10 @@ namespace oxygine
         //converts global position (position in parent space) to local space
         Vector2 global2local(const Vector2& pos) const;
         //converts local position to parent space
-        Vector2 local2global(const Vector2& pos) const;
+        Vector2 local2global(const Vector2& pos = Vector2(0, 0)) const;
 
         //converts local position to Stage
-        Vector2 local2stage(const Vector2& pos, Actor* stage = 0) const;
+        Vector2 local2stage(const Vector2& pos = Vector2(0, 0), Actor* stage = 0) const;
         //converts global position (position in Stage space) to local space
         Vector2 stage2local(const Vector2& pos, Actor* stage = 0) const;
 
