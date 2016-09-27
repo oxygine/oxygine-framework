@@ -138,8 +138,12 @@ namespace oxygine
     }
 #endif
     
-    void iosGetMemoryUsage(size_t &a)
+    void iosGetMemoryUsage(size_t& a, size_t &b, size_t &c)
     {
+    	a = 0;
+    	b = 0;
+    	c = 0;
+    	
         struct task_basic_info info;
         mach_msg_type_number_t size = sizeof(info);
         kern_return_t kerr = task_info(mach_task_self(),

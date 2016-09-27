@@ -343,9 +343,9 @@ namespace oxygine
         s << "textures=" << aligned(NativeTexture::created, 2) << " ";
 
 #ifdef __APPLE__
-        size_t mem;
-        iosGetMemoryUsage(mem);
-        s << "memory=" << mem / 1024 << "kb ";
+        size_t mem1, mem2, mem3;
+        iosGetMemoryUsage(mem1, mem2, mem3);
+        s << "memory=" << mem1 / 1024 << "|" << mem2 / 1024 << "|" << mem3 / 1024 << "kb ";
 #endif
 
         if (!_debugText.empty())
