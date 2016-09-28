@@ -354,6 +354,9 @@ namespace oxygine
 
     Rect PostProcess::getScreenRect(const Actor& actor) const
     {
+        if (_options._flags & PostProcessOptions::flag_screen)
+            return _screen;
+
         Rect screen;
 
         Rect display(Point(0, 0), core::getDisplaySize());

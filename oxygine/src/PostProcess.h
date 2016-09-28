@@ -20,6 +20,7 @@ namespace oxygine
         {
             flag_singleR2T = 1,
             flag_fullscreen = 1 << 1,
+            flag_screen = 1 << 2,
         };
 
         PostProcessOptions(int flags = 0) : _flags(flags), _downscale(1) {}
