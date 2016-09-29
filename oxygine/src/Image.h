@@ -35,6 +35,7 @@ namespace oxygine
         //void convert2pot(MemoryTexture &dest);
 
         void fill_zero();
+        void fill(unsigned int val);
 
         unsigned int    getSizeVRAM() const {return (unsigned int)_buffer.size();}
         int             getWidth() const;

@@ -6,7 +6,12 @@ namespace oxygine
 {
     namespace operations
     {
+        //based on memcpy
         void copy(const ImageData& src, ImageData& dest);
+
+        //based on memmove, could be used for overlapped images, slower than copy
+        void move(const ImageData& src, ImageData& dest);
+
         void blit(const ImageData& src, ImageData& dest);
         void blitPremultiply(const ImageData& src, ImageData& dest);
         void flipY(const ImageData& src, ImageData& dest);

@@ -33,6 +33,7 @@ namespace oxygine
     {
     public:
         AnimationFrame() : _srcRect(0, 0, 1, 1), _destRect(0, 0, 1, 1), _resAnim(0), _row(0), _column(0) {}
+        AnimationFrame(spNativeTexture t);
 
         void init(ResAnim* rs, const Diffuse& df,
                   const RectF& srcRect, const RectF& destRect, const Vector2& frame_size);

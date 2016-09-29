@@ -555,6 +555,13 @@ namespace oxygine
         memset(&_buffer.front(), 0, _buffer.size());
     }
 
+    void Image::fill(unsigned int val)
+    {
+        if (_buffer.empty())
+            return;
+        memset(&_buffer.front(), val, _buffer.size());
+    }
+
     bool Image::init(file::buffer& buffer, bool premultiplied, TextureFormat format)
     {
         cleanup();
