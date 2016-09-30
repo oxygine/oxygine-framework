@@ -470,7 +470,7 @@ namespace oxygine
         cr->addTween(ColorRectSprite::TweenColor(Color(Color::White, 200)), 700, 1, true, 0, Tween::ease_inCubic)->setDetachActor(true);
         actor->addChild(cr);
         std::string dmp = actor->dump(0);
-        log::messageln("touched actor '%s' local pos: (%.0f,%.0f), pos: (%.0f,%.0f)\n%s",
+        log::messageln(">>>>>>>>>>>>>>>>>>>>\ntouched actor '%s' local pos: (%.0f,%.0f), pos: (%.0f,%.0f)\n%s",
                        actor->getName().c_str(),
                        te->localPosition.x, te->localPosition.y,
                        te->position.x, te->position.y,
