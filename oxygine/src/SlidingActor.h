@@ -90,6 +90,8 @@ namespace oxygine
 
         timeMS _lastIterTime;
         pointer_index _finger;
+
+        bool _ignoreTouchUp;
     };
 }
 

@@ -58,7 +58,8 @@ namespace oxygine
         _clientIsParent(false),
         _dragEnabled(true),
         _pressed(false),
-        _singleDrag(false)
+        _singleDrag(false),
+        _ignoreTouchUp(false)
     {
 
     }
@@ -164,11 +165,14 @@ namespace oxygine
             break;
             case TouchEvent::TOUCH_UP:
             {
-                _pressed = false;
-                _actor->_getStage()->removeEventListeners(this);
-                if (getTimeMS() - _startTm < 2)
+                if (!_ignoreTouchUp)
                 {
-                    _actor->setPosition(_clientPos);
+                    _pressed = false;
+                    _actor->_getStage()->removeEventListeners(this);
+                    if (getTimeMS() - _startTm < 2)
+                    {
+                        _actor->setPosition(_clientPos);
+                    }
                 }
             }
             break;

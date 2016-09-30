@@ -19,6 +19,7 @@ namespace oxygine
         _rad(_defaultTouchThreshold),
         _maxSpeed(250),
         _downTime(0),
+        _ignoreTouchUp(false),
         _lastTime(0), _current(0), _lastIterTime(0),
         _finger(0)
     {
@@ -237,7 +238,12 @@ namespace oxygine
 
             case TouchEvent::TOUCH_UP:
             {
-                if (_drag.getDragEnabled() && te->index == _finger)
+                if (_ignoreTouchUp)
+                {
+                    te->stopImmediatePropagation();
+                }
+
+                if (_drag.getDragEnabled() && te->index == _finger && _ignoreTouchUp == false)
                 {
                     _finger = 0;
                     _downTime = 0;
@@ -322,6 +328,15 @@ namespace oxygine
                             act->setNotPressed();
                             act = act->getParent();
                         }
+
+
+                        TouchEvent ev(TouchEvent::TOUCH_UP, true, Vector2(-100000, -100000));
+
+                        _ignoreTouchUp = true;
+                        _drag.setIgnoreTouchUp(true);
+                        _holded->dispatchEvent(&ev);
+                        _drag.setIgnoreTouchUp(false);
+                        _ignoreTouchUp = false;
 
                         _holded = 0;
                     }
