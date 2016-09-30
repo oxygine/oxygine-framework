@@ -105,8 +105,6 @@ namespace oxygine
         OX_ASSERT(_stage == 0);
         _stage = stage;
 
-        onAdded2Stage();
-
         spActor actor = _children._first;
         while (actor)
         {
@@ -114,6 +112,8 @@ namespace oxygine
             actor->added2stage(stage);
             actor = next;
         }
+
+        onAdded2Stage();
     }
 
     void Actor::removedFromStage()
