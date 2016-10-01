@@ -926,6 +926,8 @@ namespace oxygine
 
     void Actor::prependChild(Actor* actor)
     {
+        if (actor == getFirstChild().get())
+            return;
         if (getFirstChild())
             getFirstChild()->insertSiblingBefore(actor);
         else
