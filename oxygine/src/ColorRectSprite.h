@@ -18,6 +18,7 @@ namespace oxygine
 
         void doRender(const RenderState& rs);
 
+        RectF getDestRect() const OVERRIDE { return Actor::getDestRect(); }
     private:
     };
 }

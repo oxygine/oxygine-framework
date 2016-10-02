@@ -218,13 +218,15 @@ namespace oxygine
     {
 
     }
+    /*
+    void Sprite::sizeChanged(const Vector2& size)
+    {
+
+    }*/
 
     RectF Sprite::getDestRect() const
     {
-        if (_frame.getDiffuse().base)
-            return calcDestRectF(_frame.getDestRect(), _frame.getSize());
-
-        return Actor::getDestRect();
+        return _frame.getDestRect();
     }
 
 

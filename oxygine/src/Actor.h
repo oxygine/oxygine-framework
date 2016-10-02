@@ -150,7 +150,6 @@ namespace oxygine
         pointer_index       getOvered() const;
         bool                getTouchEnabled() const { return (_flags & flag_touchEnabled) != 0; }
         bool                getTouchChildrenEnabled() const { return (_flags & flag_touchChildrenEnabled) != 0; }
-        bool                getChildrenRelative() const {return (_flags & flag_childrenRelative) != 0;;}
         UpdateCallback      getCallbackDoUpdate() const {return _cbDoUpdate;}
         Material*           getMaterial() { return _material; }
         //RenderCallback        getCallbackDoRender() const {return _cbDoRender;}
@@ -193,8 +192,6 @@ namespace oxygine
         void setRotation(float angle);
         /**Sets rotation angle in degrees. Converts internally to radians. (use setRotation!)*/
         void setRotationDegrees(float angle);
-        /**This option is connected with Anchor. By default value is True*/
-        void setChildrenRelative(bool r) {_flags &= ~flag_childrenRelative; if (r) _flags |= flag_childrenRelative;}
 
         /**Sets Size of Actor. Size doesn't scale contents of Actor. Size only affects event handling and rendering if you change Anchor*/
         void setSize(const Vector2&);
@@ -352,7 +349,6 @@ namespace oxygine
         void _onGlobalTouchUpEvent(Event*);
         void _onGlobalTouchMoveEvent(Event*);
 
-        RectF calcDestRectF(const RectF& destRect, const Vector2& size) const;
         void _setSize(const Vector2&);
         virtual void sizeChanged(const Vector2& size);
         Actor*  _getDescendant(const std::string& name);
@@ -378,13 +374,12 @@ namespace oxygine
             flag_anchorInPixels         = 1,
             flag_visible                = 1 << 1,
             flag_touchEnabled           = 1 << 2,
-            flag_childrenRelative       = 1 << 3,
-            flag_transformDirty         = 1 << 4,
-            flag_transformInvertDirty   = 1 << 5,
-            flag_touchChildrenEnabled   = 1 << 6,
-            flag_cull                   = 1 << 7,
-            flag_fastTransform          = 1 << 8,
-            flag_reserved               = 1 << 9,
+            flag_transformDirty         = 1 << 3,
+            flag_transformInvertDirty   = 1 << 4,
+            flag_touchChildrenEnabled   = 1 << 5,
+            flag_cull                   = 1 << 6,
+            flag_fastTransform          = 1 << 7,
+            flag_reserved               = 1 << 8,
             flag_last                   = flag_reserved
         };
 

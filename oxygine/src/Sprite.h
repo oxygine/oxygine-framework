@@ -65,6 +65,7 @@ namespace oxygine
         };
         virtual void changeAnimFrame(const AnimationFrame& f);
         virtual void animFrameChanged(const AnimationFrame& f);
+        //void sizeChanged(const Vector2& size) override;
 
         AnimationFrame _frame;
     };

@@ -32,7 +32,7 @@ namespace oxygine
         _zOrder(0),
         _scale(1, 1),
         _rotation(0),
-        _flags(flag_visible | flag_touchEnabled | flag_touchChildrenEnabled | flag_childrenRelative | flag_fastTransform),
+        _flags(flag_visible | flag_touchEnabled | flag_touchChildrenEnabled | flag_fastTransform),
         _parent(0),
         _alpha(255),
         _pressed(0),
@@ -730,22 +730,20 @@ namespace oxygine
                      _pos.x, _pos.y);
         }
 
-        if (_flags & flag_childrenRelative)
+        Vector2 offset;
+        if (_flags & flag_anchorInPixels)
         {
-            Vector2 offset;
-            if (_flags & flag_anchorInPixels)
-            {
-                offset.x = -_anchor.x;
-                offset.y = -_anchor.y;
-            }
-            else
-            {
-                offset.x = -float(_size.x * _anchor.x);
-                offset.y = -float(_size.y * _anchor.y);//todo, what to do? (per pixel quality)
-            }
-
-            tr.translate(offset);
+            offset.x = -_anchor.x;
+            offset.y = -_anchor.y;
         }
+        else
+        {
+            offset.x = -float(_size.x * _anchor.x);
+            offset.y = -float(_size.y * _anchor.y);//todo, what to do? (per pixel quality)
+        }
+
+        tr.translate(offset);
+
 
         _transform = tr;
         _flags &= ~flag_transformDirty;
@@ -1135,26 +1133,9 @@ namespace oxygine
         rs.material->render(this, rs);
     }
 
-    RectF Actor::calcDestRectF(const RectF& destRect_, const Vector2& size) const
-    {
-        RectF destRect = destRect_;
-        if (!(_flags & flag_childrenRelative))
-        {
-            Vector2 a;
-
-            if ((_flags & flag_anchorInPixels))
-                a = Vector2(_anchor.x, _anchor.y);
-            else
-                a = Vector2(_anchor.x * size.x, _anchor.y * size.y);
-
-            destRect.pos -= a;
-        }
-        return destRect;
-    }
-
     RectF Actor::getDestRect() const
     {
-        return calcDestRectF(RectF(Vector2(0, 0), getSize()), getSize());
+        return RectF(Vector2(0, 0), getSize());
     }
 
     spTween Actor::_addTween(spTween tween, bool rel)
