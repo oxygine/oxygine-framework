@@ -195,7 +195,7 @@ namespace oxygine
         {
             std::sort(_files.begin(), _files.end(), sortFiles);
 #ifdef OX_DEBUG
-            for (size_t i = 0; i < _files.size() - 1; ++i)
+            for (int i = 0; i < (int)_files.size() - 1; ++i)
             {
                 OX_ASSERT(strcmp(_files[i].name, _files[i + 1].name) != 0);
             }
