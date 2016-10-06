@@ -226,6 +226,7 @@ namespace oxygine
             NativeTextureGLES::created--;
             glDeleteTextures(1, (GLuint*)&_id);
             _id = 0;
+            CHECKGL();
         }
 
 
@@ -233,10 +234,10 @@ namespace oxygine
         {
             oxglDeleteFramebuffers(1, (GLuint*)&_fbo);
             _fbo = 0;
+            CHECKGL();
         }
 
         unreg();
-        CHECKGL();
     }
 
 
