@@ -613,6 +613,7 @@ namespace oxygine
                 switch (event.type)
                 {
                     case SDL_QUIT:
+						log::messageln("SDL_QUIT");
                         done = true;
                         break;
                     case SDL_WINDOWEVENT:
@@ -637,8 +638,8 @@ namespace oxygine
                         if (event.window.event == SDL_WINDOWEVENT_FOCUS_GAINED)
                             newFocus = true;
 #ifdef __ANDROID__
-                        if (event.window.event == SDL_WINDOWEVENT_ENTER)
-                            newFocus = true;
+                        //if (event.window.event == SDL_WINDOWEVENT_ENTER)
+                         //   newFocus = true;
 #endif
 
                         if (focus != newFocus)
@@ -786,6 +787,8 @@ namespace oxygine
 
         void release()
         {
+			log::messageln("core::release");
+
             _threadMessages.clear();
             _uiMessages.clear();
 
@@ -859,6 +862,7 @@ namespace oxygine
 
         void requestQuit()
         {
+			log::messageln("requestQuit");
 #ifdef __S3E__
             s3eDeviceRequestQuit();
 #elif OXYGINE_SDL
