@@ -40,9 +40,28 @@ namespace oxygine
 
     DECLARE_SMART(Tween, spTween);
 
-    class Tween : public EventDispatcher, public intrusive_list_item<spTween>
+    DECLARE_SMART(Script, spScript);
+
+    class Script : public EventDispatcher, public intrusive_list_item<spScript>
     {
-        typedef intrusive_list_item<spTween> intr_list;
+
+        typedef intrusive_list_item<spScript> intr_list;
+    public:
+
+        spScript&    getNextSibling() { return intr_list::getNextSibling(); }
+        spScript&    getPrevSibling() { return intr_list::getPrevSibling(); }
+
+
+        virtual void update(Actor& actor, const UpdateState& us) = 0;
+        virtual bool        isDone() const = 0;
+        virtual void complete(timeMS deltaTime = TWEEN_COMPLETE_DT) = 0;
+        virtual void start(Actor&) = 0;
+        virtual void reset() = 0;
+
+    };
+
+    class Tween : public Script
+    {
     public:
         enum EASE
         {
@@ -114,8 +133,6 @@ namespace oxygine
         Actor*      getClient() const { return _client; }
         float       getPercent() const { return _percent; }
         spObject    getDataObject() const { return _data; }
-        spTween&    getNextSibling() { return intr_list::getNextSibling(); }
-        spTween&    getPrevSibling() { return intr_list::getPrevSibling(); }
 
         bool        isStarted() const { return _status != status_not_started; }
         bool        isDone() const { return _status == status_remove; }

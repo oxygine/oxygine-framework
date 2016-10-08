@@ -112,9 +112,9 @@ namespace oxygine
         /**search tween by name*/
         spTween             getTween(const std::string& name, error_policy ep = ep_show_error);
         /**returns first tween in actor*/
-        spTween             getFirstTween() const {return _tweens._first;}
+        spTween             getFirstTween() const {return safeSpCast<Tween>(_tweens._first);}
         /**returns last tween in actor*/
-        spTween             getLastTween() const {return _tweens._last;}
+        spTween             getLastTween() const { return safeSpCast<Tween>(_tweens._last); }
 
         const Vector2&      getAnchor() const {return _anchor;}
         float               getAnchorX() const {return _anchor.x;}
@@ -395,7 +395,7 @@ namespace oxygine
         spClock _clock;
         Actor* _parent;
 
-        typedef intrusive_list<spTween> tweens;
+        typedef intrusive_list<spScript> tweens;
         tweens _tweens;
 
         children _children;

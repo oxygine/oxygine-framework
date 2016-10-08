@@ -60,7 +60,7 @@ namespace oxygine
             return 0;
 
 
-        _tweens.append(t);
+        _tweens.append(spScript(t.get()));
         return t;
     }
 
@@ -95,7 +95,7 @@ namespace oxygine
 
         if (_current)
         {
-            spTween next = _current->getNextSibling();
+            spScript next = _current->getNextSibling();
             _current->update(actor, us);
             if (_current->isDone())
             {
@@ -118,7 +118,7 @@ namespace oxygine
             }
             else
             {
-                spTween next = _tweens._first;
+                spScript next = _tweens._first;
                 while (next)
                 {
                     next->reset();

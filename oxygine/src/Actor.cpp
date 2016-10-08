@@ -242,7 +242,7 @@ namespace oxygine
             stream << " rot=" << getRotation() / MATH_PI * 360.0f << "";
 
         int tweensCount = 0;
-        spTween t = _tweens._first;
+        spScript t = _tweens._first;
         while (t)
         {
             t = t->getNextSibling();
@@ -977,10 +977,10 @@ namespace oxygine
 
     void Actor::internalUpdate(const UpdateState& us)
     {
-        spTween tween = _tweens._first;
+        spScript tween = _tweens._first;
         while (tween)
         {
-            spTween tweenNext = tween->getNextSibling();
+            spScript tweenNext = tween->getNextSibling();
 
             if (tween->getParentList())
                 tween->update(*this, us);
@@ -1164,7 +1164,7 @@ namespace oxygine
             return 0;
 
         tween->start(*this);
-        _tweens.append(tween);
+        _tweens.append(spScript(tween.get()));
 
         return tween;
     }
@@ -1182,11 +1182,11 @@ namespace oxygine
 
     spTween Actor::getTween(const std::string& name, error_policy ep)
     {
-        spTween tween = _tweens._first;
+        spScript tween = _tweens._first;
         while (tween)
         {
             if (tween->isName(name))
-                return tween;
+                return safeSpCast<Tween>(tween);
             tween = tween->getNextSibling();
         }
 
@@ -1203,36 +1203,38 @@ namespace oxygine
         if (v->getParentList() == &_tweens)
         {
             v->setClient(0);
-            _tweens.remove(v);
+            _tweens.remove(spScript(v.get()));
         }
     }
 
     void Actor::removeTweens(bool callComplete)
     {
-        spTween t = _tweens._first;
+        spScript t = _tweens._first;
         while (t)
         {
-            spTween c = t;
+            spScript c = t;
             t = t->getNextSibling();
 
             if (callComplete)
                 c->complete();
             else
-                removeTween(c);
+            {
+                _tweens.remove(c);
+            }
         }
     }
 
     void Actor::removeTweensByName(const std::string& name)
     {
-        spTween t = _tweens._first;
+        spScript t = _tweens._first;
         while (t)
         {
-            spTween c = t;
+            spScript c = t;
             t = t->getNextSibling();
 
             if (c->isName(name))
             {
-                removeTween(c);
+                _tweens.remove(c);
             }
         }
     }

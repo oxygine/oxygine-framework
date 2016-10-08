@@ -46,9 +46,9 @@ namespace oxygine
         void _start(Actor& actor);
         void _update(Actor& actor, const UpdateState& us);
 
-        typedef intrusive_list<spTween> tweens;
+        typedef intrusive_list<spScript> tweens;
         tweens _tweens;
-        spTween _current;
+        spScript _current;
         int _loopsDone;
     };
 
