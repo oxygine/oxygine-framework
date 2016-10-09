@@ -2,4 +2,4 @@ language: objective-c
 osx_image: xcode8
 xcode_project: oxygine/SDL/ios/oxygine/oxygine_ios.xcodeproj
 xcode_scheme: oxygine_ios
-xcode_sdk: iPhoneOS10.0
+xcode_sdk: iPhoneSimulator10.0
