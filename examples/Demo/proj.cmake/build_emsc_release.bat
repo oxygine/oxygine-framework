@@ -1,3 +1,5 @@
+call emsdk activate
+
 python ../../..//tools/others/embed_folder_js.py -s ../data
 
 mkdir build_emsc_release
