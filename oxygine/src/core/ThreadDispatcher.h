@@ -91,7 +91,7 @@ namespace oxygine
         //blocking, sends message and waiting reply from other thread
         void* send(int msgid, void* arg1, void* arg2);
         //blocking, sends callback and waiting until it is done
-        void sendCallback(void* arg1, void* arg2, callback cb, void* cbData, bool highPriority = false);
+        void* sendCallback(void* arg1, void* arg2, callback cb, void* cbData, bool highPriority = false);
 #ifndef __S3E__
         //blocking, sends callback and waiting until it is done
         void sendCallback(const std::function<void()>&);

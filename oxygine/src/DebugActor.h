@@ -33,6 +33,7 @@ namespace oxygine
         ~DebugActor();
 
         /**where to display DebugActor. 0 - top left, 1 - top right, 2 - bottom right, 3 - bottom left corner*/
+        OXYGINE_DEPRECATED
         void setCornerPosition(int corner);
         //void addDebugString(const string &str);
 
@@ -57,7 +58,7 @@ namespace oxygine
         std::string _debugText;
         int _frames;
         timeMS _startTime;
-        int _corner;
+
 
         bool _showTouchedActor;
         bool _showTexel2PixelErrors;

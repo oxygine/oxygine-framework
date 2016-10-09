@@ -62,3 +62,5 @@ build
 /examples/Demo/proj.cmake/mingw
 **/proj.marmalade/build_demo_vc*
 .DS_Store
+*.VC.db
+*.VC.VC.opendb

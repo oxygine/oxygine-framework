@@ -810,6 +810,14 @@ namespace oxygine
 
     }
 
+    void Image::toPOT(Image& dest)
+    {
+        OX_ASSERT(this != &dest);
+        dest.init(nextPOT(_image.w), nextPOT(_image.h), _image.format);
+        dest.fill_zero();
+        dest.updateRegion(0, 0, _image);
+    }
+
     void Image::updateRegion(int x, int y, const ImageData& src)
     {
         Rect r(x, y, src.w, src.h);

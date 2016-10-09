@@ -278,7 +278,7 @@ namespace oxygine
         return _result;
     }
 
-    void ThreadDispatcher::sendCallback(void* arg1, void* arg2, callback cb, void* cbData, bool highPriority)
+    void* ThreadDispatcher::sendCallback(void* arg1, void* arg2, callback cb, void* cbData, bool highPriority)
     {
         message ev;
         ev.arg1 = arg1;
@@ -290,6 +290,8 @@ namespace oxygine
         MutexPthreadLock lock(_mutex);
 #endif
         _pushMessageWaitReply(ev, highPriority);
+
+        return _result;
     }
 
     void ThreadDispatcher::_pushMessageWaitReply(message& msg, bool highPriority)
