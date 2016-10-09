@@ -56,7 +56,8 @@ extern "C"
     extern PFNGLCOMPRESSEDTEXIMAGE2DPROC _glCompressedTexImage2D;
     extern PFNGLBINDBUFFERPROC _glBindBuffer;
     extern PFNGLGENBUFFERSPROC _glGenBuffers;
-    extern PFNGLBUFFERDATAPROC _glBufferData;
+	extern PFNGLBUFFERDATAPROC _glBufferData;
+	extern PFNGLBUFFERSUBDATAPROC _glBufferSubData;
     extern PFNGLGETPROGRAMIVPROC _glGetProgramiv;
     extern PFNGLGENERATEMIPMAPPROC _glGenerateMipmap;
     extern PFNGLSTENCILOPSEPARATEPROC _glStencilOpSeparate;
@@ -154,6 +155,7 @@ extern "C"
 #define oxglBindBuffer DECLARE_GLEXT(glBindBuffer)
 #define oxglGenBuffers DECLARE_GLEXT(glGenBuffers)
 #define oxglBufferData DECLARE_GLEXT(glBufferData)
+#define oxglBufferSubData DECLARE_GLEXT(glBufferSubData)
 #define oxglGetProgramiv DECLARE_GLEXT(glGetProgramiv)
 #define oxglGenerateMipmap DECLARE_GLEXT(glGenerateMipmap)
 #define oxglStencilOpSeparate DECLARE_GLEXT(glStencilOpSeparate)

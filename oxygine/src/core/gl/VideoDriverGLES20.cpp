@@ -24,7 +24,8 @@
 namespace oxygine
 {
     GLuint ib = 0;
-
+	GLuint vb = 0;
+	int vbpos = 0;
     VideoDriverGLES20::VideoDriverGLES20(): _programID(0), _p(0)
     {
 
@@ -48,6 +49,15 @@ namespace oxygine
             oxglBufferData(GL_ELEMENT_ARRAY_BUFFER, STDRenderer::indices16.size() * sizeof(unsigned short), &STDRenderer::indices16.front(), GL_STATIC_DRAW);
             oxglBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
         }
+
+		if (!vb)
+		{
+			oxglGenBuffers(1, &vb);
+			oxglBindBuffer(GL_ARRAY_BUFFER, vb);
+			char data[160000];
+			oxglBufferData(GL_ARRAY_BUFFER, 160000, data, GL_STATIC_DRAW);
+			oxglBindBuffer(GL_ARRAY_BUFFER, 0);
+		}
     }
 
     bool VideoDriverGLES20::isReady() const
@@ -74,6 +84,9 @@ namespace oxygine
 
     void VideoDriverGLES20::clear(const Color& color)
     {
+
+
+		vbpos = 0;
         Vector4 c = color.toVector();
         glClearColor(c.x, c.y, c.z, c.w);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -113,6 +126,7 @@ namespace oxygine
 
     void VideoDriverGLES20::draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl_, const void* vdata, unsigned int size)
     {
+		OX_ASSERT(0);
         const VertexDeclarationGL* decl = static_cast<const VertexDeclarationGL*>(decl_);
 
         const unsigned char* verticesData = (const unsigned char*)vdata;
@@ -143,23 +157,28 @@ namespace oxygine
 
     void VideoDriverGLES20::draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl_, const void* vdata, unsigned int verticesDataSize, const unsigned short* indicesData, unsigned int numIndices)
     {
-        const VertexDeclarationGL* decl = static_cast<const VertexDeclarationGL*>(decl_);
+		const VertexDeclarationGL* decl = static_cast<const VertexDeclarationGL*>(decl_);
 
-        const unsigned char* verticesData = (const unsigned char*)vdata;
+		oxglBindBuffer(GL_ARRAY_BUFFER, vb);
+	//	oxglBufferData(GL_ARRAY_BUFFER, verticesDataSize * decl_->size, vdata, GL_STATIC_DRAW);
+		oxglBufferSubData(GL_ARRAY_BUFFER, vbpos, verticesDataSize * decl_->size, vdata);
 
-        oxglBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ib);
-        if (indicesData != &STDRenderer::indices16.front())
-            int q = 0;
+
+
+		oxglBindBuffer(GL_ARRAY_BUFFER, vb);
 
         const VertexDeclarationGL::Element* el = decl->elements;
         for (int i = 0; i < decl->numElements; ++i)
         {
-            oxglEnableVertexAttribArray(el->index);
-            oxglVertexAttribPointer(el->index, el->size, el->elemType, el->normalized, decl->size, verticesData + el->offset);
-            el++;
+			oxglEnableVertexAttribArray(el->index);
+            oxglVertexAttribPointer(el->index, el->size, el->elemType, el->normalized, decl->size, (void*)(vbpos + el->offset));
+			el++;
         }
 		 
+
+		oxglBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ib);
         glDrawElements(getPT(pt), numIndices, GL_UNSIGNED_SHORT, 0);
+
 
         el = decl->elements;
         for (int i = 0; i < decl->numElements; ++i)
@@ -168,9 +187,12 @@ namespace oxygine
             el++;
         }
 
+		oxglBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		oxglBindBuffer(GL_ARRAY_BUFFER, 0);
+
 
         _debugAddPrimitives(pt, numIndices);
-
+		vbpos += verticesDataSize;
         CHECKGL();
     }
 

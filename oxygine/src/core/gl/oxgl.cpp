@@ -98,8 +98,10 @@ extern "C"
     {}
     GLAPI void APIENTRY def_glGenBuffers(GLsizei n, GLuint* buffers)
     {}
-    GLAPI void APIENTRY def_glBufferData(GLenum target, GLsizeiptr size, const void* data, GLenum usage)
-    {}
+	GLAPI void APIENTRY def_glBufferData(GLenum target, GLsizeiptr size, const void* data, GLenum usage)
+	{}
+	GLAPI void APIENTRY def_glBufferSubData(GLenum target, GLintptr offset, GLsizeiptr size, const void* data)
+	{}
     GLAPI void APIENTRY def_glGetProgramiv(GLuint program, GLenum pname, GLint* params)
     {}
     GLAPI void APIENTRY def_glGenerateMipmap(GLenum target)
@@ -158,6 +160,7 @@ extern "C"
     PFNGLBINDBUFFERPROC _glBindBuffer = 0;
     PFNGLGENBUFFERSPROC _glGenBuffers = 0;
     PFNGLBUFFERDATAPROC _glBufferData = 0;
+	PFNGLBUFFERSUBDATAPROC _glBufferSubData = 0;
     PFNGLGETPROGRAMIVPROC _glGetProgramiv = 0;
     PFNGLGENERATEMIPMAPPROC _glGenerateMipmap = 0;
     PFNGLSTENCILOPSEPARATEPROC _glStencilOpSeparate = 0;
@@ -209,7 +212,8 @@ int initGLExtensions(myGetProcAdress func)
     GETFUNC(_glCompressedTexImage2D, def_glCompressedTexImage2D, PFNGLCOMPRESSEDTEXIMAGE2DPROC, "glCompressedTexImage2D");
     GETFUNC(_glBindBuffer, def_glBindBuffer, PFNGLBINDBUFFERPROC, "glBindBuffer");
     GETFUNC(_glGenBuffers, def_glGenBuffers, PFNGLGENBUFFERSPROC, "glGenBuffers");
-    GETFUNC(_glBufferData, def_glBufferData, PFNGLBUFFERDATAPROC, "glBufferData");
+	GETFUNC(_glBufferData, def_glBufferData, PFNGLBUFFERDATAPROC, "glBufferData");
+	GETFUNC(_glBufferSubData, def_glBufferSubData, PFNGLBUFFERSUBDATAPROC, "glBufferSubData");
     GETFUNC(_glGetProgramiv, def_glGetProgramiv, PFNGLGETPROGRAMIVPROC, "glGetProgramiv");
     GETFUNC(_glGenerateMipmap, def_glGenerateMipmap, PFNGLGENERATEMIPMAPPROC, "glGenerateMipmap");
     GETFUNC(_glStencilOpSeparate, def_glStencilOpSeparate, PFNGLSTENCILOPSEPARATEPROC, "glStencilOpSeparate");
