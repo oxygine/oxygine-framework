@@ -65,6 +65,7 @@ namespace oxygine
 
     ThreadDispatcher::ThreadDispatcher(): _id(0), _result(0)
     {
+#ifndef OX_NO_MT
         pthread_cond_init(&_cond, 0);
 
         pthread_mutexattr_t attr;
@@ -72,36 +73,44 @@ namespace oxygine
         pthread_mutexattr_settype(&attr, PTHREAD_MUTEX_RECURSIVE);
 
         pthread_mutex_init(&_mutex, &attr);
-
+#endif
         _events.reserve(10);
     }
 
     ThreadDispatcher::~ThreadDispatcher()
     {
+#ifndef OX_NO_MT
         pthread_mutex_destroy(&_mutex);
         pthread_cond_destroy(&_cond);
+#endif
     }
 
     void ThreadDispatcher::_waitMessage()
     {
+#ifndef OX_NO_MT
         _replyLast(0);
 
         while (_events.empty())
             pthread_cond_wait(&_cond, &_mutex);
+#endif
     }
 
     void ThreadDispatcher::wait()
     {
+#ifndef OX_NO_MT
         MutexPthreadLock lock(_mutex);
         _waitMessage();
+#endif
     }
 
     void ThreadDispatcher::get(message& ev)
     {
         {
+#ifndef OX_NO_MT
             MutexPthreadLock lock(_mutex);
             LOGDN("get");
 
+#endif
             _waitMessage();
 
             _last = _events.front();
@@ -134,22 +143,34 @@ namespace oxygine
 
     bool ThreadDispatcher::empty()
     {
+#ifndef OX_NO_MT
         MutexPthreadLock lock(_mutex);
+#endif
+
         bool v = _events.empty();
         return v;
     }
 
     size_t ThreadDispatcher::size()
     {
+#ifndef OX_NO_MT
         MutexPthreadLock lock(_mutex);
+#endif
         size_t v = _events.size();
         return v;
     }
 
     void ThreadDispatcher::clear()
     {
+#ifndef OX_NO_MT
         MutexPthreadLock lock(_mutex);
+#endif
         _events.clear();
+        _last = message();
+        _id = 0;
+        _result = 0;
+        _replyingTo = 0;
+
     }
 
     void ThreadDispatcher::_popMessage(message& res)
@@ -169,7 +190,9 @@ namespace oxygine
 
         bool ret = false;
         {
+#ifndef OX_NO_MT
             MutexPthreadLock lock(_mutex);
+#endif
             if (ev.num == -1)
                 ev.num = (int)_events.size();
 
@@ -200,8 +223,10 @@ namespace oxygine
         {
             LOGDN("replying to id=%d", _last._id);
 
+#ifndef OX_NO_MT
             //pthread_cond_signal(&_cond);
             pthread_cond_broadcast(&_cond);
+#endif
             mywait(&_cond, &_mutex);
         }
     }
@@ -213,18 +238,24 @@ namespace oxygine
         do
         {
             LOGDN("ThreadMessages::waiting reply... _replyingTo=%d  myid=%d", _replyingTo, id);
+#ifndef OX_NO_MT
             pthread_cond_signal(&_cond);
+#endif
             mywait(&_cond, &_mutex);
         }
         while (_replyingTo != id);
 
         _last.need_reply = false;
+#ifndef OX_NO_MT
         pthread_cond_signal(&_cond);
+#endif
     }
 
     void ThreadDispatcher::reply(void* val)
     {
+#ifndef OX_NO_MT
         MutexPthreadLock lock(_mutex);
+#endif
         OX_ASSERT(_last.need_reply);
         _replyLast(val);
     }
@@ -239,13 +270,15 @@ namespace oxygine
         ev.arg1 = arg1;
         ev.arg2 = arg2;
 
+#ifndef OX_NO_MT
         MutexPthreadLock lock(_mutex);
+#endif
         _pushMessageWaitReply(ev);
 
         return _result;
     }
 
-    void ThreadDispatcher::sendCallback(void* arg1, void* arg2, callback cb, void* cbData)
+    void ThreadDispatcher::sendCallback(void* arg1, void* arg2, callback cb, void* cbData, bool highPriority)
     {
         message ev;
         ev.arg1 = arg1;
@@ -253,18 +286,23 @@ namespace oxygine
         ev.cb = cb;
         ev.cbData = cbData;
 
+#ifndef OX_NO_MT
         MutexPthreadLock lock(_mutex);
-        _pushMessageWaitReply(ev);
+#endif
+        _pushMessageWaitReply(ev, highPriority);
     }
 
-    void ThreadDispatcher::_pushMessageWaitReply(message& msg)
+    void ThreadDispatcher::_pushMessageWaitReply(message& msg, bool highPriority)
     {
         msg._id = ++_id;
         msg.need_reply = true;
         LOGDN("_pushMessageWaitReply id=%d msgid=%d", msg._id, msg.msgid);
 
+        if (highPriority)
+            _events.insert(_events.begin(), msg);
+        else
+            _events.push_back(msg);
 
-        _events.push_back(msg);
         _waitReply(msg._id);
         LOGDN("waiting reply  %d - done", msg._id);
     }
@@ -273,7 +311,9 @@ namespace oxygine
     {
         msg._id = ++_id;
         _events.push_back(msg);
+#ifndef OX_NO_MT
         pthread_cond_signal(&_cond);
+#endif
     }
 
     void ThreadDispatcher::post(int msgid, void* arg1, void* arg2)
@@ -283,7 +323,9 @@ namespace oxygine
         ev.arg1 = arg1;
         ev.arg2 = arg2;
 
+#ifndef OX_NO_MT
         MutexPthreadLock lock(_mutex);
+#endif
         _pushMessage(ev);
     }
 
@@ -295,8 +337,9 @@ namespace oxygine
         ev.arg2 = arg2;
         ev.cb = cb;
         ev.cbData = cbData;
-
+#ifndef OX_NO_MT
         MutexPthreadLock lock(_mutex);
+#endif
         _pushMessage(ev);
     }
 
@@ -307,14 +350,17 @@ namespace oxygine
         ev.arg2 = arg2;
         ev.cb = cb;
         ev.cbData = cbData;
-
+#ifndef OX_NO_MT
         MutexPthreadLock lock(_mutex);
+#endif
         _pushMessage(ev);
     }
 
     void ThreadDispatcher::removeCallback(int msgid, callback cb, void* cbData)
     {
+#ifndef OX_NO_MT
         MutexPthreadLock lock(_mutex);
+#endif
         for (messages::iterator i = _events.begin(); i != _events.end(); ++i)
         {
             message& m = *i;
@@ -332,7 +378,10 @@ namespace oxygine
         message ev;
         ev.cbFunction = f;
 
+#ifndef OX_NO_MT
         MutexPthreadLock lock(_mutex);
+#endif
+
         _pushMessage(ev);
     }
 
@@ -340,9 +389,20 @@ namespace oxygine
     {
         message ev;
         ev.cbFunction = f;
-
+#ifndef OX_NO_MT
         MutexPthreadLock lock(_mutex);
+#endif
         _pushMessageWaitReply(ev);
     }
 #endif
+
+    std::vector<ThreadDispatcher::message>& ThreadDispatcher::lockMessages()
+    {
+        pthread_mutex_lock(&_mutex);
+        return _events;
+    }
+    void ThreadDispatcher::unlockMessages()
+    {
+        pthread_mutex_unlock(&_mutex);
+    }
 }

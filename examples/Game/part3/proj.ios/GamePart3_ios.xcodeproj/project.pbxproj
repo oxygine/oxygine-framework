@@ -23,8 +23,8 @@
 		04998EF817F8B6F3003441C3 /* libjpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04998EF617F8B6F3003441C3 /* libjpeg.a */; };
 		049B52B11871EBFA00EF3C66 /* liboxygine_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 049B52AD1871EBBA00EF3C66 /* liboxygine_ios.a */; };
 		04E9AD3F1876FE84006A7317 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04E9AD3E1876FE84006A7317 /* Images.xcassets */; };
-		922B9F8F1BBB2FB100B1401E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 922B9F8E1BBB2FB100B1401E /* LaunchScreen.storyboard */; settings = {ASSET_TAGS = (); }; };
-
+		AD18619B1D8EC97A0043AFA3 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD18619A1D8EC97A0043AFA3 /* AVFoundation.framework */; };
+		
 		2DC477AC10D6C07B3FE008F6 /* ../src/Enemy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360377333740D8A2FD15BBE6 /* ../src/Enemy.cpp */; };
 		DA49ED8903C628BA578C8670 /* ../src/Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BF9628FC8D38F9748F0CDEB /* ../src/Game.cpp */; };
 		C8860D93875589970329DCCD /* ../src/GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DA100C319512824B7570663 /* ../src/GameScene.cpp */; };
@@ -40,6 +40,7 @@
 		33E41D858B2ABD49382CD53F /* ../src/res.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD0E956CC3A2F7EB94822B5C /* ../src/res.cpp */; };
 		3BB41671209E30BDF95D1B16 /* ../data/images in Sources */ = {isa = PBXBuildFile; fileRef = 7623D793B59EF0CD569E6EC2 /* ../data/images */; };
 		E02A0627DE00D04110ABADA6 /* ../data/xmls in Sources */ = {isa = PBXBuildFile; fileRef = AFA30E959880563E6ABBBC4F /* ../data/xmls */; };
+
 
 /* End PBXBuildFile section */
 
@@ -88,10 +89,10 @@
 		04998EEC17F8ADD4003441C3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		04998EED17F8ADD4003441C3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		9223FE7E1C2D913D000B1FDA /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
+		AD18619A1D8EC97A0043AFA3 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		04998EF517F8B6F3003441C3 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpng.a; path = "../../../..//oxygine/third_party/ios/libraries/libpng.a"; sourceTree = "<group>"; };
 		04998EF617F8B6F3003441C3 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = "../../../..//oxygine/third_party/ios/libraries/libjpeg.a"; sourceTree = "<group>"; };
 		04E9AD3E1876FE84006A7317 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name =Images.xcassets; path = GamePart3/Images.xcassets; sourceTree = "<group>"; };
-		922B9F8F1BBB2FB100B1401E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 922B9F8E1BBB2FB100B1401E /* LaunchScreen.storyboard */; settings = {ASSET_TAGS = (); }; };
 
 		360377333740D8A2FD15BBE6 /* ../src/Enemy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Enemy.cpp; path = ../src/Enemy.cpp; sourceTree = "<group>"; };
 		0BF9628FC8D38F9748F0CDEB /* ../src/Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Game.cpp; path = ../src/Game.cpp; sourceTree = "<group>"; };
@@ -121,6 +122,7 @@
 		7623D793B59EF0CD569E6EC2 /* ../data/images */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = images; path = ../data/images; sourceTree = "<group>"; };
 		AFA30E959880563E6ABBBC4F /* ../data/xmls */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; name = xmls; path = ../data/xmls; sourceTree = "<group>"; };
 
+
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +130,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD18619B1D8EC97A0043AFA3 /* AVFoundation.framework in Frameworks */,
 				9223FE7F1C2D913D000B1FDA /* GameController.framework in Frameworks */,
 				049B52B11871EBFA00EF3C66 /* liboxygine_ios.a in Frameworks */,
 				04998D3617F8A97D003441C3 /* libSDL2.a in Frameworks */,
@@ -161,7 +164,6 @@
 		04998CE317F8A933003441C3 = {
 			isa = PBXGroup;
 			children = (
-				922B9F8E1BBB2FB100B1401E /* LaunchScreen.storyboard */,
 				045D531C17F8BD5E00CC2C64 /* dependencies */,
 				04998D3917F8A9AA003441C3 /* oxygine_ios.xcodeproj */,
 				04998D2F17F8A96E003441C3 /* SDL.xcodeproj */,
@@ -184,6 +186,7 @@
 		04998CEE17F8A933003441C3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				AD18619A1D8EC97A0043AFA3 /* AVFoundation.framework */,
 				9223FE7E1C2D913D000B1FDA /* GameController.framework */,
 				04998EEB17F8ADD4003441C3 /* UIKit.framework */,
 				048AD0AD197D24AB001963EF /* CoreMotion.framework */,
@@ -339,7 +342,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				04E9AD3F1876FE84006A7317 /* Images.xcassets in Resources */,
-				922B9F8F1BBB2FB100B1401E /* LaunchScreen.storyboard in Resources */,
 								3BB41671209E30BDF95D1B16 /* images */, 
 				E02A0627DE00D04110ABADA6 /* xmls */, 
 
@@ -421,7 +423,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "../../../..//oxygine/src ../../../../..//SDL/include";
@@ -481,6 +483,7 @@
 					"../../../..//oxygine/third_party/ios/libraries",
 				);
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.oxygine.gamepart3;
 				PRODUCT_NAME = GamePart3_ios;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -505,6 +508,7 @@
 					"../../../..//oxygine/third_party/ios/libraries",
 				);
 				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = org.oxygine.gamepart3;
 				PRODUCT_NAME = GamePart3_ios;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";

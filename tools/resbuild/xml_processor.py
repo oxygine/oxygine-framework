@@ -222,9 +222,11 @@ class XmlProcessor(object):
     def warning(self, st):
         if self.args.warnings:
             print("warning: " + st)
+        self.warnings += 1
 
     def error(self, st):
         print("error: " + st)
+        self.errors += 1
 
     def process(self):
         # print self.path_data

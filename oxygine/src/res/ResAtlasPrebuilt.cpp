@@ -58,7 +58,8 @@ namespace oxygine
                 alpha_file = *context.prebuilt_folder + alpha_file;
             }
 
-            addAtlas(tf, *context.prebuilt_folder + file, alpha_file, w, h);
+            std::string p = *context.prebuilt_folder + file;
+            addAtlas(tf, p, alpha_file, w, h);
 
             meta_image = meta_image.next_sibling("atlas");
             context.walker.nextMeta();

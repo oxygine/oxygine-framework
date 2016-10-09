@@ -1,6 +1,6 @@
 #include "ImageUtils.h"
 #include "core/ImageData.h"
-#include "MemoryTexture.h"
+#include "Image.h"
 //#include "png.h"
 extern "C"
 {
@@ -18,9 +18,9 @@ namespace oxygine
 {
     void saveImage(const ImageData& im_, const char* path, const char* format)
     {
-        MemoryTexture src;
+        Image src;
         src.init(im_);
-        MemoryTexture dest;
+        Image dest;
         src.convert(dest, TF_B8G8R8A8);
         const ImageData& im = dest.lock();
 

@@ -92,6 +92,10 @@
 		92CE26631A589401003901D6 /* ios.mm in Sources */ = {isa = PBXBuildFile; fileRef = 92CE26611A589401003901D6 /* ios.mm */; };
 		92E0C9A01B2491C200F0DB21 /* cdecode.c in Sources */ = {isa = PBXBuildFile; fileRef = 92E0C99E1B2491C200F0DB21 /* cdecode.c */; };
 		92E0C9A11B2491C200F0DB21 /* cdecode.h in Headers */ = {isa = PBXBuildFile; fileRef = 92E0C99F1B2491C200F0DB21 /* cdecode.h */; };
+		AD2E0A7B1D6B4F6400E77A23 /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD2E0A791D6B4F6400E77A23 /* Image.cpp */; };
+		AD2E0A7C1D6B4F6400E77A23 /* Image.h in Headers */ = {isa = PBXBuildFile; fileRef = AD2E0A7A1D6B4F6400E77A23 /* Image.h */; };
+		AD977D911D56EAD800C3C05E /* key.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD977D8F1D56EAD800C3C05E /* key.cpp */; };
+		AD977D921D56EAD800C3C05E /* key.h in Headers */ = {isa = PBXBuildFile; fileRef = AD977D901D56EAD800C3C05E /* key.h */; };
 		C38704A617C0C71700015CA8 /* VideoDriverGLES20.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C38704A417C0C71700015CA8 /* VideoDriverGLES20.cpp */; };
 		C38704A717C0C71700015CA8 /* VideoDriverGLES20.h in Headers */ = {isa = PBXBuildFile; fileRef = C38704A517C0C71700015CA8 /* VideoDriverGLES20.h */; };
 		C38EC22C1709600E00568283 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C38EC22B1709600E00568283 /* OpenGLES.framework */; };
@@ -172,7 +176,6 @@
 		C3E8704816EBC8EB00052915 /* vector2.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FA516EBC8EB00052915 /* vector2.h */; };
 		C3E8704916EBC8EB00052915 /* vector3.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FA616EBC8EB00052915 /* vector3.h */; };
 		C3E8704A16EBC8EB00052915 /* vector4.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FA716EBC8EB00052915 /* vector4.h */; };
-		C3E8704B16EBC8EB00052915 /* MemoryTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3E86FA816EBC8EB00052915 /* MemoryTexture.cpp */; };
 		C3E8704C16EBC8EB00052915 /* MemoryTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FA916EBC8EB00052915 /* MemoryTexture.h */; };
 		C3E8705316EBC8EB00052915 /* PointerState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3E86FB016EBC8EB00052915 /* PointerState.cpp */; };
 		C3E8705416EBC8EB00052915 /* PointerState.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FB116EBC8EB00052915 /* PointerState.h */; };
@@ -199,7 +202,6 @@
 		C3E8706916EBC8EB00052915 /* Resources.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FCB16EBC8EB00052915 /* Resources.h */; };
 		C3E8706A16EBC8EB00052915 /* ResStarlingAtlas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3E86FCC16EBC8EB00052915 /* ResStarlingAtlas.cpp */; };
 		C3E8706B16EBC8EB00052915 /* ResStarlingAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FCD16EBC8EB00052915 /* ResStarlingAtlas.h */; };
-		C3E8706D16EBC8EB00052915 /* RootActor.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FCF16EBC8EB00052915 /* RootActor.h */; };
 		C3E8706E16EBC8EB00052915 /* SlidingActor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3E86FD016EBC8EB00052915 /* SlidingActor.cpp */; };
 		C3E8706F16EBC8EB00052915 /* SlidingActor.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86FD116EBC8EB00052915 /* SlidingActor.h */; };
 		C3E8707016EBC8EB00052915 /* Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3E86FD216EBC8EB00052915 /* Sprite.cpp */; };
@@ -330,6 +332,10 @@
 		92CE26611A589401003901D6 /* ios.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ios.mm; path = ../../../src/core/ios/ios.mm; sourceTree = "<group>"; };
 		92E0C99E1B2491C200F0DB21 /* cdecode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cdecode.c; sourceTree = "<group>"; };
 		92E0C99F1B2491C200F0DB21 /* cdecode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cdecode.h; sourceTree = "<group>"; };
+		AD2E0A791D6B4F6400E77A23 /* Image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Image.cpp; path = ../../../src/Image.cpp; sourceTree = "<group>"; };
+		AD2E0A7A1D6B4F6400E77A23 /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Image.h; path = ../../../src/Image.h; sourceTree = "<group>"; };
+		AD977D8F1D56EAD800C3C05E /* key.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = key.cpp; path = ../../../src/key.cpp; sourceTree = "<group>"; };
+		AD977D901D56EAD800C3C05E /* key.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = key.h; path = ../../../src/key.h; sourceTree = "<group>"; };
 		C38704A417C0C71700015CA8 /* VideoDriverGLES20.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VideoDriverGLES20.cpp; path = gl/VideoDriverGLES20.cpp; sourceTree = "<group>"; };
 		C38704A517C0C71700015CA8 /* VideoDriverGLES20.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VideoDriverGLES20.h; path = gl/VideoDriverGLES20.h; sourceTree = "<group>"; };
 		C38EC22B1709600E00568283 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -413,7 +419,6 @@
 		C3E86FA516EBC8EB00052915 /* vector2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vector2.h; sourceTree = "<group>"; };
 		C3E86FA616EBC8EB00052915 /* vector3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vector3.h; sourceTree = "<group>"; };
 		C3E86FA716EBC8EB00052915 /* vector4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vector4.h; sourceTree = "<group>"; };
-		C3E86FA816EBC8EB00052915 /* MemoryTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MemoryTexture.cpp; path = ../../../src/MemoryTexture.cpp; sourceTree = "<group>"; };
 		C3E86FA916EBC8EB00052915 /* MemoryTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MemoryTexture.h; path = ../../../src/MemoryTexture.h; sourceTree = "<group>"; };
 		C3E86FB016EBC8EB00052915 /* PointerState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PointerState.cpp; path = ../../../src/PointerState.cpp; sourceTree = "<group>"; };
 		C3E86FB116EBC8EB00052915 /* PointerState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PointerState.h; path = ../../../src/PointerState.h; sourceTree = "<group>"; };
@@ -442,7 +447,6 @@
 		C3E86FCB16EBC8EB00052915 /* Resources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Resources.h; sourceTree = "<group>"; };
 		C3E86FCC16EBC8EB00052915 /* ResStarlingAtlas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ResStarlingAtlas.cpp; sourceTree = "<group>"; };
 		C3E86FCD16EBC8EB00052915 /* ResStarlingAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResStarlingAtlas.h; sourceTree = "<group>"; };
-		C3E86FCF16EBC8EB00052915 /* RootActor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootActor.h; path = ../../../src/RootActor.h; sourceTree = "<group>"; };
 		C3E86FD016EBC8EB00052915 /* SlidingActor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SlidingActor.cpp; path = ../../../src/SlidingActor.cpp; sourceTree = "<group>"; };
 		C3E86FD116EBC8EB00052915 /* SlidingActor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SlidingActor.h; path = ../../../src/SlidingActor.h; sourceTree = "<group>"; };
 		C3E86FD216EBC8EB00052915 /* Sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Sprite.cpp; path = ../../../src/Sprite.cpp; sourceTree = "<group>"; };
@@ -575,110 +579,112 @@
 		C3E86F5316EBC8C200052915 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				922553371CAFA4EF00333A1E /* TweenGlow.cpp */,
-				922553381CAFA4EF00333A1E /* TweenGlow.h */,
-				9250AFAC1C9B14950060A168 /* PostProcess.cpp */,
-				9250AFAD1C9B14950060A168 /* PostProcess.h */,
-				9250AFAE1C9B14950060A168 /* TweenOutline.cpp */,
-				9250AFAF1C9B14950060A168 /* TweenOutline.h */,
-				929AF5641C88AA4000D276ED /* ThreadLoader.cpp */,
-				929AF5651C88AA4000D276ED /* ThreadLoader.h */,
-				9264E5B91B8358B00049F91F /* json */,
-				CEC2D0001C47288E00450163 /* Material.cpp */,
-				CEC2D0011C47288E00450163 /* Material.h */,
-				CEC2D0021C47288E00450163 /* STDMaterial.cpp */,
-				CEC2D0031C47288E00450163 /* STDMaterial.h */,
-				9240B4051ADFB856005F9C5B /* Property.h */,
-				9240B4061ADFB856005F9C5B /* TweenAnim.cpp */,
-				9240B4071ADFB856005F9C5B /* TweenAnim.h */,
-				9223E31B1A530E8A00B2770B /* HttpRequestTask.cpp */,
-				9223E3151A52D6B800B2770B /* HttpRequestTask.h */,
-				9223E3161A52D6B800B2770B /* WebImage.cpp */,
-				9223E3171A52D6B800B2770B /* WebImage.h */,
-				9223E3101A5193E000B2770B /* AsyncTask.cpp */,
-				9223E3111A5193E000B2770B /* AsyncTask.h */,
-				9223E30B1A518BCC00B2770B /* ios */,
-				923663611A4756C500EB65B3 /* KeyEvent.h */,
-				923663621A4756C500EB65B3 /* Serializable.cpp */,
-				923663631A4756C500EB65B3 /* Serializable.h */,
-				923663641A4756C500EB65B3 /* TouchEvent.h */,
-				923663651A4756C500EB65B3 /* Tween.cpp */,
-				923663661A4756C500EB65B3 /* Tween.h */,
-				923663671A4756C500EB65B3 /* TweenQueue.cpp */,
-				923663681A4756C500EB65B3 /* TweenQueue.h */,
-				CEC2D0041C47288E00450163 /* TweenAlphaFade.cpp */,
-				CEC2D0051C47288E00450163 /* TweenAlphaFade.h */,
-				923A9E931A1FCBB700A6F08E /* MaskedRenderer.cpp */,
-				923A9E941A1FCBB700A6F08E /* MaskedRenderer.h */,
-				923A9E951A1FCBB700A6F08E /* STDRenderer.cpp */,
-				923A9E961A1FCBB700A6F08E /* STDRenderer.h */,
-				92214D6219F14A2F00A4459A /* Polygon.cpp */,
-				92214D6319F14A2F00A4459A /* Polygon.h */,
-				048AD0C919B1FD74001963EF /* Stage.cpp */,
-				048AD0CA19B1FD74001963EF /* Stage.h */,
-				048AD0A8197D2444001963EF /* TextField.cpp */,
-				048AD0A9197D2444001963EF /* TextField.h */,
-				0467086D192796E500D71824 /* Serialize.cpp */,
-				0467086B192796A000D71824 /* Serialize.h */,
-				04B3A71718A65668004C67E3 /* InputText.cpp */,
-				04B3A71818A65668004C67E3 /* InputText.h */,
-				0472E37B17F8A2EC0016A832 /* MaskedSprite.cpp */,
-				0472E37C17F8A2EC0016A832 /* MaskedSprite.h */,
-				0472E37D17F8A2EC0016A832 /* oxygine_include.h */,
-				0472E37E17F8A2EC0016A832 /* oxygine-framework.h */,
-				0472E36E17F8A2D30016A832 /* minizip */,
-				C38EC2611709649300568283 /* dev_tools */,
+				AD2E0A791D6B4F6400E77A23 /* Image.cpp */,
+				AD2E0A7A1D6B4F6400E77A23 /* Image.h */,
 				C3E86F5516EBC8EB00052915 /* Actor.cpp */,
-				C3E86F5616EBC8EB00052915 /* Actor.h */,
 				C3E86F5716EBC8EB00052915 /* AnimationFrame.cpp */,
-				C3E86F5816EBC8EB00052915 /* AnimationFrame.h */,
+				9223E3101A5193E000B2770B /* AsyncTask.cpp */,
 				C3E86F5916EBC8EB00052915 /* Blocking.cpp */,
-				C3E86F5A16EBC8EB00052915 /* Blocking.h */,
 				C3E86F5B16EBC8EB00052915 /* Box9Sprite.cpp */,
-				C3E86F5C16EBC8EB00052915 /* Box9Sprite.h */,
 				C3E86F5D16EBC8EB00052915 /* Button.cpp */,
-				C3E86F5E16EBC8EB00052915 /* Button.h */,
 				C3E86F5F16EBC8EB00052915 /* ClipRectActor.cpp */,
-				C3E86F6016EBC8EB00052915 /* ClipRectActor.h */,
 				C3E86F6116EBC8EB00052915 /* Clock.cpp */,
-				C3E86F6216EBC8EB00052915 /* Clock.h */,
-				C3E86F6316EBC8EB00052915 /* closure */,
 				C3E86F6616EBC8EB00052915 /* ColorRectSprite.cpp */,
-				C3E86F6716EBC8EB00052915 /* ColorRectSprite.h */,
-				C3E86F6816EBC8EB00052915 /* core */,
 				C3E86F9016EBC8EB00052915 /* DebugActor.cpp */,
-				C3E86F9116EBC8EB00052915 /* DebugActor.h */,
 				C3E86F9216EBC8EB00052915 /* Draggable.cpp */,
+				C3E86F9516EBC8EB00052915 /* EventDispatcher.cpp */,
+				C3E86F9716EBC8EB00052915 /* Font.cpp */,
+				9223E31B1A530E8A00B2770B /* HttpRequestTask.cpp */,
+				C3E86F9A16EBC8EB00052915 /* Input.cpp */,
+				04B3A71718A65668004C67E3 /* InputText.cpp */,
+				AD977D8F1D56EAD800C3C05E /* key.cpp */,
+				923A9E931A1FCBB700A6F08E /* MaskedRenderer.cpp */,
+				0472E37B17F8A2EC0016A832 /* MaskedSprite.cpp */,
+				CEC2D0001C47288E00450163 /* Material.cpp */,
+				C3E86FB016EBC8EB00052915 /* PointerState.cpp */,
+				92214D6219F14A2F00A4459A /* Polygon.cpp */,
+				9250AFAC1C9B14950060A168 /* PostProcess.cpp */,
+				C3E86FB216EBC8EB00052915 /* ProgressBar.cpp */,
+				923663621A4756C500EB65B3 /* Serializable.cpp */,
+				0467086D192796E500D71824 /* Serialize.cpp */,
+				C3E86FD016EBC8EB00052915 /* SlidingActor.cpp */,
+				C3E86FD216EBC8EB00052915 /* Sprite.cpp */,
+				048AD0C919B1FD74001963EF /* Stage.cpp */,
+				CEC2D0021C47288E00450163 /* STDMaterial.cpp */,
+				923A9E951A1FCBB700A6F08E /* STDRenderer.cpp */,
+				048AD0A8197D2444001963EF /* TextField.cpp */,
+				929AF5641C88AA4000D276ED /* ThreadLoader.cpp */,
+				923663651A4756C500EB65B3 /* Tween.cpp */,
+				CEC2D0041C47288E00450163 /* TweenAlphaFade.cpp */,
+				9240B4061ADFB856005F9C5B /* TweenAnim.cpp */,
+				922553371CAFA4EF00333A1E /* TweenGlow.cpp */,
+				9250AFAE1C9B14950060A168 /* TweenOutline.cpp */,
+				923663671A4756C500EB65B3 /* TweenQueue.cpp */,
+				C3E86FF516EBC8EB00052915 /* VisualStyle.cpp */,
+				9223E3161A52D6B800B2770B /* WebImage.cpp */,
+				C3E86F5616EBC8EB00052915 /* Actor.h */,
+				C3E86F5816EBC8EB00052915 /* AnimationFrame.h */,
+				9223E3111A5193E000B2770B /* AsyncTask.h */,
+				C3E86F5A16EBC8EB00052915 /* Blocking.h */,
+				C3E86F5C16EBC8EB00052915 /* Box9Sprite.h */,
+				C3E86F5E16EBC8EB00052915 /* Button.h */,
+				C3E86F6016EBC8EB00052915 /* ClipRectActor.h */,
+				C3E86F6216EBC8EB00052915 /* Clock.h */,
+				C3E86F6716EBC8EB00052915 /* ColorRectSprite.h */,
+				C3E86F9116EBC8EB00052915 /* DebugActor.h */,
 				C3E86F9316EBC8EB00052915 /* Draggable.h */,
 				C3E86F9416EBC8EB00052915 /* Event.h */,
-				C3E86F9516EBC8EB00052915 /* EventDispatcher.cpp */,
 				C3E86F9616EBC8EB00052915 /* EventDispatcher.h */,
-				C3E86F9716EBC8EB00052915 /* Font.cpp */,
 				C3E86F9816EBC8EB00052915 /* Font.h */,
+				9223E3151A52D6B800B2770B /* HttpRequestTask.h */,
 				C3E86F9916EBC8EB00052915 /* InitActor.h */,
-				C3E86F9A16EBC8EB00052915 /* Input.cpp */,
 				C3E86F9B16EBC8EB00052915 /* Input.h */,
-				C3E86F9D16EBC8EB00052915 /* math */,
-				C3E86FA816EBC8EB00052915 /* MemoryTexture.cpp */,
+				04B3A71818A65668004C67E3 /* InputText.h */,
+				AD977D901D56EAD800C3C05E /* key.h */,
+				923663611A4756C500EB65B3 /* KeyEvent.h */,
+				923A9E941A1FCBB700A6F08E /* MaskedRenderer.h */,
+				0472E37C17F8A2EC0016A832 /* MaskedSprite.h */,
+				CEC2D0011C47288E00450163 /* Material.h */,
 				C3E86FA916EBC8EB00052915 /* MemoryTexture.h */,
-				C3E86FB016EBC8EB00052915 /* PointerState.cpp */,
+				0472E37D17F8A2EC0016A832 /* oxygine_include.h */,
+				0472E37E17F8A2EC0016A832 /* oxygine-framework.h */,
 				C3E86FB116EBC8EB00052915 /* PointerState.h */,
-				C3E86FB216EBC8EB00052915 /* ProgressBar.cpp */,
+				92214D6319F14A2F00A4459A /* Polygon.h */,
+				9250AFAD1C9B14950060A168 /* PostProcess.h */,
 				C3E86FB316EBC8EB00052915 /* ProgressBar.h */,
-				C3E86FB416EBC8EB00052915 /* pugixml */,
+				9240B4051ADFB856005F9C5B /* Property.h */,
 				C3E86FBA16EBC8EB00052915 /* RenderState.h */,
-				C3E86FBB16EBC8EB00052915 /* res */,
-				C3E86FCF16EBC8EB00052915 /* RootActor.h */,
-				C3E86FD016EBC8EB00052915 /* SlidingActor.cpp */,
+				923663631A4756C500EB65B3 /* Serializable.h */,
+				0467086B192796A000D71824 /* Serialize.h */,
 				C3E86FD116EBC8EB00052915 /* SlidingActor.h */,
-				C3E86FD216EBC8EB00052915 /* Sprite.cpp */,
 				C3E86FD316EBC8EB00052915 /* Sprite.h */,
-				C3E86FD416EBC8EB00052915 /* text_utils */,
+				048AD0CA19B1FD74001963EF /* Stage.h */,
+				CEC2D0031C47288E00450163 /* STDMaterial.h */,
+				923A9E961A1FCBB700A6F08E /* STDRenderer.h */,
+				048AD0A9197D2444001963EF /* TextField.h */,
 				C3E86FDD16EBC8EB00052915 /* TextStyle.h */,
+				929AF5651C88AA4000D276ED /* ThreadLoader.h */,
+				923663641A4756C500EB65B3 /* TouchEvent.h */,
+				923663661A4756C500EB65B3 /* Tween.h */,
+				CEC2D0051C47288E00450163 /* TweenAlphaFade.h */,
+				9240B4071ADFB856005F9C5B /* TweenAnim.h */,
+				922553381CAFA4EF00333A1E /* TweenGlow.h */,
+				9250AFAF1C9B14950060A168 /* TweenOutline.h */,
+				923663681A4756C500EB65B3 /* TweenQueue.h */,
 				C3E86FEB16EBC8EB00052915 /* UpdateState.h */,
-				C3E86FEC16EBC8EB00052915 /* utils */,
-				C3E86FF516EBC8EB00052915 /* VisualStyle.cpp */,
 				C3E86FF616EBC8EB00052915 /* VisualStyle.h */,
+				9223E3171A52D6B800B2770B /* WebImage.h */,
+				C3E86F6316EBC8EB00052915 /* closure */,
+				C3E86F6816EBC8EB00052915 /* core */,
+				C38EC2611709649300568283 /* dev_tools */,
+				9223E30B1A518BCC00B2770B /* ios */,
+				9264E5B91B8358B00049F91F /* json */,
+				C3E86F9D16EBC8EB00052915 /* math */,
+				0472E36E17F8A2D30016A832 /* minizip */,
+				C3E86FB416EBC8EB00052915 /* pugixml */,
+				C3E86FBB16EBC8EB00052915 /* res */,
+				C3E86FD416EBC8EB00052915 /* text_utils */,
+				C3E86FEC16EBC8EB00052915 /* utils */,
 				C3E86FF716EBC8EB00052915 /* winnie_alloc */,
 			);
 			name = src;
@@ -882,6 +888,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD977D921D56EAD800C3C05E /* key.h in Headers */,
 				0472E35817F8A1A80016A832 /* file.h in Headers */,
 				0472E35C17F8A1A80016A832 /* log.h in Headers */,
 				C3E86FFF16EBC8EB00052915 /* Actor.h in Headers */,
@@ -929,6 +936,7 @@
 				C3E8702D16EBC8EB00052915 /* Renderer.h in Headers */,
 				C3E8702F16EBC8EB00052915 /* Texture.h in Headers */,
 				C3E8703116EBC8EB00052915 /* VideoDriver.h in Headers */,
+				AD2E0A7C1D6B4F6400E77A23 /* Image.h in Headers */,
 				0472E37A17F8A2D30016A832 /* unzip.h in Headers */,
 				C3E8703716EBC8EB00052915 /* DebugActor.h in Headers */,
 				C3E8703916EBC8EB00052915 /* Draggable.h in Headers */,
@@ -973,7 +981,6 @@
 				9264E5BE1B8358D80049F91F /* json.h in Headers */,
 				C3E8706916EBC8EB00052915 /* Resources.h in Headers */,
 				C3E8706B16EBC8EB00052915 /* ResStarlingAtlas.h in Headers */,
-				C3E8706D16EBC8EB00052915 /* RootActor.h in Headers */,
 				C3E8706F16EBC8EB00052915 /* SlidingActor.h in Headers */,
 				C3E8707116EBC8EB00052915 /* Sprite.h in Headers */,
 				C3E8707316EBC8EB00052915 /* Aligner.h in Headers */,
@@ -1042,7 +1049,7 @@
 		C3E86F4316EBC8A500052915 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = denism;
 			};
 			buildConfigurationList = C3E86F4616EBC8A500052915 /* Build configuration list for PBXProject "oxygine_ios" */;
@@ -1103,7 +1110,6 @@
 				0472E36017F8A1A80016A832 /* system_data.cpp in Sources */,
 				C3E8704016EBC8EB00052915 /* Input.cpp in Sources */,
 				C3E8704216EBC8EB00052915 /* AffineTransform.cpp in Sources */,
-				C3E8704B16EBC8EB00052915 /* MemoryTexture.cpp in Sources */,
 				0472E37F17F8A2EC0016A832 /* MaskedSprite.cpp in Sources */,
 				04AEC313182BD98D006413A9 /* UberShaderProgram.cpp in Sources */,
 				C3E8705316EBC8EB00052915 /* PointerState.cpp in Sources */,
@@ -1142,12 +1148,14 @@
 				0472E37917F8A2D30016A832 /* unzip.c in Sources */,
 				C3E8708D16EBC8EB00052915 /* VisualStyle.cpp in Sources */,
 				048AD0CB19B1FD74001963EF /* Stage.cpp in Sources */,
+				AD977D911D56EAD800C3C05E /* key.cpp in Sources */,
 				C3E8708F16EBC8EB00052915 /* system_alloc.cpp in Sources */,
 				0472E35917F8A1A80016A832 /* FileSystem.cpp in Sources */,
 				9250AFB21C9B14950060A168 /* TweenOutline.cpp in Sources */,
 				9223E30E1A518CC400B2770B /* HttpRequestCocoaTask.mm in Sources */,
 				C3E8709116EBC8EB00052915 /* winnie_alloc.cpp in Sources */,
 				048AD0AA197D2444001963EF /* TextField.cpp in Sources */,
+				AD2E0A7B1D6B4F6400E77A23 /* Image.cpp in Sources */,
 				C38EC26F1709649300568283 /* DeveloperMenu.cpp in Sources */,
 				929AF56E1C88AD5600D276ED /* ResAtlasPrebuilt.cpp in Sources */,
 				92214D6419F14A2F00A4459A /* Polygon.cpp in Sources */,
@@ -1184,6 +1192,7 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;

@@ -1,6 +1,6 @@
 #include "WebImage.h"
 #include "res/ResAnim.h"
-#include "MemoryTexture.h"
+#include "Image.h"
 #include "HttpRequestTask.h"
 #include "Sprite.h"
 #include <vector>
@@ -56,7 +56,7 @@ namespace oxygine
         file::buffer bf;
         _http->getResponseSwap(bf.data);
 
-        MemoryTexture mt;
+        Image mt;
         if (mt.init(bf, true))
         {
             ResAnim rs;

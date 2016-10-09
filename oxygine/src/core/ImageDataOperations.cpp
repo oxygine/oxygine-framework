@@ -44,11 +44,42 @@ namespace oxygine
                 const unsigned char* srcLine = src.data;
                 unsigned char* destLine = dest.data;
 
-                for (int h = 0; h < src.h; h++)
+                const int srch = src.h;
+                const int srcpitch = src.pitch;
+                const int destpitch = dest.pitch;
+                for (int h = 0; h < srch; h++)
                 {
                     memcpy(destLine, srcLine, bppPitch);
-                    srcLine += src.pitch;
-                    destLine += dest.pitch;
+                    srcLine += srcpitch;
+                    destLine += destpitch;
+                }
+            }
+        }
+
+        void move(const ImageData& src, ImageData& dest)
+        {
+            if (!check(src, dest))
+                return;
+
+            OX_ASSERT(src.format == dest.format);
+
+            int bppPitch = src.w * src.bytespp;
+
+            if (src.pitch == dest.pitch && bppPitch == dest.pitch)
+                memmove(dest.data, src.data, bppPitch * src.h);
+            else
+            {
+                const unsigned char* srcLine = src.data;
+                unsigned char* destLine = dest.data;
+
+                const int srch = src.h;
+                const int srcpitch = src.pitch;
+                const int destpitch = dest.pitch;
+                for (int h = 0; h < srch; h++)
+                {
+                    memmove(destLine, srcLine, bppPitch);
+                    srcLine += srcpitch;
+                    destLine += destpitch;
                 }
             }
         }
@@ -81,11 +112,16 @@ namespace oxygine
 
             int bppPitch = src.w * src.bytespp;
 
-            for (int h = 0; h < src.h; h++)
+
+
+            const int srch = src.h;
+            const int srcpitch = src.pitch;
+            const int destpitch = dest.pitch;
+            for (int h = 0; h < srch; h++)
             {
                 memcpy(destLine, srcLine, bppPitch);
-                srcLine += src.pitch;
-                destLine -= dest.pitch;
+                srcLine += srcpitch;
+                destLine -= destpitch;
             }
         }
     }

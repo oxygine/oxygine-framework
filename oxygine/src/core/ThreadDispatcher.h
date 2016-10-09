@@ -22,6 +22,24 @@ namespace oxygine
         pthread_mutex_t& _mutex;
         bool _locked;
     };
+    /*
+    class TDMessage
+    {
+    public:
+        TDMessage& withMSGID(int id) { msgid = id; return *this; }
+        TDMessage& withArgs(void* Arg1, void* Arg2 = 0) { arg1 = Arg1; arg2 = Arg2; return *this; }
+        TDMessage& withHighPriority() { hp = true; return *this; }
+        TDMessage& withReply() { reply = true; return *this; }
+
+        int msgid;
+        void* arg1;
+        void* arg2;
+        bool hp;
+        bool reply;
+
+    protected:
+    };*/
+
 
     /**Messages Queue used for communication between threads*/
     class ThreadDispatcher
@@ -73,7 +91,7 @@ namespace oxygine
         //blocking, sends message and waiting reply from other thread
         void* send(int msgid, void* arg1, void* arg2);
         //blocking, sends callback and waiting until it is done
-        void sendCallback(void* arg1, void* arg2, callback cb, void* cbData);
+        void sendCallback(void* arg1, void* arg2, callback cb, void* cbData, bool highPriority = false);
 #ifndef __S3E__
         //blocking, sends callback and waiting until it is done
         void sendCallback(const std::function<void()>&);
@@ -95,6 +113,12 @@ namespace oxygine
 
         void reply(void* val);
 
+        //void post(TDMessage&);
+        //void send(TDMessage&);
+
+        std::vector<message>& lockMessages();
+        void unlockMessages();
+
     private:
         void _waitMessage();
         void _waitReply(int id);
@@ -102,20 +126,30 @@ namespace oxygine
         void _runCallbacks();
 
         void _pushMessage(message&);
-        void _pushMessageWaitReply(message&);
+        void _pushMessageWaitReply(message&, bool highPriority = false);
         void _popMessage(message&);
         void _popMessageNoCB(message&);
         void _replyLast(void* val);
-        unsigned int _id;
-        void*   _result;
-        int _replyingTo;
+
+
+        pthread_mutex_t _mutex;
+        pthread_cond_t _cond;
 
         typedef std::vector<message> messages;
         messages _events;
         message _last;
-        pthread_cond_t _cond;
-        pthread_mutex_t _mutex;
+
+        void*   _result;
+        unsigned int _id;
+        int _replyingTo;
     };
 
     typedef  ThreadDispatcher ThreadMessages;
+
+    class ThreadDispatcher2
+    {
+    public:
+
+    protected:
+    };
 }

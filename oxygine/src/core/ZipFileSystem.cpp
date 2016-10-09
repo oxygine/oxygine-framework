@@ -52,6 +52,8 @@ namespace oxygine
 
         void Zips::read(unzFile zp)
         {
+            //MutexAutoLock al(_lock);
+
             do
             {
                 unz_file_pos pos;
@@ -72,6 +74,8 @@ namespace oxygine
 
         void Zips::add(const unsigned char* data, unsigned int size)
         {
+            MutexAutoLock al(_lock);
+
             zlib_filefunc_def ff;
             fill_memory_filefunc(&ff);
 
@@ -94,6 +98,8 @@ namespace oxygine
 
         void Zips::add(std::vector<char>& data)
         {
+            MutexAutoLock al(_lock);
+
             zlib_filefunc_def ff;
             fill_memory_filefunc(&ff);
 
@@ -157,6 +163,8 @@ namespace oxygine
 
         void Zips::add(const char* name)
         {
+            MutexAutoLock al(_lock);
+
             zlib_filefunc_def zpfs;
             memset(&zpfs, 0, sizeof(zpfs));
 
@@ -167,6 +175,8 @@ namespace oxygine
             zpfs.zseek_file = ox_fseek;
             zpfs.zclose_file = ox_fclose;
             zpfs.zerror_file = ox_ferror;
+            zpfs.opaque = (void*)_zps.size();
+            //zpfs.opaque = name;
 
             unzFile zp = unzOpen2(name, &zpfs);//todo, optimize search in zip
             OX_ASSERT(zp);
@@ -193,8 +203,16 @@ namespace oxygine
             log::messageln("ZipFS, total files: %d", _files.size());
         }
 
+        bool Zips::isExists(const char* name)
+        {
+            MutexAutoLock al(_lock);
+            return getEntryByName(name) != 0;
+        }
+
         bool Zips::read(const char* name, file::buffer& bf)
         {
+            MutexAutoLock al(_lock);
+
             const file_entry* entry = getEntryByName(name);
             if (!entry)
                 return false;
@@ -203,11 +221,13 @@ namespace oxygine
 
         bool Zips::read(const file_entry* entry, file::buffer& bf)
         {
+            MutexAutoLock al(_lock);
             return readEntry(entry, bf);
         }
 
         void Zips::reset()
         {
+            MutexAutoLock al(_lock);
             for (zips::iterator i = _zps.begin(); i != _zps.end(); ++i)
             {
                 zpitem& f = *i;
@@ -259,6 +279,7 @@ namespace oxygine
             return _files.size();
         }
 
+
         class fileHandleZip: public fileHandle
         {
         public:
@@ -309,6 +330,96 @@ namespace oxygine
             }
 
             const file_entry* _entry;
+        };
+
+        class fileHandleZipStreaming : public fileHandle
+        {
+        public:
+            file::handle _h;
+            z_off_t _pos;
+            z_off_t _size;
+            long _cpos;
+
+            fileHandleZipStreaming(const file_entry* entry, const Zips& z): _cpos(0)
+            {
+                int r = 0;
+                r = unzGoToFilePos(entry->zp, const_cast<unz_file_pos*>(&entry->pos));
+                OX_ASSERT(r == UNZ_OK);
+
+                r = unzOpenCurrentFile(entry->zp);
+                OX_ASSERT(r == UNZ_OK);
+
+
+                void* ptr;
+                r = unzRealTell(entry->zp, &_pos, &_size, &ptr);
+                OX_ASSERT(r == UNZ_OK);
+
+                zlib_filefunc_def* f = (zlib_filefunc_def*)ptr;
+                const char* ssss = z.getZipFileName((int)(size_t)f->opaque);
+
+                _h = file::open(ssss, "rb");
+                file::seek(_h, static_cast<unsigned int>(_pos), SEEK_SET);
+
+                unzCloseCurrentFile(entry->zp);
+            }
+
+            ~fileHandleZipStreaming()
+            {
+                int q = 0;
+            }
+
+            void release()
+            {
+                file::close(_h);
+                delete this;
+            }
+
+            unsigned int read(void* dest, unsigned int size)
+            {
+                if (_cpos + (long)size > _size)
+                    size = (unsigned int)(_size - _cpos);
+
+                unsigned int ret = file::read(_h, dest, size);
+                _cpos += ret;
+
+                return ret;
+            }
+
+            unsigned int write(const void* src, unsigned int size)
+            {
+                OX_ASSERT(0);
+                return 0;
+            }
+
+            unsigned int getSize() const
+            {
+                return (unsigned int)_size;
+            }
+
+            int          seek(unsigned int offset, int whence)
+            {
+                switch (whence)
+                {
+                    case SEEK_SET:
+                        _cpos = offset;
+                        return file::seek(_h, (unsigned int)(_pos + offset), SEEK_SET);
+                    case SEEK_CUR:
+                        _cpos += offset;
+                        return file::seek(_h, offset, SEEK_CUR);
+                    case SEEK_END:
+                        _cpos = _size;
+                        return file::seek(_h, offset, SEEK_END);
+                    default:
+                        break;
+                }
+                OX_ASSERT(0);
+                return 0;
+            }
+
+            unsigned int tell() const
+            {
+                return (unsigned int)_cpos;
+            }
 
         };
 
@@ -329,9 +440,18 @@ namespace oxygine
             _zips.add(data);
         }
 
+
         void ZipFileSystem::reset()
         {
             _zips.reset();
+        }
+
+        FileSystem::status ZipFileSystem::_read(const char* file, file::buffer& bf, error_policy ep)
+        {
+            if (_zips.read(file, bf))
+                return status_ok;
+
+            return status_error;
         }
 
         FileSystem::status ZipFileSystem::_open(const char* file, const char* mode, error_policy ep, file::fileHandle*& fh)
@@ -339,12 +459,20 @@ namespace oxygine
             const file_entry* entry = _zips.getEntryByName(file);
             if (entry)
             {
-                fh = new fileHandleZip(entry);
+                if (*mode == 's')
+                    fh = new fileHandleZipStreaming(entry, _zips);
+                else
+                    fh = new fileHandleZip(entry);
                 return status_ok;
             }
 
             handleErrorPolicy(ep, "can't find zip file entry: %s", file);
             return status_error;
+        }
+
+        bool ZipFileSystem::_isExists(const char* file)
+        {
+            return _zips.isExists(file);
         }
 
         FileSystem::status ZipFileSystem::_deleteFile(const char* file)

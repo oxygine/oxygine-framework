@@ -22,12 +22,12 @@
 #include "initActor.h"
 #include "Input.h"
 #include "InputText.h"
+#include "Image.h"
 #include "MemoryTexture.h"
 #include "ThreadLoader.h"
 #include "PointerState.h"
 #include "ProgressBar.h"
 #include "RenderState.h"
-#include "RootActor.h"
 #include "Stage.h"
 #include "SlidingActor.h"
 #include "Sprite.h"
@@ -43,6 +43,7 @@
 #include "Serialize.h"
 #include "STDRenderer.h"
 #include "WebImage.h"
+#include "key.h"
 
 //closure/
 #include "closure/closure.h"
@@ -111,6 +112,7 @@
 #include "res/Resource.h"
 #include "res/Resources.h"
 #include "res/ResStarlingAtlas.h"
+#include "res/SingleResAnim.h"
 
 //text_utils/
 #include "text_utils/Aligner.h"

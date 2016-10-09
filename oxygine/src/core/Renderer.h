@@ -18,14 +18,18 @@ namespace oxygine
 {
     typedef AffineTransform Transform;
 
+#define MAKE_BLEND_MODE(source, dest) ((IVideoDriver::BT_##source << 16) | (IVideoDriver::BT_##dest))
+
+
     enum blend_mode
     {
-        blend_disabled,
-        blend_premultiplied_alpha,
-        blend_alpha,
-        blend_add,
-        blend_multiply,
-        blend_inverse,
+        blend_disabled              = 0,
+        blend_premultiplied_alpha   = MAKE_BLEND_MODE(ONE, ONE_MINUS_SRC_ALPHA),
+        blend_alpha                 = MAKE_BLEND_MODE(SRC_ALPHA, ONE_MINUS_SRC_ALPHA),
+        blend_add                   = MAKE_BLEND_MODE(ONE, ONE),
+        blend_screen                = MAKE_BLEND_MODE(ONE, ONE_MINUS_SRC_COLOR),
+        blend_multiply              = MAKE_BLEND_MODE(DST_COLOR, ONE_MINUS_SRC_ALPHA),
+        blend_inverse               = MAKE_BLEND_MODE(ONE_MINUS_DST_COLOR, ZERO),
     };
 
 

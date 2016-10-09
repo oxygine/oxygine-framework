@@ -13,6 +13,12 @@ namespace oxygine
 
     }
 
+
+    ShaderProgramGL::ShaderProgramGL(GLuint vs, GLuint ps, const VertexDeclarationGL* decl)
+    {
+        _program = createProgram(vs, ps, decl);
+    }
+
     ShaderProgramGL::~ShaderProgramGL()
     {
         if (_program)
@@ -52,6 +58,27 @@ namespace oxygine
         return status == GL_TRUE;
     }
 
+
+    bool ShaderProgramGL::getProgramBuildLog(GLuint program, std::string& str)
+    {
+        GLint length = 0;
+        GLint success = GL_TRUE;
+        oxglGetProgramiv(program, GL_INFO_LOG_LENGTH, &length);
+        if (length)
+        {
+            str.resize(length);
+            oxglGetProgramInfoLog(program, (int)str.size(), NULL, &str[0]);
+        }
+        else
+            str.clear();
+
+        GLint status = GL_TRUE;
+        oxglGetProgramiv(program, GL_LINK_STATUS, &status);
+
+        return status == GL_TRUE;
+
+    }
+
     unsigned int ShaderProgramGL::createShader(unsigned int type, const char* data, const char* prepend, const char* append, error_policy ep)
     {
         GLuint shader = oxglCreateShader(type);
@@ -87,6 +114,13 @@ namespace oxygine
         }
 #endif
 
+#ifdef __ANDROID__
+        *ptr = "#define ANDROID 1\n";
+        ptr++;
+#endif
+
+
+
 
         if (prepend)
         {
@@ -119,6 +153,8 @@ namespace oxygine
             handleErrorPolicy(ep, "can't compile shader: %s", log.c_str());
         }
 
+        checkGLError();
+
         return shader;
     }
 
@@ -133,6 +169,21 @@ namespace oxygine
             oxglBindAttribLocation(p, decl->elements[i].index, decl->elements[i].name);
 
         oxglLinkProgram(p);
+
+
+        std::string log;
+        bool success = getProgramBuildLog(p, log);
+
+        if (success)
+        {
+            //log::messageln("compiled shader: %s", log.c_str());
+        }
+        else
+        {
+            log::error("can't link gl program: %s", log.c_str());
+            oxglDeleteProgram(p);
+            p = 0;
+        }
 
         CHECKGL();
 

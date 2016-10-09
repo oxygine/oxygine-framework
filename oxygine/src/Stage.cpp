@@ -14,7 +14,7 @@ namespace oxygine
 {
     spStage Stage::instance;
 
-    Stage::Stage(bool autoReset) : _statUpdate(0), _statRender(0), _clipOuter(false), _viewport(0, 0, 0, 0) //, _active(true)
+    Stage::Stage(bool autoReset) : _statUpdate(0), _clipOuter(false), _viewport(0, 0, 0, 0) //, _active(true)
     {
         spClock clock = new Clock();
         setClock(clock);
@@ -142,7 +142,8 @@ namespace oxygine
 
         STDMaterial& mat = *STDMaterial::instance;
         mat.apply(0);
-        mat.setViewProj(view, proj);
+        Matrix vp = view * proj;
+        mat.setViewProj(vp);
 
         timeMS t = getTimeMS();
         RenderState rs;
@@ -161,8 +162,6 @@ namespace oxygine
         Actor::render(rs);
 
         mat.finish();
-
-        _statRender = getTimeMS() - t;
     }
 
     void Stage::render(const Color& clearColor, const Rect& viewport)

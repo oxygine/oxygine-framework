@@ -237,9 +237,6 @@
     <ClCompile Include="..\..\src\MaskedSprite.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\MemoryTexture.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\PointerState.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -347,6 +344,15 @@
     </ClCompile>
     <ClCompile Include="..\..\src\TweenGlow.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\key.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\Image.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\res\SingleResAnim.cpp">
+      <Filter>src\res</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -605,9 +611,6 @@
     <ClInclude Include="..\..\src\MaskedSprite.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\MemoryTexture.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\oxygine-framework.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -627,9 +630,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\TextStyle.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Tweener.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\UpdateState.h">
@@ -701,9 +701,6 @@
     <ClInclude Include="..\..\src\oxygine_include.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\RootActor.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\TweenAnim.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -748,6 +745,15 @@
     </ClInclude>
     <ClInclude Include="..\..\src\TweenGlow.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\key.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\Image.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\res\SingleResAnim.h">
+      <Filter>src\res</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -10,6 +10,7 @@
 #include "MaskedSprite.h"
 #include "ClipRectActor.h"
 #include "core/oxygine.h"
+#include "res/ResFont.h"
 
 namespace oxygine
 {
@@ -30,9 +31,9 @@ namespace oxygine
         }
     }
 
-    void STDMaterial::setViewProj(const Matrix& view, const Matrix& proj)
+    void STDMaterial::setViewProj(const Matrix& vp)
     {
-        _renderer->setViewProjTransform(view, proj);
+        _renderer->setViewProjTransform(vp);
     }
 
     void STDMaterial::render(ClipRectActor* actor, const RenderState& parentRS)
@@ -153,7 +154,7 @@ namespace oxygine
 #endif
 
             _renderer->setTransform(rs.transform);
-            _renderer->draw(rs.getFinalColor(sprite->getColor()), frame.getSrcRect(), frame.getDestRect());
+            _renderer->draw(rs.getFinalColor(sprite->getColor()), frame.getSrcRect(), sprite->getDestRect());
         }
     }
 
@@ -176,13 +177,13 @@ namespace oxygine
         _renderer->setBlendMode(tf->getBlendMode());
         _renderer->setTransform(rs.transform);
 
-
-        if (tf->getFont()->isSDF())
+        int sdfSize;
+        if (tf->getFont()->isSDF(sdfSize))
         {
             float scale = sqrtf(rs.transform.a * rs.transform.a + rs.transform.c * rs.transform.c);
 
             if (tf->getFontSize())
-                scale = scale * tf->getFontSize() / tf->getFont()->getSize();
+                scale = scale * tf->getFontSize() / sdfSize;
 
             float contrast = 3.0f + scale * 8.0f;
             float offset = tf->getWeight();

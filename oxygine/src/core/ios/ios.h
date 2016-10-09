@@ -9,9 +9,10 @@ namespace oxygine
         std::string getSupportFolder();
     }
 
-    class MemoryTexture;
+    class Image;
 
-    bool nsImageLoad(MemoryTexture& mt, void* pData, int nDatalen, bool premultiplied, TextureFormat format);
+
+    bool nsImageLoad(Image& mt, void* pData, int nDatalen, bool premultiplied, TextureFormat format);
 
     void iosGetMemoryUsage(size_t& a);
 }

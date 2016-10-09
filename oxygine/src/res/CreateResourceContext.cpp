@@ -1,6 +1,6 @@
 #include "CreateResourceContext.h"
 #include "core/NativeTexture.h"
-#include "MemoryTexture.h"
+#include "Image.h"
 #include "core/ThreadDispatcher.h"
 #include "core/oxygine.h"
 #include "pthread.h"
@@ -12,12 +12,18 @@ namespace oxygine
 
     void LoadResourcesContext::init()
     {
+#ifndef OX_NO_MT
         _mainThread = pthread_self();
+#endif
     }
 
     bool isMainThread()
     {
+#ifdef OX_NO_MT
+        return true;
+#else
         return pthread_equal(_mainThread, pthread_self()) != 0;
+#endif
     }
 
     LoadResourcesContext* LoadResourcesContext::get()
@@ -204,7 +210,7 @@ namespace oxygine
         const CreateTextureTask* task = (const CreateTextureTask*)msg.cbData;
 
 
-        MemoryTexture* src = task->src.get();
+        Image* src = task->src.get();
         NativeTexture* dest = task->dest.get();
 
         bool done = false;

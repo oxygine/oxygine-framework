@@ -14,11 +14,14 @@ namespace oxygine
     ShaderProgram* PostProcess::shaderBlurV = 0;
     ShaderProgram* PostProcess::shaderBlurH = 0;
     ShaderProgram* PostProcess::shaderBlit = 0;
+    bool _ppBuilt = false;
 
     void PostProcess::initShaders()
     {
-        if (PostProcess::shaderBlurH)
+        if (_ppBuilt)
             return;
+        _ppBuilt = true;
+
 
         file::Zips zp;
         zp.add(system_data, system_size);
@@ -38,9 +41,9 @@ namespace oxygine
         fs_blur.push_back(0);
 
 
-        unsigned int h = ShaderProgramGL::createShader(GL_VERTEX_SHADER, (const char*)&vs_h.front(), "", "");
-        unsigned int v = ShaderProgramGL::createShader(GL_VERTEX_SHADER, (const char*)&vs_v.front(), "", "");
-        unsigned int ps = ShaderProgramGL::createShader(GL_FRAGMENT_SHADER, (const char*)&fs_blur.front(), "", "");
+        unsigned int h = ShaderProgramGL::createShader(GL_VERTEX_SHADER, (const char*)&vs_h.front());
+        unsigned int v = ShaderProgramGL::createShader(GL_VERTEX_SHADER, (const char*)&vs_v.front());
+        unsigned int ps = ShaderProgramGL::createShader(GL_FRAGMENT_SHADER, (const char*)&fs_blur.front());
 
 
         IVideoDriver* driver = IVideoDriver::instance;
@@ -91,7 +94,8 @@ namespace oxygine
 
     DECLARE_SMART(TweenPostProcess, spTweenPostProcess);
 
-    vector<spTweenPostProcess> postProcessItems;
+    class PPTask;
+    vector<PPTask*> postProcessItems;
 
     int alignTextureSize(int v)
     {
@@ -149,6 +153,12 @@ namespace oxygine
 
         if (!t->getHandle())
             return false;
+
+        if (!HAVE_NPOT_RT())
+        {
+            w = nextPOT(w);
+            h = nextPOT(h);
+        }
 
         if (t->getFormat() == tf &&
                 t->getWidth() >= w && t->getHeight() >= h &&
@@ -250,7 +260,24 @@ namespace oxygine
     }
 
 
+    void addPostProcessItem(PPTask* task)
+    {
+        if (find(postProcessItems.begin(), postProcessItems.end(), task) == postProcessItems.end())
+        {
+            task->addRefPP();
+            postProcessItems.push_back(task);
+        }
+    }
 
+
+    void removePostProcessItem(PPTask* t)
+    {
+        vector<PPTask*>::iterator i = std::find(postProcessItems.begin(), postProcessItems.end(), t);
+        if (i == postProcessItems.end())
+            return;
+        t->releaseRefPP();
+        postProcessItems.erase(i);
+    }
 
 
 
@@ -266,9 +293,9 @@ namespace oxygine
 
             for (size_t i = 0; i < postProcessItems.size(); ++i)
             {
-                spTweenPostProcess p = postProcessItems[i];
+                PPTask* p = postProcessItems[i];
                 p->renderPP();
-                p->getActor()->releaseRef();
+                p->releaseRefPP();
             }
 
             postProcessItems.clear();
@@ -327,6 +354,9 @@ namespace oxygine
 
     Rect PostProcess::getScreenRect(const Actor& actor) const
     {
+        if (_options._flags & PostProcessOptions::flag_screen)
+            return _screen;
+
         Rect screen;
 
         Rect display(Point(0, 0), core::getDisplaySize());
@@ -335,6 +365,8 @@ namespace oxygine
             return display;
 
         screen = actor.computeBounds(actor.computeGlobalTransform()).cast<Rect>();
+        if (screen.getWidth() < 0)
+            int q = 0;
         screen.size += Point(1, 1);
         screen.expand(_extend, _extend);
 
@@ -347,6 +379,8 @@ namespace oxygine
     void PostProcess::update(Actor* actor)
     {
         _screen = getScreenRect(*actor);
+        if (_screen.isEmpty())
+            return;
 
 //        OX_ASSERT(actor->_getStage());
         _rt = getRTManager().get(_rt, _screen.getWidth(), _screen.getHeight(), _format);
@@ -403,6 +437,8 @@ namespace oxygine
 
     TweenPostProcess::~TweenPostProcess()
     {
+
+        removePostProcessItem(this);
         if (_actor && _actor->getMaterial())
             _actor->setMaterial(_prevMaterial);
     }
@@ -417,6 +453,16 @@ namespace oxygine
         _renderPP();
     }
 
+    void TweenPostProcess::addRefPP()
+    {
+        _actor->addRef();
+    }
+
+    void TweenPostProcess::releaseRefPP()
+    {
+        _actor->releaseRef();
+    }
+
     void TweenPostProcess::init(Actor& actor)
     {
         _actor = &actor;
@@ -427,12 +473,7 @@ namespace oxygine
     void TweenPostProcess::update(Actor& actor, float p, const UpdateState& us)
     {
         _progress = p;
-
-        if (find(postProcessItems.begin(), postProcessItems.end(), this) == postProcessItems.end())
-        {
-            _actor->addRef();
-            postProcessItems.push_back(this);
-        }
+        addPostProcessItem(this);
     }
 
     void TweenPostProcess::done(Actor& actor)

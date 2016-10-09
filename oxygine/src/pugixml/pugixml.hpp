@@ -1344,8 +1344,6 @@ namespace pugi
 	std::basic_string<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t> > PUGIXML_FUNCTION as_wide(const std::basic_string<char, std::char_traits<char>, std::allocator<char> >& str);
 #endif
 
-	pugi::xml_attribute PUGIXML_FUNCTION find_next_attribute(const pugi::xml_node &node, pugi::xml_attribute& attr, const char *name);
-
 	// Memory allocation function interface; returns pointer to allocated memory or NULL on failure
 	typedef void* (*allocation_function)(size_t size);
 

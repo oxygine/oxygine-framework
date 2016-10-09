@@ -41,7 +41,7 @@ public:
         content->addChild(text);
 
         TextStyle st;
-        st.font = resourcesUI.getResFont("big")->getFont();
+        st.font = resourcesUI.getResFont("big");
         st.vAlign = TextStyle::VALIGN_MIDDLE;
         st.hAlign = TextStyle::HALIGN_MIDDLE;
         st.multiline = true;

@@ -4,6 +4,8 @@
 #include <malloc.h>
 #endif
 
+#define USE_ALLOCA
+
 namespace oxygine
 {
     EventDispatcher::EventDispatcher(): _lastID(0), _listeners(0)
@@ -154,16 +156,26 @@ namespace oxygine
 
 
         size_t size = _listeners->size();
-        listenerbase* copy = (listenerbase*)alloca(sizeof(listenerbase) * size);
-
         size_t num = 0;
+
+#ifdef USE_ALLOCA
+        listenerbase* copy = (listenerbase*)alloca(sizeof(listenerbase) * size);
+#else
+        listenerbase* copy = new listenerbase[size];
+#endif
+
+
         for (size_t i = 0; i != size; ++i)
         {
             listener& ls = _listeners->at(i);
             if (ls.type != event->type)
                 continue;
-
+#ifdef USE_ALLOCA
             new(copy + num) listenerbase(ls);
+#else
+            copy[num] = ls;
+#endif
+
             ++num;
         }
 
@@ -177,11 +189,15 @@ namespace oxygine
                 break;
         }
 
+#ifdef USE_ALLOCA
         for (size_t i = 0; i != num; ++i)
         {
             listenerbase& ls = copy[i];
             ls.~listenerbase();
         }
+#else
+        delete[] copy;
+#endif
     }
 
     int EventDispatcher::getListenersCount() const

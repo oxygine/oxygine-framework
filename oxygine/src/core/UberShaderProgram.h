@@ -34,7 +34,7 @@ namespace oxygine
         void setShaderUniformsCallback(ShaderUniformsCallback cb) {_cb = cb;}
 
 
-        virtual shader*         getShaderProgram(int flags) = 0;
+        virtual ShaderProgram*         getShaderProgram(int flags) = 0;
 
 
     protected:
@@ -72,7 +72,7 @@ namespace oxygine
             SAMPLER_NUM,
         };
 
-        shader*                 getShaderProgram(int flags);
+        ShaderProgram*  getShaderProgram(int flags) OVERRIDE;
 
         void apply(IVideoDriver* driver, spNativeTexture base, spNativeTexture alpha);
 

@@ -31,6 +31,7 @@ namespace oxygine
         void setDragBounds(const RectF& bounds);
         /**sets destination drag client. Default value is Actor attached to DragHandler*/
         void setDragClient(Actor* actor);
+        void setIgnoreTouchUp(bool ignore) { _ignoreTouchUp = ignore; }
         void snapClient2Bounds();
 
     protected:
@@ -53,5 +54,6 @@ namespace oxygine
         bool _clientIsParent;
         bool _pressed;
         bool _dragEnabled;
+        bool _ignoreTouchUp;
     };
 }

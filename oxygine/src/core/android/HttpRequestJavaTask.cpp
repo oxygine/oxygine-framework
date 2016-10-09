@@ -5,9 +5,15 @@ namespace oxygine
 {
     jclass _jHttpRequestsClass = 0;
     jmethodID _jCreateRequestMethod = 0;
+    static HttpRequestTask* createTask()
+    {
+        return new HttpRequestJavaTask;
+    }
 
     void HttpRequestTask::init()
     {
+        setCustomRequests(createTask);
+
         JNIEnv* env = jniGetEnv();
         LOCAL_REF_HOLDER(env);
 
@@ -32,11 +38,6 @@ namespace oxygine
         jmethodID jRelease = env->GetStaticMethodID(_jHttpRequestsClass, "release", "()V");
         JNI_NOT_NULL(jRelease);
         env->CallStaticObjectMethod(_jHttpRequestsClass, jRelease);
-    }
-
-    spHttpRequestTask HttpRequestTask::create()
-    {
-        return new HttpRequestJavaTask();
     }
 
     HttpRequestJavaTask::HttpRequestJavaTask(): _handle(0)

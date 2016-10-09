@@ -5,10 +5,11 @@
 #include "res/CreateResourceContext.h"
 #include "res/Resources.h"
 
+
 #include "res/ResBuffer.h"
 #include "res/ResFontBM.h"
 #include "res/ResAtlas.h"
-#include "MemoryTexture.h"
+#include "Image.h"
 #include "PointerState.h"
 #include "Input.h"
 
@@ -43,8 +44,8 @@
 #ifdef EMSCRIPTEN
 #include <sys/time.h>
 #include <emscripten.h>
-#include <SDL.h>
-#include <SDL_compat.h>
+//#include <SDL.h>
+//#include <SDL_compat.h>
 #include <SDL_events.h>
 #elif __ANDROID__
 #include "core/android/jniUtils.h"
@@ -81,25 +82,11 @@ extern "C"
 
 namespace oxygine
 {
-    namespace file
-    {
-        void init(const char* company, const char* app);
-        void free();
-    }
-
-    IVideoDriver::Stats _videoStats;
-
     static ThreadDispatcher _threadMessages;
     static ThreadDispatcher _uiMessages;
     Mutex mutexAlloc;
 
     bool _useTouchAPI = false;
-
-#if EMSCRIPTEN
-    static Point _displaySize(0, 0);
-    static void* _window = 0;
-#endif
-
 
 #ifdef OXYGINE_SDL
     static SDL_Window* _window = 0;
@@ -188,6 +175,11 @@ namespace oxygine
     }
 #endif
 
+    namespace key
+    {
+        void update();
+    }
+
     namespace core
     {
         void focusLost()
@@ -238,13 +230,35 @@ namespace oxygine
 
         void init2();
 
-        void init(init_desc* desc_ptr)
+        void init0()
         {
-            Input::instance.__removeFromDebugList();
-
-
             if (!_dispatcher)
                 _dispatcher = new EventDispatcher;
+        }
+
+        void init(init_desc* desc_ptr)
+        {
+            std::string t;
+
+#ifdef OX_DEBUG
+            t += "OX_DEBUG ";
+#endif
+
+#ifdef NDEBUG
+            t += "NDEBUG ";
+#endif
+
+#ifdef _DEBUG
+            t += "_DEBUG ";
+#endif
+
+#ifdef DEBUG
+            t += "DEBUG ";
+#endif
+
+            log::messageln("build settings %s", t.c_str());
+
+            init0();
 
 
             log::messageln("initialize oxygine");
@@ -286,37 +300,6 @@ namespace oxygine
             s3eDeviceRegister(S3E_DEVICE_UNPAUSE, applicationUnPause, 0);
             s3eDeviceRegister(S3E_DEVICE_PAUSE, applicationPause, 0);
 
-#elif EMSCRIPTEN
-            log::messageln("EMSCRIPTEN build");
-
-            if (desc.w == -1 && desc.h == -1)
-            {
-                int fs = 0;
-                emscripten_get_canvas_size(&desc.w, &desc.h, &fs);
-            }
-
-            if (SDL_Init(SDL_INIT_VIDEO) != 0)
-            {
-                log::error("Unable to initialize SDL: %s\n", SDL_GetError());
-            }
-
-            SDL_Surface* screen;
-            screen = SDL_SetVideoMode(desc.w, desc.h, 32, SDL_OPENGL);
-            _displaySize = Point(desc.w, desc.h);
-
-            emscripten_SDL_SetEventHandler(SDL_eventsHandler, 0);
-
-            int v = EM_ASM_INT(
-            {
-                var p = navigator.platform;
-                if (p == 'iPad' || p == 'iPhone' || p == 'iPod')
-                    return 1;
-                return 0;
-            }, 0);
-
-            if (v)
-                _useTouchAPI = true;
-
 #elif OXYGINE_SDL
 
             log::messageln("SDL build");
@@ -341,7 +324,7 @@ namespace oxygine
             }
 
             SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 0);
-            SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 0);
+            //SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 0);
             //SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
@@ -397,6 +380,22 @@ namespace oxygine
             }
 
             SDL_GL_SetSwapInterval(desc.vsync ? 1 : 0);
+
+#ifdef EMSCRIPTEN
+            SDL_SetEventFilter(SDL_eventsHandler, 0);
+
+            int v = EM_ASM_INT(
+            {
+                var p = navigator.platform;
+                if (p == 'iPad' || p == 'iPhone' || p == 'iPod')
+                    return 1;
+                return 0;
+            }, 0);
+
+            if (v)
+                _useTouchAPI = true;
+
+#endif
 
 #if __ANDROID__ || TARGET_OS_IPHONE
             //if (SDL_GetNumTouchDevices() > 0)
@@ -462,7 +461,7 @@ namespace oxygine
             log::messageln("oxygine initialized");
         }
 
-#if OXYGINE_SDL || EMSCRIPTEN
+#if OXYGINE_SDL
         Vector2 convertTouch(SDL_Event& ev)
         {
             Point size = getDisplaySize();
@@ -529,10 +528,16 @@ namespace oxygine
 
         bool  beginRendering(window w)
         {
+
 #ifdef OXYGINE_SDL
             SDL_Window* wnd = w;
             if (!wnd)
+            {
+                if (!focus)
+                    return false;
+
                 wnd = _window;
+            }
             SDL_GL_MakeCurrent(wnd, _context);
 #endif
 
@@ -541,6 +546,7 @@ namespace oxygine
             bool ready = STDRenderer::isReady();
             if (ready)
             {
+                IVideoDriver::_stats.start = getTimeMS();
                 updatePortProcessItems();
             }
 
@@ -557,8 +563,6 @@ namespace oxygine
             CHECKGL();
 #if __S3E__
             IwGLSwapBuffers();
-#elif EMSCRIPTEN
-            SDL_GL_SwapBuffers();
 #elif OXYGINE_SDL
             SDL_Window* wnd = w;
             if (!wnd)
@@ -573,12 +577,9 @@ namespace oxygine
                 SDL_GL_SwapWindow(wnd);
             }
 #endif
-
-            IVideoDriver::instance->getStats(_videoStats);
-            IVideoDriver::instance->swapped();
-
             CHECKGL();
 
+            IVideoDriver::_stats.duration = getTimeMS() - IVideoDriver::_stats.start;
             //sleep(1000/50);
         }
 
@@ -590,13 +591,10 @@ namespace oxygine
             Input* input = &Input::instance;
 
 
-#ifndef EMSCRIPTEN
             SDL_Window* wnd = SDL_GetWindowFromID(event.window.windowID);
             void* data = SDL_GetWindowData(wnd, "_");
             spStage stage = (Stage*)data;
-#else
-            spStage stage = getStage();
-#endif
+
             if (!stage)
                 stage = getStage();
 
@@ -631,8 +629,8 @@ namespace oxygine
                             newFocus = true;
                         if (focus != newFocus)
                         {
-                            focus = newFocus;
 #if HANDLE_FOCUS_LOST
+                            focus = newFocus;
 
                             if (focus)
                                 focusAcquired();
@@ -723,6 +721,14 @@ namespace oxygine
 
         bool update()
         {
+#ifndef OXYGINE_EDITOR
+            key::update();
+#endif
+
+            timeMS duration = IVideoDriver::_stats.duration;
+            IVideoDriver::_stats = IVideoDriver::Stats();
+            IVideoDriver::_stats.duration = duration;
+
             ThreadDispatcher::peekMessage msg;
             while (_threadMessages.peek(msg, true)) {}
 
@@ -744,7 +750,7 @@ namespace oxygine
 #endif
 
 
-#if OXYGINE_SDL || EMSCRIPTEN
+#if OXYGINE_SDL
 
             //log::messageln("update");
 
@@ -752,7 +758,7 @@ namespace oxygine
             SDL_Event event;
             while (SDL_PollEvent(&event))
             {
-#if !EMSCRIPTEN //emscripten handled events from callback
+#if !EMSCRIPTEN //emscripten build handles events from EventsFilter
                 SDL_handleEvent(event, done);
 #endif
             }
@@ -766,6 +772,9 @@ namespace oxygine
 
         void release()
         {
+            _threadMessages.clear();
+            _uiMessages.clear();
+
             clearPostProcessItems();
             PostProcess::freeShaders();
 
@@ -796,6 +805,8 @@ namespace oxygine
             Resources::unregisterResourceType("bmfc_font");
             Resources::unregisterResourceType("sdfont");
             Resources::unregisterResourceType("starling");
+
+
 
 #if OXYGINE_SDL
             SDL_GL_DeleteContext(_context);
@@ -881,8 +892,6 @@ namespace oxygine
 
             SDL_GL_GetDrawableSize(_window, &w, &h);
             return Point(w, h);
-#elif EMSCRIPTEN
-            return _displaySize;
 #else
             log::warning("getDisplaySize not implemented");
             return Point(0, 0);

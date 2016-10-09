@@ -2,7 +2,7 @@
 #include "Font.h"
 #include <vector>
 #include "pugixml/pugixml.hpp"
-#include "MemoryTexture.h"
+#include "Image.h"
 #include "core/NativeTexture.h"
 #include "core/VideoDriver.h"
 #include "core/file.h"
@@ -54,6 +54,7 @@ namespace oxygine
         return font;
     }
 
+
     ResFontBM::ResFontBM(): _font(0), _format(TF_R8G8B8A8), _premultipliedAlpha(false), _sdf(false)
     {
 
@@ -64,6 +65,12 @@ namespace oxygine
         cleanup();
     }
 
+
+    bool ResFontBM::isSDF(int& size) const
+    {
+        size = _font->getSize();
+        return _sdf;
+    }
 
     void ResFontBM::init(const char* path, bool premultipliedAlpha)
     {
@@ -90,6 +97,7 @@ namespace oxygine
         _pages.clear();
         delete _font;
         _font = 0;
+        _loadCounter = 0;
     }
 
     void ResFontBM::_restore(Restorable* r, void*)
@@ -110,10 +118,10 @@ namespace oxygine
         if (!load_context->isNeedProceed(p.texture))
             return;
 
-        spMemoryTexture mt = new MemoryTexture;
+        spImage mt = new Image;
 
         file::buffer bf;
-        file::read(p.file.c_str(), bf);
+        file::read(p.file, bf);
 
         mt->init(bf, !_premultipliedAlpha, _format);
         CreateTextureTask opt;
@@ -315,6 +323,7 @@ namespace oxygine
         fontSize = abs(fontSize);
         Font* font = new Font();
         font->init(getName().c_str(), fontSize, fontSize, lineHeight + fontSize - base, _sdf);
+        _size = fontSize;
         _font = font;
 
         if (context)
@@ -451,7 +460,7 @@ namespace oxygine
 
         std::string path = _file;
         file::buffer fb;
-        file::read(path.c_str(), fb);
+        file::read(path, fb);
 
         if (fb.empty())
             return;
@@ -508,6 +517,7 @@ namespace oxygine
         fontSize = abs(fontSize);
         Font* font = new Font();
         font->init(getName().c_str(), fontSize, fontSize, lineHeight + fontSize - base, _sdf);
+        _size = fontSize;
         _font = font;
 
         if (context)

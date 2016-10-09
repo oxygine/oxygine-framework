@@ -79,4 +79,13 @@ namespace oxygine
         _srcRect.setY(_srcRect.getBottom());
         _srcRect.setHeight(-_srcRect.getHeight());
     }
+
+    AnimationFrame::AnimationFrame(spNativeTexture t)
+    {
+        _diffuse.base = t;
+        _diffuse.premultiplied = true;
+        _srcRect = RectF(0, 0, 1, 1);
+        _destRect = RectF(0, 0, t->getWidth(), t->getHeight());
+        _frameSize = Vector2(t->getWidth(), t->getHeight());
+    }
 }

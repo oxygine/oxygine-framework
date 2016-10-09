@@ -230,16 +230,13 @@ namespace oxygine
         /**Returns true if actor is child or located deeper in current subtree*/
         bool isDescendant(const spActor& actor) const;
 
-        /**DEPRECATED, use insertSiblingBefore Inserts the specified actor before "where" actor as a child*/
-        OXYGINE_DEPRECATED
-        void insertChildBefore(spActor actor, spActor where);
-        /**DEPRECATED, use insertSiblingAfter Inserts the specified actor after "where" actor as a child*/
-        OXYGINE_DEPRECATED
-        void insertChildAfter(spActor actor, spActor where);
-
+        /**inserts sibling before 'this' actor*/
         void insertSiblingBefore(spActor);
+        /**inserts sibling after 'this' actor*/
         void insertSiblingAfter(spActor);
+        /**adds child first in list*/
         void prependChild(spActor actor);
+        /**adds child first in list*/
         void prependChild(Actor* actor);
         void addChild(spActor actor);
         void addChild(Actor* actor);//avoid conversion to spActor
@@ -293,10 +290,10 @@ namespace oxygine
         //converts global position (position in parent space) to local space
         Vector2 global2local(const Vector2& pos) const;
         //converts local position to parent space
-        Vector2 local2global(const Vector2& pos) const;
+        Vector2 local2global(const Vector2& pos = Vector2(0, 0)) const;
 
         //converts local position to Stage
-        Vector2 local2stage(const Vector2& pos, Actor* stage = 0) const;
+        Vector2 local2stage(const Vector2& pos = Vector2(0, 0), Actor* stage = 0) const;
         //converts global position (position in Stage space) to local space
         Vector2 stage2local(const Vector2& pos, Actor* stage = 0) const;
 
@@ -331,6 +328,7 @@ namespace oxygine
         /**recursively removes all event listeners and added tweens*/
         void clean();
 
+        virtual bool getBounds(RectF&) const { return false; }
 
     protected:
 
@@ -342,8 +340,8 @@ namespace oxygine
         virtual void onAdded2Stage() {}
         virtual void onRemovedFromStage() {}
         virtual void transformUpdated() {}
-        virtual bool getBounds(RectF&) const { return false; }
-        void calcBounds2(RectF& bounds, const Transform& transform) const;
+
+        virtual void calcBounds2(RectF& bounds, const Transform& transform) const;
 
 
         typedef intrusive_list<spActor> children;
@@ -420,31 +418,12 @@ namespace oxygine
     Vector2 convert_stage2local(spActor child, const Vector2& pos, spActor root = 0);
     Vector2 convert_stage2local(const Actor* child, const Vector2& pos, const Actor* root = 0);
 
-    /**Deprecated*/
-    OXYGINE_DEPRECATED
-    inline Vector2 convert_local2root(spActor child, const Vector2& pos, spActor root = 0) { return convert_local2stage(child, pos, root); }
-    /**Deprecated*/
-    OXYGINE_DEPRECATED
-    inline Vector2 convert_root2local(spActor child, const Vector2& pos, spActor root = 0) { return convert_stage2local(child, pos, root); }
 
     /*Tests 2 actors intersection and returns contact point in space of object1.*/
     bool testIntersection(spActor obj1, spActor obj2, spActor commonParent = 0, Vector2* contact = 0);
 
 
-    //deprecated, use actor::computeGlobalTransform
-    OXYGINE_DEPRECATED
-    Transform getGlobalTransform(spActor child, spActor parent = 0);
-
-    //deprecated, use actor::computeGlobalTransform
-    OXYGINE_DEPRECATED
-    Transform getGlobalTransform2(spActor child, Actor* parent = 0);
-
-
     RectF getActorTransformedDestRect(Actor* actor, const Transform& tr);
-
-    //deprecated, use reattachActor
-    OXYGINE_DEPRECATED
-    void    changeParentAndSavePosition(spActor mutualParent, spActor actor, spActor newParent);
 
     /**changes actor parent but with the same position on the screen*/
     void    reattachActor(spActor actor, spActor newParent, spActor root = 0);

@@ -4,14 +4,14 @@
 #include <vector>
 #include <list>
 #include "NativeTexture.h"
-#include "MemoryTexture.h"
+#include "Image.h"
 #include "Mutex.h"
 #include "ThreadDispatcher.h"
 #include "res/CreateResourceContext.h"
 
 namespace oxygine
 {
-    DECLARE_SMART(MemoryTexture, spMemoryTexture);
+    DECLARE_SMART(Image, spImage);
     DECLARE_SMART(NativeTexture, spNativeTexture);
 
     class Mem2Native

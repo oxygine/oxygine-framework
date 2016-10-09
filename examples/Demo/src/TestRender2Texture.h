@@ -13,6 +13,14 @@ public:
     {
         notify("touch to draw", 100000);
 
+
+        spSprite back = new Sprite;
+        back->setResAnim(resources.getResAnim("bg"));
+        back->attachTo(content);
+        back->setPosition(content->getSize() / 2 - back->getSize() / 2);
+
+
+
         color = Color(255, 255, 255, 32);
 
         Vector2 size = content->getSize();
@@ -27,14 +35,16 @@ public:
         AnimationFrame frame;
         Diffuse df;
         df.base = texture;
+        df.premultiplied = false;
         frame.init(0, df,
                    RectF(0, 0, size.x / texture->getWidth(), size.y / texture->getHeight()),
                    RectF(Vector2(0, 0), size), size);
         preview->setAnimFrame(frame);
-        preview->setBlendMode(blend_disabled);
+
 
         content->addEventListener(TouchEvent::MOVE, CLOSURE(this, &TestRender2Texture::onMove));
         content->addEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &TestRender2Texture::onDown));
+
     }
 
     void onDown(Event* ev)
@@ -46,7 +56,9 @@ public:
     void onMove(Event* ev)
     {
         TouchEvent* te = (TouchEvent*)ev;
-        if (!te->getPointer()->isPressed())
+        bool left = te->getPointer()->isPressed();
+        bool right = te->getPointer()->isPressed(MouseButton_Right);
+        if (!left && !right)
             return;
 
         STDRenderer& renderer = *STDRenderer::instance;
@@ -65,11 +77,19 @@ public:
         renderer.begin(0);
         RectF destRect(te->localPosition - Vector2(16, 16), Vector2(32, 32));
 
-        ResAnim* brush = resources.getResAnim("brush");
+        ResAnim* brush = resources.getResAnim(left ? "brush" : "brush_eraser");
         AnimationFrame frame = brush->getFrame(0);
         const Diffuse& df = frame.getDiffuse();
-        renderer.setTexture(df.base, 0, true);
-        renderer.setBlendMode(blend_premultiplied_alpha);
+        renderer.setTexture(df.base, 0);
+        if (left)
+            renderer.setBlendMode(blend_premultiplied_alpha);
+        else
+        {
+            color = Color::White;
+            renderer.setBlendMode(blend_disabled);
+        }
+
+
         renderer.draw(color, frame.getSrcRect(), destRect);
         renderer.end();
 #else

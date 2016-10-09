@@ -54,7 +54,7 @@ public:
         float theta = 2.0f * MATH_PI / num * i;
 
         Vector2 dir = Vector2(scalar::cos(theta), scalar::sin(theta));
-        float rad = getRoot()->getHeight() * 0.4f * (1 + scalar::sin(theta * 10) / 10);
+        float rad = getStage()->getHeight() * 0.4f * (1 + scalar::sin(theta * 10) / 10);
         Vector2 p = dir * rad;
 
         Color c = lerp(Color(Color::Lime), Color(Color::Red), scalar::abs(scalar::sin(theta * 3)));

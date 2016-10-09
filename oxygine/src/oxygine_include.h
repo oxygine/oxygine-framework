@@ -11,6 +11,10 @@
 #include <TargetConditionals.h>
 #endif
 
+#if EMSCRIPTEN
+#include <emscripten.h>
+#endif
+
 
 //Round everything to whole pixels during rendering.
 // Helps to avoid artifacts in pixel art games
@@ -18,6 +22,13 @@
 // and fractional sprite coordinates or sprite scaling.
 // Introduces some CPU overhead.
 //#define OXYGINE_NO_SUBPIXEL_RENDERING 1
+
+
+#ifdef __ANDROID__
+#define HAVE_NPOT_RT()  (true)
+#else
+#define HAVE_NPOT_RT()  (true)
+#endif
 
 //#define OXYGINE_NO_YEILD 1
 
@@ -31,6 +42,7 @@
 #   endif
 #elif EMSCRIPTEN
 #   define OXYGINE_EMSCRIPTEN 1
+#   define OXYGINE_SDL 1
 #   ifndef NDEBUG
 #       define OX_DEBUG 1
 #   endif // DEBUG  
@@ -80,7 +92,7 @@ namespace oxygine { namespace log { void error(const char* format, ...); } }
 
 //assert without log::error
 #ifdef OXYGINE_QT
-#   define OX_ASSERT_NL(x) {Q_ASSERT(x);}
+#   define OX_ASSERT_NL(x) { if (!(x)) __asm("int3"); Q_ASSERT(x);}
 #elif !OX_DEBUG || EMSCRIPTEN
 #   define OX_ASSERT_NL(x)
 #else
@@ -98,7 +110,7 @@ namespace oxygine { namespace log { void error(const char* format, ...); } }
 
 #define OXYGINE_RENDERER 4
 
-#define OXYGINE_VERSION 2
+#define OXYGINE_VERSION 4
 
 #ifdef __GNUC__
 #   define OXYGINE_DEPRECATED __attribute__((deprecated))

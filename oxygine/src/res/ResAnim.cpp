@@ -1,5 +1,5 @@
 #include "ResAnim.h"
-#include "MemoryTexture.h"
+#include "Image.h"
 #include "core/NativeTexture.h"
 #include "core/VideoDriver.h"
 
@@ -55,35 +55,21 @@ namespace oxygine
     void ResAnim::init(const std::string& file, int columns, int rows, float scaleFactor)
     {
         file::buffer bf;
-        file::read(file.c_str(), bf);
-        MemoryTexture mt;
+        file::read(file, bf);
+        Image mt;
         mt.init(bf, true);
         init(&mt, columns, rows, scaleFactor);
     }
 
-    void ResAnim::init(MemoryTexture* original, int columns, int rows, float scaleFactor)
+    void ResAnim::init(Image* original, int columns, int rows, float scaleFactor)
     {
         _scaleFactor = scaleFactor;
         if (!original)
             return;
 
         spNativeTexture texture = IVideoDriver::instance->createTexture();
-        /*
-        int w2 = nextPOT(original->getWidth());
-        int h2 = nextPOT(original->getHeight());
-        if (w2 != original->getWidth() || h2 != original->getHeight())
-        {
-            texture->init(w2, h2, original->getFormat());
-            texture->updateRegion(0, 0, original->lock());
-        }
-        else
-        {
-        */
         texture->init(original->lock(), false);
-        //}
-
         texture->apply();
-
         init(texture, original->getSize(), columns, rows, scaleFactor);
     }
 

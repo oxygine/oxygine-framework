@@ -1,6 +1,7 @@
 #pragma once
 #include "oxygine_include.h"
 #include "ScalarMath.h"
+#include "Vector4.h"
 
 namespace oxygine
 {
@@ -10,6 +11,7 @@ namespace oxygine
         enum
         {
             /**ABGR(LE) colors table*/
+            Zero                 = 0x00000000,
             AliceBlue            = 0xF0F8FFFF,
             AntiqueWhite         = 0xFAEBD7FF,
             Aqua                 = 0x00FFFFFF,
@@ -214,6 +216,8 @@ namespace oxygine
         float getGreenF() const {return g / 255.0f;}
         float getBlueF() const {return b / 255.0f;}
         float getAlphaF() const {return a / 255.0f;}
+
+        Vector4 toVector()const { return Vector4(getRedF(), getGreenF(), getBlueF(), getAlphaF()); }
 
         Color operator + (const Color& c) const
         {

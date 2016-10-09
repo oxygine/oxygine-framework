@@ -24,6 +24,7 @@
 namespace oxygine
 {
     GLuint ib = 0;
+
     VideoDriverGLES20::VideoDriverGLES20(): _programID(0), _p(0)
     {
 
@@ -65,11 +66,6 @@ namespace oxygine
         //_currentProgram = 0;
     }
 
-    void VideoDriverGLES20::updateConstants()
-    {
-        //_currentProgram->setUniform("mat", &_matrixVP);
-    }
-
 
     void VideoDriverGLES20::begin(const Rect& viewport, const Color* clearColor)
     {
@@ -78,7 +74,8 @@ namespace oxygine
 
     void VideoDriverGLES20::clear(const Color& color)
     {
-        glClearColor(color.getRedF(), color.getGreenF(), color.getBlueF(), color.getAlphaF());
+        Vector4 c = color.toVector();
+        glClearColor(c.x, c.y, c.z, c.w);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         CHECKGL();
@@ -139,9 +136,7 @@ namespace oxygine
         }
 
 
-#if OXYGINE_TRACE_VIDEO_STATS
-        _debugAddPrimitives(pt, (int)(GLsizei)primitives);
-#endif
+        _debugAddPrimitives(pt, (int)primitives);
 
         CHECKGL();
     }
@@ -152,7 +147,7 @@ namespace oxygine
 
         const unsigned char* verticesData = (const unsigned char*)vdata;
 
-        //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ib);
+        oxglBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ib);
         if (indicesData != &STDRenderer::indices16.front())
             int q = 0;
 
@@ -163,8 +158,8 @@ namespace oxygine
             oxglVertexAttribPointer(el->index, el->size, el->elemType, el->normalized, decl->size, verticesData + el->offset);
             el++;
         }
-
-        glDrawElements(getPT(pt), numIndices, GL_UNSIGNED_SHORT, indicesData);
+		 
+        glDrawElements(getPT(pt), numIndices, GL_UNSIGNED_SHORT, 0);
 
         el = decl->elements;
         for (int i = 0; i < decl->numElements; ++i)
@@ -174,9 +169,8 @@ namespace oxygine
         }
 
 
-#if OXYGINE_TRACE_VIDEO_STATS
         _debugAddPrimitives(pt, numIndices);
-#endif
+
         CHECKGL();
     }
 
@@ -247,5 +241,4 @@ namespace oxygine
         oxglUniform1f(p, val);
         CHECKGL();
     }
-
 }

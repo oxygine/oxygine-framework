@@ -4,6 +4,7 @@
 #include "utils/stringUtils.h"
 #include "RenderState.h"
 #include "AnimationFrame.h"
+#include "res/ResFont.h"
 
 namespace oxygine
 {
@@ -166,22 +167,21 @@ namespace oxygine
             if (!_data.empty())
             {
                 int i = 0;
-                const Font* font = rd.getStyle().font;
+                const Font* font = rd.getStyle().font->getFont(0, rd.getStyle().fontSize);
 
                 while (i != (int)_data.size())
                 {
                     Symbol& s = _data[i];
-                    //wchar_t c = s.c;
-                    const glyph* gl = font->getGlyph(s.code);
-                    if (gl)
-                    {
-                        s.gl = *gl;
-                        i += rd.putSymbol(s);
-                    }
+                    if (s.code == '\n')
+                        rd.nextLine();
                     else
                     {
-                        if (s.code == '\n')
-                            rd.nextLine();
+                        const glyph* gl = font->getGlyph(s.code);
+                        if (gl)
+                        {
+                            s.gl = *gl;
+                            i += rd.putSymbol(s);
+                        }
                         else
                         {
                             gl = font->getGlyph(_defMissing);

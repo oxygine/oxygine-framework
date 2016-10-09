@@ -17,6 +17,7 @@ namespace oxygine
             std::string _path;
             char* _getFullPath(const char* path, char buff[512]);
 
+            status _read(const char* file, file::buffer&, error_policy ep);
             status _open(const char* file_, const char* mode, error_policy ep, fileHandle*& fh);
             status _deleteFile(const char* file);
             status _renameFile(const char* src, const char* dest);

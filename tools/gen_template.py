@@ -96,6 +96,7 @@ def _run(args):
 
     values["OXYGINE"] = unixpath(ox_path)
     values["ROOT"] = unixpath(root_path)
+    values["PROJECT_LC"] = name.lower()
 
     def process(template, relto, path, gl, fn=None):
         res = ""
@@ -312,7 +313,7 @@ def _run(args):
             print("src " + src_path)
             tp = guess_type(src_path)
 
-            if ext == ".storyboard":
+            if ext in (".storyboard", ".gradle"):
                 tp = ("text", "")
 
             if not tp[0]:

@@ -12,7 +12,7 @@ namespace oxygine
     static ThreadDispatcher _messages;
     //ThreadMessages _main;
 
-    spHttpRequestTask HttpRequestTask::create()
+    static HttpRequestTask* createCurl()
     {
         return new HttpRequestTaskCURL;
     }
@@ -140,6 +140,7 @@ namespace oxygine
     {
         if (multi_handle)
             return;
+        setCustomRequests(createCurl);
         multi_handle = curl_multi_init();
         pthread_create(&_thread, 0, thread, 0);
     }
@@ -173,7 +174,7 @@ namespace oxygine
     {
         if (!_handle && !_fname.empty())
         {
-            _handle = file::open(_fname.c_str(), "wb");
+            _handle = file::open(_fname, "wb");
         }
 
         size_t size = n * l;
@@ -216,6 +217,9 @@ namespace oxygine
         curl_easy_setopt(_easy, CURLOPT_FOLLOWLOCATION, true);
         curl_easy_setopt(_easy, CURLOPT_NOPROGRESS, 0);
 
+        //curl_slist *header = curl_slist_append(0, "hello");
+        //curl_easy_setopt(_easy, CURLOPT_HEADER, header);
+
         if (!_postData.empty())
         {
             curl_slist* headers = NULL; // init to NULL is important
@@ -252,7 +256,7 @@ namespace oxygine
         {
             file::close(_handle);
             if (error)
-                file::deleteFile(_fname.c_str());
+                file::deleteFile(_fname);
         }
         _handle = 0;
     }

@@ -27,7 +27,7 @@ namespace oxygine
         {
             if (ResFont* fnt = DebugActor::resSystem->getResFont("system"))
             {
-                _style.font = fnt->getFont();
+                _style.font = fnt;
             }
         }
     }
@@ -102,12 +102,12 @@ namespace oxygine
         needRebuild();
     }
 
-    const Font* TextField::getFont() const
+    const ResFont* TextField::getFont() const
     {
         return _style.font;
     }
 
-    void TextField::setFont(const Font* font)
+    void TextField::setFont(const ResFont* font)
     {
         _style.font = font;
         needRebuild();
@@ -286,11 +286,10 @@ namespace oxygine
                 _root = new text::TextNode(_text.c_str());
             }
 
-            text::Aligner rd;
+            text::Aligner rd(_style);
 
             rd.width = (int)getWidth();
             rd.height = (int)getHeight();
-            rd.style = _style;
             rd.begin();
             _root->resize(rd);
             rd.end();
@@ -440,7 +439,7 @@ namespace oxygine
         {
             ResFont* font = data->factory->getResFont(fnt);
             if (font)
-                _style.font = font->getFont();
+                _style.font = font;
         }
 
         needRebuild();

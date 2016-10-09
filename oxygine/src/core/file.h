@@ -3,6 +3,7 @@
 #include <vector>
 #include "Object.h"
 #include "FileSystem.h"
+#include <string>
 
 namespace oxygine
 {
@@ -50,7 +51,7 @@ namespace oxygine
         };
 
         /**Opens file for binary reading (mode = "rb") or binary writing (mode = "wb"). If file is missing returns zero.*/
-        handle open(const char* file, const char* mode, error_policy ep = ep_show_error);
+        handle open(const std::string& file, const char* mode, error_policy ep = ep_show_error);
 
         /**Closes opened file handle*/
         void close(handle);
@@ -62,7 +63,7 @@ namespace oxygine
         unsigned int read(handle, void* dest, unsigned int size);
 
         /**Reads bytes into destination buffer with stdio flags = "rb". Clears existing buffer*/
-        void read(const char* file, buffer& dest, error_policy ep = ep_show_error);
+        bool read(const std::string& file, buffer& dest, error_policy ep = ep_show_error);
 
         /**Reads bytes into destination buffer with stdio flags = "wb"*/
         unsigned int read(handle, buffer& dest);
@@ -71,26 +72,26 @@ namespace oxygine
         void write(handle, const void* data, unsigned int size);
 
         /**Writes bytes to file*/
-        void write(const char* file, const buffer& data, error_policy ep = ep_show_error);
-        void write(const char* file, const void* data, unsigned int size, error_policy ep = ep_show_error);
+        void write(const std::string& file, const buffer& data, error_policy ep = ep_show_error);
+        void write(const std::string& file, const void* data, unsigned int size, error_policy ep = ep_show_error);
 
         /**Is file exists?*/
-        bool exists(const char* file);
+        bool exists(const std::string& file);
 
         /**returns opened file size*/
         unsigned int size(handle);
 
         /**Deletes file*/
-        bool deleteFile(const char* path, error_policy ep = ep_show_warning);
+        bool deleteFile(const std::string& path, error_policy ep = ep_show_warning);
 
         /**Renames file*/
-        bool rename(const char* src, const char* dest, error_policy ep = ep_show_warning);
+        bool rename(const std::string& src, const std::string& dest, error_policy ep = ep_show_warning);
 
         /**Makes directory. Not recursive*/
-        bool makeDirectory(const char* path);
+        bool makeDirectory(const std::string& path);
 
         /**Deletes empty directory*/
-        void deleteDirectory(const char* path);
+        void deleteDirectory(const std::string& path);
 
         /**Returns primary read only FileSystem*/
         file::STDFileSystem& fs();
@@ -119,5 +120,13 @@ namespace oxygine
 
             handle _handle;
         };
+
+
+
+        /**you don't need to call "file::init" yourself. It would be called from core::init. Use it only when you need access to filesystem before core::init*/
+        void init(const char* company, const char* app);
+
+        /**for internal purposes*/
+        void free();
     }
 }

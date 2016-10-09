@@ -18,7 +18,6 @@ namespace oxygine
 
     public:
 
-
         MatrixT();
         MatrixT(const T*);
         MatrixT(
@@ -36,12 +35,12 @@ namespace oxygine
         void identity();
         void inverse();
         void transpose();
-        void translation(const vector3&);
-        void scaling(const vector3&);
+        void translate(const vector3&);
+        void scale(const vector3&);
         void buildSRT(const vector3& scale, T angle, const vector3& t);
 
-        MatrixT getInverse()const;
-        MatrixT getTranspose()const;
+        MatrixT inversed() const;
+        MatrixT transposed() const;
 
         vector3 transformVec3(const vector3&)const;
         vector4 transformVec4(const vector4&)const;
@@ -59,6 +58,7 @@ namespace oxygine
             const vector3& At,
             const vector3& Up);
 
+        static MatrixT ident();
         static MatrixT& inverse(MatrixT& out, const MatrixT& in);
         static MatrixT& transpose(MatrixT& out, const MatrixT& in);
         static MatrixT& rotationX(MatrixT& out, T angle);
@@ -70,11 +70,23 @@ namespace oxygine
         static MatrixT& perspectiveFovLH(MatrixT& out, T fovy, T aspect, T znear, T zfar);
         static MatrixT& perspectiveFovRH(MatrixT& out, T fovy, T aspect, T znear, T zfar);
 
+        static MatrixT& perspectiveOffCenterLH(MatrixT& out, T left, T right, T bottom, T top, T znear, T zfar);
+        static MatrixT& perspectiveOffCenterRH(MatrixT& out, T left, T right, T bottom, T top, T znear, T zfar);
+
         static MatrixT& orthoLH(MatrixT& out, T width, T height, T zNear, T zFar);
 
         static vector3& transformVec3(vector3& out, const vector3& in, const MatrixT& mat);
         static vector4& transformVec4(vector4& out, const vector4& in, const MatrixT& mat);
 
+
+        OXYGINE_DEPRECATED
+        void translation(const vector3&);
+        OXYGINE_DEPRECATED
+        void scaling(const vector3&);
+        OXYGINE_DEPRECATED
+        MatrixT getInverse()const;
+        OXYGINE_DEPRECATED
+        MatrixT getTranspose()const;
 
         union
         {
@@ -142,30 +154,57 @@ namespace oxygine
     template <class T>
     MatrixT<T> MatrixT<T>::getInverse() const
     {
-        matrix m = *this;
-        inverse(m, m);
-        return m;
+        return inversed();
     }
 
 
+    template <class T>
+    MatrixT<T> MatrixT<T>::inversed() const
+    {
+        matrix m;
+        inverse(m, *this);
+        return m;
+    }
+
+    template <class T>
+    MatrixT<T> MatrixT<T>::ident()
+    {
+        MatrixT m;
+        m.identity();
+        return m;
+    }
 
 
     template <class T>
     void MatrixT<T>::transpose()
     {
-        transpose(this, *this);
+        transpose(*this, *this);
     }
 
     template <class T>
     MatrixT<T> MatrixT<T>::getTranspose() const
     {
-        matrix m = *this;
-        transpose(m, m);
+        return transposed();
+    }
+
+
+    template <class T>
+    MatrixT<T> MatrixT<T>::transposed() const
+    {
+        matrix m;
+        transpose(m, *this);
         return m;
     }
 
     template <class T>
     void MatrixT<T>::translation(const vector3& t)
+    {
+        translate(t);
+    }
+
+
+    template <class T>
+    void MatrixT<T>::translate(const vector3& t)
     {
         matrix tm;
         matrix::translation(tm, t);
@@ -174,6 +213,15 @@ namespace oxygine
 
     template <class T>
     void MatrixT<T>::scaling(const vector3& s)
+    {
+        matrix sm;
+        matrix::scaling(sm, s);
+        *this = *this * sm;
+    }
+
+
+    template <class T>
+    void MatrixT<T>::scale(const vector3& s)
     {
         matrix sm;
         matrix::scaling(sm, s);
@@ -382,6 +430,28 @@ namespace oxygine
                   0.0f, y, 0.0f, 0.0f,
                   0.0f, 0.0f, zFar / (zFar - zNear), -1.0f,
                   0.0f, 0.0f, zFar * zNear / (zFar - zNear), 0.0f);
+        return out;
+    }
+
+    template <class T>
+    inline MatrixT<T>& MatrixT<T>::perspectiveOffCenterLH(MatrixT& out, T left, T right, T bottom, T top, T znearPlane, T zfarPlane)
+    {
+        out = matrix(
+                  2 * znearPlane / (right - left), 0, 0, 0,
+                  0, 2 * znearPlane / (top - bottom), 0, 0,
+                  (left + right) / (left - right), (top + bottom) / (bottom - top), zfarPlane / (zfarPlane - znearPlane), 1,
+                  0, 0, znearPlane * zfarPlane / (znearPlane - zfarPlane), 0);
+        return out;
+    }
+
+    template <class T>
+    inline MatrixT<T>& MatrixT<T>::perspectiveOffCenterRH(MatrixT& out, T left, T right, T bottom, T top, T znearPlane, T zfarPlane)
+    {
+        out = matrix(
+                  2 * znearPlane / (right - left), 0, 0, 0,
+                  0, 2 * znearPlane / (top - bottom), 0, 0,
+                  (left + right) / (right - left), (top + bottom) / (top - bottom), zfarPlane / (znearPlane - zfarPlane), -1,
+                  0, 0, znearPlane * zfarPlane / (znearPlane - zfarPlane), 0);
         return out;
     }
 

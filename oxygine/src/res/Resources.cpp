@@ -175,7 +175,7 @@ namespace oxygine
 
         FS_LOG("step0");
         file::buffer fb;
-        file::read(xmlFile.c_str(), fb);
+        file::read(xmlFile, fb);
 
         FS_LOG("step1");
 
@@ -342,6 +342,11 @@ namespace oxygine
     Resources::resources& Resources::_getResources()
     {
         return _resources;
+    }
+
+    Resources::resourcesMap& Resources::_getResourcesMap()
+    {
+        return _resourcesMap;
     }
 
     Resource* Resources::get(const std::string& id_, error_policy ep) const

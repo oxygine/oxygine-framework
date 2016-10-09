@@ -98,18 +98,12 @@ private:
     Color _outer;
     unsigned char _adata;
 
-    Vector4 tovec(const Color& c)
-    {
-        return Vector4(c.getRedF(), c.getGreenF(), c.getBlueF(), c.getAlphaF());
-    }
-
     void setUniforms(IVideoDriver* driver, ShaderProgram* prog)
     {
         Color q(_adata, _adata, _adata, _adata);
-        Vector4 c;
-        c = tovec(_outer * q);
+        Vector4 c = (_outer * q).toVector();
         driver->setUniform("_black", &c, 1);
-        c = tovec(getColor() * _style.color * q);
+        c = (getColor() * _style.color * q).toVector();
         driver->setUniform("_white", &c, 1);
     }
 
@@ -146,7 +140,7 @@ public:
         _txt = txt;
 
         TextStyle st;
-        st.font = resources.getResFont("num_fnt_shdr")->getFont();
+        st.font = resources.getResFont("num_fnt_shdr");
         st.vAlign = TextStyle::VALIGN_MIDDLE;
         st.hAlign = TextStyle::HALIGN_MIDDLE;
         //st.color = Color::CornflowerBlue;

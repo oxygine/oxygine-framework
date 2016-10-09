@@ -19,7 +19,9 @@ namespace oxygine
         _rad(_defaultTouchThreshold),
         _maxSpeed(250),
         _downTime(0),
-        _lastTime(0), _current(0), _lastIterTime(0)
+        _ignoreTouchUp(false),
+        _lastTime(0), _current(0), _lastIterTime(0),
+        _finger(0)
     {
         _clip = new ClipRectActor;
         _clip->addEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &SlidingActor::_newEvent));
@@ -57,6 +59,9 @@ namespace oxygine
 
     void SlidingActor::snap()
     {
+        if (!_content)
+            return;
+
         updateDragBounds();
         _drag.snapClient2Bounds();
         _sliding = false;
@@ -90,6 +95,7 @@ namespace oxygine
         _holded = 0; //event->target;
         //_downPos = te->localPosition;
         //_downTime = tm;
+        _finger = 0;
 
 
         _speed = Vector2(0, 0);
@@ -208,11 +214,13 @@ namespace oxygine
             return;
 
         TouchEvent* te = safeCast<TouchEvent*>(event);
+        //if (te->)
         timeMS tm = getTimeMS();
         switch (te->type)
         {
             case TouchEvent::TOUCH_DOWN:
             {
+                _finger = te->index;
                 _current = 0;
                 _lastIterTime = tm;
 
@@ -230,8 +238,14 @@ namespace oxygine
 
             case TouchEvent::TOUCH_UP:
             {
-                if (_drag.getDragEnabled())
+                if (_ignoreTouchUp)
                 {
+                    te->stopImmediatePropagation();
+                }
+
+                if (_drag.getDragEnabled() && te->index == _finger && _ignoreTouchUp == false)
+                {
+                    _finger = 0;
                     _downTime = 0;
                     Vector2 pos = _content->getPosition();
 
@@ -302,18 +316,30 @@ namespace oxygine
 
             case TouchEvent::MOVE:
             {
-                Vector2 offset = _downPos - te->localPosition;
-                float d = offset.dot(offset);
-                if (_holded && (d >= _rad * _rad))
+                if (te->index == _finger)
                 {
-                    spActor act = safeSpCast<Actor>(_holded);
-                    while (act && act.get() != _content.get())
+                    Vector2 offset = _downPos - te->localPosition;
+                    float d = offset.dot(offset);
+                    if (_holded && (d >= _rad * _rad))
                     {
-                        act->setNotPressed();
-                        act = act->getParent();
-                    }
+                        spActor act = safeSpCast<Actor>(_holded);
+                        while (act && act.get() != _content.get())
+                        {
+                            act->setNotPressed();
+                            act = act->getParent();
+                        }
 
-                    _holded = 0;
+
+                        TouchEvent ev(TouchEvent::TOUCH_UP, true, Vector2(-100000, -100000));
+
+                        _ignoreTouchUp = true;
+                        _drag.setIgnoreTouchUp(true);
+                        _holded->dispatchEvent(&ev);
+                        _drag.setIgnoreTouchUp(false);
+                        _ignoreTouchUp = false;
+
+                        _holded = 0;
+                    }
                 }
             }
             break;

@@ -1,5 +1,6 @@
 #include "oxygine-framework.h"
 #include <functional>
+#include "res/SingleResAnim.h"
 using namespace oxygine;
 
 //it is our resources
@@ -18,6 +19,7 @@ public:
     {
         //create button Sprite
         spSprite button = new Sprite();
+
 
         //setup it:
         //set button.png image. Resource 'button' defined in 'res.xml'
@@ -55,7 +57,7 @@ public:
 
         //initialize text style
         TextStyle style;
-        style.font = gameResources.getResFont("main")->getFont();
+        style.font = gameResources.getResFont("main");
         style.color = Color::White;
         style.vAlign = TextStyle::VALIGN_MIDDLE;
         style.hAlign = TextStyle::HALIGN_CENTER;

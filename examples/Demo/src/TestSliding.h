@@ -44,7 +44,7 @@ public:
         title->setSize(map->getSize());
         title->setAlign(TextStyle::VALIGN_MIDDLE, TextStyle::HALIGN_MIDDLE);
         title->setY(-50);
-        title->setFont(resourcesUI.getResFont("big")->getFont());
+        title->setFont(resourcesUI.getResFont("big"));
         title->setColor(Color::Black);
         title->attachTo(map);
 

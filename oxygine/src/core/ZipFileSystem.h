@@ -4,6 +4,7 @@
 #include "FileSystem.h"
 #include "minizip/unzip.h"
 #include "core/file.h"
+#include "core/Mutex.h"
 
 namespace oxygine
 {
@@ -32,10 +33,13 @@ namespace oxygine
 
             bool read(const char* name, file::buffer& bf);
             bool read(const file_entry* entry, file::buffer& bf);
+            bool isExists(const char* name);
 
             const file_entry*   getEntryByName(const char* name);
             const file_entry*   getEntry(int index);
             size_t              getNumEntries() const;
+
+            const char* getZipFileName(int i) const { return _zps[i].name; }
 
         private:
             void read(unzFile zp);
@@ -55,6 +59,8 @@ namespace oxygine
             };
             typedef std::vector<zpitem> zips;
             zips _zps;
+
+            Mutex _lock;
         };
 
         bool read(file_entry* entry, file::buffer& bf);
@@ -77,11 +83,13 @@ namespace oxygine
 
             Zips _zips;
 
+            status _read(const char* file, file::buffer&, error_policy ep);
             status _open(const char* file, const char* mode, error_policy ep, file::fileHandle*& fh);
             status _deleteFile(const char* file);
             status _makeDirectory(const char* file);
             status _deleteDirectory(const char* file);
             status _renameFile(const char* src, const char* dest);
+            bool _isExists(const char* file);
 
         };
     }

@@ -66,6 +66,9 @@ namespace oxygine
 
     void TweenQueue::complete(timeMS deltaTime)
     {
+        if (_status == status_remove)
+            return;
+
         UpdateState us;
         us.dt = deltaTime;
         while (_status != status_done)

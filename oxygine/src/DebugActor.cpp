@@ -49,11 +49,12 @@ namespace oxygine
         if (resSystem)
             return;
 
-        spActor a = new MaskedSprite;
+        log::messageln("DebugActor::initialize");
 
         zp.setPrefix("system/");
         zp.add(system_data, system_size);
 
+        //file::ZipFileSystem zp;
         file::mount(&zp);
         resSystem = new Resources;
         resSystem->loadXML("system/res.xml", ResourcesLoadOptions().prebuiltFolder("system"));
@@ -62,10 +63,25 @@ namespace oxygine
     void DebugActor::show()
     {
         initialize();
+
         if (!DebugActor::instance)
             DebugActor::instance = new DebugActor;
 
         getStage()->addChild(DebugActor::instance);
+    }
+
+    void DebugActor::toggle()
+    {
+        if (!DebugActor::instance)
+        {
+            show();
+            return;
+        }
+
+        if (DebugActor::instance->_getStage())
+            hide();
+        else
+            show();
     }
 
     void DebugActor::hide()
@@ -123,7 +139,7 @@ namespace oxygine
 
         if (ResFont* fnt = resSystem->getResFont("mono"))
         {
-            st.font = fnt->getFont();
+            st.font = fnt;
         }
 
         OX_ASSERT(st.font != NULL);
@@ -197,8 +213,14 @@ namespace oxygine
 
         if (DebugActor::instance)
         {
-            DebugActor::instance->_debugText += buff;
-            DebugActor::instance->_debugText += "\n";
+            std::string& str = DebugActor::instance->_debugText;
+            str += buff;
+            str += "\n";
+
+            if (str.size() > 500)
+            {
+                str.resize(500);
+            }
         }
     }
 
@@ -255,8 +277,6 @@ namespace oxygine
     {
     }
 
-    extern IVideoDriver::Stats _videoStats;
-
     std::string aligned(int v, int width)
     {
         char str[32];
@@ -272,16 +292,21 @@ namespace oxygine
 
     void DebugActor::doUpdate(const UpdateState& us)
     {
+    }
+
+    void DebugActor::render(RenderState const& parentRS)
+    {
+        timeMS tm = getTimeMS();
+
         static int fps = 0;
         ++_frames;
         if (_frames > 50)
         {
-            timeMS this_time = getTimeMS();
-            if (this_time != _startTime)
+            if (tm != _startTime)
             {
-                fps = int(((float)_frames / (this_time - _startTime)) * 1000);
+                fps = int(((float)_frames / (tm - _startTime)) * 1000);
             }
-            _startTime = this_time;
+            _startTime = tm;
             _frames = 0;
         }
 
@@ -300,17 +325,21 @@ namespace oxygine
         s << "mfree=" << mem_free << " mem=" << mem_used << std::endl;
 #endif
 
-
+        const IVideoDriver::Stats& vstats = IVideoDriver::_stats;
 
 #ifdef OXYGINE_DEBUG_TRACE_LEAKS
         s << "objects=" << (int)ObjectBase::__getCreatedObjects().size() << std::endl;
 #endif
-#ifdef OXYGINE_TRACE_VIDEO_STATS
-        s << "batches=" << aligned(_videoStats.batches, 3) << " triangles=" << aligned(_videoStats.triangles, 3) << std::endl;
+
+#if OXYGINE_TRACE_VIDEO_STATS
+        int primitives = 0;
+        primitives += vstats.elements[IVideoDriver::PT_TRIANGLES] / 3;
+        primitives += vstats.elements[IVideoDriver::PT_TRIANGLE_STRIP] - 2;
+        s << "batches=" << aligned(vstats.batches, 3) << " primitives=" << aligned(primitives, 3) << std::endl;
 #endif
 
         s << "update=" << aligned(getStage()->_statUpdate, 2) << "ms ";
-        s << "render=" << aligned(getStage()->_statRender, 2) << "ms ";
+        s << "render=" << aligned(vstats.duration, 2) << "ms ";
         s << "textures=" << aligned(NativeTexture::created, 2) << " ";
 
 #ifdef __APPLE__
@@ -318,7 +347,6 @@ namespace oxygine
         iosGetMemoryUsage(mem);
         s << "memory=" << mem / 1024 << "kb ";
 #endif
-        //s << "\nlisteners=" << getStage()->getListenersCount() << "";
 
         if (!_debugText.empty())
         {
@@ -369,19 +397,18 @@ namespace oxygine
 
         setPosition(pos);
         setScale(1.0f / getStage()->getScaleX());
-    }
 
-    void DebugActor::render(RenderState const& parentRS)
-    {
+
         RenderState rs = parentRS;
         parentRS.material->finish();
 
         STDRenderer renderer;
         STDMaterial mat(&renderer);
         mat.apply(0);
-        //STDRenderer* renderer = mat.getRenderer();
+
+
         IVideoDriver* driver = renderer.getDriver();
-        driver->setDebugStats(false);
+
 
         Rect vp(Point(0, 0), core::getDisplaySize());
         driver->setViewport(vp);
@@ -390,10 +417,14 @@ namespace oxygine
         rs.material = &mat;
         Actor::render(rs);
         renderer.drawBatch();
-        driver->setDebugStats(true);
+
         mat.finish();
 
         Material::setCurrent(0);
+
+        timeMS dur = getTimeMS() - tm;
+
+        IVideoDriver::_stats.start += dur;
     }
 
     void DebugActor::showTexel2PixelErrors(bool show)
@@ -439,7 +470,7 @@ namespace oxygine
         cr->addTween(ColorRectSprite::TweenColor(Color(Color::White, 200)), 700, 1, true, 0, Tween::ease_inCubic)->setDetachActor(true);
         actor->addChild(cr);
         std::string dmp = actor->dump(0);
-        log::messageln("touched actor '%s' local pos: (%.0f,%.0f), pos: (%.0f,%.0f)\n%s",
+        log::messageln(">>>>>>>>>>>>>>>>>>>>\ntouched actor '%s' local pos: (%.0f,%.0f), pos: (%.0f,%.0f)\n%s",
                        actor->getName().c_str(),
                        te->localPosition.x, te->localPosition.y,
                        te->position.x, te->position.y,

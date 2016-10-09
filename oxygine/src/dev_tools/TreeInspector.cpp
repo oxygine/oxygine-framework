@@ -11,7 +11,7 @@
 #include "res/ResFontBM.h"
 #include "res/Resources.h"
 
-#include "MemoryTexture.h"
+#include "Image.h"
 #include "Font.h"
 #include "Stage.h"
 
@@ -54,7 +54,7 @@ namespace oxygine
     {
         ResAnim* rs = new ResAnim(0);
 
-        MemoryTexture mt;
+        Image mt;
         file::buffer bf;
         file::read(file, bf);
         mt.init(bf);
@@ -131,7 +131,7 @@ namespace oxygine
 
 
         TextStyle style;
-        style.font = _resSystem->getResFont("system")->getFont();
+        style.font = _resSystem->getResFont("system");
         style.vAlign = TextStyle::VALIGN_TOP;
 
         updateSizes();

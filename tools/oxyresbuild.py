@@ -38,6 +38,8 @@ def get_parser():
         "Value > 1 - upscale, Value < 1 - downscale. Should be used "
         "with --resize", type=float, default=1.0
     )
+    parser.add_argument(
+        "--trim_threshold", help="Alpha trim threshold. Used to optimize image when trimming transparent borders of image", type=int, default=2)
     parser.add_argument("-r", "--resize", help="Resize images by a scale value",
                         action="store_true", default=False)
     parser.add_argument("-us", "--upscale",
@@ -56,6 +58,8 @@ def get_parser():
                         "compressed textures (pvr option)",
                         action="store_true", default=False)
     parser.add_argument("-w", "--warnings", help="show warnings",
+                        action="store_true", default=False)
+    parser.add_argument("--simple_downsample", help="don't use smart algorithm when resizing args",
                         action="store_true", default=False)
     parser.add_argument(
         "-v", "--verbosity", help="verbosity level. 1 - only errors, "
@@ -78,10 +82,13 @@ def get_parser():
 def do(args):
     p = xml_processor.XmlProcessor(args)
     p.process()
+    return p
 
 
 def process(values):
-    ar = values.split(" ")
+    import shlex
+    ar = shlex.split(values)
+    #ar = values.split(" ")
     args = []
     for a in ar:
         v = a.strip()
@@ -90,7 +97,7 @@ def process(values):
         args.append(v)
 
     args = get_parser().parse_args(args)
-    do(args)
+    return do(args)
 
 
 if __name__ == "__main__":

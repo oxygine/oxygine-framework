@@ -13,7 +13,7 @@
 namespace oxygine
 {
     Vector2 fitSize(const Vector2& destSize, const Vector2& src);
-    const Vector2 itemSize(128.0f, 128.0f);
+    const Vector2 itemSize(256.0f, 256.0f);
 
     class TextureLine: public Box9Sprite
     {
@@ -107,7 +107,7 @@ namespace oxygine
 
         int n = 0;
         int mem = 0;
-        for (std::vector<spNativeTexture>::iterator i = textures.begin(); i != textures.end(); ++i)
+        for (std::vector<spNativeTexture>::reverse_iterator i = textures.rbegin(); i != textures.rend(); ++i)
         {
             spNativeTexture t = *i;
             TextureLine* line = new TextureLine(t);

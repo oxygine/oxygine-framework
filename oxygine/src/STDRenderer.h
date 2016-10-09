@@ -44,6 +44,8 @@ namespace oxygine
 
 
         void setDriver(IVideoDriver*);
+
+        OXYGINE_DEPRECATED
         void setViewProjTransform(const Matrix& view, const Matrix& proj);
         void setViewProjTransform(const Matrix& viewProj);
         void setVertexDeclaration(const VertexDeclaration* decl);

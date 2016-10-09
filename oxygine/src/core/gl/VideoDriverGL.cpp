@@ -6,19 +6,12 @@
 
 namespace oxygine
 {
-    VideoDriverGL::VideoDriverGL(): _batches(0), _triangles(0),
-        _traceStats(true)
+    VideoDriverGL::VideoDriverGL()
     {
         _rt = new NativeTextureGLES;
         GLint fbo = 0;
         glGetIntegerv(GL_FRAMEBUFFER_BINDING, &fbo);
         _rt->_fbo = fbo;
-    }
-
-    void    VideoDriverGL::getStats(Stats& s) const
-    {
-        s.batches = _batches;
-        s.triangles = _triangles;
     }
 
     unsigned int VideoDriverGL::getPT(IVideoDriver::PRIMITIVE_TYPE pt)
@@ -71,24 +64,6 @@ namespace oxygine
         }
         OX_ASSERT(!"unknown blend");
         return GL_ONE;
-    }
-
-    void VideoDriverGL::_debugAddPrimitives(IVideoDriver::PRIMITIVE_TYPE pt, int num)
-    {
-        if (!_traceStats)
-            return;
-
-        switch (pt)
-        {
-            case PT_TRIANGLE_STRIP:
-                _triangles += num - 2;
-                break;
-            case PT_TRIANGLES:
-                _triangles += num / 3;
-                break;
-        }
-
-        _batches++;
     }
 
     bool VideoDriverGL::getScissorRect(Rect& r) const
@@ -161,7 +136,8 @@ namespace oxygine
         glDisable(GL_SCISSOR_TEST);
         if (clearColor)
         {
-            glClearColor(clearColor->getRedF(), clearColor->getGreenF(), clearColor->getBlueF(), clearColor->getAlphaF());
+            Vector4 c = clearColor->toVector();
+            glClearColor(c.x, c.y, c.z, c.w);
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         }
         else
@@ -186,6 +162,22 @@ namespace oxygine
                     glEnable(GL_BLEND);
                 else
                     glDisable(GL_BLEND);
+                break;
+            case STATE_CULL_FACE:
+                switch (value)
+                {
+                    case CULL_FACE_FRONT_AND_BACK:
+                        glCullFace(GL_FRONT_AND_BACK);
+                        break;
+                    case CULL_FACE_FRONT:
+                        glCullFace(GL_FRONT);
+                        break;
+                    case CULL_FACE_BACK:
+                        glCullFace(GL_BACK);
+                        break;
+                    default:
+                        break;
+                }
                 break;
             default:
                 OX_ASSERT(!"unknown state");

@@ -84,6 +84,11 @@ namespace oxygine
         return v;
     }
 
+	void Tween::remove()
+	{
+		getClient()->removeTween(this);
+	}
+
     void Tween::complete(timeMS deltaTime)
     {
         if (_loops == -1)
@@ -94,6 +99,9 @@ namespace oxygine
             return;
 
         OX_ASSERT(_client);
+
+		if (!_client)
+			return;
 
 //OX_ASSERT(!"not implemented");
 

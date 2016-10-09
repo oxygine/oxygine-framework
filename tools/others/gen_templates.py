@@ -14,8 +14,9 @@ def gen(path, project=""):
     #projs = ("ios", )
     # projs = ("macosx", )
     #projs = ("win32", )
-    #projs = ("cmake", )
-    # projs = ("android", )
+    projs = ("cmake", )
+    projs = ("android", )
+    projs = ("ios", )
     # projs = ("emscripten", )
 
     for platform in projs:
@@ -40,6 +41,5 @@ if 1:
     gen("HelloWorld")
     gen("Match3")
 
-
-gen("Demo")
+#gen("Demo")
 #gen("HelloWorld")

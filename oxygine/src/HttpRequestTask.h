@@ -11,7 +11,8 @@ namespace oxygine
     {
     public:
         static spHttpRequestTask create();
-
+        typedef HttpRequestTask* (*createHttpRequestCallback)();
+        static void setCustomRequests(createHttpRequestCallback);
         static void init();
         static void release();
 
@@ -40,20 +41,21 @@ namespace oxygine
         const std::vector<unsigned char>&   getResponse() const;
         const std::vector<unsigned char>&   getPostData() const;
         const std::string&                  getFileName() const;
-        bool                                getCacheEnabled() const;
+
 
         /**swap version of getResponse if you want to modify result buffer inplace*/
         void getResponseSwap(std::vector<unsigned char>&);
+        void addHeader(const std::string& key, const std::string& value);
 
         void setPostData(const std::vector<unsigned char>& data);
         void setUrl(const std::string& url);
         void setFileName(const std::string& name);
         void setCacheEnabled(bool enabled);
 
-
     protected:
         void _prerun();
         void _onError() OVERRIDE;
+        void _onComplete() OVERRIDE;
 
         //async
         void progress(int loaded, int total);
@@ -65,6 +67,7 @@ namespace oxygine
         virtual void _setUrl(const std::string& url) {}
         virtual void _setPostData(const std::vector<unsigned char>& data) {}
         virtual void _setCacheEnabled(bool enabled) {}
+        virtual void _addHeader(const std::string& key, const std::string& value) {}
 
         int _loaded;
         std::string _url;
