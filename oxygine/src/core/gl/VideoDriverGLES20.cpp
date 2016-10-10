@@ -26,6 +26,7 @@ namespace oxygine
     GLuint ib = 0;
 	GLuint vb = 0;
 	int vbpos = 0;
+	const int vbomax = 300000;
     VideoDriverGLES20::VideoDriverGLES20(): _programID(0), _p(0)
     {
 
@@ -54,8 +55,7 @@ namespace oxygine
 		{
 			oxglGenBuffers(1, &vb);
 			oxglBindBuffer(GL_ARRAY_BUFFER, vb);
-			char data[160000];
-			oxglBufferData(GL_ARRAY_BUFFER, 160000, data, GL_STATIC_DRAW);
+			oxglBufferData(GL_ARRAY_BUFFER, vbomax, 0, GL_STREAM_DRAW);
 			oxglBindBuffer(GL_ARRAY_BUFFER, 0);
 		}
     }
@@ -84,9 +84,6 @@ namespace oxygine
 
     void VideoDriverGLES20::clear(const Color& color)
     {
-
-
-		vbpos = 0;
         Vector4 c = color.toVector();
         glClearColor(c.x, c.y, c.z, c.w);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -160,12 +157,11 @@ namespace oxygine
 		const VertexDeclarationGL* decl = static_cast<const VertexDeclarationGL*>(decl_);
 
 		oxglBindBuffer(GL_ARRAY_BUFFER, vb);
-	//	oxglBufferData(GL_ARRAY_BUFFER, verticesDataSize * decl_->size, vdata, GL_STATIC_DRAW);
-		oxglBufferSubData(GL_ARRAY_BUFFER, vbpos, verticesDataSize * decl_->size, vdata);
+		int sz = verticesDataSize * decl_->size;
+		if (vbpos + sz >= vbomax)
+			vbpos = 0;
+		oxglBufferSubData(GL_ARRAY_BUFFER, vbpos, sz, vdata);
 
-
-
-		oxglBindBuffer(GL_ARRAY_BUFFER, vb);
 
         const VertexDeclarationGL::Element* el = decl->elements;
         for (int i = 0; i < decl->numElements; ++i)
@@ -180,19 +176,9 @@ namespace oxygine
         glDrawElements(getPT(pt), numIndices, GL_UNSIGNED_SHORT, 0);
 
 
-        el = decl->elements;
-        for (int i = 0; i < decl->numElements; ++i)
-        {
-            oxglDisableVertexAttribArray(el->index);
-            el++;
-        }
-
-		oxglBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-		oxglBindBuffer(GL_ARRAY_BUFFER, 0);
-
 
         _debugAddPrimitives(pt, numIndices);
-		vbpos += verticesDataSize;
+		vbpos += sz;
         CHECKGL();
     }
 
