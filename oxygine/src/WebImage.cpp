@@ -20,6 +20,7 @@ namespace oxygine
         setSize(64, 64);
         _image = new Sprite;
         _image->setName("_child_");
+        _image->setTouchEnabled(false);
         addChild(_image);
     }
 

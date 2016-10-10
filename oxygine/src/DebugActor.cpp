@@ -37,12 +37,17 @@
 #include "core/ios/ios.h"
 #endif
 
+#ifndef __S3E__
+#include "SDL_video.h"
+#endif
+
 namespace oxygine
 {
     Resources* DebugActor::resSystem = 0;
     file::ZipFileSystem zp;
 
     spDebugActor DebugActor::instance;
+    int _corner = 0;
 
     void DebugActor::initialize()
     {
@@ -54,7 +59,6 @@ namespace oxygine
         zp.setPrefix("system/");
         zp.add(system_data, system_size);
 
-        //file::ZipFileSystem zp;
         file::mount(&zp);
         resSystem = new Resources;
         resSystem->loadXML("system/res.xml", ResourcesLoadOptions().prebuiltFolder("system"));
@@ -92,8 +96,7 @@ namespace oxygine
 
     void DebugActor::setCorner(int corner)
     {
-        if (DebugActor::instance)
-            DebugActor::instance->setCornerPosition(corner);
+        _corner = corner;
     }
 
     void DebugActor::release()
@@ -107,7 +110,7 @@ namespace oxygine
 
     void DebugActor::setCornerPosition(int corner)
     {
-        _corner = corner;
+        setCorner(corner);
     }
 
     void DebugActor::addButton(float& x, const char* name, const char* anim)
@@ -123,7 +126,7 @@ namespace oxygine
         btn->addEventListener(TouchEvent::CLICK, CLOSURE(this, &DebugActor::_btnClicked));
     }
 
-    DebugActor::DebugActor(): _frames(0), _startTime(0), _corner(0), _showTexel2PixelErrors(false), _showTouchedActor(false)
+    DebugActor::DebugActor(): _frames(0), _startTime(0), _showTexel2PixelErrors(false), _showTouchedActor(false)
     {
         DebugActor::initialize();
 
@@ -183,6 +186,16 @@ namespace oxygine
 
 
         instance = this;
+        /*
+
+        float dpi = 0;
+        float dpi1 = 0;
+        float dpi2 = 0;
+        int ret = SDL_GetDisplayDPI(0, &dpi, &dpi1, &dpi2);
+        {
+            log::messageln("dpi>>>>> %d %f %f %f", ret, dpi, dpi1, dpi2);
+        }
+        */
     }
 
     void DebugActor::onAdded2Stage()
@@ -194,13 +207,6 @@ namespace oxygine
     {
         _stage->removeEventListeners(this);
     }
-
-    /*
-    void DebugActor::addDebugString(const string &str)
-    {
-        _debugText += str;
-    }
-    */
 
     void DebugActor::addDebugString(const char* format, ...)
     {
