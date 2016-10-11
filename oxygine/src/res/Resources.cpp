@@ -127,6 +127,11 @@ namespace oxygine
         __freeName();
     }
 
+	bool Resources::isEmpty() const
+	{
+		return _docs.empty();
+	}
+
     void Resources::updateName(const std::string& filename)
     {
         char head[256];
@@ -167,7 +172,7 @@ namespace oxygine
     };
 
 
-    void Resources::loadXML(const std::string& xmlFile, const ResourcesLoadOptions& opt)
+    bool Resources::loadXML(const std::string& xmlFile, const ResourcesLoadOptions& opt)
     {
         _name = xmlFile;
         _loadCounter = opt._loadCompletely ? 1 : 0;
@@ -175,7 +180,15 @@ namespace oxygine
 
         FS_LOG("step0");
         file::buffer fb;
-        file::read(xmlFile, fb);
+        int sz = file::read(xmlFile, fb);
+
+
+		if (!sz)
+		{
+			log::error("can't load xml file: '%s'", xmlFile.c_str());
+			OX_ASSERT(!"can't find xml file");
+			return false;
+		}
 
         FS_LOG("step1");
 
@@ -207,11 +220,6 @@ namespace oxygine
                 doc_meta.load_buffer_inplace(&fb_meta.data[0], fb_meta.data.size());
         }
 
-        if (!fb.data.size())
-        {
-            OX_ASSERT(fb.data.size() && "can't find xml file");
-            return;
-        }
 
         pugi::xml_document* doc = new pugi::xml_document();
         _docs.push_back(doc);
@@ -279,6 +287,7 @@ namespace oxygine
         }
 
         FS_LOG("xml loaded");
+		return true;
     }
 
     void Resources::collect(resources& r)
