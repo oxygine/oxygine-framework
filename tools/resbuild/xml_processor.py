@@ -138,8 +138,11 @@ class XmlProcessor(object):
         self._npot = args.npot
         #self._meta_element = None
 
-        self.helper = oxygine_helper.helper(
-            os.path.split(__file__)[0] + "/../../")
+        rp = os.path.abspath(__file__) 
+        rp = os.path.dirname(rp)
+        rp = os.path.join(rp, "../../")
+        rp = os.path.normpath(rp) + "/"
+        self.helper = oxygine_helper.helper(rp)
 
         self.register_processor(process_font.bmfc_font_Processor())
         self.register_processor(process_font.font_Processor())
