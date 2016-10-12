@@ -127,10 +127,10 @@ namespace oxygine
         __freeName();
     }
 
-	bool Resources::isEmpty() const
-	{
-		return _docs.empty();
-	}
+    bool Resources::isEmpty() const
+    {
+        return _docs.empty();
+    }
 
     void Resources::updateName(const std::string& filename)
     {
@@ -183,12 +183,12 @@ namespace oxygine
         int sz = file::read(xmlFile, fb);
 
 
-		if (!sz)
-		{
-			log::error("can't load xml file: '%s'", xmlFile.c_str());
-			OX_ASSERT(!"can't find xml file");
-			return false;
-		}
+        if (!sz)
+        {
+            log::error("can't load xml file: '%s'", xmlFile.c_str());
+            OX_ASSERT(!"can't find xml file");
+            return false;
+        }
 
         FS_LOG("step1");
 
@@ -287,7 +287,7 @@ namespace oxygine
         }
 
         FS_LOG("xml loaded");
-		return true;
+        return true;
     }
 
     void Resources::collect(resources& r)

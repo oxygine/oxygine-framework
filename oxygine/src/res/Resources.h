@@ -92,8 +92,8 @@ namespace oxygine
         /**Completely deletes all loaded resources*/
         void free();
 
-		/**Does it have any loaded xmls*/
-		bool isEmpty() const;
+        /**Does it have any loaded xmls*/
+        bool isEmpty() const;
 
         /** get resource by id, no case sensitive
         @param resource id
