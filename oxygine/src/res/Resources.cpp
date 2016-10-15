@@ -84,14 +84,14 @@ namespace oxygine
 
     void Resources::load(ResLoadedCallback cb)
     {
-        _Resource::load(0);
+        inherited::load(0);
         //if (cb)
         //  cb(thi)
     }
 
     void Resources::unload()
     {
-        _Resource::unload();
+        inherited::unload();
     }
 
     void Resources::_load(LoadResourcesContext* context)
@@ -249,7 +249,7 @@ namespace oxygine
             registeredResources::iterator i = std::lower_bound(_registeredResources.begin(), _registeredResources.end(), type);
             if (i == _registeredResources.end() || strcmp(i->id, type))
             {
-                log::error("unknown resource. type: '%s' id: '%s'", type, _Resource::extractID(context.walker.getNode(), "", "").c_str());
+                log::error("unknown resource. type: '%s' id: '%s'", type, Resource::extractID(context.walker.getNode(), "", "").c_str());
                 OX_ASSERT(!"unknown resource type");
                 continue;
             }

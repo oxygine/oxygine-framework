@@ -450,7 +450,7 @@ namespace oxygine
             _premultipliedAlpha = node.attribute("premultiplied_alpha").as_bool(_premultipliedAlpha);
 
             _file = context->walker.getPath("file");
-            setName(_Resource::extractID(node, _file, ""));
+            setName(Resource::extractID(node, _file, ""));
 
             if (bmc)
             {

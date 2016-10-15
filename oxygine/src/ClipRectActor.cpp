@@ -10,7 +10,7 @@ namespace oxygine
 {
     void ClipRectActor::copyFrom(const ClipRectActor& src, cloneOptions opt)
     {
-        _Actor::copyFrom(src, opt);
+        inherited::copyFrom(src, opt);
         _clipping = src._clipping;
     }
 
@@ -34,7 +34,7 @@ namespace oxygine
                 return;
         }
 
-        _Actor::handleEvent(event);
+        inherited::handleEvent(event);
     }
 
     void ClipRectActor::render(const RenderState& parentRS)
@@ -44,13 +44,13 @@ namespace oxygine
 
     void ClipRectActor::serialize(serializedata* data)
     {
-        _Actor::serialize(data);
+        inherited::serialize(data);
         pugi::xml_node node = data->node;
         node.set_name("ClipRectActor");
     }
 
     void ClipRectActor::deserialize(const deserializedata* data)
     {
-        _Actor::deserialize(data);
+        inherited::deserialize(data);
     }
 }

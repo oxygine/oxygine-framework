@@ -21,10 +21,11 @@ namespace oxygine
     typedef Closure<void (Event* ev)> EventCallback;
 
     DECLARE_SMART(EventDispatcher, spEventDispatcher);
-    class EventDispatcher: public _Object
+    class EventDispatcher: public Object
     {
+        INHERITED(Object);
     public:
-        EventDispatcher(const EventDispatcher& ed): _Object(ed), _lastID(0), _listeners(0) {}
+        EventDispatcher(const EventDispatcher& ed): inherited(ed), _lastID(0), _listeners(0) {}
         EventDispatcher();
         ~EventDispatcher();
 

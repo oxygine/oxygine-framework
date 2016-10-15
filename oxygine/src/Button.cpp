@@ -8,7 +8,7 @@ namespace oxygine
 {
     void Button::copyFrom(const Button& src, cloneOptions opt)
     {
-        _Sprite::copyFrom(src, opt);
+        inherited::copyFrom(src, opt);
 
         _state = src._state;
         _resAnim = src._resAnim;
@@ -115,9 +115,9 @@ namespace oxygine
             return;
 
         if (_resAnim->getColumns() > s)
-            _Sprite::setAnimFrame(_resAnim->getFrame(s, _row));
+            inherited::setAnimFrame(_resAnim->getFrame(s, _row));
         else
-            _Sprite::setAnimFrame(_resAnim->getFrame(0, _row));
+            inherited::setAnimFrame(_resAnim->getFrame(0, _row));
 
     }
 }

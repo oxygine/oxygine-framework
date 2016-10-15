@@ -13,8 +13,9 @@ namespace oxygine
     class LoadResourcesContext;
 
     DECLARE_SMART(Resource, spResource);
-    class Resource: public _Object//Base
+    class Resource: public Object
     {
+        INHERITED(Object);
     public:
         Resource();
         ~Resource();
@@ -61,12 +62,5 @@ namespace oxygine
 }
 
 
-#ifdef OX_EDITOR
-#include "EditorResource.h"
-#else
-namespace oxygine
-{
-    typedef Resource _Resource;
-}
-#endif
+EDITOR_INCLUDE(Resource);
 

@@ -6,8 +6,9 @@ namespace oxygine
 {
     DECLARE_SMART(ProgressBar, spProgressBar);
 
-    class ProgressBar: public _Sprite
+    class ProgressBar: public Sprite
     {
+        INHERITED(Sprite);
     public:
         enum { PROGRESS_CHANGED = sysEventID('P', 'C', 'h') };
 
@@ -56,8 +57,4 @@ namespace oxygine
     };
 }
 
-#ifdef OX_EDITOR
-#include "EditorProgressBar.h"
-#else
-typedef oxygine::ProgressBar BaseProgressBar;
-#endif
+EDITOR_INCLUDE(ProgressBar);

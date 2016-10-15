@@ -139,6 +139,14 @@ typedef signed long long int64;
 #   endif
 #endif
 
+#define INHERITED(CLASS) private: typedef CLASS inherited
+
+#ifndef EDITOR_INCLUDE
+#define EDITOR_INCLUDE(CLASS)
+//namespace oxygine {typedef CLASS _##CLASS;}
+#endif
+
+
 namespace oxygine
 {
     enum error_policy

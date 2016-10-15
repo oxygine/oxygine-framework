@@ -12,8 +12,9 @@ namespace oxygine
     DECLARE_SMART(Stage, spStage);
 
     class DebugActor;
-    class Stage : public _Actor
+    class Stage : public Actor
     {
+        INHERITED(Actor);
     public:
         enum
         {

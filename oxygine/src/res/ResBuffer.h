@@ -9,8 +9,9 @@ namespace oxygine
     class Resources;
     class CreateResourceContext;
 
-    class ResBuffer: public _Resource
+    class ResBuffer: public Resource
     {
+        INHERITED(Resource);
     public:
         static Resource* create(CreateResourceContext&);
 

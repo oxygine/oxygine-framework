@@ -27,8 +27,9 @@ namespace oxygine
     };
 
     DECLARE_SMART(VStyleActor, spVStyleActor);
-    class VStyleActor : public _Actor
+    class VStyleActor : public Actor
     {
+        INHERITED(Actor);
     public:
         DECLARE_COPYCLONE_NEW(VStyleActor);
         VStyleActor();
@@ -52,11 +53,4 @@ namespace oxygine
 
 }
 
-#ifdef OX_EDITOR
-#include "EditorVisualStyle.h"
-#else
-namespace oxygine
-{
-    typedef VStyleActor _VStyleActor;
-}
-#endif
+EDITOR_INCLUDE(VStyleActor);
