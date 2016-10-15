@@ -349,6 +349,7 @@ namespace oxygine
         void _onGlobalTouchUpEvent(Event*);
         void _onGlobalTouchMoveEvent(Event*);
 
+        const Vector2& _getSize() const { return _size; }
         void _setSize(const Vector2&);
         virtual void sizeChanged(const Vector2& size);
         Actor*  _getDescendant(const std::string& name);
