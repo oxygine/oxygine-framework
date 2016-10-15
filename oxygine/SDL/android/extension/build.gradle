@@ -10,9 +10,9 @@ buildscript {
 apply plugin: 'com.android.library'
 
 android {
-        compileSdkVersion 23
-  		buildToolsVersion '23.0.3'
-
+        compileSdkVersion rootProject.android.compileSdkVersion
+        buildToolsVersion rootProject.android.buildToolsVersion
+        
         sourceSets {
             main {
                 manifest.srcFile 'AndroidManifest.xml'

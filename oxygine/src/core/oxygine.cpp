@@ -70,11 +70,11 @@ extern "C"
 
 
 #if EMSCRIPTEN
-#define HANDLE_FOCUS_LOST 0
+#   define HANDLE_FOCUS_LOST 0
 #elif !SDL_VIDEO_OPENGL
-#define HANDLE_FOCUS_LOST 1
+#   define HANDLE_FOCUS_LOST 1
 #else
-#define HANDLE_FOCUS_LOST 0
+#   define HANDLE_FOCUS_LOST 0
 #endif
 
 #define LOST_RESET_CONTEXT 0
@@ -534,7 +534,10 @@ namespace oxygine
             if (!wnd)
             {
                 if (!focus)
+                {
+                    log::messageln("!focus");
                     return false;
+                }
 
                 wnd = _window;
             }
@@ -548,6 +551,10 @@ namespace oxygine
             {
                 IVideoDriver::_stats.start = getTimeMS();
                 updatePortProcessItems();
+            }
+            else
+            {
+                log::messageln("!ready");
             }
 
             return ready;
@@ -606,6 +613,7 @@ namespace oxygine
                 switch (event.type)
                 {
                     case SDL_QUIT:
+                        log::messageln("SDL_QUIT");
                         done = true;
                         break;
                     case SDL_WINDOWEVENT:
@@ -617,6 +625,8 @@ namespace oxygine
                         active = true;
                         */
 
+                        log::messageln("SDL_WINDOWEVENT %d", (int)event.window.event);
+
                         if (event.window.event == SDL_WINDOWEVENT_MINIMIZED)
                             active = false;
                         if (event.window.event == SDL_WINDOWEVENT_RESTORED)
@@ -627,6 +637,11 @@ namespace oxygine
                             newFocus = false;
                         if (event.window.event == SDL_WINDOWEVENT_FOCUS_GAINED)
                             newFocus = true;
+#ifdef __ANDROID__
+                        //if (event.window.event == SDL_WINDOWEVENT_ENTER)
+                        //   newFocus = true;
+#endif
+
                         if (focus != newFocus)
                         {
 #if HANDLE_FOCUS_LOST
@@ -772,6 +787,8 @@ namespace oxygine
 
         void release()
         {
+            log::messageln("core::release");
+
             _threadMessages.clear();
             _uiMessages.clear();
 
@@ -845,6 +862,7 @@ namespace oxygine
 
         void requestQuit()
         {
+            log::messageln("requestQuit");
 #ifdef __S3E__
             s3eDeviceRequestQuit();
 #elif OXYGINE_SDL
