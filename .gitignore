@@ -64,3 +64,4 @@ build
 .DS_Store
 *.VC.db
 *.VC.VC.opendb
+oxygine/SDL/win32/oxygine.vcxproj.user

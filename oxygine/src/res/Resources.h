@@ -79,7 +79,7 @@ namespace oxygine
         @param xml file paths
         @param options
         */
-        void loadXML(const std::string& xmlFile, const ResourcesLoadOptions& opt = ResourcesLoadOptions());
+        bool loadXML(const std::string& xmlFile, const ResourcesLoadOptions& opt = ResourcesLoadOptions());
 
         /**Adds Resource*/
         void add(Resource* r, bool accessByShortenID = false);
@@ -92,6 +92,9 @@ namespace oxygine
 
         /**Completely deletes all loaded resources*/
         void free();
+
+        /**Does it have any loaded xmls*/
+        bool isEmpty() const;
 
         /** get resource by id, no case sensitive
         @param resource id
