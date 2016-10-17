@@ -398,7 +398,8 @@ namespace oxygine
         Rect vp = _screen;
         vp.pos = Point(0, 0);
         driver->setViewport(vp);
-        driver->clear(0);
+
+        driver->clear(_options._clearColor);
 
 
         RenderState rs;
