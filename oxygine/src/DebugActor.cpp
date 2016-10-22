@@ -340,7 +340,8 @@ namespace oxygine
 #if OXYGINE_TRACE_VIDEO_STATS
         int primitives = 0;
         primitives += vstats.elements[IVideoDriver::PT_TRIANGLES] / 3;
-        primitives += vstats.elements[IVideoDriver::PT_TRIANGLE_STRIP] - 2;
+        if (vstats.elements[IVideoDriver::PT_TRIANGLE_STRIP])
+            primitives += vstats.elements[IVideoDriver::PT_TRIANGLE_STRIP] - 2;
         s << "batches=" << aligned(vstats.batches, 3) << " primitives=" << aligned(primitives, 3) << std::endl;
 #endif
 

@@ -125,6 +125,7 @@ namespace oxygine
     RenderTargetsManager& getRTManager();
 
     void updatePortProcessItems();
+    bool isRenderingPostProcessItems();
     void addPostProcessItem(PPTask*);
     void removePostProcessItem(PPTask*);
     void clearPostProcessItems();
