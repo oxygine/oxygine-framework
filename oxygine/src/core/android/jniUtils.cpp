@@ -189,11 +189,22 @@ namespace oxygine
 
     jobject jniFindExtension(JNIEnv* env, jclass cl)
     {
-        jmethodID m = env->GetMethodID(jniGetMainActivityClass(), "findClass", "(Ljava/lang/Class;)Lorg/oxygine/lib/extension/ActivityObserver;");
-        JNI_NOT_NULL(m);
+        jobject r;
 
-        jobject r = env->CallObjectMethod(jniGetMainActivity(), m, cl);
-        JNI_NOT_NULL(r);
+        try
+        {
+            jmethodID m = env->GetMethodID(jniGetMainActivityClass(), "findClass", "(Ljava/lang/Class;)Lorg/oxygine/lib/extension/ActivityObserver;");
+            JNI_NOT_NULL(m);
+
+            r = env->CallObjectMethod(jniGetMainActivity(), m, cl);
+            JNI_NOT_NULL(r);
+        }
+        catch (const notFound&)
+        {
+
+        }
+
+        return r;
     }
 
 
