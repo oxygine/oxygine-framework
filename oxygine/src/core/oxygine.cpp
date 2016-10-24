@@ -535,7 +535,7 @@ namespace oxygine
             {
                 if (!focus)
                 {
-                    log::messageln("!focus");
+                    //log::messageln("!focus");
                     return false;
                 }
 
