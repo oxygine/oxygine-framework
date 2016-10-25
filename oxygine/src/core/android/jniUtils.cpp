@@ -12,6 +12,7 @@ jclass _jUtils = 0;
 jmethodID _jUtils_getTimeUTCMS = 0;
 jmethodID _jUtils_getLanguage = 0;
 jmethodID _jUtils_getPackage = 0;
+jmethodID _jUtils_getProperty = 0;
 jmethodID _jUtils_isNetworkAvailable = 0;
 jmethodID _jRunnable_run = 0;
 
@@ -51,6 +52,9 @@ namespace oxygine
 
             _jUtils_getPackage = env->GetStaticMethodID(_jUtils, "getPackage", "()Ljava/lang/String;");
             JNI_NOT_NULL(_jUtils_getPackage);
+
+            _jUtils_getProperty = env->GetStaticMethodID(_jUtils, "getProperty", "(Ljava/lang/String;)Ljava/lang/String;");
+            JNI_NOT_NULL(_jUtils_getProperty);            
 
             _jUtils_isNetworkAvailable = env->GetStaticMethodID(_jUtils, "isNetworkAvailable", "()Z");
             JNI_NOT_NULL(_jUtils_isNetworkAvailable);
@@ -207,7 +211,17 @@ namespace oxygine
         return r;
     }
 
+    std::string     jniGetProperty(const std::string &id)
+    { 
+        JNIEnv* env = jniGetEnv();
+        LOCAL_REF_HOLDER(env);
 
+        jstring jarg = env->NewStringUTF(id.c_str());
+        jstring jstr = (jstring)env->CallStaticObjectMethod(_jUtils, _jUtils_getProperty, jarg);
+        
+
+        return jniGetString(env, jstr);
+    }
 }
 
 static void _init(JNIEnv* env)

@@ -25,4 +25,7 @@ namespace oxygine
     void            jniWriteBuffer2InternalStorageFile(const char* path, const char* data, size_t size);
 
     jobject         jniFindExtension(JNIEnv* env, jclass cl);
+
+
+    std::string     jniGetProperty(const std::string &id);
 }
