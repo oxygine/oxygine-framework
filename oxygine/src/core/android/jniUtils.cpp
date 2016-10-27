@@ -54,7 +54,7 @@ namespace oxygine
             JNI_NOT_NULL(_jUtils_getPackage);
 
             _jUtils_getProperty = env->GetStaticMethodID(_jUtils, "getProperty", "(Ljava/lang/String;)Ljava/lang/String;");
-            JNI_NOT_NULL(_jUtils_getProperty);            
+            JNI_NOT_NULL(_jUtils_getProperty);
 
             _jUtils_isNetworkAvailable = env->GetStaticMethodID(_jUtils, "isNetworkAvailable", "()Z");
             JNI_NOT_NULL(_jUtils_isNetworkAvailable);
@@ -211,14 +211,14 @@ namespace oxygine
         return r;
     }
 
-    std::string     jniGetProperty(const std::string &id)
-    { 
+    std::string     jniGetProperty(const std::string& id)
+    {
         JNIEnv* env = jniGetEnv();
         LOCAL_REF_HOLDER(env);
 
         jstring jarg = env->NewStringUTF(id.c_str());
         jstring jstr = (jstring)env->CallStaticObjectMethod(_jUtils, _jUtils_getProperty, jarg);
-        
+
 
         return jniGetString(env, jstr);
     }

@@ -27,5 +27,5 @@ namespace oxygine
     jobject         jniFindExtension(JNIEnv* env, jclass cl);
 
 
-    std::string     jniGetProperty(const std::string &id);
+    std::string     jniGetProperty(const std::string& id);
 }
