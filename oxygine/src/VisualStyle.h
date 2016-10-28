@@ -40,7 +40,7 @@ namespace oxygine
         const Color&            getColor() const;
 
         void                    setColor(const Color& color);
-		void                    setColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+        void                    setColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
         void                    setBlendMode(blend_mode mode) {_vstyle.setBlendMode(mode);}
 
         typedef Property<Color, const Color&, VStyleActor, &VStyleActor::getColor, &VStyleActor::setColor> TweenColor;

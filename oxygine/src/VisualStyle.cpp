@@ -78,9 +78,9 @@ namespace oxygine
         _vstyle.setColor(color);
     }
 
-	void VStyleActor::setColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
-	{
-		setColor(Color(r, g, b, a));
-	}
+    void VStyleActor::setColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
+    {
+        setColor(Color(r, g, b, a));
+    }
 
 }
