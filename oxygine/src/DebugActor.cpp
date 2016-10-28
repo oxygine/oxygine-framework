@@ -386,7 +386,7 @@ namespace oxygine
                 break;
         }
 
-        pos = getStage()->global2local(pos);
+        pos = getStage()->parent2local(pos);
 
         Vector2 realSize = getScaledSize();
         switch (_corner)

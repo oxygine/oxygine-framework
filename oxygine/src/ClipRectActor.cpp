@@ -29,7 +29,7 @@ namespace oxygine
         if (TouchEvent::isTouchEvent(event->type))
         {
             TouchEvent* te = safeCast<TouchEvent*>(event);
-            Vector2 localPosition = global2local(te->localPosition);
+            Vector2 localPosition = parent2local(te->localPosition);
             if (!isOn(localPosition))
                 return;
         }
