@@ -14,8 +14,9 @@ namespace oxygine
     }
 
 
-    class TextField : public _VStyleActor
+    class TextField : public VStyleActor
     {
+        INHERITED(VStyleActor);
     public:
         DECLARE_COPYCLONE_NEW(TextField);
         TextField();
@@ -121,11 +122,4 @@ namespace oxygine
     };
 }
 
-#ifdef OX_EDITOR
-#include "EditorTextField.h"
-#else
-namespace oxygine
-{
-    typedef TextField _TextField;
-}
-#endif
+EDITOR_INCLUDE(TextField);

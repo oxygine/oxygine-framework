@@ -26,7 +26,7 @@ namespace oxygine
 
     void Sprite::copyFrom(const Sprite& src, cloneOptions opt)
     {
-        _VStyleActor::copyFrom(src, opt);
+        inherited::copyFrom(src, opt);
 
         _frame = src._frame;
         animFrameChanged(_frame);
@@ -235,7 +235,7 @@ namespace oxygine
 
     void Sprite::serialize(serializedata* data)
     {
-        _VStyleActor::serialize(data);
+        inherited::serialize(data);
 
         pugi::xml_node node = data->node;
 
@@ -278,7 +278,7 @@ namespace oxygine
 
     void Sprite::deserialize(const deserializedata* data)
     {
-        _VStyleActor::deserialize(data);
+        inherited::deserialize(data);
 
         pugi::xml_node node = data->node;
         const char* res = node.attribute("resanim").as_string(0);

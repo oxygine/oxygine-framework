@@ -7,8 +7,9 @@ namespace oxygine
     class ResAnim;
 
     DECLARE_SMART(Polygon, spPolygon);
-    class Polygon : public _Sprite
+    class Polygon : public Sprite
     {
+        INHERITED(Sprite);
     public:
         DECLARE_COPYCLONE_NEW(Polygon);
 
@@ -35,11 +36,4 @@ namespace oxygine
     };
 }
 
-#ifdef OX_EDITOR
-#include "EditorPolygon.h"
-#else
-namespace oxygine
-{
-    typedef Polygon _Polygon;
-}
-#endif
+EDITOR_INCLUDE(Polygon);

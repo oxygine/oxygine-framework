@@ -5,8 +5,9 @@ namespace oxygine
 {
     DECLARE_SMART(Box9Sprite, spBox9Sprite);
 
-    class Box9Sprite: public _Sprite
+    class Box9Sprite: public Sprite
     {
+        INHERITED(Sprite);
     public:
         DECLARE_COPYCLONE_NEW(Box9Sprite);
         enum StretchMode
@@ -64,9 +65,5 @@ namespace oxygine
     };
 }
 
-#ifdef OX_EDITOR
-#include "EditorBox9Sprite.h"
-#else
-typedef oxygine::Box9Sprite BaseBox9Sprite;
-#endif
 
+EDITOR_INCLUDE(Box9Sprite);

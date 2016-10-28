@@ -125,11 +125,4 @@ namespace oxygine
     }
 }
 
-#ifdef OX_EDITOR
-#include "EditorObject.h"
-#else
-namespace oxygine
-{
-    typedef Object _Object;
-}
-#endif
+EDITOR_INCLUDE(Object);

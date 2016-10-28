@@ -8,7 +8,7 @@ namespace oxygine
 {
     void ColorRectSprite::copyFrom(const ColorRectSprite& src, cloneOptions opt)
     {
-        _Sprite::copyFrom(src, opt);
+        inherited::copyFrom(src, opt);
     }
 
     ColorRectSprite::ColorRectSprite()

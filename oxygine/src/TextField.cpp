@@ -40,7 +40,7 @@ namespace oxygine
 
     void TextField::copyFrom(const TextField& src, cloneOptions opt)
     {
-        _VStyleActor::copyFrom(src, opt);
+        inherited::copyFrom(src, opt);
         _text = src._text;
         _style = src._style;
         _root = 0;
@@ -401,7 +401,7 @@ namespace oxygine
 
     void TextField::serialize(serializedata* data)
     {
-        _VStyleActor::serialize(data);
+        inherited::serialize(data);
         pugi::xml_node node = data->node;
 
         TextStyle def;
@@ -422,7 +422,7 @@ namespace oxygine
 
     void TextField::deserialize(const deserializedata* data)
     {
-        _VStyleActor::deserialize(data);
+        inherited::deserialize(data);
         pugi::xml_node node = data->node;
 
         TextStyle def;

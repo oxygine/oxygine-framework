@@ -6,8 +6,9 @@ namespace oxygine
     class Font;
 
     DECLARE_SMART(ResFont, spResFont);
-    class ResFont: public _Resource
+    class ResFont: public Resource
     {
+        INHERITED(Resource);
     public:
         ResFont(): _size(0) {}
 

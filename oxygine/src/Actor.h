@@ -453,11 +453,4 @@ namespace oxygine
 }
 
 
-#ifdef OX_EDITOR
-#include "EditorActor.h"
-#else
-namespace oxygine
-{
-    typedef Actor _Actor;
-}
-#endif
+EDITOR_INCLUDE(Actor);

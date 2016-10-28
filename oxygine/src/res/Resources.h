@@ -51,8 +51,9 @@ namespace oxygine
         std::string _prebuilFolder;
     };
 
-    class Resources: public _Resource
+    class Resources: public Resource
     {
+        INHERITED(Resource);
     public:
         typedef std::vector<spResource> resources;
 #ifdef __S3E__
