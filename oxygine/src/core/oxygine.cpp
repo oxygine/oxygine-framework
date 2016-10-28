@@ -342,7 +342,6 @@ namespace oxygine
 #if TARGET_OS_IPHONE
             flags |= SDL_WINDOW_BORDERLESS;
             flags |= SDL_WINDOW_ALLOW_HIGHDPI;
-            flags |= SDL_WINDOW_FULLSCREEN;
 #endif
 
             //SDL_DisplayMode mode;
@@ -358,10 +357,15 @@ namespace oxygine
             if (desc.fullscreen)
                 flags |= SDL_WINDOW_FULLSCREEN;
 
-            {
-                Event ev(EVENT_PRECREATEWINDOW);
-                _dispatcher->dispatchEvent(&ev);
-            }
+
+            Event ev(EVENT_PRECREATEWINDOW);
+            _dispatcher->dispatchEvent(&ev);
+
+
+#if TARGET_OS_IPHONE
+            //ios bug workaround
+            flags &= ~SDL_WINDOW_FULLSCREEN;
+#endif
 
             log::messageln("creating window %d %d", desc.w, desc.h);
 
