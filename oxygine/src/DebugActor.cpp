@@ -31,6 +31,7 @@
 #include <stdarg.h>
 #include <iomanip>
 
+
 #ifdef __S3E__
 #include "s3eMemory.h"
 #elif __APPLE__
@@ -40,6 +41,13 @@
 #ifndef __S3E__
 #include "SDL_video.h"
 #endif
+
+#ifdef __WIN32__
+#pragma comment(lib, "psapi.lib") // Added to support GetProcessMemoryInfo()
+#include <windows.h>
+#include <Psapi.h>
+#endif
+
 
 namespace oxygine
 {
@@ -353,6 +361,13 @@ namespace oxygine
         size_t mem;
         iosGetMemoryUsage(mem);
         s << "memory=" << mem / 1024 << "kb ";
+#endif
+
+#ifdef __WIN32__
+        PROCESS_MEMORY_COUNTERS_EX pmc;
+        GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*) &pmc, sizeof(pmc));
+        s << "memory=" << pmc.PrivateUsage/ 1024 << "kb ";
+
 #endif
 
         if (!_debugText.empty())
