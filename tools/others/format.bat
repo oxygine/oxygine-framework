@@ -20,6 +20,9 @@ echo %root%
 %astyle% %root%\oxygine-billing\examples\*.cpp %root%\oxygine-billing\examples\*.h %options%
 %astyle% %root%\oxygine-billing\src\*.cpp %root%\oxygine-billing\src\*.h %options%
 
+%astyle% %root%\oxygine-freetype\examples\*.cpp %root%\oxygine-freetype\examples\*.h %options%
+%astyle% %root%\oxygine-freetype\src\*.cpp %root%\oxygine-freetype\src\*.h %options%
+
 %astyle% %root%\oxygine-facebook\example\*.cpp %root%\oxygine-facebook\example\*.h %options%
 %astyle% %root%\oxygine-facebook\src\*.cpp %root%\oxygine-facebook\src\*.h %options%
 
