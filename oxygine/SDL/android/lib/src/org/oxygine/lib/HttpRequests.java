@@ -247,7 +247,7 @@ public class HttpRequests {
     }
 
     static public void release() {
-
+        _handler = null;
     }
 
     static public HttpRequestHolder createRequest(String url, String fname, byte[] post, long handle) {

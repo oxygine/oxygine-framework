@@ -76,6 +76,7 @@ namespace oxygine
             _messages.wait();
 
             int still_running = -1;
+
             while (still_running)
             {
                 static int i = 0;
@@ -84,6 +85,8 @@ namespace oxygine
                 ThreadDispatcher::peekMessage tmsg;
                 if (_messages.peek(tmsg, true))
                 {
+                    if (tmsg.msgid == 1)
+                        return 0;
                     curl_multi_add_handle(multi_handle, (CURL*)tmsg.arg1);
                     int q = 0;
                 }
@@ -131,6 +134,7 @@ namespace oxygine
                     }
                 }
             }
+
         }
 
         return 0;
@@ -147,6 +151,9 @@ namespace oxygine
 
     void HttpRequestTask::release()
     {
+        _messages.post(1, 0, 0);
+        pthread_join(_thread, 0);
+
         if (multi_handle)
             curl_multi_cleanup(multi_handle);
         multi_handle = 0;

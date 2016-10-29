@@ -366,7 +366,7 @@ namespace oxygine
 #ifdef __WIN32__
         PROCESS_MEMORY_COUNTERS_EX pmc;
         GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*) &pmc, sizeof(pmc));
-        s << "memory=" << pmc.PrivateUsage/ 1024 << "kb ";
+        s << "memory=" << pmc.PrivateUsage / 1024 << "kb ";
 
 #endif
 
