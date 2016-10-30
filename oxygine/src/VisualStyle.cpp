@@ -18,7 +18,7 @@ namespace oxygine
 
     void VStyleActor::copyFrom(const VStyleActor& src, cloneOptions opt)
     {
-        _Actor::copyFrom(src, opt);
+        inherited::copyFrom(src, opt);
         _vstyle = src._vstyle;
     }
 
@@ -52,7 +52,7 @@ namespace oxygine
 
     void VStyleActor::serialize(serializedata* data)
     {
-        _Actor::serialize(data);
+        inherited::serialize(data);
         if (_vstyle.getColor() != Color(0xffffffff))
             data->node.append_attribute("color").set_value(color2hex(_vstyle.getColor()).c_str());
         if (_vstyle.getBlendMode() != blend_premultiplied_alpha)
@@ -63,7 +63,7 @@ namespace oxygine
 
     void VStyleActor::deserialize(const deserializedata* data)
     {
-        _Actor::deserialize(data);
+        inherited::deserialize(data);
         setColor(hex2color(data->node.attribute("color").as_string("ffffffff")));
         setBlendMode((blend_mode)(data->node.attribute("blend").as_int(blend_premultiplied_alpha)));
     }
@@ -77,4 +77,10 @@ namespace oxygine
     {
         _vstyle.setColor(color);
     }
+
+    void VStyleActor::setColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
+    {
+        setColor(Color(r, g, b, a));
+    }
+
 }

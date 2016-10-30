@@ -31,6 +31,7 @@
 #include <stdarg.h>
 #include <iomanip>
 
+
 #ifdef __S3E__
 #include "s3eMemory.h"
 #elif __APPLE__
@@ -40,6 +41,13 @@
 #ifndef __S3E__
 #include "SDL_video.h"
 #endif
+
+#ifdef __WIN32__
+#pragma comment(lib, "psapi.lib") // Added to support GetProcessMemoryInfo()
+#include <windows.h>
+#include <Psapi.h>
+#endif
+
 
 namespace oxygine
 {
@@ -340,7 +348,8 @@ namespace oxygine
 #if OXYGINE_TRACE_VIDEO_STATS
         int primitives = 0;
         primitives += vstats.elements[IVideoDriver::PT_TRIANGLES] / 3;
-        primitives += vstats.elements[IVideoDriver::PT_TRIANGLE_STRIP] - 2;
+        if (vstats.elements[IVideoDriver::PT_TRIANGLE_STRIP])
+            primitives += vstats.elements[IVideoDriver::PT_TRIANGLE_STRIP] - 2;
         s << "batches=" << aligned(vstats.batches, 3) << " primitives=" << aligned(primitives, 3) << std::endl;
 #endif
 
@@ -352,6 +361,13 @@ namespace oxygine
         size_t mem;
         iosGetMemoryUsage(mem);
         s << "memory=" << mem / 1024 << "kb ";
+#endif
+
+#ifdef __WIN32__
+        PROCESS_MEMORY_COUNTERS_EX pmc;
+        GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*) &pmc, sizeof(pmc));
+        s << "memory=" << pmc.PrivateUsage / 1024 << "kb ";
+
 #endif
 
         if (!_debugText.empty())
@@ -385,7 +401,7 @@ namespace oxygine
                 break;
         }
 
-        pos = getStage()->global2local(pos);
+        pos = getStage()->parent2local(pos);
 
         Vector2 realSize = getScaledSize();
         switch (_corner)

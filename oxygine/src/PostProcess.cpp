@@ -280,11 +280,17 @@ namespace oxygine
     }
 
 
+    bool _renderingPP = false;
+    bool isRenderingPostProcessItems()
+    {
+        return _renderingPP;
+    }
 
     void updatePortProcessItems()
     {
         if (!postProcessItems.empty())
         {
+            _renderingPP = true;
             Material::setCurrent(0);
 
             IVideoDriver* driver = IVideoDriver::instance;
@@ -300,6 +306,7 @@ namespace oxygine
 
             postProcessItems.clear();
             driver->setRenderTarget(prevRT);
+            _renderingPP = false;
         }
 
         _rtm.update();
@@ -398,7 +405,8 @@ namespace oxygine
         Rect vp = _screen;
         vp.pos = Point(0, 0);
         driver->setViewport(vp);
-        driver->clear(0);
+
+        driver->clear(_options._clearColor);
 
 
         RenderState rs;

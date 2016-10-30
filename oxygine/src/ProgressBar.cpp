@@ -52,7 +52,7 @@ namespace oxygine
 
     void ProgressBar::copyFrom(const ProgressBar& src, cloneOptions opt)
     {
-        _Sprite::copyFrom(src, opt);
+        inherited::copyFrom(src, opt);
         _progress = src._progress;
         _direction = src._direction;
         _originalFrame = src._originalFrame;
@@ -62,7 +62,7 @@ namespace oxygine
     {
         _originalFrame = f;
         _update();
-        _Sprite::animFrameChanged(f);
+        inherited::animFrameChanged(f);
     }
 
     void ProgressBar::_update()
@@ -105,7 +105,7 @@ namespace oxygine
             return;
         if (((_direction != __dir_radial_ccw) && (_direction != dir_radial_cw)) || (_progress == 1.0f))
         {
-            _Sprite::doRender(rs);
+            inherited::doRender(rs);
             return;
         }
 
@@ -124,7 +124,7 @@ namespace oxygine
             renderer->setBlendMode(getBlendMode());
             renderer->setTexture(df.base, df.alpha, df.premultiplied);
 
-            RectF destRect = _Sprite::getDestRect();
+            RectF destRect = inherited::getDestRect();
 
             RectF srcRect = _frame.getSrcRect();
             float u = srcRect.pos.x;
@@ -344,7 +344,7 @@ namespace oxygine
         }
         stream << " direction=" << dir << "";
 
-        stream << "\n" << _Sprite::dump(options);
+        stream << "\n" << inherited::dump(options);
 
         return stream.str();
     }
@@ -389,7 +389,7 @@ namespace oxygine
 
     void ProgressBar::serialize(serializedata* data)
     {
-        _Sprite::serialize(data);
+        inherited::serialize(data);
         pugi::xml_node node = data->node;
         data->node.set_name("ProgressBar");
         data->node.append_attribute("progress").set_value(_progress);
@@ -398,7 +398,7 @@ namespace oxygine
 
     void ProgressBar::deserialize(const deserializedata* data)
     {
-        _Sprite::deserialize(data);
+        inherited::deserialize(data);
         _direction = (direction)data->node.attribute("direction").as_int();
         _progress = data->node.attribute("progress").as_float(1.0f);
 

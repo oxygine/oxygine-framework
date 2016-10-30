@@ -11,8 +11,8 @@ namespace oxygine
     {
         class STDFileSystem;
 
-        struct _handle_ {};
-        typedef _handle_* handle;
+
+        typedef file::fileHandle* handle;
 
         /**memory buffer for files IO operations, emulates std::vector */
         class buffer

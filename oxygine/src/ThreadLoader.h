@@ -4,6 +4,7 @@
 #include "pthread.h"
 #include "core/ThreadDispatcher.h"
 #include <functional>
+#include "Event.h"
 
 namespace oxygine
 {
@@ -16,7 +17,7 @@ namespace oxygine
     public:
         enum
         {
-            COMPLETE = sysEventID('T', 'L', 'C'),
+            COMPLETE = Event::COMPLETE,
         };
 
         ThreadLoader();

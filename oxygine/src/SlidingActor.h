@@ -10,8 +10,9 @@ namespace oxygine
     DECLARE_SMART(SlidingActor, spSlidingActor);
     DECLARE_SMART(DragHandler, spDragHandler);
 
-    class SlidingActor: public _Actor
+    class SlidingActor: public Actor
     {
+        INHERITED(Actor);
     public:
         static void setDefaultTouchThreshold(float val);
 
@@ -95,8 +96,4 @@ namespace oxygine
     };
 }
 
-#ifdef OX_EDITOR
-#include "EditorSlidingActor.h"
-#else
-typedef oxygine::SlidingActor BaseSlidingActor;
-#endif
+EDITOR_INCLUDE(SlidingActor);

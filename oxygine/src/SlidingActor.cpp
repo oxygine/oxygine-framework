@@ -205,7 +205,7 @@ namespace oxygine
 
     void SlidingActor::handleEvent(Event* event)
     {
-        _Actor::handleEvent(event);
+        inherited::handleEvent(event);
     }
 
     void SlidingActor::_newEvent(Event* event)
@@ -348,13 +348,13 @@ namespace oxygine
 
     void SlidingActor::serialize(serializedata* data)
     {
-        _Actor::serialize(data);
+        inherited::serialize(data);
 
         data->node.set_name("SlidingActor");
     }
 
     void SlidingActor::deserialize(const deserializedata* data)
     {
-        _Actor::deserialize(data);
+        inherited::deserialize(data);
     }
 }

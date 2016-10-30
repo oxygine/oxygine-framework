@@ -387,7 +387,7 @@ namespace oxygine
                 if (TouchEvent::isTouchEvent(event->type))
                 {
                     TouchEvent* me = safeCast<TouchEvent*>(event);
-                    me->localPosition = local2global(me->localPosition);
+                    me->localPosition = local2parent(me->localPosition);
                 }
 
                 event->phase = Event::phase_bubbling;
@@ -418,7 +418,7 @@ namespace oxygine
         {
             TouchEvent* me = safeCast<TouchEvent*>(event);
             originalLocalPos = me->localPosition;
-            me->localPosition = global2local(originalLocalPos);
+            me->localPosition = parent2local(originalLocalPos);
         }
 
         event->phase = Event::phase_capturing;
@@ -1037,13 +1037,13 @@ namespace oxygine
 
     }
 
-    Vector2 Actor::global2local(const Vector2& global) const
+    Vector2 Actor::parent2local(const Vector2& global) const
     {
         const AffineTransform& t = getTransformInvert();
         return t.transform(global);
     }
 
-    Vector2 Actor::local2global(const Vector2& local) const
+    Vector2 Actor::local2parent(const Vector2& local) const
     {
         const AffineTransform& t = getTransform();
         return t.transform(local);
@@ -1340,7 +1340,7 @@ namespace oxygine
         if (child->getParent() && child->getParent() != parent)
             pos = convert_global2local_(child->getParent(), parent, pos);
 
-        pos = child->global2local(pos);
+        pos = child->parent2local(pos);
         return pos;
     }
 
@@ -1353,7 +1353,7 @@ namespace oxygine
     {
         while (child && child != parent)
         {
-            pos = child->local2global(pos);
+            pos = child->local2parent(pos);
             child = child->getParent();
         }
 
@@ -1425,7 +1425,7 @@ namespace oxygine
         spActor act = actor->getParent();
         while (act && act != mutualParent)
         {
-            pos = act->local2global(pos);
+            pos = act->local2parent(pos);
             act = act->getParent();
         }
 

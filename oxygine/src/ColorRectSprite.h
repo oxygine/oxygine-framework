@@ -6,8 +6,9 @@ namespace oxygine
 {
     DECLARE_SMART(ColorRectSprite, spColorRectSprite);
 
-    class ColorRectSprite: public _Sprite
+    class ColorRectSprite: public Sprite
     {
+        INHERITED(Sprite);
     public:
         DECLARE_COPYCLONE_NEW(ColorRectSprite);
         ColorRectSprite();
@@ -27,11 +28,4 @@ namespace oxygine
     };
 }
 
-#ifdef OX_EDITOR
-#include "EditorColorRectSprite.h"
-#else
-namespace oxygine
-{
-    typedef ColorRectSprite _ColorRectSprite;
-}
-#endif
+EDITOR_INCLUDE(ColorRectSprite);

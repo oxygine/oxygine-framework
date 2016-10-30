@@ -13,8 +13,9 @@ namespace oxygine
     class ResAnim;
 
     DECLARE_SMART(Sprite, spSprite);
-    class Sprite : public _VStyleActor
+    class Sprite : public VStyleActor
     {
+        INHERITED(VStyleActor);
     public:
         DECLARE_COPYCLONE_NEW(Sprite);
 
@@ -72,11 +73,4 @@ namespace oxygine
     };
 }
 
-#ifdef OX_EDITOR
-#include "EditorSprite.h"
-#else
-namespace oxygine
-{
-    typedef Sprite _Sprite;
-}
-#endif
+EDITOR_INCLUDE(Sprite);

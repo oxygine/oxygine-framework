@@ -5,8 +5,9 @@
 namespace oxygine
 {
     DECLARE_SMART(MaskedSprite, spMaskedSprite);
-    class MaskedSprite: public _Sprite
+    class MaskedSprite: public Sprite
     {
+        INHERITED(Sprite);
     public:
         DECLARE_COPYCLONE_NEW(MaskedSprite);
 
@@ -31,11 +32,4 @@ namespace oxygine
     };
 }
 
-#ifdef OX_EDITOR
-#include "EditorMaskedSprite.h"
-#else
-namespace oxygine
-{
-    typedef MaskedSprite _MaskedSprite;
-}
-#endif
+EDITOR_INCLUDE(MaskedSprite);

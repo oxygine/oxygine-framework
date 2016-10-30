@@ -56,7 +56,7 @@ namespace oxygine
 
     void ResAtlas::init_resAnim(ResAnim* rs, const std::string& file, pugi::xml_node node)
     {
-        rs->setName(_Resource::extractID(node, file, ""));
+        rs->setName(Resource::extractID(node, file, ""));
         setNode(rs, node);
     }
 
@@ -97,7 +97,7 @@ namespace oxygine
             ra = rs;
         }
 
-        ra->setName(_Resource::extractID(context.walker.getNode(), "", std::string("!atlas:") + *context.xml_name));
+        ra->setName(Resource::extractID(context.walker.getNode(), "", std::string("!atlas:") + *context.xml_name));
         context.resources->add(ra);
         setNode(ra, context.walker.getNode());
 

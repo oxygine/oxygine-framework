@@ -54,7 +54,6 @@ namespace oxygine
     {
         __doCheck();
 
-        OX_ASSERT(_listeners);
         if (!_listeners)
             return;
 

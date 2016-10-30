@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.provider.Settings;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -25,6 +26,12 @@ public class Utils {
 
     public static String getPackage() {
         return _context.getPackageName();
+    }
+
+    public static String getProperty(String prop) {
+    	if (prop == "ANDROID_ID")
+    		return Settings.Secure.ANDROID_ID;
+        return "";
     }
 
     public static boolean isNetworkAvailable() {

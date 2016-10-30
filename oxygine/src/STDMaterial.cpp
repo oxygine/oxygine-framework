@@ -82,7 +82,7 @@ namespace oxygine
         }
 
         if (vis)
-            actor->_Actor::render(rs);
+            actor->Actor::render(rs);
 
 
         if (actor->getClipping())
@@ -120,14 +120,14 @@ namespace oxygine
             mr.begin(_renderer);
             _renderer = &mr;
             RenderState rs = parentRS;
-            sprite->_Sprite::render(rs);
+            sprite->Sprite::render(rs);
             mr.end();
 
             _renderer = original;
         }
         else
         {
-            sprite->_Sprite::render(parentRS);
+            sprite->Sprite::render(parentRS);
         }
     }
 
