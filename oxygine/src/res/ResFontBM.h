@@ -49,6 +49,7 @@ namespace oxygine
         void _restore(Restorable*, void*);
         void _createFont(CreateResourceContext* context, bool sd, bool bmc, int downsample);
         void _createFontFromTxt(CreateResourceContext* context, char* fontData, const std::string& fontPath, int downsample);
+        void _finalize();
 
         typedef std::vector<page> pages;
         pages _pages;

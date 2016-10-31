@@ -54,7 +54,7 @@ namespace oxygine
             std::string str = "<r>" + st + "</r>";
             pugi::xml_document doc;
 
-            int flags = pugi::parse_default;
+            int flags = pugi::parse_default | pugi::parse_ws_pcdata;
             pugi::xml_parse_result res = doc.load_buffer(str.c_str(), str.size(), flags);
             if (!res)
             {

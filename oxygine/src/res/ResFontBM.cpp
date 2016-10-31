@@ -415,6 +415,7 @@ namespace oxygine
         }
 
         _font->sortGlyphs();
+        _finalize();
     }
     /////////////////////////////////////////////////////////
 
@@ -434,6 +435,22 @@ namespace oxygine
             p.texture->init(0, tw, th, TF_UNDEFINED);
 
         _pages.push_back(p);
+    }
+
+    void ResFontBM::_finalize()
+    {
+        const glyph *g = _font->getGlyph(0xA0);
+        if (g)
+            return;
+        
+        g = _font->getGlyph(' ');
+        if (!g)
+            return;
+
+        glyph p = *g;
+        p.ch = 0xA0;
+        _font->addGlyph(p);
+        
     }
 
     void ResFontBM::_createFont(CreateResourceContext* context, bool sd, bool bmc, int downsample)
@@ -593,6 +610,7 @@ namespace oxygine
         }
 
         font->sortGlyphs();
+        _finalize();
     }
 
     void ResFontBM::_unload()

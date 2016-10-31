@@ -2,14 +2,15 @@
 
 namespace oxygine
 {
-    spHttpRequestTask HttpRequestTask::create()
+    static HttpRequestTask* createS3E()
     {
         return new HttpRequestTaskS3E;
     }
+     
 
     void HttpRequestTask::init()
     {
-
+        setCustomRequests(createS3E);
     }
 
     void HttpRequestTask::release()
