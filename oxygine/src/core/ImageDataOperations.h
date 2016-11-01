@@ -4,6 +4,8 @@
 
 namespace oxygine
 {
+    class Color;
+
     namespace operations
     {
         //based on memcpy
@@ -13,19 +15,22 @@ namespace oxygine
         void move(const ImageData& src, ImageData& dest);
 
         void blit(const ImageData& src, ImageData& dest);
+        void blitColored(const ImageData& src, ImageData& dest, const Color &c);
         void blitPremultiply(const ImageData& src, ImageData& dest);
+        void premultiply(ImageData& dest);
         void flipY(const ImageData& src, ImageData& dest);
+        void blend(const ImageData& src, ImageData& dest);
 
         inline void blend_srcAlpha_invSrcAlpha(const Pixel& pS, Pixel& pD)
         {
             const unsigned int& s = pS.rgba;
             unsigned int& d = pD.rgba;
 
-            unsigned int dst_rb = d      & 0xFF00FF;
-            unsigned int dst_ag = d >> 8 & 0xFF00FF;
+            unsigned int dst_rb = d        & 0xFF00FF;
+            unsigned int dst_ag = (d >> 8) & 0xFF00FF;
 
-            unsigned int src_rb = s      & 0xFF00FF;
-            unsigned int src_ag = s >> 8 & 0xFF00FF;
+            unsigned int src_rb = s        & 0xFF00FF;
+            unsigned int src_ag = (s >> 8) & 0xFF00FF;
 
             unsigned int d_rb = src_rb - dst_rb;
             unsigned int d_ag = src_ag - dst_ag;
@@ -35,8 +40,8 @@ namespace oxygine
             d_rb >>= 8;
             d_ag >>= 8;
 
-            const unsigned int rb  = (d_rb + dst_rb)      & 0x00FF00FF;
-            const unsigned int ag  = (d_ag + dst_ag) << 8 & 0xFF00FF00;
+            const unsigned int rb  = (d_rb + dst_rb)        & 0x00FF00FF;
+            const unsigned int ag  = ((d_ag + dst_ag) << 8) & 0xFF00FF00;
 
             d = rb | ag;
         }
@@ -117,6 +122,29 @@ namespace oxygine
             }
         };
 
+        class op_blit_colored
+        {
+        public:            
+            op_blit_colored(const Pixel &clr):color(clr){}
+
+            template<class Src, class Dest>
+            void operator()(const Src& srcPixelFormat, Dest& destPixelFormat, const unsigned char* srcData, unsigned char* destData) const
+            {
+                Pixel src;
+                srcPixelFormat.getPixel(srcData, src);
+
+                Pixel dest;
+                dest.r = (src.r * color.r) / 255;
+                dest.g = (src.g * color.g) / 255;
+                dest.b = (src.b * color.b) / 255;
+                dest.a = (src.a * color.a) / 255;
+
+                destPixelFormat.setPixel(destData, dest);
+            }
+
+            Pixel color;
+        };
+
         class op_blend_srcAlpha_invSrcAlpha
         {
         public:
@@ -127,7 +155,7 @@ namespace oxygine
                 srcPixelFormat.getPixel(srcData, pS);
 
                 Pixel pD;
-                destPixelFormat.getPixel(srcData, pD);
+                destPixelFormat.getPixel(destData, pD);
 
                 blend_srcAlpha_invSrcAlpha(pS, pD);
                 destPixelFormat.setPixel(destData, pD);

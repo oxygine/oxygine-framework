@@ -348,8 +348,6 @@ namespace oxygine
             }
         }
 
-
-
         // chars blocks
         for (int i = 0; i < numChars; i++)
         {
@@ -409,6 +407,7 @@ namespace oxygine
             int code = 0;
             ucs2_to_utf8(charID, (unsigned char*)&code);
             gl.ch = code;
+            gl.opt = 0;
             gl.texture = _pages[page_].texture;
 
             _font->addGlyph(gl);
@@ -439,11 +438,12 @@ namespace oxygine
 
     void ResFontBM::_finalize()
     {
-        const glyph *g = _font->getGlyph(0xA0);
+        glyphOptions opt = 0;
+        const glyph *g = _font->getGlyph(0xA0, opt);
         if (g)
             return;
         
-        g = _font->getGlyph(' ');
+        g = _font->getGlyph(' ', opt);
         if (!g)
             return;
 
@@ -543,7 +543,6 @@ namespace oxygine
             _font->setScale(scale);
         }
 
-
         pugi::xml_node chars = pages.next_sibling("chars");
         pugi::xml_node child = chars.first_child();
         while (!child.empty())
@@ -602,6 +601,7 @@ namespace oxygine
             int code = 0;
             ucs2_to_utf8(charID, (unsigned char*)&code);
             gl.ch = code;
+            gl.opt = 0;
             gl.texture = _pages[page].texture;
 
             font->addGlyph(gl);

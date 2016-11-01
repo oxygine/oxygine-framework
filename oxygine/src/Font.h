@@ -11,11 +11,14 @@ namespace oxygine
 {
     DECLARE_SMART(NativeTexture, spNativeTexture);
 
+    typedef unsigned int glyphOptions;
+
     struct glyph
     {
         RectF src;
 
         int ch;
+        glyphOptions opt;
 
         short sw;
         short sh;
@@ -28,17 +31,20 @@ namespace oxygine
 
         spNativeTexture texture;
 
-        bool operator == (const glyph& r) const {return ch == r.ch;}
+        bool operator == (const glyph& r) const {return ch == r.ch && opt == r.opt;}
+#ifdef __S3E__
         bool operator < (const glyph& r) const { return ch < r.ch; }
+#endif
     };
 
     struct GlyphHasher
     {
         std::size_t operator()(const glyph& k) const
         {
-            return std::hash<int>()(k.ch);
+            return std::hash<int>()(k.ch + k.opt);
         }
     };
+
 
     class Font: public ObjectBase
     {
@@ -53,7 +59,7 @@ namespace oxygine
 
         void setScale(float scale) { _scale = scale; }
 
-        const glyph*    getGlyph(int code) const;
+        const glyph*    getGlyph(int code, const glyphOptions &opt) const;
         int             getBaselineDistance() const;
         int             getSize() const;
         float           getScale() const;
@@ -61,9 +67,9 @@ namespace oxygine
         bool            isSDF() const;
 
     protected:
-        const glyph* findGlyph(int code) const;
+        const glyph* findGlyph(int code, const glyphOptions &opt) const;
 
-        virtual bool loadGlyph(int code, glyph&) { return false; }
+        virtual bool loadGlyph(int code, glyph&, const glyphOptions &opt) { return false; }
 
 #ifdef __S3E__
         typedef std::set<glyph> glyphs;

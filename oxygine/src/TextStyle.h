@@ -40,7 +40,8 @@ namespace oxygine
             breakLongWords(false),
             outline(0.0f),
             outlineColor(Color::Black),
-            weight(0.5f) {}
+            weight(0.5f),
+            options(0){}
 
         const ResFont* font;
 
@@ -49,6 +50,7 @@ namespace oxygine
 
         int linesOffset;//vertical distance offset between lines
         int kerning;//horizontal distance
+        unsigned int options;//additional flags could be used for generating custom glyphs
         bool multiline;
         bool breakLongWords;//works with multiline flag. breakLongWords = false doesn't allow to break too long words
         Color color;
@@ -90,6 +92,7 @@ namespace oxygine
         TextStyle withOutline(float outline) const { TextStyle st = *this; st.outline = outline; return st; }
         TextStyle withOutlineColor(const Color& color) const { TextStyle st = *this; st.outlineColor = color; return st; }
         TextStyle withWeight(float weight) const { TextStyle st = *this; st.weight = weight; return st; }
+        TextStyle withOptions(unsigned int opt) const { TextStyle st = *this; st.options = opt; return st; }
     };
 
     std::string dumpStyle(const TextStyle& s, bool onlydiff);
