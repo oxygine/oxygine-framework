@@ -102,6 +102,12 @@ namespace oxygine
             applyOperation(op, src, dest);
         }
 
+		void blitAlpha(const ImageData& src, ImageData& dest)
+		{
+			op_replaceAlpha op;
+			applyOperation(op, src, dest);
+		}
+
         void flipY(const ImageData& src, ImageData& dest)
         {
             if (!check(src, dest))
