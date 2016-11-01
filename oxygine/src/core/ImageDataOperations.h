@@ -15,7 +15,7 @@ namespace oxygine
         void move(const ImageData& src, ImageData& dest);
 
         void blit(const ImageData& src, ImageData& dest);
-        void blitColored(const ImageData& src, ImageData& dest, const Color &c);
+        void blitColored(const ImageData& src, ImageData& dest, const Color& c);
         void blitPremultiply(const ImageData& src, ImageData& dest);
         void premultiply(ImageData& dest);
         void flipY(const ImageData& src, ImageData& dest);
@@ -124,8 +124,8 @@ namespace oxygine
 
         class op_blit_colored
         {
-        public:            
-            op_blit_colored(const Pixel &clr):color(clr){}
+        public:
+            op_blit_colored(const Pixel& clr): color(clr) {}
 
             template<class Src, class Dest>
             void operator()(const Src& srcPixelFormat, Dest& destPixelFormat, const unsigned char* srcData, unsigned char* destData) const

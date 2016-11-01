@@ -51,7 +51,7 @@ namespace oxygine
         return ob1.ch < ob2.ch;
     }
 
-    const glyph* Font::findGlyph(int code, const glyphOptions &opt) const
+    const glyph* Font::findGlyph(int code, const glyphOptions& opt) const
     {
         glyph g;
         g.ch = code;
@@ -65,7 +65,7 @@ namespace oxygine
         return 0;
     }
 
-    const glyph* Font::getGlyph(int code, const glyphOptions &opt) const
+    const glyph* Font::getGlyph(int code, const glyphOptions& opt) const
     {
         const glyph* g = findGlyph(code, opt);
         if (g)

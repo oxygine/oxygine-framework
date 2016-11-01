@@ -108,7 +108,7 @@ namespace oxygine
             blitPremultiply(dest, dest);
         }
 
-        void blitColored(const ImageData& src, ImageData& dest, const Color &c)
+        void blitColored(const ImageData& src, ImageData& dest, const Color& c)
         {
             Pixel p;
             p.r = c.r;

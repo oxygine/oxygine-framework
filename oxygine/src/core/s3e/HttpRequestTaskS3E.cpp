@@ -6,7 +6,7 @@ namespace oxygine
     {
         return new HttpRequestTaskS3E;
     }
-     
+
 
     void HttpRequestTask::init()
     {

@@ -41,7 +41,7 @@ namespace oxygine
             outline(0.0f),
             outlineColor(Color::Black),
             weight(0.5f),
-            options(0){}
+            options(0) {}
 
         const ResFont* font;
 

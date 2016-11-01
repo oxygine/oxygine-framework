@@ -439,10 +439,10 @@ namespace oxygine
     void ResFontBM::_finalize()
     {
         glyphOptions opt = 0;
-        const glyph *g = _font->getGlyph(0xA0, opt);
+        const glyph* g = _font->getGlyph(0xA0, opt);
         if (g)
             return;
-        
+
         g = _font->getGlyph(' ', opt);
         if (!g)
             return;
@@ -450,7 +450,7 @@ namespace oxygine
         glyph p = *g;
         p.ch = 0xA0;
         _font->addGlyph(p);
-        
+
     }
 
     void ResFontBM::_createFont(CreateResourceContext* context, bool sd, bool bmc, int downsample)

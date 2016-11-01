@@ -176,7 +176,7 @@ namespace oxygine
                     if (s.code == '\n')
                         rd.nextLine();
                     else
-                    {                        
+                    {
                         const glyph* gl = font->getGlyph(s.code, opt);
                         if (gl)
                         {

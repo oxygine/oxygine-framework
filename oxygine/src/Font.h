@@ -59,7 +59,7 @@ namespace oxygine
 
         void setScale(float scale) { _scale = scale; }
 
-        const glyph*    getGlyph(int code, const glyphOptions &opt) const;
+        const glyph*    getGlyph(int code, const glyphOptions& opt) const;
         int             getBaselineDistance() const;
         int             getSize() const;
         float           getScale() const;
@@ -67,9 +67,9 @@ namespace oxygine
         bool            isSDF() const;
 
     protected:
-        const glyph* findGlyph(int code, const glyphOptions &opt) const;
+        const glyph* findGlyph(int code, const glyphOptions& opt) const;
 
-        virtual bool loadGlyph(int code, glyph&, const glyphOptions &opt) { return false; }
+        virtual bool loadGlyph(int code, glyph&, const glyphOptions& opt) { return false; }
 
 #ifdef __S3E__
         typedef std::set<glyph> glyphs;
