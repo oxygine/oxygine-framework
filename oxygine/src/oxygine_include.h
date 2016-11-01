@@ -110,7 +110,7 @@ namespace oxygine { namespace log { void error(const char* format, ...); } }
 
 #define OXYGINE_RENDERER 4
 
-#define OXYGINE_VERSION 4
+#define OXYGINE_VERSION 5
 
 #ifdef __GNUC__
 #   define OXYGINE_DEPRECATED __attribute__((deprecated))
