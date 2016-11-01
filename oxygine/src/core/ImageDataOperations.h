@@ -14,6 +14,7 @@ namespace oxygine
 
         void blit(const ImageData& src, ImageData& dest);
         void blitPremultiply(const ImageData& src, ImageData& dest);
+		void blitAlpha(const ImageData& src, ImageData& dest);
         void flipY(const ImageData& src, ImageData& dest);
 
         inline void blend_srcAlpha_invSrcAlpha(const Pixel& pS, Pixel& pD)
@@ -104,6 +105,24 @@ namespace oxygine
                 destPixelFormat.setPixel(destData, p);
             }
         };
+
+		class op_replaceAlpha
+		{
+		public:
+			template<class Src, class Dest>
+			void operator()(const Src& srcPixelFormat, Dest& destPixelFormat, const unsigned char* srcData, unsigned char* destData) const
+			{
+				Pixel p;
+				srcPixelFormat.getPixel(srcData, p);
+
+				Pixel p1;
+				destPixelFormat.getPixel(destData, p1);
+
+				p1.a = p.r;
+
+				destPixelFormat.setPixel(destData, p1);
+			}
+		};
 
         class op_blit
         {
