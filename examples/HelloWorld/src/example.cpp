@@ -1,6 +1,5 @@
 #include "oxygine-framework.h"
 #include <functional>
-#include "res/SingleResAnim.h"
 using namespace oxygine;
 
 //it is our resources
