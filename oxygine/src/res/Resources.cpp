@@ -317,7 +317,11 @@ namespace oxygine
         if (accessByShortenID)
         {
             std::string shortName = path::extractFileName(name);
-            _resourcesMap[shortName] = r;
+            if (shortName != name)
+            { 
+                OX_ASSERT(_resourcesMap.find(shortName) == _resourcesMap.end());
+                _resourcesMap[shortName] = r;
+            }            
         }
     }
 
