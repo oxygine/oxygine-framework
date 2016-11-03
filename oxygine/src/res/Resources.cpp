@@ -318,8 +318,15 @@ namespace oxygine
         {
             std::string shortName = path::extractFileName(name);
             if (shortName != name)
-            { 
+            {
+#ifdef OX_DEBUG
                 OX_ASSERT(_resourcesMap.find(shortName) == _resourcesMap.end());
+                if (_resourcesMap.find(shortName) != _resourcesMap.end())
+                {
+                    log::error("short resource name '%s' conflicts with '%s'", r->getName().c_str(), _resourcesMap[shortName]->getName().c_str());
+                }
+#endif
+
                 _resourcesMap[shortName] = r;
             }            
         }

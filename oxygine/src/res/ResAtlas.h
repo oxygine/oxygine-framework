@@ -30,8 +30,9 @@ namespace oxygine
         ~ResAtlas();
 
         void addAtlas(TextureFormat tf, const std::string& base, const std::string& alpha, int w, int h);
+
         const atlas& getAtlas(int i) const {return _atlasses[i];}
-        int getNum() const { return (int)_atlasses.size(); }
+        int          getNum() const { return (int)_atlasses.size(); }
 
     protected:
         void _restore(Restorable* r, void* user);
