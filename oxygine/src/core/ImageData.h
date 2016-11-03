@@ -60,6 +60,8 @@ namespace oxygine
         ~ImageData();
 
         ImageData getRect(const Rect& r) const;
+        ImageData getRect(int x, int y, int w, int h) const;
+        ImageData getRect(int x, int y) const;
         unsigned char* getPixelPtr(int x, int y) const;
 
     public:
