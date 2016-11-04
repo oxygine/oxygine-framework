@@ -147,6 +147,10 @@ typedef signed long long int64;
 #endif
 
 
+#if !defined(__S3E__) && (defined(_MSC_VER) || (__cplusplus > 199711L))
+#define OX_HAS_CPP11
+#endif
+
 namespace oxygine
 {
     enum error_policy
