@@ -39,9 +39,11 @@ extern "C"
     extern PFNGLATTACHSHADERPROC _glAttachShader;
     extern PFNGLCOMPILESHADERPROC _glCompileShader;
     extern PFNGLBINDATTRIBLOCATIONPROC _glBindAttribLocation;
+    extern PFNGLGETATTRIBLOCATIONPROC _glGetAttribLocation;
     extern PFNGLLINKPROGRAMPROC _glLinkProgram;
     extern PFNGLUNIFORM1IPROC _glUniform1i;
     extern PFNGLUNIFORM2FVPROC _glUniform2fv;
+	extern PFNGLUNIFORM2FPROC _glUniform2f;
     extern PFNGLUNIFORM3FVPROC _glUniform3fv;
     extern PFNGLUNIFORM4FVPROC _glUniform4fv;
     extern PFNGLUNIFORM1FPROC _glUniform1f;
@@ -56,7 +58,17 @@ extern "C"
     extern PFNGLBINDBUFFERPROC _glBindBuffer;
     extern PFNGLGENBUFFERSPROC _glGenBuffers;
     extern PFNGLBUFFERDATAPROC _glBufferData;
+    extern PFNGLGETPROGRAMIVPROC _glGetProgramiv;
+    extern PFNGLGENERATEMIPMAPPROC _glGenerateMipmap;
+    extern PFNGLSTENCILOPSEPARATEPROC _glStencilOpSeparate;
+    extern PFNGLGENRENDERBUFFERSPROC _glGenRenderbuffers;
+    extern PFNGLBINDRENDERBUFFERPROC _glBindRenderbuffer;
+    extern PFNGLRENDERBUFFERSTORAGEPROC _glRenderbufferStorage;
+    extern PFNGLFRAMEBUFFERRENDERBUFFERPROC _glFramebufferRenderbuffer;
+    extern PFNGLDELETERENDERBUFFERSPROC _glDeleteRenderbuffers;
+    extern PFNGLDELETESHADERPROC _glDeleteShader;
     extern PFNGLDELETEBUFFERSPROC _glDeleteBuffers;
+    extern PFNGLGETPROGRAMINFOLOGPROC _glGetProgramInfoLog;
 }
 
 #elif __ANDROID__
@@ -111,7 +123,6 @@ extern "C"
 #define PASTER(x,y) x ## y
 #define EVALUATOR(x,y)  PASTER(x,y)
 #define DECLARE_GLEXT(y)  EVALUATOR(GLPREF,y)
-
 #define oxglShaderSource DECLARE_GLEXT(glShaderSource)
 #define oxglUseProgram DECLARE_GLEXT(glUseProgram)
 #define oxglVertexAttribPointer DECLARE_GLEXT(glVertexAttribPointer)
@@ -126,8 +137,10 @@ extern "C"
 #define oxglAttachShader DECLARE_GLEXT(glAttachShader)
 #define oxglCompileShader DECLARE_GLEXT(glCompileShader)
 #define oxglBindAttribLocation DECLARE_GLEXT(glBindAttribLocation)
+#define oxglGetAttribLocation DECLARE_GLEXT(glGetAttribLocation)
 #define oxglLinkProgram DECLARE_GLEXT(glLinkProgram)
 #define oxglUniform1i DECLARE_GLEXT(glUniform1i)
+#define oxglUniform2f DECLARE_GLEXT(glUniform2f)
 #define oxglUniform2fv DECLARE_GLEXT(glUniform2fv)
 #define oxglUniform3fv DECLARE_GLEXT(glUniform3fv)
 #define oxglUniform4fv DECLARE_GLEXT(glUniform4fv)
@@ -143,7 +156,17 @@ extern "C"
 #define oxglBindBuffer DECLARE_GLEXT(glBindBuffer)
 #define oxglGenBuffers DECLARE_GLEXT(glGenBuffers)
 #define oxglBufferData DECLARE_GLEXT(glBufferData)
+#define oxglGetProgramiv DECLARE_GLEXT(glGetProgramiv)
+#define oxglGenerateMipmap DECLARE_GLEXT(glGenerateMipmap)
+#define oxglStencilOpSeparate DECLARE_GLEXT(glStencilOpSeparate)
+#define oxglGenRenderbuffers DECLARE_GLEXT(glGenRenderbuffers)
+#define oxglBindRenderbuffer DECLARE_GLEXT(glBindRenderbuffer)
+#define oxglRenderbufferStorage DECLARE_GLEXT(glRenderbufferStorage)
+#define oxglFramebufferRenderbuffer DECLARE_GLEXT(glFramebufferRenderbuffer)
+#define oxglDeleteRenderbuffers DECLARE_GLEXT(glDeleteRenderbuffers)
+#define oxglDeleteShader DECLARE_GLEXT(glDeleteShader)
 #define oxglDeleteBuffers DECLARE_GLEXT(glDeleteBuffers)
+#define oxglGetProgramInfoLog DECLARE_GLEXT(glGetProgramInfoLog)
 
 
 //#undef PASTER

@@ -24,6 +24,7 @@ extern "C"
     GLAPI void APIENTRY def_glShaderSource(GLuint shader, GLsizei count, const GLchar* const* string, const GLint* length)
 #endif
     {}
+
     GLAPI void APIENTRY def_glUseProgram(GLuint program)
     {}
     GLAPI void APIENTRY def_glVertexAttribPointer(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void* pointer)
@@ -41,19 +42,32 @@ extern "C"
     GLAPI void APIENTRY def_glGetShaderInfoLog(GLuint shader, GLsizei bufSize, GLsizei* length, GLchar* infoLog)
     {}
     GLAPI GLuint APIENTRY def_glCreateShader(GLenum type)
-    {return 0;}
+    {
+        return 0;
+    }
     GLAPI GLuint APIENTRY def_glCreateProgram(void)
-    {return 0;}
+    {
+        return 0;
+    }
     GLAPI void APIENTRY def_glAttachShader(GLuint program, GLuint shader)
     {}
     GLAPI void APIENTRY def_glCompileShader(GLuint shader)
     {}
+
     GLAPI void APIENTRY def_glBindAttribLocation(GLuint program, GLuint index, const GLchar* name)
     {}
+
+    GLAPI GLint APIENTRY def_glGetAttribLocation(GLuint program, const GLchar* name)
+    {
+        return 0;
+    }
+
     GLAPI void APIENTRY def_glLinkProgram(GLuint program)
     {}
     GLAPI void APIENTRY def_glUniform1i(GLint location, GLint v0)
     {}
+	GLAPI void APIENTRY def_glUniform2f(GLint location, GLfloat v0, GLfloat v1)
+	{}
     GLAPI void APIENTRY def_glUniform2fv(GLint location, GLsizei count, const GLfloat* value)
     {}
     GLAPI void APIENTRY def_glUniform3fv(GLint location, GLsizei count, const GLfloat* value)
@@ -69,11 +83,15 @@ extern "C"
     GLAPI void APIENTRY def_glGenFramebuffers(GLsizei n, GLuint* framebuffers)
     {}
     GLAPI GLenum APIENTRY def_glCheckFramebufferStatus(GLenum target)
-    {return 0;}
+    {
+        return 0;
+    }
     GLAPI void APIENTRY def_glDeleteFramebuffers(GLsizei n, const GLuint* framebuffers)
     {}
     GLAPI GLint APIENTRY def_glGetUniformLocation(GLuint program, const GLchar* name)
-    {return 0;}
+    {
+        return 0;
+    }
     GLAPI void APIENTRY def_glFramebufferTexture2D(GLenum target, GLenum attachment, GLenum textarget, GLuint texture, GLint level)
     {}
     GLAPI void APIENTRY def_glCompressedTexImage2D(GLenum target, GLint level, GLenum internalformat, GLsizei width, GLsizei height, GLint border, GLsizei imageSize, const void* data)
@@ -84,8 +102,30 @@ extern "C"
     {}
     GLAPI void APIENTRY def_glBufferData(GLenum target, GLsizeiptr size, const void* data, GLenum usage)
     {}
+    GLAPI void APIENTRY def_glGetProgramiv(GLuint program, GLenum pname, GLint* params)
+    {}
+    GLAPI void APIENTRY def_glGenerateMipmap(GLenum target)
+    {}
+    GLAPI void APIENTRY def_glStencilOpSeparate(GLenum face, GLenum sfail, GLenum dpfail, GLenum dppass)
+    {}
+    GLAPI void APIENTRY def_glGenRenderbuffers(GLsizei n, GLuint* renderbuffers)
+    {}
+    GLAPI void APIENTRY def_glBindRenderbuffer(GLenum target, GLuint renderbuffer)
+    {}
+    GLAPI void APIENTRY def_glRenderbufferStorage(GLenum target, GLenum internalformat, GLsizei width, GLsizei height)
+    {}
+    GLAPI void APIENTRY def_glFramebufferRenderbuffer(GLenum target, GLenum attachment, GLenum renderbuffertarget, GLuint renderbuffer)
+    {}
+    GLAPI void APIENTRY def_glDeleteRenderbuffers(GLsizei n, const GLuint* renderbuffers)
+    {}
+
+    GLAPI void APIENTRY def_glDeleteShader(GLuint shader)
+    {}
     GLAPI void APIENTRY def_glDeleteBuffers(GLsizei n, const GLuint* buffers)
     {}
+    GLAPI void APIENTRY def_glGetProgramInfoLog(GLuint program, GLsizei bufSize, GLsizei* length, GLchar* infoLog)
+    {}
+
 
 
     PFNGLSHADERSOURCEPROC _glShaderSource = 0;
@@ -102,8 +142,10 @@ extern "C"
     PFNGLATTACHSHADERPROC _glAttachShader = 0;
     PFNGLCOMPILESHADERPROC _glCompileShader = 0;
     PFNGLBINDATTRIBLOCATIONPROC _glBindAttribLocation = 0;
+    PFNGLGETATTRIBLOCATIONPROC _glGetAttribLocation = 0;
     PFNGLLINKPROGRAMPROC _glLinkProgram = 0;
     PFNGLUNIFORM1IPROC _glUniform1i = 0;
+	PFNGLUNIFORM2FPROC _glUniform2f = 0;
     PFNGLUNIFORM2FVPROC _glUniform2fv = 0;
     PFNGLUNIFORM3FVPROC _glUniform3fv = 0;
     PFNGLUNIFORM4FVPROC _glUniform4fv = 0;
@@ -119,7 +161,17 @@ extern "C"
     PFNGLBINDBUFFERPROC _glBindBuffer = 0;
     PFNGLGENBUFFERSPROC _glGenBuffers = 0;
     PFNGLBUFFERDATAPROC _glBufferData = 0;
+    PFNGLGETPROGRAMIVPROC _glGetProgramiv = 0;
+    PFNGLGENERATEMIPMAPPROC _glGenerateMipmap = 0;
+    PFNGLSTENCILOPSEPARATEPROC _glStencilOpSeparate = 0;
+    PFNGLGENRENDERBUFFERSPROC _glGenRenderbuffers = 0;
+    PFNGLBINDRENDERBUFFERPROC _glBindRenderbuffer = 0;
+    PFNGLRENDERBUFFERSTORAGEPROC _glRenderbufferStorage = 0;
+    PFNGLFRAMEBUFFERRENDERBUFFERPROC _glFramebufferRenderbuffer = 0;
+    PFNGLDELETERENDERBUFFERSPROC _glDeleteRenderbuffers = 0;
+    PFNGLDELETESHADERPROC _glDeleteShader = 0;
     PFNGLDELETEBUFFERSPROC _glDeleteBuffers = 0;
+    PFNGLGETPROGRAMINFOLOGPROC _glGetProgramInfoLog = 0;
 }
 
 int initGLExtensions(myGetProcAdress func)
@@ -143,8 +195,10 @@ int initGLExtensions(myGetProcAdress func)
     GETFUNC(_glAttachShader, def_glAttachShader, PFNGLATTACHSHADERPROC, "glAttachShader");
     GETFUNC(_glCompileShader, def_glCompileShader, PFNGLCOMPILESHADERPROC, "glCompileShader");
     GETFUNC(_glBindAttribLocation, def_glBindAttribLocation, PFNGLBINDATTRIBLOCATIONPROC, "glBindAttribLocation");
+    GETFUNC(_glGetAttribLocation, def_glGetAttribLocation, PFNGLGETATTRIBLOCATIONPROC, "glGetAttribLocation");
     GETFUNC(_glLinkProgram, def_glLinkProgram, PFNGLLINKPROGRAMPROC, "glLinkProgram");
     GETFUNC(_glUniform1i, def_glUniform1i, PFNGLUNIFORM1IPROC, "glUniform1i");
+	GETFUNC(_glUniform2f, def_glUniform2f, PFNGLUNIFORM2FPROC, "glUniform2f");
     GETFUNC(_glUniform2fv, def_glUniform2fv, PFNGLUNIFORM2FVPROC, "glUniform2fv");
     GETFUNC(_glUniform3fv, def_glUniform3fv, PFNGLUNIFORM3FVPROC, "glUniform3fv");
     GETFUNC(_glUniform4fv, def_glUniform4fv, PFNGLUNIFORM4FVPROC, "glUniform4fv");
@@ -160,7 +214,17 @@ int initGLExtensions(myGetProcAdress func)
     GETFUNC(_glBindBuffer, def_glBindBuffer, PFNGLBINDBUFFERPROC, "glBindBuffer");
     GETFUNC(_glGenBuffers, def_glGenBuffers, PFNGLGENBUFFERSPROC, "glGenBuffers");
     GETFUNC(_glBufferData, def_glBufferData, PFNGLBUFFERDATAPROC, "glBufferData");
+    GETFUNC(_glGetProgramiv, def_glGetProgramiv, PFNGLGETPROGRAMIVPROC, "glGetProgramiv");
+    GETFUNC(_glGenerateMipmap, def_glGenerateMipmap, PFNGLGENERATEMIPMAPPROC, "glGenerateMipmap");
+    GETFUNC(_glStencilOpSeparate, def_glStencilOpSeparate, PFNGLSTENCILOPSEPARATEPROC, "glStencilOpSeparate");
+    GETFUNC(_glGenRenderbuffers, def_glGenRenderbuffers, PFNGLGENRENDERBUFFERSPROC, "glGenRenderbuffers");
+    GETFUNC(_glBindRenderbuffer, def_glBindRenderbuffer, PFNGLBINDRENDERBUFFERPROC, "glBindRenderbuffer");
+    GETFUNC(_glRenderbufferStorage, def_glRenderbufferStorage, PFNGLRENDERBUFFERSTORAGEPROC, "glRenderbufferStorage");
+    GETFUNC(_glFramebufferRenderbuffer, def_glFramebufferRenderbuffer, PFNGLFRAMEBUFFERRENDERBUFFERPROC, "glFramebufferRenderbuffer");
+    GETFUNC(_glDeleteRenderbuffers, def_glDeleteRenderbuffers, PFNGLDELETERENDERBUFFERSPROC, "glDeleteRenderbuffers");
+    GETFUNC(_glDeleteShader, def_glDeleteShader, PFNGLDELETESHADERPROC, "glDeleteShader");
     GETFUNC(_glDeleteBuffers, def_glDeleteBuffers, PFNGLDELETEBUFFERSPROC, "glDeleteBuffers");
+    GETFUNC(_glGetProgramInfoLog, def_glGetProgramInfoLog, PFNGLGETPROGRAMINFOLOGPROC, "glGetProgramInfoLog");
 
     return missing;
 }
