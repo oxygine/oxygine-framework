@@ -8,9 +8,45 @@ namespace oxygine
     template <class T>
     class intrusive_ptr
     {
-        T* _ptr;
     public:
+
+        T* _ptr;
         typedef T element_type;
+
+
+        intrusive_ptr(intrusive_ptr&& s)
+        {
+            _ptr = s._ptr;
+            s._ptr = 0;
+        }
+
+        template<class U>
+        intrusive_ptr(intrusive_ptr<U>&& rhs)
+        {
+            _ptr = rhs._ptr;
+            rhs._ptr = 0;
+        }
+
+        template<class U>
+        intrusive_ptr& operator = (intrusive_ptr<U>&& rhs)
+        {
+            if (_ptr)
+                intrusive_ptr_release(_ptr);
+            _ptr = rhs._ptr;
+            rhs._ptr = 0;
+        }
+
+        intrusive_ptr& operator = (intrusive_ptr&& s)
+        {
+            if (_ptr)
+                intrusive_ptr_release(_ptr);
+
+            _ptr = s._ptr;
+            s._ptr = 0;
+
+            return *this;
+        }
+
 
         intrusive_ptr(): _ptr(0) {}
         intrusive_ptr(const intrusive_ptr& s): _ptr(s._ptr)
@@ -19,7 +55,7 @@ namespace oxygine
                 intrusive_ptr_add_ref(s._ptr);
         }
 
-        template<class U>
+        template<class U>   
         intrusive_ptr(intrusive_ptr<U> const& rhs)
             : _ptr(rhs.get())
         {
