@@ -147,7 +147,7 @@ typedef signed long long int64;
 #endif
 
 
-#if !defined(__S3E__) && ( (defined(_MSC_VER) && (_MSC_VER >= 1800)) || (__cplusplus > 199711L))
+#if !defined(__S3E__) && ( (defined(_MSC_VER) && (_MSC_VER >= 100)) || (__cplusplus > 199711L))
 #define OX_HAS_CPP11
 #endif
 
