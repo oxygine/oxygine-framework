@@ -15,7 +15,6 @@ namespace oxygine
 
     class ResFontBM: public ResFont
     {
-        INHERITED(ResFont);
     public:
         static Resource* create(CreateResourceContext& context);
         static Resource* createBM(CreateResourceContext& context);
