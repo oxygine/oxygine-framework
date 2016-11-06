@@ -328,7 +328,7 @@ namespace oxygine
 #endif
 
                 _resourcesMap[shortName] = r;
-            }            
+            }
         }
     }
 

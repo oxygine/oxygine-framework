@@ -15,7 +15,7 @@ namespace oxygine
 #ifdef OX_HAS_CPP11
     inline int error_eventID_should_be_size_of_4_chars(int x) { return x; }
     constexpr size_t constStringLength(const char* str) { return (*str == 0) ? 0 : constStringLength(str + 1) + 1; }
-    constexpr int EventIDc11(const char *str) { return constStringLength(str) == 4 ? makefourcc(str[0], str[1], str[2], str[3]) : error_eventID_should_be_size_of_4_chars(0); }
+    constexpr int EventIDc11(const char* str) { return constStringLength(str) == 4 ? makefourcc(str[0], str[1], str[2], str[3]) : error_eventID_should_be_size_of_4_chars(0); }
 #endif
 
     //eventID('_', '_', '_', '_')

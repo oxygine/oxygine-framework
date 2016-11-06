@@ -111,8 +111,8 @@ namespace oxygine
 
     const Resources* ResAnim::getResources() const
     {
-        const Resource *parent = getParent()->getParent();
-        const Resources *p = safeCast<const Resources*>(parent);
+        const Resource* parent = getParent()->getParent();
+        const Resources* p = safeCast<const Resources*>(parent);
         return p;
     }
 
