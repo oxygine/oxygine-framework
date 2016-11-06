@@ -139,11 +139,14 @@ typedef signed long long int64;
 #   endif
 #endif
 
+#ifdef OXYGINE_QT
+#define INHERITED(CLASS) private: typedef Editor##CLASS inherited
+#else
 #define INHERITED(CLASS) private: typedef CLASS inherited
+#endif
 
 #ifndef EDITOR_INCLUDE
 #define EDITOR_INCLUDE(CLASS)
-//namespace oxygine {typedef CLASS _##CLASS;}
 #endif
 
 
