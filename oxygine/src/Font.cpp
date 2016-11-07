@@ -32,8 +32,6 @@ namespace oxygine
         _sdf = sdf;
         _size = realSize;
         _baselineDistance = baselineDistance;
-        _lineHeight = lineHeight;
-        //_glyphs.reserve(200);
     }
 
     void Font::addGlyph(const glyph& gl)
@@ -96,11 +94,6 @@ namespace oxygine
     float Font::getScale() const
     {
         return _scale;
-    }
-
-    int Font::getLineHeight() const
-    {
-        return _lineHeight;
     }
 
     bool Font::isSDF() const

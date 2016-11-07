@@ -41,6 +41,7 @@ namespace oxygine
             outline(0.0f),
             outlineColor(Color::Black),
             weight(0.5f),
+            baselineScale(1.0f),
             options(0) {}
 
         const ResFont* font;
@@ -66,6 +67,7 @@ namespace oxygine
         float outline;//works only with SD fonts, disabled by default = 0.0f, 0.5 - max outline
         Color outlineColor;//works only with SD fonts
         float weight;//works only with SD fonts, font weight, default = 0.5f,  0.0 - bold, 1.0 - thin
+        float baselineScale;//baseline distance multiplier
 
 
 
@@ -83,6 +85,8 @@ namespace oxygine
         TextStyle alignMiddle() const { TextStyle st = *this; st.vAlign = VALIGN_MIDDLE; st.hAlign = HALIGN_MIDDLE; return st; }
 
         TextStyle withHOffset(int offset) const { TextStyle st = *this; st.linesOffset = offset; return st; }
+        TextStyle withBaselineScale(float s) const { TextStyle st = *this; st.baselineScale = s; return st; }
+
         TextStyle withKerning(int kerning) const { TextStyle st = *this; st.kerning = kerning; return st; }
         TextStyle withMultiline(bool multiline = true) const { TextStyle st = *this; st.multiline = multiline; return st; }
         TextStyle withColor(const Color& color) const { TextStyle st = *this; st.color = color; return st; }

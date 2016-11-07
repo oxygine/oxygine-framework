@@ -58,12 +58,12 @@ namespace oxygine
         void sortGlyphs() {}
 
         void setScale(float scale) { _scale = scale; }
+        void setBaselineDistance(int d) { _baselineDistance = d; }
 
         const glyph*    getGlyph(int code, const glyphOptions& opt) const;
         int             getBaselineDistance() const;
         int             getSize() const;
         float           getScale() const;
-        int             getLineHeight() const;
         bool            isSDF() const;
 
     protected:
@@ -83,6 +83,5 @@ namespace oxygine
 
         int _size;
         int _baselineDistance;
-        int _lineHeight;
     };
 }

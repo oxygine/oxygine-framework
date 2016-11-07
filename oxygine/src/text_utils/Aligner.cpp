@@ -102,7 +102,7 @@ namespace oxygine
 
         int Aligner::getLineSkip() const
         {
-            return _font->getBaselineDistance() + getStyle().linesOffset;
+            return _font->getBaselineDistance() * getStyle().baselineScale + getStyle().linesOffset;
         }
 
         void Aligner::_alignLine(line& ln)
