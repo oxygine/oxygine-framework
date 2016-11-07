@@ -182,6 +182,9 @@ namespace oxygine
 
     namespace core
     {
+        static bool active = true;
+        static bool focus = true;
+
         void focusLost()
         {
             if (!LOST_RESET_CONTEXT)
@@ -260,10 +263,13 @@ namespace oxygine
 
             init0();
 
-
             log::messageln("initialize oxygine");
             if (desc_ptr)
                 desc = *desc_ptr;
+
+
+            focus = true;
+            active = true;
 
 #ifdef __S3E__
             log::messageln("S3E build");
@@ -473,8 +479,6 @@ namespace oxygine
         }
 #endif
 
-        bool active = true;
-        bool focus = true;
 
 
         bool isActive()
