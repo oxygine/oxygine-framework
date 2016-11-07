@@ -2,9 +2,11 @@
 
 #if TARGET_OS_IPHONE
 #import <UIKit/UIImage.h>
+#import <UIKit/UIApplication.h>
 #else
 #import <AppKit/AppKit.h>
 #endif
+
 
 #include "ios.h"
 #include "Image.h"
@@ -151,5 +153,13 @@ namespace oxygine
         } else {
             a = 0;
         }
+    }
+    
+    void iosNavigate(const char *url_)
+    {
+#if TARGET_OS_IPHONE
+        NSURL *url = [NSURL URLWithString: [NSString stringWithUTF8String:url_]];
+        [[UIApplication sharedApplication] openURL:url];
+#endif
     }
 }

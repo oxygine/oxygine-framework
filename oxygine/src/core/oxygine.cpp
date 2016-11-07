@@ -51,6 +51,7 @@
 #include "core/android/jniUtils.h"
 #elif __APPLE__
 #include <TargetConditionals.h>
+#include "ios/ios.h"
 #endif
 
 #ifdef OXYGINE_SDL
@@ -854,6 +855,8 @@ namespace oxygine
                 var url = Pointer_stringify($0);
                 window.open(url, '_blank');
             }, str);
+#elif __APPLE__
+            iosNavigate(str);
 #else
             OX_ASSERT(!"execute not implemented");
 #endif
