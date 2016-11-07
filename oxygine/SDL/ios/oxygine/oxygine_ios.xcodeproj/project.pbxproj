@@ -115,8 +115,6 @@
 		C3E86FFF16EBC8EB00052915 /* Actor.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86F5616EBC8EB00052915 /* Actor.h */; };
 		C3E8700016EBC8EB00052915 /* AnimationFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3E86F5716EBC8EB00052915 /* AnimationFrame.cpp */; };
 		C3E8700116EBC8EB00052915 /* AnimationFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86F5816EBC8EB00052915 /* AnimationFrame.h */; };
-		C3E8700216EBC8EB00052915 /* Blocking.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3E86F5916EBC8EB00052915 /* Blocking.cpp */; };
-		C3E8700316EBC8EB00052915 /* Blocking.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86F5A16EBC8EB00052915 /* Blocking.h */; };
 		C3E8700416EBC8EB00052915 /* Box9Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3E86F5B16EBC8EB00052915 /* Box9Sprite.cpp */; };
 		C3E8700516EBC8EB00052915 /* Box9Sprite.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86F5C16EBC8EB00052915 /* Box9Sprite.h */; };
 		C3E8700616EBC8EB00052915 /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3E86F5D16EBC8EB00052915 /* Button.cpp */; };
@@ -357,8 +355,6 @@
 		C3E86F5616EBC8EB00052915 /* Actor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Actor.h; path = ../../../src/Actor.h; sourceTree = "<group>"; };
 		C3E86F5716EBC8EB00052915 /* AnimationFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AnimationFrame.cpp; path = ../../../src/AnimationFrame.cpp; sourceTree = "<group>"; };
 		C3E86F5816EBC8EB00052915 /* AnimationFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimationFrame.h; path = ../../../src/AnimationFrame.h; sourceTree = "<group>"; };
-		C3E86F5916EBC8EB00052915 /* Blocking.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Blocking.cpp; path = ../../../src/Blocking.cpp; sourceTree = "<group>"; };
-		C3E86F5A16EBC8EB00052915 /* Blocking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Blocking.h; path = ../../../src/Blocking.h; sourceTree = "<group>"; };
 		C3E86F5B16EBC8EB00052915 /* Box9Sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Box9Sprite.cpp; path = ../../../src/Box9Sprite.cpp; sourceTree = "<group>"; };
 		C3E86F5C16EBC8EB00052915 /* Box9Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Box9Sprite.h; path = ../../../src/Box9Sprite.h; sourceTree = "<group>"; };
 		C3E86F5D16EBC8EB00052915 /* Button.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Button.cpp; path = ../../../src/Button.cpp; sourceTree = "<group>"; };
@@ -584,7 +580,6 @@
 				C3E86F5516EBC8EB00052915 /* Actor.cpp */,
 				C3E86F5716EBC8EB00052915 /* AnimationFrame.cpp */,
 				9223E3101A5193E000B2770B /* AsyncTask.cpp */,
-				C3E86F5916EBC8EB00052915 /* Blocking.cpp */,
 				C3E86F5B16EBC8EB00052915 /* Box9Sprite.cpp */,
 				C3E86F5D16EBC8EB00052915 /* Button.cpp */,
 				C3E86F5F16EBC8EB00052915 /* ClipRectActor.cpp */,
@@ -625,7 +620,6 @@
 				C3E86F5616EBC8EB00052915 /* Actor.h */,
 				C3E86F5816EBC8EB00052915 /* AnimationFrame.h */,
 				9223E3111A5193E000B2770B /* AsyncTask.h */,
-				C3E86F5A16EBC8EB00052915 /* Blocking.h */,
 				C3E86F5C16EBC8EB00052915 /* Box9Sprite.h */,
 				C3E86F5E16EBC8EB00052915 /* Button.h */,
 				C3E86F6016EBC8EB00052915 /* ClipRectActor.h */,
@@ -894,7 +888,6 @@
 				C3E86FFF16EBC8EB00052915 /* Actor.h in Headers */,
 				9250AFB31C9B14950060A168 /* TweenOutline.h in Headers */,
 				C3E8700116EBC8EB00052915 /* AnimationFrame.h in Headers */,
-				C3E8700316EBC8EB00052915 /* Blocking.h in Headers */,
 				929AF5671C88AA4000D276ED /* ThreadLoader.h in Headers */,
 				9225533A1CAFA4EF00333A1E /* TweenGlow.h in Headers */,
 				C3E8700516EBC8EB00052915 /* Box9Sprite.h in Headers */,
@@ -1077,7 +1070,6 @@
 				C3E86FFE16EBC8EB00052915 /* Actor.cpp in Sources */,
 				922553391CAFA4EF00333A1E /* TweenGlow.cpp in Sources */,
 				C3E8700016EBC8EB00052915 /* AnimationFrame.cpp in Sources */,
-				C3E8700216EBC8EB00052915 /* Blocking.cpp in Sources */,
 				C3E8700416EBC8EB00052915 /* Box9Sprite.cpp in Sources */,
 				C3E8700616EBC8EB00052915 /* Button.cpp in Sources */,
 				0472E37717F8A2D30016A832 /* ioapi_mem.c in Sources */,
