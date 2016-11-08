@@ -201,9 +201,6 @@
     <ClCompile Include="..\..\src\AnimationFrame.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Blocking.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\Box9Sprite.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -567,9 +564,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\AnimationFrame.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\Blocking.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\Box9Sprite.h">
