@@ -17,6 +17,9 @@ namespace oxygine
 
     void Input::sendPointerButtonEvent(spStage stage, MouseButton button, float x, float y, float pressure, int type, PointerState* ps)
     {
+        if (!_multiTouch && ps->getIndex() != 1 && ps != &_pointerMouse)
+            return;
+        
         Vector2 p(x, y);
 
         TouchEvent me(type, true, p);
@@ -43,6 +46,10 @@ namespace oxygine
 
     void Input::sendPointerMotionEvent(spStage stage, float x, float y, float pressure, PointerState* ps)
     {
+        
+        if (!_multiTouch && ps->getIndex() != 1 && ps != &_pointerMouse)
+            return;
+        
         TouchEvent me(TouchEvent::MOVE, true, Vector2(x, y));
         me.index = ps->getIndex();
         me.pressure = pressure;
@@ -69,6 +76,7 @@ namespace oxygine
         for (int i = 0; i < MAX_TOUCHES; ++i)
             _pointers[i].init(i + 1);
         memset(_ids, 0, sizeof(_ids));
+        _multiTouch = true;
     }
 
     Input::~Input()
@@ -78,6 +86,11 @@ namespace oxygine
 
     void Input::cleanup()
     {
+    }
+    
+    void Input::multiTouchEnabled(bool en)
+    {
+        _multiTouch = en;
     }
 
     PointerState* Input::getTouchByIndex(int index)
