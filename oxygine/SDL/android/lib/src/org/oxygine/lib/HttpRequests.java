@@ -104,7 +104,8 @@ class HttpRequest extends AsyncTask<RequestDetails, Integer, String> {
             else
                 connection = (HttpURLConnection) url.openConnection();
 
-
+            connection.setInstanceFollowRedirects(true);
+            
             if (details.postData != null) {
                 connection.setDoOutput(true);
                 //connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
@@ -113,6 +114,35 @@ class HttpRequest extends AsyncTask<RequestDetails, Integer, String> {
             }
 
             //connection.connect();
+
+            /*
+
+            boolean redirect = false;
+
+            int status = conn.getResponseCode();
+            if (status != HttpURLConnection.HTTP_OK) {
+                if (status == HttpURLConnection.HTTP_MOVED_TEMP || status == HttpURLConnection.HTTP_MOVED_PERM || status == HttpURLConnection.HTTP_SEE_OTHER)
+                    redirect = true;
+            }
+
+            if (redirect) {
+
+                // get redirect url from "location" header field
+                String newUrl = conn.getHeaderField("Location");
+
+                // get the cookie if need, for login
+                String cookies = conn.getHeaderField("Set-Cookie");
+
+                // open the new connnection again
+                conn = (HttpURLConnection) new URL(newUrl).openConnection();
+                conn.setRequestProperty("Cookie", cookies);
+                conn.addRequestProperty("Accept-Language", "en-US,en;q=0.8");
+                conn.addRequestProperty("User-Agent", "Mozilla");
+                conn.addRequestProperty("Referer", "google.com");
+
+                System.out.println("Redirect to URL : " + newUrl);
+            }
+            */
 
             // expect HTTP 200 OK, so we don't mistakenly save error report
             // instead of the file
