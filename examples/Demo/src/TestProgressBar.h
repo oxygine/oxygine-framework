@@ -19,7 +19,8 @@ public:
         bar->setResAnim(resources.getResAnim("bg"));
         bar->setAnchor(Vector2(0.5f, 0.5f));
         bar->setPosition(getSize() / 2);
-        bar->setScale(0.5f);
+
+        //bar->setSize(600, 200);
         content->addChild(bar);
     }
 

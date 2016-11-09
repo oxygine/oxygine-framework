@@ -42,7 +42,10 @@ namespace oxygine
 
     ProgressBar::ProgressBar(): _progress(1.0f), _direction(dir_0)
     {
-
+        AnimationFrame f(STDRenderer::white);
+        f.setSize(200, 60);
+        f.setDestRect(RectF(0, 0, 200, 60));
+        setAnimFrame(f);
     }
 
     ProgressBar::~ProgressBar()
@@ -101,8 +104,6 @@ namespace oxygine
 
     void ProgressBar::doRender(const RenderState& rs)
     {
-        if (_progress == 0)
-            return;
         if (((_direction != __dir_radial_ccw) && (_direction != dir_radial_cw)) || (_progress == 1.0f))
         {
             inherited::doRender(rs);
@@ -348,12 +349,6 @@ namespace oxygine
 
         return stream.str();
     }
-
-    RectF ProgressBar::getDestRect() const
-    {
-        return _frame.getDestRect();
-    }
-
     void ProgressBar::setProgress(float f)
     {
         _progress = scalar::clamp(f, 0.0f, 1.0f);

@@ -21,7 +21,7 @@ namespace oxygine
         ~Input();
 
         void cleanup();
-        
+
         void multiTouchEnabled(bool en);
 
         /**id should be in range [1, MAX_TOUCHES]*/
@@ -43,7 +43,7 @@ namespace oxygine
         void sendPointerButtonEvent(spStage, MouseButton button, float x, float y, float pressure, int type, PointerState*);
         void sendPointerMotionEvent(spStage, float x, float y, float pressure, PointerState*);
         void sendPointerWheelEvent(spStage, int scroll, PointerState*);
-        
+
         bool _multiTouch;
     };
 }
