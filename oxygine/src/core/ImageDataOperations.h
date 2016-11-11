@@ -145,6 +145,35 @@ namespace oxygine
             Pixel color;
         };
 
+
+
+        class op_blend_one_invSrcAlpha
+        {
+        public:
+            template<class Src, class Dest>
+            void operator()(const Src& srcPixelFormat, Dest& destPixelFormat, const unsigned char* srcData, unsigned char* destData) const
+            {
+                Pixel s;
+                srcPixelFormat.getPixel(srcData, s);
+
+                Pixel d;
+                destPixelFormat.getPixel(destData, d);
+
+#define M(v) std::min(v, 255);
+                unsigned char a = s.a;
+                unsigned char ia = 255 - a;
+                Pixel r;
+                r.r = M((d.r * ia) / 255 + (s.r * a) / 255);
+                r.g = M((d.g * ia) / 255 + (s.g * a) / 255);
+                r.b = M((d.b * ia) / 255 + (s.b * a) / 255);
+                r.a = M((d.a * ia) / 255 + (s.a * a) / 255);
+#undef  M
+
+                destPixelFormat.setPixel(destData, r);
+            }
+        };
+
+
         class op_blend_srcAlpha_invSrcAlpha
         {
         public:
