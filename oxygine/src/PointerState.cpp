@@ -9,7 +9,6 @@ namespace oxygine
 
     void PointerState::init(pointer_index index)
     {
-        OX_ASSERT(index > 0 && index < 16);
         _index = index;
         _pressed = 0;
         _position.setZero();
