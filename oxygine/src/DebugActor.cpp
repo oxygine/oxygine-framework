@@ -423,7 +423,6 @@ namespace oxygine
         //setPosition(pos);
         setScale(1.0f / getStage()->getScaleX());
 
-
         RenderState rs = parentRS;
         parentRS.material->finish();
 
@@ -480,14 +479,18 @@ namespace oxygine
     void DebugActor::onDAEvent(Event* ev)
     {
         TouchEvent* t = safeCast<TouchEvent*>(ev);
-        Vector2 loc = stage2local(t->localPosition, _getStage());
+        Vector2 loc = parent2local(t->localPosition);
         if (t->type == TouchEvent::MOVE)
         {
             setAlpha(isOn(loc) ? 64 : 255);
 
             if (_dragging)
             {
-                setPosition(t->localPosition - _local);
+                Transform tr = getTransform();
+                tr.x = 0;
+                tr.y = 0;
+                Vector2 converted = tr.transform(loc - _local);
+                setPosition(getPosition() + converted);
             }
         }
 
