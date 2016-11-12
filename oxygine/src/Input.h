@@ -24,8 +24,8 @@ namespace oxygine
 
         void multiTouchEnabled(bool en);
 
-        /**id should be in range [1, MAX_TOUCHES]*/
-        PointerState* getTouchByIndex(int index);
+        /**index should be in range [1, MAX_TOUCHES]*/
+        PointerState* getTouchByIndex(pointer_index index);
 
 #ifndef __S3E__
         int touchID2index(int64 id);

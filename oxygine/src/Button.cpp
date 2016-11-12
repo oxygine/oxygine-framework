@@ -34,15 +34,26 @@ namespace oxygine
     void Button::_mouseEvent(Event* event)
     {
         TouchEvent* me = safeCast<TouchEvent*>(event);
-
-        switch (event->type)
+        if (event->type == TouchEvent::CLICK)
         {
-            case TouchEvent::CLICK:
+            if (me->mouseButton == MouseButton_Left)
             {
                 event->phase = Event::phase_target;
                 event->target = this;
             }
-            break;
+            else
+            {
+                event->stopImmediatePropagation();
+            }
+
+            return;
+        }
+
+        if (me->mouseButton != MouseButton_Left)
+            return;
+
+        switch (event->type)
+        {
             case TouchEvent::OVER:
             {
                 if (!_btnOvered)

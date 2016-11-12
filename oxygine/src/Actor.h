@@ -15,7 +15,6 @@
 namespace oxygine
 {
     class Event;
-    typedef char pointer_index;
 
     typedef unsigned int dumpOptions;
 
@@ -145,7 +144,7 @@ namespace oxygine
         const spClock&      getClock() const;
         virtual RectF       getDestRect() const;
         /**returns touch id if actor is pressed down*/
-        pointer_index       getPressed() const;
+        pointer_index       getPressed(MouseButton b = MouseButton_Touch) const;
         /**returns touch id if actor is moused overred*/
         pointer_index       getOvered() const;
         bool                getTouchEnabled() const { return (_flags & flag_touchEnabled) != 0; }
@@ -325,7 +324,7 @@ namespace oxygine
         /**Returns Stage where Actor attached to. Used for multi stage (window) mode*/
         Stage*              _getStage();
 
-        void setNotPressed();
+        void setNotPressed(MouseButton b);
 
         bool internalRender(RenderState& rs, const RenderState& parentRS);
 
@@ -354,6 +353,8 @@ namespace oxygine
         static unsigned short& _getFlags(Actor* actor) { return actor->_flags; }
 
         void _onGlobalTouchUpEvent(Event*);
+        void _onGlobalTouchUpEvent1(Event*);
+        void _onGlobalTouchUpEvent2(Event*);
         void _onGlobalTouchMoveEvent(Event*);
 
         const Vector2& _getSize() const { return _size; }
@@ -403,17 +404,27 @@ namespace oxygine
 
         children _children;
 
-        pointer_index _pressed;
-        pointer_index _overred;
+        union
+        {
+            struct
+            {
+                pointer_index _pressedButton[MouseButton_Num];
+                pointer_index _overred;
+            };
+            OXYGINE_DEPRECATED
+            pointer_index _pressed;//for compatibility, deprecated
+            int32_t _pressedOvered;
+        };
+
 
     private:
-        short   _zOrder;
 
         Vector2 _pos;
         Vector2 _anchor;
         Vector2 _scale;
         Vector2 _size;
         float   _rotation;
+        short   _zOrder;
     };
 
     Vector2 convert_local2stage(spActor child, const Vector2& pos, spActor root = 0);

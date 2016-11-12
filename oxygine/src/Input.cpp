@@ -93,8 +93,9 @@ namespace oxygine
         _multiTouch = en;
     }
 
-    PointerState* Input::getTouchByIndex(int index)
+    PointerState* Input::getTouchByIndex(pointer_index index_)
     {
+        int index = index_;
         if (index == MAX_TOUCHES + 1)
             return &_pointerMouse;
         index -= 1;

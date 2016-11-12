@@ -167,6 +167,7 @@ namespace oxygine
     void handleErrorPolicy(error_policy ep, const char* format, ...);
 
     typedef int timeMS;
+    typedef unsigned char pointer_index;
 
     /** returns local app time in milliseconds (1sec = 1000ms). Counting starts from zero*/
     timeMS          getTimeMS();

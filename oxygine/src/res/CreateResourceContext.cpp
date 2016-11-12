@@ -66,9 +66,9 @@ namespace oxygine
         //_alphaTracking = true;
     }
 
-    const char * isRelative(const char *str)
+    const char* isRelative(const char* str)
     {
-        const char *str_ = str;
+        const char* str_ = str;
         if (*str == '.')
         {
             ++str;
@@ -83,7 +83,7 @@ namespace oxygine
     {
         std::string s;
 
-        const char *rl = isRelative(str);
+        const char* rl = isRelative(str);
         if (rl)
         {
             s = currentPath;
@@ -97,7 +97,7 @@ namespace oxygine
     std::string XmlWalker::getPath(const char* attrName) const
     {
         const char* str = _root.attribute(attrName).as_string();
-        const char *rl = isRelative(str);
+        const char* rl = isRelative(str);
         if (rl)
         {
             return *_xmlFolder + rl;

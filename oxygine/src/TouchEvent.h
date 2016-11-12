@@ -3,7 +3,6 @@
 #undef OUT
 namespace oxygine
 {
-    typedef char pointer_index;
     class PointerState;
 
     class TouchEvent : public Event
