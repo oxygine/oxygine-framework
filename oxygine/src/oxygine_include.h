@@ -110,7 +110,7 @@ namespace oxygine { namespace log { void error(const char* format, ...); } }
 
 #define OXYGINE_RENDERER 4
 
-#define OXYGINE_VERSION 4
+#define OXYGINE_VERSION 5
 
 #ifdef __GNUC__
 #   define OXYGINE_DEPRECATED __attribute__((deprecated))
@@ -139,13 +139,20 @@ typedef signed long long int64;
 #   endif
 #endif
 
+#ifdef OXYGINE_QT
+#define INHERITED(CLASS) private: typedef Editor##CLASS inherited
+#else
 #define INHERITED(CLASS) private: typedef CLASS inherited
+#endif
 
 #ifndef EDITOR_INCLUDE
 #define EDITOR_INCLUDE(CLASS)
-//namespace oxygine {typedef CLASS _##CLASS;}
 #endif
 
+
+#if !defined(__S3E__) && ( (defined(_MSC_VER) && (_MSC_VER > 1800)) || (__cplusplus > 199711L))
+#define OX_HAS_CPP11
+#endif
 
 namespace oxygine
 {
@@ -160,6 +167,7 @@ namespace oxygine
     void handleErrorPolicy(error_policy ep, const char* format, ...);
 
     typedef int timeMS;
+    typedef unsigned char pointer_index;
 
     /** returns local app time in milliseconds (1sec = 1000ms). Counting starts from zero*/
     timeMS          getTimeMS();

@@ -805,6 +805,16 @@ namespace oxygine
         return lock(lock_read | lock_write, &rect);
     }
 
+    ImageData Image::lock(int x, int y, int w, int h)
+    {
+        return lock(Rect(x, y, w, h));
+    }
+
+    ImageData Image::lock(int x, int y)
+    {
+        return lock(Rect(x, y, _image.w - x, _image.h - y));
+    }
+
     void Image::unlock()
     {
 

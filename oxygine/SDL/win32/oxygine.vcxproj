@@ -115,7 +115,6 @@
     <ClCompile Include="..\..\src\Actor.cpp" />
     <ClCompile Include="..\..\src\AnimationFrame.cpp" />
     <ClCompile Include="..\..\src\AsyncTask.cpp" />
-    <ClCompile Include="..\..\src\Blocking.cpp" />
     <ClCompile Include="..\..\src\Box9Sprite.cpp" />
     <ClCompile Include="..\..\src\Button.cpp" />
     <ClCompile Include="..\..\src\ClipRectActor.cpp" />
@@ -219,7 +218,6 @@
     <ClInclude Include="..\..\src\Actor.h" />
     <ClInclude Include="..\..\src\AnimationFrame.h" />
     <ClInclude Include="..\..\src\AsyncTask.h" />
-    <ClInclude Include="..\..\src\Blocking.h" />
     <ClInclude Include="..\..\src\Box9Sprite.h" />
     <ClInclude Include="..\..\src\Button.h" />
     <ClInclude Include="..\..\src\ClipRectActor.h" />

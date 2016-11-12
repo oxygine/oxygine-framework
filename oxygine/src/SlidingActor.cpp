@@ -325,7 +325,8 @@ namespace oxygine
                         spActor act = safeSpCast<Actor>(_holded);
                         while (act && act.get() != _content.get())
                         {
-                            act->setNotPressed();
+                            for (int i = 0; i < MouseButton_Num; ++i)
+                                act->setNotPressed((MouseButton)i);
                             act = act->getParent();
                         }
 

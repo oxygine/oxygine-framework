@@ -1,4 +1,5 @@
 #include "ImageDataOperations.h"
+#include "math/Color.h"
 #include <string.h>
 
 namespace oxygine
@@ -102,6 +103,23 @@ namespace oxygine
             applyOperation(op, src, dest);
         }
 
+        void premultiply(ImageData& dest)
+        {
+            blitPremultiply(dest, dest);
+        }
+
+        void blitColored(const ImageData& src, ImageData& dest, const Color& c)
+        {
+            Pixel p;
+            p.r = c.r;
+            p.g = c.g;
+            p.b = c.b;
+            p.a = c.a;
+
+            op_blit_colored op(p);
+            applyOperation(op, src, dest);
+        }
+
         void flipY(const ImageData& src, ImageData& dest)
         {
             if (!check(src, dest))
@@ -123,6 +141,12 @@ namespace oxygine
                 srcLine += srcpitch;
                 destLine -= destpitch;
             }
+        }
+
+        void blend(const ImageData& src, ImageData& dest)
+        {
+            op_blend_srcAlpha_invSrcAlpha op;
+            applyOperation(op, src, dest);
         }
     }
 }

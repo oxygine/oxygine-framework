@@ -43,13 +43,18 @@ class XmlWalker:
 
     def getPath(self, attr):
         path = self.root.getAttribute(attr)
+
         if path.startswith("./") or path.startswith(".\\"):
             return self.xml_folder + path[2:len(path)]
+
+        if path == ".":
+            return self.xml_folder
 
         return self.path + path
 
     def setSrcFullPath(self, path):
         return self.src + path
+
 
     def checkSetAttributes(self):
         self._checkSetAttributes(self.root)
@@ -57,10 +62,11 @@ class XmlWalker:
     def _checkSetAttributes(self, node):
         path = node.getAttribute("path")
         if path:
-            if 0:
-                path = ""
             if path.startswith("./") or path.startswith(".\\"):
                 path = self.xml_folder + path[2:len(path)]
+            elif path == ".":
+                path = self.xml_folder
+
             self.path = path + "/"
 
         scale_factor = node.getAttribute("scale_factor")

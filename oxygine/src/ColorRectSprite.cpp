@@ -25,6 +25,11 @@ namespace oxygine
         rs.material->doRender(this, rs);
     }
 
+    void ColorRectSprite::sizeChanged(const Vector2& size)
+    {
+        Actor::sizeChanged(size);
+    }
+
     void ColorRectSprite::serialize(serializedata* data)
     {
         VStyleActor::serialize(data);

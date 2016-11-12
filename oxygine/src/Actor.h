@@ -15,7 +15,6 @@
 namespace oxygine
 {
     class Event;
-    typedef char pointer_index;
 
     typedef unsigned int dumpOptions;
 
@@ -145,12 +144,11 @@ namespace oxygine
         const spClock&      getClock() const;
         virtual RectF       getDestRect() const;
         /**returns touch id if actor is pressed down*/
-        pointer_index       getPressed() const;
+        pointer_index       getPressed(MouseButton b = MouseButton_Touch) const;
         /**returns touch id if actor is moused overred*/
         pointer_index       getOvered() const;
         bool                getTouchEnabled() const { return (_flags & flag_touchEnabled) != 0; }
         bool                getTouchChildrenEnabled() const { return (_flags & flag_touchChildrenEnabled) != 0; }
-        bool                getChildrenRelative() const {return (_flags & flag_childrenRelative) != 0;;}
         UpdateCallback      getCallbackDoUpdate() const {return _cbDoUpdate;}
         Material*           getMaterial() { return _material; }
         //RenderCallback        getCallbackDoRender() const {return _cbDoRender;}
@@ -193,8 +191,6 @@ namespace oxygine
         void setRotation(float angle);
         /**Sets rotation angle in degrees. Converts internally to radians. (use setRotation!)*/
         void setRotationDegrees(float angle);
-        /**This option is connected with Anchor. By default value is True*/
-        void setChildrenRelative(bool r) {_flags &= ~flag_childrenRelative; if (r) _flags |= flag_childrenRelative;}
 
         /**Sets Size of Actor. Size doesn't scale contents of Actor. Size only affects event handling and rendering if you change Anchor*/
         void setSize(const Vector2&);
@@ -328,7 +324,7 @@ namespace oxygine
         /**Returns Stage where Actor attached to. Used for multi stage (window) mode*/
         Stage*              _getStage();
 
-        void setNotPressed();
+        void setNotPressed(MouseButton b);
 
         bool internalRender(RenderState& rs, const RenderState& parentRS);
 
@@ -357,9 +353,11 @@ namespace oxygine
         static unsigned short& _getFlags(Actor* actor) { return actor->_flags; }
 
         void _onGlobalTouchUpEvent(Event*);
+        void _onGlobalTouchUpEvent1(Event*);
+        void _onGlobalTouchUpEvent2(Event*);
         void _onGlobalTouchMoveEvent(Event*);
 
-        RectF calcDestRectF(const RectF& destRect, const Vector2& size) const;
+        const Vector2& _getSize() const { return _size; }
         void _setSize(const Vector2&);
         virtual void sizeChanged(const Vector2& size);
         Actor*  _getDescendant(const std::string& name);
@@ -385,13 +383,12 @@ namespace oxygine
             flag_anchorInPixels         = 1,
             flag_visible                = 1 << 1,
             flag_touchEnabled           = 1 << 2,
-            flag_childrenRelative       = 1 << 3,
-            flag_transformDirty         = 1 << 4,
-            flag_transformInvertDirty   = 1 << 5,
-            flag_touchChildrenEnabled   = 1 << 6,
-            flag_cull                   = 1 << 7,
-            flag_fastTransform          = 1 << 8,
-            flag_reserved               = 1 << 9,
+            flag_transformDirty         = 1 << 3,
+            flag_transformInvertDirty   = 1 << 4,
+            flag_touchChildrenEnabled   = 1 << 5,
+            flag_cull                   = 1 << 6,
+            flag_fastTransform          = 1 << 7,
+            flag_reserved               = 1 << 8,
             flag_last                   = flag_reserved
         };
 
@@ -407,17 +404,27 @@ namespace oxygine
 
         children _children;
 
-        pointer_index _pressed;
-        pointer_index _overred;
+        union
+        {
+            struct
+            {
+                pointer_index _pressedButton[MouseButton_Num];
+                pointer_index _overred;
+            };
+            OXYGINE_DEPRECATED
+            pointer_index _pressed;//for compatibility, deprecated
+            int32_t _pressedOvered;
+        };
+
 
     private:
-        short   _zOrder;
 
         Vector2 _pos;
         Vector2 _anchor;
         Vector2 _scale;
         Vector2 _size;
         float   _rotation;
+        short   _zOrder;
     };
 
     Vector2 convert_local2stage(spActor child, const Vector2& pos, spActor root = 0);

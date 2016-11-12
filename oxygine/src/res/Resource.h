@@ -63,4 +63,3 @@ namespace oxygine
 
 
 EDITOR_INCLUDE(Resource);
-

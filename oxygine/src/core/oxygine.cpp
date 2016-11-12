@@ -51,6 +51,7 @@
 #include "core/android/jniUtils.h"
 #elif __APPLE__
 #include <TargetConditionals.h>
+#include "ios/ios.h"
 #endif
 
 #ifdef OXYGINE_SDL
@@ -182,6 +183,9 @@ namespace oxygine
 
     namespace core
     {
+        static bool active = true;
+        static bool focus = true;
+
         void focusLost()
         {
             if (!LOST_RESET_CONTEXT)
@@ -260,10 +264,13 @@ namespace oxygine
 
             init0();
 
-
             log::messageln("initialize oxygine");
             if (desc_ptr)
                 desc = *desc_ptr;
+
+
+            focus = true;
+            active = true;
 
 #ifdef __S3E__
             log::messageln("S3E build");
@@ -473,8 +480,6 @@ namespace oxygine
         }
 #endif
 
-        bool active = true;
-        bool focus = true;
 
 
         bool isActive()
@@ -850,6 +855,8 @@ namespace oxygine
                 var url = Pointer_stringify($0);
                 window.open(url, '_blank');
             }, str);
+#elif __APPLE__
+            iosNavigate(str);
 #else
             OX_ASSERT(!"execute not implemented");
 #endif

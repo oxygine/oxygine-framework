@@ -46,6 +46,7 @@ namespace oxygine
         const Color&                getOutlineColor() const;
         float                       getOutline() const;
         float                       getWeight() const;
+        float                       getBaselineScale() const;
 
 
         bool getBounds(RectF&) const OVERRIDE;
@@ -61,6 +62,8 @@ namespace oxygine
         void setBreakLongWords(bool val);
         /**Overwrites TextStyle linesOffset*/
         void setLinesOffset(int offset);
+        /**Overwrites TextStyle baselineScale*/
+        void setBaselineScale(float scale);
         /**Overwrites TextStyle kerning*/
         void setKerning(int kerning);
         /**Overwrites TextStyle scale2Size. deprecated, use setFontSize*/

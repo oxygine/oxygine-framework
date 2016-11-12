@@ -2,6 +2,7 @@
 #include "Image.h"
 #include "core/NativeTexture.h"
 #include "core/VideoDriver.h"
+#include "Resources.h"
 
 namespace oxygine
 {
@@ -107,6 +108,13 @@ namespace oxygine
         return getFrame(0, 0);
     }
 
+
+    const Resources* ResAnim::getResources() const
+    {
+        const Resource* parent = getParent()->getParent();
+        const Resources* p = safeCast<const Resources*>(parent);
+        return p;
+    }
 
     const AnimationFrame& ResAnim::getFrame(int col, int row) const
     {

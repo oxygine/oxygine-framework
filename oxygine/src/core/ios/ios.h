@@ -15,4 +15,5 @@ namespace oxygine
     bool nsImageLoad(Image& mt, void* pData, int nDatalen, bool premultiplied, TextureFormat format);
 
     void iosGetMemoryUsage(size_t& a);
+    void iosNavigate(const char*);
 }

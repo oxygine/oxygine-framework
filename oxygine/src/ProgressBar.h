@@ -46,7 +46,6 @@ namespace oxygine
     private:
         void doRender(const RenderState& rs);
 
-        RectF getDestRect() const OVERRIDE;
         virtual void _update();
 
         void animFrameChanged(const AnimationFrame& f);

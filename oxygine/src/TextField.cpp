@@ -85,6 +85,12 @@ namespace oxygine
         needRebuild();
     }
 
+    void TextField::setBaselineScale(float s)
+    {
+        _style.baselineScale = s;
+        needRebuild();
+    }
+
     void TextField::setKerning(int kerning)
     {
         _style.kerning = kerning;
@@ -248,6 +254,11 @@ namespace oxygine
     float TextField::getWeight() const
     {
         return _style.weight;
+    }
+
+    float TextField::getBaselineScale() const
+    {
+        return _style.baselineScale;
     }
 
     text::Symbol* TextField::getSymbolAt(int pos) const
@@ -414,6 +425,7 @@ namespace oxygine
         setAttr(node, "valign", _style.vAlign, def.vAlign);
         setAttr(node, "halign", _style.hAlign, def.hAlign);
         setAttr(node, "multiline", _style.multiline, def.multiline);
+        setAttr(node, "baselineScale", _style.baselineScale, def.baselineScale);
         setAttr(node, "breakLongWords", _style.breakLongWords, def.breakLongWords);
         if (_style.font)
             node.append_attribute("font").set_value(_style.font->getName().c_str());
@@ -434,6 +446,7 @@ namespace oxygine
         _style.fontSize = node.attribute("fontsize2scale").as_int(def.fontSize);
         _style.linesOffset = node.attribute("linesOffset").as_int(def.linesOffset);
         _style.kerning = node.attribute("kerning").as_int(def.kerning);
+        _style.baselineScale = node.attribute("baselineScale").as_float(def.baselineScale);
         const char* fnt = node.attribute("font").as_string(0);
         if (fnt && *fnt)
         {

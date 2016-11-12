@@ -32,16 +32,15 @@ namespace oxygine
         _zOrder(0),
         _scale(1, 1),
         _rotation(0),
-        _flags(flag_visible | flag_touchEnabled | flag_touchChildrenEnabled | flag_childrenRelative | flag_fastTransform),
+        _flags(flag_visible | flag_touchEnabled | flag_touchChildrenEnabled | flag_fastTransform),
         _parent(0),
         _alpha(255),
-        _pressed(0),
-        _overred(0),
         _stage(0),
         _material(0)
     {
         _transform.identity();
         _transformInvert.identity();
+        _pressedOvered = 0;
     }
 
     void Actor::copyFrom(const Actor& src, cloneOptions opt)
@@ -58,8 +57,8 @@ namespace oxygine
         _flags = src._flags;
         _parent = 0;
         _alpha = src._alpha;
-        _overred = 0;
-        _pressed = 0;
+
+        _pressedOvered = 0;
 
         _transform = src._transform;
         _transformInvert = src._transformInvert;
@@ -124,8 +123,7 @@ namespace oxygine
         _stage->removeEventListeners(this);
         _stage = 0;
 
-        _pressed = 0;
-        _overred = 0;
+        _pressedOvered = 0;
 
         spActor actor = _children._first;
         while (actor)
@@ -276,9 +274,9 @@ namespace oxygine
         return stream.str();
     }
 
-    pointer_index Actor::getPressed() const
+    pointer_index Actor::getPressed(MouseButton b) const
     {
-        return _pressed;
+        return _pressedButton[b];
     }
 
     pointer_index Actor::getOvered() const
@@ -286,10 +284,11 @@ namespace oxygine
         return _overred;
     }
 
-    void Actor::setNotPressed()
+    void Actor::setNotPressed(MouseButton b)
     {
-        _pressed = 0;
-        _getStage()->removeEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onGlobalTouchUpEvent));
+        _pressedButton[b] = 0;
+        if (_pressedOvered == _overred)//!_pressed[0] && !_pressed[1] && !_pressed[2])
+            _getStage()->removeEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onGlobalTouchUpEvent));
 
         updateStatePressed();
     }
@@ -297,10 +296,10 @@ namespace oxygine
     void Actor::_onGlobalTouchUpEvent(Event* ev)
     {
         TouchEvent* te = safeCast<TouchEvent*>(ev);
-        if (te->index != _pressed)
+        if (te->index != _pressedButton[te->mouseButton])
             return;
 
-        setNotPressed();
+        setNotPressed(te->mouseButton);
 
         TouchEvent up = *te;
         up.bubbles = false;
@@ -351,11 +350,12 @@ namespace oxygine
         if (event->type == TouchEvent::TOUCH_DOWN)
         {
             TouchEvent* te = safeCast<TouchEvent*>(event);
-            if (!_pressed)
+            if (!_pressedButton[te->mouseButton])
             {
-                _pressed = te->index;
-                _getStage()->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onGlobalTouchUpEvent));
+                if (_pressedOvered == _overred)//!_pressed[0] && !_pressed[1] && !_pressed[2])
+                    _getStage()->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onGlobalTouchUpEvent));
 
+                _pressedButton[te->mouseButton] = te->index;
                 updateStatePressed();
             }
         }
@@ -365,14 +365,14 @@ namespace oxygine
         if (event->type == TouchEvent::TOUCH_UP)
         {
             TouchEvent* te = safeCast<TouchEvent*>(event);
-            if (_pressed == te->index)
+            if (_pressedButton[te->mouseButton] == te->index)
             {
                 click = *te;
                 click.type = TouchEvent::CLICK;
                 click.bubbles = false;
                 //will be dispatched later after UP
 
-                setNotPressed();
+                setNotPressed(te->mouseButton);
             }
         }
 
@@ -730,22 +730,20 @@ namespace oxygine
                      _pos.x, _pos.y);
         }
 
-        if (_flags & flag_childrenRelative)
+        Vector2 offset;
+        if (_flags & flag_anchorInPixels)
         {
-            Vector2 offset;
-            if (_flags & flag_anchorInPixels)
-            {
-                offset.x = -_anchor.x;
-                offset.y = -_anchor.y;
-            }
-            else
-            {
-                offset.x = -float(_size.x * _anchor.x);
-                offset.y = -float(_size.y * _anchor.y);//todo, what to do? (per pixel quality)
-            }
-
-            tr.translate(offset);
+            offset.x = -_anchor.x;
+            offset.y = -_anchor.y;
         }
+        else
+        {
+            offset.x = -float(_size.x * _anchor.x);
+            offset.y = -float(_size.y * _anchor.y);//todo, what to do? (per pixel quality)
+        }
+
+        tr.translate(offset);
+
 
         _transform = tr;
         _flags &= ~flag_transformDirty;
@@ -1135,26 +1133,9 @@ namespace oxygine
         rs.material->render(this, rs);
     }
 
-    RectF Actor::calcDestRectF(const RectF& destRect_, const Vector2& size) const
-    {
-        RectF destRect = destRect_;
-        if (!(_flags & flag_childrenRelative))
-        {
-            Vector2 a;
-
-            if ((_flags & flag_anchorInPixels))
-                a = Vector2(_anchor.x, _anchor.y);
-            else
-                a = Vector2(_anchor.x * size.x, _anchor.y * size.y);
-
-            destRect.pos -= a;
-        }
-        return destRect;
-    }
-
     RectF Actor::getDestRect() const
     {
-        return calcDestRectF(RectF(Vector2(0, 0), getSize()), getSize());
+        return RectF(Vector2(0, 0), getSize());
     }
 
     spTween Actor::_addTween(spTween tween, bool rel)

@@ -36,6 +36,7 @@ namespace oxygine
         int                     getRows() const {return (int)_frames.size() / _columns;}
         int                     getTotalFrames() const {return (int)_frames.size();}
         int                     getFrameRate() const { return _framerate; }
+        const Resources*        getResources() const;
         const AnimationFrame&   getFrame(int col, int row) const;
         /**returns frame by index ignoring cols and rows*/
         const AnimationFrame&   getFrame(int index) const;

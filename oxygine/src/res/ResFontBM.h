@@ -15,7 +15,6 @@ namespace oxygine
 
     class ResFontBM: public ResFont
     {
-        INHERITED(ResFont);
     public:
         static Resource* create(CreateResourceContext& context);
         static Resource* createBM(CreateResourceContext& context);
@@ -49,6 +48,7 @@ namespace oxygine
         void _restore(Restorable*, void*);
         void _createFont(CreateResourceContext* context, bool sd, bool bmc, int downsample);
         void _createFontFromTxt(CreateResourceContext* context, char* fontData, const std::string& fontPath, int downsample);
+        void _finalize();
 
         typedef std::vector<page> pages;
         pages _pages;

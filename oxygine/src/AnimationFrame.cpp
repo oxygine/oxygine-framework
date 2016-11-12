@@ -82,6 +82,8 @@ namespace oxygine
 
     AnimationFrame::AnimationFrame(spNativeTexture t)
     {
+        _row = _column = 0;
+        _resAnim = 0;
         _diffuse.base = t;
         _diffuse.premultiplied = true;
         _srcRect = RectF(0, 0, 1, 1);
