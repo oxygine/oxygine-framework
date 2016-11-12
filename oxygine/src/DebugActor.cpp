@@ -489,8 +489,8 @@ namespace oxygine
                 Transform tr = getTransform();
                 tr.x = 0;
                 tr.y = 0;
-                Vector2 converted = tr.transform(loc - _local);
-                setPosition(getPosition() + converted);
+                Vector2 p = tr.transform(_local);
+                setPosition(t->localPosition - p);
             }
         }
 
