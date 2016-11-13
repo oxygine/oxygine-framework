@@ -406,10 +406,11 @@ namespace oxygine
 
         union
         {
+            //dont change order!!! or broke statements: if (_pressedOvered == _overred)
             struct
             {
-                pointer_index _pressedButton[MouseButton_Num];
                 pointer_index _overred;
+                pointer_index _pressedButton[MouseButton_Num];
             };
             OXYGINE_DEPRECATED
             pointer_index _pressed;//for compatibility, deprecated
