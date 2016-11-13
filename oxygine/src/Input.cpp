@@ -95,6 +95,8 @@ namespace oxygine
 
     PointerState* Input::getTouchByIndex(pointer_index index_)
     {
+        OX_ASSERT(index_ != 0);
+
         int index = index_;
         if (index == MAX_TOUCHES + 1)
             return &_pointerMouse;
