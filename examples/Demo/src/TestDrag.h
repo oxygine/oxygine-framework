@@ -23,14 +23,7 @@ public:
 
         if (te->type == TouchEvent::MOVE)
         {
-            Vector2 localPos = stage2local(te->localPosition);
-            Vector2 offset = localPos - local;
-
-            Transform tr = getTransform();
-            tr.x = 0;
-            tr.y = 0;
-            Vector2 p = tr.transform(offset);
-            setPosition(getPosition() + p);
+            move(te->localPosition);
         }
 
         if (te->type == TouchEvent::TOUCH_UP)
@@ -38,6 +31,31 @@ public:
             _stage->removeEventListeners(this);
         }
     }
+
+    void move(const Vector2 &pos)
+    {
+        Vector2 localPos = stage2local(pos);
+        Vector2 offset = localPos - local;
+
+        Transform tr = getTransform();
+        tr.x = 0;
+        tr.y = 0;
+        Vector2 p = tr.transform(offset);
+        setPosition(getPosition() + p);
+    }
+
+    void doUpdate(const UpdateState& us)
+    {
+        pointer_index ind = getPressed();
+        if (!ind)
+            return;
+        PointerState *st = Input::instance.getTouchByIndex(ind);
+        move(_stage->parent2local(st->getPosition()));
+    }
+
+    
+
+
 
     void onAdded2Stage()
     {
@@ -48,6 +66,7 @@ public:
     {
         _stage->removeEventListeners(this);
     }
+
 
     Vector2 local;
 };
