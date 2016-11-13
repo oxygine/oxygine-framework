@@ -80,8 +80,7 @@ namespace oxygine
                 {
                     _btnPressed = me->index;
                     setState(statePressed);
-
-                    _getStage()->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Button::_mouseEvent));
+                    addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Button::_mouseEvent));
                 }
             }
             break;
@@ -90,8 +89,7 @@ namespace oxygine
                 if (_btnPressed == me->index)
                 {
                     setState(stateNormal);
-                    if (_getStage())
-                        _getStage()->removeEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Button::_mouseEvent));
+                    removeEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Button::_mouseEvent));
                     _btnPressed = 0;
                 }
             }
