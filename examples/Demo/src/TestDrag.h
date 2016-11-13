@@ -32,7 +32,7 @@ public:
         }
     }
 
-    void move(const Vector2 &pos)
+    void move(const Vector2& pos)
     {
         Vector2 localPos = stage2local(pos);
         Vector2 offset = localPos - local;
@@ -49,11 +49,11 @@ public:
         pointer_index ind = getPressed();
         if (!ind)
             return;
-        PointerState *st = Input::instance.getTouchByIndex(ind);
+        PointerState* st = Input::instance.getTouchByIndex(ind);
         move(_stage->parent2local(st->getPosition()));
     }
 
-    
+
 
 
 
