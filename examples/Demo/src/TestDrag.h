@@ -7,10 +7,49 @@ class DraggableSprite: public Sprite
 public:
     DraggableSprite()
     {
-        drag.init(this);
+        //drag.init(this);
     }
 
-    Draggable drag;
+    //Draggable drag;
+    void onEvent(Event* ev)
+    {
+        TouchEvent* te = safeCast<TouchEvent*>(ev);
+        if (te->type == TouchEvent::TOUCH_DOWN)
+        {
+            local = te->localPosition;
+            _stage->addEventListener(TouchEvent::MOVE, CLOSURE(this, &DraggableSprite::onEvent));
+            _stage->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &DraggableSprite::onEvent));
+        }
+
+        if (te->type == TouchEvent::MOVE)
+        {
+            Vector2 localPos = stage2local(te->localPosition);
+            Vector2 offset = localPos - local;
+
+            Transform tr = getTransform();
+            tr.x = 0;
+            tr.y = 0;
+            Vector2 p = tr.transform(offset);
+            setPosition(getPosition() + p);
+        }
+
+        if (te->type == TouchEvent::TOUCH_UP)
+        {
+            _stage->removeEventListeners(this);
+        }
+    }
+
+    void onAdded2Stage()
+    {
+        addEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &DraggableSprite::onEvent));
+    }
+
+    void onRemovedFromStage()
+    {
+        _stage->removeEventListeners(this);
+    }
+
+    Vector2 local;
 };
 
 class DragTest: public Test
@@ -30,17 +69,19 @@ public:
         pos[1] = Vector2(600, 225);
         pos[2] = Vector2(305, 170);
 
-        for (int i = 0; i < 3; ++i)
+
+        for (int i = 0; i < 1; ++i)
         {
             spSprite sprite = new DraggableSprite;
             sprite->setPosition(pos[i]);
             sprite->setResAnim(resources.getResAnim("batterfly"));
             sprite->attachTo(content);
 
+
             float angle = scalar::randFloat(0, (float)MATH_PI * 2);
             sprite->setRotation(angle);
             sprite->addTween(Actor::TweenRotation(MATH_PI * 2 + angle), 30000, -1);
-            sprite->setScale(scalar::randFloat(0.8f, 1.2f));
+            //sprite->setScale(scalar::randFloat(0.8f, 1.2f));
             sprite->setAnchor(0.5f, 0.5f);
 
             sprite->addEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &DragTest::onMouseDown));
@@ -60,6 +101,7 @@ public:
 
     void doUpdate(const UpdateState& us)
     {
+        return;
         //check intersections between sprites and visualize contact points
         for (int i = 0; i < 3; ++i)
         {
