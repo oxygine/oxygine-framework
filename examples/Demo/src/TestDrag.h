@@ -70,7 +70,7 @@ public:
         pos[2] = Vector2(305, 170);
 
 
-        for (int i = 0; i < 1; ++i)
+        for (int i = 0; i < 3; ++i)
         {
             spSprite sprite = new DraggableSprite;
             sprite->setPosition(pos[i]);
@@ -81,7 +81,7 @@ public:
             float angle = scalar::randFloat(0, (float)MATH_PI * 2);
             sprite->setRotation(angle);
             sprite->addTween(Actor::TweenRotation(MATH_PI * 2 + angle), 30000, -1);
-            //sprite->setScale(scalar::randFloat(0.8f, 1.2f));
+            sprite->setScale(scalar::randFloat(0.8f, 1.2f));
             sprite->setAnchor(0.5f, 0.5f);
 
             sprite->addEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &DragTest::onMouseDown));
@@ -101,7 +101,6 @@ public:
 
     void doUpdate(const UpdateState& us)
     {
-        return;
         //check intersections between sprites and visualize contact points
         for (int i = 0; i < 3; ++i)
         {
