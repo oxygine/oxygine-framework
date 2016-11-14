@@ -114,7 +114,7 @@ namespace oxygine
                 for (size_t i = 0; i < ln.size(); ++i)
                 {
                     Symbol& s = *ln[i];
-                    rx = std::max(s.x + s.gl.sw, rx);
+                    rx = std::max(s.x + s.gl.advance_x, rx);
                 }
 
                 int tx = _alignX(rx);
