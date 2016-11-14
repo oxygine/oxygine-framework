@@ -171,7 +171,7 @@ namespace oxygine
             s.y = _y + s.gl.offset_y;
             _x += s.gl.advance_x + getStyle().kerning;
 
-            int rx = s.x + s.gl.sw;
+            int rx = s.x + s.gl.advance_x;
 
 
             _lineWidth = std::max(rx, _lineWidth);
