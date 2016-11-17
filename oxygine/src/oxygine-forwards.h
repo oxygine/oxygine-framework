@@ -1,13 +1,23 @@
 #pragma  once
-#include "oxygine-include.h"
 #include "core/ref_counter.h"
-#include "core/intrusive_ptr.h"
 #include "closure/closure.h"
 
 
 #ifdef OXYGINE_SDL
-typedef struct SDL_Window SDL_Window;
+    typedef struct SDL_Window SDL_Window;
 #endif
+
+#define DECLARE_SMART(class_name, spname) \
+    class class_name;\
+    typedef oxygine::intrusive_ptr<class_name> spname;
+
+#define DECLARENS_SMART(name_space, class_name, spname) \
+    namespace name_space \
+    {\
+        class class_name;\
+        typedef oxygine::intrusive_ptr<class_name> spname;\
+    }
+
 
 struct SDL_KeyboardEvent;
 
@@ -15,7 +25,6 @@ namespace pugi
 {
     class xml_node;
 }
-
 namespace oxygine
 {
     namespace text
@@ -24,227 +33,101 @@ namespace oxygine
         struct Symbol;
     }
 
-    class Event;
-    class Color;
-    class Color;
-    DECLARE_SMART(NativeTexture, spNativeTexture);
-
-
-    class Resource;
-    class ResFont;
-    class ResAnim;
-
-    class CreateResourceContext;
-    class LoadResourcesContext;
-    class Resources;
-    class ShaderProgram;
-    class VertexDeclaration;
-
-    class IVideoDriver;
-
-    class ResourcesLoadOptions;
-
-    class ShaderProgram;
-    class IVideoDriver;
-    DECLARE_SMART(NativeTexture, spNativeTexture);
-
-
-    class Resources;
-    class Mem2Native;
-
-    class LoadResourcesContext;
-    class LoadResourcesContext;
-    DECLARE_SMART(Resource, spResource);
-
-    class Resources;
-    class CreateResourceContext;
-    class Restorable;
-
-    DECLARE_SMART(NativeTexture, spNativeTexture);
-    DECLARE_SMART(ResBuffer, spResBuffer);
-
-    class Resources;
-    class XmlWalker;
-    class CreateResourceContext;
-    DECLARE_SMART(NativeTexture, spNativeTexture);
-    class ResAtlas;
-
-    DECLARE_SMART(Texture, spTexture);
-
-
-    class Image;
-
-    DECLARE_SMART(ResAnim, spResAnim);
-
-    class ResFontBM;
-
-    class Resources;
-    class CreateResourceContext;
-
-    class Font;
-
-    DECLARE_SMART(ResFont, spResFont);
-
-    class ThreadDispatcher;
-    class ShaderProgram;
-    DECLARE_SMART(Object, spObject);
-
-    DECLARE_SMART(NativeTexture, spNativeTexture);
-    DECLARE_SMART(RenderTexture, spRenderTexture);
-
-    typedef void* nativeTextureHandle;
-    class Mutex;
-    class ImageData;
-    class SingleResAnim;
-
-
-    class Resources;
-    class Restorable;
-    class CreateResourceContext;
-    DECLARE_SMART(NativeTexture, spNativeTexture);
-    class ResStarlingAtlas;
-
-    typedef unsigned int dumpOptions;
-    class UberShaderProgram;
-    class RenderState;
-    class UpdateState;
-    class Material;
-    class ResAnim;
-    class EventState;
-    class Actor;
-    class ResAnim;
-    class AnimationFrame;
-    class Sprite;
-    class UpdateState;
-    class PointerState;
-    class Resources;
-    class Resource;
-    class Font;
-    class ResFont;
-    class ClipRectActor;
-    class Sprite;
-    class TextField;
-    class ColorRectSprite;
-    class DebugActor;
-
-    DECLARE_SMART(HttpRequestTask, spHttpRequestTask);
-    DECLARE_SMART(Sprite, spSprite);
-    DECLARE_SMART(WebImage, spWebImage);
-
-
-    DECLARE_SMART(Texture, spTexture);
+    template <class T>
+    class intrusive_ptr;
+    
     DECLARE_SMART(Actor, spActor);
-    DECLARE_SMART(Clock, spClock);
-    DECLARE_SMART(DragHandler, spDragHandler);
-
-    DECLARE_SMART(Actor, spActor);
+    DECLARE_SMART(AsyncTask, spAsyncTask);
     DECLARE_SMART(Box9Sprite, spBox9Sprite);
     DECLARE_SMART(Button, spButton);
     DECLARE_SMART(ClipRectActor, spClipRectActor);
     DECLARE_SMART(Clock, spClock);
     DECLARE_SMART(ColorRectSprite, spColorRectSprite);
     DECLARE_SMART(DebugActor, spDebugActor);
+    DECLARE_SMART(DragHandler, spDragHandler);
     DECLARE_SMART(EventDispatcher, spEventDispatcher);
     DECLARE_SMART(HttpRequestTask, spHttpRequestTask);
     DECLARE_SMART(InputText, spInputText);
     DECLARE_SMART(MaskedSprite, spMaskedSprite);
-
-    class Event;
-    class Material;
-    class PointerState;
+    DECLARE_SMART(NativeTexture, spNativeTexture);
+    DECLARE_SMART(Object, spObject);
     DECLARE_SMART(Polygon, spPolygon);
     DECLARE_SMART(ProgressBar, spProgressBar);
+    DECLARE_SMART(RenderTexture, spRenderTexture);
+    DECLARE_SMART(ResAnim, spResAnim);
+    DECLARE_SMART(ResBuffer, spResBuffer);
+    DECLARE_SMART(ResFont, spResFont);
+    DECLARE_SMART(Resource, spResource);
+    DECLARE_SMART(STDMaterial, spSTDMaterial);
     DECLARE_SMART(SlidingActor, spSlidingActor);
     DECLARE_SMART(Sprite, spSprite);
     DECLARE_SMART(Stage, spStage);
-    DECLARE_SMART(STDMaterial, spSTDMaterial);
     DECLARE_SMART(TextField, spTextField);
+    DECLARE_SMART(Texture, spTexture);
     DECLARE_SMART(ThreadLoader, spThreadLoader);
     DECLARE_SMART(Tween, spTween);
     DECLARE_SMART(TweenQueue, spTweenQueue);
     DECLARE_SMART(WebImage, spWebImage);
 
-
-
-
-
+    class Actor;
     class AnimationFrame;
-
-    class Resource;
-    class ResAnim;
-    class ResFont;
-
-    struct serializedata;
-    struct deserializedata;
-    struct deserializeLinkData;
-
-    class Color;
-    class Event;
-    class Material;
-
-    class Actor;
-    class ShaderProgram;
-    class PostProcessOptions;
-
-    class UpdateState;
-    class Tween;
-    class Actor;
-    class UpdateState;
-    class UpdateState;
-    class TweenOptions;
-
-    class RenderState;
-    class Actor;
     class ClipRectActor;
+    class Color;
+    class ColorRectSprite;
+    class CreateResourceContext;
+    class DebugActor;
+    class Event;
+    class EventState;
+    class Font;
+    class IVideoDriver;
+    class Image;
+    class ImageData;
+    class LoadResourcesContext;
     class MaskedSprite;
+    class Material;
+    class Mem2Native;
+    class Mutex;
+    class PointerState;
+    class PostProcessOptions;
+    class ProgressBar;
+    class RenderState;
+    class ResAnim;
+    class ResAtlas;
+    class ResFont;
+    class ResFontBM;
+    class ResStarlingAtlas;
+    class Resource;
+    class Resources;
+    class ResourcesLoadOptions;
+    class Restorable;
+    class ShaderProgram;
+    class SingleResAnim;
     class Sprite;
     class TextField;
-    class ColorRectSprite;
-    class ProgressBar;
-    DECLARE_SMART(TextField, spTextField);
-
-    DECLARE_SMART(Stage, spStage);
-    class Actor;
-    class EventState;
-
-    DECLARE_SMART(NativeTexture, spNativeTexture);
-
-    typedef unsigned int glyphOptions;
-
-    typedef int eventType;
-    class Event;
-
-    typedef int eventType;
-    DECLARE_SMART(EventDispatcher, spEventDispatcher);
+    class ThreadDispatcher;
     class TouchEvent;
-
-    class ResFontBM;
-    class ResAnim;
-    class Resources;
-
-    DECLARE_SMART(TextField, spTextField);
-    DECLARE_SMART(ColorRectSprite, spColorRectSprite);
-
-
-
-    DECLARE_SMART(Texture, spTexture);
-    DECLARE_SMART(NativeTexture, spNativeTexture);
-
-
-    DECLARE_SMART(STDMaterial, spSTDMaterial);
-    DECLARE_SMART(AsyncTask, spAsyncTask);
-
-    typedef Closure<void(Event* ev)> EventCallback;
-
-
-    typedef Closure<void(const UpdateState& us)> UpdateCallback;
-    typedef Closure<void(const RenderState& rs)> RenderCallback;
-    typedef int cloneOptions;
-    typedef int copyOptions;//deprecated typedef
-
+    class Tween;
+    class TweenOptions;
+    class UberShaderProgram;
+    class UpdateState;
+    class VertexDeclaration;
+    class XmlWalker;    
+    struct deserializeLinkData;
+    struct deserializedata;
+    struct serializedata;
 
     const int cloneOptionsDoNotCloneClildren = 0x01;
-    const int cloneOptionsResetTransform = 0x02;
+    const int cloneOptionsResetTransform = 0x02;  
+
+    typedef Closure<void(Event* ev)> EventCallback;
+    typedef Closure<void(const RenderState& rs)> RenderCallback;
+    typedef Closure<void(const UpdateState& us)> UpdateCallback;
+    typedef int cloneOptions;
+    typedef int copyOptions;//deprecated typedef
+    typedef int eventType;
+    typedef unsigned int dumpOptions;
+    typedef unsigned int glyphOptions;
+    typedef void* nativeTextureHandle;
 
 
 #define DECLARE_COPYCLONE(type) type(const type &src, cloneOptions);\
