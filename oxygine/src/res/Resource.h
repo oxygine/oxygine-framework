@@ -1,5 +1,5 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include <string>
 #include "core/Object.h"
 #include "pugixml/pugixml.hpp"

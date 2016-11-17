@@ -1,5 +1,5 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "core/Object.h"
 #include "core/Renderer.h"
 #include "math/Rect.h"

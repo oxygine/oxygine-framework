@@ -1,5 +1,5 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "EventDispatcher.h"
 #include "pthread.h"
 #include "core/ThreadDispatcher.h"

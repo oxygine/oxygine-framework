@@ -1,5 +1,5 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #ifdef __S3E__
 #else
 #   include "SDL_keyboard.h"

@@ -749,6 +749,12 @@
     <ClInclude Include="..\..\src\res\SingleResAnim.h">
       <Filter>src\res</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\oxygine-forwards.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\oxygine-include.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />

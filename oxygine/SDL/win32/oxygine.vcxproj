@@ -284,6 +284,8 @@
     <ClInclude Include="..\..\src\minizip\ioapi.h" />
     <ClInclude Include="..\..\src\minizip\ioapi_mem.h" />
     <ClInclude Include="..\..\src\minizip\unzip.h" />
+    <ClInclude Include="..\..\src\oxygine-forwards.h" />
+    <ClInclude Include="..\..\src\oxygine-include.h" />
     <ClInclude Include="..\..\src\PostProcess.h" />
     <ClInclude Include="..\..\src\res\SingleResAnim.h" />
     <ClInclude Include="..\..\src\ThreadLoader.h" />
