@@ -23,8 +23,6 @@ namespace oxygine
 
     protected:
         void sizeChanged(const Vector2& size) OVERRIDE;
-
-    private:
     };
 }
 

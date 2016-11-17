@@ -5,9 +5,6 @@
 
 namespace oxygine
 {
-    class EventState;
-    class Actor;
-
     enum MouseButton
     {
         MouseButton_Touch = 0,

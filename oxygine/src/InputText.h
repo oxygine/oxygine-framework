@@ -9,7 +9,6 @@
 
 namespace oxygine
 {
-    DECLARE_SMART(TextField, spTextField);
     DECLARE_SMART(InputText, spInputText);
 
     class InputText: public EventDispatcher

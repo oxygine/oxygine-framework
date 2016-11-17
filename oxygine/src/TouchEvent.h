@@ -1,10 +1,9 @@
 #pragma once
+#include "oxygine-include.h"
 #include "Event.h"
 #undef OUT
 namespace oxygine
 {
-    class PointerState;
-
     class TouchEvent : public Event
     {
     public:
@@ -27,8 +26,14 @@ namespace oxygine
 
         TouchEvent(eventType type, bool Bubbles = true, const Vector2& locPosition = Vector2(0, 0)) : Event(type, Bubbles), localPosition(locPosition), position(locPosition), mouseButton(MouseButton_Touch), pressure(1.0f), index(1) {}
 
-        Vector2 localPosition;//local position for Event::currentTarget actor
-        Vector2 position;//local position for Event::target actor
+        /**
+        position in local space for Event::currentTarget Actor
+        */
+        Vector2 localPosition;
+        /**
+        position in local space for Event::target actor
+        */
+        Vector2 position;
 
         float pressure;
 

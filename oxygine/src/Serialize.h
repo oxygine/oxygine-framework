@@ -8,12 +8,6 @@
 
 namespace oxygine
 {
-    DECLARE_SMART(Actor, spActor);
-
-    class Resource;
-    class ResAnim;
-    class ResFont;
-
     class creator
     {
     public:

@@ -3,17 +3,10 @@
 #include "Actor.h"
 #include "TextStyle.h"
 #include "VisualStyle.h"
+
 namespace oxygine
 {
     DECLARE_SMART(TextField, spTextField);
-
-    namespace text
-    {
-        class Node;
-        struct Symbol;
-    }
-
-
     class TextField : public VStyleActor
     {
         INHERITED(VStyleActor);

@@ -5,13 +5,8 @@
 #include "EventDispatcher.h"
 #undef OUT
 
-struct SDL_KeyboardEvent;
-
 namespace oxygine
 {
-    typedef int eventType;
-    DECLARE_SMART(EventDispatcher, spEventDispatcher);
-
     class Event
     {
     public:

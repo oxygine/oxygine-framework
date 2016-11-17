@@ -6,9 +6,6 @@
 
 namespace oxygine
 {
-    DECLARE_SMART(Texture, spTexture);
-    DECLARE_SMART(NativeTexture, spNativeTexture);
-
     class Diffuse
     {
     public:
@@ -28,7 +25,6 @@ namespace oxygine
         unsigned char pitch;
     };
 
-    class ResAnim;
     class AnimationFrame
     {
     public:

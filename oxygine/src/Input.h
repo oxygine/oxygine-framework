@@ -6,10 +6,6 @@
 
 namespace oxygine
 {
-    DECLARE_SMART(Stage, spStage);
-    class Actor;
-    class EventState;
-
     const int MAX_TOUCHES = 17;
 
     class Input

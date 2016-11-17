@@ -1,25 +1,26 @@
 #pragma once
+#include "oxygine-include.h"
 #include "core/ThreadDispatcher.h"
 #include "EventDispatcher.h"
 #include "Event.h"
-
-namespace oxygine
-{
 
 #ifdef ERROR
 #undef ERROR
 #endif
 
+namespace oxygine
+{
     DECLARE_SMART(AsyncTask, spAsyncTask);
 
-    class AsyncTaskEvent : public Event
+    class AsyncTaskEvent: public Event
     {
     public:
         AsyncTaskEvent(eventType type, AsyncTask* t) : Event(type), task(t) {}
         AsyncTask* task;
     };
 
-    class AsyncTask : public EventDispatcher
+
+    class AsyncTask: public EventDispatcher
     {
     public:
         enum

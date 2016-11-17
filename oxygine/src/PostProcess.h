@@ -8,11 +8,6 @@
 
 namespace oxygine
 {
-    class Actor;
-    class ShaderProgram;
-    class PostProcessOptions;
-
-
     class PostProcessOptions
     {
     public:

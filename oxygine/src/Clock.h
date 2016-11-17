@@ -4,9 +4,6 @@
 
 namespace oxygine
 {
-    class UpdateState;
-
-
     DECLARE_SMART(Clock, spClock);
     class Clock: public Object
     {

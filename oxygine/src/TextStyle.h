@@ -5,9 +5,6 @@
 
 namespace oxygine
 {
-    class Font;
-    class ResFont;
-
     class TextStyle
     {
     public:

@@ -8,8 +8,6 @@
 namespace oxygine
 {
     DECLARE_SMART(SlidingActor, spSlidingActor);
-    DECLARE_SMART(DragHandler, spDragHandler);
-
     class SlidingActor: public Actor
     {
         INHERITED(Actor);

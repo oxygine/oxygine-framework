@@ -4,8 +4,6 @@
 
 namespace oxygine
 {
-    class ResAnim;
-
     DECLARE_SMART(Polygon, spPolygon);
     class Polygon : public Sprite
     {

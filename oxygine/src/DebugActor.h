@@ -5,12 +5,6 @@
 
 namespace oxygine
 {
-    class ResFontBM;
-    class ResAnim;
-    class Resources;
-
-    DECLARE_SMART(TextField, spTextField);
-    DECLARE_SMART(ColorRectSprite, spColorRectSprite);
     DECLARE_SMART(DebugActor, spDebugActor);
 
     /**DebugActor is helper class. It displays FPS, memory usage, other stats and dev tools buttons*/

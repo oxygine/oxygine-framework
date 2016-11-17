@@ -3,11 +3,6 @@
 
 namespace oxygine
 {
-    class ResAnim;
-    class AnimationFrame;
-    class Sprite;
-    class UpdateState;
-
     /** A TweenAnim class
     *   use for playing per frame animation
     \code

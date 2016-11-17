@@ -3,15 +3,6 @@
 
 namespace oxygine
 {
-    class RenderState;
-    class Actor;
-    class ClipRectActor;
-    class MaskedSprite;
-    class Sprite;
-    class TextField;
-    class ColorRectSprite;
-    class ProgressBar;
-
     class Material
     {
     public:

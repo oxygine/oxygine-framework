@@ -7,12 +7,9 @@
 #else
 #include <unordered_set>
 #endif
+
 namespace oxygine
 {
-    DECLARE_SMART(NativeTexture, spNativeTexture);
-
-    typedef unsigned int glyphOptions;
-
     struct glyph
     {
         RectF src;

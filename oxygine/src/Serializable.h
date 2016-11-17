@@ -3,10 +3,6 @@
 
 namespace oxygine
 {
-    struct serializedata;
-    struct deserializedata;
-    struct deserializeLinkData;
-
     class Serializable
     {
     public:

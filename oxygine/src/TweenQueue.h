@@ -1,4 +1,5 @@
 #pragma once
+#include "oxygine-include.h"
 #include "Tween.h"
 
 namespace oxygine
@@ -41,7 +42,7 @@ namespace oxygine
         spTween add(const GS& gs, timeMS duration, int loops = 1, bool twoSides = false, timeMS delay = 0, Tween::EASE ease = Tween::ease_linear);
 
         template<class GS>
-        spTween add(const GS& gs, const TweenOptions &);
+        spTween add(const GS& gs, const TweenOptions&);
 
         void complete(timeMS deltaTime);
 
@@ -63,7 +64,7 @@ namespace oxygine
     }
 
     template<class GS>
-    spTween TweenQueue::add(const GS& gs, const TweenOptions &opt)
+    spTween TweenQueue::add(const GS& gs, const TweenOptions& opt)
     {
         return add(createTween2(gs, opt));
     }

@@ -75,8 +75,5 @@ namespace oxygine
         bool _cacheEnabled;
         std::vector<unsigned char> _response;
         std::vector<unsigned char> _postData;
-
-        //size_t _loaded;
-        //size_t _total;
     };
 }

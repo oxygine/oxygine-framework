@@ -5,11 +5,7 @@
 
 namespace oxygine
 {
-    class ClipRectActor;
-    class Sprite;
-    class TextField;
-    class ColorRectSprite;
-
+    DECLARE_SMART(STDMaterial, spSTDMaterial);
     class STDMaterial : public Material
     {
     public:
@@ -32,7 +28,6 @@ namespace oxygine
         STDRenderer* getRenderer() { return _renderer; }
 
     protected:
-        //STDRenderer _renderer_;
         STDRenderer* _renderer;
     };
 

@@ -5,7 +5,6 @@
 
 namespace oxygine
 {
-    class TouchEvent;
     Vector2 convertPosUp(Actor* src, Actor* dest, const Vector2& pos, bool direction);
     Vector2 convertPosDown(Actor* src, Actor* dest, const Vector2& pos, bool direction);
 

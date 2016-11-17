@@ -1,5 +1,6 @@
 #pragma once
 #include "oxygine-include.h"
+#include "oxygine-forwards.h"
 #include "core/Object.h"
 #include "core/Renderer.h"
 #include "math/Rect.h"
@@ -10,49 +11,8 @@
 #include "TouchEvent.h"
 #include "Tween.h"
 
-
-
 namespace oxygine
 {
-    class Event;
-
-    typedef unsigned int dumpOptions;
-
-    class RenderState;
-    class UpdateState;
-    class Material;
-
-
-    DECLARE_SMART(Texture, spTexture);
-    DECLARE_SMART(Actor, spActor);
-    DECLARE_SMART(Clock, spClock);
-
-
-    typedef Closure<void (const UpdateState& us)> UpdateCallback;
-    typedef Closure<void (const RenderState& rs)> RenderCallback;
-
-    const int cloneOptionsDoNotCloneClildren = 0x01;
-    const int cloneOptionsResetTransform = 0x02;
-    typedef int cloneOptions;
-    typedef int copyOptions;//deprecated typedef
-
-
-#define DECLARE_COPYCLONE(type) type(const type &src, cloneOptions);\
-    virtual type* clone(cloneOptions opt=0) const {return new type(*this, opt);}\
-
-
-#define DECLARE_COPYCLONE_NEW(type)  type(const type &src, cloneOptions opt = 0){copyFrom(src, opt);}\
-    virtual type* clone(cloneOptions opt=0) const {type *tp = new type(); tp->copyFrom(*this, opt); return tp;}\
-    virtual void copyFrom(const type &src, cloneOptions opt = 0);
-
-#define DECLARE_COPYCLONE_NEW2(type)  type(const type &src, cloneOptions opt = 0);\
-    virtual type* clone(cloneOptions opt=0) const;\
-    virtual void copyFrom(const type &src, cloneOptions opt = 0);
-
-#define CREATE_COPYCLONE_NEW(type) type::type(const type &src, cloneOptions opt){copyFrom(src, opt);}\
-    type* type::clone(cloneOptions opt) const {type *tp = new type(); tp->copyFrom(*this, opt); return tp;}
-
-
     class TweenOptions
     {
     public:
@@ -77,7 +37,9 @@ namespace oxygine
         bool            _detach;
     };
 
-    class Actor : public EventDispatcher, public intrusive_list_item<spActor>, public Serializable
+    DECLARE_SMART(Actor, spActor);
+
+    class Actor: public EventDispatcher, public intrusive_list_item<spActor>, public Serializable
     {
         typedef intrusive_list_item<spActor> intr_list;
     public:

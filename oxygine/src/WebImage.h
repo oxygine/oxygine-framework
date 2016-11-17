@@ -1,13 +1,11 @@
 #pragma once
+#include "oxygine-include.h"
 #include "Actor.h"
 #include <string>
 
 namespace oxygine
 {
-    DECLARE_SMART(HttpRequestTask, spHttpRequestTask);
-    DECLARE_SMART(Sprite, spSprite);
     DECLARE_SMART(WebImage, spWebImage);
-
     class WebImage : public Actor
     {
         INHERITED(Actor);

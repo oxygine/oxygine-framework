@@ -5,8 +5,6 @@ namespace oxygine
 {
     DECLARE_SMART(Button, spButton);
 
-    class ResAnim;
-
     class Button: public Sprite
     {
         INHERITED(Sprite);

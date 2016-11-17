@@ -9,9 +9,6 @@
 namespace oxygine
 {
     DECLARE_SMART(ThreadLoader, spThreadLoader);
-    class Resources;
-    class Resource;
-
     class ThreadLoader: public EventDispatcher
     {
     public:

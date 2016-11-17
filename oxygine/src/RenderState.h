@@ -4,10 +4,6 @@
 
 namespace oxygine
 {
-    class Color;
-    class Event;
-    class Material;
-
     class RState
     {
     public:

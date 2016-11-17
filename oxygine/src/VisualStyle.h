@@ -4,7 +4,6 @@
 
 namespace oxygine
 {
-    class RenderState;
     class VisualStyle
     {
     public:

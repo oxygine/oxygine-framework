@@ -4,8 +4,6 @@
 
 namespace oxygine
 {
-
-
     class ClipUV
     {
     public:

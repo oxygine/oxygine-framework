@@ -6,10 +6,6 @@
 
 namespace oxygine
 {
-
-    typedef int eventType;
-    class Event;
-
 #define makefourcc(a,b,c,d) ( ((unsigned int)a) | (((unsigned int)b)<< 8) | (((unsigned int)c)<<16) | (((unsigned int)d)<<24))
 
 #ifdef OX_HAS_CPP11
@@ -26,7 +22,6 @@ namespace oxygine
 
 #define  EventID(str) EventIDc11(str)
 
-    typedef Closure<void (Event* ev)> EventCallback;
 
     DECLARE_SMART(EventDispatcher, spEventDispatcher);
     class EventDispatcher: public Object
