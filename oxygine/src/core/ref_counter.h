@@ -1,6 +1,5 @@
 #pragma once
 #include "oxygine-include.h"
-
 #include "intrusive_ptr.h"
 
 namespace oxygine

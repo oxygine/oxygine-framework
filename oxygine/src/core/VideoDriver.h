@@ -9,12 +9,6 @@
 
 namespace oxygine
 {
-    class Color;
-    DECLARE_SMART(NativeTexture, spNativeTexture);
-
-    class ShaderProgram;
-    class VertexDeclaration;
-
     class IVideoDriver
     {
     public:

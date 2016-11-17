@@ -6,12 +6,6 @@
 
 namespace oxygine
 {
-    class Resources;
-    class Mem2Native;
-
-    class LoadResourcesContext;
-    class LoadResourcesContext;
-
     DECLARE_SMART(Resource, spResource);
     class Resource: public Object
     {

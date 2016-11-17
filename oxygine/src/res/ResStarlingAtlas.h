@@ -3,11 +3,6 @@
 #include "Resource.h"
 namespace oxygine
 {
-    class Resources;
-    class Restorable;
-    class CreateResourceContext;
-    DECLARE_SMART(NativeTexture, spNativeTexture);
-
     class ResStarlingAtlas: public Resource
     {
         INHERITED(Resource);

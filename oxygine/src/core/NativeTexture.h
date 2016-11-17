@@ -7,13 +7,6 @@
 
 namespace oxygine
 {
-
-    DECLARE_SMART(NativeTexture, spNativeTexture);
-    DECLARE_SMART(RenderTexture, spRenderTexture);
-
-    typedef void* nativeTextureHandle;
-
-
     class NativeTexture: public Texture, public Restorable
     {
     public:

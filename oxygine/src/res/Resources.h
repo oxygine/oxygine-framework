@@ -13,20 +13,9 @@
 #include <unordered_map>
 #endif
 
-namespace pugi
-{
-    class xml_node;
-}
 
 namespace oxygine
 {
-    class Resource;
-    class ResFont;
-    class ResAnim;
-
-    class CreateResourceContext;
-    class LoadResourcesContext;
-
     class ResourcesLoadOptions
     {
     public:

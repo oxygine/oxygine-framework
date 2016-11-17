@@ -144,12 +144,6 @@ namespace oxygine
         int _replyingTo;
     };
 
+
     typedef  ThreadDispatcher ThreadMessages;
-
-    class ThreadDispatcher2
-    {
-    public:
-
-    protected:
-    };
 }

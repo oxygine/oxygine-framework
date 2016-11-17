@@ -6,9 +6,6 @@
 
 namespace oxygine
 {
-    class Resources;
-    class CreateResourceContext;
-
     class ResBuffer: public Resource
     {
         INHERITED(Resource);

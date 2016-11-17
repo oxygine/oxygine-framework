@@ -6,8 +6,6 @@
 
 namespace oxygine
 {
-//#define OBJECT_POOL_ALLOCATOR 0
-
     class PoolObject
     {
     public:

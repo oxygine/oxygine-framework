@@ -11,6 +11,10 @@ typedef struct SDL_Window SDL_Window;
 
 struct SDL_KeyboardEvent;
 
+namespace pugi
+{
+    class xml_node;
+}
 
 namespace oxygine
 {
@@ -21,6 +25,84 @@ namespace oxygine
     }
 
     class Event;
+    class Color;
+    class Color;
+    DECLARE_SMART(NativeTexture, spNativeTexture);
+
+
+    class Resource;
+    class ResFont;
+    class ResAnim;
+
+    class CreateResourceContext;
+    class LoadResourcesContext;
+    class Resources;
+    class ShaderProgram;
+    class VertexDeclaration;
+
+    class IVideoDriver;
+
+    class ResourcesLoadOptions;
+
+    class ShaderProgram;
+    class IVideoDriver;
+    DECLARE_SMART(NativeTexture, spNativeTexture);
+
+
+    class Resources;
+    class Mem2Native;
+
+    class LoadResourcesContext;
+    class LoadResourcesContext;
+    DECLARE_SMART(Resource, spResource);
+
+    class Resources;
+    class CreateResourceContext;
+    class Restorable;
+
+    DECLARE_SMART(NativeTexture, spNativeTexture);
+    DECLARE_SMART(ResBuffer, spResBuffer);
+
+    class Resources;
+    class XmlWalker;
+    class CreateResourceContext;
+    DECLARE_SMART(NativeTexture, spNativeTexture);
+    class ResAtlas;
+
+    DECLARE_SMART(Texture, spTexture);
+
+
+    class Image;
+
+    DECLARE_SMART(ResAnim, spResAnim);
+
+    class ResFontBM;
+
+    class Resources;
+    class CreateResourceContext;
+
+    class Font;
+
+    DECLARE_SMART(ResFont, spResFont);
+
+    class ThreadDispatcher;
+    class ShaderProgram;
+    DECLARE_SMART(Object, spObject);
+
+    DECLARE_SMART(NativeTexture, spNativeTexture);
+    DECLARE_SMART(RenderTexture, spRenderTexture);
+
+    typedef void* nativeTextureHandle;
+    class Mutex;
+    class ImageData;
+    class SingleResAnim;
+
+
+    class Resources;
+    class Restorable;
+    class CreateResourceContext;
+    DECLARE_SMART(NativeTexture, spNativeTexture);
+    class ResStarlingAtlas;
 
     typedef unsigned int dumpOptions;
     class UberShaderProgram;

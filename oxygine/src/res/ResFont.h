@@ -1,10 +1,9 @@
 #pragma once
 #include "oxygine-include.h"
 #include "Resource.h"
+
 namespace oxygine
 {
-    class Font;
-
     DECLARE_SMART(ResFont, spResFont);
     class ResFont: public Resource
     {

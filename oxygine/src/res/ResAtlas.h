@@ -6,11 +6,6 @@
 
 namespace oxygine
 {
-    class Resources;
-    class XmlWalker;
-    class CreateResourceContext;
-    DECLARE_SMART(NativeTexture, spNativeTexture);
-
     class ResAtlas: public Resource
     {
         INHERITED(Resource);
@@ -59,7 +54,5 @@ namespace oxygine
 
     typedef void(*load_texture_hook)(const std::string& file, spNativeTexture nt, bool linearFilter, bool clamp2edge, LoadResourcesContext* load_context);
     void set_load_texture_hook(load_texture_hook);
-
-    class LoadResourcesContext;
     void load_texture_internal(const std::string& file, spNativeTexture nt, bool linearFilter, bool clamp2edge, LoadResourcesContext* load_context);
 }

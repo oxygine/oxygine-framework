@@ -8,8 +8,6 @@ namespace oxygine
 {
     bool isMainThread();
 
-    class Resources;
-
     /**internal class*/
     class XmlWalker
     {
@@ -60,7 +58,6 @@ namespace oxygine
         bool _alphaHitTest;
     };
 
-    class ResourcesLoadOptions;
 
     class CreateResourceContext
     {

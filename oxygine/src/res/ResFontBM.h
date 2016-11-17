@@ -6,13 +6,6 @@
 
 namespace oxygine
 {
-    class Resources;
-    class CreateResourceContext;
-    class Restorable;
-
-    DECLARE_SMART(NativeTexture, spNativeTexture);
-
-
     class ResFontBM: public ResFont
     {
     public:

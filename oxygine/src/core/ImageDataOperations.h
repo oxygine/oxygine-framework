@@ -4,8 +4,6 @@
 
 namespace oxygine
 {
-    class Color;
-
     namespace operations
     {
         //based on memcpy
