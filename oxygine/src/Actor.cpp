@@ -288,7 +288,11 @@ namespace oxygine
     {
         _pressedButton[b] = 0;
         if (_pressedOvered == _overred)//!_pressed[0] && !_pressed[1] && !_pressed[2])
-            _getStage()->removeEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onGlobalTouchUpEvent));
+        {
+            Stage *stage = _getStage();
+            if (stage)
+                stage->removeEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onGlobalTouchUpEvent));
+        }
 
         updateStatePressed();
     }
@@ -369,7 +373,7 @@ namespace oxygine
             {
                 click = *te;
                 click.type = TouchEvent::CLICK;
-                click.bubbles = false;
+                click.bubbles = true;
                 //will be dispatched later after UP
 
                 setNotPressed(te->mouseButton);
@@ -378,7 +382,6 @@ namespace oxygine
 
 
         EventDispatcher::dispatchEvent(event);
-
 
         if (!event->stopsImmediatePropagation && event->bubbles && !event->stopsPropagation)
         {
@@ -396,7 +399,7 @@ namespace oxygine
             }
         }
 
-        if (click.type)
+        if (click.type && event->target.get() == this)
         {
             //send click event at the end after TOUCH_UP event
             dispatchEvent(&click);

@@ -328,15 +328,16 @@ namespace oxygine
                         while (act && act.get() != _content.get())
                         {
                             for (int i = 0; i < MouseButton_Num; ++i)
+                            {
                                 act->setNotPressed((MouseButton)i);
 
+                                TouchEvent ev(TouchEvent::TOUCH_UP, true, Vector2(-100000, -100000));
+                                ev.mouseButton = (MouseButton)i;
+                                ev.index = te->index;
+                                ev.bubbles = false;
+                                act->dispatchEvent(&ev);
 
-                            TouchEvent ev(TouchEvent::TOUCH_UP, true, Vector2(-100000, -100000));
-                            ev.index = te->index;
-                            ev.bubbles = false;
-                            act->dispatchEvent(&ev);
-
-
+                            }
                             act = act->getParent();
                         }
 
