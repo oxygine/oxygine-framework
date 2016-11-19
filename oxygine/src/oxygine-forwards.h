@@ -4,7 +4,7 @@
 
 
 #ifdef OXYGINE_SDL
-    typedef struct SDL_Window SDL_Window;
+typedef struct SDL_Window SDL_Window;
 #endif
 
 #define DECLARE_SMART(class_name, spname) \
@@ -35,7 +35,7 @@ namespace oxygine
 
     template <class T>
     class intrusive_ptr;
-    
+
     DECLARE_SMART(Actor, spActor);
     DECLARE_SMART(AsyncTask, spAsyncTask);
     DECLARE_SMART(Box9Sprite, spBox9Sprite);
@@ -111,13 +111,13 @@ namespace oxygine
     class UberShaderProgram;
     class UpdateState;
     class VertexDeclaration;
-    class XmlWalker;    
+    class XmlWalker;
     struct deserializeLinkData;
     struct deserializedata;
     struct serializedata;
 
     const int cloneOptionsDoNotCloneClildren = 0x01;
-    const int cloneOptionsResetTransform = 0x02;  
+    const int cloneOptionsResetTransform = 0x02;
 
     typedef Closure<void(Event* ev)> EventCallback;
     typedef Closure<void(const RenderState& rs)> RenderCallback;

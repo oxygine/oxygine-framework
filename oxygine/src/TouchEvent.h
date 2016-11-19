@@ -24,7 +24,7 @@ namespace oxygine
         };
 
 
-        TouchEvent(eventType type, bool Bubbles = true, const Vector2& locPosition = Vector2(0, 0)) : Event(type, Bubbles), localPosition(locPosition), position(locPosition), mouseButton(MouseButton_Touch), pressure(1.0f), index(1) {}
+        TouchEvent(eventType type, bool Bubbles = true, const Vector2& locPosition = Vector2(0, 0)) : Event(type, Bubbles), localPosition(locPosition), position(locPosition), mouseButton(MouseButton_Touch), pressure(1.0f), index(1), __clickDispatched(false) {}
 
         /**
         position in local space for Event::currentTarget Actor
@@ -43,5 +43,6 @@ namespace oxygine
         const PointerState* getPointer() const;
 
         static bool isTouchEvent(int eventID) { return eventID > __FIRST && eventID < __LAST; }
+        bool __clickDispatched;
     };
 }

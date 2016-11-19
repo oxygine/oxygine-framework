@@ -289,7 +289,7 @@ namespace oxygine
         _pressedButton[b] = 0;
         if (_pressedOvered == _overred)//!_pressed[0] && !_pressed[1] && !_pressed[2])
         {
-            Stage *stage = _getStage();
+            Stage* stage = _getStage();
             if (stage)
                 stage->removeEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onGlobalTouchUpEvent));
         }
@@ -366,11 +366,12 @@ namespace oxygine
 
         TouchEvent click(0);
 
-        if (event->type == TouchEvent::TOUCH_UP &&  event->target.get() == this)
+        if (event->type == TouchEvent::TOUCH_UP)
         {
             TouchEvent* te = safeCast<TouchEvent*>(event);
-            if (_pressedButton[te->mouseButton] == te->index)
+            if (_pressedButton[te->mouseButton] == te->index && !te->__clickDispatched)
             {
+                te->__clickDispatched = true;
                 click = *te;
                 click.type = TouchEvent::CLICK;
                 click.bubbles = true;
