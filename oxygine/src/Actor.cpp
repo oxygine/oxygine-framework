@@ -366,7 +366,7 @@ namespace oxygine
 
         TouchEvent click(0);
 
-        if (event->type == TouchEvent::TOUCH_UP)
+        if (event->type == TouchEvent::TOUCH_UP &&  event->target.get() == this)
         {
             TouchEvent* te = safeCast<TouchEvent*>(event);
             if (_pressedButton[te->mouseButton] == te->index)
@@ -399,7 +399,7 @@ namespace oxygine
             }
         }
 
-        if (click.type && event->target.get() == this)
+        if (click.type)
         {
             //send click event at the end after TOUCH_UP event
             dispatchEvent(&click);
