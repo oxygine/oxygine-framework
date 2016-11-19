@@ -1,11 +1,9 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "STDRenderer.h"
 
 namespace oxygine
 {
-
-
     class ClipUV
     {
     public:

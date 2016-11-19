@@ -1,12 +1,8 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 
 namespace oxygine
 {
-    struct serializedata;
-    struct deserializedata;
-    struct deserializeLinkData;
-
     class Serializable
     {
     public:

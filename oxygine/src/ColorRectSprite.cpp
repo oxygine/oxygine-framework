@@ -8,7 +8,7 @@ namespace oxygine
 {
     void ColorRectSprite::copyFrom(const ColorRectSprite& src, cloneOptions opt)
     {
-        _Sprite::copyFrom(src, opt);
+        inherited::copyFrom(src, opt);
     }
 
     ColorRectSprite::ColorRectSprite()
@@ -23,6 +23,11 @@ namespace oxygine
     void ColorRectSprite::doRender(const RenderState& rs)
     {
         rs.material->doRender(this, rs);
+    }
+
+    void ColorRectSprite::sizeChanged(const Vector2& size)
+    {
+        Actor::sizeChanged(size);
     }
 
     void ColorRectSprite::serialize(serializedata* data)

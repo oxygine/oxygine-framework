@@ -31,11 +31,23 @@
 #include <stdarg.h>
 #include <iomanip>
 
+
 #ifdef __S3E__
 #include "s3eMemory.h"
 #elif __APPLE__
 #include "core/ios/ios.h"
 #endif
+
+#ifndef __S3E__
+#include "SDL_video.h"
+#endif
+
+#ifdef __WIN32__
+#pragma comment(lib, "psapi.lib") // Added to support GetProcessMemoryInfo()
+#include <windows.h>
+#include <Psapi.h>
+#endif
+
 
 namespace oxygine
 {
@@ -43,6 +55,7 @@ namespace oxygine
     file::ZipFileSystem zp;
 
     spDebugActor DebugActor::instance;
+    int _corner = 0;
 
     void DebugActor::initialize()
     {
@@ -54,7 +67,6 @@ namespace oxygine
         zp.setPrefix("system/");
         zp.add(system_data, system_size);
 
-        //file::ZipFileSystem zp;
         file::mount(&zp);
         resSystem = new Resources;
         resSystem->loadXML("system/res.xml", ResourcesLoadOptions().prebuiltFolder("system"));
@@ -92,8 +104,7 @@ namespace oxygine
 
     void DebugActor::setCorner(int corner)
     {
-        if (DebugActor::instance)
-            DebugActor::instance->setCornerPosition(corner);
+        _corner = corner;
     }
 
     void DebugActor::release()
@@ -107,7 +118,7 @@ namespace oxygine
 
     void DebugActor::setCornerPosition(int corner)
     {
-        _corner = corner;
+        setCorner(corner);
     }
 
     void DebugActor::addButton(float& x, const char* name, const char* anim)
@@ -123,7 +134,7 @@ namespace oxygine
         btn->addEventListener(TouchEvent::CLICK, CLOSURE(this, &DebugActor::_btnClicked));
     }
 
-    DebugActor::DebugActor(): _frames(0), _startTime(0), _corner(0), _showTexel2PixelErrors(false), _showTouchedActor(false)
+    DebugActor::DebugActor(): _frames(0), _startTime(0), _showTexel2PixelErrors(false), _showTouchedActor(false), _dragging(false)
     {
         DebugActor::initialize();
 
@@ -183,24 +194,30 @@ namespace oxygine
 
 
         instance = this;
+        /*
+
+        float dpi = 0;
+        float dpi1 = 0;
+        float dpi2 = 0;
+        int ret = SDL_GetDisplayDPI(0, &dpi, &dpi1, &dpi2);
+        {
+            log::messageln("dpi>>>>> %d %f %f %f", ret, dpi, dpi1, dpi2);
+        }
+        */
     }
 
     void DebugActor::onAdded2Stage()
     {
+        _dragging = false;
         _stage->addEventListener(TouchEvent::MOVE, CLOSURE(this, &DebugActor::onDAEvent));
+        _stage->addEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &DebugActor::onDAEvent));
+        _stage->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &DebugActor::onDAEvent));
     }
 
     void DebugActor::onRemovedFromStage()
     {
         _stage->removeEventListeners(this);
     }
-
-    /*
-    void DebugActor::addDebugString(const string &str)
-    {
-        _debugText += str;
-    }
-    */
 
     void DebugActor::addDebugString(const char* format, ...)
     {
@@ -334,7 +351,8 @@ namespace oxygine
 #if OXYGINE_TRACE_VIDEO_STATS
         int primitives = 0;
         primitives += vstats.elements[IVideoDriver::PT_TRIANGLES] / 3;
-        primitives += vstats.elements[IVideoDriver::PT_TRIANGLE_STRIP] - 2;
+        if (vstats.elements[IVideoDriver::PT_TRIANGLE_STRIP])
+            primitives += vstats.elements[IVideoDriver::PT_TRIANGLE_STRIP] - 2;
         s << "batches=" << aligned(vstats.batches, 3) << " primitives=" << aligned(primitives, 3) << std::endl;
 #endif
 
@@ -346,6 +364,13 @@ namespace oxygine
         size_t mem;
         iosGetMemoryUsage(mem);
         s << "memory=" << mem / 1024 << "kb ";
+#endif
+
+#ifdef __WIN32__
+        PROCESS_MEMORY_COUNTERS_EX pmc;
+        GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*) &pmc, sizeof(pmc));
+        s << "memory=" << pmc.PrivateUsage / 1024 << "kb ";
+
 #endif
 
         if (!_debugText.empty())
@@ -379,7 +404,7 @@ namespace oxygine
                 break;
         }
 
-        pos = getStage()->global2local(pos);
+        pos = getStage()->parent2local(pos);
 
         Vector2 realSize = getScaledSize();
         switch (_corner)
@@ -395,9 +420,8 @@ namespace oxygine
                 break;
         }
 
-        setPosition(pos);
+        //setPosition(pos);
         setScale(1.0f / getStage()->getScaleX());
-
 
         RenderState rs = parentRS;
         parentRS.material->finish();
@@ -455,8 +479,33 @@ namespace oxygine
     void DebugActor::onDAEvent(Event* ev)
     {
         TouchEvent* t = safeCast<TouchEvent*>(ev);
-        Vector2 loc = stage2local(t->localPosition, _getStage());
-        setAlpha(isOn(loc) ? 64 : 255);
+        Vector2 loc = parent2local(t->localPosition);
+        if (t->type == TouchEvent::MOVE)
+        {
+            setAlpha(isOn(loc) ? 64 : 255);
+
+            if (_dragging)
+            {
+                Transform tr = getTransform();
+                tr.x = 0;
+                tr.y = 0;
+                Vector2 p = tr.transform(_local);
+                setPosition(t->localPosition - p);
+            }
+        }
+
+        if (t->type == TouchEvent::TOUCH_DOWN)
+        {
+            if (isOn(loc))
+            {
+                _local = loc;
+                _dragging = true;
+            }
+        }
+        if (t->type == TouchEvent::TOUCH_UP)
+        {
+            _dragging = false;
+        }
     }
 
     void DebugActor::onEvent(Event* ev)
@@ -470,7 +519,7 @@ namespace oxygine
         cr->addTween(ColorRectSprite::TweenColor(Color(Color::White, 200)), 700, 1, true, 0, Tween::ease_inCubic)->setDetachActor(true);
         actor->addChild(cr);
         std::string dmp = actor->dump(0);
-        log::messageln("touched actor '%s' local pos: (%.0f,%.0f), pos: (%.0f,%.0f)\n%s",
+        log::messageln(">>>>>>>>>>>>>>>>>>>>\ntouched actor '%s' local pos: (%.0f,%.0f), pos: (%.0f,%.0f)\n%s",
                        actor->getName().c_str(),
                        te->localPosition.x, te->localPosition.y,
                        te->position.x, te->position.y,

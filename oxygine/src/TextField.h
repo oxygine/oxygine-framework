@@ -1,21 +1,15 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "Actor.h"
 #include "TextStyle.h"
 #include "VisualStyle.h"
+
 namespace oxygine
 {
     DECLARE_SMART(TextField, spTextField);
-
-    namespace text
+    class TextField : public VStyleActor
     {
-        class Node;
-        struct Symbol;
-    }
-
-
-    class TextField : public _VStyleActor
-    {
+        INHERITED(VStyleActor);
     public:
         DECLARE_COPYCLONE_NEW(TextField);
         TextField();
@@ -45,6 +39,7 @@ namespace oxygine
         const Color&                getOutlineColor() const;
         float                       getOutline() const;
         float                       getWeight() const;
+        float                       getBaselineScale() const;
 
 
         bool getBounds(RectF&) const OVERRIDE;
@@ -60,6 +55,8 @@ namespace oxygine
         void setBreakLongWords(bool val);
         /**Overwrites TextStyle linesOffset*/
         void setLinesOffset(int offset);
+        /**Overwrites TextStyle baselineScale*/
+        void setBaselineScale(float scale);
         /**Overwrites TextStyle kerning*/
         void setKerning(int kerning);
         /**Overwrites TextStyle scale2Size. deprecated, use setFontSize*/
@@ -122,11 +119,4 @@ namespace oxygine
     };
 }
 
-#ifdef OX_EDITOR
-#include "EditorTextField.h"
-#else
-namespace oxygine
-{
-    typedef TextField _TextField;
-}
-#endif
+EDITOR_INCLUDE(TextField);

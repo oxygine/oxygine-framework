@@ -1,5 +1,5 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "math/Rect.h"
 #include "core/NativeTexture.h"
 #include "core/Renderer.h"
@@ -8,11 +8,6 @@
 
 namespace oxygine
 {
-    class Actor;
-    class ShaderProgram;
-    class PostProcessOptions;
-
-
     class PostProcessOptions
     {
     public:
@@ -20,16 +15,19 @@ namespace oxygine
         {
             flag_singleR2T = 1,
             flag_fullscreen = 1 << 1,
+            flag_screen = 1 << 2,
         };
 
-        PostProcessOptions(int flags = 0) : _flags(flags), _downscale(1) {}
+        PostProcessOptions(int flags = 0) : _flags(flags), _downscale(1), _clearColor(0, 0, 0, 0) {}
         PostProcessOptions& fullscreen(bool enable = true) { _flags = enable ? (_flags | flag_fullscreen) : (_flags  & (~flag_fullscreen)); return *this; }
         PostProcessOptions& singleRender(bool enable = true) { _flags = enable ? (_flags | flag_singleR2T) : (_flags  & (~flag_singleR2T)); return *this; }
         //loops -(2, 3, 4, ...),  final size: 2^loops
         PostProcessOptions& downscale(int loops = 2) { _downscale = loops; return *this; }
+        PostProcessOptions& clear(const Color& c) { _clearColor = c; return *this; }
 
         int _flags;
         int _downscale;
+        Color _clearColor;
     };
 
 
@@ -122,6 +120,7 @@ namespace oxygine
     RenderTargetsManager& getRTManager();
 
     void updatePortProcessItems();
+    bool isRenderingPostProcessItems();
     void addPostProcessItem(PPTask*);
     void removePostProcessItem(PPTask*);
     void clearPostProcessItems();

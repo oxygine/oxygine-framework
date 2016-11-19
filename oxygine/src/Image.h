@@ -1,5 +1,5 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "core/Texture.h"
 #include "core/file.h"
 
@@ -35,6 +35,7 @@ namespace oxygine
         //void convert2pot(MemoryTexture &dest);
 
         void fill_zero();
+        void fill(unsigned int val);
 
         unsigned int    getSizeVRAM() const {return (unsigned int)_buffer.size();}
         int             getWidth() const;
@@ -45,7 +46,11 @@ namespace oxygine
         ImageData   lock(lock_flags f = 0, const Rect* pRect = 0);
         ImageData   lock(const Rect* pRect);
         ImageData   lock(const Rect& pRect);
+        ImageData   lock(int x, int y, int w, int h);
+        ImageData   lock(int x, int y);
+
         void        unlock();
+        void        toPOT(Image& dest);
 
         void        updateRegion(int x, int y, const ImageData& data);
         void        apply(const Rect*);

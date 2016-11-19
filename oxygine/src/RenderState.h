@@ -1,13 +1,9 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "core/Renderer.h"
 
 namespace oxygine
 {
-    class Color;
-    class Event;
-    class Material;
-
     class RState
     {
     public:

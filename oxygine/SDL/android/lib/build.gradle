@@ -11,17 +11,17 @@ apply plugin: 'com.android.library'
 
 dependencies {
         compile project(':oxygine-extension')
-    }
+}
 
 android {
-		lintOptions {
-        	abortOnError false
-    	}
+        lintOptions {
+            abortOnError false
+        }
 
-        compileSdkVersion 23
-  		buildToolsVersion '23.0.2'
+        compileSdkVersion rootProject.android.compileSdkVersion
+        buildToolsVersion rootProject.android.buildToolsVersion
 
-  		sourceSets {
+        sourceSets {
             main {
                 manifest.srcFile 'AndroidManifest.xml'
                 java.srcDirs = ['src']

@@ -1,14 +1,11 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "math/Rect.h"
 #include "core/Texture.h"
 #include "core/NativeTexture.h"
 
 namespace oxygine
 {
-    DECLARE_SMART(Texture, spTexture);
-    DECLARE_SMART(NativeTexture, spNativeTexture);
-
     class Diffuse
     {
     public:
@@ -28,11 +25,11 @@ namespace oxygine
         unsigned char pitch;
     };
 
-    class ResAnim;
     class AnimationFrame
     {
     public:
         AnimationFrame() : _srcRect(0, 0, 1, 1), _destRect(0, 0, 1, 1), _resAnim(0), _row(0), _column(0) {}
+        AnimationFrame(spNativeTexture t);
 
         void init(ResAnim* rs, const Diffuse& df,
                   const RectF& srcRect, const RectF& destRect, const Vector2& frame_size);
@@ -60,6 +57,7 @@ namespace oxygine
         void            setResAnim(ResAnim* rs) {_resAnim = rs;}
         void            setDiffuse(const Diffuse& d) { _diffuse = d; }
         void            setSize(const Vector2& size) {_frameSize = size;}
+        void            setSize(float w, float h) { setSize(Vector2(w, h)); }
         void            setHitTestData(const HitTestData& ad) { _hittest = ad; }
         void            setRow(int v) {_row = v;}
         void            setColumn(int v) {_column = v;}

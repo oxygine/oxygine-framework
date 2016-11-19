@@ -1,5 +1,5 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 
 #include "Vector3.h"
 #include "Vector4.h"
@@ -70,7 +70,7 @@ namespace oxygine
         static MatrixT& perspectiveFovLH(MatrixT& out, T fovy, T aspect, T znear, T zfar);
         static MatrixT& perspectiveFovRH(MatrixT& out, T fovy, T aspect, T znear, T zfar);
 
-        static MatrixT& perspectivOffCenterLH(MatrixT& out, T left, T right, T bottom, T top, T znear, T zfar);
+        static MatrixT& perspectiveOffCenterLH(MatrixT& out, T left, T right, T bottom, T top, T znear, T zfar);
         static MatrixT& perspectiveOffCenterRH(MatrixT& out, T left, T right, T bottom, T top, T znear, T zfar);
 
         static MatrixT& orthoLH(MatrixT& out, T width, T height, T zNear, T zFar);
@@ -434,7 +434,7 @@ namespace oxygine
     }
 
     template <class T>
-    inline MatrixT<T>& MatrixT<T>::perspectivOffCenterLH(MatrixT& out, T left, T right, T bottom, T top, T znearPlane, T zfarPlane)
+    inline MatrixT<T>& MatrixT<T>::perspectiveOffCenterLH(MatrixT& out, T left, T right, T bottom, T top, T znearPlane, T zfarPlane)
     {
         out = matrix(
                   2 * znearPlane / (right - left), 0, 0, 0,

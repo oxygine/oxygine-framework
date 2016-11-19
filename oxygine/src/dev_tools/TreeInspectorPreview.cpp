@@ -54,7 +54,7 @@ namespace oxygine
 
         Material::setCurrent(0);
 
-        setSize(30, 30);
+        //setSize(30, 30);
 
         RectF itemRect = _videoCache._bounds;
         if (itemRect.isEmpty())

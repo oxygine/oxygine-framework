@@ -1,4 +1,5 @@
 #include "ImageDataOperations.h"
+#include "math/Color.h"
 #include <string.h>
 
 namespace oxygine
@@ -44,11 +45,42 @@ namespace oxygine
                 const unsigned char* srcLine = src.data;
                 unsigned char* destLine = dest.data;
 
-                for (int h = 0; h < src.h; h++)
+                const int srch = src.h;
+                const int srcpitch = src.pitch;
+                const int destpitch = dest.pitch;
+                for (int h = 0; h < srch; h++)
                 {
                     memcpy(destLine, srcLine, bppPitch);
-                    srcLine += src.pitch;
-                    destLine += dest.pitch;
+                    srcLine += srcpitch;
+                    destLine += destpitch;
+                }
+            }
+        }
+
+        void move(const ImageData& src, ImageData& dest)
+        {
+            if (!check(src, dest))
+                return;
+
+            OX_ASSERT(src.format == dest.format);
+
+            int bppPitch = src.w * src.bytespp;
+
+            if (src.pitch == dest.pitch && bppPitch == dest.pitch)
+                memmove(dest.data, src.data, bppPitch * src.h);
+            else
+            {
+                const unsigned char* srcLine = src.data;
+                unsigned char* destLine = dest.data;
+
+                const int srch = src.h;
+                const int srcpitch = src.pitch;
+                const int destpitch = dest.pitch;
+                for (int h = 0; h < srch; h++)
+                {
+                    memmove(destLine, srcLine, bppPitch);
+                    srcLine += srcpitch;
+                    destLine += destpitch;
                 }
             }
         }
@@ -71,6 +103,23 @@ namespace oxygine
             applyOperation(op, src, dest);
         }
 
+        void premultiply(ImageData& dest)
+        {
+            blitPremultiply(dest, dest);
+        }
+
+        void blitColored(const ImageData& src, ImageData& dest, const Color& c)
+        {
+            Pixel p;
+            p.r = c.r;
+            p.g = c.g;
+            p.b = c.b;
+            p.a = c.a;
+
+            op_blit_colored op(p);
+            applyOperation(op, src, dest);
+        }
+
         void flipY(const ImageData& src, ImageData& dest)
         {
             if (!check(src, dest))
@@ -81,12 +130,23 @@ namespace oxygine
 
             int bppPitch = src.w * src.bytespp;
 
-            for (int h = 0; h < src.h; h++)
+
+
+            const int srch = src.h;
+            const int srcpitch = src.pitch;
+            const int destpitch = dest.pitch;
+            for (int h = 0; h < srch; h++)
             {
                 memcpy(destLine, srcLine, bppPitch);
-                srcLine += src.pitch;
-                destLine -= dest.pitch;
+                srcLine += srcpitch;
+                destLine -= destpitch;
             }
+        }
+
+        void blend(const ImageData& src, ImageData& dest)
+        {
+            op_blend_srcAlpha_invSrcAlpha op;
+            applyOperation(op, src, dest);
         }
     }
 }

@@ -32,16 +32,15 @@ namespace oxygine
         _zOrder(0),
         _scale(1, 1),
         _rotation(0),
-        _flags(flag_visible | flag_touchEnabled | flag_touchChildrenEnabled | flag_childrenRelative | flag_fastTransform),
+        _flags(flag_visible | flag_touchEnabled | flag_touchChildrenEnabled | flag_fastTransform),
         _parent(0),
         _alpha(255),
-        _pressed(0),
-        _overred(0),
         _stage(0),
         _material(0)
     {
         _transform.identity();
         _transformInvert.identity();
+        _pressedOvered = 0;
     }
 
     void Actor::copyFrom(const Actor& src, cloneOptions opt)
@@ -58,8 +57,8 @@ namespace oxygine
         _flags = src._flags;
         _parent = 0;
         _alpha = src._alpha;
-        _overred = 0;
-        _pressed = 0;
+
+        _pressedOvered = 0;
 
         _transform = src._transform;
         _transformInvert = src._transformInvert;
@@ -105,8 +104,6 @@ namespace oxygine
         OX_ASSERT(_stage == 0);
         _stage = stage;
 
-        onAdded2Stage();
-
         spActor actor = _children._first;
         while (actor)
         {
@@ -114,6 +111,8 @@ namespace oxygine
             actor->added2stage(stage);
             actor = next;
         }
+
+        onAdded2Stage();
     }
 
     void Actor::removedFromStage()
@@ -124,8 +123,7 @@ namespace oxygine
         _stage->removeEventListeners(this);
         _stage = 0;
 
-        _pressed = 0;
-        _overred = 0;
+        _pressedOvered = 0;
 
         spActor actor = _children._first;
         while (actor)
@@ -276,9 +274,9 @@ namespace oxygine
         return stream.str();
     }
 
-    pointer_index Actor::getPressed() const
+    pointer_index Actor::getPressed(MouseButton b) const
     {
-        return _pressed;
+        return _pressedButton[b];
     }
 
     pointer_index Actor::getOvered() const
@@ -286,10 +284,15 @@ namespace oxygine
         return _overred;
     }
 
-    void Actor::setNotPressed()
+    void Actor::setNotPressed(MouseButton b)
     {
-        _pressed = 0;
-        _getStage()->removeEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onGlobalTouchUpEvent));
+        _pressedButton[b] = 0;
+        if (_pressedOvered == _overred)//!_pressed[0] && !_pressed[1] && !_pressed[2])
+        {
+            Stage* stage = _getStage();
+            if (stage)
+                stage->removeEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onGlobalTouchUpEvent));
+        }
 
         updateStatePressed();
     }
@@ -297,10 +300,10 @@ namespace oxygine
     void Actor::_onGlobalTouchUpEvent(Event* ev)
     {
         TouchEvent* te = safeCast<TouchEvent*>(ev);
-        if (te->index != _pressed)
+        if (te->index != _pressedButton[te->mouseButton])
             return;
 
-        setNotPressed();
+        setNotPressed(te->mouseButton);
 
         TouchEvent up = *te;
         up.bubbles = false;
@@ -351,11 +354,12 @@ namespace oxygine
         if (event->type == TouchEvent::TOUCH_DOWN)
         {
             TouchEvent* te = safeCast<TouchEvent*>(event);
-            if (!_pressed)
+            if (!_pressedButton[te->mouseButton])
             {
-                _pressed = te->index;
-                _getStage()->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onGlobalTouchUpEvent));
+                if (_pressedOvered == _overred)//!_pressed[0] && !_pressed[1] && !_pressed[2])
+                    _getStage()->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Actor::_onGlobalTouchUpEvent));
 
+                _pressedButton[te->mouseButton] = te->index;
                 updateStatePressed();
             }
         }
@@ -365,20 +369,20 @@ namespace oxygine
         if (event->type == TouchEvent::TOUCH_UP)
         {
             TouchEvent* te = safeCast<TouchEvent*>(event);
-            if (_pressed == te->index)
+            if (_pressedButton[te->mouseButton] == te->index && !te->__clickDispatched)
             {
+                te->__clickDispatched = true;
                 click = *te;
                 click.type = TouchEvent::CLICK;
-                click.bubbles = false;
+                click.bubbles = true;
                 //will be dispatched later after UP
 
-                setNotPressed();
+                setNotPressed(te->mouseButton);
             }
         }
 
 
         EventDispatcher::dispatchEvent(event);
-
 
         if (!event->stopsImmediatePropagation && event->bubbles && !event->stopsPropagation)
         {
@@ -387,7 +391,7 @@ namespace oxygine
                 if (TouchEvent::isTouchEvent(event->type))
                 {
                     TouchEvent* me = safeCast<TouchEvent*>(event);
-                    me->localPosition = local2global(me->localPosition);
+                    me->localPosition = local2parent(me->localPosition);
                 }
 
                 event->phase = Event::phase_bubbling;
@@ -418,7 +422,7 @@ namespace oxygine
         {
             TouchEvent* me = safeCast<TouchEvent*>(event);
             originalLocalPos = me->localPosition;
-            me->localPosition = global2local(originalLocalPos);
+            me->localPosition = parent2local(originalLocalPos);
         }
 
         event->phase = Event::phase_capturing;
@@ -730,22 +734,20 @@ namespace oxygine
                      _pos.x, _pos.y);
         }
 
-        if (_flags & flag_childrenRelative)
+        Vector2 offset;
+        if (_flags & flag_anchorInPixels)
         {
-            Vector2 offset;
-            if (_flags & flag_anchorInPixels)
-            {
-                offset.x = -_anchor.x;
-                offset.y = -_anchor.y;
-            }
-            else
-            {
-                offset.x = -float(_size.x * _anchor.x);
-                offset.y = -float(_size.y * _anchor.y);//todo, what to do? (per pixel quality)
-            }
-
-            tr.translate(offset);
+            offset.x = -_anchor.x;
+            offset.y = -_anchor.y;
         }
+        else
+        {
+            offset.x = -float(_size.x * _anchor.x);
+            offset.y = -float(_size.y * _anchor.y);//todo, what to do? (per pixel quality)
+        }
+
+        tr.translate(offset);
+
 
         _transform = tr;
         _flags &= ~flag_transformDirty;
@@ -926,6 +928,8 @@ namespace oxygine
 
     void Actor::prependChild(Actor* actor)
     {
+        if (actor == getFirstChild().get())
+            return;
         if (getFirstChild())
             getFirstChild()->insertSiblingBefore(actor);
         else
@@ -1037,13 +1041,13 @@ namespace oxygine
 
     }
 
-    Vector2 Actor::global2local(const Vector2& global) const
+    Vector2 Actor::parent2local(const Vector2& global) const
     {
         const AffineTransform& t = getTransformInvert();
         return t.transform(global);
     }
 
-    Vector2 Actor::local2global(const Vector2& local) const
+    Vector2 Actor::local2parent(const Vector2& local) const
     {
         const AffineTransform& t = getTransform();
         return t.transform(local);
@@ -1133,26 +1137,9 @@ namespace oxygine
         rs.material->render(this, rs);
     }
 
-    RectF Actor::calcDestRectF(const RectF& destRect_, const Vector2& size) const
-    {
-        RectF destRect = destRect_;
-        if (!(_flags & flag_childrenRelative))
-        {
-            Vector2 a;
-
-            if ((_flags & flag_anchorInPixels))
-                a = Vector2(_anchor.x, _anchor.y);
-            else
-                a = Vector2(_anchor.x * size.x, _anchor.y * size.y);
-
-            destRect.pos -= a;
-        }
-        return destRect;
-    }
-
     RectF Actor::getDestRect() const
     {
-        return calcDestRectF(RectF(Vector2(0, 0), getSize()), getSize());
+        return RectF(Vector2(0, 0), getSize());
     }
 
     spTween Actor::_addTween(spTween tween, bool rel)
@@ -1357,7 +1344,7 @@ namespace oxygine
         if (child->getParent() && child->getParent() != parent)
             pos = convert_global2local_(child->getParent(), parent, pos);
 
-        pos = child->global2local(pos);
+        pos = child->parent2local(pos);
         return pos;
     }
 
@@ -1370,7 +1357,7 @@ namespace oxygine
     {
         while (child && child != parent)
         {
-            pos = child->local2global(pos);
+            pos = child->local2parent(pos);
             child = child->getParent();
         }
 
@@ -1442,7 +1429,7 @@ namespace oxygine
         spActor act = actor->getParent();
         while (act && act != mutualParent)
         {
-            pos = act->local2global(pos);
+            pos = act->local2parent(pos);
             act = act->getParent();
         }
 

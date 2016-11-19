@@ -1,5 +1,5 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "core/Object.h"
 #include "closure/closure.h"
 #include "utils/intrusive_list.h"
@@ -13,10 +13,6 @@
 
 namespace oxygine
 {
-    class Tween;
-    class Actor;
-    class UpdateState;
-
     class TweenEvent : public Event
     {
     public:
@@ -32,14 +28,12 @@ namespace oxygine
         const UpdateState* us;
     };
 
-    class UpdateState;
-    class TweenOptions;
+
 
     const int TWEEN_COMPLETE_DT = std::numeric_limits<int>::max() / 2;
 
 
     DECLARE_SMART(Tween, spTween);
-
     class Tween : public EventDispatcher, public intrusive_list_item<spTween>
     {
         typedef intrusive_list_item<spTween> intr_list;

@@ -1,5 +1,5 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "Resource.h"
 #include "AnimationFrame.h"
 #include "core/Texture.h"
@@ -7,15 +7,12 @@
 
 namespace oxygine
 {
-    DECLARE_SMART(Texture, spTexture);
-
-
     typedef std::vector<AnimationFrame> animationFrames;
-    class Image;
 
     DECLARE_SMART(ResAnim, spResAnim);
-    class ResAnim: public _Resource
+    class ResAnim: public Resource
     {
+        INHERITED(Resource);
     public:
         ResAnim(Resource* atlas = 0);
         ~ResAnim();
@@ -24,7 +21,7 @@ namespace oxygine
         virtual void init(Image* original, int columns = 1, int rows = 1, float scaleFactor = 1.0f);
         void init(animationFrames& frames, int columns, float scaleFactor = 1.0f, float appliedScale = 1.0f);
         /**creates animation frames from NativeTexture*/
-        void init(spNativeTexture texture, const Point& originalSize, int columns, int rows, float scaleFactor);
+        void init(spNativeTexture texture, const Point& originalSize, int columns = 1, int rows = 1, float scaleFactor = 1.0f);
 
         /*adds additional column. use it only if rows = 1*/
         //void addFrame(const AnimationFrame &frame);
@@ -35,6 +32,7 @@ namespace oxygine
         int                     getRows() const {return (int)_frames.size() / _columns;}
         int                     getTotalFrames() const {return (int)_frames.size();}
         int                     getFrameRate() const { return _framerate; }
+        const Resources*        getResources() const;
         const AnimationFrame&   getFrame(int col, int row) const;
         /**returns frame by index ignoring cols and rows*/
         const AnimationFrame&   getFrame(int index) const;

@@ -1,5 +1,5 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "core/Object.h"
 #include "pugixml/pugixml.hpp"
 #include "res/ResAnim.h"
@@ -8,12 +8,6 @@
 
 namespace oxygine
 {
-    DECLARE_SMART(Actor, spActor);
-
-    class Resource;
-    class ResAnim;
-    class ResFont;
-
     class creator
     {
     public:

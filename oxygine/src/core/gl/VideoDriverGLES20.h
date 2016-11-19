@@ -1,5 +1,5 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "VideoDriverGL.h"
 #include "core/Restorable.h"
 #include "../ShaderProgram.h"

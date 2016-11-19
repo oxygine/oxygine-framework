@@ -1,5 +1,5 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include <vector>
 #include "Object.h"
 #include "FileSystem.h"
@@ -11,8 +11,8 @@ namespace oxygine
     {
         class STDFileSystem;
 
-        struct _handle_ {};
-        typedef _handle_* handle;
+
+        typedef file::fileHandle* handle;
 
         /**memory buffer for files IO operations, emulates std::vector */
         class buffer
@@ -56,7 +56,10 @@ namespace oxygine
         /**Closes opened file handle*/
         void close(handle);
 
+        /**Seeks to file position, whence could be SEEK_SET, SEEK_END, SEEK_CUR*/
         int seek(handle, unsigned int offset, int whence);
+
+        /**Returns current file position*/
         unsigned int tell(handle);
 
         /**Reads bytes into user memory*/

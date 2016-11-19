@@ -84,14 +84,14 @@ namespace oxygine
 
     void Resources::load(ResLoadedCallback cb)
     {
-        _Resource::load(0);
+        inherited::load(0);
         //if (cb)
         //  cb(thi)
     }
 
     void Resources::unload()
     {
-        _Resource::unload();
+        inherited::unload();
     }
 
     void Resources::_load(LoadResourcesContext* context)
@@ -125,6 +125,11 @@ namespace oxygine
         _docs.clear();
 
         __freeName();
+    }
+
+    bool Resources::isEmpty() const
+    {
+        return _docs.empty();
     }
 
     void Resources::updateName(const std::string& filename)
@@ -167,7 +172,7 @@ namespace oxygine
     };
 
 
-    void Resources::loadXML(const std::string& xmlFile, const ResourcesLoadOptions& opt)
+    bool Resources::loadXML(const std::string& xmlFile, const ResourcesLoadOptions& opt)
     {
         _name = xmlFile;
         _loadCounter = opt._loadCompletely ? 1 : 0;
@@ -175,7 +180,15 @@ namespace oxygine
 
         FS_LOG("step0");
         file::buffer fb;
-        file::read(xmlFile, fb);
+        int sz = file::read(xmlFile, fb);
+
+
+        if (!sz)
+        {
+            log::error("can't load xml file: '%s'", xmlFile.c_str());
+            OX_ASSERT(!"can't find xml file");
+            return false;
+        }
 
         FS_LOG("step1");
 
@@ -207,11 +220,6 @@ namespace oxygine
                 doc_meta.load_buffer_inplace(&fb_meta.data[0], fb_meta.data.size());
         }
 
-        if (!fb.data.size())
-        {
-            OX_ASSERT(fb.data.size() && "can't find xml file");
-            return;
-        }
 
         pugi::xml_document* doc = new pugi::xml_document();
         _docs.push_back(doc);
@@ -249,7 +257,7 @@ namespace oxygine
             registeredResources::iterator i = std::lower_bound(_registeredResources.begin(), _registeredResources.end(), type);
             if (i == _registeredResources.end() || strcmp(i->id, type))
             {
-                log::error("unknown resource. type: '%s' id: '%s'", type, _Resource::extractID(context.walker.getNode(), "", "").c_str());
+                log::error("unknown resource. type: '%s' id: '%s'", type, Resource::extractID(context.walker.getNode(), "", "").c_str());
                 OX_ASSERT(!"unknown resource type");
                 continue;
             }
@@ -279,6 +287,7 @@ namespace oxygine
         }
 
         FS_LOG("xml loaded");
+        return true;
     }
 
     void Resources::collect(resources& r)
@@ -308,7 +317,18 @@ namespace oxygine
         if (accessByShortenID)
         {
             std::string shortName = path::extractFileName(name);
-            _resourcesMap[shortName] = r;
+            if (shortName != name)
+            {
+#ifdef OX_DEBUG
+                OX_ASSERT(_resourcesMap.find(shortName) == _resourcesMap.end());
+                if (_resourcesMap.find(shortName) != _resourcesMap.end())
+                {
+                    log::error("short resource name '%s' conflicts with '%s'", r->getName().c_str(), _resourcesMap[shortName]->getName().c_str());
+                }
+#endif
+
+                _resourcesMap[shortName] = r;
+            }
         }
     }
 

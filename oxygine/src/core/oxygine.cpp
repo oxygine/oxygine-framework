@@ -51,6 +51,7 @@
 #include "core/android/jniUtils.h"
 #elif __APPLE__
 #include <TargetConditionals.h>
+#include "ios/ios.h"
 #endif
 
 #ifdef OXYGINE_SDL
@@ -70,11 +71,11 @@ extern "C"
 
 
 #if EMSCRIPTEN
-#define HANDLE_FOCUS_LOST 0
+#   define HANDLE_FOCUS_LOST 0
 #elif !SDL_VIDEO_OPENGL
-#define HANDLE_FOCUS_LOST 1
+#   define HANDLE_FOCUS_LOST 1
 #else
-#define HANDLE_FOCUS_LOST 0
+#   define HANDLE_FOCUS_LOST 0
 #endif
 
 #define LOST_RESET_CONTEXT 0
@@ -182,6 +183,9 @@ namespace oxygine
 
     namespace core
     {
+        static bool active = true;
+        static bool focus = true;
+
         void focusLost()
         {
             if (!LOST_RESET_CONTEXT)
@@ -260,10 +264,13 @@ namespace oxygine
 
             init0();
 
-
             log::messageln("initialize oxygine");
             if (desc_ptr)
                 desc = *desc_ptr;
+
+
+            focus = true;
+            active = true;
 
 #ifdef __S3E__
             log::messageln("S3E build");
@@ -342,7 +349,6 @@ namespace oxygine
 #if TARGET_OS_IPHONE
             flags |= SDL_WINDOW_BORDERLESS;
             flags |= SDL_WINDOW_ALLOW_HIGHDPI;
-            flags |= SDL_WINDOW_FULLSCREEN;
 #endif
 
             //SDL_DisplayMode mode;
@@ -358,10 +364,15 @@ namespace oxygine
             if (desc.fullscreen)
                 flags |= SDL_WINDOW_FULLSCREEN;
 
-            {
-                Event ev(EVENT_PRECREATEWINDOW);
-                _dispatcher->dispatchEvent(&ev);
-            }
+
+            Event ev(EVENT_PRECREATEWINDOW);
+            _dispatcher->dispatchEvent(&ev);
+
+
+#if TARGET_OS_IPHONE
+            //ios bug workaround
+            flags &= ~SDL_WINDOW_FULLSCREEN;
+#endif
 
             log::messageln("creating window %d %d", desc.w, desc.h);
 
@@ -469,8 +480,6 @@ namespace oxygine
         }
 #endif
 
-        bool active = true;
-        bool focus = true;
 
 
         bool isActive()
@@ -534,7 +543,10 @@ namespace oxygine
             if (!wnd)
             {
                 if (!focus)
+                {
+                    //log::messageln("!focus");
                     return false;
+                }
 
                 wnd = _window;
             }
@@ -548,6 +560,10 @@ namespace oxygine
             {
                 IVideoDriver::_stats.start = getTimeMS();
                 updatePortProcessItems();
+            }
+            else
+            {
+                log::messageln("!ready");
             }
 
             return ready;
@@ -606,6 +622,7 @@ namespace oxygine
                 switch (event.type)
                 {
                     case SDL_QUIT:
+                        log::messageln("SDL_QUIT");
                         done = true;
                         break;
                     case SDL_WINDOWEVENT:
@@ -617,6 +634,8 @@ namespace oxygine
                         active = true;
                         */
 
+                        log::messageln("SDL_WINDOWEVENT %d", (int)event.window.event);
+
                         if (event.window.event == SDL_WINDOWEVENT_MINIMIZED)
                             active = false;
                         if (event.window.event == SDL_WINDOWEVENT_RESTORED)
@@ -627,6 +646,11 @@ namespace oxygine
                             newFocus = false;
                         if (event.window.event == SDL_WINDOWEVENT_FOCUS_GAINED)
                             newFocus = true;
+#ifdef __ANDROID__
+                        //if (event.window.event == SDL_WINDOWEVENT_ENTER)
+                        //   newFocus = true;
+#endif
+
                         if (focus != newFocus)
                         {
 #if HANDLE_FOCUS_LOST
@@ -772,6 +796,8 @@ namespace oxygine
 
         void release()
         {
+            log::messageln("core::release");
+
             _threadMessages.clear();
             _uiMessages.clear();
 
@@ -829,6 +855,8 @@ namespace oxygine
                 var url = Pointer_stringify($0);
                 window.open(url, '_blank');
             }, str);
+#elif __APPLE__
+            iosNavigate(str);
 #else
             OX_ASSERT(!"execute not implemented");
 #endif
@@ -845,6 +873,7 @@ namespace oxygine
 
         void requestQuit()
         {
+            log::messageln("requestQuit");
 #ifdef __S3E__
             s3eDeviceRequestQuit();
 #elif OXYGINE_SDL

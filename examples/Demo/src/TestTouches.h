@@ -1,5 +1,6 @@
 #pragma once
 #include "test.h"
+#include "utils/stringUtils.h"
 
 class TestTouches: public Test
 {
@@ -35,20 +36,28 @@ public:
         tf->setY(5);
         tf->attachTo(orange);
 
-        tf = new TextField;
-        tf->setText("");
-        tf->setColor(Color::Black);
-        tf->setName("state2");
-        tf->setX(35);
-        tf->setY(5);
-        tf->attachTo(orange);
+        for (int i = 0; i < MouseButton_Num; ++i)
+        {
+            tf = new TextField;
+            tf->setText("");
+            tf->setColor(Color::Black);
+            char name[255];
+            safe_sprintf(name, "pressed %d", i);
+            tf->setName(name);
+            tf->setX(5);
+            tf->setY(15 + i * 10);
+            tf->attachTo(orange);
+        }
+
+
+
 
         tf = new TextField;
         tf->setText("");
         tf->setColor(Color::Black);
         tf->setName("local");
         tf->setX(5);
-        tf->setY(25);
+        tf->setY(50);
         tf->setMultiline(true);
         tf->setWidth(orange->getWidth());
         tf->attachTo(orange);
@@ -66,9 +75,14 @@ public:
 
     void onDownUp(Event* ev)
     {
+        TouchEvent* te = safeCast<TouchEvent*>(ev);
         spSprite s = safeSpCast<Sprite>(ev->currentTarget);
-        spTextField tf = s->getChildT<TextField>("state2");
-        tf->setText(ev->type == TouchEvent::TOUCH_DOWN ? "pressed" : "");
+
+        char name[255];
+        safe_sprintf(name, "pressed %d", (int)te->mouseButton);
+
+        spTextField tf = s->getChildT<TextField>(name);
+        tf->setText(ev->type == TouchEvent::TOUCH_DOWN ? name : "");
         updateLocalPos(ev);
     }
 
@@ -110,10 +124,10 @@ public:
         spSprite Green = createRect("Green", Color::Green, Vector2(100, 25), Vector2(100, 150));
         Green->attachTo(Orange);
 
-        spSprite Beige = createRect("Beige", Color::Beige, Vector2(150, 150), Vector2(250, 100));
+        spSprite Beige = createRect("Beige", Color::Beige, Vector2(150, 150), Vector2(260, 100));
         Beige->attachTo(Orange);
 
-        spSprite LightGreen = createRect("LightGreen", Color::LightGreen, Vector2(180, -50), Vector2(50, 200));
+        spSprite LightGreen = createRect("LightGreen", Color::LightGreen, Vector2(180, -50), Vector2(65, 200));
         LightGreen->attachTo(Beige);
 
 
@@ -174,14 +188,15 @@ public:
                      "\n"
                      "current target: %s\n"
                      "local position: %d %d\n"
+                     "button: %d\n"
                      ,
                      n,
                      eventName,
                      te->target->getName().c_str(),
                      (int)te->position.x, (int)te->position.y,
                      te->currentTarget->getName().c_str(),
-                     (int)te->localPosition.x, (int)te->localPosition.y
-
+                     (int)te->localPosition.x, (int)te->localPosition.y,
+                     (int)te->mouseButton
                     );
 
 

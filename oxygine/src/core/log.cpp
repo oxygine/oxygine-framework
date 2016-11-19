@@ -7,6 +7,8 @@
 
 
 
+
+
 #if defined(ANDROID)
 #include <android/log.h>
 #define  LOG_TAG    "SDL"
@@ -20,7 +22,6 @@
 #define LOGD(str) fputs(str, stdout)
 #endif
 #endif
-
 
 
 namespace oxygine
@@ -51,11 +52,28 @@ namespace oxygine
             _enabled = false;
         }
 
+        void outDefault(const char* txt)
+        {
+            LOGD(txt);
+        }
+
+
         error_handler _eh = 0;
+        out_handler _oh = outDefault;
 
         void setErrorHandler(error_handler eh)
         {
             _eh = eh;
+        }
+
+        void setOutHandler(out_handler h)
+        {
+            _oh = h;
+        }
+
+        out_handler getOutHandler()
+        {
+            return _oh;
         }
 
         void out(const char* str)
@@ -63,11 +81,7 @@ namespace oxygine
             if (!_enabled)
                 return;
 
-            //if (!fh)
-            //  fh = fopen("log.txt", "w");
-            //fprintf(fh, str);
-            //fflush(fh);
-            LOGD(str);
+            _oh(str);
         }
 
         void out_line(char* str, int i)

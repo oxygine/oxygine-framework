@@ -1,18 +1,11 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "ResFont.h"
 #include "core/Texture.h"
 #include <vector>
 
 namespace oxygine
 {
-    class Resources;
-    class CreateResourceContext;
-    class Restorable;
-
-    DECLARE_SMART(NativeTexture, spNativeTexture);
-
-
     class ResFontBM: public ResFont
     {
     public:
@@ -48,6 +41,7 @@ namespace oxygine
         void _restore(Restorable*, void*);
         void _createFont(CreateResourceContext* context, bool sd, bool bmc, int downsample);
         void _createFontFromTxt(CreateResourceContext* context, char* fontData, const std::string& fontPath, int downsample);
+        void _finalize();
 
         typedef std::vector<page> pages;
         pages _pages;

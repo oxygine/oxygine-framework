@@ -2,14 +2,14 @@
 #include "Actor.h"
 namespace oxygine
 {
-    PointerState::PointerState(): _index(0)
+    PointerState::PointerState(): _index(1)
     {
         init(_index);
     }
 
-    void PointerState::init(int pointerIndex)
+    void PointerState::init(pointer_index index)
     {
-        _index = pointerIndex;
+        _index = index;
         _pressed = 0;
         _position.setZero();
     }

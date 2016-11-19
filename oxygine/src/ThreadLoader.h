@@ -1,22 +1,20 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "EventDispatcher.h"
 #include "pthread.h"
 #include "core/ThreadDispatcher.h"
 #include <functional>
+#include "Event.h"
 
 namespace oxygine
 {
     DECLARE_SMART(ThreadLoader, spThreadLoader);
-    class Resources;
-    class Resource;
-
     class ThreadLoader: public EventDispatcher
     {
     public:
         enum
         {
-            COMPLETE = sysEventID('T', 'L', 'C'),
+            COMPLETE = Event::COMPLETE,
         };
 
         ThreadLoader();

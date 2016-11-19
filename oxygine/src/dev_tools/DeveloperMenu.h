@@ -1,5 +1,5 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "ClipRectActor.h"
 #include "ColorRectSprite.h"
 #include "Draggable.h"

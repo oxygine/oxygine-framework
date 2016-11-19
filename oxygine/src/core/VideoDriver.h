@@ -1,5 +1,5 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "ref_counter.h"
 #include "vertex.h"
 #include "math/Rect.h"
@@ -9,12 +9,6 @@
 
 namespace oxygine
 {
-    class Color;
-    DECLARE_SMART(NativeTexture, spNativeTexture);
-
-    class ShaderProgram;
-    class VertexDeclaration;
-
     class IVideoDriver
     {
     public:

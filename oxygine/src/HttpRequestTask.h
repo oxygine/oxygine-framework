@@ -1,5 +1,5 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "AsyncTask.h"
 #include <vector>
 #include <string>
@@ -75,8 +75,5 @@ namespace oxygine
         bool _cacheEnabled;
         std::vector<unsigned char> _response;
         std::vector<unsigned char> _postData;
-
-        //size_t _loaded;
-        //size_t _total;
     };
 }

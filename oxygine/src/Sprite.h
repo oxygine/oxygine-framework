@@ -1,5 +1,5 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "core/Texture.h"
 #include "math/Rect.h"
 #include "res/ResAnim.h"
@@ -10,11 +10,10 @@
 
 namespace oxygine
 {
-    class ResAnim;
-
     DECLARE_SMART(Sprite, spSprite);
-    class Sprite : public _VStyleActor
+    class Sprite : public VStyleActor
     {
+        INHERITED(VStyleActor);
     public:
         DECLARE_COPYCLONE_NEW(Sprite);
 
@@ -65,16 +64,11 @@ namespace oxygine
         };
         virtual void changeAnimFrame(const AnimationFrame& f);
         virtual void animFrameChanged(const AnimationFrame& f);
+        void sizeChanged(const Vector2& size) OVERRIDE;
 
+        Vector2 _localScale;
         AnimationFrame _frame;
     };
 }
 
-#ifdef OX_EDITOR
-#include "EditorSprite.h"
-#else
-namespace oxygine
-{
-    typedef Sprite _Sprite;
-}
-#endif
+EDITOR_INCLUDE(Sprite);

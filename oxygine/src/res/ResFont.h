@@ -1,13 +1,13 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "Resource.h"
+
 namespace oxygine
 {
-    class Font;
-
     DECLARE_SMART(ResFont, spResFont);
-    class ResFont: public _Resource
+    class ResFont: public Resource
     {
+        INHERITED(Resource);
     public:
         ResFont(): _size(0) {}
 

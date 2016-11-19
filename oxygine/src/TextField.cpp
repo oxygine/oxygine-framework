@@ -41,7 +41,7 @@ namespace oxygine
 
     void TextField::copyFrom(const TextField& src, cloneOptions opt)
     {
-        _VStyleActor::copyFrom(src, opt);
+        inherited::copyFrom(src, opt);
         _text = src._text;
         _style = src._style;
         _root = 0;
@@ -83,6 +83,12 @@ namespace oxygine
     void TextField::setLinesOffset(int offset)
     {
         _style.linesOffset = offset;
+        needRebuild();
+    }
+
+    void TextField::setBaselineScale(float s)
+    {
+        _style.baselineScale = s;
         needRebuild();
     }
 
@@ -251,6 +257,11 @@ namespace oxygine
         return _style.weight;
     }
 
+    float TextField::getBaselineScale() const
+    {
+        return _style.baselineScale;
+    }
+
     text::Symbol* TextField::getSymbolAt(int pos) const
     {
         return const_cast<TextField*>(this)->getRootNode(1)->getSymbol(pos);
@@ -403,7 +414,7 @@ namespace oxygine
 
     void TextField::serialize(serializedata* data)
     {
-        _VStyleActor::serialize(data);
+        inherited::serialize(data);
         pugi::xml_node node = data->node;
 
         TextStyle def;
@@ -416,6 +427,7 @@ namespace oxygine
         setAttr(node, "valign", _style.vAlign, def.vAlign);
         setAttr(node, "halign", _style.hAlign, def.hAlign);
         setAttr(node, "multiline", _style.multiline, def.multiline);
+        setAttr(node, "baselineScale", _style.baselineScale, def.baselineScale);
         setAttr(node, "breakLongWords", _style.breakLongWords, def.breakLongWords);
         if (_style.font)
             node.append_attribute("font").set_value(_style.font->getName().c_str());
@@ -424,7 +436,7 @@ namespace oxygine
 
     void TextField::deserialize(const deserializedata* data)
     {
-        _VStyleActor::deserialize(data);
+        inherited::deserialize(data);
         pugi::xml_node node = data->node;
 
         TextStyle def;
@@ -436,6 +448,7 @@ namespace oxygine
         _style.fontSize = node.attribute("fontsize2scale").as_int(def.fontSize);
         _style.linesOffset = node.attribute("linesOffset").as_int(def.linesOffset);
         _style.kerning = node.attribute("kerning").as_int(def.kerning);
+        _style.baselineScale = node.attribute("baselineScale").as_float(def.baselineScale);
         const char* fnt = node.attribute("font").as_string(0);
         if (fnt && *fnt)
         {

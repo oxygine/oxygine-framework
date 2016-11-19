@@ -1,5 +1,5 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 
 namespace oxygine
 {
@@ -29,6 +29,16 @@ namespace oxygine
     {
         Pixel p;
         p.rgba = rgba;
+        return p;
+    }
+
+    inline Pixel initPixel(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
+    {
+        Pixel p;
+        p.r = r;
+        p.g = g;
+        p.b = b;
+        p.a = a;
         return p;
     }
 

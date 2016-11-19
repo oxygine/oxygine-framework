@@ -1,5 +1,8 @@
 #pragma once
-#include "oxygine_include.h"
+#ifndef INTRUSIVE_PTR_HEADER
+#define INTRUSIVE_PTR_HEADER
+
+#include "oxygine-include.h"
 //#include "ref_counter.h"
 #include "ox_debug.h"
 
@@ -147,3 +150,5 @@ namespace oxygine
         {}
     };
 }
+
+#endif

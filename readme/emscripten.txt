@@ -12,14 +12,12 @@ How to build. Steps:
 
 
 - Configure environment variables properly:
-  EMSCRIPTEN points to Emscripten SDK folder with emcc
-  	example: d:\Emscripten\emscripten\1.35.0\
   JAVA_HOME points to JDK 
   	example: c:\Program Files (x86)\Java\jdk1.6.0_26\
 
 - Add necessary paths to environment variable PATH:
-  EMSCRIPTEN
-  	example: d:\Emscripten\emscripten\1.35.0\
+  Emscripten
+  	example: d:\Emscripten\
   JDK 
   	example: "c:\Program Files (x86)\Java\jdk1.6.0_26\bin\"
 

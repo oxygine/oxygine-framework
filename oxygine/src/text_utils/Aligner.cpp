@@ -109,7 +109,7 @@ namespace oxygine
 
         int Aligner::getLineSkip() const
         {
-            return _font->getBaselineDistance() + getStyle().linesOffset;
+            return _font->getBaselineDistance() * getStyle().baselineScale + getStyle().linesOffset;
         }
 
         void Aligner::_alignLine(line& ln)
@@ -121,7 +121,7 @@ namespace oxygine
                 for (size_t i = 0; i < ln.size(); ++i)
                 {
                     Symbol& s = *ln[i];
-                    rx = std::max(s.x + s.gl.sw, rx);
+                    rx = std::max(s.x + s.gl.advance_x, rx);
                 }
 
                 int tx = _alignX(rx);
@@ -178,7 +178,7 @@ namespace oxygine
             s.y = _y + s.gl.offset_y;
             _x += s.gl.advance_x + getStyle().kerning;
 
-            int rx = s.x + s.gl.sw;
+            int rx = s.x + s.gl.advance_x;
 
 
             _lineWidth = std::max(rx, _lineWidth);

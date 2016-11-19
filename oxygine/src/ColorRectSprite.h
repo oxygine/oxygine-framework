@@ -1,13 +1,14 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "Sprite.h"
 
 namespace oxygine
 {
     DECLARE_SMART(ColorRectSprite, spColorRectSprite);
 
-    class ColorRectSprite: public _Sprite
+    class ColorRectSprite: public Sprite
     {
+        INHERITED(Sprite);
     public:
         DECLARE_COPYCLONE_NEW(ColorRectSprite);
         ColorRectSprite();
@@ -18,15 +19,11 @@ namespace oxygine
 
         void doRender(const RenderState& rs);
 
-    private:
+        RectF getDestRect() const OVERRIDE { return Actor::getDestRect(); }
+
+    protected:
+        void sizeChanged(const Vector2& size) OVERRIDE;
     };
 }
 
-#ifdef OX_EDITOR
-#include "EditorColorRectSprite.h"
-#else
-namespace oxygine
-{
-    typedef ColorRectSprite _ColorRectSprite;
-}
-#endif
+EDITOR_INCLUDE(ColorRectSprite);

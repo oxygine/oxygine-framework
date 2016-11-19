@@ -48,10 +48,10 @@ namespace oxygine
             path::normalize(t->getName().c_str(), path);
 
             char txt[255];
-            safe_sprintf(txt, "%s\n<div c=\"FF0000\">%s</div>-<div c=\"0000ff\">%dx%d</div>\nid: %d",
+            safe_sprintf(txt, "%s\n<div c=\"FF0000\">%s</div>-<div c=\"0000ff\">%dx%d</div>\nid: %d tid: %d",
                          path,
                          textureFormat2String(t->getFormat()),
-                         t->getWidth(), t->getHeight(), t->getObjectID());
+                         t->getWidth(), t->getHeight(), t->getObjectID(), (int)(size_t)t->getHandle());
 
             spTextField text = initActor(new TextField,
                                          arg_color = Color::Black,

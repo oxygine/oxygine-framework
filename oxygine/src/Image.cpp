@@ -555,6 +555,13 @@ namespace oxygine
         memset(&_buffer.front(), 0, _buffer.size());
     }
 
+    void Image::fill(unsigned int val)
+    {
+        if (_buffer.empty())
+            return;
+        memset(&_buffer.front(), val, _buffer.size());
+    }
+
     bool Image::init(file::buffer& buffer, bool premultiplied, TextureFormat format)
     {
         cleanup();
@@ -798,9 +805,27 @@ namespace oxygine
         return lock(lock_read | lock_write, &rect);
     }
 
+    ImageData Image::lock(int x, int y, int w, int h)
+    {
+        return lock(Rect(x, y, w, h));
+    }
+
+    ImageData Image::lock(int x, int y)
+    {
+        return lock(Rect(x, y, _image.w - x, _image.h - y));
+    }
+
     void Image::unlock()
     {
 
+    }
+
+    void Image::toPOT(Image& dest)
+    {
+        OX_ASSERT(this != &dest);
+        dest.init(nextPOT(_image.w), nextPOT(_image.h), _image.format);
+        dest.fill_zero();
+        dest.updateRegion(0, 0, _image);
     }
 
     void Image::updateRegion(int x, int y, const ImageData& src)

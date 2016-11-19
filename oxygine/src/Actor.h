@@ -1,5 +1,6 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
+#include "oxygine-forwards.h"
 #include "core/Object.h"
 #include "core/Renderer.h"
 #include "math/Rect.h"
@@ -10,50 +11,8 @@
 #include "TouchEvent.h"
 #include "Tween.h"
 
-
-
 namespace oxygine
 {
-    class Event;
-    typedef char pointer_index;
-
-    typedef unsigned int dumpOptions;
-
-    class RenderState;
-    class UpdateState;
-    class Material;
-
-
-    DECLARE_SMART(Texture, spTexture);
-    DECLARE_SMART(Actor, spActor);
-    DECLARE_SMART(Clock, spClock);
-
-
-    typedef Closure<void (const UpdateState& us)> UpdateCallback;
-    typedef Closure<void (const RenderState& rs)> RenderCallback;
-
-    const int cloneOptionsDoNotCloneClildren = 0x01;
-    const int cloneOptionsResetTransform = 0x02;
-    typedef int cloneOptions;
-    typedef int copyOptions;//deprecated typedef
-
-
-#define DECLARE_COPYCLONE(type) type(const type &src, cloneOptions);\
-    virtual type* clone(cloneOptions opt=0) const {return new type(*this, opt);}\
-
-
-#define DECLARE_COPYCLONE_NEW(type)  type(const type &src, cloneOptions opt = 0){copyFrom(src, opt);}\
-    virtual type* clone(cloneOptions opt=0) const {type *tp = new type(); tp->copyFrom(*this, opt); return tp;}\
-    virtual void copyFrom(const type &src, cloneOptions opt = 0);
-
-#define DECLARE_COPYCLONE_NEW2(type)  type(const type &src, cloneOptions opt = 0);\
-    virtual type* clone(cloneOptions opt=0) const;\
-    virtual void copyFrom(const type &src, cloneOptions opt = 0);
-
-#define CREATE_COPYCLONE_NEW(type) type::type(const type &src, cloneOptions opt){copyFrom(src, opt);}\
-    type* type::clone(cloneOptions opt) const {type *tp = new type(); tp->copyFrom(*this, opt); return tp;}
-
-
     class TweenOptions
     {
     public:
@@ -78,7 +37,9 @@ namespace oxygine
         bool            _detach;
     };
 
-    class Actor : public EventDispatcher, public intrusive_list_item<spActor>, public Serializable
+    DECLARE_SMART(Actor, spActor);
+
+    class Actor: public EventDispatcher, public intrusive_list_item<spActor>, public Serializable
     {
         typedef intrusive_list_item<spActor> intr_list;
     public:
@@ -145,12 +106,11 @@ namespace oxygine
         const spClock&      getClock() const;
         virtual RectF       getDestRect() const;
         /**returns touch id if actor is pressed down*/
-        pointer_index       getPressed() const;
+        pointer_index       getPressed(MouseButton b = MouseButton_Touch) const;
         /**returns touch id if actor is moused overred*/
         pointer_index       getOvered() const;
         bool                getTouchEnabled() const { return (_flags & flag_touchEnabled) != 0; }
         bool                getTouchChildrenEnabled() const { return (_flags & flag_touchChildrenEnabled) != 0; }
-        bool                getChildrenRelative() const {return (_flags & flag_childrenRelative) != 0;;}
         UpdateCallback      getCallbackDoUpdate() const {return _cbDoUpdate;}
         Material*           getMaterial() { return _material; }
         //RenderCallback        getCallbackDoRender() const {return _cbDoRender;}
@@ -193,8 +153,6 @@ namespace oxygine
         void setRotation(float angle);
         /**Sets rotation angle in degrees. Converts internally to radians. (use setRotation!)*/
         void setRotationDegrees(float angle);
-        /**This option is connected with Anchor. By default value is True*/
-        void setChildrenRelative(bool r) {_flags &= ~flag_childrenRelative; if (r) _flags |= flag_childrenRelative;}
 
         /**Sets Size of Actor. Size doesn't scale contents of Actor. Size only affects event handling and rendering if you change Anchor*/
         void setSize(const Vector2&);
@@ -287,13 +245,20 @@ namespace oxygine
         virtual void handleEvent(Event* event);
         virtual void doRender(const RenderState& rs) {}
 
-        //converts global position (position in parent space) to local space
-        Vector2 global2local(const Vector2& pos) const;
+        //converts global position (position in parent space) to local space, deprecated use parent2local
+        OXYGINE_DEPRECATED
+        Vector2 global2local(const Vector2& pos) const { return parent2local(pos); }
+        //converts local position to parent space, deprecated use local2parent
+        OXYGINE_DEPRECATED
+        Vector2 local2global(const Vector2& pos = Vector2(0, 0)) const { return local2parent(pos); }
+
+        //converts position in parent space to local space
+        Vector2 parent2local(const Vector2& pos) const;
         //converts local position to parent space
-        Vector2 local2global(const Vector2& pos) const;
+        Vector2 local2parent(const Vector2& pos = Vector2(0, 0)) const;
 
         //converts local position to Stage
-        Vector2 local2stage(const Vector2& pos, Actor* stage = 0) const;
+        Vector2 local2stage(const Vector2& pos = Vector2(0, 0), Actor* stage = 0) const;
         //converts global position (position in Stage space) to local space
         Vector2 stage2local(const Vector2& pos, Actor* stage = 0) const;
 
@@ -321,7 +286,7 @@ namespace oxygine
         /**Returns Stage where Actor attached to. Used for multi stage (window) mode*/
         Stage*              _getStage();
 
-        void setNotPressed();
+        void setNotPressed(MouseButton b);
 
         bool internalRender(RenderState& rs, const RenderState& parentRS);
 
@@ -350,9 +315,11 @@ namespace oxygine
         static unsigned short& _getFlags(Actor* actor) { return actor->_flags; }
 
         void _onGlobalTouchUpEvent(Event*);
+        void _onGlobalTouchUpEvent1(Event*);
+        void _onGlobalTouchUpEvent2(Event*);
         void _onGlobalTouchMoveEvent(Event*);
 
-        RectF calcDestRectF(const RectF& destRect, const Vector2& size) const;
+        const Vector2& _getSize() const { return _size; }
         void _setSize(const Vector2&);
         virtual void sizeChanged(const Vector2& size);
         Actor*  _getDescendant(const std::string& name);
@@ -378,13 +345,12 @@ namespace oxygine
             flag_anchorInPixels         = 1,
             flag_visible                = 1 << 1,
             flag_touchEnabled           = 1 << 2,
-            flag_childrenRelative       = 1 << 3,
-            flag_transformDirty         = 1 << 4,
-            flag_transformInvertDirty   = 1 << 5,
-            flag_touchChildrenEnabled   = 1 << 6,
-            flag_cull                   = 1 << 7,
-            flag_fastTransform          = 1 << 8,
-            flag_reserved               = 1 << 9,
+            flag_transformDirty         = 1 << 3,
+            flag_transformInvertDirty   = 1 << 4,
+            flag_touchChildrenEnabled   = 1 << 5,
+            flag_cull                   = 1 << 6,
+            flag_fastTransform          = 1 << 7,
+            flag_reserved               = 1 << 8,
             flag_last                   = flag_reserved
         };
 
@@ -400,17 +366,26 @@ namespace oxygine
 
         children _children;
 
-        pointer_index _pressed;
-        pointer_index _overred;
+        union
+        {
+            //dont change order!!! or brake statements: if (_pressedOvered == _overred)
+            struct
+            {
+                pointer_index _overred;
+                pointer_index _pressedButton[MouseButton_Num];
+            };
+            int32_t _pressedOvered;
+        };
+
 
     private:
-        short   _zOrder;
 
         Vector2 _pos;
         Vector2 _anchor;
         Vector2 _scale;
         Vector2 _size;
         float   _rotation;
+        short   _zOrder;
     };
 
     Vector2 convert_local2stage(spActor child, const Vector2& pos, spActor root = 0);
@@ -446,11 +421,4 @@ namespace oxygine
 }
 
 
-#ifdef OX_EDITOR
-#include "EditorActor.h"
-#else
-namespace oxygine
-{
-    typedef Actor _Actor;
-}
-#endif
+EDITOR_INCLUDE(Actor);

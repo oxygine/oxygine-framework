@@ -1,13 +1,11 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "ref_counter.h"
 #include <string>
 #include <vector>
 
 namespace oxygine
 {
-//#define OBJECT_POOL_ALLOCATOR 0
-
     class PoolObject
     {
     public:
@@ -125,11 +123,4 @@ namespace oxygine
     }
 }
 
-#ifdef OX_EDITOR
-#include "EditorObject.h"
-#else
-namespace oxygine
-{
-    typedef Object _Object;
-}
-#endif
+EDITOR_INCLUDE(Object);

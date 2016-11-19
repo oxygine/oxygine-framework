@@ -8,7 +8,7 @@ namespace oxygine
 {
     void Button::copyFrom(const Button& src, cloneOptions opt)
     {
-        _Sprite::copyFrom(src, opt);
+        inherited::copyFrom(src, opt);
 
         _state = src._state;
         _resAnim = src._resAnim;
@@ -34,15 +34,26 @@ namespace oxygine
     void Button::_mouseEvent(Event* event)
     {
         TouchEvent* me = safeCast<TouchEvent*>(event);
-
-        switch (event->type)
+        if (event->type == TouchEvent::CLICK)
         {
-            case TouchEvent::CLICK:
+            if (me->mouseButton == MouseButton_Left)
             {
                 event->phase = Event::phase_target;
                 event->target = this;
             }
-            break;
+            else
+            {
+                event->stopImmediatePropagation();
+            }
+
+            return;
+        }
+
+        if (me->mouseButton != MouseButton_Left)
+            return;
+
+        switch (event->type)
+        {
             case TouchEvent::OVER:
             {
                 if (!_btnOvered)
@@ -69,8 +80,7 @@ namespace oxygine
                 {
                     _btnPressed = me->index;
                     setState(statePressed);
-
-                    _getStage()->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Button::_mouseEvent));
+                    addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Button::_mouseEvent));
                 }
             }
             break;
@@ -79,8 +89,7 @@ namespace oxygine
                 if (_btnPressed == me->index)
                 {
                     setState(stateNormal);
-                    if (_getStage())
-                        _getStage()->removeEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Button::_mouseEvent));
+                    removeEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Button::_mouseEvent));
                     _btnPressed = 0;
                 }
             }
@@ -115,9 +124,9 @@ namespace oxygine
             return;
 
         if (_resAnim->getColumns() > s)
-            _Sprite::setAnimFrame(_resAnim->getFrame(s, _row));
+            inherited::setAnimFrame(_resAnim->getFrame(s, _row));
         else
-            _Sprite::setAnimFrame(_resAnim->getFrame(0, _row));
+            inherited::setAnimFrame(_resAnim->getFrame(0, _row));
 
     }
 }

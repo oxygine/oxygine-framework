@@ -1,16 +1,14 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "Resource.h"
 #include "core/file.h"
 #include <vector>
 
 namespace oxygine
 {
-    class Resources;
-    class CreateResourceContext;
-
-    class ResBuffer: public _Resource
+    class ResBuffer: public Resource
     {
+        INHERITED(Resource);
     public:
         static Resource* create(CreateResourceContext&);
 

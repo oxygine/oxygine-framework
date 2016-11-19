@@ -1,13 +1,8 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 
 namespace oxygine
 {
-    class ResAnim;
-    class AnimationFrame;
-    class Sprite;
-    class UpdateState;
-
     /** A TweenAnim class
     *   use for playing per frame animation
     \code

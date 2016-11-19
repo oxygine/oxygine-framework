@@ -201,9 +201,6 @@
     <ClCompile Include="..\..\src\AnimationFrame.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Blocking.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\Box9Sprite.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -569,9 +566,6 @@
     <ClInclude Include="..\..\src\AnimationFrame.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Blocking.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\Box9Sprite.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -754,6 +748,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\res\SingleResAnim.h">
       <Filter>src\res</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\oxygine-forwards.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\oxygine-include.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -9,7 +9,7 @@
 
 namespace oxygine
 {
-    Sprite::Sprite()
+    Sprite::Sprite(): _localScale(1.0f, 1.0f)
     {
 
     }
@@ -26,9 +26,10 @@ namespace oxygine
 
     void Sprite::copyFrom(const Sprite& src, cloneOptions opt)
     {
-        _VStyleActor::copyFrom(src, opt);
+        inherited::copyFrom(src, opt);
 
         _frame = src._frame;
+        _localScale = src._localScale;
         animFrameChanged(_frame);
 
         _vstyle = src._vstyle;
@@ -60,6 +61,9 @@ namespace oxygine
         //    stream << "resanim='" << _frame.getResAnim()->getName() << "' ";
         if (_flags & flag_manageResAnim)
             stream << "manageResAnim=true";
+
+        if (_localScale != Vector2(1.0f, 1.0f))
+            stream << " localScale=(" << _localScale.x << "," << _localScale.y << ")";
 
         stream << Actor::dump(options);
         return stream.str();
@@ -209,7 +213,8 @@ namespace oxygine
             _frame = frame.getFlipped(flipY, flipX);
         else
             _frame = frame;
-        setSize(_frame.getSize());
+        _setSize(_frame.getSize().mult(_localScale));
+
 
         animFrameChanged(_frame);
     }
@@ -219,12 +224,20 @@ namespace oxygine
 
     }
 
+    void Sprite::sizeChanged(const Vector2& size)
+    {
+        Actor::sizeChanged(size);
+        const Vector2& sz = _frame.getSize();
+        _localScale.x = size.x / sz.x;
+        _localScale.y = size.y / sz.y;
+    }
+
     RectF Sprite::getDestRect() const
     {
-        if (_frame.getDiffuse().base)
-            return calcDestRectF(_frame.getDestRect(), _frame.getSize());
-
-        return Actor::getDestRect();
+        RectF r = _frame.getDestRect();
+        r.pos = r.pos.mult(_localScale);
+        r.size = r.size.mult(_localScale);
+        return r;
     }
 
 
@@ -235,7 +248,7 @@ namespace oxygine
 
     void Sprite::serialize(serializedata* data)
     {
-        _VStyleActor::serialize(data);
+        inherited::serialize(data);
 
         pugi::xml_node node = data->node;
 
@@ -278,7 +291,7 @@ namespace oxygine
 
     void Sprite::deserialize(const deserializedata* data)
     {
-        _VStyleActor::deserialize(data);
+        inherited::deserialize(data);
 
         pugi::xml_node node = data->node;
         const char* res = node.attribute("resanim").as_string(0);

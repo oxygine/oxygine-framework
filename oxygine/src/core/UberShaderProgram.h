@@ -2,15 +2,9 @@
 #include <vector>
 #include "Restorable.h"
 #include "Object.h"
-//#include <unordered_map>
 
 namespace oxygine
 {
-    class ShaderProgram;
-    class IVideoDriver;
-    DECLARE_SMART(NativeTexture, spNativeTexture);
-
-
     class UberShaderProgramBase: public Restorable
     {
     public:

@@ -1,14 +1,13 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "Sprite.h"
 namespace oxygine
 {
     DECLARE_SMART(Button, spButton);
 
-    class ResAnim;
-
-    class Button: public _Sprite
+    class Button: public Sprite
     {
+        INHERITED(Sprite);
     public:
         DECLARE_COPYCLONE_NEW(Button);
 
@@ -45,11 +44,4 @@ namespace oxygine
     };
 }
 
-#ifdef OX_EDITOR
-#include "EditorButton.h"
-#else
-namespace oxygine
-{
-    typedef Button _Button;
-}
-#endif
+EDITOR_INCLUDE(Button);

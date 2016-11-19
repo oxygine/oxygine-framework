@@ -1,15 +1,18 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include <list>
 #include "core/Object.h"
 #include "closure/closure.h"
 
 namespace oxygine
 {
-    typedef int eventType;
-    class Event;
-
 #define makefourcc(a,b,c,d) ( ((unsigned int)a) | (((unsigned int)b)<< 8) | (((unsigned int)c)<<16) | (((unsigned int)d)<<24))
+
+#ifdef OX_HAS_CPP11
+    inline int error_eventID_should_be_size_of_4_chars(int x) { return x; }
+    constexpr size_t constStringLength(const char* str) { return (*str == 0) ? 0 : constStringLength(str + 1) + 1; }
+    constexpr int EventIDc11(const char* str) { return constStringLength(str) == 4 ? makefourcc(str[0], str[1], str[2], str[3]) : error_eventID_should_be_size_of_4_chars(0); }
+#endif
 
     //eventID('_', '_', '_', '_')
 #define eventID(a,b,c,d) makefourcc(a,b,c,d)
@@ -17,14 +20,15 @@ namespace oxygine
     /*sysEventID is used for system Oxygine events, use 'eventID' for custom game events*/
 #define sysEventID(b,c,d) makefourcc(0xA,b,c,d)
 
+#define  EventID(str) EventIDc11(str)
 
-    typedef Closure<void (Event* ev)> EventCallback;
 
     DECLARE_SMART(EventDispatcher, spEventDispatcher);
-    class EventDispatcher: public _Object
+    class EventDispatcher: public Object
     {
+        INHERITED(Object);
     public:
-        EventDispatcher(const EventDispatcher& ed): _Object(ed), _lastID(0), _listeners(0) {}
+        EventDispatcher(const EventDispatcher& ed): inherited(ed), _lastID(0), _listeners(0) {}
         EventDispatcher();
         ~EventDispatcher();
 
