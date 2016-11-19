@@ -111,19 +111,19 @@ extern "C"
 {
     JNIEnv* Android_JNI_GetEnv(void);
 
-    JNIEXPORT void JNICALL Java_org_oxygine_lib_HttpRequest_nativeHttpRequestResponseSuccess(JNIEnv* env, jlong handle, jbyteArray array)
+    JNIEXPORT void JNICALL Java_org_oxygine_lib_HttpRequest_nativeHttpRequestResponseSuccess(JNIEnv* env, jclass, jlong handle, jbyteArray array)
     {
         oxygine::HttpRequestJavaTask* task = (oxygine::HttpRequestJavaTask*)handle;
         task->complete_(array);
     }
 
-    JNIEXPORT void JNICALL Java_org_oxygine_lib_HttpRequest_nativeHttpRequestResponseProgress(JNIEnv* env, jlong handle, jint loaded, jint total)
+    JNIEXPORT void JNICALL Java_org_oxygine_lib_HttpRequest_nativeHttpRequestResponseProgress(JNIEnv* env, jclass, jlong handle, jint loaded, jint total)
     {
         oxygine::HttpRequestJavaTask* task = (oxygine::HttpRequestJavaTask*)handle;
         task->progress_(loaded, total);
     }
 
-    JNIEXPORT void JNICALL Java_org_oxygine_lib_HttpRequest_nativeHttpRequestResponseError(JNIEnv* env, jlong handle)
+    JNIEXPORT void JNICALL Java_org_oxygine_lib_HttpRequest_nativeHttpRequestResponseError(JNIEnv* env, jclass, jlong handle)
     {
         oxygine::HttpRequestJavaTask* task = (oxygine::HttpRequestJavaTask*)handle;
         task->error_();
