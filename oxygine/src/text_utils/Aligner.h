@@ -46,11 +46,15 @@ namespace oxygine
             int width;
             int height;
 
+
+            const Font* _font;
+
+            float _adjScale;
+
         private:
             int getLineWidth()const;
             int getLineSkip()const;
 
-            const Font* _font;
 
             typedef std::vector<Symbol*> line;
 
@@ -64,6 +68,7 @@ namespace oxygine
             int _x, _y;
             line _line;
             int _lineWidth;
+            int _fontSize;
         };
     }
 }

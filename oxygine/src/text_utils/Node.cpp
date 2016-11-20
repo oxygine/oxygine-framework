@@ -167,7 +167,7 @@ namespace oxygine
             if (!_data.empty())
             {
                 int i = 0;
-                const Font* font = rd.getStyle().font->getFont(0, rd.getStyle().fontSize);
+                const Font* font = rd._font;
                 glyphOptions opt = rd.getStyle().options;
 
                 while (i != (int)_data.size())

@@ -269,7 +269,7 @@ namespace oxygine
 
     const Rect& TextField::getTextRect() const
     {
-        const_cast<TextField*>(this)->getRootNode(1);
+        const_cast<TextField*>(this)->getRootNode(_rtscale);
         return _textRect;
     }
 

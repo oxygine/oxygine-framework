@@ -10,10 +10,27 @@ namespace oxygine
 
         Aligner::Aligner(const TextStyle& Style, float gscale): width(0), height(0), _x(0), _y(0), _lineWidth(0), bounds(0, 0, 0, 0), style(Style), _globalScale(gscale)
         {
+            _fontSize = style.fontSize;
+
 #ifdef GSCALE
-            style.fontSize = style.fontSize  * _globalScale;
+            float fs = _fontSize * _globalScale;
+            _fontSize = fs;
+            const int X = 20;
+            if (_fontSize > X)
+            {
+                int x = _fontSize % X;
+                if (x)
+                    _fontSize = _fontSize + (X - x);
+            }
+
+            _adjScale = fs / _fontSize;
+            _globalScale = (float)_fontSize / style.fontSize;
 #endif
-            _font = style.font->getFont(0, style.fontSize);
+
+
+            log::messageln("gscale %f, adjScale %f globscale %f, %d %f", gscale, _adjScale, _globalScale, _fontSize, fs);
+
+            _font = style.font->getFont(0, _fontSize);
             _line.reserve(50);
         }
 
@@ -73,6 +90,8 @@ namespace oxygine
             _scale = _font->getScale();
             if (st.fontSize)
                 _scale = _font->getSize() / float(st.fontSize);
+
+
 #ifdef GSCALE
             _scale =  _globalScale;
 #endif
@@ -82,6 +101,7 @@ namespace oxygine
 
             bounds = Rect(_alignX(0), _alignY(0), 0, 0);
             nextLine();
+
         }
 
         void Aligner::end()
