@@ -11,6 +11,9 @@ namespace oxygine
     {
         INHERITED(VStyleActor);
     public:
+        static void setDefaultFont(ResFont*);
+        static ResFont* getDefaultFont();
+
         DECLARE_COPYCLONE_NEW(TextField);
         TextField();
         ~TextField();
@@ -112,6 +115,7 @@ namespace oxygine
         text::Node* _root;
         Rect _textRect;
         float _rtscale;
+        int _realFontSize;
 
 
         void needRebuild();

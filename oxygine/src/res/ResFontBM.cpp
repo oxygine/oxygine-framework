@@ -72,6 +72,25 @@ namespace oxygine
         return _sdf;
     }
 
+    void ResFontBM::alignSize(float scale, int fontSize, float& resScale, int& resFontSize) const
+    {
+        resFontSize = fontSize;
+        resScale = scale;
+
+
+
+        //_scale = _font->getScale();
+        //if (st.fontSize)
+        //    _scale = _font->getSize() / float(st.fontSize);
+        if (fontSize)
+            resScale = _font->getSize() / float(fontSize);
+        else
+        {
+            resFontSize = _font->getScale();
+            resScale = _font->getScale();
+        }
+    }
+
     void ResFontBM::init(const char* path, bool premultipliedAlpha)
     {
         _premultipliedAlpha = premultipliedAlpha;

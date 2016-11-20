@@ -25,6 +25,7 @@
 #include "winnie_alloc/winnie_alloc.h"
 #include "ThreadDispatcher.h"
 #include "PostProcess.h"
+#include "TextField.h"
 
 #ifdef __S3E__
 #include "s3e.h"
@@ -469,6 +470,11 @@ namespace oxygine
             STDMaterial::instance = new STDMaterial(STDRenderer::instance);
 
             CHECKGL();
+
+#ifdef OX_DEBUG
+            DebugActor::initialize();
+            TextField::setDefaultFont(DebugActor::resSystem->getResFont("system"));
+#endif
             log::messageln("oxygine initialized");
         }
 

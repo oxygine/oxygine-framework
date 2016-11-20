@@ -8,30 +8,13 @@ namespace oxygine
     {
 #define GSCALE 1
 
-        Aligner::Aligner(const TextStyle& Style, float gscale): width(0), height(0), _x(0), _y(0), _lineWidth(0), bounds(0, 0, 0, 0), style(Style), _globalScale(gscale)
+        Aligner::Aligner(const TextStyle& Style, int fs, float gscale, const Vector2& size): width((int)size.x), height((int)size.y), _x(0), _y(0), _lineWidth(0), bounds(0, 0, 0, 0), style(Style), _scale(gscale), _fontSize(fs)
         {
-            _fontSize = style.fontSize;
-
-#ifdef GSCALE
-            float fs = _fontSize * _globalScale;
-            _fontSize = fs;
-            const int X = 20;
-            if (_fontSize > X)
-            {
-                int x = _fontSize % X;
-                if (x)
-                    _fontSize = _fontSize + (X - x);
-            }
-
-            _adjScale = fs / _fontSize;
-            _globalScale = (float)_fontSize / style.fontSize;
-#endif
-
-
-            log::messageln("gscale %f, adjScale %f globscale %f, %d %f", gscale, _adjScale, _globalScale, _fontSize, fs);
+            //log::messageln("gscale %f, adjScale %f globscale %f, %d %f", gscale, _globalScale, _fontSize, fs);
 
             _font = style.font->getFont(0, _fontSize);
             _line.reserve(50);
+            _lineSkip = (int)(_font->getBaselineDistance() * style.baselineScale) + style.linesOffset;
         }
 
         Aligner::~Aligner()
@@ -86,16 +69,6 @@ namespace oxygine
             _x = 0;
             _y = 0;
 
-            const TextStyle& st = getStyle();
-            _scale = _font->getScale();
-            if (st.fontSize)
-                _scale = _font->getSize() / float(st.fontSize);
-
-
-#ifdef GSCALE
-            _scale =  _globalScale;
-#endif
-
             width = int(width * _scale);
             height = int(height * _scale);
 
@@ -129,7 +102,7 @@ namespace oxygine
 
         int Aligner::getLineSkip() const
         {
-            return _font->getBaselineDistance() * getStyle().baselineScale + getStyle().linesOffset;
+            return _lineSkip;
         }
 
         void Aligner::_alignLine(line& ln)

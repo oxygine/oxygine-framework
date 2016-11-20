@@ -26,6 +26,8 @@ namespace oxygine
 
         bool isSDF(int& size) const OVERRIDE;
 
+        void alignSize(float scale, int fontSize, float& resScale, int& resFontSize) const OVERRIDE;
+
     private:
         struct page
         {

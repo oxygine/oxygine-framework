@@ -16,21 +16,24 @@
 
 namespace oxygine
 {
+    static ResFont* _defaultFont = 0;
+    void TextField::setDefaultFont(ResFont* f)
+    {
+        _defaultFont = f;
+    }
+
+    ResFont* TextField::getDefaultFont()
+    {
+        return _defaultFont;
+    }
+
     TextField::TextField():
         _root(0),
-        _textRect(0, 0, 0, 0)
+        _textRect(0, 0, 0, 0),
+        _rtscale(1.0f)
     {
         _flags |= flag_rebuild;
-        _style.font = NULL;
-        _rtscale = 0;
-
-        if (DebugActor::resSystem)
-        {
-            if (ResFont* fnt = DebugActor::resSystem->getResFont("system"))
-            {
-                _style.font = fnt;
-            }
-        }
+        _style.font = _defaultFont;
     }
 
     TextField::~TextField()
@@ -45,6 +48,7 @@ namespace oxygine
         _text = src._text;
         _style = src._style;
         _root = 0;
+        _rtscale = 1.0f;
 
         _flags |= flag_rebuild;
         _textRect = src._textRect;
@@ -117,6 +121,8 @@ namespace oxygine
     void TextField::setFont(const ResFont* font)
     {
         _style.font = font;
+        if (!_style.font)
+            _style.font = _defaultFont;
         needRebuild();
     }
 
@@ -163,6 +169,9 @@ namespace oxygine
 
         if (st.fontSize == 0)
             _style.fontSize = size;
+
+        if (!_style.font)
+            _style.font = _defaultFont;
 
         needRebuild();
     }
@@ -264,7 +273,7 @@ namespace oxygine
 
     text::Symbol* TextField::getSymbolAt(int pos) const
     {
-        return const_cast<TextField*>(this)->getRootNode(1)->getSymbol(pos);
+        return const_cast<TextField*>(this)->getRootNode(_rtscale)->getSymbol(pos);
     }
 
     const Rect& TextField::getTextRect() const
@@ -280,10 +289,21 @@ namespace oxygine
     }
 
 
-    text::Node* TextField::getRootNode(float scale)
+    text::Node* TextField::getRootNode(float globalScale)
     {
+        if (!_style.font)
+            return _root;
+
+
+        int fontSize = _style.fontSize;
+        float scale = globalScale;
+
+        _style.font->alignSize(globalScale, _style.fontSize, scale, fontSize);
+
         if ((_flags & flag_rebuild || _rtscale != scale) && _style.font)
         {
+            _rtscale = scale;
+            _realFontSize = fontSize;
             delete _root;
 
             _flags &= ~flag_rebuild;
@@ -298,11 +318,7 @@ namespace oxygine
                 _root = new text::TextNode(_text.c_str());
             }
 
-            _rtscale = scale;
-            text::Aligner rd(_style, scale);
-
-            rd.width = (int)getWidth();
-            rd.height = (int)getHeight();
+            text::Aligner rd(_style, fontSize, scale, getSize());
             rd.begin();
             _root->resize(rd);
             rd.end();

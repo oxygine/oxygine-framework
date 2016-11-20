@@ -27,7 +27,7 @@ namespace oxygine
         class Aligner
         {
         public:
-            Aligner(const TextStyle& style, float gscale);
+            Aligner(const TextStyle& style, int fs, float gscale, const Vector2& size);
             ~Aligner();
 
 
@@ -49,8 +49,6 @@ namespace oxygine
 
             const Font* _font;
 
-            float _adjScale;
-
         private:
             int getLineWidth()const;
             int getLineSkip()const;
@@ -64,11 +62,11 @@ namespace oxygine
             void _nextLine(line& ln);
 
             float _scale;
-            float _globalScale;
             int _x, _y;
             line _line;
             int _lineWidth;
             int _fontSize;
+            int _lineSkip;
         };
     }
 }
