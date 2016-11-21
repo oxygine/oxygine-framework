@@ -127,8 +127,6 @@
 		C3E8700D16EBC8EB00052915 /* closure_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86F6516EBC8EB00052915 /* closure_impl.h */; };
 		C3E8700E16EBC8EB00052915 /* ColorRectSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3E86F6616EBC8EB00052915 /* ColorRectSprite.cpp */; };
 		C3E8700F16EBC8EB00052915 /* ColorRectSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86F6716EBC8EB00052915 /* ColorRectSprite.h */; };
-		C3E8701016EBC8EB00052915 /* coroutines.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3E86F6A16EBC8EB00052915 /* coroutines.cpp */; };
-		C3E8701116EBC8EB00052915 /* coroutines.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86F6B16EBC8EB00052915 /* coroutines.h */; };
 		C3E8701416EBC8EB00052915 /* ImageData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3E86F6E16EBC8EB00052915 /* ImageData.cpp */; };
 		C3E8701516EBC8EB00052915 /* ImageData.h in Headers */ = {isa = PBXBuildFile; fileRef = C3E86F6F16EBC8EB00052915 /* ImageData.h */; };
 		C3E8701616EBC8EB00052915 /* ImageDataOperations.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C3E86F7016EBC8EB00052915 /* ImageDataOperations.cpp */; };
@@ -367,8 +365,6 @@
 		C3E86F6516EBC8EB00052915 /* closure_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = closure_impl.h; sourceTree = "<group>"; };
 		C3E86F6616EBC8EB00052915 /* ColorRectSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ColorRectSprite.cpp; path = ../../../src/ColorRectSprite.cpp; sourceTree = "<group>"; };
 		C3E86F6716EBC8EB00052915 /* ColorRectSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColorRectSprite.h; path = ../../../src/ColorRectSprite.h; sourceTree = "<group>"; };
-		C3E86F6A16EBC8EB00052915 /* coroutines.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coroutines.cpp; sourceTree = "<group>"; };
-		C3E86F6B16EBC8EB00052915 /* coroutines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coroutines.h; sourceTree = "<group>"; };
 		C3E86F6E16EBC8EB00052915 /* ImageData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageData.cpp; sourceTree = "<group>"; };
 		C3E86F6F16EBC8EB00052915 /* ImageData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageData.h; sourceTree = "<group>"; };
 		C3E86F7016EBC8EB00052915 /* ImageDataOperations.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ImageDataOperations.cpp; sourceTree = "<group>"; };
@@ -719,8 +715,6 @@
 				0472E35517F8A1A80016A832 /* ZipFileSystem.cpp */,
 				0472E35617F8A1A80016A832 /* ZipFileSystem.h */,
 				C3EE215017BECD6100715678 /* gl */,
-				C3E86F6A16EBC8EB00052915 /* coroutines.cpp */,
-				C3E86F6B16EBC8EB00052915 /* coroutines.h */,
 				C3E86F6E16EBC8EB00052915 /* ImageData.cpp */,
 				C3E86F6F16EBC8EB00052915 /* ImageData.h */,
 				C3E86F7016EBC8EB00052915 /* ImageDataOperations.cpp */,
@@ -900,7 +894,6 @@
 				C3E8700D16EBC8EB00052915 /* closure_impl.h in Headers */,
 				9240B40A1ADFB856005F9C5B /* TweenAnim.h in Headers */,
 				C3E8700F16EBC8EB00052915 /* ColorRectSprite.h in Headers */,
-				C3E8701116EBC8EB00052915 /* coroutines.h in Headers */,
 				0472E35A17F8A1A80016A832 /* FileSystem.h in Headers */,
 				0472E36517F8A1A80016A832 /* ZipFileSystem.h in Headers */,
 				0472E36317F8A1A80016A832 /* VertexDeclaration.h in Headers */,
@@ -1078,7 +1071,6 @@
 				9264E5BF1B8358D80049F91F /* jsoncpp.cpp in Sources */,
 				C3E8700A16EBC8EB00052915 /* Clock.cpp in Sources */,
 				C3E8700E16EBC8EB00052915 /* ColorRectSprite.cpp in Sources */,
-				C3E8701016EBC8EB00052915 /* coroutines.cpp in Sources */,
 				C3E8701416EBC8EB00052915 /* ImageData.cpp in Sources */,
 				CEC2D00A1C47288E00450163 /* STDMaterial.cpp in Sources */,
 				0472E36417F8A1A80016A832 /* ZipFileSystem.cpp in Sources */,

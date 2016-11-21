@@ -42,7 +42,7 @@
 #include "SDL_video.h"
 #endif
 
-#ifdef __WIN32__
+#ifdef _WIN32
 #pragma comment(lib, "psapi.lib") // Added to support GetProcessMemoryInfo()
 #include <windows.h>
 #include <Psapi.h>
@@ -366,7 +366,7 @@ namespace oxygine
         s << "memory=" << mem / 1024 << "kb ";
 #endif
 
-#ifdef __WIN32__
+#ifdef _WIN32
         PROCESS_MEMORY_COUNTERS_EX pmc;
         GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*) &pmc, sizeof(pmc));
         s << "memory=" << pmc.PrivateUsage / 1024 << "kb ";
