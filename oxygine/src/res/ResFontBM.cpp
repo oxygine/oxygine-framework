@@ -72,25 +72,12 @@ namespace oxygine
         return _sdf;
     }
 
-    void ResFontBM::alignSize(float worldScale, int styleFontSize, float& resScale, int& resFontSize) const
-    {
-        resFontSize = styleFontSize;
-        resScale = worldScale;
-
-        if (styleFontSize)
-            resScale = _font->getSize() / float(styleFontSize);
-        else
-        {
-            resFontSize = _font->getScale();
-            resScale = _font->getScale();
-        }
-    }
-
     const oxygine::Font* ResFontBM::getClosestFont(float worldScale, int styleFontSize, float& resScale) const
     {
-        if (!styleFontSize)
-            styleFontSize = _size;
-        resScale = _size / float(styleFontSize);
+        if (styleFontSize)
+            resScale = _size / float(styleFontSize);
+        else
+            resScale = _font->getScale();
 
         return _font;
     }

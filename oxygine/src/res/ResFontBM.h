@@ -26,7 +26,6 @@ namespace oxygine
 
         bool isSDF(int& size) const OVERRIDE;
 
-        void alignSize(float scale, int fontSize, float& resScale, int& resFontSize) const OVERRIDE;
         const Font* getClosestFont(float worldScale, int styleFontSize, float& resScale) const OVERRIDE;
 
     private:
