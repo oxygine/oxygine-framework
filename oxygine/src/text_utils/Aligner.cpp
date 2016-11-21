@@ -8,11 +8,9 @@ namespace oxygine
     {
 #define GSCALE 1
 
-        Aligner::Aligner(const TextStyle& Style, int fs, float gscale, const Vector2& size): width((int)size.x), height((int)size.y), _x(0), _y(0), _lineWidth(0), bounds(0, 0, 0, 0), style(Style), _scale(gscale), _fontSize(fs)
+        Aligner::Aligner(const TextStyle& Style, const Font* font, float gscale, const Vector2& size): width((int)size.x), height((int)size.y), _x(0), _y(0), _lineWidth(0), bounds(0, 0, 0, 0), style(Style), _scale(gscale), _font(font)
         {
             //log::messageln("gscale %f, adjScale %f globscale %f, %d %f", gscale, _globalScale, _fontSize, fs);
-
-            _font = style.font->getFont(0, _fontSize);
             _line.reserve(50);
             _lineSkip = (int)(_font->getBaselineDistance() * style.baselineScale) + style.linesOffset;
         }

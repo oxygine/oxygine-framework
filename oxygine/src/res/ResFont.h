@@ -16,7 +16,7 @@ namespace oxygine
         int getSize() const { return _size; }
 
         virtual void alignSize(float worldScale, int styleFontSize, float& resScale, int& resFontSize) const;
-
+        virtual const Font* getClosestFont(float worldScale, int styleFontSize, float& resScale) const;
     protected:
         int _size;
     };

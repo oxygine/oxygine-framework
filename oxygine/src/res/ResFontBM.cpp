@@ -86,6 +86,15 @@ namespace oxygine
         }
     }
 
+    const oxygine::Font* ResFontBM::getClosestFont(float worldScale, int styleFontSize, float& resScale) const
+    {
+        if (!styleFontSize)
+            styleFontSize = _size;
+        resScale = _size / float(styleFontSize);
+
+        return _font;
+    }
+
     void ResFontBM::init(const char* path, bool premultipliedAlpha)
     {
         _premultipliedAlpha = premultipliedAlpha;
