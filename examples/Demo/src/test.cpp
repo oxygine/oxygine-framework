@@ -230,7 +230,7 @@ void Test::notify(std::string txt, int time)
     spTweenQueue tq = new TweenQueue;
     tq->add(Actor::TweenAlpha(255), 300, 1, false, 0, Tween::ease_inExpo);
     tq->add(Actor::TweenAlpha(0), 300, 1, false, 1200);
-    tq->setDetachActor(true);
+    tq->detachWhenDone();
     tq->addDoneCallback(CLOSURE(this, &Test::notifyDone));
 
     sprite->addTween(tq);

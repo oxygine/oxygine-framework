@@ -137,7 +137,7 @@ public:
                     spSprite c = new Sprite;
                     c->setAnchor(0.5f, 0.5f);
                     c->setResAnim(resources.getResAnim("snow"));
-                    c->addTween(Actor::TweenAlpha(0), 300)->setDetachActor(true);
+                    c->addTween(Actor::TweenAlpha(0), 300)->detachWhenDone();
                     Vector2 pos = a->local2stage(contact, content);
                     c->setPosition(pos);
                     c->attachTo(contacts);
@@ -229,7 +229,7 @@ public:
             t = dragging->addTween(Actor::TweenPosition(basket->getPosition() - basket->getSize() / 2), 500);
         else
             t = dragging->addTween(Actor::TweenPosition(ball->getPosition() - ball->getSize() / 2), 500);
-        t->setDetachActor(true);
+        t->detachWhenDone();
         dragging = 0;
     }
 

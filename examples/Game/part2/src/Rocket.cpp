@@ -72,9 +72,9 @@ void Rocket::explode()
     //run tween with explosion animation
     spTween tween = anim->addTween(Sprite::TweenAnim(res::ui.getResAnim("explosion")), 1000);
     //auto detach sprite when tween is done
-    tween->setDetachActor(true);
+    tween->detachWhenDone();
 
     //hide rocket and then detach it
     tween = _view->addTween(Actor::TweenAlpha(0), 500);
-    tween->setDetachActor(true);
+    tween->detachWhenDone();
 }

@@ -86,7 +86,7 @@ public:
     void _loaded(Event* event)
     {
         notify("Loaded!");
-        ui->getChild("loading")->addTween(Sprite::TweenAlpha(0), 400)->setDetachActor(true);
+        ui->getChild("loading")->addTween(Sprite::TweenAlpha(0), 400)->detachWhenDone();
 
         releaseRef();//added ref earlier from void clicked(id)
     }

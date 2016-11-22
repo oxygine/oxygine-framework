@@ -516,7 +516,7 @@ namespace oxygine
         cr->setTouchEnabled(false);
         cr->setColor(Color(rand() % 255, rand() % 255, rand() % 255, 0));
         cr->setSize(actor->getSize());
-        cr->addTween(ColorRectSprite::TweenColor(Color(Color::White, 200)), 700, 1, true, 0, Tween::ease_inCubic)->setDetachActor(true);
+        cr->addTween(ColorRectSprite::TweenColor(Color(Color::White, 200)), 700, 1, true, 0, Tween::ease_inCubic)->detachWhenDone();
         actor->addChild(cr);
         std::string dmp = actor->dump(0);
         log::messageln(">>>>>>>>>>>>>>>>>>>>\ntouched actor '%s' local pos: (%.0f,%.0f), pos: (%.0f,%.0f)\n%s",

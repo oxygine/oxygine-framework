@@ -127,7 +127,7 @@ public:
             snow->setY(-50);
             snow->attachTo(_masked);
 
-            snow->addTween(Actor::TweenY(content->getHeight() + 50), 6000)->setDetachActor(true);
+            snow->addTween(Actor::TweenY(content->getHeight() + 50), 6000)->detachWhenDone();
             snow->addTween(Actor::TweenRotation(scalar::randFloat(0, MATH_PI * 2)), 5000);
         }
     }

@@ -44,8 +44,8 @@ public:
             char name[255];
             safe_sprintf(name, "pressed %d", i);
             tf->setName(name);
-            tf->setX(5);
-            tf->setY(15 + i * 10);
+            tf->setX(5.0f);
+            tf->setY(15.0f + i * 10.0f);
             tf->attachTo(orange);
         }
 

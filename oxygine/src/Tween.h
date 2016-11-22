@@ -108,8 +108,8 @@ namespace oxygine
         Actor*      getClient() const { return _client; }
         float       getPercent() const { return _percent; }
         spObject    getDataObject() const { return _data; }
-        spTween&    getNextSibling() { return intr_list::getNextSibling(); }
-        spTween&    getPrevSibling() { return intr_list::getPrevSibling(); }
+        spTween     getNextSibling() { return intr_list::getNextSibling(); }
+        spTween     getPrevSibling() { return intr_list::getPrevSibling(); }
 
         bool        isStarted() const { return _status != status_not_started; }
         bool        isDone() const { return _status == status_remove; }
@@ -117,12 +117,11 @@ namespace oxygine
         /**set custom user data object to Tween. Could be used for store some useful data*/
         void setDataObject(spObject data) { _data = data; }
         /**add callback would be called when tween done.  Could be added more than one.
-        setDoneCallback is faster because it doesn't allocate memory for list internally
-        */
+        setDoneCallback is faster because it doesn't allocate memory for list internally*/
         void addDoneCallback(const EventCallback& cb);
         /**set Easing function*/
         void setEase(EASE ease) { _ease = ease; }
-        /**set Global Easing functiont */
+        /**set Global Easing function */
         void setGlobalEase(EASE ease) { _globalEase = ease; }
         /**set Delay before starting tween*/
         void setDelay(timeMS delay) { _delay = delay; }
@@ -133,8 +132,11 @@ namespace oxygine
         void setClient(Actor* client) { _client = client; }
         void setTwoSides(bool ts) { _twoSides = ts; }
 
-        /**delete actor from parent node when tween done*/
+        /**delete actor from parent node when tween done. Deprecated, use detachWhenDone*/
+        OXYGINE_DEPRECATED
         void setDetachActor(bool detach) { _detach = detach; }
+        /**delete actor from parent node when tween done*/
+        void detachWhenDone(bool detach = true) { _detach = detach; }
 
         /**immediately completes tween, calls doneCallback and mark tween as completed and removes self from Actor. If tween has infinity loops (=-1) then do nothing*/
         virtual void complete(timeMS deltaTime = TWEEN_COMPLETE_DT);

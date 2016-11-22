@@ -26,18 +26,14 @@ namespace oxygine
 
         TouchEvent(eventType type, bool Bubbles = true, const Vector2& locPosition = Vector2(0, 0)) : Event(type, Bubbles), localPosition(locPosition), position(locPosition), mouseButton(MouseButton_Touch), pressure(1.0f), index(1), __clickDispatched(false) {}
 
-        /**
-        position in local space for Event::currentTarget Actor
-        */
+        /**position in local space for Event::currentTarget Actor*/
         Vector2 localPosition;
-        /**
-        position in local space for Event::target actor
-        */
+        /**position in local space for Event::target actor*/
         Vector2 position;
 
         float pressure;
 
-        MouseButton mouseButton;//valid only for TouchUP/Down events
+        MouseButton mouseButton;
         pointer_index index;
 
         const PointerState* getPointer() const;
