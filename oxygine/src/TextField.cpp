@@ -294,16 +294,13 @@ namespace oxygine
         if (!_style.font)
             return _root;
 
-
-        int fontSize = _style.fontSize;
-        float scale = globalScale;
-
-        _style.font->alignSize(globalScale, _style.fontSize, scale, fontSize);
+        float scale = 1.0f;
+        const Font* font = _style.font->getClosestFont(globalScale, _style.fontSize, scale);
 
         if ((_flags & flag_rebuild || _rtscale != scale) && _style.font)
         {
             _rtscale = scale;
-            _realFontSize = fontSize;
+            //_realFontSize = fontSize;
             delete _root;
 
             _flags &= ~flag_rebuild;
@@ -318,7 +315,7 @@ namespace oxygine
                 _root = new text::TextNode(_text.c_str());
             }
 
-            text::Aligner rd(_style, fontSize, scale, getSize());
+            text::Aligner rd(_style, font, scale, getSize());
             rd.begin();
             _root->resize(rd);
             rd.end();

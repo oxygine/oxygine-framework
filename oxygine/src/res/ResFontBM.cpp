@@ -72,18 +72,14 @@ namespace oxygine
         return _sdf;
     }
 
-    void ResFontBM::alignSize(float worldScale, int styleFontSize, float& resScale, int& resFontSize) const
+    const oxygine::Font* ResFontBM::getClosestFont(float worldScale, int styleFontSize, float& resScale) const
     {
-        resFontSize = styleFontSize;
-        resScale = worldScale;
-
         if (styleFontSize)
-            resScale = _font->getSize() / float(styleFontSize);
+            resScale = _size / float(styleFontSize);
         else
-        {
-            resFontSize = _font->getScale();
             resScale = _font->getScale();
-        }
+
+        return _font;
     }
 
     void ResFontBM::init(const char* path, bool premultipliedAlpha)
