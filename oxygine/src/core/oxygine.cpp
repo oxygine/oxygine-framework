@@ -56,8 +56,6 @@
 #endif
 
 #ifdef OXYGINE_SDL
-#include "coroutines.h"
-
 extern "C"
 {
 #include "SDL.h"

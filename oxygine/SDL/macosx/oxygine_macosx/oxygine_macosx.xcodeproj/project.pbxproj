@@ -29,8 +29,6 @@
 		049B56741871F21E00EF3C66 /* closure_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B55A11871F21D00EF3C66 /* closure_impl.h */; };
 		049B56751871F21E00EF3C66 /* ColorRectSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B55A21871F21D00EF3C66 /* ColorRectSprite.cpp */; };
 		049B56761871F21E00EF3C66 /* ColorRectSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B55A31871F21D00EF3C66 /* ColorRectSprite.h */; };
-		049B56771871F21E00EF3C66 /* coroutines.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B55A61871F21D00EF3C66 /* coroutines.cpp */; };
-		049B56781871F21E00EF3C66 /* coroutines.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B55A71871F21D00EF3C66 /* coroutines.h */; };
 		049B56791871F21E00EF3C66 /* file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B55A81871F21D00EF3C66 /* file.cpp */; };
 		049B567A1871F21E00EF3C66 /* file.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B55A91871F21D00EF3C66 /* file.h */; };
 		049B567C1871F21E00EF3C66 /* FileSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B55AB1871F21D00EF3C66 /* FileSystem.cpp */; };
@@ -268,8 +266,6 @@
 		049B55A11871F21D00EF3C66 /* closure_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = closure_impl.h; sourceTree = "<group>"; };
 		049B55A21871F21D00EF3C66 /* ColorRectSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ColorRectSprite.cpp; path = ../../../src/ColorRectSprite.cpp; sourceTree = "<group>"; };
 		049B55A31871F21D00EF3C66 /* ColorRectSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColorRectSprite.h; path = ../../../src/ColorRectSprite.h; sourceTree = "<group>"; };
-		049B55A61871F21D00EF3C66 /* coroutines.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coroutines.cpp; sourceTree = "<group>"; };
-		049B55A71871F21D00EF3C66 /* coroutines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coroutines.h; sourceTree = "<group>"; };
 		049B55A81871F21D00EF3C66 /* file.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = file.cpp; sourceTree = "<group>"; };
 		049B55A91871F21D00EF3C66 /* file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file.h; sourceTree = "<group>"; };
 		049B55AB1871F21D00EF3C66 /* FileSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileSystem.cpp; sourceTree = "<group>"; };
@@ -645,8 +641,6 @@
 				92F3F3471CA3BD7B00425D52 /* ThreadDispatcher.h */,
 				92F3F3481CA3BD7B00425D52 /* ThreadMessages.h */,
 				92CE26661A58AADB003901D6 /* ios */,
-				049B55A61871F21D00EF3C66 /* coroutines.cpp */,
-				049B55A71871F21D00EF3C66 /* coroutines.h */,
 				049B55A81871F21D00EF3C66 /* file.cpp */,
 				049B55A91871F21D00EF3C66 /* file.h */,
 				049B55AB1871F21D00EF3C66 /* FileSystem.cpp */,
@@ -950,7 +944,6 @@
 				049B570A1871F21E00EF3C66 /* Sprite.h in Headers */,
 				CEC2CFF91C47274C00450163 /* STDMaterial.h in Headers */,
 				049B56E61871F21E00EF3C66 /* unzip.h in Headers */,
-				049B56781871F21E00EF3C66 /* coroutines.h in Headers */,
 				049B571A1871F21E00EF3C66 /* ImageUtils.h in Headers */,
 				049B57021871F21E00EF3C66 /* Resources.h in Headers */,
 				049B56921871F21E00EF3C66 /* log.h in Headers */,
@@ -1162,7 +1155,6 @@
 				049B56CD1871F21E00EF3C66 /* EventDispatcher.cpp in Sources */,
 				92F3F3421CA3BD5400425D52 /* PostProcess.cpp in Sources */,
 				049B56C01871F21E00EF3C66 /* TexturesInspector.cpp in Sources */,
-				049B56771871F21E00EF3C66 /* coroutines.cpp in Sources */,
 				049B56F91871F21E00EF3C66 /* ResBuffer.cpp in Sources */,
 				049B568E1871F21E00EF3C66 /* ImageDataOperations.cpp in Sources */,
 				049B56821871F21E00EF3C66 /* ShaderProgramGL.cpp in Sources */,

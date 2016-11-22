@@ -135,9 +135,6 @@
     <ClCompile Include="..\..\src\core\gl\VideoDriverGL.cpp">
       <Filter>src\gl</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\coroutines.cpp">
-      <Filter>src\core</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\core\file.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
@@ -478,9 +475,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\core\gl\VideoDriverGL.h">
       <Filter>src\gl</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\core\coroutines.h">
-      <Filter>src\core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\core\file.h">
       <Filter>src\core</Filter>

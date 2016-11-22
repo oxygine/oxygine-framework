@@ -120,7 +120,6 @@
     <ClCompile Include="..\..\src\ClipRectActor.cpp" />
     <ClCompile Include="..\..\src\Clock.cpp" />
     <ClCompile Include="..\..\src\ColorRectSprite.cpp" />
-    <ClCompile Include="..\..\src\core\coroutines.cpp" />
     <ClCompile Include="..\..\src\core\curl\HttpRequestCurlTask.cpp" />
     <ClCompile Include="..\..\src\core\file.cpp" />
     <ClCompile Include="..\..\src\core\FileSystem.cpp" />
@@ -223,7 +222,6 @@
     <ClInclude Include="..\..\src\ClipRectActor.h" />
     <ClInclude Include="..\..\src\Clock.h" />
     <ClInclude Include="..\..\src\ColorRectSprite.h" />
-    <ClInclude Include="..\..\src\core\coroutines.h" />
     <ClInclude Include="..\..\src\core\curl\HttpRequestCurlTask.h" />
     <ClInclude Include="..\..\src\core\file.h" />
     <ClInclude Include="..\..\src\core\FileSystem.h" />

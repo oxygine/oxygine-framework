@@ -49,7 +49,6 @@
 //#include "closure/closure_impl.h"
 
 //core/
-#include "core/coroutines.h"
 #include "core/file.h"
 #include "core/ImageData.h"
 #include "core/ImageDataOperations.h"
