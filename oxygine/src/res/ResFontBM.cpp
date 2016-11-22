@@ -74,11 +74,11 @@ namespace oxygine
 
     const oxygine::Font* ResFontBM::getClosestFont(float worldScale, int styleFontSize, float& resScale) const
     {
-        if (styleFontSize)
-            resScale = _size / float(styleFontSize);
-        else
-            resScale = _font->getScale();
+        if (!styleFontSize)
+            styleFontSize = _size;
 
+        float scale = _size / float(styleFontSize) * _font->getScale();
+        resScale = resScale;
         return _font;
     }
 

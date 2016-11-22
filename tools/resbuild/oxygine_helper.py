@@ -14,7 +14,7 @@ class helper(object):
         elif sys.platform == "linux2":
             self.path_pvrtextool = self.path_root + "/3rdPartyTools/linux/PVRTexToolCLI "
         else:
-            self.path_pvrtextool = self.path_root + "/3rdPartyTools/PVRTexToolCL.exe "
+            self.path_pvrtextool = self.path_root + "/3rdPartyTools/PVRTexToolCLI.exe "
 
     def process_xml(self, embedded, args):
         if embedded:
