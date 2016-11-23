@@ -78,7 +78,7 @@ namespace oxygine
             styleFontSize = _size;
 
         float scale = _size / float(styleFontSize) * _font->getScale();
-        resScale = resScale;
+        resScale = scale;
         return _font;
     }
 
