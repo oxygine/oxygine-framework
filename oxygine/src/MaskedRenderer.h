@@ -72,7 +72,7 @@ namespace oxygine
     class MaskedRenderer : public STDRenderer
     {
     public:
-        MaskedRenderer(spNativeTexture mask, const RectF& srcRect, const RectF& destRect, const Transform& t, bool channelR);
+        MaskedRenderer(spNativeTexture mask, const RectF& srcRect, const RectF& destRect, const Transform& t, bool channelR, IVideoDriver *);
 
         //void draw(const RState *rs, const RectF &destRect) OVERRIDE;
 

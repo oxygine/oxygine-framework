@@ -116,7 +116,7 @@ namespace oxygine
 
             _renderer->drawBatch();
 
-            MaskedRenderer mr(msk, maskSrc, maskDest, t, rchannel);
+            MaskedRenderer mr(msk, maskSrc, maskDest, t, rchannel, original->getDriver());
             mr.begin(_renderer);
             _renderer = &mr;
             RenderState rs = parentRS;

@@ -6,18 +6,12 @@
 #include "RenderState.h"
 #include "STDRenderer.h"
 #include "STDMaterial.h"
+#include "DebugActor.h"
+#include "core/NativeTexture.h"
 
 namespace oxygine
 {
-    TreeInspectorPreview::TreeInspectorPreview(TreeInspector* tree): _tree(tree), _prevParent(0), _drawChildren(false)
-    {
-        setTouchEnabled(false);
-    }
-
-    TreeInspectorPreview::~TreeInspectorPreview()
-    {
-
-    }
+    
 
     Vector2 fitSize(const Vector2& destSize, const Vector2& src)
     {
@@ -37,26 +31,66 @@ namespace oxygine
         return Vector2(srcSize.x * scale, srcSize.y * scale);
     }
 
-    void TreeInspectorPreview::init(spActor item)
-    {
-        STDRenderer r_(&_videoCache);
-        STDMaterial mat(&r_);
 
-        STDRenderer& r = r_;
+    TreeInspectorPreview::TreeInspectorPreview(): _drawChildren(false)
+    {
+
+        //setTouchEnabled(false);
+        //addEventListener(TouchEvent::TOUCH_DOWN, )
+    }
+
+    TreeInspectorPreview::~TreeInspectorPreview()
+    {
+
+    }
+
+    void TreeInspectorPreview::doUpdate(const UpdateState& us)
+    {
+        if (getPressed())
+        {
+
+        }
+        else
+        {
+
+        }
+    }
+
+
+    Vector2 TreeInspectorPreview::render2cache(spActor item, const Vector2& size, bool child)
+    {
+        Material::setCurrent(0);
+
+        VideoDriverCache &cache = _videoCache;
+
+        STDRenderer renderer(&cache);
+        renderer.setViewProjTransform(STDRenderer::instance->getViewProjection());
+        STDMaterial mat(&renderer);
+
         RenderState rs;
-        rs.transform = item->getTransform();
         rs.material = &mat;
-        r.begin(0);
-        //r.setTransform(rs.transform);
-        item->doRender(rs);
-        r.end();
-        r.drawBatch();
+        RectF clip(0,0,getStage()->getWidth(), getStage()->getHeight());
+        rs.clip = &clip;
+        renderer.begin(0);
+        if (child)
+        {
+            bool vis = item->getVisible();
+            item->setVisible(true);
+            item->render(rs);
+            item->setVisible(vis);
+        }
+        else
+            item->doRender(rs);
+
+        renderer.end();
+        renderer.drawBatch();
 
         Material::setCurrent(0);
 
+
         //setSize(30, 30);
 
-        RectF itemRect = _videoCache._bounds;
+        RectF itemRect = cache._bounds;
         if (itemRect.isEmpty())
         {
             itemRect = item->getDestRect();
@@ -64,23 +98,36 @@ namespace oxygine
                 itemRect.setSize(Vector2(10, 4));
         }
 
-        Vector2 ns = fitSize(Vector2(50.0f, 50.0f), itemRect.size);
+        Vector2 ns = fitSize(size, itemRect.size);
         float scale = ns.x / itemRect.size.x;
 
-        _cacheTransform.identity();
+        AffineTransform transform;
+        transform.identity();
+        transform.scale(Vector2(scale, scale));
+        transform.translate(-itemRect.pos);
 
-        _cacheTransform.scale(Vector2(scale, scale));
-        _cacheTransform.translate(-itemRect.pos);
+        cache.transform(transform);
 
+        return ns;
+    }
 
+    void TreeInspectorPreview::init(spActor item, const Vector2& size, bool tree)
+    {
+        Vector2 ns = render2cache(item, size, tree);
 
-        AnimationFrame fr = _tree->_resSystem->getResAnim("checker")->getFrame(0, 0);
-        //Point itemSize(30, 30);// = _getItemRect().size;
+        AnimationFrame fr = DebugActor::resSystem->getResAnim("checker")->getFrame(0);
+
+        Vector2 uv = ns;
 
         RectF srcRect = fr.getSrcRect();
+
+        uv.x = std::min(uv.x, fr.getDestRect().getWidth());
+        uv.y = std::min(uv.y, fr.getDestRect().getHeight());
+
         const Diffuse& df = fr.getDiffuse();
-        srcRect.size.x = ns.x / (float)df.base->getWidth();
-        srcRect.size.y = ns.y / (float)df.base->getHeight();
+        srcRect.size.x = uv.x / (float)df.base->getWidth();
+        srcRect.size.y = uv.y / (float)df.base->getHeight();
+
         RectF destRect = fr.getDestRect();
         destRect.size = ns;
 
@@ -95,8 +142,295 @@ namespace oxygine
         Sprite::doRender(parentRenderState);
 
         STDMaterial::instance->getRenderer()->drawBatch();
-        _videoCache.render(_cacheTransform * parentRenderState.transform);
+        _videoCache.render(parentRenderState.transform);
         STDMaterial::instance->getRenderer()->drawBatch();
         STDMaterial::instance->getRenderer()->resetSettings();
     }
+
+    VideoDriverCache::VideoDriverCache() : _bounds(0, 0, 0, 0)
+    {
+        _batches.push_back(cached_batch());
+        rt = new NativeTextureNull;
+    }
+
+    VideoDriverCache::~VideoDriverCache()
+    {
+
+    }
+
+    oxygine::VideoDriverCache::cached_batch& VideoDriverCache::current()
+    {
+        return _batches.back();
+    }
+
+    const oxygine::VideoDriverCache::cached_batch& VideoDriverCache::current() const
+    {
+        return _batches.back();
+    }
+
+    oxygine::spNativeTexture VideoDriverCache::createTexture()
+    {
+        return 0;
+    }
+
+    void VideoDriverCache::begin(const Rect& viewport, const Color* color)
+    {
+
+    }
+
+    const oxygine::VertexDeclaration* VideoDriverCache::getVertexDeclaration(bvertex_format fmt) const
+    {
+        return instance->getVertexDeclaration(fmt);
+    }
+
+    void VideoDriverCache::setDefaultSettings()
+    {
+
+    }
+
+    void VideoDriverCache::setRenderTarget(spNativeTexture r)
+    {
+        rt = r;
+    }
+
+    oxygine::spNativeTexture VideoDriverCache::getRenderTarget() const
+    {
+        return rt;
+    }
+
+    void VideoDriverCache::setShaderProgram(ShaderProgram* program)
+    {
+        current().program = program;
+    }
+
+    void VideoDriverCache::setTexture(int sampler, spNativeTexture texture)
+    {
+        current().textures[sampler] = texture;
+    }
+
+    void VideoDriverCache::setState(STATE state, unsigned int value)
+    {
+        current().states[state] = value;
+    }
+
+    void VideoDriverCache::addUni(const char *id, cached_batch::uni::type tp, const void* ptr, int sz)
+    {
+        cached_batch::uni uni;
+        uni.id = id;
+        uni.tp = tp;
+        const unsigned char *data = (const unsigned char*)ptr;
+        uni.data.assign(data, data + sz);
+        current().uniforms.push_back(uni);
+    }
+
+    void VideoDriverCache::setUniformInt(const char* id, int v)
+    {
+        addUni(id, cached_batch::uni::uni_int, &v, sizeof(v));
+    }
+
+    void VideoDriverCache::setUniform(const char* id, float v)
+    {
+        addUni(id, cached_batch::uni::uni_float, &v, sizeof(v));
+    }
+
+    void VideoDriverCache::setUniform(const char* id, const Matrix* v)
+    {
+        addUni(id, cached_batch::uni::uni_matrix, v, sizeof(*v));
+    }
+
+    void VideoDriverCache::setUniform(const char* id, const Vector2* v, int num)
+    {
+        addUni(id, cached_batch::uni::uni_vec2, v, sizeof(*v) * num);
+    }
+
+    void VideoDriverCache::setUniform(const char* id, const Vector3* v, int num)
+    {
+        addUni(id, cached_batch::uni::uni_vec3, v, sizeof(*v) * num);
+    }
+
+    void VideoDriverCache::setUniform(const char* id, const Vector4* v, int num)
+    {
+        addUni(id, cached_batch::uni::uni_vec4, v, sizeof(*v) * num);
+    }
+
+    void VideoDriverCache::setBlendFunc(BLEND_TYPE src, BLEND_TYPE dest)
+    {
+        current().blendSrc = src;
+        current().blendDest = dest;
+    }
+
+    void VideoDriverCache::setScissorRect(const Rect* r)
+    {
+        if (r)
+            current().scissor = *r;
+        else
+            current().scissor = EmptyScissor;
+
+    }
+
+    bool VideoDriverCache::getScissorRect(Rect& r) const
+    {
+        if (current().scissor == EmptyScissor)
+            return false;
+        r = current().scissor;
+        return true;
+    }
+
+    void VideoDriverCache::nextBatch()
+    {
+        _batches.push_back(cached_batch());
+        cached_batch &b = _batches.back();
+        b = _batches[_batches.size() - 2];
+        b.indices.clear();
+        b.vertices.clear();
+        b.numIndices = 0;
+        b.numVertices = 0;
+    }
+
+    void VideoDriverCache::draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData, unsigned int numVertices, const unsigned short* indicesData, unsigned int numIndices)
+    {
+        if (!numIndices)
+            return;
+
+        current().vdecl = decl;
+        current().pt = pt;
+        current().numVertices = numVertices;
+        current().numIndices = numIndices;
+        current().vertices.assign((const char*)verticesData, (const char*)verticesData + decl->size * numVertices);
+        current().indices.assign(indicesData, indicesData + numIndices);
+
+        const vertexPCT2* v = (const vertexPCT2*)(&current().vertices.front());
+        if (_batches.size() == 1)
+        {
+            OX_ASSERT(current().vertices.size());
+            _bounds = RectF(v->x, v->y, 0, 0);
+        }
+
+        size_t num = current().vertices.size() / current().vdecl->size;
+
+        for (size_t i = 0; i != num; ++i)
+        {
+            v = (const vertexPCT2*)(&current().vertices.front() + current().vdecl->size * i);
+            RectF f(v->x, v->y, 0, 0);
+            _bounds.unite(f);
+        }
+        nextBatch();
+    }
+
+    void VideoDriverCache::draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData, unsigned int numVertices)
+    {
+        current().vdecl = decl;
+        current().pt = pt;
+        current().numVertices = numVertices;
+        current().vertices.assign((const char*)verticesData, (const char*)verticesData + current().vdecl->size * numVertices);
+        nextBatch();
+    }
+
+    void VideoDriverCache::render(const AffineTransform& transform)
+    {
+        for (batches::iterator i = _batches.begin(); i != _batches.end(); ++i)
+        {
+            const cached_batch& b = *i;
+
+            std::vector<char> modified = b.vertices;
+
+            if (b.vertices.size())
+            {
+                size_t num = b.vertices.size() / b.vdecl->size;
+
+                //if (0)
+                for (size_t i = 0; i != num; ++i)
+                {
+                    vertexPCT2* v = (vertexPCT2*)(&modified.front() + b.vdecl->size * i);
+                    Vector2 np = transform.transform(Vector2(v->x, v->y));
+                    v->x = np.x;
+                    v->y = np.y;
+                }
+            }
+
+            for (int i = 0; i < cached_batch::MAX_TEXTURES; ++i)
+                instance->setTexture(i, b.textures[i]);
+
+            if (b.program)
+                instance->setShaderProgram(b.program);
+            instance->setBlendFunc(b.blendSrc, b.blendDest);
+            for (int i = 0; i < STATE_NUM; ++i)
+                instance->setState((STATE)i, b.states[i]);
+
+            /*
+            if (b.scissor == EmptyScissor)
+                instance->setScissorRect(0);
+            else
+                instance->setScissorRect(&b.scissor);
+
+            */
+            //if(0)
+            for (size_t i = 0; i < b.uniforms.size(); ++i)
+            {
+                const cached_batch::uni &uni = b.uniforms[i];
+                switch (uni.tp)
+                {
+                case cached_batch::uni::uni_float:
+                    instance->setUniform(uni.id.c_str(), *((const float*)&uni.data[0])); break;
+                case cached_batch::uni::uni_int:
+                    instance->setUniformInt(uni.id.c_str(), *((const int*)&uni.data[0])); break;
+                case cached_batch::uni::uni_matrix:
+                    instance->setUniform(uni.id.c_str(), ((const Matrix*)&uni.data[0])); break;
+                case cached_batch::uni::uni_vec2:
+                    instance->setUniform(uni.id.c_str(), ((const Vector2*)&uni.data[0]), uni.data.size() / sizeof(Vector2)); break;
+                case cached_batch::uni::uni_vec3:
+                    instance->setUniform(uni.id.c_str(), ((const Vector3*)&uni.data[0]), uni.data.size() / sizeof(Vector3)); break;
+                case cached_batch::uni::uni_vec4:
+                    instance->setUniform(uni.id.c_str(), ((const Vector4*)&uni.data[0]), uni.data.size() / sizeof(Vector4)); break;
+                default:
+                    break;
+                }
+            }
+
+            if (b.numIndices)
+                instance->draw(b.pt, b.vdecl, &modified.front(), b.numVertices, &b.indices.front(), b.numIndices);
+            else
+            {
+                if (b.numVertices)
+                    instance->draw(b.pt, b.vdecl, &modified.front(), b.numVertices);
+            }
+        }
+    }
+
+    void VideoDriverCache::transform(const AffineTransform& m)
+    {
+        for (batches::iterator i = _batches.begin(); i != _batches.end(); ++i)
+        {
+            cached_batch& b = *i;
+            if (!b.numVertices)
+                continue;
+
+            size_t num = b.vertices.size() / b.vdecl->size;
+
+            std::vector<char> &modified = b.vertices;
+            //if (0)
+            for (size_t i = 0; i != num; ++i)
+            {
+                vertexPCT2* v = (vertexPCT2*)(&modified.front() + b.vdecl->size * i);
+                Vector2 np = m.transform(Vector2(v->x, v->y));
+                v->x = np.x;
+                v->y = np.y;
+            }
+
+            /*
+            if (b.scissor != EmptyScissor)
+            {
+                Vector2 lt = b.scissor.getLeftTop().cast<Vector2>();
+                lt = m.transform(lt);
+
+                Vector2 rb = b.scissor.getRightBottom().cast<Vector2>();
+                rb = m.transform(rb);
+
+                Vector2 size = rb - lt;
+                b.scissor = RectF(lt, size).cast<Rect>();
+            }
+            */
+        }
+    }
+
 }

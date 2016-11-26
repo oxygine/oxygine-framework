@@ -21,6 +21,8 @@ namespace oxygine
     private:
         TreeInspectorPage* _page;
         spTreeInspectorPreview _item;
+        spTreeInspectorPreview _itemTree;
+
 
         void _onMouseOver(bool over);
         void _onPress(bool over);

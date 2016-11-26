@@ -5,6 +5,8 @@
 #include "TextField.h"
 #include "res/ResFont.h"
 #include "res/Resources.h"
+#include "Stage.h"
+#include "DebugActor.h"
 
 namespace oxygine
 {
@@ -25,9 +27,12 @@ namespace oxygine
         setCull(true);
 
         _page = page;
-        _item = new TreeInspectorPreview(page->getTreeInspector());
-        _item->init(item);
+        _item = new TreeInspectorPreview();
+        _item->init(item, Vector2(50, 50), false);
         addChild(_item);
+
+        _itemTree = new TreeInspectorPreview();
+        _itemTree->init(item, getStage()->getSize()/2, true);
 
 
         spTextField tb = new TextField();
@@ -37,7 +42,7 @@ namespace oxygine
         const float minWidth = 300.0f;
 
         TextStyle style;
-        style.font = _page->getTreeInspector()->_resSystem->getResFont("system");
+        style.font = DebugActor::resSystem->getResFont("system");
         style.multiline = true;
         style.vAlign = TextStyle::VALIGN_TOP;
         tb->setStyle(style);
@@ -60,6 +65,17 @@ namespace oxygine
         addChild(tb);
 
         setSize(0, 0);
-        setSize(TreeInspector::calcBounds(this).size);
+        Vector2 sz = TreeInspector::calcBounds(this).size;
+        setSize(sz);
+
+        addTouchDownListener([=](Event*) {
+            _itemTree->setPriority(_stage->getLastChild()->getPriority());
+            _itemTree->setPosition(getStage()->getSize() / 4);
+            _stage->addChild(_itemTree);
+        });
+
+        addTouchUpListener([=](Event*) {
+            _itemTree->detach();
+        });
     }
 }
