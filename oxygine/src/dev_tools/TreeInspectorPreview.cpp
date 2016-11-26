@@ -56,10 +56,13 @@ namespace oxygine
         }
     }
 
+    bool _render2cache = false;
 
     Vector2 TreeInspectorPreview::render2cache(spActor item, const Vector2& size, bool child)
     {
         Material::setCurrent(0);
+
+        _render2cache = true;
 
         VideoDriverCache &cache = _videoCache;
 
@@ -74,10 +77,17 @@ namespace oxygine
         renderer.begin(0);
         if (child)
         {
+            STDMaterial *originalMat = STDMaterial::instance;
+
+            STDMaterial::instance = &mat;
+
             bool vis = item->getVisible();
             item->setVisible(true);
+            rs.transform = rs.transform * item->getTransformInvert();
             item->render(rs);
             item->setVisible(vis);
+
+            STDMaterial::instance = originalMat;
         }
         else
             item->doRender(rs);
@@ -91,7 +101,7 @@ namespace oxygine
         //setSize(30, 30);
 
         RectF itemRect = cache._bounds;
-        if (itemRect.isEmpty())
+        if (itemRect == RectF::invalidated())
         {
             itemRect = item->getDestRect();
             if (itemRect.isEmpty())
@@ -108,6 +118,7 @@ namespace oxygine
 
         cache.transform(transform);
 
+        _render2cache = false;
         return ns;
     }
 
@@ -140,17 +151,23 @@ namespace oxygine
     void TreeInspectorPreview::doRender(RenderState const& parentRenderState)
     {
         Sprite::doRender(parentRenderState);
+        Material::setCurrent(0);
 
         STDMaterial::instance->getRenderer()->drawBatch();
+        if (getParent() == getStage().get())
+        {
+            int q = 0;
+        }
         _videoCache.render(parentRenderState.transform);
         STDMaterial::instance->getRenderer()->drawBatch();
         STDMaterial::instance->getRenderer()->resetSettings();
     }
 
-    VideoDriverCache::VideoDriverCache() : _bounds(0, 0, 0, 0)
+    VideoDriverCache::VideoDriverCache()
     {
         _batches.push_back(cached_batch());
         rt = new NativeTextureNull;
+        _bounds = RectF::invalidated();
     }
 
     VideoDriverCache::~VideoDriverCache()
@@ -278,6 +295,19 @@ namespace oxygine
 
     void VideoDriverCache::nextBatch()
     {
+        const vertexPCT2* v = (const vertexPCT2*)(&current().vertices.front());
+
+        size_t num = current().vertices.size() / current().vdecl->size;
+        
+
+        for (size_t i = 0; i != num; ++i)
+        {
+            v = (const vertexPCT2*)(&current().vertices.front() + current().vdecl->size * i);
+            RectF f(v->x, v->y, 0, 0);
+            _bounds.unite(f);
+        }
+
+
         _batches.push_back(cached_batch());
         cached_batch &b = _batches.back();
         b = _batches[_batches.size() - 2];
@@ -299,21 +329,6 @@ namespace oxygine
         current().vertices.assign((const char*)verticesData, (const char*)verticesData + decl->size * numVertices);
         current().indices.assign(indicesData, indicesData + numIndices);
 
-        const vertexPCT2* v = (const vertexPCT2*)(&current().vertices.front());
-        if (_batches.size() == 1)
-        {
-            OX_ASSERT(current().vertices.size());
-            _bounds = RectF(v->x, v->y, 0, 0);
-        }
-
-        size_t num = current().vertices.size() / current().vdecl->size;
-
-        for (size_t i = 0; i != num; ++i)
-        {
-            v = (const vertexPCT2*)(&current().vertices.front() + current().vdecl->size * i);
-            RectF f(v->x, v->y, 0, 0);
-            _bounds.unite(f);
-        }
         nextBatch();
     }
 
@@ -397,8 +412,13 @@ namespace oxygine
         }
     }
 
-    void VideoDriverCache::transform(const AffineTransform& m)
+    void VideoDriverCache::transform(const AffineTransform& transform)
     {
+        /*
+        AffineTransform transform;
+        transform.identity();
+        */
+
         for (batches::iterator i = _batches.begin(); i != _batches.end(); ++i)
         {
             cached_batch& b = *i;
@@ -412,7 +432,7 @@ namespace oxygine
             for (size_t i = 0; i != num; ++i)
             {
                 vertexPCT2* v = (vertexPCT2*)(&modified.front() + b.vdecl->size * i);
-                Vector2 np = m.transform(Vector2(v->x, v->y));
+                Vector2 np = transform.transform(Vector2(v->x, v->y));
                 v->x = np.x;
                 v->y = np.y;
             }
