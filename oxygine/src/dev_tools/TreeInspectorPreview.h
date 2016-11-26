@@ -116,6 +116,7 @@ namespace oxygine
         void transform(const AffineTransform& m);
 
         spNativeTexture rt;
+        Matrix wvp;
     };
 
 

@@ -72,7 +72,7 @@ namespace oxygine
 
         RenderState rs;
         rs.material = &mat;
-        RectF clip(0,0,getStage()->getWidth(), getStage()->getHeight());
+        RectF clip = RectF::huge();
         rs.clip = &clip;
         renderer.begin(0);
         if (child)
@@ -253,6 +253,7 @@ namespace oxygine
     void VideoDriverCache::setUniform(const char* id, const Matrix* v)
     {
         addUni(id, cached_batch::uni::uni_matrix, v, sizeof(*v));
+        wvp = *v;
     }
 
     void VideoDriverCache::setUniform(const char* id, const Vector2* v, int num)
@@ -295,14 +296,20 @@ namespace oxygine
 
     void VideoDriverCache::nextBatch()
     {
-        const vertexPCT2* v = (const vertexPCT2*)(&current().vertices.front());
+        vertexPCT2* v = (vertexPCT2*)(&current().vertices.front());
 
         size_t num = current().vertices.size() / current().vdecl->size;
         
 
         for (size_t i = 0; i != num; ++i)
         {
-            v = (const vertexPCT2*)(&current().vertices.front() + current().vdecl->size * i);
+            v = (vertexPCT2*)(&current().vertices.front() + current().vdecl->size * i);
+            Vector4 p(v->x, v->y, v->z, 1.0f);
+            p = wvp.transformVec4(p);
+            p.x /= p.w;
+            p.y /= p.w;
+            v->x = p.x * getStage()->getWidth();
+            v->y = getStage()->getHeight() - p.y * getStage()->getHeight();
             RectF f(v->x, v->y, 0, 0);
             _bounds.unite(f);
         }
@@ -390,7 +397,12 @@ namespace oxygine
                 case cached_batch::uni::uni_int:
                     instance->setUniformInt(uni.id.c_str(), *((const int*)&uni.data[0])); break;
                 case cached_batch::uni::uni_matrix:
-                    instance->setUniform(uni.id.c_str(), ((const Matrix*)&uni.data[0])); break;
+                {
+                    Matrix m = STDRenderer::instance->getViewProjection();
+                    //instance->setUniform(uni.id.c_str(), ((const Matrix*)&uni.data[0])); 
+                    instance->setUniform(uni.id.c_str(), &m);
+                    break;
+                }
                 case cached_batch::uni::uni_vec2:
                     instance->setUniform(uni.id.c_str(), ((const Vector2*)&uni.data[0]), uni.data.size() / sizeof(Vector2)); break;
                 case cached_batch::uni::uni_vec3:

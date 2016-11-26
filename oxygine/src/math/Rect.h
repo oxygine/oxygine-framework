@@ -20,10 +20,19 @@ namespace oxygine
         static const RectT invalidated()
         {
             return RectT(
-                       std::numeric_limits<T>::max() / 2,
-                       std::numeric_limits<T>::max() / 2,
-                       -std::numeric_limits<T>::max(),
-                       -std::numeric_limits<T>::max());
+                std::numeric_limits<T>::max() / 2,
+                std::numeric_limits<T>::max() / 2,
+                -std::numeric_limits<T>::max(),
+                -std::numeric_limits<T>::max());
+        }
+
+        static const RectT huge()
+        {
+            return RectT(
+                -std::numeric_limits<T>::max() / 2,
+                -std::numeric_limits<T>::max() / 2,
+                std::numeric_limits<T>::max(),
+                std::numeric_limits<T>::max());
         }
 
         bool operator == (const RectT& r) const
