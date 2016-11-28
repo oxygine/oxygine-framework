@@ -37,7 +37,7 @@ namespace oxygine
             PRIMITIVE_TYPE pt;
             std::vector<char> vertices;
             std::vector<unsigned short> indices;
-            
+
             struct uni
             {
                 std::string id;
@@ -87,7 +87,7 @@ namespace oxygine
 
         void setState(STATE state, unsigned int value);
 
-        void addUni(const char *id, cached_batch::uni::type tp, const void* ptr, int sz);
+        void addUni(const char* id, cached_batch::uni::type tp, const void* ptr, int sz);
 
         void setUniformInt(const char* id, int v);
 

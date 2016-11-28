@@ -32,7 +32,7 @@ namespace oxygine
         addChild(_item);
 
         _itemTree = new TreeInspectorPreview();
-        _itemTree->init(item, getStage()->getSize()/2, true);
+        _itemTree->init(item, getStage()->getSize() / 2, true);
 
 
         spTextField tb = new TextField();
@@ -68,13 +68,15 @@ namespace oxygine
         Vector2 sz = TreeInspector::calcBounds(this).size;
         setSize(sz);
 
-        addTouchDownListener([=](Event*) {
+        addTouchDownListener([ = ](Event*)
+        {
             _itemTree->setPriority(_stage->getLastChild()->getPriority());
             _itemTree->setPosition(getStage()->getSize() / 4);
             _stage->addChild(_itemTree);
         });
 
-        addTouchUpListener([=](Event*) {
+        addTouchUpListener([ = ](Event*)
+        {
             _itemTree->detach();
         });
     }

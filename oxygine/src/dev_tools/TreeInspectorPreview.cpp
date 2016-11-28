@@ -11,7 +11,7 @@
 
 namespace oxygine
 {
-    
+
 
     Vector2 fitSize(const Vector2& destSize, const Vector2& src)
     {
@@ -64,7 +64,7 @@ namespace oxygine
 
         _render2cache = true;
 
-        VideoDriverCache &cache = _videoCache;
+        VideoDriverCache& cache = _videoCache;
 
         STDRenderer renderer(&cache);
         renderer.setViewProjTransform(STDRenderer::instance->getViewProjection());
@@ -77,7 +77,7 @@ namespace oxygine
         renderer.begin(0);
         if (child)
         {
-            STDMaterial *originalMat = STDMaterial::instance;
+            STDMaterial* originalMat = STDMaterial::instance;
 
             STDMaterial::instance = &mat;
 
@@ -230,12 +230,12 @@ namespace oxygine
         current().states[state] = value;
     }
 
-    void VideoDriverCache::addUni(const char *id, cached_batch::uni::type tp, const void* ptr, int sz)
+    void VideoDriverCache::addUni(const char* id, cached_batch::uni::type tp, const void* ptr, int sz)
     {
         cached_batch::uni uni;
         uni.id = id;
         uni.tp = tp;
-        const unsigned char *data = (const unsigned char*)ptr;
+        const unsigned char* data = (const unsigned char*)ptr;
         uni.data.assign(data, data + sz);
         current().uniforms.push_back(uni);
     }
@@ -299,7 +299,7 @@ namespace oxygine
         vertexPCT2* v = (vertexPCT2*)(&current().vertices.front());
 
         size_t num = current().vertices.size() / current().vdecl->size;
-        
+
 
         for (size_t i = 0; i != num; ++i)
         {
@@ -316,7 +316,7 @@ namespace oxygine
 
 
         _batches.push_back(cached_batch());
-        cached_batch &b = _batches.back();
+        cached_batch& b = _batches.back();
         b = _batches[_batches.size() - 2];
         b.indices.clear();
         b.vertices.clear();
@@ -389,28 +389,28 @@ namespace oxygine
             //if(0)
             for (size_t i = 0; i < b.uniforms.size(); ++i)
             {
-                const cached_batch::uni &uni = b.uniforms[i];
+                const cached_batch::uni& uni = b.uniforms[i];
                 switch (uni.tp)
                 {
-                case cached_batch::uni::uni_float:
-                    instance->setUniform(uni.id.c_str(), *((const float*)&uni.data[0])); break;
-                case cached_batch::uni::uni_int:
-                    instance->setUniformInt(uni.id.c_str(), *((const int*)&uni.data[0])); break;
-                case cached_batch::uni::uni_matrix:
-                {
-                    Matrix m = STDRenderer::instance->getViewProjection();
-                    //instance->setUniform(uni.id.c_str(), ((const Matrix*)&uni.data[0])); 
-                    instance->setUniform(uni.id.c_str(), &m);
-                    break;
-                }
-                case cached_batch::uni::uni_vec2:
-                    instance->setUniform(uni.id.c_str(), ((const Vector2*)&uni.data[0]), uni.data.size() / sizeof(Vector2)); break;
-                case cached_batch::uni::uni_vec3:
-                    instance->setUniform(uni.id.c_str(), ((const Vector3*)&uni.data[0]), uni.data.size() / sizeof(Vector3)); break;
-                case cached_batch::uni::uni_vec4:
-                    instance->setUniform(uni.id.c_str(), ((const Vector4*)&uni.data[0]), uni.data.size() / sizeof(Vector4)); break;
-                default:
-                    break;
+                    case cached_batch::uni::uni_float:
+                        instance->setUniform(uni.id.c_str(), *((const float*)&uni.data[0])); break;
+                    case cached_batch::uni::uni_int:
+                        instance->setUniformInt(uni.id.c_str(), *((const int*)&uni.data[0])); break;
+                    case cached_batch::uni::uni_matrix:
+                    {
+                        Matrix m = STDRenderer::instance->getViewProjection();
+                        //instance->setUniform(uni.id.c_str(), ((const Matrix*)&uni.data[0]));
+                        instance->setUniform(uni.id.c_str(), &m);
+                        break;
+                    }
+                    case cached_batch::uni::uni_vec2:
+                        instance->setUniform(uni.id.c_str(), ((const Vector2*)&uni.data[0]), uni.data.size() / sizeof(Vector2)); break;
+                    case cached_batch::uni::uni_vec3:
+                        instance->setUniform(uni.id.c_str(), ((const Vector3*)&uni.data[0]), uni.data.size() / sizeof(Vector3)); break;
+                    case cached_batch::uni::uni_vec4:
+                        instance->setUniform(uni.id.c_str(), ((const Vector4*)&uni.data[0]), uni.data.size() / sizeof(Vector4)); break;
+                    default:
+                        break;
                 }
             }
 
@@ -439,7 +439,7 @@ namespace oxygine
 
             size_t num = b.vertices.size() / b.vdecl->size;
 
-            std::vector<char> &modified = b.vertices;
+            std::vector<char>& modified = b.vertices;
             //if (0)
             for (size_t i = 0; i != num; ++i)
             {

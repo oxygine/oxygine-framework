@@ -606,17 +606,25 @@ namespace oxygine
 #ifdef __S3E__
 #elif OXYGINE_EDITOR
 #else
+        spStage getStageByWindow(Uint32 windowID)
+        {
+            SDL_Window* wnd = SDL_GetWindowFromID(windowID);
+            if (!wnd)
+                return getStage();
+
+            spStage stage = Stage::getStageFromWindow(wnd);
+            if (!stage)
+                return getStage();
+
+            return stage;
+        }
+
         void SDL_handleEvent(SDL_Event& event, bool& done)
         {
             Input* input = &Input::instance;
 
 
-            SDL_Window* wnd = SDL_GetWindowFromID(event.window.windowID);
-            void* data = SDL_GetWindowData(wnd, "_");
-            spStage stage = (Stage*)data;
 
-            if (!stage)
-                stage = getStage();
 
             Event ev(EVENT_SYSTEM);
             ev.userData = &event;
@@ -676,22 +684,22 @@ namespace oxygine
                         break;
                     }
                     case SDL_MOUSEWHEEL:
-                        input->sendPointerWheelEvent(stage, event.wheel.y, &input->_pointerMouse);
+                        input->sendPointerWheelEvent(getStageByWindow(event.window.windowID), event.wheel.y, &input->_pointerMouse);
                         break;
                     case SDL_KEYDOWN:
                     {
                         KeyEvent ev(KeyEvent::KEY_DOWN, &event.key);
-                        stage->dispatchEvent(&ev);
+                        getStageByWindow(event.window.windowID)->dispatchEvent(&ev);
                     } break;
                     case SDL_KEYUP:
                     {
                         KeyEvent ev(KeyEvent::KEY_UP, &event.key);
-                        stage->dispatchEvent(&ev);
+                        getStageByWindow(event.window.windowID)->dispatchEvent(&ev);
                     } break;
 
                     case SDL_MOUSEMOTION:
                         if (!_useTouchAPI)
-                            input->sendPointerMotionEvent(stage, (float)event.motion.x, (float)event.motion.y, 1.0f, &input->_pointerMouse);
+                            input->sendPointerMotionEvent(getStageByWindow(event.window.windowID), (float)event.motion.x, (float)event.motion.y, 1.0f, &input->_pointerMouse);
                         break;
                     case SDL_MOUSEBUTTONDOWN:
                     case SDL_MOUSEBUTTONUP:
@@ -706,7 +714,7 @@ namespace oxygine
                                 case 3: b = MouseButton_Right; break;
                             }
 
-                            input->sendPointerButtonEvent(stage, b, (float)event.button.x, (float)event.button.y, 1.0f,
+                            input->sendPointerButtonEvent(getStageByWindow(event.window.windowID), b, (float)event.button.x, (float)event.button.y, 1.0f,
                                                           event.type == SDL_MOUSEBUTTONDOWN ? TouchEvent::TOUCH_DOWN : TouchEvent::TOUCH_UP, &input->_pointerMouse);
                         }
                     }
@@ -719,7 +727,7 @@ namespace oxygine
                             Vector2 pos = convertTouch(event);
                             PointerState* ps = input->getTouchByID((int64_t)event.tfinger.fingerId);
                             if (ps)
-                                input->sendPointerMotionEvent(stage,
+                                input->sendPointerMotionEvent(getStageByWindow(event.window.windowID),
                                                               pos.x, pos.y, event.tfinger.pressure, ps);
                         }
                     }
@@ -734,7 +742,7 @@ namespace oxygine
                             Vector2 pos = convertTouch(event);
                             PointerState* ps = input->getTouchByID((int64_t)event.tfinger.fingerId);
                             if (ps)
-                                input->sendPointerButtonEvent(stage,
+                                input->sendPointerButtonEvent(getStageByWindow(event.window.windowID),
                                                               MouseButton_Touch,
                                                               pos.x, pos.y, event.tfinger.pressure,
                                                               event.type == SDL_FINGERDOWN ? TouchEvent::TOUCH_DOWN : TouchEvent::TOUCH_UP,

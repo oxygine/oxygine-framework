@@ -98,7 +98,7 @@ namespace oxygine
         if (_status >= status_done)
             return;
 
-        OX_ASSERT(_client);
+        //OX_ASSERT(_client);
 
 		if (!_client)
 			return;

@@ -51,6 +51,7 @@ namespace oxygine
 #if OXYGINE_SDL
         void associateWithWindow(SDL_Window* wnd);
         SDL_Window* getAssociatedWindow() const;
+        static Stage* getStageFromWindow(SDL_Window* wnd);
 #endif
 
     protected:
