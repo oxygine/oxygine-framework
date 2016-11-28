@@ -673,6 +673,8 @@ namespace oxygine
 
                             log::messageln("focus: %d", (int)focus);
                             Event ev(focus ? Stage::ACTIVATE : Stage::DEACTIVATE);
+
+                            spStage stage = getStageByWindow(event.window.windowID);
                             if (stage)
                                 stage->dispatchEvent(&ev);
 
