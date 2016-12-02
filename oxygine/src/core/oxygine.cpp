@@ -470,8 +470,10 @@ namespace oxygine
             CHECKGL();
 
 #ifdef OX_DEBUG
+#ifndef OXYGINE_EDITOR
             DebugActor::initialize();
             TextField::setDefaultFont(DebugActor::resSystem->getResFont("system"));
+#endif
 #endif
             log::messageln("oxygine initialized");
         }
@@ -860,7 +862,9 @@ namespace oxygine
         void execute(const char* str)
         {
 #ifdef __S3E__
+
             s3eOSExecExecute(str, false);
+#elif OXYGINE_EDITOR
 #elif __ANDROID__
             jniBrowse(str);
 #elif EMSCRIPTEN
