@@ -735,7 +735,7 @@ namespace oxygine
         log::warning("Image. can't unpack data unknown file format");
 
         init(16, 16, TF_R8G8B8A8);
-        fill_zero();
+        fillZero();
 
         return false;
     }
@@ -824,7 +824,7 @@ namespace oxygine
     {
         OX_ASSERT(this != &dest);
         dest.init(nextPOT(_image.w), nextPOT(_image.h), _image.format);
-        dest.fill_zero();
+        dest.fillZero();
         dest.updateRegion(0, 0, _image);
     }
 

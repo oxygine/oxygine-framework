@@ -185,7 +185,7 @@ namespace oxygine
     void ResAtlasGeneric::nextAtlas(int w, int h, TextureFormat tf, atlas_data& ad, const char* name)
     {
         ad.mt.init(w, h, tf);
-        ad.mt.fill_zero();
+        ad.mt.fillZero();
 
         ad.atlas.clean();
         ad.atlas.init(w, h);

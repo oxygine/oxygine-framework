@@ -356,7 +356,7 @@ namespace oxygine
         if (_format != data.format)
         {
             mt.init(data.w, data.h, _format);
-            mt.fill_zero();
+            mt.fillZero();
             mt.updateRegion(0, 0, data);
             data = mt.lock();
         }

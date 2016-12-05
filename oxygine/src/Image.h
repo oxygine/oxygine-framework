@@ -34,7 +34,10 @@ namespace oxygine
         void convert(Image& dest, TextureFormat format);
         //void convert2pot(MemoryTexture &dest);
 
+        OXYGINE_DEPRECATED
         void fill_zero();
+
+        void fillZero() { fill(0); }
         void fill(unsigned int val);
 
         unsigned int    getSizeVRAM() const {return (unsigned int)_buffer.size();}

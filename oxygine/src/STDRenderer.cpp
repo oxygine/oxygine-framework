@@ -178,7 +178,7 @@ namespace oxygine
         white->setLinearFilter(false);
 
 
-        memwhite.fill_zero();
+        memwhite.fillZero();
         invisible = IVideoDriver::instance->createTexture();
         invisible->setName("!renderer. invisible");
         invisible->init(im, false);
