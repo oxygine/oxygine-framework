@@ -167,6 +167,12 @@ namespace oxygine
         setAnimFrame(rs, column, row);
     }
 
+    void Sprite::setLocalScale(const Vector2 &s)
+    {
+        _localScale = s;
+        _setSize(_frame.getSize().mult(_localScale));
+    }
+
     void Sprite::setResAnim(const ResAnim* resanim, int col, int row)
     {
         setAnimFrame(resanim, col, row);
@@ -228,12 +234,24 @@ namespace oxygine
     {
         Actor::sizeChanged(size);
         const Vector2& sz = _frame.getSize();
-        _localScale.x = size.x / sz.x;
-        _localScale.y = size.y / sz.y;
+        if (sz.x != 0)
+            _localScale.x = size.x / sz.x;
+        else
+            _localScale.x = 1.0f;
+
+        if (sz.y != 0)
+            _localScale.y = size.y / sz.y;
+        else
+            _localScale.y = 1.0f;
     }
 
     RectF Sprite::getDestRect() const
     {
+        if (!_frame.getDiffuse().base)
+        {
+            return Actor::getDestRect();
+        }
+
         RectF r = _frame.getDestRect();
         r.pos = r.pos.mult(_localScale);
         r.size = r.size.mult(_localScale);

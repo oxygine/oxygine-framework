@@ -59,6 +59,7 @@ namespace oxygine
         _alpha = src._alpha;
 
         _pressedOvered = 0;
+        _material = 0;
 
         _transform = src._transform;
         _transformInvert = src._transformInvert;

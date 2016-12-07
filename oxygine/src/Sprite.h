@@ -28,6 +28,7 @@ namespace oxygine
         const ResAnim*          getResAnim() const {return _frame.getResAnim();}
         int                     getColumn() const {return _frame.getColumn();}
         int                     getRow() const {return _frame.getRow();}
+        const Vector2&          getLocalScale() const { return _localScale; }
 
         /**load/unload atlas automatically or not*/
         void                    setManageResAnim(bool manage);
@@ -39,6 +40,7 @@ namespace oxygine
         void                    setRow(int row);
         void                    setColumn(int column);
         void                    setColumnRow(int column, int row);
+        void                    setLocalScale(const Vector2 &s);
 
         bool                    isOn(const Vector2& localPosition);
 
