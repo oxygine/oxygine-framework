@@ -43,6 +43,7 @@ extern "C"
     extern PFNGLLINKPROGRAMPROC _glLinkProgram;
     extern PFNGLUNIFORM1IPROC _glUniform1i;
     extern PFNGLUNIFORM2FVPROC _glUniform2fv;
+	extern PFNGLUNIFORM2FPROC _glUniform2f;
     extern PFNGLUNIFORM3FVPROC _glUniform3fv;
     extern PFNGLUNIFORM4FVPROC _glUniform4fv;
     extern PFNGLUNIFORM1FPROC _glUniform1f;
@@ -140,6 +141,7 @@ extern "C"
 #define oxglLinkProgram DECLARE_GLEXT(glLinkProgram)
 #define oxglUniform1i DECLARE_GLEXT(glUniform1i)
 #define oxglUniform2fv DECLARE_GLEXT(glUniform2fv)
+#define oxglUniform2f DECLARE_GLEXT(glUniform2f)
 #define oxglUniform3fv DECLARE_GLEXT(glUniform3fv)
 #define oxglUniform4fv DECLARE_GLEXT(glUniform4fv)
 #define oxglUniform1f DECLARE_GLEXT(glUniform1f)
