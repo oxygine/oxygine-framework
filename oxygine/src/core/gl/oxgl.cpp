@@ -66,6 +66,8 @@ extern "C"
     {}
     GLAPI void APIENTRY def_glUniform1i(GLint location, GLint v0)
     {}
+	GLAPI void APIENTRY def_glUniform2f(GLint location, GLfloat v0, GLfloat v1)
+	{}
     GLAPI void APIENTRY def_glUniform2fv(GLint location, GLsizei count, const GLfloat* value)
     {}
     GLAPI void APIENTRY def_glUniform3fv(GLint location, GLsizei count, const GLfloat* value)
@@ -143,6 +145,7 @@ extern "C"
     PFNGLGETATTRIBLOCATIONPROC _glGetAttribLocation = 0;
     PFNGLLINKPROGRAMPROC _glLinkProgram = 0;
     PFNGLUNIFORM1IPROC _glUniform1i = 0;
+	PFNGLUNIFORM2FPROC _glUniform2f = 0;
     PFNGLUNIFORM2FVPROC _glUniform2fv = 0;
     PFNGLUNIFORM3FVPROC _glUniform3fv = 0;
     PFNGLUNIFORM4FVPROC _glUniform4fv = 0;
@@ -195,6 +198,7 @@ int initGLExtensions(myGetProcAdress func)
     GETFUNC(_glGetAttribLocation, def_glGetAttribLocation, PFNGLGETATTRIBLOCATIONPROC, "glGetAttribLocation");
     GETFUNC(_glLinkProgram, def_glLinkProgram, PFNGLLINKPROGRAMPROC, "glLinkProgram");
     GETFUNC(_glUniform1i, def_glUniform1i, PFNGLUNIFORM1IPROC, "glUniform1i");
+	GETFUNC(_glUniform2f, def_glUniform2f, PFNGLUNIFORM2FPROC, "glUniform2f");
     GETFUNC(_glUniform2fv, def_glUniform2fv, PFNGLUNIFORM2FVPROC, "glUniform2fv");
     GETFUNC(_glUniform3fv, def_glUniform3fv, PFNGLUNIFORM3FVPROC, "glUniform3fv");
     GETFUNC(_glUniform4fv, def_glUniform4fv, PFNGLUNIFORM4FVPROC, "glUniform4fv");
