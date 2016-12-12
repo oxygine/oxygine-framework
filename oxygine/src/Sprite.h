@@ -40,7 +40,7 @@ namespace oxygine
         void                    setRow(int row);
         void                    setColumn(int column);
         void                    setColumnRow(int column, int row);
-        void                    setLocalScale(const Vector2 &s);
+        void                    setLocalScale(const Vector2& s);
 
         bool                    isOn(const Vector2& localPosition);
 

@@ -167,7 +167,7 @@ namespace oxygine
         setAnimFrame(rs, column, row);
     }
 
-    void Sprite::setLocalScale(const Vector2 &s)
+    void Sprite::setLocalScale(const Vector2& s)
     {
         _localScale = s;
         _setSize(_frame.getSize().mult(_localScale));

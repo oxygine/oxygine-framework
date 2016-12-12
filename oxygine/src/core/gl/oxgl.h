@@ -43,7 +43,7 @@ extern "C"
     extern PFNGLLINKPROGRAMPROC _glLinkProgram;
     extern PFNGLUNIFORM1IPROC _glUniform1i;
     extern PFNGLUNIFORM2FVPROC _glUniform2fv;
-	extern PFNGLUNIFORM2FPROC _glUniform2f;
+    extern PFNGLUNIFORM2FPROC _glUniform2f;
     extern PFNGLUNIFORM3FVPROC _glUniform3fv;
     extern PFNGLUNIFORM4FVPROC _glUniform4fv;
     extern PFNGLUNIFORM1FPROC _glUniform1f;
