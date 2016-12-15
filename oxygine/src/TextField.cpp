@@ -113,6 +113,12 @@ namespace oxygine
         needRebuild();
     }
 
+    void TextField::setStyleColor(const Color& color)
+    {
+        _style.color = color;
+        needRebuild();
+    }
+
     const ResFont* TextField::getFont() const
     {
         return _style.font;
@@ -259,6 +265,11 @@ namespace oxygine
     float TextField::getOutline() const
     {
         return _style.outline;
+    }
+
+    const oxygine::Color& TextField::getStyleColor() const
+    {
+        return _style.color;
     }
 
     float TextField::getWeight() const
