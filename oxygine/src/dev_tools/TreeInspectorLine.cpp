@@ -71,7 +71,7 @@ namespace oxygine
         addTouchDownListener([ = ](Event*)
         {
             _itemTree->setPriority(_stage->getLastChild()->getPriority());
-            _itemTree->setPosition(getStage()->getSize() / 4);
+            _itemTree->setPosition(getStage()->getSize() / 2 - _itemTree->getSize()/2);
             _stage->addChild(_itemTree);
         });
 
