@@ -44,6 +44,7 @@ namespace oxygine
         const Color&                getStyleColor() const;
         float                       getWeight() const;
         float                       getBaselineScale() const;
+        unsigned int                getOptions() const;
 
 
         bool getBounds(RectF&) const OVERRIDE;
@@ -70,6 +71,8 @@ namespace oxygine
         void setFontSize(int size);
         /**Overwrites TextStyle color*/
         void setStyleColor(const Color&);
+        /**Overwrites TextStyle options*/
+        void setOptions(unsigned int opt);
 
         /**Overwrites TextStyle font.*/
         void setFont(const ResFont* rs);

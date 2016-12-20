@@ -241,8 +241,16 @@ namespace oxygine
     }
 
 
-    void NativeTextureGLES::swap(NativeTexture*)
+    void NativeTextureGLES::swap(NativeTexture* t)
     {
+        NativeTextureGLES* nt = safeCast<NativeTextureGLES*>(t);
+        std::swap(_id, nt->_id);
+        std::swap(_fbo, nt->_fbo);
+        std::swap(_format, nt->_format);
+
+        std::swap(_width, nt->_width);
+        std::swap(_height, nt->_height);
+        std::swap(_format, nt->_format);
 
     }
 

@@ -43,7 +43,7 @@ namespace oxygine
         TextureFormat _format;
         int _width;
         int _height;
-        ImageData _im;
+
 
         std::vector<unsigned char> _data;
         int _lockFlags;

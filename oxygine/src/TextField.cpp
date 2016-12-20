@@ -119,6 +119,12 @@ namespace oxygine
         needRebuild();
     }
 
+    void TextField::setOptions(unsigned int opt)
+    {
+        _style.options = opt;
+        needRebuild();
+    }
+
     const ResFont* TextField::getFont() const
     {
         return _style.font;
@@ -280,6 +286,11 @@ namespace oxygine
     float TextField::getBaselineScale() const
     {
         return _style.baselineScale;
+    }
+
+    unsigned int TextField::getOptions() const
+    {
+        return _style.options;
     }
 
     text::Symbol* TextField::getSymbolAt(int pos) const
