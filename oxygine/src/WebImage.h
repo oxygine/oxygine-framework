@@ -1,6 +1,7 @@
 #pragma once
 #include "oxygine-include.h"
 #include "Actor.h"
+#include "res/ResAnim.h"
 #include <string>
 
 namespace oxygine
@@ -21,6 +22,10 @@ namespace oxygine
     private:
         void loaded(Event*);
         void error(Event*);
+        void sizeChanged(const Vector2& size) OVERRIDE;
+        void fit();
+
+        ResAnim _rs;
 
         spSprite _image;
 
