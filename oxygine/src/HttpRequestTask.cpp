@@ -4,7 +4,7 @@
 
 namespace oxygine
 {
-    HttpRequestTask *createNullHttpTask()
+    HttpRequestTask* createNullHttpTask()
     {
         return 0;
     }
