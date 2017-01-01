@@ -4,7 +4,12 @@
 
 namespace oxygine
 {
-    HttpRequestTask::createHttpRequestCallback _createRequestsCallback = 0;
+    HttpRequestTask* createNullHttpTask()
+    {
+        return 0;
+    }
+
+    HttpRequestTask::createHttpRequestCallback _createRequestsCallback = createNullHttpTask;
 
     spHttpRequestTask HttpRequestTask::create()
     {
