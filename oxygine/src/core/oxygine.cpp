@@ -688,7 +688,7 @@ namespace oxygine
                         break;
                     }
                     case SDL_MOUSEWHEEL:
-                        input->sendPointerWheelEvent(getStageByWindow(event.window.windowID), event.wheel.y, &input->_pointerMouse);
+                        input->sendPointerWheelEvent(getStageByWindow(event.window.windowID), Vector2(event.wheel.x, event.wheel.y), &input->_pointerMouse);
                         break;
                     case SDL_KEYDOWN:
                     {

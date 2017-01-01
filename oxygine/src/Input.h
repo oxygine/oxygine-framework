@@ -38,7 +38,7 @@ namespace oxygine
 
         void sendPointerButtonEvent(spStage, MouseButton button, float x, float y, float pressure, int type, PointerState*);
         void sendPointerMotionEvent(spStage, float x, float y, float pressure, PointerState*);
-        void sendPointerWheelEvent(spStage, int scroll, PointerState*);
+        void sendPointerWheelEvent(spStage, const Vector2& dir, PointerState*);
 
         bool _multiTouch;
     };

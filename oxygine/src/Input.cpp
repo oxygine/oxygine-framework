@@ -59,12 +59,17 @@ namespace oxygine
         stage->handleEvent(&me);
     }
 
-    void Input::sendPointerWheelEvent(spStage stage, int scroll, PointerState* ps)
+    void Input::sendPointerWheelEvent(spStage stage, const Vector2& dir, PointerState* ps)
     {
-        TouchEvent me(scroll > 0 ? TouchEvent::WHEEL_UP : TouchEvent::WHEEL_DOWN, true, ps->getPosition());
+        TouchEvent me(dir.y > 0 ? TouchEvent::WHEEL_UP : TouchEvent::WHEEL_DOWN, true, ps->getPosition());
         me.index = ps->getIndex();
-
         stage->handleEvent(&me);
+
+
+        TouchEvent te(TouchEvent::WHEEL_DIR, true, ps->getPosition());
+        te.index = ps->getIndex();
+        te.wheelDirection = dir;
+        stage->handleEvent(&te);
     }
 
 
