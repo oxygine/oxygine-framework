@@ -132,9 +132,6 @@ namespace oxygine
         void setClient(Actor* client) { _client = client; }
         void setTwoSides(bool ts) { _twoSides = ts; }
 
-        /**delete actor from parent node when tween done. Deprecated, use detachWhenDone*/
-        OXYGINE_DEPRECATED
-        void setDetachActor(bool detach) { _detach = detach; }
         /**delete actor from parent node when tween done*/
         void detachWhenDone(bool detach = true) { _detach = detach; }
 

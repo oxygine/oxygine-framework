@@ -28,9 +28,7 @@ namespace oxygine
         /**Returns current text*/
         const std::string&          getText() const { return _text; }
         const ResFont*              getFont() const;
-        /**deprecated use getFontSize*/
-        OXYGINE_DEPRECATED
-        int                         getFontSize2Scale() const;
+
         int                         getFontSize() const;
         int                         getLinesOffset() const;
         int                         getKerning() const;
@@ -64,9 +62,6 @@ namespace oxygine
         void setBaselineScale(float scale);
         /**Overwrites TextStyle kerning*/
         void setKerning(int kerning);
-        /**Overwrites TextStyle scale2Size. deprecated, use setFontSize*/
-        OXYGINE_DEPRECATED
-        void setFontSize2Scale(int scale2size);
         /**Overwrites TextStyle fontSize*/
         void setFontSize(int size);
         /**Overwrites TextStyle color*/

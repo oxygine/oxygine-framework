@@ -75,15 +75,15 @@ public:
 
 
         tests.push_back(text_test("It is html style tagged text. <div c='ffff00'>It could be colored.  It <div c='0000ff'>supports</div> <div c='00ff00AA'> nested tags</div> and  <br/> broken lines.</div><br/>It supports CDATA and xml escape sequences:\n<![CDATA[<div c='00ffff'>it is CDATA</div>]]>",
-                                  TextStyle::HALIGN_CENTER, TextStyle::VALIGN_MIDDLE, size, true));
+                                  TextStyle::HALIGN_MIDDLE, TextStyle::VALIGN_MIDDLE, size, true));
 
         for (int h = TextStyle::HALIGN_LEFT; h <= TextStyle::HALIGN_RIGHT; ++h)
         {
-            tests.push_back(text_test("<div c='00ff00'>Scaled Font test<br/></div> The quick brown fox jumps over the lazy dog. 1234567890. The quick brown fox jumps over the lazy dog. 1234567890. The quick brown fox jumps over the lazy dog. 1234567890. The quick brown fox jumps over the lazy dog. 1234567890. ", TextStyle::HALIGN_CENTER, TextStyle::VALIGN_MIDDLE, size, true, 5 * h  + 20));
+            tests.push_back(text_test("<div c='00ff00'>Scaled Font test<br/></div> The quick brown fox jumps over the lazy dog. 1234567890. The quick brown fox jumps over the lazy dog. 1234567890. The quick brown fox jumps over the lazy dog. 1234567890. The quick brown fox jumps over the lazy dog. 1234567890. ", TextStyle::HALIGN_MIDDLE, TextStyle::VALIGN_MIDDLE, size, true, 5 * h  + 20));
         }
 
 
-        tests.push_back(text_test("<div c='00ff00'>Using '\\n' new line test</div>\nnew line\nnew line\nnew line", TextStyle::HALIGN_CENTER, TextStyle::VALIGN_TOP, size));
+        tests.push_back(text_test("<div c='00ff00'>Using '\\n' new line test</div>\nnew line\nnew line\nnew line", TextStyle::HALIGN_MIDDLE, TextStyle::VALIGN_TOP, size));
 
         for (int h = TextStyle::HALIGN_LEFT; h <= TextStyle::HALIGN_RIGHT; ++h)
         {

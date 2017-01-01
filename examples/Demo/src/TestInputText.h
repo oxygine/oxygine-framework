@@ -17,7 +17,7 @@ public:
 
         TextStyle style;
         style.color = Color::Black;
-        style.hAlign = TextStyle::HALIGN_CENTER;
+        style.hAlign = TextStyle::HALIGN_MIDDLE;
         style.vAlign = TextStyle::VALIGN_MIDDLE;
         style.multiline = true;
         style.font = Test::resourcesUI.getResFont("big");

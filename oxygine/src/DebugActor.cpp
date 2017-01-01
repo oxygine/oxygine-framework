@@ -116,11 +116,6 @@ namespace oxygine
         zp.reset();
     }
 
-    void DebugActor::setCornerPosition(int corner)
-    {
-        setCorner(corner);
-    }
-
     void DebugActor::addButton(float& x, const char* name, const char* anim)
     {
         spButton btn;

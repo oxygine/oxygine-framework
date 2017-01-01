@@ -245,11 +245,6 @@ namespace oxygine
         _vp = viewProj;
     }
 
-    void STDRenderer::setViewProjTransform(const Matrix& view, const Matrix& proj)
-    {
-        _vp = view * proj;
-    }
-
     IVideoDriver* STDRenderer::getDriver()
     {
         return _driver;

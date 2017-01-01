@@ -55,12 +55,7 @@ public:
         text->setPosition(button->getSize() / 2);
 
         //initialize text style
-        TextStyle style;
-        style.font = gameResources.getResFont("main");
-        style.color = Color::White;
-        style.vAlign = TextStyle::VALIGN_MIDDLE;
-        style.hAlign = TextStyle::HALIGN_CENTER;
-
+        TextStyle style = TextStyle(gameResources.getResFont("main")).withColor(Color::White).alignMiddle();
         text->setStyle(style);
         text->setText("Click\nMe!");
 

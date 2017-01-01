@@ -107,9 +107,6 @@ namespace oxygine
         ThreadDispatcher& getMainThreadDispatcher();
         ThreadDispatcher& getUiThreadMessages();
 
-        OXYGINE_DEPRECATED
-        inline ThreadDispatcher& getMainThreadMessages() {return getMainThreadDispatcher();}
-
         bool isActive();
         bool hasFocus();
 

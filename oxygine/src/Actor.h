@@ -245,13 +245,6 @@ namespace oxygine
         virtual void handleEvent(Event* event);
         virtual void doRender(const RenderState& rs) {}
 
-        //converts global position (position in parent space) to local space, deprecated use parent2local
-        OXYGINE_DEPRECATED
-        Vector2 global2local(const Vector2& pos) const { return parent2local(pos); }
-        //converts local position to parent space, deprecated use local2parent
-        OXYGINE_DEPRECATED
-        Vector2 local2global(const Vector2& pos = Vector2(0, 0)) const { return local2parent(pos); }
-
         //converts position in parent space to local space
         Vector2 parent2local(const Vector2& pos) const;
         //converts local position to parent space

@@ -102,11 +102,6 @@ namespace oxygine
         needRebuild();
     }
 
-    void TextField::setFontSize2Scale(int scale2size)
-    {
-        setFontSize(scale2size);
-    }
-
     void TextField::setFontSize(int size)
     {
         _style.fontSize = size;
@@ -221,11 +216,6 @@ namespace oxygine
     void TextField::setHtmlText(const std::wstring& str)
     {
         setHtmlText(ws2utf8(str.c_str()));
-    }
-
-    int TextField::getFontSize2Scale() const
-    {
-        return _style.fontSize;
     }
 
     int            TextField::getFontSize() const

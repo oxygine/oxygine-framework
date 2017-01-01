@@ -79,15 +79,6 @@ namespace oxygine
         static vector4& transformVec4(vector4& out, const vector4& in, const MatrixT& mat);
 
 
-        OXYGINE_DEPRECATED
-        void translation(const vector3&);
-        OXYGINE_DEPRECATED
-        void scaling(const vector3&);
-        OXYGINE_DEPRECATED
-        MatrixT getInverse()const;
-        OXYGINE_DEPRECATED
-        MatrixT getTranspose()const;
-
         union
         {
             struct
@@ -151,11 +142,7 @@ namespace oxygine
         inverse(this, *this);
     }
 
-    template <class T>
-    MatrixT<T> MatrixT<T>::getInverse() const
-    {
-        return inversed();
-    }
+
 
 
     template <class T>
@@ -181,12 +168,6 @@ namespace oxygine
         transpose(*this, *this);
     }
 
-    template <class T>
-    MatrixT<T> MatrixT<T>::getTranspose() const
-    {
-        return transposed();
-    }
-
 
     template <class T>
     MatrixT<T> MatrixT<T>::transposed() const
@@ -197,28 +178,12 @@ namespace oxygine
     }
 
     template <class T>
-    void MatrixT<T>::translation(const vector3& t)
-    {
-        translate(t);
-    }
-
-
-    template <class T>
     void MatrixT<T>::translate(const vector3& t)
     {
         matrix tm;
         matrix::translation(tm, t);
         *this = *this * tm;
     }
-
-    template <class T>
-    void MatrixT<T>::scaling(const vector3& s)
-    {
-        matrix sm;
-        matrix::scaling(sm, s);
-        *this = *this * sm;
-    }
-
 
     template <class T>
     void MatrixT<T>::scale(const vector3& s)

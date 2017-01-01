@@ -50,7 +50,7 @@ public:
         style.font = resourcesUI.getResFont("big");
         style.color = Color::OrangeRed;
         style.vAlign = TextStyle::VALIGN_MIDDLE;
-        style.hAlign = TextStyle::HALIGN_CENTER;
+        style.hAlign = TextStyle::HALIGN_MIDDLE;
         style.multiline = true;
 
         spTextField text = new TextField();

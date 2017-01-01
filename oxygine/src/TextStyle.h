@@ -13,7 +13,6 @@ namespace oxygine
             HALIGN_DEFAULT,
             HALIGN_LEFT,
             HALIGN_MIDDLE,
-            HALIGN_CENTER = HALIGN_MIDDLE,//HALIGN_CENTER deprecated
             HALIGN_RIGHT
         };
 
@@ -27,7 +26,7 @@ namespace oxygine
         };
 
 
-        TextStyle(): font(0),
+        TextStyle(const ResFont* rs = 0): font(rs),
             hAlign(HALIGN_DEFAULT),
             vAlign(VALIGN_DEFAULT),
             linesOffset(0),
@@ -54,11 +53,8 @@ namespace oxygine
         Color color;
 
 
-        union
-        {
-            int fontSize;
-            int fontSize2Scale;//DEPRECATED, use fontSize
-        };
+
+        int fontSize;
 
 
         float outline;//works only with SD fonts, disabled by default = 0.0f, 0.5 - max outline

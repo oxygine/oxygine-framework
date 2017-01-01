@@ -69,7 +69,7 @@ spTextField createText(const std::string& txt)
 #endif
     style.color = textColor;
     style.vAlign = TextStyle::VALIGN_MIDDLE;
-    style.hAlign = TextStyle::HALIGN_CENTER;
+    style.hAlign = TextStyle::HALIGN_MIDDLE;
     style.multiline = true;
 
     text->setStyle(style);
