@@ -24,7 +24,7 @@ namespace oxygine
         /**Returns current text style*/
         const TextStyle&            getStyle() const {return _style;}
         /**Returns text bounds*/
-        const Rect&                 getTextRect() const;
+        const Rect&                 getTextRect(float localScale = 1.0f) const;
         /**Returns current text*/
         const std::string&          getText() const { return _text; }
         const ResFont*              getFont() const;
@@ -92,7 +92,7 @@ namespace oxygine
         void setHtmlText(const std::string& str);
         void setHtmlText(const std::wstring& str);
 
-        bool isOn(const Vector2& localPosition);
+        bool isOn(const Vector2& localPosition, float localScale = 1.0f) OVERRIDE;
 
 
         typedef Property<Color, const Color&, TextField, &TextField::getOutlineColor, &TextField::setOutlineColor>  TweenOutlineColor;

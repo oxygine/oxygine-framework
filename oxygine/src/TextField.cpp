@@ -54,9 +54,9 @@ namespace oxygine
         _textRect = src._textRect;
     }
 
-    bool TextField::isOn(const Vector2& localPosition)
+    bool TextField::isOn(const Vector2& localPosition, float localScale)
     {
-        Rect r = getTextRect();
+        Rect r = getTextRect(localScale);
         r.expand(Point(_extendedIsOn, _extendedIsOn), Point(_extendedIsOn, _extendedIsOn));
         return r.pointIn(Point((int)localPosition.x, (int)localPosition.y));
     }
@@ -288,9 +288,9 @@ namespace oxygine
         return const_cast<TextField*>(this)->getRootNode(_rtscale)->getSymbol(pos);
     }
 
-    const Rect& TextField::getTextRect() const
+    const Rect& TextField::getTextRect(float localScale) const
     {
-        const_cast<TextField*>(this)->getRootNode(_rtscale);
+        const_cast<TextField*>(this)->getRootNode(localScale);
         return _textRect;
     }
 
@@ -306,10 +306,11 @@ namespace oxygine
         if (!_style.font)
             return _root;
 
+
         float scale = 1.0f;
         const Font* font = _style.font->getClosestFont(globalScale, _style.fontSize, scale);
 
-        if ((_flags & flag_rebuild || _rtscale != scale) && _style.font)
+        if ((_flags & flag_rebuild || _rtscale != scale) && font)
         {
             _rtscale = scale;
             //_realFontSize = fontSize;

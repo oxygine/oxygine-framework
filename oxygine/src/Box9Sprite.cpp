@@ -82,11 +82,6 @@ namespace oxygine
         _prepared = false;
     }
 
-    bool Box9Sprite::isOn(const Vector2& localPosition)
-    {
-        return Actor::isOn(localPosition);
-    }
-
     void Box9Sprite::changeAnimFrame(const AnimationFrame& f)
     {
         Vector2 size = getSize();

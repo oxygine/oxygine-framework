@@ -184,7 +184,7 @@ namespace oxygine
         /**Sets callback which would be called each Actor::render cycle before doRender. Use it if you don't want inherit from Actor and overload Actor::doRender.*/
         //void setCallbackDoRender(RenderCallback cb){_cbDoRender = cb;}
 
-        virtual bool isOn(const Vector2& localPosition);
+        virtual bool isOn(const Vector2& localPosition, float localScale = 1.0f);
         /**Returns true if actor is child or located deeper in current subtree*/
         bool isDescendant(const spActor& actor) const;
 

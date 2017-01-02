@@ -418,12 +418,19 @@ namespace oxygine
         }
 
         Vector2 originalLocalPos;
+        float originalLocalScale;
 
         if (touchEvent)
         {
             TouchEvent* me = safeCast<TouchEvent*>(event);
             originalLocalPos = me->localPosition;
+            originalLocalScale = me->__localScale;
             me->localPosition = parent2local(originalLocalPos);
+            me->__localScale *= _transform.a;
+            if (me->__localScale == NAN)
+            {
+                OX_ASSERT(0);
+            }
         }
 
         event->phase = Event::phase_capturing;
@@ -443,7 +450,7 @@ namespace oxygine
             TouchEvent* me = safeCast<TouchEvent*>(event);
             if (!event->target)
             {
-                if ((_flags & flag_touchEnabled) && isOn(me->localPosition))
+                if ((_flags & flag_touchEnabled) && isOn(me->localPosition, me->__localScale))
                 {
                     event->phase = Event::phase_target;
                     event->target = this;
@@ -454,6 +461,7 @@ namespace oxygine
             }
 
             me->localPosition = originalLocalPos;
+            me->__localScale = originalLocalScale;
         }
     }
 
@@ -756,7 +764,7 @@ namespace oxygine
         const_cast<Actor*>(this)->transformUpdated();
     }
 
-    bool Actor::isOn(const Vector2& localPosition)
+    bool Actor::isOn(const Vector2& localPosition, float localScale)
     {
         RectF r = getDestRect();
         r.expand(Vector2(_extendedIsOn, _extendedIsOn), Vector2(_extendedIsOn, _extendedIsOn));
