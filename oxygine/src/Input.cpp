@@ -18,7 +18,12 @@ namespace oxygine
     void Input::sendPointerButtonEvent(spStage stage, MouseButton button, float x, float y, float pressure, int type, PointerState* ps)
     {
         if (!_multiTouch && ps->getIndex() != 1 && ps != &_pointerMouse)
+        {
+            if (type == TouchEvent::TOUCH_UP)
+                _ids[ps->getIndex() - 1] = 0;
+            
             return;
+        }
 
         Vector2 p(x, y);
 
@@ -39,9 +44,7 @@ namespace oxygine
         stage->handleEvent(&me);
 
         if (type == TouchEvent::TOUCH_UP)
-        {
             _ids[ps->getIndex() - 1] = 0;
-        }
     }
 
     void Input::sendPointerMotionEvent(spStage stage, float x, float y, float pressure, PointerState* ps)
