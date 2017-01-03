@@ -167,7 +167,8 @@ namespace oxygine
             if (!_data.empty())
             {
                 int i = 0;
-                const Font* font = rd.getStyle().font->getFont(0, rd.getStyle().fontSize);
+                const Font* font = rd._font;
+                glyphOptions opt = rd.getStyle().options;
 
                 while (i != (int)_data.size())
                 {
@@ -176,7 +177,7 @@ namespace oxygine
                         rd.nextLine();
                     else
                     {
-                        const glyph* gl = font->getGlyph(s.code);
+                        const glyph* gl = font->getGlyph(s.code, opt);
                         if (gl)
                         {
                             s.gl = *gl;
@@ -184,7 +185,7 @@ namespace oxygine
                         }
                         else
                         {
-                            gl = font->getGlyph(_defMissing);
+                            gl = font->getGlyph(_defMissing, opt);
                             if (gl)//even 'missing' symbol  could be missing
                             {
                                 s.gl = *gl;

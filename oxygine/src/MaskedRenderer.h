@@ -1,11 +1,9 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "STDRenderer.h"
 
 namespace oxygine
 {
-
-
     class ClipUV
     {
     public:
@@ -74,7 +72,7 @@ namespace oxygine
     class MaskedRenderer : public STDRenderer
     {
     public:
-        MaskedRenderer(spNativeTexture mask, const RectF& srcRect, const RectF& destRect, const Transform& t, bool channelR);
+        MaskedRenderer(spNativeTexture mask, const RectF& srcRect, const RectF& destRect, const Transform& t, bool channelR, IVideoDriver*);
 
         //void draw(const RState *rs, const RectF &destRect) OVERRIDE;
 

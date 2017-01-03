@@ -1,18 +1,14 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "Resource.h"
 #include "ResAnim.h"
 #include "CreateResourceContext.h"
 
 namespace oxygine
 {
-    class Resources;
-    class XmlWalker;
-    class CreateResourceContext;
-    DECLARE_SMART(NativeTexture, spNativeTexture);
-
-    class ResAtlas: public _Resource
+    class ResAtlas: public Resource
     {
+        INHERITED(Resource);
     public:
         static Resource* create(CreateResourceContext& context);
         struct atlas
@@ -29,8 +25,9 @@ namespace oxygine
         ~ResAtlas();
 
         void addAtlas(TextureFormat tf, const std::string& base, const std::string& alpha, int w, int h);
+
         const atlas& getAtlas(int i) const {return _atlasses[i];}
-        int getNum() const { return (int)_atlasses.size(); }
+        int          getNum() const { return (int)_atlasses.size(); }
 
     protected:
         void _restore(Restorable* r, void* user);
@@ -57,7 +54,5 @@ namespace oxygine
 
     typedef void(*load_texture_hook)(const std::string& file, spNativeTexture nt, bool linearFilter, bool clamp2edge, LoadResourcesContext* load_context);
     void set_load_texture_hook(load_texture_hook);
-
-    class LoadResourcesContext;
     void load_texture_internal(const std::string& file, spNativeTexture nt, bool linearFilter, bool clamp2edge, LoadResourcesContext* load_context);
 }

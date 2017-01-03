@@ -82,7 +82,7 @@ namespace oxygine
         }
 
         if (vis)
-            actor->_Actor::render(rs);
+            actor->Actor::render(rs);
 
 
         if (actor->getClipping())
@@ -116,18 +116,18 @@ namespace oxygine
 
             _renderer->drawBatch();
 
-            MaskedRenderer mr(msk, maskSrc, maskDest, t, rchannel);
+            MaskedRenderer mr(msk, maskSrc, maskDest, t, rchannel, original->getDriver());
             mr.begin(_renderer);
             _renderer = &mr;
             RenderState rs = parentRS;
-            sprite->_Sprite::render(rs);
+            sprite->Sprite::render(rs);
             mr.end();
 
             _renderer = original;
         }
         else
         {
-            sprite->_Sprite::render(parentRS);
+            sprite->Sprite::render(parentRS);
         }
     }
 
@@ -160,7 +160,10 @@ namespace oxygine
 
     void STDMaterial::doRender(TextField* tf, const RenderState& rs)
     {
-        text::Node* root = tf->getRootNode();
+
+        float scale = sqrtf(rs.transform.a * rs.transform.a + rs.transform.c * rs.transform.c);
+
+        text::Node* root = tf->getRootNode(scale);
         if (!root)
             return;
 
@@ -180,7 +183,6 @@ namespace oxygine
         int sdfSize;
         if (tf->getFont()->isSDF(sdfSize))
         {
-            float scale = sqrtf(rs.transform.a * rs.transform.a + rs.transform.c * rs.transform.c);
 
             if (tf->getFontSize())
                 scale = scale * tf->getFontSize() / sdfSize;

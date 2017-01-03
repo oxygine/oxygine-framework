@@ -142,6 +142,8 @@ namespace oxygine
 
     ImageData ImageData::getRect(const Rect& r) const
     {
+        OX_ASSERT(r.getX() >= 0 && r.getX() <= w);
+        OX_ASSERT(r.getY() >= 0 && r.getY() <= h);
         OX_ASSERT(r.getX() + r.getWidth() <= w);
         OX_ASSERT(r.getY() + r.getHeight() <= h);
 
@@ -149,6 +151,16 @@ namespace oxygine
         ImageData buffer(r.getWidth(), r.getHeight(), pitch, format, ptr);
 
         return buffer;
+    }
+
+    ImageData ImageData::getRect(int x, int y, int w, int h) const
+    {
+        return getRect(Rect(x, y, w, h));
+    }
+
+    ImageData ImageData::getRect(int x, int y) const
+    {
+        return getRect(x, y, w - x, h - y);
     }
 
     unsigned char* ImageData::getPixelPtr(int x, int y) const

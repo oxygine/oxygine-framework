@@ -1,13 +1,10 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "math/Color.h"
 #include <string>
 
 namespace oxygine
 {
-    class Font;
-    class ResFont;
-
     class TextStyle
     {
     public:
@@ -16,7 +13,6 @@ namespace oxygine
             HALIGN_DEFAULT,
             HALIGN_LEFT,
             HALIGN_MIDDLE,
-            HALIGN_CENTER = HALIGN_MIDDLE,//HALIGN_CENTER deprecated
             HALIGN_RIGHT
         };
 
@@ -30,7 +26,7 @@ namespace oxygine
         };
 
 
-        TextStyle(): font(0),
+        TextStyle(const ResFont* rs = 0): font(rs),
             hAlign(HALIGN_DEFAULT),
             vAlign(VALIGN_DEFAULT),
             linesOffset(0),
@@ -40,7 +36,9 @@ namespace oxygine
             breakLongWords(false),
             outline(0.0f),
             outlineColor(Color::Black),
-            weight(0.5f) {}
+            weight(0.5f),
+            baselineScale(1.0f),
+            options(0) {}
 
         const ResFont* font;
 
@@ -49,21 +47,20 @@ namespace oxygine
 
         int linesOffset;//vertical distance offset between lines
         int kerning;//horizontal distance
+        unsigned int options;//additional flags could be used for generating custom glyphs
         bool multiline;
         bool breakLongWords;//works with multiline flag. breakLongWords = false doesn't allow to break too long words
         Color color;
 
 
-        union
-        {
-            int fontSize;
-            int fontSize2Scale;//DEPRECATED, use fontSize
-        };
+
+        int fontSize;
 
 
         float outline;//works only with SD fonts, disabled by default = 0.0f, 0.5 - max outline
         Color outlineColor;//works only with SD fonts
         float weight;//works only with SD fonts, font weight, default = 0.5f,  0.0 - bold, 1.0 - thin
+        float baselineScale;//baseline distance multiplier
 
 
 
@@ -81,6 +78,8 @@ namespace oxygine
         TextStyle alignMiddle() const { TextStyle st = *this; st.vAlign = VALIGN_MIDDLE; st.hAlign = HALIGN_MIDDLE; return st; }
 
         TextStyle withHOffset(int offset) const { TextStyle st = *this; st.linesOffset = offset; return st; }
+        TextStyle withBaselineScale(float s) const { TextStyle st = *this; st.baselineScale = s; return st; }
+
         TextStyle withKerning(int kerning) const { TextStyle st = *this; st.kerning = kerning; return st; }
         TextStyle withMultiline(bool multiline = true) const { TextStyle st = *this; st.multiline = multiline; return st; }
         TextStyle withColor(const Color& color) const { TextStyle st = *this; st.color = color; return st; }
@@ -90,6 +89,7 @@ namespace oxygine
         TextStyle withOutline(float outline) const { TextStyle st = *this; st.outline = outline; return st; }
         TextStyle withOutlineColor(const Color& color) const { TextStyle st = *this; st.outlineColor = color; return st; }
         TextStyle withWeight(float weight) const { TextStyle st = *this; st.weight = weight; return st; }
+        TextStyle withOptions(unsigned int opt) const { TextStyle st = *this; st.options = opt; return st; }
     };
 
     std::string dumpStyle(const TextStyle& s, bool onlydiff);

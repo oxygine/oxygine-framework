@@ -1,20 +1,15 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include <string>
 #include "core/Object.h"
 #include "pugixml/pugixml.hpp"
 
 namespace oxygine
 {
-    class Resources;
-    class Mem2Native;
-
-    class LoadResourcesContext;
-    class LoadResourcesContext;
-
     DECLARE_SMART(Resource, spResource);
-    class Resource: public _Object//Base
+    class Resource: public Object
     {
+        INHERITED(Object);
     public:
         Resource();
         ~Resource();
@@ -61,12 +56,4 @@ namespace oxygine
 }
 
 
-#ifdef OX_EDITOR
-#include "EditorResource.h"
-#else
-namespace oxygine
-{
-    typedef Resource _Resource;
-}
-#endif
-
+EDITOR_INCLUDE(Resource);

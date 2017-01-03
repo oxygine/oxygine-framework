@@ -1,10 +1,9 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "Actor.h"
 
 namespace oxygine
 {
-    class RenderState;
     class VisualStyle
     {
     public:
@@ -27,8 +26,9 @@ namespace oxygine
     };
 
     DECLARE_SMART(VStyleActor, spVStyleActor);
-    class VStyleActor : public _Actor
+    class VStyleActor : public Actor
     {
+        INHERITED(Actor);
     public:
         DECLARE_COPYCLONE_NEW(VStyleActor);
         VStyleActor();
@@ -40,6 +40,7 @@ namespace oxygine
         const Color&            getColor() const;
 
         void                    setColor(const Color& color);
+        void                    setColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
         void                    setBlendMode(blend_mode mode) {_vstyle.setBlendMode(mode);}
 
         typedef Property<Color, const Color&, VStyleActor, &VStyleActor::getColor, &VStyleActor::setColor> TweenColor;
@@ -52,11 +53,4 @@ namespace oxygine
 
 }
 
-#ifdef OX_EDITOR
-#include "EditorVisualStyle.h"
-#else
-namespace oxygine
-{
-    typedef VStyleActor _VStyleActor;
-}
-#endif
+EDITOR_INCLUDE(VStyleActor);

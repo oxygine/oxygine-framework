@@ -1,5 +1,5 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "core/Texture.h"
 #include "math/Rect.h"
 #include "res/ResAnim.h"
@@ -10,11 +10,10 @@
 
 namespace oxygine
 {
-    class ResAnim;
-
     DECLARE_SMART(Sprite, spSprite);
-    class Sprite : public _VStyleActor
+    class Sprite : public VStyleActor
     {
+        INHERITED(VStyleActor);
     public:
         DECLARE_COPYCLONE_NEW(Sprite);
 
@@ -29,6 +28,7 @@ namespace oxygine
         const ResAnim*          getResAnim() const {return _frame.getResAnim();}
         int                     getColumn() const {return _frame.getColumn();}
         int                     getRow() const {return _frame.getRow();}
+        const Vector2&          getLocalScale() const { return _localScale; }
 
         /**load/unload atlas automatically or not*/
         void                    setManageResAnim(bool manage);
@@ -40,6 +40,7 @@ namespace oxygine
         void                    setRow(int row);
         void                    setColumn(int column);
         void                    setColumnRow(int column, int row);
+        void                    setLocalScale(const Vector2& s);
 
         bool                    isOn(const Vector2& localPosition);
 
@@ -65,16 +66,11 @@ namespace oxygine
         };
         virtual void changeAnimFrame(const AnimationFrame& f);
         virtual void animFrameChanged(const AnimationFrame& f);
+        void sizeChanged(const Vector2& size) OVERRIDE;
 
+        Vector2 _localScale;
         AnimationFrame _frame;
     };
 }
 
-#ifdef OX_EDITOR
-#include "EditorSprite.h"
-#else
-namespace oxygine
-{
-    typedef Sprite _Sprite;
-}
-#endif
+EDITOR_INCLUDE(Sprite);

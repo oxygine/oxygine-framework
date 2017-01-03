@@ -1,17 +1,12 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "closure/closure.h"
 #include "Input.h"
 #include "EventDispatcher.h"
 #undef OUT
 
-struct SDL_KeyboardEvent;
-
 namespace oxygine
 {
-    typedef int eventType;
-    DECLARE_SMART(EventDispatcher, spEventDispatcher);
-
     class Event
     {
     public:
@@ -24,6 +19,9 @@ namespace oxygine
             phase_bubbling
         };
 
+        Event(eventType Type, bool Bubbles = false) : listenerID(0), userData(0), type(Type), phase(phase_target), bubbles(Bubbles), stopsImmediatePropagation(false), stopsPropagation(false) {}
+        virtual ~Event() {}
+
         eventType type;
         Phase phase;
         bool bubbles;
@@ -34,11 +32,10 @@ namespace oxygine
         spObject userDataObject;
         int listenerID;
 
-        spEventDispatcher target; //The event target
-        spEventDispatcher currentTarget;// The object that is actively processing the Event object with an event listener.
-
-        Event(eventType Type, bool Bubbles = false) : listenerID(0), userData(0), type(Type), phase(phase_target), bubbles(Bubbles), stopsImmediatePropagation(false), stopsPropagation(false) {}
-        virtual ~Event() {}
+        /**The event target*/
+        spEventDispatcher target;
+        /**The object that is actively processing the Event object with an event listener*/
+        spEventDispatcher currentTarget;
 
         void stopPropagation() { stopsPropagation = true; }
         void stopImmediatePropagation() { stopsPropagation = stopsImmediatePropagation = true; }

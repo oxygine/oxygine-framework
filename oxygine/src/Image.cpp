@@ -735,7 +735,7 @@ namespace oxygine
         log::warning("Image. can't unpack data unknown file format");
 
         init(16, 16, TF_R8G8B8A8);
-        fill_zero();
+        fillZero();
 
         return false;
     }
@@ -805,6 +805,16 @@ namespace oxygine
         return lock(lock_read | lock_write, &rect);
     }
 
+    ImageData Image::lock(int x, int y, int w, int h)
+    {
+        return lock(Rect(x, y, w, h));
+    }
+
+    ImageData Image::lock(int x, int y)
+    {
+        return lock(Rect(x, y, _image.w - x, _image.h - y));
+    }
+
     void Image::unlock()
     {
 
@@ -812,9 +822,9 @@ namespace oxygine
 
     void Image::toPOT(Image& dest)
     {
-		OX_ASSERT(this != &dest);
+        OX_ASSERT(this != &dest);
         dest.init(nextPOT(_image.w), nextPOT(_image.h), _image.format);
-        dest.fill_zero();
+        dest.fillZero();
         dest.updateRegion(0, 0, _image);
     }
 

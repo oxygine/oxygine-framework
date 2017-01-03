@@ -32,14 +32,11 @@ namespace oxygine
         _sdf = sdf;
         _size = realSize;
         _baselineDistance = baselineDistance;
-        _lineHeight = lineHeight;
-        //_glyphs.reserve(200);
     }
 
     void Font::addGlyph(const glyph& gl)
     {
         _glyphs.insert(gl);
-        //_glyphs.push_back(gl);
     }
 
     bool glyphFindPred(const glyph& g, int code)
@@ -52,10 +49,11 @@ namespace oxygine
         return ob1.ch < ob2.ch;
     }
 
-    const glyph* Font::findGlyph(int code) const
+    const glyph* Font::findGlyph(int code, const glyphOptions& opt) const
     {
         glyph g;
         g.ch = code;
+        g.opt = opt;
         glyphs::const_iterator it = _glyphs.find(g);
         if (it != _glyphs.end())
         {
@@ -65,18 +63,18 @@ namespace oxygine
         return 0;
     }
 
-    const glyph* Font::getGlyph(int code) const
+    const glyph* Font::getGlyph(int code, const glyphOptions& opt) const
     {
-        const glyph* g = findGlyph(code);
+        const glyph* g = findGlyph(code, opt);
         if (g)
             return g;
 
         glyph gl;
         Font* fn = const_cast<Font*>(this);
-        if (fn->loadGlyph(code, gl))
+        if (fn->loadGlyph(code, gl, opt))
         {
             fn->_glyphs.insert(gl);
-            g = findGlyph(code);
+            g = findGlyph(code, opt);
             OX_ASSERT(g);
         }
 
@@ -96,11 +94,6 @@ namespace oxygine
     float Font::getScale() const
     {
         return _scale;
-    }
-
-    int Font::getLineHeight() const
-    {
-        return _lineHeight;
     }
 
     bool Font::isSDF() const

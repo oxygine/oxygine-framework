@@ -50,6 +50,13 @@ namespace oxygine
             return _window;
         return core::getWindow();
     }
+
+    Stage* Stage::getStageFromWindow(SDL_Window* wnd)
+    {
+        void* data = SDL_GetWindowData(wnd, "_");
+        return (Stage*)data;
+    }
+
 #endif
 
     Stage::~Stage()
@@ -117,9 +124,9 @@ namespace oxygine
 
     RectF Stage::getDestRect() const
     {
+//        OX_ASSERT(0);
         Vector2 s = getSize() + getPosition();
-        RectF r = calcDestRectF(RectF(-getPosition(), s), s);
-        return r;
+        return RectF(-getPosition(), s);
     }
 
     /*

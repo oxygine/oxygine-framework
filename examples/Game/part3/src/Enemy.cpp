@@ -36,6 +36,6 @@ void Enemy::explode()
     {
         //dead, hide it with alpha tween
         _dead = true;
-        _view->addTween(Actor::TweenAlpha(0), 300)->setDetachActor(true);
+        _view->addTween(Actor::TweenAlpha(0), 300)->detachWhenDone();
     }
 }

@@ -69,7 +69,7 @@ spTextField createText(const std::string& txt)
 #endif
     style.color = textColor;
     style.vAlign = TextStyle::VALIGN_MIDDLE;
-    style.hAlign = TextStyle::HALIGN_CENTER;
+    style.hAlign = TextStyle::HALIGN_MIDDLE;
     style.multiline = true;
 
     text->setStyle(style);
@@ -230,7 +230,7 @@ void Test::notify(std::string txt, int time)
     spTweenQueue tq = new TweenQueue;
     tq->add(Actor::TweenAlpha(255), 300, 1, false, 0, Tween::ease_inExpo);
     tq->add(Actor::TweenAlpha(0), 300, 1, false, 1200);
-    tq->setDetachActor(true);
+    tq->detachWhenDone();
     tq->addDoneCallback(CLOSURE(this, &Test::notifyDone));
 
     sprite->addTween(tq);

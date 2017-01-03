@@ -28,6 +28,7 @@
 #include "TestSignedDistanceFont.h"
 #include "TestTweenPostProcessing.h"
 #include "TestEdges.h"
+#include "TestCamera.h"
 
 #ifdef __S3E__
 #include "s3eKeyboard.h"
@@ -93,6 +94,7 @@ public:
         addButton("counter", "Counter");
         addButton("tweentext", "Tween Text");
         addButton("tweenshine", "Tween Shine");
+        addButton("mtz", "MultiTouch Camera/Zoom");
     }
 
     void showTest(spActor actor)
@@ -136,6 +138,7 @@ public:
         if (id == "sdf") showTest(new TestSignedDistanceFont);
         if (id == "tweenpp") showTest(new TestTweenPostProcessing);
         if (id == "edges") showTest(new TestEdges);
+        if (id == "mtz") showTest(new TestCamera);
         if (id == "openbrowser")
         {
             core::execute("http://oxygine.org/");

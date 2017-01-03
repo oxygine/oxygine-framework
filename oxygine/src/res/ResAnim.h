@@ -1,5 +1,5 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "Resource.h"
 #include "AnimationFrame.h"
 #include "core/Texture.h"
@@ -7,15 +7,12 @@
 
 namespace oxygine
 {
-    DECLARE_SMART(Texture, spTexture);
-
-
     typedef std::vector<AnimationFrame> animationFrames;
-    class Image;
 
     DECLARE_SMART(ResAnim, spResAnim);
-    class ResAnim: public _Resource
+    class ResAnim: public Resource
     {
+        INHERITED(Resource);
     public:
         ResAnim(Resource* atlas = 0);
         ~ResAnim();
@@ -35,6 +32,7 @@ namespace oxygine
         int                     getRows() const {return (int)_frames.size() / _columns;}
         int                     getTotalFrames() const {return (int)_frames.size();}
         int                     getFrameRate() const { return _framerate; }
+        const Resources*        getResources() const;
         const AnimationFrame&   getFrame(int col, int row) const;
         /**returns frame by index ignoring cols and rows*/
         const AnimationFrame&   getFrame(int index) const;

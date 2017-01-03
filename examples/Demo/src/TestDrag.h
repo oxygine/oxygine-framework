@@ -7,10 +7,68 @@ class DraggableSprite: public Sprite
 public:
     DraggableSprite()
     {
-        drag.init(this);
+        //drag.init(this);
     }
 
-    Draggable drag;
+    //Draggable drag;
+    void onEvent(Event* ev)
+    {
+        TouchEvent* te = safeCast<TouchEvent*>(ev);
+        if (te->type == TouchEvent::TOUCH_DOWN)
+        {
+            local = te->localPosition;
+            _stage->addEventListener(TouchEvent::MOVE, CLOSURE(this, &DraggableSprite::onEvent));
+            _stage->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &DraggableSprite::onEvent));
+        }
+
+        if (te->type == TouchEvent::MOVE)
+        {
+            move(te->localPosition);
+        }
+
+        if (te->type == TouchEvent::TOUCH_UP)
+        {
+            _stage->removeEventListeners(this);
+        }
+    }
+
+    void move(const Vector2& pos)
+    {
+        Vector2 localPos = stage2local(pos);
+        Vector2 offset = localPos - local;
+
+        Transform tr = getTransform();
+        tr.x = 0;
+        tr.y = 0;
+        Vector2 p = tr.transform(offset);
+        setPosition(getPosition() + p);
+    }
+
+    void doUpdate(const UpdateState& us)
+    {
+        pointer_index ind = getPressed();
+        if (!ind)
+            return;
+        PointerState* st = Input::instance.getTouchByIndex(ind);
+        move(_stage->parent2local(st->getPosition()));
+    }
+
+
+
+
+
+    void onAdded2Stage()
+    {
+        addEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &DraggableSprite::onEvent));
+    }
+
+    void onRemovedFromStage()
+    {
+        _stage->removeEventListeners(this);
+    }
+
+
+    Vector2 local;
 };
 
 class DragTest: public Test
@@ -30,12 +88,14 @@ public:
         pos[1] = Vector2(600, 225);
         pos[2] = Vector2(305, 170);
 
+
         for (int i = 0; i < 3; ++i)
         {
             spSprite sprite = new DraggableSprite;
             sprite->setPosition(pos[i]);
             sprite->setResAnim(resources.getResAnim("batterfly"));
             sprite->attachTo(content);
+
 
             float angle = scalar::randFloat(0, (float)MATH_PI * 2);
             sprite->setRotation(angle);
@@ -77,7 +137,7 @@ public:
                     spSprite c = new Sprite;
                     c->setAnchor(0.5f, 0.5f);
                     c->setResAnim(resources.getResAnim("snow"));
-                    c->addTween(Actor::TweenAlpha(0), 300)->setDetachActor(true);
+                    c->addTween(Actor::TweenAlpha(0), 300)->detachWhenDone();
                     Vector2 pos = a->local2stage(contact, content);
                     c->setPosition(pos);
                     c->attachTo(contacts);
@@ -169,7 +229,7 @@ public:
             t = dragging->addTween(Actor::TweenPosition(basket->getPosition() - basket->getSize() / 2), 500);
         else
             t = dragging->addTween(Actor::TweenPosition(ball->getPosition() - ball->getSize() / 2), 500);
-        t->setDetachActor(true);
+        t->detachWhenDone();
         dragging = 0;
     }
 

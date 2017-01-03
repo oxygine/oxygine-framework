@@ -58,12 +58,14 @@ SDL_dest = temp + "/SDL"
 OXYGINE_dest = temp + "/oxygine-framework/"
 SOUND_dest = temp + "/oxygine-sound/"
 FLOW_dest = temp + "/oxygine-flow/"
+FT_dest = temp + "/oxygine-freetype/"
 
 print("cleaning temp...")
 shutil.rmtree(temp, True)
 
 
 def export(repo, dest):
+    print("exporting " + repo)
     cmd = "git -C %s checkout-index -a -f --prefix=%s/" % (
         "d:/" + repo, "d:/oxygine-framework/temp/" + dest)
     os.system(cmd)
@@ -77,6 +79,7 @@ buildzip("oxygine-framework.zip")
 export("SDL", "SDL")
 export("oxygine-sound", "oxygine-sound")
 export("oxygine-flow", "oxygine-flow")
+export("oxygine-freetype", "oxygine-freetype")
 
 
 shutil.rmtree(SDL_dest + "/test")
@@ -125,6 +128,7 @@ def copy(path):
 enum(OXYGINE_dest + "/examples/", copy)
 enum(SOUND_dest + "/examples/", copy)
 enum(FLOW_dest + "/examples/", copy)
+enum(FT_dest + "/examples/", copy)
 
 shutil.copy(SDL_dest + "/android-project/src/org/libsdl/app/SDLActivity.java",
             OXYGINE_dest + "/oxygine/SDL/android/lib/src/org/libsdl/app/SDLActivity.java")

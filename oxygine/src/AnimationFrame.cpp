@@ -82,10 +82,12 @@ namespace oxygine
 
     AnimationFrame::AnimationFrame(spNativeTexture t)
     {
+        _row = _column = 0;
+        _resAnim = 0;
         _diffuse.base = t;
         _diffuse.premultiplied = true;
         _srcRect = RectF(0, 0, 1, 1);
-        _destRect = RectF(0, 0, t->getWidth(), t->getHeight());
-        _frameSize = Vector2(t->getWidth(), t->getHeight());
+        _destRect = RectF(0, 0, (float)t->getWidth(), (float)t->getHeight());
+        _frameSize = Vector2((float)t->getWidth(), (float)t->getHeight());
     }
 }

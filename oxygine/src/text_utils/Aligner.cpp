@@ -6,11 +6,13 @@ namespace oxygine
 {
     namespace text
     {
+#define GSCALE 1
 
-        Aligner::Aligner(const TextStyle& Style): width(0), height(0), _x(0), _y(0), _lineWidth(0), bounds(0, 0, 0, 0), style(Style)
+        Aligner::Aligner(const TextStyle& Style, const Font* font, float gscale, const Vector2& size): width((int)size.x), height((int)size.y), _x(0), _y(0), _lineWidth(0), bounds(0, 0, 0, 0), style(Style), _scale(gscale), _font(font)
         {
-            _font = style.font->getFont(0, style.fontSize);
+            //log::messageln("gscale %f, adjScale %f globscale %f, %d %f", gscale, _globalScale, _fontSize, fs);
             _line.reserve(50);
+            _lineSkip = (int)(_font->getBaselineDistance() * style.baselineScale) + style.linesOffset;
         }
 
         Aligner::~Aligner()
@@ -65,16 +67,12 @@ namespace oxygine
             _x = 0;
             _y = 0;
 
-            const TextStyle& st = getStyle();
-            _scale = _font->getScale();
-            if (st.fontSize)
-                _scale = _font->getSize() / float(st.fontSize);
-
             width = int(width * _scale);
             height = int(height * _scale);
 
             bounds = Rect(_alignX(0), _alignY(0), 0, 0);
             nextLine();
+
         }
 
         void Aligner::end()
@@ -102,7 +100,7 @@ namespace oxygine
 
         int Aligner::getLineSkip() const
         {
-            return _font->getBaselineDistance() + getStyle().linesOffset;
+            return _lineSkip;
         }
 
         void Aligner::_alignLine(line& ln)
@@ -114,7 +112,7 @@ namespace oxygine
                 for (size_t i = 0; i < ln.size(); ++i)
                 {
                     Symbol& s = *ln[i];
-                    rx = std::max(s.x + s.gl.sw, rx);
+                    rx = std::max(s.x + s.gl.advance_x, rx);
                 }
 
                 int tx = _alignX(rx);
@@ -171,7 +169,7 @@ namespace oxygine
             s.y = _y + s.gl.offset_y;
             _x += s.gl.advance_x + getStyle().kerning;
 
-            int rx = s.x + s.gl.sw;
+            int rx = s.x + s.gl.advance_x;
 
 
             _lineWidth = std::max(rx, _lineWidth);

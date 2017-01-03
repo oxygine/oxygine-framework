@@ -1,19 +1,14 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "Actor.h"
-
-#ifdef OXYGINE_SDL
-typedef struct SDL_Window SDL_Window;
-#endif
 
 
 namespace oxygine
 {
     DECLARE_SMART(Stage, spStage);
-
-    class DebugActor;
-    class Stage : public _Actor
+    class Stage : public Actor
     {
+        INHERITED(Actor);
     public:
         enum
         {
@@ -56,6 +51,7 @@ namespace oxygine
 #if OXYGINE_SDL
         void associateWithWindow(SDL_Window* wnd);
         SDL_Window* getAssociatedWindow() const;
+        static Stage* getStageFromWindow(SDL_Window* wnd);
 #endif
 
     protected:

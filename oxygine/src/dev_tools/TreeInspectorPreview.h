@@ -1,10 +1,12 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "Sprite.h"
 #include "core/VertexDeclaration.h"
 
 namespace oxygine
 {
+    const Rect EmptyScissor(0, 0, -1, -1);
+
     class TreeInspector;
 
     class VertexDeclarationNull: public VertexDeclaration
@@ -22,7 +24,7 @@ namespace oxygine
     public:
         struct cached_batch
         {
-            cached_batch(): program(0), vdecl(0), numVertices(0), numIndices(0), blendSrc(IVideoDriver::BT_ONE), blendDest(IVideoDriver::BT_ONE)
+            cached_batch(): program(0), vdecl(0), numVertices(0), numIndices(0), blendSrc(IVideoDriver::BT_ONE), blendDest(IVideoDriver::BT_ONE), scissor(EmptyScissor)
             {
                 memset(states, 0, sizeof(states));
             }
@@ -35,10 +37,23 @@ namespace oxygine
             PRIMITIVE_TYPE pt;
             std::vector<char> vertices;
             std::vector<unsigned short> indices;
+
+            struct uni
+            {
+                std::string id;
+                enum type {uni_int, uni_float, uni_vec2, uni_vec3, uni_vec4, uni_matrix};
+                type tp;
+                std::vector<unsigned char> data;
+
+            };
+            std::vector<uni> uniforms;
+
+
             int numVertices;
             int numIndices;
             unsigned int states[STATE_NUM];
             BLEND_TYPE blendSrc, blendDest;
+            Rect scissor;
         };
 
         typedef std::vector<cached_batch> batches;
@@ -48,156 +63,84 @@ namespace oxygine
         AffineTransform _transform;
         mutable VertexDeclarations<VertexDeclarationNull> _declarations;
 
-        VideoDriverCache(): _bounds(0, 0, 0, 0)
-        {
-            _batches.push_back(cached_batch());
-        }
+        VideoDriverCache();
+        ~VideoDriverCache();
 
-        cached_batch& current()
-        {
-            return _batches.back();
-        }
+        cached_batch& current();
+        const cached_batch& current() const;
 
-        spNativeTexture createTexture() {return 0;}
+        spNativeTexture createTexture();
 
-        void begin(const Rect& viewport, const Color* color)
-        {
-        }
+        void begin(const Rect& viewport, const Color* color);
 
-        const VertexDeclaration* getVertexDeclaration(bvertex_format fmt) const
-        {
-            return instance->getVertexDeclaration(fmt);
-        }
+        const VertexDeclaration* getVertexDeclaration(bvertex_format fmt) const;
 
-        void setDefaultSettings()
-        {
+        void setDefaultSettings();
 
-        }
+        void setRenderTarget(spNativeTexture);
 
-        void setRenderTarget(spNativeTexture)
-        {
+        spNativeTexture getRenderTarget() const OVERRIDE;
 
-        }
+        void setShaderProgram(ShaderProgram* program);
 
-        void setShaderProgram(ShaderProgram* program)
-        {
-            current().program = program;
-        }
+        void setTexture(int sampler, spNativeTexture texture);
 
-        void setTexture(int sampler, spNativeTexture texture)
-        {
-            current().textures[sampler] = texture;
-        }
+        void setState(STATE state, unsigned int value);
 
-        void setState(STATE state, unsigned int value)
-        {
-            current().states[state] = value;
-        }
+        void addUni(const char* id, cached_batch::uni::type tp, const void* ptr, int sz);
 
-        void setBlendFunc(BLEND_TYPE src, BLEND_TYPE dest)
-        {
-            current().blendSrc = src;
-            current().blendDest = dest;
-        }
+        void setUniformInt(const char* id, int v);
 
-        void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData,  unsigned int numVertices)
-        {
-            current().vdecl = decl;
-            current().pt = pt;
-            current().numVertices = numVertices;
-            current().vertices.assign((const char*)verticesData, (const char*)verticesData + current().vdecl->size * numVertices);
-            _batches.push_back(cached_batch());
+        void setUniform(const char* id, const Vector4* v, int num);
 
-        }
+        void setUniform(const char* id, const Vector3* v, int num);
 
-        void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData,  unsigned int numVertices, const unsigned short* indicesData, unsigned int numIndices)
-        {
-            current().vdecl = decl;
-            current().pt = pt;
-            current().numVertices = numVertices;
-            current().numIndices = numIndices;
-            current().vertices.assign((const char*)verticesData, (const char*)verticesData + decl->size * numVertices);
-            current().indices.assign(indicesData, indicesData + numIndices);
+        void setUniform(const char* id, const Vector2* v, int num);
 
-            const vertexPCT2* v = (const vertexPCT2*)(&current().vertices.front());
-            if (_batches.size() == 1)
-            {
-                OX_ASSERT(current().vertices.size());
-                _bounds = RectF(v->x, v->y, 0, 0);
-            }
+        void setUniform(const char* id, const Matrix* v);
 
-            size_t num = current().vertices.size() / current().vdecl->size;
+        void setUniform(const char* id, float v);
 
-            for (size_t i = 0; i != num; ++i)
-            {
-                v = (const vertexPCT2*)(&current().vertices.front() + current().vdecl->size * i);
-                RectF f(v->x, v->y, 0, 0);
-                _bounds.unite(f);
-            }
+        void setBlendFunc(BLEND_TYPE src, BLEND_TYPE dest);
 
+        void setScissorRect(const Rect*);
+        bool getScissorRect(Rect&) const OVERRIDE;
 
-            _batches.push_back(cached_batch());
-        }
+        void nextBatch();
 
-        void render(const AffineTransform& transform)
-        {
-            for (batches::iterator i = _batches.begin(); i != _batches.end(); ++i)
-            {
-                const cached_batch& b = *i;
-                if (!b.program)
-                    break;
-                if (!b.vdecl)
-                    break;
+        void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData,  unsigned int numVertices);
 
-                size_t num = b.vertices.size() / b.vdecl->size;
+        void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData,  unsigned int numVertices, const unsigned short* indicesData, unsigned int numIndices);
 
-                std::vector<char> modified = b.vertices;
-                for (size_t i = 0; i != num; ++i)
-                {
-                    vertexPCT2* v = (vertexPCT2*)(&modified.front() + b.vdecl->size * i);
-                    Vector2 np = transform.transform(Vector2(v->x, v->y));
-                    v->x = np.x;
-                    v->y = np.y;
-                }
+        void render(const AffineTransform& m);
+        void transform(const AffineTransform& m);
 
-                for (int i = 0; i < cached_batch::MAX_TEXTURES; ++i)
-                    instance->setTexture(i, b.textures[i]);
-
-                instance->setShaderProgram(b.program);
-                instance->setBlendFunc(b.blendSrc, b.blendDest);
-                for (int i = 0; i < STATE_NUM; ++i)
-                    instance->setState((STATE)i, b.states[i]);
-                if (b.numIndices)
-                    instance->draw(b.pt, b.vdecl, &modified.front(), b.numVertices, &b.indices.front(), b.numIndices);
-                else
-                    instance->draw(b.pt, b.vdecl, &modified.front(), b.numVertices);
-            }
-        }
+        spNativeTexture rt;
+        Matrix wvp;
     };
 
 
     class TreeInspectorPreview: public Sprite
     {
     public:
-        TreeInspectorPreview(TreeInspector* tree);
+        TreeInspectorPreview();
         ~TreeInspectorPreview();
 
-        void init(spActor item);
+        void init(spActor item, const Vector2& size, bool tree);
 
         void doRender(RenderState const& parentRenderState);
 
     private:
+        void doUpdate(const UpdateState& us);
         friend class TreeInspector;
         //bool _onEvent(const EventState &es);
 
+        Vector2 render2cache(spActor item, const Vector2& size,  bool child);
+
         VideoDriverCache _videoCache;
-        AffineTransform _cacheTransform;
+
 
         Rect _getItemRect();
-
-        Actor* _prevParent;
-
-        TreeInspector* _tree;
         bool _drawChildren;
     };
 }

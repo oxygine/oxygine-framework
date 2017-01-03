@@ -1,5 +1,5 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include <vector>
 #include "math/Rect.h"
 #include "math/Color.h"
@@ -27,7 +27,7 @@ namespace oxygine
         class Aligner
         {
         public:
-            Aligner(const TextStyle& style);
+            Aligner(const TextStyle& style, const Font* font, float gscale, const Vector2& size);
             ~Aligner();
 
 
@@ -46,11 +46,13 @@ namespace oxygine
             int width;
             int height;
 
+
+            const Font* _font;
+
         private:
             int getLineWidth()const;
             int getLineSkip()const;
 
-            const Font* _font;
 
             typedef std::vector<Symbol*> line;
 
@@ -63,6 +65,7 @@ namespace oxygine
             int _x, _y;
             line _line;
             int _lineWidth;
+            int _lineSkip;
         };
     }
 }

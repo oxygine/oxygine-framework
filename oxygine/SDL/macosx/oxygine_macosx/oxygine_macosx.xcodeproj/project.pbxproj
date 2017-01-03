@@ -17,8 +17,6 @@
 		049B56661871F21E00EF3C66 /* Actor.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B55921871F21D00EF3C66 /* Actor.h */; };
 		049B56671871F21E00EF3C66 /* AnimationFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B55931871F21D00EF3C66 /* AnimationFrame.cpp */; };
 		049B56681871F21E00EF3C66 /* AnimationFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B55941871F21D00EF3C66 /* AnimationFrame.h */; };
-		049B56691871F21E00EF3C66 /* blocking.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B55951871F21D00EF3C66 /* blocking.cpp */; };
-		049B566A1871F21E00EF3C66 /* blocking.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B55961871F21D00EF3C66 /* blocking.h */; };
 		049B566B1871F21E00EF3C66 /* Box9Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B55971871F21D00EF3C66 /* Box9Sprite.cpp */; };
 		049B566C1871F21E00EF3C66 /* Box9Sprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B55981871F21D00EF3C66 /* Box9Sprite.h */; };
 		049B566D1871F21E00EF3C66 /* Button.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B55991871F21D00EF3C66 /* Button.cpp */; };
@@ -31,8 +29,6 @@
 		049B56741871F21E00EF3C66 /* closure_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B55A11871F21D00EF3C66 /* closure_impl.h */; };
 		049B56751871F21E00EF3C66 /* ColorRectSprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B55A21871F21D00EF3C66 /* ColorRectSprite.cpp */; };
 		049B56761871F21E00EF3C66 /* ColorRectSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B55A31871F21D00EF3C66 /* ColorRectSprite.h */; };
-		049B56771871F21E00EF3C66 /* coroutines.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B55A61871F21D00EF3C66 /* coroutines.cpp */; };
-		049B56781871F21E00EF3C66 /* coroutines.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B55A71871F21D00EF3C66 /* coroutines.h */; };
 		049B56791871F21E00EF3C66 /* file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B55A81871F21D00EF3C66 /* file.cpp */; };
 		049B567A1871F21E00EF3C66 /* file.h in Headers */ = {isa = PBXBuildFile; fileRef = 049B55A91871F21D00EF3C66 /* file.h */; };
 		049B567C1871F21E00EF3C66 /* FileSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 049B55AB1871F21D00EF3C66 /* FileSystem.cpp */; };
@@ -258,8 +254,6 @@
 		049B55921871F21D00EF3C66 /* Actor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Actor.h; path = ../../../src/Actor.h; sourceTree = "<group>"; };
 		049B55931871F21D00EF3C66 /* AnimationFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AnimationFrame.cpp; path = ../../../src/AnimationFrame.cpp; sourceTree = "<group>"; };
 		049B55941871F21D00EF3C66 /* AnimationFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimationFrame.h; path = ../../../src/AnimationFrame.h; sourceTree = "<group>"; };
-		049B55951871F21D00EF3C66 /* blocking.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = blocking.cpp; path = ../../../src/blocking.cpp; sourceTree = "<group>"; };
-		049B55961871F21D00EF3C66 /* blocking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = blocking.h; path = ../../../src/blocking.h; sourceTree = "<group>"; };
 		049B55971871F21D00EF3C66 /* Box9Sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Box9Sprite.cpp; path = ../../../src/Box9Sprite.cpp; sourceTree = "<group>"; };
 		049B55981871F21D00EF3C66 /* Box9Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Box9Sprite.h; path = ../../../src/Box9Sprite.h; sourceTree = "<group>"; };
 		049B55991871F21D00EF3C66 /* Button.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Button.cpp; path = ../../../src/Button.cpp; sourceTree = "<group>"; };
@@ -272,8 +266,6 @@
 		049B55A11871F21D00EF3C66 /* closure_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = closure_impl.h; sourceTree = "<group>"; };
 		049B55A21871F21D00EF3C66 /* ColorRectSprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ColorRectSprite.cpp; path = ../../../src/ColorRectSprite.cpp; sourceTree = "<group>"; };
 		049B55A31871F21D00EF3C66 /* ColorRectSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColorRectSprite.h; path = ../../../src/ColorRectSprite.h; sourceTree = "<group>"; };
-		049B55A61871F21D00EF3C66 /* coroutines.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coroutines.cpp; sourceTree = "<group>"; };
-		049B55A71871F21D00EF3C66 /* coroutines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coroutines.h; sourceTree = "<group>"; };
 		049B55A81871F21D00EF3C66 /* file.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = file.cpp; sourceTree = "<group>"; };
 		049B55A91871F21D00EF3C66 /* file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file.h; sourceTree = "<group>"; };
 		049B55AB1871F21D00EF3C66 /* FileSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileSystem.cpp; sourceTree = "<group>"; };
@@ -531,7 +523,6 @@
 				049B55911871F21D00EF3C66 /* Actor.cpp */,
 				049B55931871F21D00EF3C66 /* AnimationFrame.cpp */,
 				92CE26711A58ABDC003901D6 /* AsyncTask.cpp */,
-				049B55951871F21D00EF3C66 /* blocking.cpp */,
 				049B55971871F21D00EF3C66 /* Box9Sprite.cpp */,
 				049B55991871F21D00EF3C66 /* Button.cpp */,
 				049B559B1871F21D00EF3C66 /* ClipRectActor.cpp */,
@@ -571,7 +562,6 @@
 				049B55921871F21D00EF3C66 /* Actor.h */,
 				049B55941871F21D00EF3C66 /* AnimationFrame.h */,
 				92CE26721A58ABDC003901D6 /* AsyncTask.h */,
-				049B55961871F21D00EF3C66 /* blocking.h */,
 				049B55981871F21D00EF3C66 /* Box9Sprite.h */,
 				049B559A1871F21D00EF3C66 /* Button.h */,
 				049B559C1871F21D00EF3C66 /* ClipRectActor.h */,
@@ -651,8 +641,6 @@
 				92F3F3471CA3BD7B00425D52 /* ThreadDispatcher.h */,
 				92F3F3481CA3BD7B00425D52 /* ThreadMessages.h */,
 				92CE26661A58AADB003901D6 /* ios */,
-				049B55A61871F21D00EF3C66 /* coroutines.cpp */,
-				049B55A71871F21D00EF3C66 /* coroutines.h */,
 				049B55A81871F21D00EF3C66 /* file.cpp */,
 				049B55A91871F21D00EF3C66 /* file.h */,
 				049B55AB1871F21D00EF3C66 /* FileSystem.cpp */,
@@ -956,7 +944,6 @@
 				049B570A1871F21E00EF3C66 /* Sprite.h in Headers */,
 				CEC2CFF91C47274C00450163 /* STDMaterial.h in Headers */,
 				049B56E61871F21E00EF3C66 /* unzip.h in Headers */,
-				049B56781871F21E00EF3C66 /* coroutines.h in Headers */,
 				049B571A1871F21E00EF3C66 /* ImageUtils.h in Headers */,
 				049B57021871F21E00EF3C66 /* Resources.h in Headers */,
 				049B56921871F21E00EF3C66 /* log.h in Headers */,
@@ -989,7 +976,6 @@
 				049B57181871F21E00EF3C66 /* AtlasTool.h in Headers */,
 				049B56EA1871F21E00EF3C66 /* oxygine-framework.h in Headers */,
 				049B571F1871F21E00EF3C66 /* VisualStyle.h in Headers */,
-				049B566A1871F21E00EF3C66 /* blocking.h in Headers */,
 				AD14D5621D72B19600182666 /* Image.h in Headers */,
 				923663591A47561500EB65B3 /* Serializable.h in Headers */,
 				049B56741871F21E00EF3C66 /* closure_impl.h in Headers */,
@@ -1133,7 +1119,6 @@
 				049B56BA1871F21E00EF3C66 /* ZipFileSystem.cpp in Sources */,
 				CEC2CFF61C47274C00450163 /* Material.cpp in Sources */,
 				049B56861871F21E00EF3C66 /* VideoDriverGL.cpp in Sources */,
-				049B56691871F21E00EF3C66 /* blocking.cpp in Sources */,
 				049B56AC1871F21E00EF3C66 /* STDFileSystem.cpp in Sources */,
 				049B56C21871F21E00EF3C66 /* TreeInspector.cpp in Sources */,
 				92CE266C1A58AADB003901D6 /* HttpRequestCocoaTask.mm in Sources */,
@@ -1170,7 +1155,6 @@
 				049B56CD1871F21E00EF3C66 /* EventDispatcher.cpp in Sources */,
 				92F3F3421CA3BD5400425D52 /* PostProcess.cpp in Sources */,
 				049B56C01871F21E00EF3C66 /* TexturesInspector.cpp in Sources */,
-				049B56771871F21E00EF3C66 /* coroutines.cpp in Sources */,
 				049B56F91871F21E00EF3C66 /* ResBuffer.cpp in Sources */,
 				049B568E1871F21E00EF3C66 /* ImageDataOperations.cpp in Sources */,
 				049B56821871F21E00EF3C66 /* ShaderProgramGL.cpp in Sources */,

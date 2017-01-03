@@ -1,9 +1,9 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include <stdarg.h>
+
 namespace oxygine
 {
-    /***/
     namespace log
     {
         /**By default logging is enabled*/

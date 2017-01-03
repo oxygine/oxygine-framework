@@ -25,6 +25,7 @@
 #include "winnie_alloc/winnie_alloc.h"
 #include "ThreadDispatcher.h"
 #include "PostProcess.h"
+#include "TextField.h"
 
 #ifdef __S3E__
 #include "s3e.h"
@@ -51,11 +52,10 @@
 #include "core/android/jniUtils.h"
 #elif __APPLE__
 #include <TargetConditionals.h>
+#include "ios/ios.h"
 #endif
 
 #ifdef OXYGINE_SDL
-#include "coroutines.h"
-
 extern "C"
 {
 #include "SDL.h"
@@ -182,6 +182,9 @@ namespace oxygine
 
     namespace core
     {
+        static bool active = true;
+        static bool focus = true;
+
         void focusLost()
         {
             if (!LOST_RESET_CONTEXT)
@@ -260,10 +263,13 @@ namespace oxygine
 
             init0();
 
-
             log::messageln("initialize oxygine");
             if (desc_ptr)
                 desc = *desc_ptr;
+
+
+            focus = true;
+            active = true;
 
 #ifdef __S3E__
             log::messageln("S3E build");
@@ -342,7 +348,6 @@ namespace oxygine
 #if TARGET_OS_IPHONE
             flags |= SDL_WINDOW_BORDERLESS;
             flags |= SDL_WINDOW_ALLOW_HIGHDPI;
-            flags |= SDL_WINDOW_FULLSCREEN;
 #endif
 
             //SDL_DisplayMode mode;
@@ -358,10 +363,15 @@ namespace oxygine
             if (desc.fullscreen)
                 flags |= SDL_WINDOW_FULLSCREEN;
 
-            {
-                Event ev(EVENT_PRECREATEWINDOW);
-                _dispatcher->dispatchEvent(&ev);
-            }
+
+            Event ev(EVENT_PRECREATEWINDOW);
+            _dispatcher->dispatchEvent(&ev);
+
+
+#if TARGET_OS_IPHONE
+            //ios bug workaround
+            flags &= ~SDL_WINDOW_FULLSCREEN;
+#endif
 
             log::messageln("creating window %d %d", desc.w, desc.h);
 
@@ -458,6 +468,13 @@ namespace oxygine
             STDMaterial::instance = new STDMaterial(STDRenderer::instance);
 
             CHECKGL();
+
+#ifdef OX_DEBUG
+#ifndef OXYGINE_EDITOR
+            DebugActor::initialize();
+            TextField::setDefaultFont(DebugActor::resSystem->getResFont("system"));
+#endif
+#endif
             log::messageln("oxygine initialized");
         }
 
@@ -469,8 +486,6 @@ namespace oxygine
         }
 #endif
 
-        bool active = true;
-        bool focus = true;
 
 
         bool isActive()
@@ -535,7 +550,7 @@ namespace oxygine
             {
                 if (!focus)
                 {
-                    log::messageln("!focus");
+                    //log::messageln("!focus");
                     return false;
                 }
 
@@ -593,17 +608,25 @@ namespace oxygine
 #ifdef __S3E__
 #elif OXYGINE_EDITOR
 #else
+        spStage getStageByWindow(Uint32 windowID)
+        {
+            SDL_Window* wnd = SDL_GetWindowFromID(windowID);
+            if (!wnd)
+                return getStage();
+
+            spStage stage = Stage::getStageFromWindow(wnd);
+            if (!stage)
+                return getStage();
+
+            return stage;
+        }
+
         void SDL_handleEvent(SDL_Event& event, bool& done)
         {
             Input* input = &Input::instance;
 
 
-            SDL_Window* wnd = SDL_GetWindowFromID(event.window.windowID);
-            void* data = SDL_GetWindowData(wnd, "_");
-            spStage stage = (Stage*)data;
 
-            if (!stage)
-                stage = getStage();
 
             Event ev(EVENT_SYSTEM);
             ev.userData = &event;
@@ -613,7 +636,7 @@ namespace oxygine
                 switch (event.type)
                 {
                     case SDL_QUIT:
-						log::messageln("SDL_QUIT");
+                        log::messageln("SDL_QUIT");
                         done = true;
                         break;
                     case SDL_WINDOWEVENT:
@@ -639,7 +662,7 @@ namespace oxygine
                             newFocus = true;
 #ifdef __ANDROID__
                         //if (event.window.event == SDL_WINDOWEVENT_ENTER)
-                         //   newFocus = true;
+                        //   newFocus = true;
 #endif
 
                         if (focus != newFocus)
@@ -652,6 +675,8 @@ namespace oxygine
 
                             log::messageln("focus: %d", (int)focus);
                             Event ev(focus ? Stage::ACTIVATE : Stage::DEACTIVATE);
+
+                            spStage stage = getStageByWindow(event.window.windowID);
                             if (stage)
                                 stage->dispatchEvent(&ev);
 
@@ -663,22 +688,22 @@ namespace oxygine
                         break;
                     }
                     case SDL_MOUSEWHEEL:
-                        input->sendPointerWheelEvent(stage, event.wheel.y, &input->_pointerMouse);
+                        input->sendPointerWheelEvent(getStageByWindow(event.window.windowID), Vector2((float)event.wheel.x, (float)event.wheel.y), &input->_pointerMouse);
                         break;
                     case SDL_KEYDOWN:
                     {
                         KeyEvent ev(KeyEvent::KEY_DOWN, &event.key);
-                        stage->dispatchEvent(&ev);
+                        getStageByWindow(event.window.windowID)->dispatchEvent(&ev);
                     } break;
                     case SDL_KEYUP:
                     {
                         KeyEvent ev(KeyEvent::KEY_UP, &event.key);
-                        stage->dispatchEvent(&ev);
+                        getStageByWindow(event.window.windowID)->dispatchEvent(&ev);
                     } break;
 
                     case SDL_MOUSEMOTION:
                         if (!_useTouchAPI)
-                            input->sendPointerMotionEvent(stage, (float)event.motion.x, (float)event.motion.y, 1.0f, &input->_pointerMouse);
+                            input->sendPointerMotionEvent(getStageByWindow(event.window.windowID), (float)event.motion.x, (float)event.motion.y, 1.0f, &input->_pointerMouse);
                         break;
                     case SDL_MOUSEBUTTONDOWN:
                     case SDL_MOUSEBUTTONUP:
@@ -693,7 +718,7 @@ namespace oxygine
                                 case 3: b = MouseButton_Right; break;
                             }
 
-                            input->sendPointerButtonEvent(stage, b, (float)event.button.x, (float)event.button.y, 1.0f,
+                            input->sendPointerButtonEvent(getStageByWindow(event.window.windowID), b, (float)event.button.x, (float)event.button.y, 1.0f,
                                                           event.type == SDL_MOUSEBUTTONDOWN ? TouchEvent::TOUCH_DOWN : TouchEvent::TOUCH_UP, &input->_pointerMouse);
                         }
                     }
@@ -706,7 +731,7 @@ namespace oxygine
                             Vector2 pos = convertTouch(event);
                             PointerState* ps = input->getTouchByID((int64_t)event.tfinger.fingerId);
                             if (ps)
-                                input->sendPointerMotionEvent(stage,
+                                input->sendPointerMotionEvent(getStageByWindow(event.window.windowID),
                                                               pos.x, pos.y, event.tfinger.pressure, ps);
                         }
                     }
@@ -721,7 +746,7 @@ namespace oxygine
                             Vector2 pos = convertTouch(event);
                             PointerState* ps = input->getTouchByID((int64_t)event.tfinger.fingerId);
                             if (ps)
-                                input->sendPointerButtonEvent(stage,
+                                input->sendPointerButtonEvent(getStageByWindow(event.window.windowID),
                                                               MouseButton_Touch,
                                                               pos.x, pos.y, event.tfinger.pressure,
                                                               event.type == SDL_FINGERDOWN ? TouchEvent::TOUCH_DOWN : TouchEvent::TOUCH_UP,
@@ -787,7 +812,7 @@ namespace oxygine
 
         void release()
         {
-			log::messageln("core::release");
+            log::messageln("core::release");
 
             _threadMessages.clear();
             _uiMessages.clear();
@@ -837,7 +862,9 @@ namespace oxygine
         void execute(const char* str)
         {
 #ifdef __S3E__
+
             s3eOSExecExecute(str, false);
+#elif OXYGINE_EDITOR
 #elif __ANDROID__
             jniBrowse(str);
 #elif EMSCRIPTEN
@@ -846,6 +873,8 @@ namespace oxygine
                 var url = Pointer_stringify($0);
                 window.open(url, '_blank');
             }, str);
+#elif __APPLE__
+            iosNavigate(str);
 #else
             OX_ASSERT(!"execute not implemented");
 #endif
@@ -862,7 +891,7 @@ namespace oxygine
 
         void requestQuit()
         {
-			log::messageln("requestQuit");
+            log::messageln("requestQuit");
 #ifdef __S3E__
             s3eDeviceRequestQuit();
 #elif OXYGINE_SDL

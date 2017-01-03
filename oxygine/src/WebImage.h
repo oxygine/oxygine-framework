@@ -1,15 +1,15 @@
 #pragma once
+#include "oxygine-include.h"
 #include "Actor.h"
+#include "res/ResAnim.h"
 #include <string>
 
 namespace oxygine
 {
-    DECLARE_SMART(HttpRequestTask, spHttpRequestTask);
-    DECLARE_SMART(Sprite, spSprite);
     DECLARE_SMART(WebImage, spWebImage);
-
-    class WebImage : public _Actor
+    class WebImage : public Actor
     {
+        INHERITED(Actor);
     public:
         DECLARE_COPYCLONE(WebImage);
 
@@ -22,6 +22,10 @@ namespace oxygine
     private:
         void loaded(Event*);
         void error(Event*);
+        void sizeChanged(const Vector2& size) OVERRIDE;
+        void fit();
+
+        ResAnim _rs;
 
         spSprite _image;
 
@@ -29,8 +33,4 @@ namespace oxygine
     };
 }
 
-#ifdef OX_EDITOR
-#include "EditorWebImage.h"
-#else
-typedef oxygine::WebImage BaseWebImage;
-#endif
+EDITOR_INCLUDE(WebImage);

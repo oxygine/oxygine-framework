@@ -16,7 +16,7 @@ namespace oxygine
 
     void MaskedSprite::copyFrom(const MaskedSprite& src, cloneOptions opt)
     {
-        _Sprite::copyFrom(src, opt);
+        inherited::copyFrom(src, opt);
         _useRChannel = src._useRChannel;
         //_mask = src._mask;
     }
@@ -49,13 +49,13 @@ namespace oxygine
 
     void MaskedSprite::serialize(serializedata* data)
     {
-        _Sprite::serialize(data);
+        inherited::serialize(data);
         data->node.set_name("MaskedSprite");
     }
 
     void MaskedSprite::deserialize(const deserializedata* data)
     {
-        _Sprite::deserialize(data);
+        inherited::deserialize(data);
     }
 
     void MaskedSprite::deserializeLink(const deserializeLinkData* data)

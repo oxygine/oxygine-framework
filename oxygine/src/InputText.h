@@ -1,5 +1,5 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "EventDispatcher.h"
 #include <string>
 
@@ -9,7 +9,6 @@
 
 namespace oxygine
 {
-    DECLARE_SMART(TextField, spTextField);
     DECLARE_SMART(InputText, spInputText);
 
     class InputText: public EventDispatcher

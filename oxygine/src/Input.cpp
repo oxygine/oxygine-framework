@@ -17,6 +17,14 @@ namespace oxygine
 
     void Input::sendPointerButtonEvent(spStage stage, MouseButton button, float x, float y, float pressure, int type, PointerState* ps)
     {
+        if (!_multiTouch && ps->getIndex() != 1 && ps != &_pointerMouse)
+        {
+            if (type == TouchEvent::TOUCH_UP)
+                _ids[ps->getIndex() - 1] = 0;
+            
+            return;
+        }
+
         Vector2 p(x, y);
 
         TouchEvent me(type, true, p);
@@ -36,13 +44,15 @@ namespace oxygine
         stage->handleEvent(&me);
 
         if (type == TouchEvent::TOUCH_UP)
-        {
             _ids[ps->getIndex() - 1] = 0;
-        }
     }
 
     void Input::sendPointerMotionEvent(spStage stage, float x, float y, float pressure, PointerState* ps)
     {
+
+        if (!_multiTouch && ps->getIndex() != 1 && ps != &_pointerMouse)
+            return;
+
         TouchEvent me(TouchEvent::MOVE, true, Vector2(x, y));
         me.index = ps->getIndex();
         me.pressure = pressure;
@@ -52,14 +62,17 @@ namespace oxygine
         stage->handleEvent(&me);
     }
 
-    void Input::sendPointerWheelEvent(spStage stage, int scroll, PointerState* ps)
+    void Input::sendPointerWheelEvent(spStage stage, const Vector2& dir, PointerState* ps)
     {
-        TouchEvent me(scroll > 0 ? TouchEvent::WHEEL_UP : TouchEvent::WHEEL_DOWN, true);
+        TouchEvent me(dir.y > 0 ? TouchEvent::WHEEL_UP : TouchEvent::WHEEL_DOWN, true, ps->getPosition());
         me.index = ps->getIndex();
-
-        ps->_position = Vector2(0, 0);
-
         stage->handleEvent(&me);
+
+
+        TouchEvent te(TouchEvent::WHEEL_DIR, true, ps->getPosition());
+        te.index = ps->getIndex();
+        te.wheelDirection = dir;
+        stage->handleEvent(&te);
     }
 
 
@@ -69,6 +82,7 @@ namespace oxygine
         for (int i = 0; i < MAX_TOUCHES; ++i)
             _pointers[i].init(i + 1);
         memset(_ids, 0, sizeof(_ids));
+        _multiTouch = true;
     }
 
     Input::~Input()
@@ -80,8 +94,16 @@ namespace oxygine
     {
     }
 
-    PointerState* Input::getTouchByIndex(int index)
+    void Input::multiTouchEnabled(bool en)
     {
+        _multiTouch = en;
+    }
+
+    PointerState* Input::getTouchByIndex(pointer_index index_)
+    {
+        OX_ASSERT(index_ != 0);
+
+        int index = index_;
         if (index == MAX_TOUCHES + 1)
             return &_pointerMouse;
         index -= 1;

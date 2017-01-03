@@ -178,7 +178,7 @@ namespace oxygine
         white->setLinearFilter(false);
 
 
-        memwhite.fill_zero();
+        memwhite.fillZero();
         invisible = IVideoDriver::instance->createTexture();
         invisible->setName("!renderer. invisible");
         invisible->init(im, false);
@@ -243,11 +243,6 @@ namespace oxygine
     void STDRenderer::setViewProjTransform(const Matrix& viewProj)
     {
         _vp = viewProj;
-    }
-
-    void STDRenderer::setViewProjTransform(const Matrix& view, const Matrix& proj)
-    {
-        _vp = view * proj;
     }
 
     IVideoDriver* STDRenderer::getDriver()

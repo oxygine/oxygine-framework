@@ -14,7 +14,7 @@ namespace oxygine
 {
     void Box9Sprite::copyFrom(const Box9Sprite& src, cloneOptions opt)
     {
-        _Sprite::copyFrom(src, opt);
+        inherited::copyFrom(src, opt);
 
         _prepared = src._prepared;
 
@@ -82,15 +82,10 @@ namespace oxygine
         _prepared = false;
     }
 
-    bool Box9Sprite::isOn(const Vector2& localPosition)
-    {
-        return Actor::isOn(localPosition);
-    }
-
     void Box9Sprite::changeAnimFrame(const AnimationFrame& f)
     {
         Vector2 size = getSize();
-        _Sprite::changeAnimFrame(f);
+        inherited::changeAnimFrame(f);
         setSize(size);
     }
 
@@ -121,7 +116,7 @@ namespace oxygine
             attr = resanim->getAttribute("horizontal");
             _horzMode = (StretchMode)attr.as_uint(STRETCHING);
         }
-        _Sprite::animFrameChanged(f);
+        inherited::animFrameChanged(f);
     }
 
     RectF Box9Sprite::getDestRect() const
@@ -274,7 +269,7 @@ namespace oxygine
         stream << "\n";
 
 
-        stream << _Sprite::dump(options);
+        stream << inherited::dump(options);
         return stream.str();
     }
 
@@ -342,7 +337,7 @@ namespace oxygine
 
     void Box9Sprite::serialize(serializedata* data)
     {
-        _Sprite::serialize(data);
+        inherited::serialize(data);
         setAttrV2(data->node, "size", getSize(), Vector2(0, 0));
         data->node.set_name("Box9Sprite");
     }
@@ -351,7 +346,7 @@ namespace oxygine
 
     void Box9Sprite::deserialize(const deserializedata* data)
     {
-        _Sprite::deserialize(data);
+        inherited::deserialize(data);
 
         setSize(attr2Vector2(data->node.attribute("size").as_string()));
     }

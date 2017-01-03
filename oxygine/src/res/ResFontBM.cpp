@@ -72,6 +72,16 @@ namespace oxygine
         return _sdf;
     }
 
+    const oxygine::Font* ResFontBM::getClosestFont(float worldScale, int styleFontSize, float& resScale) const
+    {
+        if (!styleFontSize)
+            styleFontSize = _size;
+
+        float scale = _size / float(styleFontSize) * _font->getScale();
+        resScale = scale;
+        return _font;
+    }
+
     void ResFontBM::init(const char* path, bool premultipliedAlpha)
     {
         _premultipliedAlpha = premultipliedAlpha;
@@ -348,8 +358,6 @@ namespace oxygine
             }
         }
 
-
-
         // chars blocks
         for (int i = 0; i < numChars; i++)
         {
@@ -409,12 +417,14 @@ namespace oxygine
             int code = 0;
             ucs2_to_utf8(charID, (unsigned char*)&code);
             gl.ch = code;
+            gl.opt = 0;
             gl.texture = _pages[page_].texture;
 
             _font->addGlyph(gl);
         }
 
         _font->sortGlyphs();
+        _finalize();
     }
     /////////////////////////////////////////////////////////
 
@@ -436,6 +446,23 @@ namespace oxygine
         _pages.push_back(p);
     }
 
+    void ResFontBM::_finalize()
+    {
+        glyphOptions opt = 0;
+        const glyph* g = _font->getGlyph(0xA0, opt);
+        if (g)
+            return;
+
+        g = _font->getGlyph(' ', opt);
+        if (!g)
+            return;
+
+        glyph p = *g;
+        p.ch = 0xA0;
+        _font->addGlyph(p);
+
+    }
+
     void ResFontBM::_createFont(CreateResourceContext* context, bool sd, bool bmc, int downsample)
     {
         _sdf = sd;
@@ -450,7 +477,7 @@ namespace oxygine
             _premultipliedAlpha = node.attribute("premultiplied_alpha").as_bool(_premultipliedAlpha);
 
             _file = context->walker.getPath("file");
-            setName(_Resource::extractID(node, _file, ""));
+            setName(Resource::extractID(node, _file, ""));
 
             if (bmc)
             {
@@ -526,7 +553,6 @@ namespace oxygine
             _font->setScale(scale);
         }
 
-
         pugi::xml_node chars = pages.next_sibling("chars");
         pugi::xml_node child = chars.first_child();
         while (!child.empty())
@@ -585,6 +611,7 @@ namespace oxygine
             int code = 0;
             ucs2_to_utf8(charID, (unsigned char*)&code);
             gl.ch = code;
+            gl.opt = 0;
             gl.texture = _pages[page].texture;
 
             font->addGlyph(gl);
@@ -593,6 +620,7 @@ namespace oxygine
         }
 
         font->sortGlyphs();
+        _finalize();
     }
 
     void ResFontBM::_unload()

@@ -1,13 +1,14 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "Sprite.h"
 
 namespace oxygine
 {
     DECLARE_SMART(ProgressBar, spProgressBar);
 
-    class ProgressBar: public _Sprite
+    class ProgressBar: public Sprite
     {
+        INHERITED(Sprite);
     public:
         enum { PROGRESS_CHANGED = sysEventID('P', 'C', 'h') };
 
@@ -45,7 +46,6 @@ namespace oxygine
     private:
         void doRender(const RenderState& rs);
 
-        RectF getDestRect() const OVERRIDE;
         virtual void _update();
 
         void animFrameChanged(const AnimationFrame& f);
@@ -56,8 +56,4 @@ namespace oxygine
     };
 }
 
-#ifdef OX_EDITOR
-#include "EditorProgressBar.h"
-#else
-typedef oxygine::ProgressBar BaseProgressBar;
-#endif
+EDITOR_INCLUDE(ProgressBar);

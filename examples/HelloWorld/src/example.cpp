@@ -1,6 +1,5 @@
 #include "oxygine-framework.h"
 #include <functional>
-#include "res/SingleResAnim.h"
 using namespace oxygine;
 
 //it is our resources
@@ -56,12 +55,7 @@ public:
         text->setPosition(button->getSize() / 2);
 
         //initialize text style
-        TextStyle style;
-        style.font = gameResources.getResFont("main");
-        style.color = Color::White;
-        style.vAlign = TextStyle::VALIGN_MIDDLE;
-        style.hAlign = TextStyle::HALIGN_CENTER;
-
+        TextStyle style = TextStyle(gameResources.getResFont("main")).withColor(Color::White).alignMiddle();
         text->setStyle(style);
         text->setText("Click\nMe!");
 
@@ -120,7 +114,7 @@ public:
 
         //and remove sprite from tree when tweenQueue is empty
         //if you don't hold any references to sprite it would be deleted automatically
-        tweenQueue->setDetachActor(true);
+        tweenQueue->detachWhenDone();
     }
 };
 //declare spMainActor as intrusive_ptr holder of MainActor

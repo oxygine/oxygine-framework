@@ -20,6 +20,7 @@ namespace oxygine
         setSize(64, 64);
         _image = new Sprite;
         _image->setName("_child_");
+        _image->setTouchEnabled(false);
         addChild(_image);
     }
 
@@ -59,12 +60,10 @@ namespace oxygine
         Image mt;
         if (mt.init(bf, true))
         {
-            ResAnim rs;
-            rs.init(&mt);
-            float w = (float)rs.getFrame(0, 0).getWidth();
-            if (w != 0.0f)
-                _image->setScale(getWidth() / w);
-            _image->setAnimFrame(&rs);
+            _rs.init(&mt);
+            _image->setResAnim(&_rs);
+
+            fit();
         }
 
         _http = 0;
@@ -74,5 +73,22 @@ namespace oxygine
     void WebImage::unload()
     {
         _image->setResAnim(0);
+    }
+
+    void WebImage::fit()
+    {
+        if (!_rs.getTotalFrames())
+            return;
+        if (!_rs.getWidth())
+            return;
+        float sx = getWidth() / _rs.getWidth();
+        float sy = getHeight() / _rs.getHeight();
+        float s = std::min(sx, sy);
+        _image->setScale(s);
+    }
+
+    void WebImage::sizeChanged(const Vector2& size)
+    {
+        fit();
     }
 }

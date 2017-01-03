@@ -3,8 +3,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
-
-
+#include "utils/stringUtils.h"
 
 
 
@@ -133,7 +132,9 @@ namespace oxygine
 
         void message_va(const char* format, va_list args)
         {
-            out_prefix(0, "", format, args);
+            char tm[16];
+            safe_sprintf(tm, "%03d", getTimeMS());
+            out_prefix(0, tm, format, args);
         }
 
         void warning(const char* format, ...)
@@ -146,7 +147,10 @@ namespace oxygine
 
         void warning_va(const char* format, va_list args)
         {
-            out_line_prefix(0, "warning: ", format, args);
+            char tm[32];
+            safe_sprintf(tm, "%03d warning: ", getTimeMS());
+
+            out_line_prefix(0, tm, format, args);
         }
 
         void error(const char* format, ...)
@@ -159,7 +163,9 @@ namespace oxygine
 
         void error_va(const char* format, va_list args)
         {
-            out_line_prefix(_eh, "error: ", format, args);
+            char tm[32];
+            safe_sprintf(tm, "%03d error: ", getTimeMS());
+            out_line_prefix(_eh, tm, format, args);
         }
 
         void messageln(const char* format, ...)
@@ -172,7 +178,9 @@ namespace oxygine
 
         void messageln_va(const char* format, va_list args)
         {
-            out_line_prefix(0, "", format, args);
+            char tm[16];
+            safe_sprintf(tm, "%03d ", getTimeMS());
+            out_line_prefix(0, tm, format, args);
         }
     }
 }

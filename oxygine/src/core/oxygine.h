@@ -1,5 +1,5 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "../EventDispatcher.h"
 #include "math/Vector2.h"
 #include <string>
@@ -106,9 +106,6 @@ namespace oxygine
 
         ThreadDispatcher& getMainThreadDispatcher();
         ThreadDispatcher& getUiThreadMessages();
-
-        OXYGINE_DEPRECATED
-        inline ThreadDispatcher& getMainThreadMessages() {return getMainThreadDispatcher();}
 
         bool isActive();
         bool hasFocus();

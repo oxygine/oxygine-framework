@@ -34,7 +34,7 @@ void MyButton::setText(const string& txt)
         TextStyle style;
         style.font = res::ui.getResFont("normal");
         style.vAlign = TextStyle::VALIGN_MIDDLE;
-        style.hAlign = TextStyle::HALIGN_CENTER;
+        style.hAlign = TextStyle::HALIGN_MIDDLE;
 
         //attach it to MyButton and set the same size as button
         //text would be centered

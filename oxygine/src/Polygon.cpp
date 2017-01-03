@@ -22,12 +22,12 @@ namespace oxygine
 
     void Polygon::copyFrom(const Polygon& src, cloneOptions opt)
     {
-        _Sprite::copyFrom(src, opt);
+        inherited::copyFrom(src, opt);
     }
 
     void Polygon::serialize(serializedata* data)
     {
-        _Sprite::serialize(data);
+        inherited::serialize(data);
 
         pugi::xml_node node = data->node;
         node.set_name("Polygon");
@@ -35,7 +35,7 @@ namespace oxygine
 
     void Polygon::deserialize(const deserializedata* data)
     {
-        _Sprite::deserialize(data);
+        inherited::deserialize(data);
     }
 
     std::string Polygon::dump(const dumpOptions& options) const
@@ -48,7 +48,7 @@ namespace oxygine
             stream << "vertices=" << _verticesSize / _vdecl->size << " ";
         }
 
-        stream << _Sprite::dump(options);
+        stream << inherited::dump(options);
         return stream.str();
     }
 

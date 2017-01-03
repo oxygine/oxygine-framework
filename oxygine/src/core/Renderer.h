@@ -1,5 +1,5 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include <vector>
 
 #include "math/Color.h"
@@ -220,16 +220,6 @@ namespace oxygine
         virtual ~IElementRenderer() {}
         virtual void drawElement(const spNativeTexture& texture, unsigned int color, const RectF& src, const RectF& dest) = 0;
     };
-
-    typedef AffineTransform Transform;
-
-    /*
-    class Renderer
-    {
-    public:
-
-    };
-    */
 
     /**Returns View matrix where Left Top corner is (0,0), and right bottom is (w,h)*/
     Matrix makeViewMatrix(int w, int h, bool flipU = false);

@@ -183,7 +183,7 @@ public:
 
             spSprite sprite = new Sprite();
             sprite->setResAnim(gameResources.getResAnim("shot"));
-            Vector2 local = actor->global2local(te->localPosition);
+            Vector2 local = actor->parent2local(te->localPosition);
             sprite->setPosition(local);
             sprite->setAnchor(Vector2(0.5f, 0.5f));
             sprite->attachTo(actor);

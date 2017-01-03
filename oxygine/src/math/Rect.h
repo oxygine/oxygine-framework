@@ -1,5 +1,5 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "Vector2.h"
 #include <algorithm>
 #include <limits>
@@ -24,6 +24,15 @@ namespace oxygine
                        std::numeric_limits<T>::max() / 2,
                        -std::numeric_limits<T>::max(),
                        -std::numeric_limits<T>::max());
+        }
+
+        static const RectT huge()
+        {
+            return RectT(
+                       -std::numeric_limits<T>::max() / 2,
+                       -std::numeric_limits<T>::max() / 2,
+                       std::numeric_limits<T>::max(),
+                       std::numeric_limits<T>::max());
         }
 
         bool operator == (const RectT& r) const

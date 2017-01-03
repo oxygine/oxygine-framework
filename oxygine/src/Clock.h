@@ -1,12 +1,9 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include "core/Object.h"
 
 namespace oxygine
 {
-    class UpdateState;
-
-
     DECLARE_SMART(Clock, spClock);
     class Clock: public Object
     {

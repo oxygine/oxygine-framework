@@ -1,5 +1,5 @@
 #pragma once
-#include "oxygine_include.h"
+#include "oxygine-include.h"
 #include <string>
 #include <list>
 #include <string.h>
@@ -13,20 +13,9 @@
 #include <unordered_map>
 #endif
 
-namespace pugi
-{
-    class xml_node;
-}
 
 namespace oxygine
 {
-    class Resource;
-    class ResFont;
-    class ResAnim;
-
-    class CreateResourceContext;
-    class LoadResourcesContext;
-
     class ResourcesLoadOptions
     {
     public:
@@ -51,8 +40,9 @@ namespace oxygine
         std::string _prebuilFolder;
     };
 
-    class Resources: public _Resource
+    class Resources: public Resource
     {
+        INHERITED(Resource);
     public:
         typedef std::vector<spResource> resources;
 #ifdef __S3E__
@@ -78,7 +68,7 @@ namespace oxygine
         @param xml file paths
         @param options
         */
-        void loadXML(const std::string& xmlFile, const ResourcesLoadOptions& opt = ResourcesLoadOptions());
+        bool loadXML(const std::string& xmlFile, const ResourcesLoadOptions& opt = ResourcesLoadOptions());
 
         /**Adds Resource*/
         void add(Resource* r, bool accessByShortenID = false);
@@ -91,6 +81,9 @@ namespace oxygine
 
         /**Completely deletes all loaded resources*/
         void free();
+
+        /**Does it have any loaded xmls*/
+        bool isEmpty() const;
 
         /** get resource by id, no case sensitive
         @param resource id
