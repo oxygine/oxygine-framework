@@ -140,6 +140,7 @@ extern "C"
 #define oxglGetAttribLocation DECLARE_GLEXT(glGetAttribLocation)
 #define oxglLinkProgram DECLARE_GLEXT(glLinkProgram)
 #define oxglUniform1i DECLARE_GLEXT(glUniform1i)
+#define oxglUniform2f DECLARE_GLEXT(glUniform2f)
 #define oxglUniform2fv DECLARE_GLEXT(glUniform2fv)
 #define oxglUniform2f DECLARE_GLEXT(glUniform2f)
 #define oxglUniform3fv DECLARE_GLEXT(glUniform3fv)
