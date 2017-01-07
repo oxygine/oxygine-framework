@@ -27,6 +27,9 @@ namespace oxygine
     HttpRequestTask::~HttpRequestTask()
     {
         log::messageln("~HttpRequestTask");
+        if(!_headers.empty()) {
+            _headers.clear();
+        }
     }
 
     void HttpRequestTask::setCustomRequests(createHttpRequestCallback cb)
@@ -60,8 +63,11 @@ namespace oxygine
 
     void HttpRequestTask::addHeader(const std::string& key, const std::string& value)
     {
-        OX_ASSERT(!"not implemented");
-        _addHeader(key, value);
+        OX_ASSERT(!"Implmenting");
+        if(!key.empty()) {            
+            _headers.push_back(std::make_pair(key,value));          
+            _addHeader(key, value);            
+        }
     }
 
     const std::vector<unsigned char>&   HttpRequestTask::getPostData() const
