@@ -29,7 +29,7 @@ namespace oxygine
             return true;
         }
 
-        void copy(const ImageData& src, ImageData& dest)
+        void copy(const ImageData& src, const ImageData& dest)
         {
             if (!check(src, dest))
                 return;
@@ -57,7 +57,7 @@ namespace oxygine
             }
         }
 
-        void move(const ImageData& src, ImageData& dest)
+        void move(const ImageData& src, const ImageData& dest)
         {
             if (!check(src, dest))
                 return;
@@ -85,7 +85,7 @@ namespace oxygine
             }
         }
 
-        void blit(const ImageData& src, ImageData& dest)
+        void blit(const ImageData& src, const ImageData& dest)
         {
             if (src.format == dest.format)
             {
@@ -97,18 +97,18 @@ namespace oxygine
             applyOperation(op, src, dest);
         }
 
-        void blitPremultiply(const ImageData& src, ImageData& dest)
+        void blitPremultiply(const ImageData& src, const ImageData& dest)
         {
             op_premultipliedAlpha op;
             applyOperation(op, src, dest);
         }
 
-        void premultiply(ImageData& dest)
+        void premultiply(const ImageData& dest)
         {
             blitPremultiply(dest, dest);
         }
 
-        void blitColored(const ImageData& src, ImageData& dest, const Color& c)
+        void blitColored(const ImageData& src, const ImageData& dest, const Color& c)
         {
             Pixel p;
             p.r = c.r;
@@ -120,7 +120,7 @@ namespace oxygine
             applyOperation(op, src, dest);
         }
 
-        void flipY(const ImageData& src, ImageData& dest)
+        void flipY(const ImageData& src, const ImageData& dest)
         {
             if (!check(src, dest))
                 return;
@@ -143,7 +143,7 @@ namespace oxygine
             }
         }
 
-        void blend(const ImageData& src, ImageData& dest)
+        void blend(const ImageData& src, const ImageData& dest)
         {
             op_blend_srcAlpha_invSrcAlpha op;
             applyOperation(op, src, dest);

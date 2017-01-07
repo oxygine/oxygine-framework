@@ -7,17 +7,17 @@ namespace oxygine
     namespace operations
     {
         //based on memcpy
-        void copy(const ImageData& src, ImageData& dest);
+        void copy(const ImageData& src, const ImageData& dest);
 
         //based on memmove, could be used for overlapped images, slower than copy
-        void move(const ImageData& src, ImageData& dest);
+        void move(const ImageData& src, const ImageData& dest);
 
-        void blit(const ImageData& src, ImageData& dest);
-        void blitColored(const ImageData& src, ImageData& dest, const Color& c);
-        void blitPremultiply(const ImageData& src, ImageData& dest);
-        void premultiply(ImageData& dest);
-        void flipY(const ImageData& src, ImageData& dest);
-        void blend(const ImageData& src, ImageData& dest);
+        void blit(const ImageData& src, const ImageData& dest);
+        void blitColored(const ImageData& src, const ImageData& dest, const Color& c);
+        void blitPremultiply(const ImageData& src, const ImageData& dest);
+        void premultiply(const ImageData& dest);
+        void flipY(const ImageData& src, const ImageData& dest);
+        void blend(const ImageData& src, const ImageData& dest);
 
         inline void blend_srcAlpha_invSrcAlpha(const Pixel& pS, Pixel& pD)
         {
@@ -46,7 +46,7 @@ namespace oxygine
 
 
         template <class Op>
-        void applyOperation(const Op& op, const ImageData& src, ImageData& dest);
+        void applyOperation(const Op& op, const ImageData& src, const ImageData& dest);
 
 
         class op_fill
@@ -194,7 +194,7 @@ namespace oxygine
 
 
         template <class Op, class Src, class Dest>
-        void applyOperationT(const Op& op, const Src& srcPixelFormat, Dest& destPixelFormat, const ImageData& src, ImageData& dest)
+        void applyOperationT(const Op& op, const Src& srcPixelFormat, Dest& destPixelFormat, const ImageData& src, const ImageData& dest)
         {
             if (!check(src, dest))
                 return;
@@ -225,7 +225,7 @@ namespace oxygine
 
 
         template <class Op, class Dest>
-        void applyOperationT(const Op& op, Dest& destPixelFormat, ImageData& dest)
+        void applyOperationT(const Op& op, Dest& destPixelFormat, const ImageData& dest)
         {
             if (!check(dest, dest))
                 return;
@@ -260,7 +260,7 @@ namespace oxygine
         break;
 
         template<class Src, class Op>
-        void SwitchSrcDestT(const Op& op, const Src& s, const ImageData& src, ImageData& dest)
+        void SwitchSrcDestT(const Op& op, const Src& s, const ImageData& src, const ImageData& dest)
         {
 #define FORMAT_CASE FORMAT_OP1
             ALL_FORMATS_SWITCH(dest.format);
@@ -277,7 +277,7 @@ namespace oxygine
 
 
         template <class Op>
-        void applyOperation(const Op& op, const ImageData& src, ImageData& dest)
+        void applyOperation(const Op& op, const ImageData& src, const ImageData& dest)
         {
 #define FORMAT_CASE FORMAT_OP2
             ALL_FORMATS_SWITCH(src.format);
@@ -293,7 +293,7 @@ namespace oxygine
         break;
 
         template <class Op>
-        void applyOperation(const Op& op, ImageData& dest)
+        void applyOperation(const Op& op, const ImageData& dest)
         {
 #define FORMAT_CASE FORMAT_OP3
             ALL_FORMATS_SWITCH(dest.format);

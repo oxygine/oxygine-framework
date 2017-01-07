@@ -24,12 +24,65 @@ public:
     int width;
     int height;
 
-    SingleResAnim res;
+    spNativeTexture nt;
+
     int tileWidth;
     int tileHeight;
 
     int cols;
     int rows;
+
+    void createTileSetTexture(Image& src)
+    {
+        cols = src.getWidth() / tileWidth;
+        rows = src.getHeight() / tileHeight;
+
+        Image dest;
+        dest.init(cols * (tileWidth + 2), rows * (tileHeight * 2), TF_R8G8B8A8);
+
+
+        //http://stackoverflow.com/questions/19611745/opengl-black-lines-in-between-tiles
+        for (int y = 0; y < rows; ++y)
+        {
+            for (int x = 0; x < cols; ++x)
+            {
+                Rect srcRect(x * tileWidth, y * tileHeight, tileWidth, tileHeight);
+                Rect destRect = srcRect;
+                destRect.pos.x += 2 * x + 1;
+                destRect.pos.y += 2 * y + 1;
+
+                ImageData srcIm = src.lock(srcRect);
+                ImageData destIm = dest.lock(destRect);
+                operations::blit(srcIm, destIm);
+
+                destRect.expand(Point(1, 1), Point(1, 1));
+
+
+
+                operations::blit(
+                    dest.lock(destRect.pos.x + 1, destRect.pos.y + 1, tileWidth, 1),
+                    dest.lock(destRect.pos.x + 1, destRect.pos.y, tileWidth, 1));
+
+                operations::blit(
+                    dest.lock(destRect.pos.x + 1, destRect.pos.y + tileHeight, tileWidth, 1),
+                    dest.lock(destRect.pos.x + 1, destRect.pos.y + tileHeight + 1, tileWidth, 1));
+
+                operations::blit(
+                    dest.lock(destRect.pos.x + 1, destRect.pos.y, 1, tileHeight + 2),
+                    dest.lock(destRect.pos.x, destRect.pos.y, 1, tileHeight + 2));
+
+                operations::blit(
+                    dest.lock(destRect.pos.x + tileWidth, destRect.pos.y, 1, tileHeight + 2),
+                    dest.lock(destRect.pos.x + tileWidth + 1, destRect.pos.y, 1, tileHeight + 2));
+
+            }
+        }
+
+        nt = IVideoDriver::instance->createTexture();
+        nt->init(dest.lock());
+        nt->setClamp2Edge(true);
+        nt->setLinearFilter(false);
+    }
 
     Tiled(const std::string& tmx, const std::string& texture)
     {
@@ -73,14 +126,15 @@ public:
             layerNode = layerNode.next_sibling();
         }
 
+        //load image from file
+        Image src;
+        file::read(texture, fb);
+        src.init(fb, true);
 
-        res.init(texture);
-        res.getTexture()->setClamp2Edge(true);
-        res.getTexture()->setLinearFilter(false);
+        createTileSetTexture(src);
 
 
-        cols = res.getTexture()->getWidth() / tileWidth;
-        rows = res.getTexture()->getHeight() / tileHeight;
+        //saveImage(dest.lock(), "test.tga");
     }
 
     void drawLayer(int startX, int startY, int endX, int endY, const layer& l)
@@ -91,8 +145,8 @@ public:
 
         STDRenderer* renderer = STDRenderer::instance;
 
-        float tw = 1.0f / res.getTexture()->getWidth();
-        float th = 1.0f / res.getTexture()->getHeight();
+        float tw = 1.0f / nt->getWidth();
+        float th = 1.0f / nt->getHeight();
 
         for (int y = startY; y < endY; ++y)
         {
@@ -118,7 +172,7 @@ public:
                 int row = tile / cols;
 
 
-                Rect src(col * tileWidth, row * tileHeight, tileWidth, tileHeight);
+                Rect src(col * (tileWidth + 2) + 1, row * (tileHeight + 2) + 1, tileWidth, tileHeight);
                 if (flipped_horizontally)
                 {
                     src.pos.x += tileWidth;
@@ -149,7 +203,7 @@ public:
         Material::setCurrent(rs.material);
 
         STDRenderer* renderer = STDRenderer::instance;
-        renderer->setTexture(res.getTexture());
+        renderer->setTexture(nt);
         renderer->setTransform(rs.transform);
         renderer->setBlendMode(blend_premultiplied_alpha);
 
