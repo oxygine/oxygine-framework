@@ -16,6 +16,7 @@ namespace oxygine
         static void init();
         static void release();
 
+        typedef std::vector<std::pair<std::string,std::string>>  headers_pair;
         /**dispatching AsyncTask events*/
         enum
         {
@@ -75,5 +76,6 @@ namespace oxygine
         bool _cacheEnabled;
         std::vector<unsigned char> _response;
         std::vector<unsigned char> _postData;
+        headers_pair _headers;
     };
 }

@@ -35,5 +35,6 @@ namespace oxygine
 
         file::handle _handle;
         void* _easy;
+        curl_slist* _httpHeaders;
     };
 }
