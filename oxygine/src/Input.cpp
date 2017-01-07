@@ -21,7 +21,7 @@ namespace oxygine
         {
             if (type == TouchEvent::TOUCH_UP)
                 _ids[ps->getIndex() - 1] = 0;
-            
+
             return;
         }
 

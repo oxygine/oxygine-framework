@@ -19,6 +19,8 @@ namespace oxygine
             return;
 
         spNativeTexture texture = IVideoDriver::instance->createTexture();
+        _texture = texture;
+
         texture->init(original->lock(), false);
         texture->apply();
         ResAnim::init(texture, original->getSize(), columns, rows, scaleFactor);
@@ -64,4 +66,10 @@ namespace oxygine
         }
 
     }
+
+    spNativeTexture SingleResAnim::getTexture() const
+    {
+        return _texture;
+    }
+
 }
