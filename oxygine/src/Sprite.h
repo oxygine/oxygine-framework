@@ -42,7 +42,7 @@ namespace oxygine
         void                    setColumnRow(int column, int row);
         void                    setLocalScale(const Vector2& s);
 
-        bool                    isOn(const Vector2& localPosition);
+        bool                    isOn(const Vector2& localPosition, float localScale) OVERRIDE;
 
         bool                    isFlippedX() const {return (_flags & flag_flipX) != 0;}
         bool                    isFlippedY() const {return (_flags & flag_flipY) != 0;}

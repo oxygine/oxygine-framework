@@ -116,7 +116,7 @@ namespace oxygine
         setPosition(_viewport.pos);
     }
 
-    bool Stage::isOn(const Vector2& localPosition)
+    bool Stage::isOn(const Vector2& localPosition, float localScale)
     {
         return true;
     }

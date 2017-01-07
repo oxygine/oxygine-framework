@@ -77,9 +77,9 @@ namespace oxygine
 
     extern int HIT_TEST_DOWNSCALE;
 
-    bool Sprite::isOn(const Vector2& localPosition)
+    bool Sprite::isOn(const Vector2& localPosition, float localScale)
     {
-        if (!Actor::isOn(localPosition))
+        if (!Actor::isOn(localPosition, localScale))
             return false;
 
         if (_extendedIsOn)
