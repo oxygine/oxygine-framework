@@ -50,8 +50,8 @@ namespace oxygine
     
     namespace operations
     {
-        void blit(const ImageData &src, ImageData &dest);
-        void blitPremultiply(const ImageData &src, ImageData &dest);
+        void blit(const ImageData &src, const ImageData &dest);
+        void blitPremultiply(const ImageData &src, const ImageData &dest);
     }
     
 #if TARGET_OS_IPHONE
