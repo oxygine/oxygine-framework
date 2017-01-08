@@ -303,8 +303,18 @@ namespace oxygine
 
         setAttr(node, "flipX", isFlippedX(), false);
         setAttr(node, "flipY", isFlippedY(), false);
+        setAttrV2(node, "localScale", _localScale, Vector2(1, 1));
 
         node.set_name("Sprite");
+    }
+
+    Vector2 attr2Vector2(const pugi::xml_attribute &attr, const Vector2& def)
+    {
+        if (!attr)
+            return def;
+        Vector2 v;
+        sscanf(attr.as_string(""), "%f,%f", &v.x, &v.y);
+        return v;
     }
 
     void Sprite::deserialize(const deserializedata* data)
@@ -320,6 +330,11 @@ namespace oxygine
             AnimationFrame frame = data->factory->getFrame(res, col, row);
             setAnimFrame(frame);
         }
+
+
+        _localScale = attr2Vector2(node.attribute("localScale"), Vector2(1, 1));
+        _setSize(_frame.getSize().mult(_localScale));
+
 
         setFlipped(node.attribute("flipX").as_bool(false), node.attribute("flipY").as_bool(false));
     }
