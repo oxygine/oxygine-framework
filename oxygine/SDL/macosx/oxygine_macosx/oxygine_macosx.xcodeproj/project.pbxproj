@@ -232,6 +232,8 @@
 		92F3F34B1CA3BD7B00425D52 /* ThreadMessages.h in Headers */ = {isa = PBXBuildFile; fileRef = 92F3F3481CA3BD7B00425D52 /* ThreadMessages.h */; };
 		AD14D5611D72B19600182666 /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD14D55F1D72B19600182666 /* Image.cpp */; };
 		AD14D5621D72B19600182666 /* Image.h in Headers */ = {isa = PBXBuildFile; fileRef = AD14D5601D72B19600182666 /* Image.h */; };
+		AD3C64031E22EDA300D8DBAF /* oxygine-forwards.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3C64011E22EDA300D8DBAF /* oxygine-forwards.h */; };
+		AD3C64041E22EDA300D8DBAF /* oxygine-include.h in Headers */ = {isa = PBXBuildFile; fileRef = AD3C64021E22EDA300D8DBAF /* oxygine-include.h */; };
 		AD977D971D56F26400C3C05E /* key.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AD977D951D56F26400C3C05E /* key.cpp */; };
 		AD977D981D56F26400C3C05E /* key.h in Headers */ = {isa = PBXBuildFile; fileRef = AD977D961D56F26400C3C05E /* key.h */; };
 		CEC2CFF61C47274C00450163 /* Material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEC2CFEE1C47274C00450163 /* Material.cpp */; };
@@ -474,6 +476,8 @@
 		92F3F3481CA3BD7B00425D52 /* ThreadMessages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadMessages.h; sourceTree = "<group>"; };
 		AD14D55F1D72B19600182666 /* Image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Image.cpp; path = ../../../src/Image.cpp; sourceTree = "<group>"; };
 		AD14D5601D72B19600182666 /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Image.h; path = ../../../src/Image.h; sourceTree = "<group>"; };
+		AD3C64011E22EDA300D8DBAF /* oxygine-forwards.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "oxygine-forwards.h"; path = "../../../src/oxygine-forwards.h"; sourceTree = "<group>"; };
+		AD3C64021E22EDA300D8DBAF /* oxygine-include.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "oxygine-include.h"; path = "../../../src/oxygine-include.h"; sourceTree = "<group>"; };
 		AD977D951D56F26400C3C05E /* key.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = key.cpp; path = ../../../src/key.cpp; sourceTree = "<group>"; };
 		AD977D961D56F26400C3C05E /* key.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = key.h; path = ../../../src/key.h; sourceTree = "<group>"; };
 		CEC2CFEE1C47274C00450163 /* Material.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Material.cpp; path = ../../../src/Material.cpp; sourceTree = "<group>"; };
@@ -516,6 +520,8 @@
 		049B55901871F21000EF3C66 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				AD3C64011E22EDA300D8DBAF /* oxygine-forwards.h */,
+				AD3C64021E22EDA300D8DBAF /* oxygine-include.h */,
 				AD14D55F1D72B19600182666 /* Image.cpp */,
 				AD14D5601D72B19600182666 /* Image.h */,
 				AD977D951D56F26400C3C05E /* key.cpp */,
@@ -882,6 +888,7 @@
 				049B56D31871F21E00EF3C66 /* Input.h in Headers */,
 				049B56CE1871F21E00EF3C66 /* EventDispatcher.h in Headers */,
 				049B57241871F21E00EF3C66 /* winnie_alloc_config.h in Headers */,
+				AD3C64031E22EDA300D8DBAF /* oxygine-forwards.h in Headers */,
 				049B56D91871F21E00EF3C66 /* matrix.h in Headers */,
 				049B56A11871F21E00EF3C66 /* pixel.h in Headers */,
 				049B56FA1871F21E00EF3C66 /* ResBuffer.h in Headers */,
@@ -960,6 +967,7 @@
 				049B56B61871F21E00EF3C66 /* vertex.h in Headers */,
 				049B56D11871F21E00EF3C66 /* initActor.h in Headers */,
 				049B566E1871F21E00EF3C66 /* Button.h in Headers */,
+				AD3C64041E22EDA300D8DBAF /* oxygine-include.h in Headers */,
 				049B56901871F21E00EF3C66 /* intrusive_ptr.h in Headers */,
 				929AF57D1C88AF2E00D276ED /* ResAtlasPrebuilt.h in Headers */,
 				049B56871871F21E00EF3C66 /* VideoDriverGL.h in Headers */,

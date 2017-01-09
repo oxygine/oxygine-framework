@@ -125,6 +125,11 @@ namespace oxygine
         return Actor::getDestRect();
     }
 
+    bool Box9Sprite::isOn(const Vector2 &localPosition, float localScale)
+    {
+        return Actor::isOn(localPosition, localScale);
+    }
+
     void Box9Sprite::prepare()
     {
         _guidesX.resize(4);
