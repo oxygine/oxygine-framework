@@ -197,7 +197,7 @@ namespace oxygine
         return size;
     }
 
-    HttpRequestTaskCURL::HttpRequestTaskCURL() : _easy(0), _handle(0)
+    HttpRequestTaskCURL::HttpRequestTaskCURL() : _easy(0), _handle(0), _httpHeaders(NULL)
     {
         _easy = curl_easy_init();
     }
@@ -213,6 +213,10 @@ namespace oxygine
         _easy = 0;
     }
 
+    void _addHeader(const std::string& key, const std::string& value) {        
+       _httpHeaders = curl_slist_append(_httpHeaders, key + ": " + value);
+    }
+
     void HttpRequestTaskCURL::_run()
     {
         curl_easy_setopt(_easy, CURLOPT_URL, _url.c_str());
@@ -226,13 +230,17 @@ namespace oxygine
 
         //curl_slist *header = curl_slist_append(0, "hello");
         //curl_easy_setopt(_easy, CURLOPT_HEADER, header);
+        if(!_httpHeaders) {
+            httpHeaders = curl_slist_append(_httpHeaders, "Content-Type: text/plain");
+        } 
 
-        if (!_postData.empty())
-        {
-            curl_slist* headers = NULL; // init to NULL is important
-            //headers = curl_slist_append(headers, "Accept:")
-            headers = curl_slist_append(headers, "Content-Type: text/plain");
-            curl_easy_setopt(_easy, CURLOPT_HTTPHEADER, headers);
+        curl_easy_setopt(_easy, CURLOPT_HTTPHEADER, _httpHeaders);        
+
+        if (!_postData.empty()){
+            // curl_slist* headers = NULL; // init to NULL is important
+            //headers = curl_slist_append(headers, "Accept:")            
+
+            
 
             //curl_easy_setopt(_easy, CURLOPT_PORT, 4002);
 
