@@ -32,7 +32,7 @@ namespace oxygine
         void setVerticalGuides(float x1, float x2);
         void setHorizontalGuides(float y1, float y2);
 
-        bool isOn(const Vector2 &localPosition, float localScale) OVERRIDE;
+        bool isOn(const Vector2& localPosition, float localScale) OVERRIDE;
 
         std::string dump(const dumpOptions&) const;
 
