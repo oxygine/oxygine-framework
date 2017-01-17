@@ -19,6 +19,7 @@ namespace oxygine
     bool            jniIsNetworkAvailable();
 
     bool            jniExit();
+    void            jniRestartApp();
     void            jniMoveTaskToBack();
     void            jniBrowse(const char* url);
 

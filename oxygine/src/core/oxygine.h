@@ -70,7 +70,7 @@ namespace oxygine
         void init0();
 
         /** Initializes Oxygine*/
-        void init(init_desc* desc = 0);
+        int init(init_desc* desc = 0);
 
         /** Releases all internal components*/
         void release();

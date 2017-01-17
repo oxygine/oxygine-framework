@@ -1,12 +1,14 @@
 package org.oxygine.lib;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.provider.Settings;
+import android.app.PendingIntent;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -50,10 +52,21 @@ public class Utils {
         _context.moveTaskToBack(true);
     }
 
+    public static void restartApp() {
+        Intent mStartActivity = new Intent(_context, OxygineActivity.instance.getClass());
+		int mPendingIntentId = 123456;
+		PendingIntent mPendingIntent = PendingIntent.getActivity(_context, mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
+		AlarmManager mgr = (AlarmManager)_context.getSystemService(Context.ALARM_SERVICE);
+		mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
+		System.exit(0);
+    }
+
     public static void browse(String url) {
         Intent browseIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         _context.startActivity(browseIntent);
     }
+
+
 
     public static void writeBuffer2InternalStorage(String path, byte[] data) {
         File file = new File(_context.getFilesDir() + File.separator + path);

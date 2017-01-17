@@ -239,7 +239,7 @@ namespace oxygine
                 _dispatcher = new EventDispatcher;
         }
 
-        void init(init_desc* desc_ptr)
+        int init(init_desc* desc_ptr)
         {
             std::string t;
 
@@ -380,13 +380,19 @@ namespace oxygine
             if (!_window)
             {
                 log::error("can't create window: %s", SDL_GetError());
-                return;
+#ifdef __ANDROID__
+                jniRestartApp();
+#endif
+                return -1;
             }
             _context = SDL_GL_CreateContext(_window);
             if (!_context)
             {
                 log::error("can't create gl context: %s", SDL_GetError());
-                return;
+#ifdef __ANDROID__
+                jniRestartApp();
+#endif
+                return -1;
             }
 
             SDL_GL_SetSwapInterval(desc.vsync ? 1 : 0);
@@ -415,6 +421,8 @@ namespace oxygine
 #endif
             LoadResourcesContext::init();
             init2();
+
+            return 1;
         }
 
 

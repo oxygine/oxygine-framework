@@ -38,7 +38,7 @@ namespace oxygine
         std::stringstream stream;
         if (_color != def.getColor())
         {
-            stream << "color=(" << (int)_color.r << ", " << (int)_color.g << ", " << (int)_color.b << ", " << (int)_color.a << ")";
+            stream << "color=" << color2hex(_color);
         }
 
         if (_blend != def.getBlendMode())
