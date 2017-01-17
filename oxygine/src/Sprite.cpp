@@ -308,7 +308,7 @@ namespace oxygine
         node.set_name("Sprite");
     }
 
-    Vector2 attr2Vector2(const pugi::xml_attribute &attr, const Vector2& def)
+    Vector2 attr2Vector2(const pugi::xml_attribute& attr, const Vector2& def)
     {
         if (!attr)
             return def;
