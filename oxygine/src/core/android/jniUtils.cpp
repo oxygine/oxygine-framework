@@ -137,7 +137,7 @@ namespace oxygine
 
             jmethodID m = env->GetStaticMethodID(_jUtils, "exit", "()V");
             JNI_NOT_NULL(m);
-            env->CallStaticVoidMethod(_jUtils, m);            
+            env->CallStaticVoidMethod(_jUtils, m);
         }
         catch (const notFound&) {}
 
