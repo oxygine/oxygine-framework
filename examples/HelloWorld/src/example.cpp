@@ -124,9 +124,6 @@ typedef oxygine::intrusive_ptr<MainActor> spMainActor;
 
 void example_preinit() {}
 
-void sceneMouseDown(oxygine::Event* event) { std::cout << "DOWN\n"; }
-void sceneMouseUp(oxygine::Event* event) { std::cout << "UP\n"; }
-
 //called from main.cpp
 void example_init()
 {
@@ -139,15 +136,7 @@ void example_init()
     spMainActor actor = new MainActor;
 
     //and add it to Stage as child
-    //getStage()->addChild(actor);
-
-
-    //...
-    oxygine::getStage()->removeAllEventListeners();
-    topActor->removeAllEventListeners();
-    topActor->addEventListener(oxygine::TouchEvent::TOUCH_DOWN, CLOSURE(this, &MyScene::sceneMouseDown));
-    topActor->addEventListener(oxygine::TouchEvent::TOUCH_UP, CLOSURE(this, &MyScene::sceneMouseUp));
-
+    getStage()->addChild(actor);
 }
 
 
