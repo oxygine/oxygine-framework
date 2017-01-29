@@ -5,6 +5,8 @@
 #include "core/VideoDriver.h"
 #include "Resources.h"
 #include <stdint.h>
+#include "utils/stringUtils.h"
+#include "utils/ImageUtils.h"
 
 namespace oxygine
 {
@@ -162,16 +164,30 @@ namespace oxygine
 
         //int w = nextPOT(bounds.getRight());
         //int h = nextPOT(bounds.getBottom());
+
+
+
         int w = bounds.getRight();
         int h = bounds.getBottom();
 
-        mt->init(ad.mt.lock().getRect(Rect(0, 0, w, h)));
+        int aw = w % 4;
+        aw = aw ? w + 4 - aw : w;
+
+
+        ImageData reg = ad.mt.lock().getRect(Rect(0, 0, aw, h));
+        mt->init(reg);
+
 #if 0
+        if (ad.mt.getFormat() == TF_R5G5B5A1)
+            int q = 0;
         static int n = 0;
         n++;
         char name[255];
         safe_sprintf(name, "test%d.tga", n);
-        saveImage(image_data, name);
+        saveImage(mt->lock(), name);
+
+        safe_sprintf(name, "test%d_.tga", n);
+        saveImage(ad.mt.lock(), name);
 #endif
 
         CreateTextureTask task;
@@ -343,7 +359,7 @@ namespace oxygine
 
                         HitTestData adata;
                         ImageData src;
-                        Rect bounds(0, 0, im.w, im.h);
+                        Rect bounds(0, 0, srcImage_.w, srcImage_.h);
                         if (trim)
                             makeAlpha(srcImage_, bounds, _hitTestBuffer, adata, walker.getAlphaHitTest());
                         src = srcImage_.getRect(bounds);
