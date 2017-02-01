@@ -16,7 +16,7 @@ if sys.version_info[0] >= 3:
     unicode = str
 
 
-platforms = ("win32", "android", "macosx", "ios", "cmake", "all")
+platforms = ("win32", "android", "macosx", "ios", "ios_mac", "cmake", "all")
 
 
 def relpath(a, b):
@@ -162,7 +162,7 @@ def _run(args):
             SRC = process(tmsrc, relto, args.src, cpp_files)
             INCLUDE = process(tminc, relto, args.src, h_files)
 
-        if args.type in ("macosx", "ios"):
+        if args.type in ("macosx", "ios", "ios_mac"):
             r = random.Random()
             r.seed(1)
 
@@ -313,7 +313,7 @@ def _run(args):
             print("src " + src_path)
             tp = guess_type(src_path)
 
-            if ext in (".storyboard", ".gradle"):
+            if ext in (".storyboard", ".gradle", ".xib"):
                 tp = ("text", "")
 
             if not tp[0]:
@@ -332,7 +332,7 @@ def _run(args):
 
                 ext = os.path.splitext(dest_path)[1]
 
-                if args.type == "ios" or args.type == "macosx" or ext == ".sh":
+                if args.type == "ios" or args.type == "macosx" or args.type == "ios_mac" or ext == ".sh":
                     dest_file = io.open(dest_path, "w", newline="\n")
                     try:
                         dest_file.write(dest_data)
