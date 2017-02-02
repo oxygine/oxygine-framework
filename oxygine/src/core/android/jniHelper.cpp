@@ -24,6 +24,9 @@ namespace oxygine
 
     void jniGetStringArray(vector<std::string>& res, JNIEnv* env, jobjectArray jarray)
     {
+        if (jarray == 0)
+            return;
+
         jsize sz = env->GetArrayLength(jarray);
         res.reserve(sz);
 
