@@ -1,4 +1,6 @@
 #!/usr/bin/env sh
-sh build.sh
-sh ant_debug.sh
-sh install.sh
+
+ndk-build NDK_MODULE_PATH=../../../../
+gradlew assembleDebug
+adb install -r build/outputs/apk/proj.android-debug.apk
+adb shell am start -n org.oxygine.HelloWorld/org.oxygine.HelloWorld.MainActivity

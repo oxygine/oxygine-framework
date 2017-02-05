@@ -1,3 +1,4 @@
-call build
-call ant_debug
-call install
+call ndk-build NDK_MODULE_PATH=../../../../ %*
+call gradlew assembleDebug
+call adb install -r build/outputs/apk/proj.android-debug.apk
+call adb shell am start -n org.oxygine.Demo/org.oxygine.Demo.MainActivity
