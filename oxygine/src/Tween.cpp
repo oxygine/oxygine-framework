@@ -192,6 +192,8 @@ namespace oxygine
                 done(*_client, us);
             }
             break;
+            default:
+                break;
         }
     }
 
@@ -320,6 +322,8 @@ namespace oxygine
 			DEF_EASY_FROM_IN(Circ);
 			DEF_EASY_FROM_IN(Back);
 			DEF_EASY_FROM_IN(Bounce);
+        default:
+            break;
 		}
 
 		return "unknown";

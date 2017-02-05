@@ -6,24 +6,24 @@ http://www.youtube.com/watch?v=d8eHHr_KHgQ
 2a. Examples folder have configured android project
 =================================================================================================
 How to build. Steps:
-- Install JDK version 6/7
-- Install Android NDK (https://developer.android.com/tools/sdk/ndk/index.html) and set it up
-- Install Android SDK Tools (https://developer.android.com/intl/ru/sdk/index.html#Other), 
+- Install "java development kit" JDK 8 (or older)
+- Install Android NDK (https://developer.android.com/ndk/downloads/index.html) and set it up
+- Install Android SDK "Command line tools" (https://developer.android.com/studio/index.html,  scroll to bottom), 
   Launch SDK Manager and install Android SDK v16
 
 - Configure environment variables properly:
   NDK_ROOT points to root NDK folder 
-  	example: d:\android\android-ndk-r9c\
+  	example: d:\android\android-ndk-r13b\
   ANDROID_HOME points to root Android SDK folder
   	example: d:/android/android-sdk/
   JAVA_HOME points to JDK 
-  	example: c:\Program Files (x86)\Java\jdk1.6.0_26\
+  	example: c:\Program Files\Java\jdk1.8.0_101\
 
 - Add necessary paths to environment variable PATH:
   JDK 
-  	example: "c:\Program Files (x86)\Java\jdk1.6.0_26\bin\"
+  	example: "c:\Program Files\Java\jdk1.8.0_101\bin\"
   NDK tools 
-  	example: d:\android\android-ndk-r9c\
+  	example: d:\android\android-ndk-r13b\
   Android SDK tools and platform-tools
   	example: d:\android\android-sdk\platform-tools\
   	example: d:\android\android-sdk\tools\)
@@ -32,7 +32,7 @@ How to build. Steps:
 	from SDL/android-project/src/
 	to oxygine-framework/oxygine/SDL/android/lib/src/
 
-- Go to oxygine-framework\examples and choose any example. For example "Demo" 
+- Go to oxygine-framework\examples and choose any of them. For example "Demo" 
 - Try to build and run it using shell/batch scripts located in proj.android folder*:
   - build-run.bat   
     * or ./build-run.sh for unix

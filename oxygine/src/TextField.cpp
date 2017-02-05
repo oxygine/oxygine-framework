@@ -355,6 +355,8 @@ namespace oxygine
                 return "bottom";
             case TextStyle::VALIGN_MIDDLE:
                 return "middle";
+            default:
+                break;
         }
         return "unknown";
     }

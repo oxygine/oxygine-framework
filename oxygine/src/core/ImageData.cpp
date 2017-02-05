@@ -52,6 +52,8 @@ namespace oxygine
             case TF_PVRTCII_4:
             case TF_ETC1:
                 return true;
+            default:
+                break;
         }
         return false;
     }

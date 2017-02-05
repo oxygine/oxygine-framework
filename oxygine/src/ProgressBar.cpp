@@ -95,6 +95,8 @@ namespace oxygine
                 newSrc.size.y = newSrc.size.y * _progress;
                 newDest.size.y = newDest.size.y * _progress;
                 break;
+            default:
+                break;
         }
 
         Vector2 newSize = _originalFrame.getSize() * _progress;
@@ -341,6 +343,8 @@ namespace oxygine
                 break;
             case __dir_radial_ccw:
                 dir = "dir_radial_ccw";
+                break;
+            default:
                 break;
         }
         stream << " direction=" << dir << "";

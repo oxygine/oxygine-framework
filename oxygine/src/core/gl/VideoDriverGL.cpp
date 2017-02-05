@@ -32,6 +32,8 @@ namespace oxygine
                 return GL_TRIANGLE_STRIP;
             case PT_TRIANGLE_FAN:
                 return GL_TRIANGLE_FAN;
+            default:
+                break;
         }
         OX_ASSERT(!"unknown primitive type");
         return PT_POINTS;
