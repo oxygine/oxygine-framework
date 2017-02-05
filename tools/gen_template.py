@@ -316,6 +316,9 @@ def _run(args):
             if ext in (".storyboard", ".gradle", ".xib"):
                 tp = ("text", "")
 
+            if ext in (".jar", ):
+                tp = ("binary/binary", "")
+
             if not tp[0]:
                 print(">>>>>>>>>>" + str(tp))
                 continue
