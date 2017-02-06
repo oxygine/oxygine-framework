@@ -308,12 +308,13 @@ def _run(args):
 
             dest_path = dest + dest_local
 
+            fname = os.path.split(dest_path)[1]
             ext = os.path.splitext(dest_path)[1]
 
             print("src " + src_path)
             tp = guess_type(src_path)
 
-            if ext in (".storyboard", ".gradle", ".xib"):
+            if ext in (".storyboard", ".gradle", ".xib") or fname == "gradlew":
                 tp = ("text", "")
 
             if ext in (".jar", ):
