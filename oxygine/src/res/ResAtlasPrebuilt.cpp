@@ -30,7 +30,7 @@ namespace oxygine
             int len = meta_alpha.attribute("len").as_int();
             base64_decodestate state;
             base64_init_decodestate(&state);
-            _hitTestBuffer.resize(len * 3 / 4);
+            _hitTestBuffer.resize(len * 3 / 4 + 1);
             if (len)
                 base64_decode_block(data, len, (char*)&_hitTestBuffer.front(), &state);
         }
