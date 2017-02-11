@@ -4,6 +4,7 @@
 #include "Serialize.h"
 #include "Material.h"
 #include "STDRenderer.h"
+#include "STDMaterial.h"
 
 namespace oxygine
 {
@@ -113,13 +114,12 @@ namespace oxygine
         }
 
 
-
         Material::setCurrent(rs.material);
         //rs.material->doRender(this, rs);
         ///*
 
-        //STDRenderer* renderer = safeCast<STDRenderer*>(rs.renderer);
-        STDRenderer* renderer = STDRenderer::instance;
+        STDRenderer* renderer = safeCast<STDMaterial*>(rs.material)->getRenderer();
+        //STDRenderer* renderer = STDRenderer::instance;
 
         const Diffuse& df = _frame.getDiffuse();
         if (df.base)
