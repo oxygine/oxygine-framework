@@ -39,4 +39,25 @@ namespace oxygine
     {
         p->releaseRef();
     }
+
+
+    class AutoRefHolder
+    {
+    public:
+        AutoRefHolder(ref_counter* rc) : _rc(rc)
+        {
+            _rc->addRef();
+        }
+
+        ~AutoRefHolder()
+        {
+            _rc->releaseRef();
+        }
+
+        ref_counter* _rc;
+
+    private:
+        AutoRefHolder(const AutoRefHolder&);
+        AutoRefHolder& operator=(const AutoRefHolder&);
+    };
 }
