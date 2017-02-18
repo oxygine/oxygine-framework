@@ -65,3 +65,4 @@ build
 *.VC.db
 *.VC.VC.opendb
 oxygine/SDL/win32/oxygine.vcxproj.user
+*.iml
