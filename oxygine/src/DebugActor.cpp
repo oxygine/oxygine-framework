@@ -42,6 +42,10 @@
 #include "SDL_video.h"
 #endif
 
+#ifdef __ANDROID__
+#include <malloc.h>
+#endif
+
 #ifdef _WIN32
 #pragma comment(lib, "psapi.lib") // Added to support GetProcessMemoryInfo()
 #include <windows.h>
@@ -360,6 +364,15 @@ namespace oxygine
         iosGetMemoryUsage(mem);
         s << "memory=" << mem / 1024 << "kb ";
 #endif
+
+#ifdef __ANDROID__
+        
+        
+        auto info = mallinfo();
+
+        s << "memory=" << info.uordblks / 1024 << "|" << info.fordblks / 1024 << "kb ";
+#endif
+
 
 #ifdef _WIN32
         PROCESS_MEMORY_COUNTERS_EX pmc;
