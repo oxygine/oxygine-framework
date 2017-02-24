@@ -22,6 +22,7 @@ funcs = ["glShaderSource",
          "glBindAttribLocation",
          "glLinkProgram",
          "glUniform1i",
+         "glUniform2f",
          "glUniform2fv",
          "glUniform3fv",
          "glUniform4fv",
@@ -50,7 +51,11 @@ funcs = ["glShaderSource",
          "glDeleteRenderbuffers",
          "glDeleteShader",
          "glDeleteBuffers",
-         "glGetProgramInfoLog"
+         "glGetProgramInfoLog",
+         "glBlendEquation",
+         "glBlendFuncSeparate",
+         "glBlendEquationSeparate",
+         "glGetAttribLocation",
          ]
 
 
@@ -62,20 +67,6 @@ defl = cStringIO.StringIO()
 init = cStringIO.StringIO()
 extern = cStringIO.StringIO()
 define = cStringIO.StringIO()
-
-
-init.write("""
-void initGLExtensions(myGetProcAdress func)
-{
-    if (_glUseProgram)
-        return;
-
-""")
-
-base.write("""
-extern "C"
-{
-""")
 
 
 def get(name):
@@ -104,6 +95,9 @@ def get(name):
             defl.write(stf + "\n")
             # base.write("{\n")
             defl.write("{")
+
+            if "void " not in stf:
+            	defl.write("return 0;")  
 
             args = st[st.find("(") + 1:st.find(")")]
             args = args.split(",")
@@ -143,13 +137,30 @@ def get(name):
 for f in funcs:
     get(f)
 
-base.write("""
-}
-""")
-
 print(defl.getvalue())
 print(base.getvalue())
 print(init.getvalue())
 
-open("res.cpp", "w").write(defl.getvalue() + base.getvalue() + init.getvalue())
-open("res.h", "w").write(extern.getvalue() + define.getvalue())
+
+def replace(src, block_begin, block_end, data):
+	start = src.find(block_begin) + len(block_begin) + 1
+	end = src.find(block_end)
+	src = src[0:start] + data + src[end:]
+
+	return src
+
+HEADER = "../../oxygine/src/core/gl/oxgl.h"
+CPP    = "../../oxygine/src/core/gl/oxgl.cpp"
+
+header = open(HEADER, "r").read()
+cpp    = open(CPP,    "r").read()
+
+header = replace(header, "//!--pfngl-begin--!", "//!--pfngl-end--!", extern.getvalue())	
+header = replace(header, "//!--oxgl-begin--!",  "//!--oxgl-end--!",  define.getvalue())	
+
+cpp = replace(cpp, "//!--defgl-begin--!", "//!--defgl-end--!", defl.getvalue())	
+cpp = replace(cpp, "//!--_gl-begin--!",  "//!--_gl-end--!",  base.getvalue())	
+cpp = replace(cpp, "//!--getfunc-begin--!",  "//!--getfunc-end--!",  init.getvalue())	
+
+open(HEADER, "w").write(header)
+open(CPP, "w").write(cpp)
