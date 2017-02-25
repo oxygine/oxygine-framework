@@ -88,7 +88,7 @@ namespace oxygine
 
             VideoDriverGLES20* driver = ((VideoDriverGLES20*)IVideoDriver::instance);
             const VertexDeclarationGL* decl = driver->getVertexDeclaration(bformat);
-            ShaderProgramGL* pgl = new ShaderProgramGL(ShaderProgramGL::createProgram(vs, fs, decl));
+            ShaderProgramGL* pgl = new ShaderProgramGL(ShaderProgramGL::createProgram(vs, fs, decl, true));
 
 
             CHECKGL();

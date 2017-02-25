@@ -30,6 +30,7 @@
 #include "TestEdges.h"
 #include "TestCamera.h"
 #include "TestTiled.h"
+#include "TestOpenGL.h"
 
 #ifdef __S3E__
 #include "s3eKeyboard.h"
@@ -78,6 +79,7 @@ public:
         addButton("cliprect", "ClipRect Actor");
         addButton("usershader", "Extended UberShader");
         addButton("usershader2", "Custom shaders and render");
+        addButton("opengl", "OpenGL usage");
         addButton("multicolorfont", "Outer Font Color");
         addButton("sdf", "Signed Distance Font");
         addButton("mask", "Mask");
@@ -131,6 +133,7 @@ public:
         if (id == "cliprect") showTest(new TestClipRect);
         if (id == "usershader") showTest(new TestUserShader);
         if (id == "usershader2") showTest(new TestUserShader2);
+        if (id == "opengl") showTest(new TestOpenGL);
         if (id == "mask") showTest(new TestMask);
         if (id == "polygon") showTest(new TestPolygon);
         if (id == "inputtext") showTest(new TestInputText);

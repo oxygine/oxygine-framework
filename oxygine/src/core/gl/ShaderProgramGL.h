@@ -16,7 +16,7 @@ namespace oxygine
 
         static unsigned int createShader(unsigned int type, const char* data,
                                          const char* prepend = "", const char* append = "", error_policy ep = ep_show_error);
-        static unsigned int createProgram(int vs, int fs, const VertexDeclarationGL* decl);
+        static unsigned int createProgram(int vs, int fs, const VertexDeclarationGL* decl, bool deleteAttachedShaders = false);
         static bool getShaderBuildLog(GLuint shader, std::string& str);
         static bool getProgramBuildLog(GLuint program, std::string& str);
 

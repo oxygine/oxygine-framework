@@ -159,7 +159,7 @@ namespace oxygine
     }
 
 
-    unsigned int ShaderProgramGL::createProgram(int vs, int fs, const VertexDeclarationGL* decl)
+    unsigned int ShaderProgramGL::createProgram(int vs, int fs, const VertexDeclarationGL* decl, bool deleteAttachedShaders)
     {
         int p = oxglCreateProgram();
         oxglAttachShader(p, vs);
@@ -177,6 +177,13 @@ namespace oxygine
         if (success)
         {
             //log::messageln("compiled shader: %s", log.c_str());
+            oxglDetachShader(p, vs);
+            oxglDetachShader(p, fs);
+            if (deleteAttachedShaders)
+            {
+                oxglDeleteShader(vs);
+                oxglDeleteShader(fs);
+            }
         }
         else
         {

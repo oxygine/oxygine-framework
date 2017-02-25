@@ -26,53 +26,54 @@
 extern "C"
 {
 //!--pfngl-begin--!
-    extern PFNGLSHADERSOURCEPROC _glShaderSource;
-    extern PFNGLUSEPROGRAMPROC _glUseProgram;
-    extern PFNGLVERTEXATTRIBPOINTERPROC _glVertexAttribPointer;
-    extern PFNGLACTIVETEXTUREPROC _glActiveTexture;
-    extern PFNGLENABLEVERTEXATTRIBARRAYPROC _glEnableVertexAttribArray;
-    extern PFNGLDISABLEVERTEXATTRIBARRAYPROC _glDisableVertexAttribArray;
-    extern PFNGLDELETEPROGRAMPROC _glDeleteProgram;
-    extern PFNGLGETSHADERIVPROC _glGetShaderiv;
-    extern PFNGLGETSHADERINFOLOGPROC _glGetShaderInfoLog;
-    extern PFNGLCREATESHADERPROC _glCreateShader;
-    extern PFNGLCREATEPROGRAMPROC _glCreateProgram;
-    extern PFNGLATTACHSHADERPROC _glAttachShader;
-    extern PFNGLCOMPILESHADERPROC _glCompileShader;
-    extern PFNGLBINDATTRIBLOCATIONPROC _glBindAttribLocation;
-    extern PFNGLLINKPROGRAMPROC _glLinkProgram;
-    extern PFNGLUNIFORM1IPROC _glUniform1i;
-    extern PFNGLUNIFORM2FPROC _glUniform2f;
-    extern PFNGLUNIFORM2FVPROC _glUniform2fv;
-    extern PFNGLUNIFORM3FVPROC _glUniform3fv;
-    extern PFNGLUNIFORM4FVPROC _glUniform4fv;
-    extern PFNGLUNIFORM1FPROC _glUniform1f;
-    extern PFNGLUNIFORMMATRIX4FVPROC _glUniformMatrix4fv;
-    extern PFNGLBINDFRAMEBUFFERPROC _glBindFramebuffer;
-    extern PFNGLGENFRAMEBUFFERSPROC _glGenFramebuffers;
-    extern PFNGLCHECKFRAMEBUFFERSTATUSPROC _glCheckFramebufferStatus;
-    extern PFNGLDELETEFRAMEBUFFERSPROC _glDeleteFramebuffers;
-    extern PFNGLGETUNIFORMLOCATIONPROC _glGetUniformLocation;
-    extern PFNGLFRAMEBUFFERTEXTURE2DPROC _glFramebufferTexture2D;
-    extern PFNGLCOMPRESSEDTEXIMAGE2DPROC _glCompressedTexImage2D;
-    extern PFNGLBINDBUFFERPROC _glBindBuffer;
-    extern PFNGLGENBUFFERSPROC _glGenBuffers;
-    extern PFNGLBUFFERDATAPROC _glBufferData;
-    extern PFNGLGETPROGRAMIVPROC _glGetProgramiv;
-    extern PFNGLGENERATEMIPMAPPROC _glGenerateMipmap;
-    extern PFNGLSTENCILOPSEPARATEPROC _glStencilOpSeparate;
-    extern PFNGLGENRENDERBUFFERSPROC _glGenRenderbuffers;
-    extern PFNGLBINDRENDERBUFFERPROC _glBindRenderbuffer;
-    extern PFNGLRENDERBUFFERSTORAGEPROC _glRenderbufferStorage;
-    extern PFNGLFRAMEBUFFERRENDERBUFFERPROC _glFramebufferRenderbuffer;
-    extern PFNGLDELETERENDERBUFFERSPROC _glDeleteRenderbuffers;
-    extern PFNGLDELETESHADERPROC _glDeleteShader;
-    extern PFNGLDELETEBUFFERSPROC _glDeleteBuffers;
-    extern PFNGLGETPROGRAMINFOLOGPROC _glGetProgramInfoLog;
-    extern PFNGLBLENDEQUATIONPROC _glBlendEquation;
-    extern PFNGLBLENDFUNCSEPARATEPROC _glBlendFuncSeparate;
-    extern PFNGLBLENDEQUATIONSEPARATEPROC _glBlendEquationSeparate;
-    extern PFNGLGETATTRIBLOCATIONPROC _glGetAttribLocation;
+extern PFNGLSHADERSOURCEPROC _glShaderSource;
+extern PFNGLUSEPROGRAMPROC _glUseProgram;
+extern PFNGLVERTEXATTRIBPOINTERPROC _glVertexAttribPointer;
+extern PFNGLACTIVETEXTUREPROC _glActiveTexture;
+extern PFNGLENABLEVERTEXATTRIBARRAYPROC _glEnableVertexAttribArray;
+extern PFNGLDISABLEVERTEXATTRIBARRAYPROC _glDisableVertexAttribArray;
+extern PFNGLDELETEPROGRAMPROC _glDeleteProgram;
+extern PFNGLGETSHADERIVPROC _glGetShaderiv;
+extern PFNGLGETSHADERINFOLOGPROC _glGetShaderInfoLog;
+extern PFNGLCREATESHADERPROC _glCreateShader;
+extern PFNGLCREATEPROGRAMPROC _glCreateProgram;
+extern PFNGLATTACHSHADERPROC _glAttachShader;
+extern PFNGLCOMPILESHADERPROC _glCompileShader;
+extern PFNGLDETACHSHADERPROC _glDetachShader;
+extern PFNGLBINDATTRIBLOCATIONPROC _glBindAttribLocation;
+extern PFNGLLINKPROGRAMPROC _glLinkProgram;
+extern PFNGLUNIFORM1IPROC _glUniform1i;
+extern PFNGLUNIFORM2FPROC _glUniform2f;
+extern PFNGLUNIFORM2FVPROC _glUniform2fv;
+extern PFNGLUNIFORM3FVPROC _glUniform3fv;
+extern PFNGLUNIFORM4FVPROC _glUniform4fv;
+extern PFNGLUNIFORM1FPROC _glUniform1f;
+extern PFNGLUNIFORMMATRIX4FVPROC _glUniformMatrix4fv;
+extern PFNGLBINDFRAMEBUFFERPROC _glBindFramebuffer;
+extern PFNGLGENFRAMEBUFFERSPROC _glGenFramebuffers;
+extern PFNGLCHECKFRAMEBUFFERSTATUSPROC _glCheckFramebufferStatus;
+extern PFNGLDELETEFRAMEBUFFERSPROC _glDeleteFramebuffers;
+extern PFNGLGETUNIFORMLOCATIONPROC _glGetUniformLocation;
+extern PFNGLFRAMEBUFFERTEXTURE2DPROC _glFramebufferTexture2D;
+extern PFNGLCOMPRESSEDTEXIMAGE2DPROC _glCompressedTexImage2D;
+extern PFNGLBINDBUFFERPROC _glBindBuffer;
+extern PFNGLGENBUFFERSPROC _glGenBuffers;
+extern PFNGLBUFFERDATAPROC _glBufferData;
+extern PFNGLGETPROGRAMIVPROC _glGetProgramiv;
+extern PFNGLGENERATEMIPMAPPROC _glGenerateMipmap;
+extern PFNGLSTENCILOPSEPARATEPROC _glStencilOpSeparate;
+extern PFNGLGENRENDERBUFFERSPROC _glGenRenderbuffers;
+extern PFNGLBINDRENDERBUFFERPROC _glBindRenderbuffer;
+extern PFNGLRENDERBUFFERSTORAGEPROC _glRenderbufferStorage;
+extern PFNGLFRAMEBUFFERRENDERBUFFERPROC _glFramebufferRenderbuffer;
+extern PFNGLDELETERENDERBUFFERSPROC _glDeleteRenderbuffers;
+extern PFNGLDELETESHADERPROC _glDeleteShader;
+extern PFNGLDELETEBUFFERSPROC _glDeleteBuffers;
+extern PFNGLGETPROGRAMINFOLOGPROC _glGetProgramInfoLog;
+extern PFNGLBLENDEQUATIONPROC _glBlendEquation;
+extern PFNGLBLENDFUNCSEPARATEPROC _glBlendFuncSeparate;
+extern PFNGLBLENDEQUATIONSEPARATEPROC _glBlendEquationSeparate;
+extern PFNGLGETATTRIBLOCATIONPROC _glGetAttribLocation;
 //!--pfngl-end--!
 }
 
@@ -143,6 +144,7 @@ extern "C"
 #define oxglCreateProgram DECLARE_GLEXT(glCreateProgram)
 #define oxglAttachShader DECLARE_GLEXT(glAttachShader)
 #define oxglCompileShader DECLARE_GLEXT(glCompileShader)
+#define oxglDetachShader DECLARE_GLEXT(glDetachShader)
 #define oxglBindAttribLocation DECLARE_GLEXT(glBindAttribLocation)
 #define oxglLinkProgram DECLARE_GLEXT(glLinkProgram)
 #define oxglUniform1i DECLARE_GLEXT(glUniform1i)

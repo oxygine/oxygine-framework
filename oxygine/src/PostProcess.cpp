@@ -57,6 +57,10 @@ namespace oxygine
         driver->setUniformInt("s_texture", 0);
 
 
+        oxglDeleteShader(h);
+        oxglDeleteShader(v);
+        oxglDeleteShader(ps);
+
         file::buffer vs_blit;
         file::buffer fs_blit;
         zp.read("system/pp_blit_vs.glsl", vs_blit);
@@ -69,7 +73,7 @@ namespace oxygine
         unsigned int vs = ShaderProgramGL::createShader(GL_VERTEX_SHADER, (const char*)&vs_blit.front(), "", "");
         unsigned int fs = ShaderProgramGL::createShader(GL_FRAGMENT_SHADER, (const char*)&fs_blit.front(), "", "");
 
-        shaderBlit = new ShaderProgramGL(ShaderProgramGL::createProgram(vs, fs, decl));
+        shaderBlit = new ShaderProgramGL(ShaderProgramGL::createProgram(vs, fs, decl, true));
         driver->setShaderProgram(shaderBlit);
         driver->setUniformInt("s_texture", 0);
     }

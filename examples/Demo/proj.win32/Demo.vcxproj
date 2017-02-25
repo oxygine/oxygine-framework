@@ -146,6 +146,7 @@
     <ClInclude Include="../src/test.h" />
     <ClInclude Include="..\src\TestCamera.h" />
     <ClInclude Include="..\src\TestEdges.h" />
+    <ClInclude Include="..\src\TestOpenGL.h" />
     <ClInclude Include="..\src\TestSignedDistanceFont.h" />
     <ClInclude Include="..\src\TestTiled.h" />
     <ClInclude Include="..\src\TestTweenPostProcessing.h" />
