@@ -120,8 +120,12 @@ namespace oxygine
                     that the call to select() below makes sense! */
 
                     int rc = select(maxfd + 1, &fdread, &fdwrite, &fdexcep, &timeout);
+
+#if LIBCURL_VERSION_MINOR >= 44
+                    //todo: fix libcurl 30 silently 
                     if (rc == -1)
                         return 0;
+#endif
                     //while(CURLM_CALL_MULTI_PERFORM == curl_multi_perform(multi_handle, &still_running));
                 }
 
@@ -226,10 +230,18 @@ namespace oxygine
         curl_easy_setopt(_easy, CURLOPT_PRIVATE, this);
         curl_easy_setopt(_easy, CURLOPT_WRITEFUNCTION, HttpRequestTaskCURL::cbWriteFunction);
         curl_easy_setopt(_easy, CURLOPT_WRITEDATA, this);
+
+#ifdef CURLOPT_XFERINFOFUNCTION
         curl_easy_setopt(_easy, CURLOPT_XFERINFOFUNCTION, HttpRequestTaskCURL::cbXRefInfoFunction);
         curl_easy_setopt(_easy, CURLOPT_XFERINFODATA, this);
+#else
+
+#endif
         curl_easy_setopt(_easy, CURLOPT_FOLLOWLOCATION, true);
         curl_easy_setopt(_easy, CURLOPT_NOPROGRESS, 0);
+
+
+        curl_easy_setopt(_easy, CURLOPT_SSL_VERIFYPEER, false);
 
 
         if (!_postData.empty())
