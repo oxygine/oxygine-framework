@@ -148,17 +148,20 @@ class HttpRequest extends AsyncTask<RequestDetails, Integer, String> {
             // expect HTTP 200 OK, so we don't mistakenly save error report
             // instead of the file
             respCode = connection.getResponseCode();
-            if (respCode != HttpURLConnection.HTTP_OK) {
-                nativeHttpRequestResponseError(details.handle, respCode);
-                return "Server returned HTTP " + respCode + " " + connection.getResponseMessage();
-            }
+            //if (respCode != HttpURLConnection.HTTP_OK) {
+            //    nativeHttpRequestResponseError(details.handle, respCode);
+            //    return "Server returned HTTP " + respCode + " " + connection.getResponseMessage();
+            //}
 
             // this will be useful to display download percentage
             // might be -1: server did not report the length
             int fileLength = connection.getContentLength();
 
             // download the file
-            input = connection.getInputStream();
+            if (respCode >= 400 && respCode <= 599)
+                input = connection.getErrorStream();
+            else
+                input = connection.getInputStream();
 
 
             ByteArrayOutputStream bt = null;

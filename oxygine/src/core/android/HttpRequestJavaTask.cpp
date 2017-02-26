@@ -37,7 +37,7 @@ namespace oxygine
 
         jmethodID jRelease = env->GetStaticMethodID(_jHttpRequestsClass, "release", "()V");
         JNI_NOT_NULL(jRelease);
-        env->CallStaticObjectMethod(_jHttpRequestsClass, jRelease);
+        env->CallStaticVoidMethod(_jHttpRequestsClass, jRelease);
 
         env->DeleteGlobalRef(_jHttpRequestsClass);
         _jHttpRequestsClass = 0;
