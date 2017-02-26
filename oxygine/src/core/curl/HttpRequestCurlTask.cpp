@@ -115,12 +115,20 @@ namespace oxygine
                     /* get file descriptors from the transfers */
                     curl_multi_fdset(multi_handle, &fdread, &fdwrite, &fdexcep, &maxfd);
 
+                    if (maxfd != -1)
+                    {
+                        int rc = select(maxfd + 1, &fdread, &fdwrite, &fdexcep, &timeout);
+                        //if (rc > 0)
+                        //    curl_multi_perform(multi_handle, &still_running);
+                        int q = 0;
+                    }
+
                     /* In a real-world program you OF COURSE check the return code of the
                     function calls, *and* you make sure that maxfd is bigger than -1 so
                     that the call to select() below makes sense! */
 
-                    int rc = select(maxfd + 1, &fdread, &fdwrite, &fdexcep, &timeout);
-
+                    //int rc = select(maxfd + 1, &fdread, &fdwrite, &fdexcep, &timeout);
+                    //log::messageln("RC: %d", rc);
 #if LIBCURL_VERSION_MINOR >= 44
                     //todo: fix libcurl 30 silently 
                     if (rc == -1)
@@ -134,8 +142,10 @@ namespace oxygine
                 int num;
                 while ((msg = curl_multi_info_read(multi_handle, &num)))
                 {
+                    //log::messageln("-");
                     if (msg->msg == CURLMSG_DONE)
                     {
+                        //log::messageln("done");
                         curl_multi_remove_handle(multi_handle, msg->easy_handle);
                         core::getMainThreadDispatcher().postCallback(ID_DONE, msg->easy_handle, (void*)msg->data.result, mainThreadFunc, 0);
                     }
