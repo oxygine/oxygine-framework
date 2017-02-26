@@ -62,19 +62,9 @@ public:
             return;
 
         STDRenderer& renderer = *STDRenderer::instance;
-        IVideoDriver* driver = IVideoDriver::instance;
-
-
-        Rect viewport(Point(0, 0), content->getSize().cast<Point>());
-        renderer.initCoordinateSystem(viewport.getWidth(), viewport.getHeight(), true);
-
-        spNativeTexture previousRT = driver->getRenderTarget();
-
-        driver->setRenderTarget(texture);
-        driver->setViewport(viewport);
 
 #if 1
-        renderer.begin(0);
+        renderer.begin(texture);
         RectF destRect(te->localPosition - Vector2(16, 16), Vector2(32, 32));
 
         ResAnim* brush = resources.getResAnim(left ? "brush" : "brush_eraser");
@@ -105,8 +95,5 @@ public:
         actor->render(rs);
         Material::setCurrent(0);
 #endif
-
-        //restore to default render target
-        driver->setRenderTarget(previousRT);
     }
 };

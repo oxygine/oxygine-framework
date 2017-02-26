@@ -264,6 +264,7 @@ namespace oxygine
 
     void STDRenderer::begin(STDRenderer* prev)
     {
+        //OX_ASSERT(!_drawing);
         OX_ASSERT(_vertices.empty() == true);
         _previous = prev;
         if (_previous)
@@ -278,11 +279,21 @@ namespace oxygine
         resetSettings();
 
         _begin();
+
+        _drawing = true;
     }
 
     void STDRenderer::end()
     {
         drawBatch();
+
+        if (_prevRT)
+        {
+            _driver->setRenderTarget(_prevRT);
+            _prevRT = 0;
+        }
+
+        _drawing = false;
 
         if (_previous)
             _previous->begin(0);
@@ -393,6 +404,7 @@ namespace oxygine
 
         _uberShader = &uberShader;
         _transform.identity();
+        _drawing = false;
     }
 
     void STDRenderer::setBlendMode(blend_mode blend)
@@ -501,6 +513,26 @@ namespace oxygine
         _base = 0;
         _alpha = 0;
         _blend = blend_disabled;
+    }
+
+    void STDRenderer::begin(spNativeTexture nt, const Rect *viewport)
+    {
+        OX_ASSERT(!_drawing);
+        OX_ASSERT(_prevRT == 0);
+        _prevRT = _driver->getRenderTarget();
+        _driver->setRenderTarget(nt);
+
+        Rect vp;
+        if (!viewport)
+        {
+            vp = Rect(0, 0, nt->getWidth(), nt->getHeight());
+            viewport = &vp;
+        }
+        _driver->setViewport(*viewport);
+
+
+        initCoordinateSystem(viewport->getWidth(), viewport->getHeight(), true);
+        begin();
     }
 
     void STDRenderer::_resetSettings()
