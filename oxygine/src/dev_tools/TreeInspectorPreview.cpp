@@ -74,7 +74,7 @@ namespace oxygine
         rs.material = &mat;
         RectF clip = RectF::huge();
         rs.clip = &clip;
-        renderer.begin(0);
+        //renderer.begin(0);
         if (child)
         {
             STDMaterial* originalMat = STDMaterial::instance;
@@ -92,8 +92,8 @@ namespace oxygine
         else
             item->doRender(rs);
 
-        renderer.end();
-        renderer.drawBatch();
+        //renderer.end();
+        //renderer.drawBatch();
 
         Material::setCurrent(0);
 

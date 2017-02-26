@@ -30,7 +30,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <iomanip>
-
+#include "core/oxygine.h"
 
 #ifdef __S3E__
 #include "s3eMemory.h"
@@ -193,16 +193,6 @@ namespace oxygine
 
 
         instance = this;
-        /*
-
-        float dpi = 0;
-        float dpi1 = 0;
-        float dpi2 = 0;
-        int ret = SDL_GetDisplayDPI(0, &dpi, &dpi1, &dpi2);
-        {
-            log::messageln("dpi>>>>> %d %f %f %f", ret, dpi, dpi1, dpi2);
-        }
-        */
     }
 
     void DebugActor::onAdded2Stage()
@@ -283,7 +273,7 @@ namespace oxygine
             }
 
             dm->setScale(1.0f / scale);
-            Vector2 p = -_getStage()->getPosition() / scale;
+            Vector2 p = _getStage()->parent2local(Vector2(0, 0));
             dm->setPosition(p);
             _getStage()->addChild(dm);
         }
@@ -428,31 +418,11 @@ namespace oxygine
                 break;
         }
 
-        //setPosition(pos);
+        setPosition(pos);
         setScale(1.0f / getStage()->getScaleX());
 
-        RenderState rs = parentRS;
-        parentRS.material->finish();
+        Actor::render(parentRS);
 
-        STDRenderer renderer;
-        STDMaterial mat(&renderer);
-        mat.apply(0);
-
-
-        IVideoDriver* driver = renderer.getDriver();
-
-
-        Rect vp(Point(0, 0), core::getDisplaySize());
-        driver->setViewport(vp);
-        renderer.initCoordinateSystem(vp.getWidth(), vp.getHeight());
-        renderer.resetSettings();
-        rs.material = &mat;
-        Actor::render(rs);
-        renderer.drawBatch();
-
-        mat.finish();
-
-        Material::setCurrent(0);
 
         timeMS dur = getTimeMS() - tm;
 

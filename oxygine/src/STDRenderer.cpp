@@ -243,6 +243,13 @@ namespace oxygine
     void STDRenderer::setViewProjTransform(const Matrix& viewProj)
     {
         _vp = viewProj;
+        if (_drawing)
+        {
+            drawBatch();
+        }
+
+
+        _driver->setUniform("mat", &_vp);
     }
 
     IVideoDriver* STDRenderer::getDriver()
@@ -264,7 +271,7 @@ namespace oxygine
 
     void STDRenderer::begin(STDRenderer* prev)
     {
-        //OX_ASSERT(!_drawing);
+        OX_ASSERT(!_drawing);
         OX_ASSERT(_vertices.empty() == true);
         _previous = prev;
         if (_previous)
