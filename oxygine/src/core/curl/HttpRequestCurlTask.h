@@ -29,6 +29,8 @@ namespace oxygine
         static size_t cbXRefInfoFunction(void* clientp, curl_off_t dltotal, curl_off_t dlnow, curl_off_t ultotal, curl_off_t ulnow);
         size_t _cbXRefInfoFunction(curl_off_t dltotal, curl_off_t dlnow);
 
+        static int cbProgressFunction(void* clientp, double dltotal, double dlnow, double ultotal, double ulnow);
+
 
         void _run();
         void _finalize(bool error);

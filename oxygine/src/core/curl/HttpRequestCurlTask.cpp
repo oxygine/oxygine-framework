@@ -178,6 +178,12 @@ namespace oxygine
         return 0;
     }
 
+
+    int HttpRequestTaskCURL::cbProgressFunction(void* userData, double dltotal, double dlnow, double ultotal, double ulnow)
+    {
+        return ((HttpRequestTaskCURL*)userData)->_cbXRefInfoFunction((curl_off_t) dltotal, (curl_off_t)dlnow);
+    }
+
     size_t HttpRequestTaskCURL::cbWriteFunction(char* d, size_t n, size_t l, void* userData)
     {
         return ((HttpRequestTaskCURL*)userData)->_cbWriteFunction(d, n, l);
@@ -231,14 +237,19 @@ namespace oxygine
         curl_easy_setopt(_easy, CURLOPT_WRITEFUNCTION, HttpRequestTaskCURL::cbWriteFunction);
         curl_easy_setopt(_easy, CURLOPT_WRITEDATA, this);
 
+
+        curl_easy_setopt(_easy, CURLOPT_NOPROGRESS, 0);
+
 #ifdef CURLOPT_XFERINFOFUNCTION
         curl_easy_setopt(_easy, CURLOPT_XFERINFOFUNCTION, HttpRequestTaskCURL::cbXRefInfoFunction);
         curl_easy_setopt(_easy, CURLOPT_XFERINFODATA, this);
 #else
 
+        curl_easy_setopt(_easy, CURLOPT_PROGRESSFUNCTION, HttpRequestTaskCURL::cbProgressFunction);
+        curl_easy_setopt(_easy, CURLOPT_PROGRESSDATA, this);
 #endif
         curl_easy_setopt(_easy, CURLOPT_FOLLOWLOCATION, true);
-        curl_easy_setopt(_easy, CURLOPT_NOPROGRESS, 0);
+        
 
 
         curl_easy_setopt(_easy, CURLOPT_SSL_VERIFYPEER, false);
