@@ -65,17 +65,21 @@ static HttpRequestTask *createTask()
     
     [fileManager removeItemAtURL:destUrl error:&fileManagerError];
     
+    /*
     if (code == 200)
     {
         [fileManager copyItemAtURL:location toURL:destUrl error:&fileManagerError];
     
-        task->complete_(/* data */ nil, /* error */ false);
+        task->complete_(nil,  false);
     }
     else
     {
         task->complete_(nil, true);
         
     }
+    */
+
+    task->complete_(nil, false, code);
 }
 
 #pragma mark - NSURLSessionTaskDelegate
@@ -200,8 +204,10 @@ namespace oxygine
         progress(loaded, total);
     }
     
-    void HttpRequestCocoaTask::complete_(NSData *data, bool error)
+    void HttpRequestCocoaTask::complete_(NSData *data, bool error, int respCode)
     {
+        _responseCode = respCode;
+        
         if (error)
             onError();
         else

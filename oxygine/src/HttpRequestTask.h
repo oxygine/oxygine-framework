@@ -22,7 +22,7 @@ namespace oxygine
         {
             ERROR = AsyncTask::ERROR,
             PROGRESS = AsyncTask::PROGRESS,
-            COMPLETE = AsyncTask::COMPLETE
+            COMPLETE = AsyncTask::COMPLETE,
         };
 
         class ProgressEvent : public Event
@@ -46,17 +46,20 @@ namespace oxygine
 
         /**swap version of getResponse if you want to modify result buffer inplace*/
         void getResponseSwap(std::vector<unsigned char>&);
+        int  getResponseCode() const { return _responseCode; }
         void addHeader(const std::string& key, const std::string& value);
 
         void setPostData(const std::vector<unsigned char>& data);
         void setUrl(const std::string& url);
         void setFileName(const std::string& name);
         void setCacheEnabled(bool enabled);
+        void setSuccessOnAnyResponseCode(bool en) { _successOnAnyResponceCode = en; }
 
     protected:
         void _prerun();
         void _onError() OVERRIDE;
         void _onComplete() OVERRIDE;
+        void _dispatchComplete() OVERRIDE;
 
         //async
         void progress(int loaded, int total);
@@ -76,6 +79,9 @@ namespace oxygine
         bool _cacheEnabled;
         std::vector<unsigned char> _response;
         std::vector<unsigned char> _postData;
+
+        int _responseCode;
+        bool _successOnAnyResponceCode;
 
         typedef std::vector< std::pair<std::string, std::string> >  headers;
         headers _headers;

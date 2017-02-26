@@ -36,7 +36,8 @@ namespace oxygine
                 {
                     int response = 0;
                     curl_easy_getinfo(easy, CURLINFO_RESPONSE_CODE, &response);
-                    ok = response == 200;
+                    task->_responseCode = response;
+                    //ok = response == 200;
                 }
 
 #if 0
@@ -53,7 +54,9 @@ namespace oxygine
 #endif
 
                 if (ok)
+                {
                     task->onComplete();
+                }
                 else
                     task->onError();
 

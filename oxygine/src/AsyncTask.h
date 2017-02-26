@@ -64,6 +64,7 @@ namespace oxygine
         virtual void _onFinal(bool error) {}
         virtual void _onCustom(const ThreadDispatcher::message&) {};
         virtual void _finalize(bool error) {}
+        virtual void _dispatchComplete();
 
         enum { customID = sysEventID('s', 'c', 's') };
         bool syncEvent(int msgid, void* arg1 = 0, void* arg2 = 0);

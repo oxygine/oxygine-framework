@@ -65,11 +65,11 @@ class HttpRequest extends AsyncTask<RequestDetails, Integer, String> {
     public HttpRequest() {
     }
 
-    public static native void nativeHttpRequestResponseSuccess(long handle, byte[] data);
+    public static native void nativeHttpRequestResponseSuccess(long handle, byte[] data, int code);
 
     public static native void nativeHttpRequestResponseProgress(long handle, int loaded, int total);
 
-    public static native void nativeHttpRequestResponseError(long handle);
+    public static native void nativeHttpRequestResponseError(long handle, int code);
 
     private Proxy detectProxy() {
         try {
@@ -95,6 +95,7 @@ class HttpRequest extends AsyncTask<RequestDetails, Integer, String> {
         HttpURLConnection connection = null;
         RequestDetails details = details_[0];
 
+        int respCode = 0;
 
         try {
             URL url = new URL(details.url);
@@ -146,9 +147,10 @@ class HttpRequest extends AsyncTask<RequestDetails, Integer, String> {
 
             // expect HTTP 200 OK, so we don't mistakenly save error report
             // instead of the file
-            if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                nativeHttpRequestResponseError(details.handle);
-                return "Server returned HTTP " + connection.getResponseCode() + " " + connection.getResponseMessage();
+            respCode = connection.getResponseCode();
+            if (respCode != HttpURLConnection.HTTP_OK) {
+                nativeHttpRequestResponseError(details.handle, respCode);
+                return "Server returned HTTP " + respCode + " " + connection.getResponseMessage();
             }
 
             // this will be useful to display download percentage
@@ -191,12 +193,12 @@ class HttpRequest extends AsyncTask<RequestDetails, Integer, String> {
                 nativeHttpRequestResponseProgress(details.handle, total, fileLength);
             }
             if (bt != null)
-                nativeHttpRequestResponseSuccess(details.handle, bt.toByteArray());
+                nativeHttpRequestResponseSuccess(details.handle, bt.toByteArray(), respCode);
             else
-                nativeHttpRequestResponseSuccess(details.handle, null);
+                nativeHttpRequestResponseSuccess(details.handle, null, respCode);
 
         } catch (Exception e) {
-            nativeHttpRequestResponseError(details.handle);
+            nativeHttpRequestResponseError(details.handle, respCode);
             Log.v("HttpRequest", "error: " + e.toString());
             return e.toString();
         } finally {
