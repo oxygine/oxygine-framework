@@ -102,7 +102,7 @@ static HttpRequestTask *createTask()
         }
         else
         {
-            httpRequestTask->complete_(/* data */ nil, /* error */ true);
+            httpRequestTask->complete_(/* data */ nil, /* error */ true, 0);
         }
     }
     
@@ -251,16 +251,15 @@ namespace oxygine
                                                   NSError *error) {
                                   // handle response
                                   
-                                  bool httpError = false;
                                   
                                   if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
                                       NSHTTPURLResponse *httpResponse = ((NSHTTPURLResponse *)response);
-                                      NSInteger statusCode = httpResponse.statusCode;
-                                      if (statusCode != 200)
-                                          httpError = true;
+                                      _responseCode = httpResponse.statusCode;
+                                      //if (statusCode != 200)
+                                       //   httpError = true;
                                   }
                                   
-                                  if (error || httpError)
+                                  if (error)
                                   {
                                       onError();
                                   }
@@ -272,6 +271,7 @@ namespace oxygine
                                           size_t len = data.length;
                                           _response.assign((const char*)ptr, (const char*)ptr + len);
                                       }
+                                      
                                       onComplete();
                                   }
                                   releaseRef();
