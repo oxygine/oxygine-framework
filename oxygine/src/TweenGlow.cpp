@@ -20,7 +20,7 @@ namespace oxygine
 
         TweenGlowImpl(const Color& c, const PostProcessOptions& opt) : TweenPostProcess(opt), _color(c), _downsample(1) {}
 
-        void render(Actor* actor, const RenderState& rs) OVERRIDE
+        void render(Actor* actor, const RenderState& rs) override
         {
             STDMaterial* mat = STDMaterial::instance;
             STDRenderer* renderer = mat->getRenderer();
@@ -52,7 +52,7 @@ namespace oxygine
             renderer->drawBatch();
         }
 
-        void _renderPP() OVERRIDE
+        void _renderPP() override
         {
             PostProcess::initShaders();
 

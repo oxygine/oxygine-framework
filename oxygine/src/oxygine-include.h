@@ -128,7 +128,7 @@ namespace oxygine { namespace log { void error(const char* format, ...); } }
 #ifdef _MSC_VER
 #   define OVERRIDE override
 #else
-#   define OVERRIDE
+#   define override
 #endif
 
 

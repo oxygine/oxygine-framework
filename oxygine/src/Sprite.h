@@ -21,7 +21,7 @@ namespace oxygine
         ~Sprite();
 
         const AnimationFrame&   getAnimFrame() const {return _frame;}
-        RectF                   getDestRect() const OVERRIDE;
+        RectF                   getDestRect() const override;
         const Diffuse&          getDiffuse() const {return _frame.getDiffuse();}
         bool                    getManageResAnim() const {return (_flags & flag_manageResAnim) != 0;}
         const RectF&            getSrcRect() const {return _frame.getSrcRect();}
@@ -42,7 +42,7 @@ namespace oxygine
         void                    setColumnRow(int column, int row);
         void                    setLocalScale(const Vector2& s);
 
-        bool                    isOn(const Vector2& localPosition, float localScale) OVERRIDE;
+        bool                    isOn(const Vector2& localPosition, float localScale) override;
 
         bool                    isFlippedX() const {return (_flags & flag_flipX) != 0;}
         bool                    isFlippedY() const {return (_flags & flag_flipY) != 0;}
@@ -66,7 +66,7 @@ namespace oxygine
         };
         virtual void changeAnimFrame(const AnimationFrame& f);
         virtual void animFrameChanged(const AnimationFrame& f);
-        void sizeChanged(const Vector2& size) OVERRIDE;
+        void sizeChanged(const Vector2& size) override;
 
         Vector2 _localScale;
         AnimationFrame _frame;

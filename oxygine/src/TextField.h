@@ -45,7 +45,7 @@ namespace oxygine
         unsigned int                getOptions() const;
 
 
-        bool getBounds(RectF&) const OVERRIDE;
+        bool getBounds(RectF&) const override;
 
         /**Overwrites TextStyle Vertical align*/
         void setVAlign(TextStyle::VerticalAlign align);
@@ -92,7 +92,7 @@ namespace oxygine
         void setHtmlText(const std::string& str);
         void setHtmlText(const std::wstring& str);
 
-        bool isOn(const Vector2& localPosition, float localScale = 1.0f) OVERRIDE;
+        bool isOn(const Vector2& localPosition, float localScale = 1.0f) override;
 
 
         typedef Property<Color, const Color&, TextField, &TextField::getOutlineColor, &TextField::setOutlineColor>  TweenOutlineColor;

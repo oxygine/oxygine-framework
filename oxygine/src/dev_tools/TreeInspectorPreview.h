@@ -79,7 +79,7 @@ namespace oxygine
 
         void setRenderTarget(spNativeTexture);
 
-        spNativeTexture getRenderTarget() const OVERRIDE;
+        spNativeTexture getRenderTarget() const override;
 
         void setShaderProgram(ShaderProgram* program);
 
@@ -104,7 +104,7 @@ namespace oxygine
         void setBlendFunc(BLEND_TYPE src, BLEND_TYPE dest);
 
         void setScissorRect(const Rect*);
-        bool getScissorRect(Rect&) const OVERRIDE;
+        bool getScissorRect(Rect&) const override;
 
         void nextBatch();
 

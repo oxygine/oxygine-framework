@@ -66,12 +66,12 @@ namespace oxygine
             SAMPLER_NUM,
         };
 
-        ShaderProgram*  getShaderProgram(int flags) OVERRIDE;
+        ShaderProgram*  getShaderProgram(int flags) override;
 
         void apply(IVideoDriver* driver, spNativeTexture base, spNativeTexture alpha);
 
     protected:
-        void releaseShaders() OVERRIDE;
+        void releaseShaders() override;
         shader _shaders[_SIZE];
     };
 }

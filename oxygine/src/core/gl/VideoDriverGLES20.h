@@ -23,7 +23,7 @@ namespace oxygine
         void begin(const Rect& viewport, const Color* clearColor);
         void clear(const Color& color);
 
-        ShaderProgram*  getShaderProgram() const OVERRIDE { return _p; }
+        ShaderProgram*  getShaderProgram() const override { return _p; }
 
         void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData, unsigned int verticesDataSize);
         void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData, unsigned int verticesDataSize, const unsigned short* indicesData, unsigned int numIndices);

@@ -60,7 +60,7 @@ namespace oxygine
 
         //bool _active;
 
-        bool isOn(const Vector2& localPosition, float localScale) OVERRIDE;
+        bool isOn(const Vector2& localPosition, float localScale) override;
 
     private:
 

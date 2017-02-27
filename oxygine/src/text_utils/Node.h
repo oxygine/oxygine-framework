@@ -73,7 +73,7 @@ namespace oxygine
             void _finalPass(Aligner& rd);
             void draw(DrawContext& dc);
 
-            Symbol* getSymbol(int& pos) OVERRIDE;
+            Symbol* getSymbol(int& pos) override;
 
 #ifdef OX_DEBUG
             std::string _text;//only for debug

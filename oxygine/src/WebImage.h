@@ -22,7 +22,7 @@ namespace oxygine
     private:
         void loaded(Event*);
         void error(Event*);
-        void sizeChanged(const Vector2& size) OVERRIDE;
+        void sizeChanged(const Vector2& size) override;
         void fit();
 
         ResAnim _rs;

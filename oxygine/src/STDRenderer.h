@@ -57,7 +57,7 @@ namespace oxygine
         void beginElementRendering(bool basePremultiplied);// OVERRIDE;
         void beginSDFont(float contrast, float offset, const Color& outlineColor, float outlineOffset);
         void endSDFont();
-        void drawElement(const spNativeTexture& texture, unsigned int color, const RectF& src, const RectF& dest) OVERRIDE;
+        void drawElement(const spNativeTexture& texture, unsigned int color, const RectF& src, const RectF& dest) override;
         void draw(const Color&, const RectF& srcRect, const RectF& destRect);
         /**Draws existing batch immediately.*/
         void drawBatch();

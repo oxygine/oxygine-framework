@@ -32,7 +32,7 @@ namespace oxygine
         void setVerticalGuides(float x1, float x2);
         void setHorizontalGuides(float y1, float y2);
 
-        bool isOn(const Vector2& localPosition, float localScale) OVERRIDE;
+        bool isOn(const Vector2& localPosition, float localScale) override;
 
         std::string dump(const dumpOptions&) const;
 
@@ -44,7 +44,7 @@ namespace oxygine
     protected:
         void sizeChanged(const Vector2& size);
         void animFrameChanged(const AnimationFrame& f);
-        void changeAnimFrame(const AnimationFrame& f) OVERRIDE;
+        void changeAnimFrame(const AnimationFrame& f) override;
 
         bool _prepared;
 

@@ -76,13 +76,13 @@ namespace oxygine
         TweenPostProcess(const PostProcessOptions& opt);
         ~TweenPostProcess();
 
-        void renderPP() OVERRIDE;
-        void addRefPP() OVERRIDE;
-        void releaseRefPP() OVERRIDE;
+        void renderPP() override;
+        void addRefPP() override;
+        void releaseRefPP() override;
 
-        void init(Actor& actor) OVERRIDE;
-        void update(Actor& actor, float p, const UpdateState& us) OVERRIDE;
-        void done(Actor& actor) OVERRIDE;
+        void init(Actor& actor) override;
+        void update(Actor& actor, float p, const UpdateState& us) override;
+        void done(Actor& actor) override;
     protected:
         virtual void _renderPP() {}
 
