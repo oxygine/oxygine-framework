@@ -49,7 +49,7 @@ public:
         driver->setUniformInt("normal_texture", 1);
     }
 
-    void apply(Material* prev) OVERRIDE
+    void apply(Material* prev) override
     {
         IVideoDriver* driver = IVideoDriver::instance;
         driver->setShaderProgram(_lightShader);
@@ -66,7 +66,7 @@ public:
         driver->setBlendFunc(IVideoDriver::BT_SRC_ALPHA, IVideoDriver::BT_ONE_MINUS_SRC_ALPHA);
     }
 
-    void finish() OVERRIDE
+    void finish() override
     {
         drawBatch(IVideoDriver::instance);
     }
@@ -86,7 +86,7 @@ public:
     }
 
 
-    void doRender(Sprite* sprite, const RenderState& rs) OVERRIDE
+    void doRender(Sprite* sprite, const RenderState& rs) override
     {
         Material::setCurrent(this);
 

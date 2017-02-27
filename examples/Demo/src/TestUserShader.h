@@ -64,7 +64,7 @@ public:
             _client->setMaterial(0);
     }
 
-    void _start(Actor& actor) OVERRIDE
+    void _start(Actor& actor) override
     {
         actor.setName("zzz");
         actor.setMaterial(this);
@@ -85,7 +85,7 @@ public:
         driver->setUniform("userValue", &_val, 1);
     }
 
-    void apply(Material* prev) OVERRIDE
+    void apply(Material* prev) override
     {
         STDRenderer* renderer = STDMaterial::instance->getRenderer();
         _program->setShaderUniformsCallback(CLOSURE(this, &TweenShader::setUniforms));
@@ -93,12 +93,12 @@ public:
         renderer->setUberShaderProgram(_program);
     }
 
-    void doRender(Sprite* s, const RenderState& rs) OVERRIDE
+    void doRender(Sprite* s, const RenderState& rs) override
     {
         STDMaterial::instance->doRender(s, rs);
     }
 
-    void finish() OVERRIDE
+    void finish() override
     {
         STDRenderer* renderer = STDMaterial::instance->getRenderer();
         renderer->drawBatch();
