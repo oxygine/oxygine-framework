@@ -82,18 +82,15 @@ namespace oxygine
 
             while (still_running)
             {
-                static int i = 0;
-                //log::messageln("upd---------%d - %d", getTimeMS(), ++i);
-
                 ThreadDispatcher::peekMessage tmsg;
                 if (_messages.peek(tmsg, true))
                 {
                     if (tmsg.msgid == 1)
                         return 0;
                     curl_multi_add_handle(multi_handle, (CURL*)tmsg.arg1);
-                    int q = 0;
                 }
 
+                int prev = still_running;
                 curl_multi_perform(multi_handle, &still_running);
                 if (still_running)
                 {
@@ -115,39 +112,28 @@ namespace oxygine
                     /* get file descriptors from the transfers */
                     curl_multi_fdset(multi_handle, &fdread, &fdwrite, &fdexcep, &maxfd);
 
-                    if (maxfd != -1)
+                    if (maxfd == -1)
+                    {
+                        sleep(100);
+                    }
+                    else
                     {
                         int rc = select(maxfd + 1, &fdread, &fdwrite, &fdexcep, &timeout);
-                        //if (rc > 0)
-                        //    curl_multi_perform(multi_handle, &still_running);
-                        int q = 0;
                     }
-
-                    /* In a real-world program you OF COURSE check the return code of the
-                    function calls, *and* you make sure that maxfd is bigger than -1 so
-                    that the call to select() below makes sense! */
-
-                    //int rc = select(maxfd + 1, &fdread, &fdwrite, &fdexcep, &timeout);
-                    //log::messageln("RC: %d", rc);
-#if LIBCURL_VERSION_MINOR >= 44
-                    //todo: fix libcurl 30 silently 
-                    if (rc == -1)
-                        return 0;
-#endif
-                    //while(CURLM_CALL_MULTI_PERFORM == curl_multi_perform(multi_handle, &still_running));
                 }
 
 
-                CURLMsg* msg = 0;
-                int num;
-                while ((msg = curl_multi_info_read(multi_handle, &num)))
+                if (still_running != prev)
                 {
-                    //log::messageln("-");
-                    if (msg->msg == CURLMSG_DONE)
+                    CURLMsg* msg = 0;
+                    int num;
+                    while ((msg = curl_multi_info_read(multi_handle, &num)))
                     {
-                        //log::messageln("done");
-                        curl_multi_remove_handle(multi_handle, msg->easy_handle);
-                        core::getMainThreadDispatcher().postCallback(ID_DONE, msg->easy_handle, (void*)msg->data.result, mainThreadFunc, 0);
+                        if (msg->msg == CURLMSG_DONE)
+                        {
+                            curl_multi_remove_handle(multi_handle, msg->easy_handle);
+                            core::getMainThreadDispatcher().postCallback(ID_DONE, msg->easy_handle, (void*)msg->data.result, mainThreadFunc, 0);
+                        }
                     }
                 }
             }
