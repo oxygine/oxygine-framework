@@ -31,10 +31,10 @@ namespace oxygine
 
     protected:
         static RectF calcBounds(Actor*);
-        void onAdded2Stage();
-        void onRemovedFromStage();
+        void onAdded2Stage() override;
+        void onRemovedFromStage() override;
 
-        void render(const RenderState& rs);
+        void render(const RenderState& rs) override;
 
         void updateSizes();
 

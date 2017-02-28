@@ -124,6 +124,6 @@ namespace oxygine
     public:
         static RestoreResourcesContext instance;
         void createTexture(const CreateTextureTask& opt) override;
-        bool isNeedProceed(spNativeTexture t);
+        bool isNeedProceed(spNativeTexture t) override;
     };
 }

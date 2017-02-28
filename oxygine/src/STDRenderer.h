@@ -64,7 +64,7 @@ namespace oxygine
 
         /**Begins rendering into RenderTexture or into primary framebuffer if rt is null*/
         void begin(STDRenderer* prev = 0);
-        void begin(spNativeTexture nt, const Rect *viewport = 0);
+        void begin(spNativeTexture nt, const Rect* viewport = 0);
         /**Completes started rendering and restores previous Frame Buffer.*/
         void end();
         /**initializes View + Projection matrices where TopLeft is (0,0) and RightBottom is (width, height). use flipU = true for render to texture*/

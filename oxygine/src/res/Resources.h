@@ -120,8 +120,8 @@ namespace oxygine
 
     protected:
         void updateName(const std::string& filename);
-        void _load(LoadResourcesContext* context);
-        void _unload();
+        void _load(LoadResourcesContext* context) override;
+        void _unload() override;
 
 
         struct registeredResource

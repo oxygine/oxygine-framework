@@ -245,7 +245,7 @@ namespace oxygine
         curl_easy_setopt(_easy, CURLOPT_PROGRESSDATA, this);
 #endif
         curl_easy_setopt(_easy, CURLOPT_FOLLOWLOCATION, true);
-        
+
 
 
         curl_easy_setopt(_easy, CURLOPT_SSL_VERIFYPEER, false);

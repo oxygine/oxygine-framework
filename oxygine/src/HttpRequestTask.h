@@ -56,7 +56,7 @@ namespace oxygine
         void setSuccessOnAnyResponseCode(bool en) { _successOnAnyResponceCode = en; }
 
     protected:
-        void _prerun();
+        void _prerun() override;
         void _onError() override;
         void _onComplete() override;
         void _dispatchComplete() override;
@@ -64,7 +64,7 @@ namespace oxygine
         //async
         void progress(int loaded, int total);
 
-        void _onCustom(const ThreadDispatcher::message& msg);
+        void _onCustom(const ThreadDispatcher::message& msg) override;
         void dispatchProgress(int loaded, int total);
 
         virtual void _setFileName(const std::string& name) {}

@@ -38,8 +38,8 @@ namespace oxygine
         void addPage(int tw, int th, const char* head, const char* file);
 
         void _loadPage(const page& p, LoadResourcesContext*);
-        void _load(LoadResourcesContext*);
-        void _unload();
+        void _load(LoadResourcesContext*) override;
+        void _unload() override;
         void _restore(Restorable*, void*);
         void _createFont(CreateResourceContext* context, bool sd, bool bmc, int downsample);
         void _createFontFromTxt(CreateResourceContext* context, char* fontData, const std::string& fontPath, int downsample);

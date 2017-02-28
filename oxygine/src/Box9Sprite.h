@@ -34,16 +34,16 @@ namespace oxygine
 
         bool isOn(const Vector2& localPosition, float localScale) override;
 
-        std::string dump(const dumpOptions&) const;
+        std::string dump(const dumpOptions&) const override;
 
-        void serialize(serializedata* data);
-        void deserialize(const deserializedata* data);
+        void serialize(serializedata* data) override;
+        void deserialize(const deserializedata* data) override;
 
-        virtual RectF getDestRect() const;
+        RectF getDestRect() const override;
 
     protected:
-        void sizeChanged(const Vector2& size);
-        void animFrameChanged(const AnimationFrame& f);
+        void sizeChanged(const Vector2& size)  override;
+        void animFrameChanged(const AnimationFrame& f) override;
         void changeAnimFrame(const AnimationFrame& f) override;
 
         bool _prepared;
@@ -61,7 +61,7 @@ namespace oxygine
 
         void prepare();
 
-        virtual void doRender(const RenderState& rs);
+        void doRender(const RenderState&) override;
     };
 }
 

@@ -34,8 +34,8 @@ namespace oxygine
 
 
             RectF src(0, 0,
-            _pp._screen.getWidth() / (float)_pp._rt->getWidth() / _downsample,
-            _pp._screen.getHeight() / (float)_pp._rt->getHeight() / _downsample);
+                      _pp._screen.getWidth() / (float)_pp._rt->getWidth() / _downsample,
+                      _pp._screen.getHeight() / (float)_pp._rt->getHeight() / _downsample);
 
             RectF dest = _pp._screen.cast<RectF>();
 

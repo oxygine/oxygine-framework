@@ -515,7 +515,7 @@ namespace oxygine
         _blend = blend_disabled;
     }
 
-    void STDRenderer::begin(spNativeTexture nt, const Rect *viewport)
+    void STDRenderer::begin(spNativeTexture nt, const Rect* viewport)
     {
         OX_ASSERT(!_drawing);
         OX_ASSERT(_prevRT == 0);

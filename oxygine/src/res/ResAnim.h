@@ -50,8 +50,8 @@ namespace oxygine
 
     protected:
 
-        void _load(LoadResourcesContext* ctx = 0);
-        void _unload();
+        void _load(LoadResourcesContext* ctx = 0) override;
+        void _unload() override;
 
         int         _columns;
         Resource*   _atlas;

@@ -69,49 +69,32 @@ namespace oxygine
         cached_batch& current();
         const cached_batch& current() const;
 
-        spNativeTexture createTexture();
-
-        void begin(const Rect& viewport, const Color* color);
-
-        const VertexDeclaration* getVertexDeclaration(bvertex_format fmt) const;
-
-        void setDefaultSettings();
-
-        void setRenderTarget(spNativeTexture);
-
+        spNativeTexture createTexture() override;
+        void begin(const Rect& viewport, const Color* color) override;
+        const VertexDeclaration* getVertexDeclaration(bvertex_format fmt) const override;
+        void setDefaultSettings() override;
+        void setRenderTarget(spNativeTexture) override;
         spNativeTexture getRenderTarget() const override;
-
-        void setShaderProgram(ShaderProgram* program);
-
-        void setTexture(int sampler, spNativeTexture texture);
-
-        void setState(STATE state, unsigned int value);
+        void setShaderProgram(ShaderProgram* program) override;
+        void setTexture(int sampler, spNativeTexture texture) override;
+        void setState(STATE state, unsigned int value) override;
 
         void addUni(const char* id, cached_batch::uni::type tp, const void* ptr, int sz);
 
-        void setUniformInt(const char* id, int v);
-
-        void setUniform(const char* id, const Vector4* v, int num);
-
-        void setUniform(const char* id, const Vector3* v, int num);
-
-        void setUniform(const char* id, const Vector2* v, int num);
-
-        void setUniform(const char* id, const Matrix* v);
-
-        void setUniform(const char* id, float v);
-
-        void setBlendFunc(BLEND_TYPE src, BLEND_TYPE dest);
-
-        void setScissorRect(const Rect*);
+        void setUniformInt(const char* id, int v) override;
+        void setUniform(const char* id, const Vector4* v, int num) override;
+        void setUniform(const char* id, const Vector3* v, int num) override;
+        void setUniform(const char* id, const Vector2* v, int num) override;
+        void setUniform(const char* id, const Matrix* v) override;
+        void setUniform(const char* id, float v) override;
+        void setBlendFunc(BLEND_TYPE src, BLEND_TYPE dest) override;
+        void setScissorRect(const Rect*) override;
         bool getScissorRect(Rect&) const override;
 
         void nextBatch();
 
-        void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData,  unsigned int numVertices);
-
-        void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData,  unsigned int numVertices, const unsigned short* indicesData, unsigned int numIndices);
-
+        void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData,  unsigned int numVertices) override;
+        void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData,  unsigned int numVertices, const unsigned short* indicesData, unsigned int numIndices) override;
         void render(const AffineTransform& m);
         void transform(const AffineTransform& m);
 
@@ -128,10 +111,10 @@ namespace oxygine
 
         void init(spActor item, const Vector2& size, bool tree);
 
-        void doRender(RenderState const& parentRenderState);
+        void doRender(const RenderState& parentRenderState) override;
 
     private:
-        void doUpdate(const UpdateState& us);
+        void doUpdate(const UpdateState& us) override;
         friend class TreeInspector;
         //bool _onEvent(const EventState &es);
 

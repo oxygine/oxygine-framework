@@ -14,10 +14,10 @@ namespace oxygine
         ColorRectSprite();
         ~ColorRectSprite();
 
-        void serialize(serializedata* data);
-        void deserialize(const deserializedata* data);
+        void serialize(serializedata* data) override;
+        void deserialize(const deserializedata* data) override;
 
-        void doRender(const RenderState& rs);
+        void doRender(const RenderState&) override;
 
         RectF getDestRect() const override { return Actor::getDestRect(); }
 

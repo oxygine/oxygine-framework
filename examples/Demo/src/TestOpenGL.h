@@ -17,7 +17,7 @@ public:
 
     int _program;
 
-    OpenGLSprite() 
+    OpenGLSprite()
     {
         const char* vertexShaderData = "\
 									uniform mediump mat4 projection;\
@@ -68,7 +68,7 @@ public:
         CHECKGL();
     }
 
-    ~OpenGLSprite() 
+    ~OpenGLSprite()
     {
         oxglDeleteProgram(_program);
     }
@@ -107,8 +107,8 @@ public:
         CHECKGL();
 
         myVertex vertices[4];
-        myVertex *v = vertices;
-        
+        myVertex* v = vertices;
+
         v->pos = Vector3(-100, -100, 0);
         v->uv = srcRect.getLeftTop();
         ++v;
@@ -125,7 +125,7 @@ public:
         v->uv = srcRect.getLeftBottom();
         ++v;
 
-        
+
         oxglEnableVertexAttribArray(0);
         oxglVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(myVertex), vertices);
 
@@ -135,7 +135,7 @@ public:
 
 
         glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-    
+
 
         oxglDisableVertexAttribArray(0);
         oxglDisableVertexAttribArray(1);
@@ -150,7 +150,7 @@ public:
     TestOpenGL()
     {
         spOpenGLSprite sprite = new OpenGLSprite;
-        sprite->setPosition(getStage()->getSize()/2);
+        sprite->setPosition(getStage()->getSize() / 2);
         sprite->setScale(3);
         content->addChild(sprite);
     }

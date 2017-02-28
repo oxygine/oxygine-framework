@@ -69,9 +69,9 @@ namespace oxygine
             TextNode(const char* v);
 
             text_data _data;
-            void _resize(Aligner& rd);
-            void _finalPass(Aligner& rd);
-            void draw(DrawContext& dc);
+            void _resize(Aligner& rd) override;
+            void _finalPass(Aligner& rd) override;
+            void draw(DrawContext& dc) override;
 
             Symbol* getSymbol(int& pos) override;
 
@@ -84,8 +84,8 @@ namespace oxygine
         {
         public:
             DivNode(const pugi::xml_node& node);
-            void _resize(Aligner& rd);
-            void draw(DrawContext& dc);
+            void _resize(Aligner& rd) override;
+            void draw(DrawContext& dc) override;
 
             Color color;
         };

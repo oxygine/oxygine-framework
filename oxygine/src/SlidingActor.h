@@ -46,16 +46,15 @@ namespace oxygine
         /**stop if sliding*/
         void stop();
 
-        void serialize(serializedata* data);
-        void deserialize(const deserializedata* data);
+        void serialize(serializedata* data) override;
+        void deserialize(const deserializedata* data) override;
 
     protected:
         void destroy();
 
-        void handleEvent(Event* event);
-
-        void sizeChanged(const Vector2& size);
-        void doUpdate(const UpdateState& us);
+        void handleEvent(Event* event) override;
+        void sizeChanged(const Vector2& size)  override;
+        void doUpdate(const UpdateState& us)  override;
         void updateDragBounds();
 
 

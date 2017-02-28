@@ -50,13 +50,13 @@ namespace oxygine
         void                    setFlippedY(bool flippedY);
         void                    setFlipped(bool flippedX, bool flippedY);
 
-        void serialize(serializedata* data);
-        void deserialize(const deserializedata* data);
+        void serialize(serializedata* data) override;
+        void deserialize(const deserializedata* data) override;
 
         typedef oxygine::TweenAnim TweenAnim;
-        std::string dump(const dumpOptions&) const;
+        std::string dump(const dumpOptions&) const override;
 
-        void doRender(const RenderState& rs);
+        void doRender(const RenderState&) override;
     protected:
         enum
         {

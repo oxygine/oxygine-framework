@@ -17,7 +17,7 @@ namespace oxygine
 #define  LOGDN(...)  ((void)0)
 
 #endif
-    
+
 
     MutexPthreadLock::MutexPthreadLock(pthread_mutex_t& m, bool lock) : _mutex(m), _locked(lock)
     {

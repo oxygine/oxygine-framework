@@ -33,14 +33,14 @@ namespace oxygine
         void showTexel2PixelErrors(bool show);
 
     protected:
-        void onAdded2Stage();
-        void onRemovedFromStage();
+        void onAdded2Stage() override;
+        void onRemovedFromStage() override;
         void showDevMenu(spActor data);
         void _btnClicked(Event* ev);
 
 
-        void doUpdate(const UpdateState& us);
-        void render(RenderState const& parentRenderState);
+        void doUpdate(const UpdateState& us) override;
+        void render(const RenderState&) override;
         void addButton(float& x, const char* name, const char* anim);
     private:
 

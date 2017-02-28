@@ -18,8 +18,8 @@ namespace oxygine
         TextField();
         ~TextField();
 
-        void serialize(serializedata* data);
-        void deserialize(const deserializedata* data);
+        void serialize(serializedata* data) override;
+        void deserialize(const deserializedata* data) override;
 
         /**Returns current text style*/
         const TextStyle&            getStyle() const {return _style;}
@@ -100,8 +100,8 @@ namespace oxygine
 
     public:
 
-        std::string dump(const dumpOptions& options) const;
-        void doRender(RenderState const& parentRenderState);
+        std::string dump(const dumpOptions& options) const override;
+        void doRender(const RenderState&) override;
 
         text::Node* getRootNode(float scale);
     protected:
@@ -120,7 +120,7 @@ namespace oxygine
 
 
         void needRebuild();
-        void sizeChanged(const Vector2& size);
+        void sizeChanged(const Vector2& size) override;
     };
 }
 

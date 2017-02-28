@@ -366,8 +366,8 @@ namespace oxygine
 #endif
 
 #ifdef __ANDROID__
-        
-        
+
+
         auto info = mallinfo();
 
         s << "memory=" << info.uordblks / 1024 << "|" << info.fordblks / 1024 << "kb ";
