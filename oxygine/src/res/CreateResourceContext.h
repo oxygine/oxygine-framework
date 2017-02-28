@@ -6,8 +6,6 @@
 
 namespace oxygine
 {
-    bool isMainThread();
-
     /**internal class*/
     class XmlWalker
     {
@@ -97,7 +95,6 @@ namespace oxygine
     {
     public:
         static LoadResourcesContext* get();
-        static void init();
 
         virtual ~LoadResourcesContext() {}
 

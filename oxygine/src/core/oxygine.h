@@ -110,6 +110,8 @@ namespace oxygine
         bool isActive();
         bool hasFocus();
 
+        bool isMainThread();
+
 
 #ifdef OXYGINE_SDL
         SDL_GLContext   getGLContext();
