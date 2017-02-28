@@ -11,7 +11,7 @@ public:
     {
     }
 
-    void _loopDone(Actor& actor, const UpdateState& us) OVERRIDE
+    void _loopDone(Actor& actor, const UpdateState& us) override
     {
         for (int i = 0; i < 5; ++i)
         {

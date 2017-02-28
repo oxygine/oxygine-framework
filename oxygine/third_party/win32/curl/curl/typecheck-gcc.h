@@ -7,7 +7,7 @@
  *                            | (__| |_| |  _ <| |___
  *                             \___|\___/|_| \_\_____|
  *
- * Copyright (C) 1998 - 2014, Daniel Stenberg, <daniel@haxx.se>, et al.
+ * Copyright (C) 1998 - 2012, Daniel Stenberg, <daniel@haxx.se>, et al.
  *
  * This software is licensed as described in the file COPYING, which
  * you should have received as part of this distribution. The terms
@@ -264,14 +264,6 @@ _CURL_WARNING(_curl_easy_getinfo_err_curl_slist,
    (option) == CURLOPT_RTSP_SESSION_ID ||                                     \
    (option) == CURLOPT_RTSP_STREAM_URI ||                                     \
    (option) == CURLOPT_RTSP_TRANSPORT ||                                      \
-   (option) == CURLOPT_XOAUTH2_BEARER ||                                      \
-   (option) == CURLOPT_DNS_SERVERS ||                                         \
-   (option) == CURLOPT_DNS_INTERFACE ||                                       \
-   (option) == CURLOPT_DNS_LOCAL_IP4 ||                                       \
-   (option) == CURLOPT_DNS_LOCAL_IP6 ||                                       \
-   (option) == CURLOPT_LOGIN_OPTIONS ||                                       \
-   (option) == CURLOPT_PROXY_SERVICE_NAME ||                                  \
-   (option) == CURLOPT_SERVICE_NAME ||                                        \
    0)
 
 /* evaluates to true if option takes a curl_write_callback argument */
@@ -293,7 +285,7 @@ _CURL_WARNING(_curl_easy_getinfo_err_curl_slist,
    (option) == CURLOPT_SOCKOPTDATA ||                                         \
    (option) == CURLOPT_OPENSOCKETDATA ||                                      \
    (option) == CURLOPT_PROGRESSDATA ||                                        \
-   (option) == CURLOPT_HEADERDATA ||                                         \
+   (option) == CURLOPT_WRITEHEADER ||                                         \
    (option) == CURLOPT_DEBUGDATA ||                                           \
    (option) == CURLOPT_SSL_CTX_DATA ||                                        \
    (option) == CURLOPT_SEEKDATA ||                                            \

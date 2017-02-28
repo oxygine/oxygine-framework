@@ -19,8 +19,8 @@ namespace oxygine
 
     private:
         void loadAtlas(CreateResourceContext& context);
-        void _load(LoadResourcesContext*);
-        void _unload();
+        void _load(LoadResourcesContext*)override;
+        void _unload() override;
         void _restore(Restorable* r, void*);
 
         spNativeTexture _texture;

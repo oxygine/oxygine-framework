@@ -36,7 +36,8 @@ namespace oxygine
                 {
                     int response = 0;
                     curl_easy_getinfo(easy, CURLINFO_RESPONSE_CODE, &response);
-                    ok = response == 200;
+                    task->_responseCode = response;
+                    //ok = response == 200;
                 }
 
 #if 0
@@ -53,7 +54,9 @@ namespace oxygine
 #endif
 
                 if (ok)
+                {
                     task->onComplete();
+                }
                 else
                     task->onError();
 
@@ -79,18 +82,15 @@ namespace oxygine
 
             while (still_running)
             {
-                static int i = 0;
-                //log::messageln("upd---------%d - %d", getTimeMS(), ++i);
-
                 ThreadDispatcher::peekMessage tmsg;
                 if (_messages.peek(tmsg, true))
                 {
                     if (tmsg.msgid == 1)
                         return 0;
                     curl_multi_add_handle(multi_handle, (CURL*)tmsg.arg1);
-                    int q = 0;
                 }
 
+                int prev = still_running;
                 curl_multi_perform(multi_handle, &still_running);
                 if (still_running)
                 {
@@ -112,25 +112,28 @@ namespace oxygine
                     /* get file descriptors from the transfers */
                     curl_multi_fdset(multi_handle, &fdread, &fdwrite, &fdexcep, &maxfd);
 
-                    /* In a real-world program you OF COURSE check the return code of the
-                    function calls, *and* you make sure that maxfd is bigger than -1 so
-                    that the call to select() below makes sense! */
-
-                    int rc = select(maxfd + 1, &fdread, &fdwrite, &fdexcep, &timeout);
-                    if (rc == -1)
-                        return 0;
-                    //while(CURLM_CALL_MULTI_PERFORM == curl_multi_perform(multi_handle, &still_running));
+                    if (maxfd == -1)
+                    {
+                        sleep(100);
+                    }
+                    else
+                    {
+                        int rc = select(maxfd + 1, &fdread, &fdwrite, &fdexcep, &timeout);
+                    }
                 }
 
 
-                CURLMsg* msg = 0;
-                int num;
-                while ((msg = curl_multi_info_read(multi_handle, &num)))
+                if (still_running != prev)
                 {
-                    if (msg->msg == CURLMSG_DONE)
+                    CURLMsg* msg = 0;
+                    int num;
+                    while ((msg = curl_multi_info_read(multi_handle, &num)))
                     {
-                        curl_multi_remove_handle(multi_handle, msg->easy_handle);
-                        core::getMainThreadDispatcher().postCallback(ID_DONE, msg->easy_handle, (void*)msg->data.result, mainThreadFunc, 0);
+                        if (msg->msg == CURLMSG_DONE)
+                        {
+                            curl_multi_remove_handle(multi_handle, msg->easy_handle);
+                            core::getMainThreadDispatcher().postCallback(ID_DONE, msg->easy_handle, (void*)msg->data.result, mainThreadFunc, 0);
+                        }
                     }
                 }
             }
@@ -169,6 +172,12 @@ namespace oxygine
         core::getMainThreadDispatcher().postCallback(ID_PROGRESS, (void*)dltotal, (void*)dlnow, mainThreadFunc, this);
 
         return 0;
+    }
+
+
+    int HttpRequestTaskCURL::cbProgressFunction(void* userData, double dltotal, double dlnow, double ultotal, double ulnow)
+    {
+        return ((HttpRequestTaskCURL*)userData)->_cbXRefInfoFunction((curl_off_t) dltotal, (curl_off_t)dlnow);
     }
 
     size_t HttpRequestTaskCURL::cbWriteFunction(char* d, size_t n, size_t l, void* userData)
@@ -223,10 +232,23 @@ namespace oxygine
         curl_easy_setopt(_easy, CURLOPT_PRIVATE, this);
         curl_easy_setopt(_easy, CURLOPT_WRITEFUNCTION, HttpRequestTaskCURL::cbWriteFunction);
         curl_easy_setopt(_easy, CURLOPT_WRITEDATA, this);
+
+
+        curl_easy_setopt(_easy, CURLOPT_NOPROGRESS, 0);
+
+#ifdef CURLOPT_XFERINFOFUNCTION
         curl_easy_setopt(_easy, CURLOPT_XFERINFOFUNCTION, HttpRequestTaskCURL::cbXRefInfoFunction);
         curl_easy_setopt(_easy, CURLOPT_XFERINFODATA, this);
+#else
+
+        curl_easy_setopt(_easy, CURLOPT_PROGRESSFUNCTION, HttpRequestTaskCURL::cbProgressFunction);
+        curl_easy_setopt(_easy, CURLOPT_PROGRESSDATA, this);
+#endif
         curl_easy_setopt(_easy, CURLOPT_FOLLOWLOCATION, true);
-        curl_easy_setopt(_easy, CURLOPT_NOPROGRESS, 0);
+
+
+
+        curl_easy_setopt(_easy, CURLOPT_SSL_VERIFYPEER, false);
 
 
         if (!_postData.empty())

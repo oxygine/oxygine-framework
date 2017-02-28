@@ -37,7 +37,7 @@ namespace oxygine
 
         jmethodID jRelease = env->GetStaticMethodID(_jHttpRequestsClass, "release", "()V");
         JNI_NOT_NULL(jRelease);
-        env->CallStaticObjectMethod(_jHttpRequestsClass, jRelease);
+        env->CallStaticVoidMethod(_jHttpRequestsClass, jRelease);
 
         env->DeleteGlobalRef(_jHttpRequestsClass);
         _jHttpRequestsClass = 0;
@@ -73,8 +73,9 @@ namespace oxygine
         _handle = env->NewGlobalRef(env->CallStaticObjectMethod(_jHttpRequestsClass, _jCreateRequestMethod, jurl, jfname, jpost, (jlong)this));
     }
 
-    void HttpRequestJavaTask::error_()
+    void HttpRequestJavaTask::error_(int respCode)
     {
+        _responseCode = respCode;
         onError();
         releaseRef();
     }
@@ -84,8 +85,9 @@ namespace oxygine
         progress(loaded, total);
     }
 
-    void HttpRequestJavaTask::complete_(jbyteArray ar)
+    void HttpRequestJavaTask::complete_(jbyteArray ar, int respCode)
     {
+        _responseCode = respCode;
         if (ar)
         {
             JNIEnv* env = jniGetEnv();
@@ -111,10 +113,10 @@ extern "C"
 {
     JNIEnv* Android_JNI_GetEnv(void);
 
-    JNIEXPORT void JNICALL Java_org_oxygine_lib_HttpRequest_nativeHttpRequestResponseSuccess(JNIEnv* env, jclass, jlong handle, jbyteArray array)
+    JNIEXPORT void JNICALL Java_org_oxygine_lib_HttpRequest_nativeHttpRequestResponseSuccess(JNIEnv* env, jclass, jlong handle, jbyteArray array, jint respCode)
     {
         oxygine::HttpRequestJavaTask* task = (oxygine::HttpRequestJavaTask*)handle;
-        task->complete_(array);
+        task->complete_(array, respCode);
     }
 
     JNIEXPORT void JNICALL Java_org_oxygine_lib_HttpRequest_nativeHttpRequestResponseProgress(JNIEnv* env, jclass, jlong handle, jint loaded, jint total)
@@ -123,9 +125,9 @@ extern "C"
         task->progress_(loaded, total);
     }
 
-    JNIEXPORT void JNICALL Java_org_oxygine_lib_HttpRequest_nativeHttpRequestResponseError(JNIEnv* env, jclass, jlong handle)
+    JNIEXPORT void JNICALL Java_org_oxygine_lib_HttpRequest_nativeHttpRequestResponseError(JNIEnv* env, jclass, jlong handle, jint respCode)
     {
         oxygine::HttpRequestJavaTask* task = (oxygine::HttpRequestJavaTask*)handle;
-        task->error_();
+        task->error_(respCode);
     }
 }

@@ -20,8 +20,8 @@ namespace oxygine
         const file::buffer& getBuffer() const {return _buffer;}
 
     private:
-        void _load(LoadResourcesContext*);
-        void _unload();
+        void _load(LoadResourcesContext*) override;
+        void _unload() override;
 
         file::buffer _buffer;
         std::string _path;

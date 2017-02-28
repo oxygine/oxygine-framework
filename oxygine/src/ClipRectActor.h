@@ -21,13 +21,13 @@ namespace oxygine
         /**Enables clipping for children. By default is on*/
         void setClipping(bool enable) {_clipping = enable;}
 
-        void render(const RenderState& rs);
+        void render(const RenderState& rs) override;
 
 
-        void handleEvent(Event* event);
+        void handleEvent(Event* event) override;
 
-        void serialize(serializedata* data);
-        void deserialize(const deserializedata* data);
+        void serialize(serializedata* data) override;
+        void deserialize(const deserializedata* data) override;
 
     protected:
 

@@ -32,8 +32,8 @@ namespace oxygine
     protected:
         void _restore(Restorable* r, void* user);
 
-        void _load(LoadResourcesContext*);
-        void _unload();
+        void _load(LoadResourcesContext*) override;
+        void _unload() override;
 
         //void loadAtlas(CreateResourceContext& context);
         ResAnim* createEmpty(const XmlWalker& walker, CreateResourceContext& context);

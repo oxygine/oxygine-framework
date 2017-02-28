@@ -66,6 +66,12 @@ namespace oxygine
         _finalize(false);
         _onComplete();
 
+        _dispatchComplete();
+    }
+
+
+    void AsyncTask::_dispatchComplete()
+    {
         AsyncTaskEvent ev(COMPLETE, this);
         dispatchEvent(&ev);
     }
@@ -82,6 +88,7 @@ namespace oxygine
         AsyncTaskEvent ev(ERROR, this);
         dispatchEvent(&ev);
     }
+
 
     bool AsyncTask::syncEvent(int msgid, void* arg1, void* arg2)
     {

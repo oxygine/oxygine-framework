@@ -42,9 +42,11 @@ namespace oxygine
     class Actor: public EventDispatcher, public intrusive_list_item<spActor>, public Serializable
     {
         typedef intrusive_list_item<spActor> intr_list;
-    public:
 
-        DECLARE_COPYCLONE_NEW2(Actor);
+    public:
+        Actor(const Actor& src, cloneOptions opt = 0);
+        virtual Actor* clone(cloneOptions opt = 0) const;
+        void copyFrom(const Actor& src, cloneOptions opt = 0);
 
         Actor();
         virtual ~Actor();
@@ -210,7 +212,7 @@ namespace oxygine
         Actor* detach();
 
         /**Dispatches an event into the event flow. The event target is the EventDispatcher object upon which the dispatchEvent() method is called.*/
-        void dispatchEvent(Event* event);
+        void dispatchEvent(Event* event) override;
 
         virtual void updateStateOvered() {}
         virtual void updateStatePressed() {}
@@ -270,8 +272,8 @@ namespace oxygine
         typedef Property<unsigned char, unsigned char, Actor, &Actor::getAlpha, &Actor::setAlpha>               TweenAlpha;
 
 
-        void serialize(serializedata*);
-        void deserialize(const deserializedata*);
+        void serialize(serializedata*) override;
+        void deserialize(const deserializedata*) override;
 
         /**Returns detailed actor information. Used for debug purposes. */
         virtual std::string dump(const dumpOptions& opt) const;

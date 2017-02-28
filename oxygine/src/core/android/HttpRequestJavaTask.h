@@ -19,9 +19,9 @@ namespace oxygine
         HttpRequestJavaTask();
         ~HttpRequestJavaTask();
 
-        void complete_(jbyteArray);
+        void complete_(jbyteArray, int respCode);
         void progress_(int loaded, int total);
-        void error_();
+        void error_(int respCode);
 
 
     protected:

@@ -20,7 +20,7 @@ namespace oxygine
     void HttpRequestTask::init() {}
     void HttpRequestTask::release() {}
 #endif
-    HttpRequestTask::HttpRequestTask() : _loaded(0), _cacheEnabled(true)
+    HttpRequestTask::HttpRequestTask() : _loaded(0), _cacheEnabled(true), _successOnAnyResponceCode(false)
     {
 
     }
@@ -88,6 +88,7 @@ namespace oxygine
 
     void HttpRequestTask::_prerun()
     {
+        _responseCode = 0;
         _loaded = 0;
         _response.clear();
         if (!_fname.empty())
@@ -124,6 +125,21 @@ namespace oxygine
 
     void HttpRequestTask::_onComplete()
     {
-        log::messageln("http request done: %s", _url.c_str());
+        log::messageln("http request done (%d): %s", _responseCode, _url.c_str());
     }
+
+    void HttpRequestTask::_dispatchComplete()
+    {
+        if (_responseCode == 200 || _successOnAnyResponceCode)
+        {
+            Event ev(COMPLETE);
+            dispatchEvent(&ev);
+        }
+        else
+        {
+            Event ev(ERROR);
+            dispatchEvent(&ev);
+        }
+    }
+
 }

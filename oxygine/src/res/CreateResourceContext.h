@@ -6,8 +6,6 @@
 
 namespace oxygine
 {
-    bool isMainThread();
-
     /**internal class*/
     class XmlWalker
     {
@@ -97,7 +95,6 @@ namespace oxygine
     {
     public:
         static LoadResourcesContext* get();
-        static void init();
 
         virtual ~LoadResourcesContext() {}
 
@@ -110,23 +107,23 @@ namespace oxygine
     {
     public:
         static SingleThreadResourcesContext instance;
-        void createTexture(const CreateTextureTask& opt) OVERRIDE;
-        bool isNeedProceed(spNativeTexture t) OVERRIDE;
+        void createTexture(const CreateTextureTask& opt) override;
+        bool isNeedProceed(spNativeTexture t) override;
     };
 
     class MTLoadingResourcesContext : public LoadResourcesContext
     {
     public:
         static MTLoadingResourcesContext instance;
-        void createTexture(const CreateTextureTask& opt) OVERRIDE;
-        bool isNeedProceed(spNativeTexture t) OVERRIDE;
+        void createTexture(const CreateTextureTask& opt) override;
+        bool isNeedProceed(spNativeTexture t) override;
     };
 
     class RestoreResourcesContext: public LoadResourcesContext
     {
     public:
         static RestoreResourcesContext instance;
-        void createTexture(const CreateTextureTask& opt) OVERRIDE;
-        bool isNeedProceed(spNativeTexture t);
+        void createTexture(const CreateTextureTask& opt) override;
+        bool isNeedProceed(spNativeTexture t) override;
     };
 }

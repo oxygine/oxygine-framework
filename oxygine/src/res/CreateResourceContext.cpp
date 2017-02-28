@@ -7,30 +7,11 @@
 
 namespace oxygine
 {
-    static pthread_t _mainThread;
-
-
-    void LoadResourcesContext::init()
-    {
-#ifndef OX_NO_MT
-        _mainThread = pthread_self();
-#endif
-    }
-
-    bool isMainThread()
-    {
-#ifdef OX_NO_MT
-        return true;
-#else
-        return pthread_equal(_mainThread, pthread_self()) != 0;
-#endif
-    }
-
     LoadResourcesContext* LoadResourcesContext::get()
     {
         LoadResourcesContext* mtcontext = &MTLoadingResourcesContext::instance;
         LoadResourcesContext* scontext = &SingleThreadResourcesContext::instance;
-        return isMainThread() ? scontext : mtcontext;
+        return core::isMainThread() ? scontext : mtcontext;
     }
 
     CreateTextureTask::CreateTextureTask(): linearFilter(true), clamp2edge(true)

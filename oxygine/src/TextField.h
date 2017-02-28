@@ -18,8 +18,8 @@ namespace oxygine
         TextField();
         ~TextField();
 
-        void serialize(serializedata* data);
-        void deserialize(const deserializedata* data);
+        void serialize(serializedata* data) override;
+        void deserialize(const deserializedata* data) override;
 
         /**Returns current text style*/
         const TextStyle&            getStyle() const {return _style;}
@@ -45,7 +45,7 @@ namespace oxygine
         unsigned int                getOptions() const;
 
 
-        bool getBounds(RectF&) const OVERRIDE;
+        bool getBounds(RectF&) const override;
 
         /**Overwrites TextStyle Vertical align*/
         void setVAlign(TextStyle::VerticalAlign align);
@@ -92,7 +92,7 @@ namespace oxygine
         void setHtmlText(const std::string& str);
         void setHtmlText(const std::wstring& str);
 
-        bool isOn(const Vector2& localPosition, float localScale = 1.0f) OVERRIDE;
+        bool isOn(const Vector2& localPosition, float localScale = 1.0f) override;
 
 
         typedef Property<Color, const Color&, TextField, &TextField::getOutlineColor, &TextField::setOutlineColor>  TweenOutlineColor;
@@ -100,8 +100,8 @@ namespace oxygine
 
     public:
 
-        std::string dump(const dumpOptions& options) const;
-        void doRender(RenderState const& parentRenderState);
+        std::string dump(const dumpOptions& options) const override;
+        void doRender(const RenderState&) override;
 
         text::Node* getRootNode(float scale);
     protected:
@@ -120,7 +120,7 @@ namespace oxygine
 
 
         void needRebuild();
-        void sizeChanged(const Vector2& size);
+        void sizeChanged(const Vector2& size) override;
     };
 }
 

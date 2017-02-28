@@ -19,12 +19,12 @@ namespace oxygine
 
         void setMask(spSprite, bool useRChannel = false);
 
-        void serialize(serializedata* data);
-        void deserialize(const deserializedata* data);
-        void deserializeLink(const deserializeLinkData*);
+        void serialize(serializedata* data) override;
+        void deserialize(const deserializedata* data) override;
+        void deserializeLink(const deserializeLinkData*) override;
 
     protected:
-        void render(const RenderState& parentRS);
+        void render(const RenderState& parentRS) override;
 
     private:
         spSprite _mask;

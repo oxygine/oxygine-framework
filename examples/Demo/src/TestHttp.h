@@ -66,6 +66,16 @@ public:
         task->setUrl("http://oxygine.org/test/missing.php");
         task->addEventListener(HttpRequestTask::ERROR, CLOSURE(this, &TestHttp::onError));
         task->run();
+
+        addButton("create request", "create request");
+    }
+
+    void clicked(string id)
+    {
+        spHttpRequestTask task;
+        task = HttpRequestTask::create();
+        task->setUrl("http://oxygine.org/img/madewith.png");
+        task->run();
     }
 
     void progress(Event* event)

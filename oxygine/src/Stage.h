@@ -43,10 +43,10 @@ namespace oxygine
 
         void cleanup();
 
-        RectF getDestRect() const;
+        RectF getDestRect() const override;
 
 
-        std::string dump(const dumpOptions& opt) const;
+        std::string dump(const dumpOptions& opt) const override;
 
 #if OXYGINE_SDL
         void associateWithWindow(SDL_Window* wnd);
@@ -60,7 +60,7 @@ namespace oxygine
 
         //bool _active;
 
-        bool isOn(const Vector2& localPosition, float localScale) OVERRIDE;
+        bool isOn(const Vector2& localPosition, float localScale) override;
 
     private:
 

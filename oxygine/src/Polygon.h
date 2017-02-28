@@ -19,13 +19,13 @@ namespace oxygine
         */
         void setVertices(const void* data, int size, int bformat, bool own);
 
-        void serialize(serializedata* data);
-        void deserialize(const deserializedata* data);
+        void serialize(serializedata* data) override;
+        void deserialize(const deserializedata* data) override;
 
-        std::string dump(const dumpOptions&) const;
+        std::string dump(const dumpOptions&) const override;
 
     protected:
-        void doRender(const RenderState& rs);
+        void doRender(const RenderState&) override;
 
         const VertexDeclaration* _vdecl;
         bool _own;

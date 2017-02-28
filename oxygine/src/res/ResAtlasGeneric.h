@@ -21,7 +21,7 @@ namespace oxygine
         void loadAtlas(CreateResourceContext& context);
         void loadAtlas2(CreateResourceContext& context);
 
-        void _load(LoadResourcesContext*) OVERRIDE;
-        void _unload() OVERRIDE;
+        void _load(LoadResourcesContext*) override;
+        void _unload() override;
     };
 }

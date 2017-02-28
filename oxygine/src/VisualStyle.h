@@ -33,8 +33,8 @@ namespace oxygine
         DECLARE_COPYCLONE_NEW(VStyleActor);
         VStyleActor();
 
-        void serialize(serializedata* data);
-        void deserialize(const deserializedata* data);
+        void serialize(serializedata* data) override;
+        void deserialize(const deserializedata* data) override;
 
         blend_mode              getBlendMode() const {return _vstyle.getBlendMode();}
         const Color&            getColor() const;
@@ -45,7 +45,7 @@ namespace oxygine
 
         typedef Property<Color, const Color&, VStyleActor, &VStyleActor::getColor, &VStyleActor::setColor> TweenColor;
 
-        bool getBounds(RectF& b) const  OVERRIDE { b = getDestRect();  return true; }
+        bool getBounds(RectF& b) const  override { b = getDestRect();  return true; }
 
     protected:
         VisualStyle _vstyle;

@@ -19,39 +19,6 @@ namespace oxygine
 #endif
 
 
-    void addtime(timespec& ts, int ms)
-    {
-        ts.tv_nsec += ms * 1000000;
-        while (ts.tv_nsec >= 1000000000)
-        {
-            ts.tv_nsec -= 1000000000;
-            ++ts.tv_sec;
-        }
-    }
-
-
-    void mywait(pthread_cond_t* cond, pthread_mutex_t* mutex)
-    {
-        /*
-        #ifdef __S3E__
-        timespec ts;
-        clock_gettime(CLOCK_REALTIME, &ts);
-        addtime(ts, 300);
-        pthread_cond_timedwait(cond, mutex, &ts);
-        #elif __ANDROID__
-        timespec ts;
-        clock_gettime(CLOCK_REALTIME, &ts);
-        addtime(ts, 500);
-        pthread_cond_timedwait(cond, mutex, &ts);
-        #else
-        pthread_cond_wait(cond, mutex);
-        #endif
-        */
-
-        pthread_cond_wait(cond, mutex);
-    }
-
-
     MutexPthreadLock::MutexPthreadLock(pthread_mutex_t& m, bool lock) : _mutex(m), _locked(lock)
     {
         if (_locked)
@@ -227,7 +194,7 @@ namespace oxygine
             //pthread_cond_signal(&_cond);
             pthread_cond_broadcast(&_cond);
 #endif
-            mywait(&_cond, &_mutex);
+            pthread_cond_wait(&_cond, &_mutex);
         }
     }
 
@@ -241,7 +208,7 @@ namespace oxygine
 #ifndef OX_NO_MT
             pthread_cond_signal(&_cond);
 #endif
-            mywait(&_cond, &_mutex);
+            pthread_cond_wait(&_cond, &_mutex);
         }
         while (_replyingTo != id);
 
