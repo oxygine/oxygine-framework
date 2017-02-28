@@ -55,6 +55,8 @@
 #include "ios/ios.h"
 #endif
 
+#include "pthread.h"
+
 #ifdef OXYGINE_SDL
 extern "C"
 {
@@ -97,6 +99,8 @@ namespace oxygine
     Point _qtFixedSize(0, 0);
 
     spEventDispatcher _dispatcher;
+
+    static pthread_t _mainThread;
 
 #ifdef __S3E__
 
@@ -210,6 +214,15 @@ namespace oxygine
                 _context = SDL_GL_CreateContext(_window);
                 initGLExtensions(SDL_GL_GetProcAddress);
             }
+#endif
+        }
+
+        bool isMainThread()
+        {
+#ifdef OX_NO_MT
+            return true;
+#else
+            return pthread_equal(_mainThread, pthread_self()) != 0;
 #endif
         }
 
@@ -419,7 +432,10 @@ namespace oxygine
 #endif
 
 #endif
-            LoadResourcesContext::init();
+
+#ifndef OX_NO_MT
+            _mainThread = pthread_self();
+#endif
             init2();
 
             return 1;
