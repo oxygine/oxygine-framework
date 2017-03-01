@@ -40,7 +40,7 @@ private:
         driver->setUniform("userValue", &_val, 1);
     }
 
-    void doRender(const RenderState& rs)
+    void doRender(const RenderState& rs) override
     {
         /* _program->setShaderUniformsCallback(CLOSURE(this, &ShaderSprite::setUniforms));
          STDRenderer* renderer = safeCast<STDRenderer*>(rs.renderer);
@@ -70,12 +70,12 @@ public:
         actor.setMaterial(this);
     }
 
-    void _update(Actor& actor, const UpdateState& us)
+    void _update(Actor& actor, const UpdateState& us) override
     {
         _val = lerp(Vector4(1, 1, 1, 0), Vector4(0, 0, 0, 0),  _percent);
     }
 
-    void _done(Actor& actor, const UpdateState& us)
+    void _done(Actor& actor, const UpdateState& us) override
     {
         actor.setMaterial(0);
     }
