@@ -118,7 +118,7 @@ def copy(path):
              "../../libs/SDL2.dll")
 
     if "Demo/" in path:
-        items = items + (win32 + "libcurl.dll", )
+        items = items + (win32 + "libcurl.dll", win32 + "ssleay32.dll", win32 + "libssh2.dll", win32 + "libeay32.dll")
 
     for item in items:
         name = os.path.split(item)[1]

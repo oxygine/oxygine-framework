@@ -1,7 +1,0 @@
-option lib
-
-subproject box2d
-
-files
-{
-}
