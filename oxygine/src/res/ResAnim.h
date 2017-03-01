@@ -45,6 +45,7 @@ namespace oxygine
 
         void setFrame(int col, int row, const AnimationFrame& frame);
         void setFrameRate(int v) { _framerate = v; }
+        void removeFrames();
 
         operator const AnimationFrame& ();
 
