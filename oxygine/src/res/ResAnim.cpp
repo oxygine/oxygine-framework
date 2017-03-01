@@ -96,6 +96,11 @@ namespace oxygine
         //OX_ASSERT(!"can't unload resanim");
     }
 
+    void ResAnim::removeFrames()
+    {
+        _frames.clear();
+    }
+
     /*
     void ResAnim::addFrame(const AnimationFrame &frame)
     {
