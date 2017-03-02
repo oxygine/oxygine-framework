@@ -52,6 +52,13 @@ namespace oxygine
 
     void WebImage::loaded(Event* e)
     {
+        if (_ref_counter <= 1)//if it is already dead
+        {
+            releaseRef();
+            return;
+        }
+
+
         dispatchEvent(e);
 
         file::buffer bf;
