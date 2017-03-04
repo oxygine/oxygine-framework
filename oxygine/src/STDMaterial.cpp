@@ -31,11 +31,6 @@ namespace oxygine
         }
     }
 
-    void STDMaterial::setViewProj(const Matrix& vp)
-    {
-        _renderer->setViewProjTransform(vp);
-    }
-
     void STDMaterial::render(ClipRectActor* actor, const RenderState& parentRS)
     {
         //Material::render(actor, parentRS);
@@ -49,12 +44,14 @@ namespace oxygine
         rs.clip = &clippedRect;
 
         Rect scissorRect(0, 0, 0, 0);
-        bool scissorEnabled = _renderer->getDriver()->getScissorRect(scissorRect);
+        STDRenderer* renderer = STDRenderer::getCurrent();
+        IVideoDriver* driver = renderer->getDriver();
+        bool scissorEnabled = driver->getScissorRect(scissorRect);
 
         bool vis = true;
         if (actor->getClipping())
         {
-            _renderer->drawBatch();
+            renderer->drawBatch();
 
             RectF ss_rect = getActorTransformedDestRect(actor, actor->getTransform() * parentRS.transform);
 
@@ -67,13 +64,13 @@ namespace oxygine
                                    int(clippedRect.size.x + 0.01f),
                                    int(clippedRect.size.y + 0.01f));
 
-                if (!_renderer->getDriver()->getRenderTarget()->getHandle())
+                if (!driver->getRenderTarget()->getHandle())
                 {
                     Point vp_size = core::getDisplaySize();
                     gl_rect.pos.y = vp_size.y - gl_rect.getBottom();
                 }
 
-                _renderer->getDriver()->setScissorRect(&gl_rect);
+                driver->setScissorRect(&gl_rect);
             }
             else
             {
@@ -87,9 +84,8 @@ namespace oxygine
 
         if (actor->getClipping())
         {
-            _renderer->drawBatch();
-
-            _renderer->getDriver()->setScissorRect(scissorEnabled ? &scissorRect : 0);
+            renderer->drawBatch();
+            driver->setScissorRect(scissorEnabled ? &scissorRect : 0);
         }
     }
 
@@ -112,18 +108,25 @@ namespace oxygine
             bool rchannel       = useR ? true    : (df.alpha ? true     : false);
             spNativeTexture msk = useR ? df.base : (df.alpha ? df.alpha : df.base);
 
-            STDRenderer* original = _renderer;
+            STDRenderer* original = STDRenderer::getCurrent();
 
-            _renderer->drawBatch();
+            original->drawBatch();
+            original->end();
+
+
 
             MaskedRenderer mr(msk, maskSrc, maskDest, t, rchannel, original->getDriver());
-            mr.begin(_renderer);
-            _renderer = &mr;
+            original->swapVerticesData(mr);
+
+            mr.setViewProjTransform(original->getViewProjection());
+            mr.begin();
+
             RenderState rs = parentRS;
             sprite->Sprite::render(rs);
             mr.end();
 
-            _renderer = original;
+            original->swapVerticesData(mr);
+            original->begin();
         }
         else
         {
@@ -148,19 +151,19 @@ namespace oxygine
         if (base)
 #endif
         {
-            _renderer->setBlendMode(sprite->getBlendMode());
+            STDRenderer* r = STDRenderer::getCurrent();
+            r->setBlendMode(sprite->getBlendMode());
 #ifndef EMSCRIPTEN
-            _renderer->setTexture(df.base, df.alpha, df.premultiplied);//preload
+            r->setTexture(df.base, df.alpha, df.premultiplied);//preload
 #endif
 
-            _renderer->setTransform(rs.transform);
-            _renderer->draw(rs.getFinalColor(sprite->getColor()), frame.getSrcRect(), sprite->getDestRect());
+            r->setTransform(rs.transform);
+            r->draw(rs.getFinalColor(sprite->getColor()), frame.getSrcRect(), sprite->getDestRect());
         }
     }
 
     void STDMaterial::doRender(TextField* tf, const RenderState& rs)
     {
-
         float scale = sqrtf(rs.transform.a * rs.transform.a + rs.transform.c * rs.transform.c);
 
         text::Node* root = tf->getRootNode(scale);
@@ -173,12 +176,14 @@ namespace oxygine
 
         text::DrawContext dc;
 
+        STDRenderer* renderer = STDRenderer::getCurrent();
+
         dc.primary = rs.getFinalColor(tf->getColor()).premultiplied();
         dc.color = tf->getStyle().color * dc.primary;
-        dc.renderer = _renderer;
+        dc.renderer = renderer;
 
-        _renderer->setBlendMode(tf->getBlendMode());
-        _renderer->setTransform(rs.transform);
+        renderer->setBlendMode(tf->getBlendMode());
+        renderer->setTransform(rs.transform);
 
         int sdfSize;
         if (tf->getFont()->isSDF(sdfSize))
@@ -191,13 +196,13 @@ namespace oxygine
             float offset = tf->getWeight();
             float outline = tf->getWeight() - tf->getOutline();
 
-            _renderer->beginSDFont(contrast, offset, tf->getOutlineColor(), outline);
+            renderer->beginSDFont(contrast, offset, tf->getOutlineColor(), outline);
             root->draw(dc);
-            _renderer->endSDFont();
+            renderer->endSDFont();
         }
         else
         {
-            _renderer->beginElementRendering(true);
+            renderer->beginElementRendering(true);
             root->draw(dc);
         }
     }
@@ -206,10 +211,12 @@ namespace oxygine
     {
         Material::setCurrent(this);
 
-        _renderer->setBlendMode(sprite->getBlendMode());
-        _renderer->setTexture(STDRenderer::white);
-        _renderer->setTransform(rs.transform);
-        _renderer->draw(rs.getFinalColor(sprite->getColor()), RectF(0, 0, 1, 1), sprite->getDestRect());
+        STDRenderer* renderer = STDRenderer::getCurrent();
+
+        renderer->setBlendMode(sprite->getBlendMode());
+        renderer->setTexture(STDRenderer::white);
+        renderer->setTransform(rs.transform);
+        renderer->draw(rs.getFinalColor(sprite->getColor()), RectF(0, 0, 1, 1), sprite->getDestRect());
     }
 
     void STDMaterial::doRender(ProgressBar*, const RenderState& rs)
@@ -219,14 +226,15 @@ namespace oxygine
 
     void STDMaterial::apply(Material* prev)
     {
-        _renderer->begin(0);
-        _renderer->setUberShaderProgram(&STDRenderer::uberShader);
+        STDRenderer* cur = STDRenderer::getCurrent();
+        if (!cur)
+            cur = STDRenderer::instance;
+        cur->begin();
+        cur->setUberShaderProgram(&STDRenderer::uberShader);
     }
 
     void STDMaterial::finish()
     {
-        if (!_renderer)
-            return;
-        _renderer->end();
+        STDRenderer::getCurrent()->end();
     }
 }

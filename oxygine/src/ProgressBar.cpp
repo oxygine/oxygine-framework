@@ -118,8 +118,7 @@ namespace oxygine
         //rs.material->doRender(this, rs);
         ///*
 
-        STDRenderer* renderer = safeCast<STDMaterial*>(rs.material)->getRenderer();
-        //STDRenderer* renderer = STDRenderer::instance;
+        STDRenderer* renderer = STDRenderer::getCurrent();
 
         const Diffuse& df = _frame.getDiffuse();
         if (df.base)

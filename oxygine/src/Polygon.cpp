@@ -81,7 +81,7 @@ namespace oxygine
 
         const Diffuse& df = _frame.getDiffuse();
 
-        STDRenderer* renderer = (safeCast<STDMaterial*>(rs.material))->getRenderer();
+        STDRenderer* renderer = STDRenderer::getCurrent();
 
         renderer->setTexture(df.base, df.alpha, df.premultiplied);
         renderer->setBlendMode(getBlendMode());

@@ -143,7 +143,7 @@ public:
 
         Color color(Color::White);
 
-        STDRenderer* renderer = STDRenderer::instance;
+        STDRenderer* renderer = STDRenderer::getCurrent();
 
         float tw = 1.0f / nt->getWidth();
         float th = 1.0f / nt->getHeight();
@@ -202,7 +202,7 @@ public:
     {
         Material::setCurrent(rs.material);
 
-        STDRenderer* renderer = STDRenderer::instance;
+        STDRenderer* renderer = STDRenderer::getCurrent();
         renderer->setTexture(nt);
         renderer->setTransform(rs.transform);
         renderer->setBlendMode(blend_premultiplied_alpha);

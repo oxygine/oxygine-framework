@@ -66,34 +66,34 @@ namespace oxygine
 
         VideoDriverCache& cache = _videoCache;
 
+
+        STDRenderer* original = STDRenderer::getCurrent();
+
         STDRenderer renderer(&cache);
+        //STDRenderer::current = &renderer;
         renderer.setViewProjTransform(STDRenderer::instance->getViewProjection());
-        STDMaterial mat(&renderer);
+        //renderer.begin();
+        STDRenderer::current = &renderer;
+        //STDMaterial mat;
 
         RenderState rs;
-        rs.material = &mat;
+        rs.material = STDMaterial::instance;
         RectF clip = RectF::huge();
         rs.clip = &clip;
-        //renderer.begin(0);
+
         if (child)
         {
-            STDMaterial* originalMat = STDMaterial::instance;
-
-            STDMaterial::instance = &mat;
-
             bool vis = item->getVisible();
             item->setVisible(true);
             rs.transform = rs.transform * item->getTransformInvert();
             item->render(rs);
             item->setVisible(vis);
 
-            STDMaterial::instance = originalMat;
+            //STDMaterial::instance = originalMat;
         }
         else
             item->doRender(rs);
 
-        //renderer.end();
-        //renderer.drawBatch();
 
         Material::setCurrent(0);
 
@@ -118,6 +118,9 @@ namespace oxygine
 
         cache.transform(transform);
 
+        STDRenderer::current = original;
+
+        //OX_ASSERT(STDRenderer::current);
         _render2cache = false;
         return ns;
     }
@@ -153,14 +156,10 @@ namespace oxygine
         Sprite::doRender(parentRenderState);
         Material::setCurrent(0);
 
-        STDMaterial::instance->getRenderer()->drawBatch();
-        if (getParent() == getStage().get())
-        {
-            int q = 0;
-        }
+        //STDMaterial::instance->getRenderer()->drawBatch();
         _videoCache.render(parentRenderState.transform);
-        STDMaterial::instance->getRenderer()->drawBatch();
-        STDMaterial::instance->getRenderer()->resetSettings();
+        //STDMaterial::instance->getRenderer()->drawBatch();
+        //STDMaterial::instance->getRenderer()->resetSettings();
     }
 
     VideoDriverCache::VideoDriverCache()

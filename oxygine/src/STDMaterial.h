@@ -11,7 +11,7 @@ namespace oxygine
     public:
         static STDMaterial* instance;
 
-        STDMaterial(STDRenderer* r): _renderer(r) {}
+        STDMaterial() {}
 
         void apply(Material* prev) override;
         void finish() override;
@@ -23,12 +23,10 @@ namespace oxygine
         void doRender(ColorRectSprite*, const RenderState& rs) override;
         void doRender(ProgressBar*, const RenderState& rs) override;
 
-        void setViewProj(const Matrix& vp);
 
-        STDRenderer* getRenderer() { return _renderer; }
+        STDRenderer* getRenderer() { return STDRenderer::getCurrent(); }
 
     protected:
-        STDRenderer* _renderer;
     };
 
 }

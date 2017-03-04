@@ -111,7 +111,7 @@ private:
     {
         Material::setCurrent(rs.material);
 
-        STDRenderer* renderer = STDRenderer::instance;
+        STDRenderer* renderer = STDRenderer::getCurrent();
         _adata = rs.alpha;
         shader->setShaderUniformsCallback(CLOSURE(this, &ShaderTextField::setUniforms));
         renderer->setUberShaderProgram(shader);

@@ -489,7 +489,7 @@ namespace oxygine
             Resources::registerResourceType(ResStarlingAtlas::create, "starling");
 
             STDRenderer::instance = new STDRenderer;
-            STDMaterial::instance = new STDMaterial(STDRenderer::instance);
+            STDMaterial::instance = new STDMaterial;
 
             CHECKGL();
 

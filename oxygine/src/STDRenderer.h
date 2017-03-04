@@ -8,6 +8,7 @@ namespace oxygine
     {
     public:
 
+        static STDRenderer* current;
         static STDRenderer* instance;
         /**Sets default rendering OpenGL options for 2D*/
         static void setDefaultSettings();
@@ -21,6 +22,9 @@ namespace oxygine
         static bool isReady();
         /**restore after lost context*/
         static void restore();
+
+        /**returns activated renderer with STDRenderer::begin*/
+        static STDRenderer* getCurrent();
 
         /**White 4x4 Texture*/
         static spNativeTexture white;
@@ -63,7 +67,7 @@ namespace oxygine
         void drawBatch();
 
         /**Begins rendering into RenderTexture or into primary framebuffer if rt is null*/
-        void begin(STDRenderer* prev = 0);
+        void begin();
         void begin(spNativeTexture nt, const Rect* viewport = 0);
         /**Completes started rendering and restores previous Frame Buffer.*/
         void end();
@@ -80,6 +84,9 @@ namespace oxygine
 #ifdef OXYGINE_DEBUG_T2P
         static void showTexel2PixelErrors(bool show);
 #endif
+
+        void swapVerticesData(std::vector<unsigned char>& data) { std::swap(data, _vertices); }
+        void swapVerticesData(STDRenderer& r) { std::swap(_vertices, r._vertices); }
 
     protected:
         Transform _transform;

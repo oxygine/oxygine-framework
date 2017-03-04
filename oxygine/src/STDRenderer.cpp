@@ -24,6 +24,7 @@ namespace oxygine
 {
     bool _restored = false;
     STDRenderer* STDRenderer::instance = 0;
+    STDRenderer* STDRenderer::current = 0;
 
 
     spNativeTexture STDRenderer::white;
@@ -188,6 +189,11 @@ namespace oxygine
     }
 
 
+    STDRenderer* STDRenderer::getCurrent()
+    {
+        return current;
+    }
+
     STDRenderer::~STDRenderer()
     {
         drawBatch();
@@ -269,17 +275,10 @@ namespace oxygine
         _program = 0;
     }
 
-    void STDRenderer::begin(STDRenderer* prev)
+    void STDRenderer::begin()
     {
         OX_ASSERT(!_drawing);
         OX_ASSERT(_vertices.empty() == true);
-        _previous = prev;
-        if (_previous)
-        {
-            _previous->end();
-            _vp = _previous->_vp;
-        }
-
         _program = 0;
         _vertices.clear();
         _transform.identity();
@@ -288,6 +287,8 @@ namespace oxygine
         _begin();
 
         _drawing = true;
+
+        current = this;
     }
 
     void STDRenderer::end()
@@ -300,10 +301,9 @@ namespace oxygine
             _prevRT = 0;
         }
 
-        _drawing = false;
+        current = 0;
 
-        if (_previous)
-            _previous->begin(0);
+        _drawing = false;
     }
 
     void STDRenderer::setVertexDeclaration(const VertexDeclaration* decl)
@@ -401,13 +401,9 @@ namespace oxygine
         if (driver)
             setDriver(driver);
 
-        _vertices.reserve(32 * 1000);
-
         _vp.identity();
 
         _vdecl = _driver->getVertexDeclaration(vertexPCT2::FORMAT);
-
-
 
         _uberShader = &uberShader;
         _transform.identity();

@@ -291,7 +291,7 @@ namespace oxygine
         //_vstyle._apply(rs);
         const Diffuse& df = _frame.getDiffuse();
 
-        STDRenderer* renderer = safeCast<STDMaterial*>(rs.material)->getRenderer();
+        STDRenderer* renderer = STDRenderer::getCurrent();
         Material::setCurrent(rs.material);
 
         if (df.base)

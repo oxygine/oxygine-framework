@@ -61,7 +61,7 @@ public:
         if (!left && !right)
             return;
 
-        STDRenderer& renderer = *STDRenderer::instance;
+        STDRenderer& renderer = *STDRenderer::getCurrent();
 
 #if 1
         renderer.begin(texture);
