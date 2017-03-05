@@ -79,16 +79,16 @@ namespace oxygine
         inline float sqrt(int s)
         {return ::sqrtf((float)s);}
 
-        inline bool equivalent(double a, double b, const double eps = 10e-8)
+        inline bool equal(double a, double b, const double eps = 10e-8)
         {
             return ((a < b + eps) && (a > b - eps)) ? true : false;
         }
 
-        inline bool equivalent(float a, float b, const float eps = (float)(10e-6))
+        inline bool equal(float a, float b, const float eps = (float)(10e-6))
         {
             return ((a < b + eps) && (a > b - eps)) ? true : false;
         }
-
+          
         template <class T>
         inline T clamp(T v, T min_, T max_)
         {
