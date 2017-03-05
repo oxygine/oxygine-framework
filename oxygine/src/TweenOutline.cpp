@@ -41,7 +41,7 @@ namespace oxygine
             renderer->drawElement(_pp._rt, color.rgba(), src, dest);
             renderer->drawBatch();
 
-
+            
             RenderState r = rs;
             r.material = mat;
             actor->setMaterial(_prevMaterial);

@@ -176,7 +176,8 @@ public:
         {
             UberShaderProgram* shader = (UberShaderProgram*)data->data;
 
-            _sprite->addTween2(new TweenShader(shader), TweenOptions(3000).twoSides(true));
+            _sprite->removeTweens();
+            _sprite->addTween2(new TweenShader(shader), TweenOptions(3000).twoSides(true).loops(-1));
         }
     }
 };
