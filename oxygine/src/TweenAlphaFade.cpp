@@ -12,8 +12,7 @@ namespace oxygine
         void render(Actor* actor, const RenderState& rs)
         {
             int _a = lerp(_fadeIn ? 0 : 255, _fadeIn ? 255 : 0, _progress);
-            STDMaterial* mat = STDMaterial::instance;
-            STDRenderer* renderer = mat->getRenderer();
+            STDRenderer* renderer = STDRenderer::getCurrent();
 
             spNativeTexture rt = _pp._rt;
             RectF src(0, 0,

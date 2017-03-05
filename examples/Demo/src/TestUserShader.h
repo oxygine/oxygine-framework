@@ -87,9 +87,8 @@ public:
 
     void apply(Material* prev) override
     {
-        STDRenderer* renderer = STDMaterial::instance->getRenderer();
+        STDRenderer* renderer = STDRenderer::getCurrent();
         _program->setShaderUniformsCallback(CLOSURE(this, &TweenShader::setUniforms));
-        //STDRenderer* renderer = safeCast<STDRenderer*>(r);
         renderer->setUberShaderProgram(_program);
     }
 
@@ -100,7 +99,7 @@ public:
 
     void finish() override
     {
-        STDRenderer* renderer = STDMaterial::instance->getRenderer();
+        STDRenderer* renderer = STDRenderer::getCurrent();
         renderer->drawBatch();
     }
 };

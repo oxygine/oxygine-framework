@@ -235,6 +235,7 @@ namespace oxygine
 
     void STDMaterial::finish()
     {
-        STDRenderer::getCurrent()->end();
+        if (STDRenderer::getCurrent())
+            STDRenderer::getCurrent()->end();
     }
 }

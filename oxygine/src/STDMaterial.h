@@ -24,8 +24,6 @@ namespace oxygine
         void doRender(ProgressBar*, const RenderState& rs) override;
 
 
-        STDRenderer* getRenderer() { return STDRenderer::getCurrent(); }
-
     protected:
     };
 

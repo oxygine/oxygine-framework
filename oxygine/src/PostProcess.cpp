@@ -415,7 +415,7 @@ namespace oxygine
 
         RenderState rs;
         STDMaterial* mat = STDMaterial::instance;
-        STDRenderer* renderer = mat->getRenderer();
+        STDRenderer* renderer = STDRenderer::instance;
         rs.material = mat;
 
         RectF clip = vp.cast<RectF>();

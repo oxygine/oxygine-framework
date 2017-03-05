@@ -301,7 +301,7 @@ namespace oxygine
             _prevRT = 0;
         }
 
-        current = 0;
+        //current = 0;
 
         _drawing = false;
     }

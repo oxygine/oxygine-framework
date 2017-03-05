@@ -57,7 +57,7 @@ public:
         Vector2 light = getStage()->getDescendant("light")->getPosition();
 
         driver->setUniform("light", &light, 1);
-        driver->setUniform("mat", &STDMaterial::instance->getRenderer()->getViewProjection());
+        driver->setUniform("mat", &STDRenderer::getCurrent()->getViewProjection());
 
         driver->setTexture(1, _normal.getDiffuse().base);
 

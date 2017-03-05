@@ -23,7 +23,7 @@ namespace oxygine
         void render(Actor* actor, const RenderState& rs) override
         {
             STDMaterial* mat = STDMaterial::instance;
-            STDRenderer* renderer = mat->getRenderer();
+            STDRenderer* renderer = STDRenderer::getCurrent();
 
             RectF src(0, 0,
                       _pp._screen.getWidth() / (float)_pp._rt->getWidth() / _downsample,
