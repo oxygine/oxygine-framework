@@ -147,17 +147,15 @@ namespace oxygine
         if (clearColor)
             driver->clear(*clearColor);
 
-        //STDMaterial& mat = *STDMaterial::instance;
-        //mat.apply(0);
         Matrix vp = view * proj;
-        //mat.setViewProj(vp);
-
         STDRenderer::instance->setViewProjTransform(vp);
 
-        timeMS t = getTimeMS();
         RenderState rs;
         rs.material = _material;
         Point ds = core::getDisplaySize();
+
+
+        Material::setCurrent(_material);
 
         RectF clip(0.0f, 0.0f, (float)ds.x, (float)ds.y);
         rs.clip = &clip;
@@ -171,7 +169,6 @@ namespace oxygine
         Actor::render(rs);
 
         Material::setCurrent(0);
-        //mat.finish();
     }
 
     void Stage::render(const Color& clearColor, const Rect& viewport)

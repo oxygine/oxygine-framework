@@ -47,7 +47,8 @@ namespace oxygine
 
         void setDriver(IVideoDriver*);
 
-        void setViewProjTransform(const Matrix& viewProj);
+        void setViewProj(const Matrix& viewProj);
+        void setViewProjTransform(const Matrix& viewProj) { setViewProj(viewProj); }
         void setVertexDeclaration(const VertexDeclaration* decl);
         void setUberShaderProgram(UberShaderProgram* pr);
         /**Sets blend mode. Default value is blend_premultiplied_alpha*/

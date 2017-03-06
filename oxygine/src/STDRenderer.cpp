@@ -246,7 +246,17 @@ namespace oxygine
         setViewProjTransform(vp);
     }
 
-    void STDRenderer::setViewProjTransform(const Matrix& viewProj)
+    IVideoDriver* STDRenderer::getDriver()
+    {
+        return _driver;
+    }
+
+    void STDRenderer::setDriver(IVideoDriver* driver)
+    {
+        _driver = driver;
+    }
+
+    void STDRenderer::setViewProj(const Matrix& viewProj)
     {
         _vp = viewProj;
         if (_drawing)
@@ -256,16 +266,6 @@ namespace oxygine
 
 
         _driver->setUniform("mat", &_vp);
-    }
-
-    IVideoDriver* STDRenderer::getDriver()
-    {
-        return _driver;
-    }
-
-    void STDRenderer::setDriver(IVideoDriver* driver)
-    {
-        _driver = driver;
     }
 
     void STDRenderer::resetSettings()
