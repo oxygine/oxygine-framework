@@ -31,7 +31,7 @@ namespace oxygine
         _driver->setTexture(UberShaderProgram::SAMPLER_MASK, _mask);
 
         Vector4 v(_clipMask.getLeft(), _clipMask.getTop(), _clipMask.getRight(), _clipMask.getBottom());
-        _driver->setUniform("clip_mask", &v, 1);
+        _driver->setUniform("clip_mask", v);
 
         Vector3 msk[4];
         _clipUV.get(msk);

@@ -207,12 +207,12 @@ namespace oxygine
         CHECKGL();
     }
 
-    void VideoDriverGLES20::setUniform(const char* id, const Matrix* mat)
+    void VideoDriverGLES20::setUniform(const char* id, const Matrix* mat, int num)
     {
         int p = oxglGetUniformLocation(_programID, id);
         if (p == -1)
             return;
-        oxglUniformMatrix4fv(p, 1, GL_FALSE, mat->ml);
+        oxglUniformMatrix4fv(p, num, GL_FALSE, mat->ml);
         CHECKGL();
     }
 

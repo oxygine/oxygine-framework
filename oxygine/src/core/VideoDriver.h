@@ -66,7 +66,7 @@ namespace oxygine
         };
 
         static IVideoDriver* instance;
-        virtual ~IVideoDriver() {}
+        virtual ~IVideoDriver();
 
         virtual void reset() = 0;
         virtual void restore() = 0;
@@ -98,9 +98,14 @@ namespace oxygine
         virtual void setUniform(const char* id, const Vector4* v, int num) = 0;
         virtual void setUniform(const char* id, const Vector3* v, int num) = 0;
         virtual void setUniform(const char* id, const Vector2* v, int num) = 0;
-        virtual void setUniform(const char* id, const Matrix*) = 0;
+        virtual void setUniform(const char* id, const Matrix* v, int num) = 0;
         virtual void setUniform(const char* id, float v) = 0;
         virtual void setUniformInt(const char* id, int v) = 0;
+
+        void setUniform(const char* id, const Vector4& v);
+        void setUniform(const char* id, const Vector3& v);
+        void setUniform(const char* id, const Vector2& v);
+        void setUniform(const char* id, const Matrix&  v);
 
 
         void _debugAddPrimitives(PRIMITIVE_TYPE pt, int num);
@@ -130,7 +135,7 @@ namespace oxygine
         void setUniform(const char* id, const Vector4* v, int num) {}
         void setUniform(const char* id, const Vector3* v, int num) {}
         void setUniform(const char* id, const Vector2* v, int num) {}
-        void setUniform(const char* id, const Matrix* mat) {}
+        void setUniform(const char* id, const Matrix* mat, int num) {}
         void setUniform(const char* id, float val) {}
 
         void setViewport(const Rect& viewport) {}

@@ -37,7 +37,7 @@ private:
     UberShaderProgram* _program;
     void setUniforms(IVideoDriver* driver, ShaderProgram* prog)
     {
-        driver->setUniform("userValue", &_val, 1);
+        driver->setUniform("userValue", _val);
     }
 
     void doRender(const RenderState& rs) override
@@ -82,7 +82,7 @@ public:
 
     void setUniforms(IVideoDriver* driver, ShaderProgram* prog)
     {
-        driver->setUniform("userValue", &_val, 1);
+        driver->setUniform("userValue", _val);
     }
 
     void apply(Material* prev) override

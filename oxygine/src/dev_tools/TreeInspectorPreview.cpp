@@ -249,9 +249,9 @@ namespace oxygine
         addUni(id, cached_batch::uni::uni_float, &v, sizeof(v));
     }
 
-    void VideoDriverCache::setUniform(const char* id, const Matrix* v)
+    void VideoDriverCache::setUniform(const char* id, const Matrix* v, int num)
     {
-        addUni(id, cached_batch::uni::uni_matrix, v, sizeof(*v));
+        addUni(id, cached_batch::uni::uni_matrix, v, sizeof(*v) * num);
         wvp = *v;
     }
 
@@ -399,7 +399,7 @@ namespace oxygine
                     {
                         Matrix m = STDRenderer::instance->getViewProjection();
                         //instance->setUniform(uni.id.c_str(), ((const Matrix*)&uni.data[0]));
-                        instance->setUniform(uni.id.c_str(), &m);
+                        instance->setUniform(uni.id.c_str(), m);
                         break;
                     }
                     case cached_batch::uni::uni_vec2:

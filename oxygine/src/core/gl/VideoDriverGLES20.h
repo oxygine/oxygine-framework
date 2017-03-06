@@ -36,7 +36,7 @@ namespace oxygine
         void setUniform(const char* id, const Vector4* v, int num) override;
         void setUniform(const char* id, const Vector3* v, int num) override;
         void setUniform(const char* id, const Vector2* v, int num) override;
-        void setUniform(const char* id, const Matrix* mat) override;
+        void setUniform(const char* id, const Matrix* mat, int num) override;
         void setUniform(const char* id, float val) override;
 
     protected:

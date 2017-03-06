@@ -85,7 +85,7 @@ namespace oxygine
         void setUniform(const char* id, const Vector4* v, int num) override;
         void setUniform(const char* id, const Vector3* v, int num) override;
         void setUniform(const char* id, const Vector2* v, int num) override;
-        void setUniform(const char* id, const Matrix* v) override;
+        void setUniform(const char* id, const Matrix* v, int num) override;
         void setUniform(const char* id, float v) override;
         void setBlendFunc(BLEND_TYPE src, BLEND_TYPE dest) override;
         void setScissorRect(const Rect*) override;

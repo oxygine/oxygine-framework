@@ -210,7 +210,7 @@ namespace oxygine
         if (prog != _program)
         {
             _driver->setShaderProgram(prog);
-            _driver->setUniform("mat", &_vp);
+            _driver->setUniform("mat", _vp);
         }
         _program = prog;
     }
@@ -265,7 +265,7 @@ namespace oxygine
         }
 
 
-        _driver->setUniform("mat", &_vp);
+        _driver->setUniform("mat", _vp);
     }
 
     void STDRenderer::resetSettings()
@@ -629,10 +629,10 @@ namespace oxygine
         setShader(prog);
 
         Vector4 c = outlineColor.toVector();
-        _driver->setUniform("sdf_outline_color", &c, 1);
+        _driver->setUniform("sdf_outline_color", c);
 
         c = Vector4(offset, contrast, outlineOffset, contrast);
-        _driver->setUniform("sdf_params", &c, 1);
+        _driver->setUniform("sdf_params", c);
     }
 
     void STDRenderer::endSDFont()

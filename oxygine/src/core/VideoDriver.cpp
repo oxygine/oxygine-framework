@@ -8,6 +8,31 @@ namespace oxygine
 {
     IVideoDriver* IVideoDriver::instance = 0;
 
+    IVideoDriver::~IVideoDriver()
+    {
+
+    }
+
+    void IVideoDriver::setUniform(const char* id, const Matrix& v)
+    {
+        setUniform(id, &v, 1);
+    }
+
+    void IVideoDriver::setUniform(const char* id, const Vector2& v)
+    {
+        setUniform(id, &v, 1);
+    }
+
+    void IVideoDriver::setUniform(const char* id, const Vector3& v)
+    {
+        setUniform(id, &v, 1);
+    }
+
+    void IVideoDriver::setUniform(const char* id, const Vector4& v)
+    {
+        setUniform(id, &v, 1);
+    }
+
     void IVideoDriver::_debugAddPrimitives(PRIMITIVE_TYPE pt, int primitives)
     {
 #if OXYGINE_TRACE_VIDEO_STATS

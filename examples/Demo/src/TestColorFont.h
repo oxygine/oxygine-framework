@@ -102,9 +102,9 @@ private:
     {
         Color q(_adata, _adata, _adata, _adata);
         Vector4 c = (_outer * q).toVector();
-        driver->setUniform("_black", &c, 1);
+        driver->setUniform("_black", c);
         c = (getColor() * _style.color * q).toVector();
-        driver->setUniform("_white", &c, 1);
+        driver->setUniform("_white", c);
     }
 
     void doRender(const RenderState& rs)
