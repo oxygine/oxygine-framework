@@ -40,15 +40,12 @@ namespace oxygine
         STDRenderer(IVideoDriver* driver = 0);
         virtual ~STDRenderer();
 
-        const Matrix&   getViewProjection() const { return _vp; }
+        const Matrix&   getViewProjection() const;
         IVideoDriver*   getDriver();
-        unsigned int    getShaderFlags() const { return _shaderFlags; }
-
-
-        void setDriver(IVideoDriver*);
+        unsigned int    getShaderFlags() const;
 
         void setViewProj(const Matrix& viewProj);
-        void setViewProjTransform(const Matrix& viewProj) { setViewProj(viewProj); }
+        void setViewProjTransform(const Matrix& viewProj);
         void setVertexDeclaration(const VertexDeclaration* decl);
         void setUberShaderProgram(UberShaderProgram* pr);
         /**Sets blend mode. Default value is blend_premultiplied_alpha*/
@@ -57,7 +54,7 @@ namespace oxygine
         void setTexture(const spNativeTexture& base, const spNativeTexture& alpha, bool basePremultiplied = true);
         void setTexture(const spNativeTexture& base, bool basePremultiplied = true);
         /**Sets World transformation.*/
-        void setTransform(const Transform& tr) { _transform = tr; }
+        void setTransform(const Transform& tr);
 
         void beginElementRendering(bool basePremultiplied);// OVERRIDE;
         void beginSDFont(float contrast, float offset, const Color& outlineColor, float outlineOffset);
@@ -75,8 +72,6 @@ namespace oxygine
         /**initializes View + Projection matrices where TopLeft is (0,0) and RightBottom is (width, height). use flipU = true for render to texture*/
         void initCoordinateSystem(int width, int height, bool flipU = false);
         void resetSettings();
-        /**Cleans existing accumulated batch.*/
-        void cleanup();
 
         virtual void addVertices(const void* data, unsigned int size);
 
@@ -86,8 +81,8 @@ namespace oxygine
         static void showTexel2PixelErrors(bool show);
 #endif
 
-        void swapVerticesData(std::vector<unsigned char>& data) { std::swap(data, _vertices); }
-        void swapVerticesData(STDRenderer& r) { std::swap(_vertices, r._vertices); }
+        void swapVerticesData(std::vector<unsigned char>& data);
+        void swapVerticesData(STDRenderer& r);
 
     protected:
         Transform _transform;
@@ -110,7 +105,6 @@ namespace oxygine
         Matrix _vp;
 
         virtual void preDrawBatch();
-        virtual void _cleanup();
         virtual void _begin();
         virtual void _resetSettings();
         //virtual

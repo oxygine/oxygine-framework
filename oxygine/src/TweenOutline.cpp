@@ -2,16 +2,10 @@
 #include "STDMaterial.h"
 #include "Actor.h"
 #include "RenderState.h"
-
 #include "core/gl/VertexDeclarationGL.h"
-
-
 
 namespace oxygine
 {
-
-
-
     class TweenOutlineImpl : public TweenPostProcess
     {
     public:

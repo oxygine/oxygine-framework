@@ -199,10 +199,9 @@ namespace oxygine
         drawBatch();
     }
 
-    void STDRenderer::cleanup()
+    const oxygine::Matrix& STDRenderer::getViewProjection() const
     {
-        _cleanup();
-        _vertices.clear();
+        return _vp;
     }
 
     void STDRenderer::setShader(ShaderProgram* prog)
@@ -243,7 +242,7 @@ namespace oxygine
         Matrix::orthoLH(proj, (float)width, (float)height, 0, 1);
 
         Matrix vp = view * proj;
-        setViewProjTransform(vp);
+        setViewProj(vp);
     }
 
     IVideoDriver* STDRenderer::getDriver()
@@ -251,27 +250,30 @@ namespace oxygine
         return _driver;
     }
 
-    void STDRenderer::setDriver(IVideoDriver* driver)
+    unsigned int STDRenderer::getShaderFlags() const
     {
-        _driver = driver;
+        return _shaderFlags;
     }
 
     void STDRenderer::setViewProj(const Matrix& viewProj)
     {
         _vp = viewProj;
         if (_drawing)
-        {
             drawBatch();
-        }
-
 
         _driver->setUniform("mat", _vp);
+    }
+
+    void STDRenderer::setViewProjTransform(const Matrix& viewProj)
+    {
+        setViewProj(viewProj);
     }
 
     void STDRenderer::resetSettings()
     {
         _resetSettings();
         _driver->setState(IVideoDriver::STATE_BLEND, 0);
+        _blend = blend_disabled;
         _program = 0;
     }
 
@@ -293,6 +295,7 @@ namespace oxygine
 
     void STDRenderer::end()
     {
+        OX_ASSERT(_drawing);
         drawBatch();
 
         if (_prevRT)
@@ -398,9 +401,7 @@ namespace oxygine
         if (!driver)
             driver = IVideoDriver::instance;
 
-        if (driver)
-            setDriver(driver);
-
+        _driver = driver;
         _vp.identity();
 
         _vdecl = _driver->getVertexDeclaration(vertexPCT2::FORMAT);
@@ -412,23 +413,24 @@ namespace oxygine
 
     void STDRenderer::setBlendMode(blend_mode blend)
     {
-        if (_blend != blend)
-        {
-            drawBatch();
+        if (_blend == blend)
+            return;
 
-            if (blend == 0)
-            {
-                _driver->setState(IVideoDriver::STATE_BLEND, 0);
-            }
-            else
-            {
-                IVideoDriver::BLEND_TYPE src  = static_cast<IVideoDriver::BLEND_TYPE>(blend >> 16);
-                IVideoDriver::BLEND_TYPE dest = static_cast<IVideoDriver::BLEND_TYPE>(blend & 0xFFFF);
-                _driver->setBlendFunc(src, dest);
-                _driver->setState(IVideoDriver::STATE_BLEND, 1);
-            }
-            _blend = blend;
+        drawBatch();
+
+        if (blend == 0)
+        {
+            _driver->setState(IVideoDriver::STATE_BLEND, 0);
         }
+        else
+        {
+            IVideoDriver::BLEND_TYPE src  = static_cast<IVideoDriver::BLEND_TYPE>(blend >> 16);
+            IVideoDriver::BLEND_TYPE dest = static_cast<IVideoDriver::BLEND_TYPE>(blend & 0xFFFF);
+            _driver->setBlendFunc(src, dest);
+            _driver->setState(IVideoDriver::STATE_BLEND, 1);
+        }
+        _blend = blend;
+
     }
 
     template <class T>
@@ -445,11 +447,26 @@ namespace oxygine
     {
         _showTexel2PixelErrors = show;
     }
+
+    void STDRenderer::swapVerticesData(STDRenderer& r)
+    {
+        std::swap(_vertices, r._vertices);
+    }
+
+    void STDRenderer::swapVerticesData(std::vector<unsigned char>& data)
+    {
+        std::swap(data, _vertices);
+    }
 #endif
 
 
     void STDRenderer::setTexture(const spNativeTexture& base_, const spNativeTexture& alpha, bool basePremultiplied)
     {
+        if (base_ == _base && _alpha == alpha)
+            return;
+
+        drawBatch();
+
         _renderTextureHook(base_);
         _renderTextureHook(alpha);
 
@@ -457,31 +474,15 @@ namespace oxygine
         if (base == 0 || base->getHandle() == 0)
             base = white;
 
-        unsigned int shaderFlags = _shaderFlags;
-
         if (basePremultiplied)
-            shaderFlags &= ~UberShaderProgram::ALPHA_PREMULTIPLY;
+            _shaderFlags &= ~UberShaderProgram::ALPHA_PREMULTIPLY;
         else
-            shaderFlags |= UberShaderProgram::ALPHA_PREMULTIPLY;
+            _shaderFlags |= UberShaderProgram::ALPHA_PREMULTIPLY;
 
         if (alpha)
-            shaderFlags |= UberShaderProgram::SEPARATE_ALPHA;
+            _shaderFlags |= UberShaderProgram::SEPARATE_ALPHA;
         else
-            shaderFlags &= ~UberShaderProgram::SEPARATE_ALPHA;
-
-        //##ifdef OX_DEBUG
-#if 0
-        if (_base != base) { OX_ASSERT(_alpha != alpha); }
-        else { OX_ASSERT(_alpha == alpha); }
-#endif //OX_DEBUG
-
-        //no reason to check changed alpha because it is in pair with base
-        if (_base != base || /*_alpha != alpha || */_shaderFlags != shaderFlags)
-        {
-            drawBatch();
-        }
-
-        _shaderFlags = shaderFlags;
+            _shaderFlags &= ~UberShaderProgram::SEPARATE_ALPHA;
 
         _base = base;
         _alpha = alpha;
@@ -489,26 +490,12 @@ namespace oxygine
 
     void STDRenderer::setTexture(const spNativeTexture& base_, bool basePremultiplied)
     {
-        spNativeTexture base = base_;
-        if (base == 0 || base->getHandle() == 0)
-            base = white;
+        setTexture(base_, 0, basePremultiplied);
+    }
 
-        unsigned int shaderFlags = _shaderFlags;
-
-        if (basePremultiplied)
-            shaderFlags &= ~UberShaderProgram::ALPHA_PREMULTIPLY;
-        else
-            shaderFlags |= UberShaderProgram::ALPHA_PREMULTIPLY;
-
-        shaderFlags &= ~UberShaderProgram::SEPARATE_ALPHA;
-
-        if (_base != base || _shaderFlags != shaderFlags)
-            drawBatch();
-
-        _shaderFlags = shaderFlags;
-
-        _base = base;
-        _alpha = 0;
+    void STDRenderer::setTransform(const Transform& tr)
+    {
+        _transform = tr;
     }
 
     void STDRenderer::_begin()
@@ -540,13 +527,6 @@ namespace oxygine
 
     void STDRenderer::_resetSettings()
     {
-        _blend = blend_disabled;
-    }
-
-    void STDRenderer::_cleanup()
-    {
-        _base = 0;
-        _alpha = 0;
     }
 
     void STDRenderer::preDrawBatch()
@@ -595,11 +575,10 @@ namespace oxygine
 
     void STDRenderer::setUberShaderProgram(UberShaderProgram* pr)
     {
-        if (_uberShader != pr)
-        {
-            drawBatch();
-        }
+        if (_uberShader == pr)
+            return;
 
+        drawBatch();
         _uberShader = pr;
     }
 

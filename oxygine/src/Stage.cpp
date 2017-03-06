@@ -148,7 +148,7 @@ namespace oxygine
             driver->clear(*clearColor);
 
         Matrix vp = view * proj;
-        STDRenderer::instance->setViewProjTransform(vp);
+        STDRenderer::instance->setViewProj(vp);
 
         RenderState rs;
         rs.material = _material;

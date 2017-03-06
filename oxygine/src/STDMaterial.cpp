@@ -118,7 +118,7 @@ namespace oxygine
             MaskedRenderer mr(msk, maskSrc, maskDest, t, rchannel, original->getDriver());
             original->swapVerticesData(mr);
 
-            mr.setViewProjTransform(original->getViewProjection());
+            mr.setViewProj(original->getViewProjection());
             mr.begin();
 
             RenderState rs = parentRS;
@@ -227,15 +227,12 @@ namespace oxygine
     void STDMaterial::apply(Material* prev)
     {
         STDRenderer* cur = STDRenderer::getCurrent();
-        if (!cur)
-            cur = STDRenderer::instance;
         cur->begin();
         cur->setUberShaderProgram(&STDRenderer::uberShader);
     }
 
     void STDMaterial::finish()
     {
-        if (STDRenderer::getCurrent())
-            STDRenderer::getCurrent()->end();
+        STDRenderer::getCurrent()->end();
     }
 }

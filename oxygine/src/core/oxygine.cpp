@@ -491,6 +491,8 @@ namespace oxygine
             STDRenderer::instance = new STDRenderer;
             STDMaterial::instance = new STDMaterial;
 
+            STDRenderer::current = STDRenderer::instance;
+
             CHECKGL();
 
 #ifdef OX_DEBUG
