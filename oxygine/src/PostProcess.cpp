@@ -393,7 +393,6 @@ namespace oxygine
         if (_screen.isEmpty())
             return;
 
-//        OX_ASSERT(actor->_getStage());
         _rt = getRTManager().get(_rt, _screen.getWidth(), _screen.getHeight(), _format);
 
 
@@ -436,7 +435,8 @@ namespace oxygine
 
         mat->Material::render(actor, rs);
 
-        mat->finish();
+        //mat->finish();
+        Material::setCurrent(0);
     }
 
 
