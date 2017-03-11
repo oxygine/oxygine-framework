@@ -111,7 +111,7 @@ namespace oxygine { namespace log { void error(const char* format, ...); } }
 
 #define OXYGINE_HAS_RESTORE
 
-#define OXYGINE_RENDERER 4
+#define OXYGINE_RENDERER 5
 
 #define OXYGINE_VERSION 5
 
