@@ -45,6 +45,7 @@ namespace oxygine
             Rect bounds;
             int width;
             int height;
+            int options;
 
 
             const Font* _font;

@@ -45,15 +45,17 @@ namespace oxygine
             virtual ~Node();
 
             void appendNode(Node* tn);
-            void resize(Aligner& rd);
+            virtual void resize(Aligner& rd);
             void finalPass(Aligner& rd);
+
             void drawChildren(DrawContext& dc);
+            void resizeChildren(Aligner& rd);
             virtual Symbol* getSymbol(int& pos);
 
             virtual void draw(DrawContext& dc);
 
-            virtual void _resize(Aligner& rd) {}
-            virtual void _finalPass(Aligner& rd) {}
+            virtual void xresize(Aligner& rd) {}
+            virtual void xfinalPass(Aligner& rd) {}
 
 
             Node* _firstChild;
@@ -69,8 +71,8 @@ namespace oxygine
             TextNode(const char* v);
 
             text_data _data;
-            void _resize(Aligner& rd) override;
-            void _finalPass(Aligner& rd) override;
+            void xresize(Aligner& rd) override;
+            void xfinalPass(Aligner& rd) override;
             void draw(DrawContext& dc) override;
 
             Symbol* getSymbol(int& pos) override;
@@ -84,16 +86,18 @@ namespace oxygine
         {
         public:
             DivNode(const pugi::xml_node& node);
-            void _resize(Aligner& rd) override;
+
+            void resize(Aligner& rd) override;
             void draw(DrawContext& dc) override;
 
             Color color;
+            unsigned int options;
         };
 
         class BrNode: public Node
         {
         public:
-            void _resize(Aligner& rd)
+            void xresize(Aligner& rd)
             {
                 rd.nextLine();
             }

@@ -41,8 +41,13 @@ namespace oxygine
 
         void Node::resize(Aligner& rd)
         {
-            _resize(rd);
+            xresize(rd);
 
+            resizeChildren(rd);
+        }
+
+        void Node::resizeChildren(Aligner& rd)
+        {
             Node* child = _firstChild;
             while (child)
             {
@@ -53,7 +58,7 @@ namespace oxygine
 
         void Node::finalPass(Aligner& rd)
         {
-            _finalPass(rd);
+            xfinalPass(rd);
 
             Node* child = _firstChild;
             while (child)
@@ -162,13 +167,14 @@ namespace oxygine
             _defMissing = v;
         }
 
-        void TextNode::_resize(Aligner& rd)
+        void TextNode::xresize(Aligner& rd)
         {
             if (!_data.empty())
             {
                 int i = 0;
                 const Font* font = rd._font;
-                glyphOptions opt = rd.getStyle().options;
+
+                const int opt = rd.options;
 
                 while (i != (int)_data.size())
                 {
@@ -206,7 +212,7 @@ namespace oxygine
             return x / sf;
         }
 
-        void TextNode::_finalPass(Aligner& rd)
+        void TextNode::xfinalPass(Aligner& rd)
         {
             float scaleFactor = rd.getScale();
 
@@ -221,30 +227,27 @@ namespace oxygine
                     s.destRect = RectF(mlt(s.x, scaleFactor), mlt(s.y, scaleFactor), mlt(s.gl.sw, scaleFactor), mlt(s.gl.sh, scaleFactor));
                 else
                     s.destRect = RectF(0, 0, 0, 0);
-
-                //s.destRect.size = Vector2(4.26666666f, 7.46666666f);
             }
         }
 
-        void DivNode::_resize(Aligner& rd)
+        void DivNode::resize(Aligner& rd)
         {
+            if (options == -1)
+            {
+                resizeChildren(rd);
+                return;
+            }
 
+            unsigned int prevOpt = rd.options;
+            rd.options = options;
+            resizeChildren(rd);
+            rd.options = prevOpt;
         }
 
         void DivNode::draw(DrawContext& dc)
         {
-            /*
-            Color prevColor = dc.renderer->getPrimaryColor();
-
-            Color blendedColor = color;
-            blendedColor.a = (blendedColor.a * dc.rs->alpha) / 255;
-
-            dc.renderer->setPrimaryColor(blendedColor);
-            drawChildren(dc);
-            dc.renderer->setPrimaryColor(prevColor);
-            */
-
             Color prev = dc.color;
+
             dc.color = color * dc.primary;
             drawChildren(dc);
             dc.color = prev;
@@ -252,6 +255,7 @@ namespace oxygine
 
         DivNode::DivNode(const pugi::xml_node& node)
         {
+            options = -1;
             pugi::xml_attribute attr = node.first_attribute();
             while (attr)
             {
@@ -259,6 +263,10 @@ namespace oxygine
                         !strcmp(attr.name(), "color"))
                 {
                     color = hex2color(attr.value());
+                }
+                else if (!strcmp(attr.name(), "opt"))
+                {
+                    options = attr.as_uint();
                 }
                 attr = attr.next_attribute();
             }
