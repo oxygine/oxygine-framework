@@ -433,9 +433,6 @@ namespace oxygine
 
 #endif
 
-#ifndef OX_NO_MT
-            _mainThread = pthread_self();
-#endif
             init2();
 
             return 1;
@@ -444,6 +441,11 @@ namespace oxygine
 
         void init2()
         {
+
+#ifndef OX_NO_MT
+            _mainThread = pthread_self();
+#endif
+
             if (!_dispatcher)
                 _dispatcher = new EventDispatcher;
 
