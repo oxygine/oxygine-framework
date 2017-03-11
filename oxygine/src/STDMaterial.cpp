@@ -172,7 +172,6 @@ namespace oxygine
 
 
         text::DrawContext dc;
-
         dc.primary = rs.getFinalColor(tf->getColor()).premultiplied();
         dc.color = tf->getStyle().color * dc.primary;
         dc.renderer = _renderer;

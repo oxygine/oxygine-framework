@@ -13,6 +13,7 @@ namespace oxygine
             //log::messageln("gscale %f, adjScale %f globscale %f, %d %f", gscale, _globalScale, _fontSize, fs);
             _line.reserve(50);
             _lineSkip = (int)(_font->getBaselineDistance() * style.baselineScale) + style.linesOffset;
+            options = Style.options;
         }
 
         Aligner::~Aligner()

@@ -88,7 +88,7 @@ namespace oxygine
         {
             return ((a < b + eps) && (a > b - eps)) ? true : false;
         }
-          
+
         template <class T>
         inline T clamp(T v, T min_, T max_)
         {
