@@ -403,11 +403,11 @@ namespace oxygine
                         break;
                     }
                     case cached_batch::uni::uni_vec2:
-                        instance->setUniform(uni.id.c_str(), ((const Vector2*)&uni.data[0]), uni.data.size() / sizeof(Vector2)); break;
+                        instance->setUniform(uni.id.c_str(), ((const Vector2*)&uni.data[0]), int(uni.data.size() / sizeof(Vector2))); break;
                     case cached_batch::uni::uni_vec3:
-                        instance->setUniform(uni.id.c_str(), ((const Vector3*)&uni.data[0]), uni.data.size() / sizeof(Vector3)); break;
+                        instance->setUniform(uni.id.c_str(), ((const Vector3*)&uni.data[0]), int(uni.data.size() / sizeof(Vector3))); break;
                     case cached_batch::uni::uni_vec4:
-                        instance->setUniform(uni.id.c_str(), ((const Vector4*)&uni.data[0]), uni.data.size() / sizeof(Vector4)); break;
+                        instance->setUniform(uni.id.c_str(), ((const Vector4*)&uni.data[0]), int(uni.data.size() / sizeof(Vector4))); break;
                     default:
                         break;
                 }

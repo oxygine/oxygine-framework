@@ -427,10 +427,12 @@ namespace oxygine
             originalLocalScale = me->__localScale;
             me->localPosition = parent2local(originalLocalPos);
             me->__localScale *= _transform.a;
+#ifdef OX_HAS_CPP11
             if (me->__localScale == NAN)
             {
                 OX_ASSERT(0);
             }
+#endif
         }
 
         event->phase = Event::phase_capturing;

@@ -80,12 +80,12 @@ public:
             else
             {
                 touch* p1, *p2;
-                for (auto& t : _touches)
+                for (std::map<int, touch>::iterator i = _touches.begin(); i != _touches.end(); ++i)
                 {
-                    if (t.first == te->index)
-                        p1 = &t.second;
+                    if (i->first == te->index)
+                        p1 = &i->second;
                     else
-                        p2 = &t.second;
+                        p2 = &i->second;
                 }
 
                 Vector2 center = (p1->current + p2->current) / 2;

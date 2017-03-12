@@ -53,7 +53,7 @@ static HttpRequestTask *createTask()
     
     NSHTTPURLResponse *resp = (NSHTTPURLResponse*)[downloadTask response];
     
-    int code = [resp statusCode];
+    long code = [resp statusCode];
     
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -79,7 +79,7 @@ static HttpRequestTask *createTask()
     }
     */
 
-    task->complete_(nil, false, code);
+    task->complete_(nil, false, (int)code);
 }
 
 #pragma mark - NSURLSessionTaskDelegate
@@ -254,7 +254,7 @@ namespace oxygine
                                   
                                   if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
                                       NSHTTPURLResponse *httpResponse = ((NSHTTPURLResponse *)response);
-                                      _responseCode = httpResponse.statusCode;
+                                      _responseCode = (int)httpResponse.statusCode;
                                       //if (statusCode != 200)
                                        //   httpError = true;
                                   }
