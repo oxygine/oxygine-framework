@@ -10,6 +10,8 @@ public:
     Color color;
     spSprite preview;
 
+    bool painter;
+
     TestRender2Texture()
     {
         notify("touch to draw", 100000);
@@ -18,7 +20,9 @@ public:
         spSprite back = new Sprite;
         back->setResAnim(resources.getResAnim("bg"));
         back->attachTo(content);
-        back->setPosition(content->getSize() / 2 - back->getSize() / 2);
+        back->setSize(getStage()->getSize());
+
+        back->setPosition(content->getSize() / 2 - back->getScaledSize() / 2);
 
 
 
@@ -45,35 +49,50 @@ public:
         content->addEventListener(TouchEvent::MOVE, CLOSURE(this, &TestRender2Texture::onMove));
         content->addEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &TestRender2Texture::onDown));
 
+
+        Test::toggle t[2];
+        t[0].text = "eraser";
+        t[1].text = "paint";
+        addToggle("mode", t, 2);
+
+        painter = true;
+    }
+
+    void toggleClicked(string id, const toggle* t) override
+    {
+        painter = !painter;
     }
 
     void onDown(Event* ev)
     {
-        color = Color(rand() % 255, rand() % 255, rand() % 255, 64);
+        color = Color(rand() % 255, rand() % 255, rand() % 255, 128);
         onMove(ev);
     }
 
     void onMove(Event* ev)
     {
         TouchEvent* te = (TouchEvent*)ev;
+
         bool left = te->getPointer()->isPressed();
         bool right = te->getPointer()->isPressed(MouseButton_Right);
+
         if (!left && !right)
             return;
 
         STDRenderer& renderer = *STDRenderer::getCurrent();
 
-
-
 #if 1
+        bool paint = painter && !right;
         renderer.begin(texture);
-        RectF destRect(te->localPosition - Vector2(30, 30), Vector2(60, 60));
+
+        Vector2 size = getStage()->getSize() / 20;
+        RectF destRect(te->localPosition - size, size * 2);
 
         ResAnim* brush = resources.getResAnim("brush");
         AnimationFrame frame = brush->getFrame(0);
         const Diffuse& df = frame.getDiffuse();
         renderer.setTexture(df.base);
-        if (left)
+        if (paint)
             renderer.setBlendMode(blend_premultiplied_alpha);
         else
         {
@@ -83,10 +102,9 @@ public:
 
         renderer.draw(color, frame.getSrcRect(), destRect);
         renderer.end();
-        if (!left)
+        if (!paint)
             oxglBlendEquation(GL_FUNC_ADD);//restore to default value
 #else
-
         renderer.begin(texture);
         spActor actor = new ManageResTest;
         actor->setScale(0.5f);

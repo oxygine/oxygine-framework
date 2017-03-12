@@ -450,6 +450,7 @@ namespace oxygine
     {
         _showTexel2PixelErrors = show;
     }
+#endif
 
     void STDRenderer::swapVerticesData(STDRenderer& r)
     {
@@ -460,7 +461,6 @@ namespace oxygine
     {
         std::swap(data, _vertices);
     }
-#endif
 
 
     void STDRenderer::setTexture(const spNativeTexture& base_, const spNativeTexture& alpha, bool basePremultiplied)
