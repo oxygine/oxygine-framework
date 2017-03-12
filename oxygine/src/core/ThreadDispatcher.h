@@ -57,9 +57,8 @@ namespace oxygine
 
             callback    cb;
             void*       cbData;
-#ifndef __S3E__
+            
             std::function< void() >     cbFunction;
-#endif
 
             unsigned int _id;
             bool need_reply;
@@ -81,6 +80,7 @@ namespace oxygine
 
         //blocking
         void wait();
+        
         //blocking
         void get(message& ev);
 
@@ -90,24 +90,23 @@ namespace oxygine
 
         //blocking, sends message and waiting reply from other thread
         void* send(int msgid, void* arg1, void* arg2);
+        
         //blocking, sends callback and waiting until it is done
         void* sendCallback(void* arg1, void* arg2, callback cb, void* cbData, bool highPriority = false);
-#ifndef __S3E__
+
         //blocking, sends callback and waiting until it is done
         void sendCallback(const std::function<void()>&);
-#endif
-
-
 
         //async, sends post message
         void post(int msgid, void* arg1, void* arg2);
+
         //async, sends post callback
         void postCallback(int msgid, void* arg1, void* arg2, callback cb, void* cbData);
         void postCallback(void* arg1, void* arg2, callback cb, void* cbData);
-#ifndef __S3E__
+
         //async, sends post callback
         void postCallback(const std::function<void()>&);
-#endif
+
         //remove scheduled postCallback
         void removeCallback(int msgid, callback cb, void* cbData);
 
@@ -128,7 +127,6 @@ namespace oxygine
         void _pushMessage(message&);
         void _pushMessageWaitReply(message&, bool highPriority = false);
         void _popMessage(message&);
-        void _popMessageNoCB(message&);
         void _replyLast(void* val);
 
 

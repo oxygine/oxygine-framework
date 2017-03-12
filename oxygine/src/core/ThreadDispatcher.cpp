@@ -97,14 +97,13 @@ namespace oxygine
             _last.cb = 0;
         }
 
-#ifndef __S3E__
+
         if (_last.cbFunction)
         {
             LOGDN("running callback function for id=%d", _last._id);
             _last.cbFunction();
             _last.cbFunction = std::function< void() >();
         }
-#endif
     }
 
 
@@ -340,8 +339,6 @@ namespace oxygine
             }
         }
     }
-
-#ifndef __S3E__
     void ThreadDispatcher::postCallback(const std::function<void()>& f)
     {
         message ev;
@@ -363,7 +360,7 @@ namespace oxygine
 #endif
         _pushMessageWaitReply(ev);
     }
-#endif
+
 
     std::vector<ThreadDispatcher::message>& ThreadDispatcher::lockMessages()
     {
