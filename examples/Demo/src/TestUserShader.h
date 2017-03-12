@@ -117,35 +117,37 @@ public:
     TestUserShader(): _shaderMono(0), _shaderAddColor(0)
     {
         _shaderMono = new UberShaderProgram();
-        _shaderMono->init(STDRenderer::uberShaderBody,
-                          "#define MODIFY_BASE_PRE\n"
-                          "uniform lowp vec4 userValue;"
-                          "lowp vec4 modify_base_pre(lowp vec4 base)\n"
-                          "{\n"
-                          "lowp float c = (base.r + base.g + base.b) / 3.0;\n"
-                          "return mix(vec4(c, c, c, base.a), base, userValue.r);\n"
-                          "}\n");
+        _shaderMono->init(STDRenderer::uberShaderBody, R"(
+                          #define MODIFY_BASE_PRE
+                          uniform lowp vec4 userValue;
+                          lowp vec4 modify_base_pre(lowp vec4 base)
+                          {
+                              lowp float c = (base.r + base.g + base.b) / 3.0;
+                              return mix(vec4(c, c, c, base.a), base, userValue.r);
+                          }
+        )");
 
         _shaderAddColor = new UberShaderProgram();
-        _shaderAddColor->init(STDRenderer::uberShaderBody,
-                              "#define MODIFY_BASE_PRE\n"
-                              "uniform lowp vec4 userValue;"
-                              "lowp vec4 modify_base_pre(lowp vec4 base)\n"
-                              "{\n"
-                              "return base + userValue * base.a;\n"
-                              "}\n");
+        _shaderAddColor->init(STDRenderer::uberShaderBody, R"(
+                              #define MODIFY_BASE_PRE
+                              uniform lowp vec4 userValue;
+                              lowp vec4 modify_base_pre(lowp vec4 base)
+                              {
+                                return base + userValue * base.a;
+                              }
+        )");
 
         _shaderInvert = new UberShaderProgram();
-        _shaderInvert->init(STDRenderer::uberShaderBody,
-                            "#define MODIFY_BASE_PRE\n"
-                            "uniform lowp vec4 userValue;"
-                            "lowp vec4 modify_base_pre(lowp vec4 base)\n"
-                            "{\n"
-                            "\n"
-                            "lowp vec4 inverted = vec4(1.0, 1.0, 1.0, 1.0) - base;\n"
-                            "lowp vec4 res = mix(inverted * base.a, base, userValue.r);\n"
-                            "return vec4(res.rgb, base.a);\n"
-                            "}\n");
+        _shaderInvert->init(STDRenderer::uberShaderBody, R"(
+                            #define MODIFY_BASE_PRE
+                            uniform lowp vec4 userValue;
+                            lowp vec4 modify_base_pre(lowp vec4 base)
+                            {                            
+                                lowp vec4 inverted = vec4(1.0, 1.0, 1.0, 1.0) - base;
+                                lowp vec4 res = mix(inverted * base.a, base, userValue.r);
+                                return vec4(res.rgb, base.a);
+                            }
+        )");
 
 
         _sprite = new Sprite;

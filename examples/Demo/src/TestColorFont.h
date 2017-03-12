@@ -57,17 +57,18 @@ public:
     static void init()
     {
         shader = new UberShaderProgram();
-        shader->init(STDRenderer::uberShaderBody,
-                     "#define MODIFY_BASE\n"
-                     "#define DONT_MULT_BY_RESULT_COLOR\n"
-                     "uniform lowp vec4 _black;"
-                     "uniform lowp vec4 _white;"
-                     "lowp vec4 modify_base(lowp vec4 base)\n"
-                     "{\n"
-                     "lowp vec4 black = vec4(_black.rgb, 1.0);" "\n"
-                     "lowp vec4 white = vec4(_white.rgb, 1.0);" "\n"
-                     "return mix(_white, _black, base.r) * base.a;\n"
-                     "}\n");
+        shader->init(STDRenderer::uberShaderBody, R"(
+                     #define MODIFY_BASE
+                     #define DONT_MULT_BY_RESULT_COLOR
+                     uniform lowp vec4 _black;
+                     uniform lowp vec4 _white;
+                     lowp vec4 modify_base(lowp vec4 base)
+                     {
+                         lowp vec4 black = vec4(_black.rgb, 1.0);
+                         lowp vec4 white = vec4(_white.rgb, 1.0);
+                         return mix(_white, _black, base.r) * base.a;
+                     }
+        )");
     }
 
     static void free()

@@ -19,26 +19,28 @@ public:
 
     OpenGLSprite()
     {
-        const char* vertexShaderData = "\
-									uniform mediump mat4 projection;\
-									attribute vec3 a_position;\
-                                    attribute vec2 a_uv;\
-                                    varying mediump vec2 v_uv;\
-									void main() {\
-									vec4 position = vec4(a_position, 1.0);\
-									gl_Position = projection * position;\
-                                    v_uv = a_uv;\
-									}\
-									";
+        const char* vertexShaderData = R"(
+            uniform mediump mat4 projection;
+            attribute vec3 a_position;
+            attribute vec2 a_uv;
+            varying mediump vec2 v_uv;
+            void main() 
+            {
+                vec4 position = vec4(a_position, 1.0);
+                gl_Position = projection * position;
+                v_uv = a_uv;
+            }
+		)";
 
-        const char* fragmentShaderData = "\
-                                      varying mediump vec2 v_uv;\
-                                      uniform lowp sampler2D base_texture;\
-                                      \
-									  void main() { \
-									  gl_FragColor = texture2D(base_texture, v_uv); \
-									  } \
-									  ";
+        const char* fragmentShaderData = R"(\
+            varying mediump vec2 v_uv;
+            uniform lowp sampler2D base_texture;
+                                      
+			void main() 
+            {
+			    gl_FragColor = texture2D(base_texture, v_uv);
+			}
+		)";
 
 
         int vs = ShaderProgramGL::createShader(GL_VERTEX_SHADER,   vertexShaderData, 0, 0);
@@ -139,6 +141,7 @@ public:
 
         oxglDisableVertexAttribArray(0);
         oxglDisableVertexAttribArray(1);
+
         CHECKGL();
     }
 };
