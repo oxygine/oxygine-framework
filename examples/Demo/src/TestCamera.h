@@ -80,7 +80,7 @@ public:
             else
             {
                 touch* p1, *p2;
-				for (std::map<int, touch>::iterator i = _touches.begin(); i != _touches.end(); ++i)
+                for (std::map<int, touch>::iterator i = _touches.begin(); i != _touches.end(); ++i)
                 {
                     if (i->first == te->index)
                         p1 = &i->second;
