@@ -35,7 +35,6 @@ public:
         AnimationFrame frame;
         Diffuse df;
         df.base = texture;
-        df.premultiplied = false;
         frame.init(0, df,
                    RectF(0, 0, size.x / texture->getWidth(), size.y / texture->getHeight()),
                    RectF(Vector2(0, 0), size), size);
@@ -49,7 +48,7 @@ public:
 
     void onDown(Event* ev)
     {
-        color = Color(rand() % 255, rand() % 255, rand() % 255, 128);
+        color = Color(rand() % 255, rand() % 255, rand() % 255, 64);
         onMove(ev);
     }
 
@@ -65,13 +64,12 @@ public:
 
         renderer.begin(texture);
 #if 1
-
         RectF destRect(te->localPosition - Vector2(16, 16), Vector2(32, 32));
 
         ResAnim* brush = resources.getResAnim(left ? "brush" : "brush_eraser");
         AnimationFrame frame = brush->getFrame(0);
         const Diffuse& df = frame.getDiffuse();
-        renderer.setTexture(df.base, 0);
+        renderer.setTexture(df.base);
         if (left)
             renderer.setBlendMode(blend_premultiplied_alpha);
         else
