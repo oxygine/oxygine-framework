@@ -1,6 +1,7 @@
 #pragma once
 #include "test.h"
 #include "STDMaterial.h"
+#include "core/gl/oxgl.h"
 
 class TestRender2Texture : public Test
 {
@@ -62,11 +63,13 @@ public:
 
         STDRenderer& renderer = *STDRenderer::getCurrent();
 
-        renderer.begin(texture);
-#if 1
-        RectF destRect(te->localPosition - Vector2(16, 16), Vector2(32, 32));
 
-        ResAnim* brush = resources.getResAnim(left ? "brush" : "brush_eraser");
+
+#if 1
+        renderer.begin(texture);
+        RectF destRect(te->localPosition - Vector2(30, 30), Vector2(60, 60));
+
+        ResAnim* brush = resources.getResAnim("brush");
         AnimationFrame frame = brush->getFrame(0);
         const Diffuse& df = frame.getDiffuse();
         renderer.setTexture(df.base);
@@ -74,23 +77,24 @@ public:
             renderer.setBlendMode(blend_premultiplied_alpha);
         else
         {
-            color = Color::White;
-            renderer.setBlendMode(blend_disabled);
+            renderer.setBlendMode(blend_add);
+            oxglBlendEquation(GL_FUNC_REVERSE_SUBTRACT);
         }
 
-
         renderer.draw(color, frame.getSrcRect(), destRect);
-
+        renderer.end();
+        if (!left)
+            oxglBlendEquation(GL_FUNC_ADD);//restore to default value
 #else
 
+        renderer.begin(texture);
         spActor actor = new ManageResTest;
         actor->setScale(0.5f);
 
         RenderState rs;
         actor->setAlpha(64);
         actor->render(rs);
-#endif
-
         renderer.end();
+#endif
     }
 };
