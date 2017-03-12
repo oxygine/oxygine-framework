@@ -196,13 +196,13 @@ namespace oxygine
             float offset = tf->getWeight();
             float outline = tf->getWeight() - tf->getOutline();
 
-            renderer->beginSDFont(contrast, offset, tf->getOutlineColor(), outline);
+            renderer->applySDF(contrast, offset, tf->getOutlineColor(), outline);
             root->draw(dc);
-            renderer->endSDFont();
+            renderer->endSDF();
         }
         else
         {
-            renderer->beginElementRendering(true);
+            renderer->applySimpleMode(true);
             root->draw(dc);
         }
     }

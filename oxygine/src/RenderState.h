@@ -1,6 +1,7 @@
 #pragma once
 #include "oxygine-include.h"
 #include "core/Renderer.h"
+#include "STDMaterial.h"
 
 namespace oxygine
 {
@@ -27,7 +28,7 @@ namespace oxygine
     class RenderState: public RState
     {
     public:
-        RenderState(): material(0) {}
+        RenderState(Material* mat = STDMaterial::instance): material(mat) {}
         Material* material;
     };
 }

@@ -10,8 +10,6 @@ namespace oxygine
 
         static STDRenderer* current;
         static STDRenderer* instance;
-        /**Sets default rendering OpenGL options for 2D*/
-        static void setDefaultSettings();
         /**Initializes internal classes. Called automatically from oxygine::init();*/
         static void initialize();
         /**Clears internal data*/
@@ -45,7 +43,6 @@ namespace oxygine
         unsigned int    getShaderFlags() const;
 
         void setViewProj(const Matrix& viewProj);
-        void setViewProjTransform(const Matrix& viewProj);
         void setVertexDeclaration(const VertexDeclaration* decl);
         void setUberShaderProgram(UberShaderProgram* pr);
         /**Sets blend mode. Default value is blend_premultiplied_alpha*/
@@ -54,15 +51,19 @@ namespace oxygine
         void setTexture(const spNativeTexture& base, const spNativeTexture& alpha, bool basePremultiplied = true);
         void setTexture(const spNativeTexture& base, bool basePremultiplied = true);
         /**Sets World transformation.*/
-        void setTransform(const Transform& tr);
-
-        void beginElementRendering(bool basePremultiplied);// OVERRIDE;
-        void beginSDFont(float contrast, float offset, const Color& outlineColor, float outlineOffset);
-        void endSDFont();
-        void drawElement(const spNativeTexture& texture, unsigned int color, const RectF& src, const RectF& dest) override;
+        void setTransform(const Transform& world);
         void draw(const Color&, const RectF& srcRect, const RectF& destRect);
+
         /**Draws existing batch immediately.*/
         void drawBatch();
+
+
+        void applySDF(float contrast, float offset, const Color& outlineColor, float outlineOffset);
+        void endSDF();
+
+        void applySimpleMode(bool basePremultiplied);
+        /**used in pair with applySimpleMode/applySDF, fast, don't have excess checks*/
+        void draw(const spNativeTexture& texture, unsigned int color, const RectF& src, const RectF& dest) override;
 
         /**Begins rendering into RenderTexture or into primary framebuffer if rt is null*/
         void begin();
@@ -83,6 +84,9 @@ namespace oxygine
 
         void swapVerticesData(std::vector<unsigned char>& data);
         void swapVerticesData(STDRenderer& r);
+
+        OXYGINE_DEPRECATED
+        void setViewProjTransform(const Matrix& viewProj);
 
     protected:
         Transform _transform;

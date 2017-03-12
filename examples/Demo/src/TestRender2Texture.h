@@ -63,8 +63,9 @@ public:
 
         STDRenderer& renderer = *STDRenderer::getCurrent();
 
-#if 1
         renderer.begin(texture);
+#if 1
+
         RectF destRect(te->localPosition - Vector2(16, 16), Vector2(32, 32));
 
         ResAnim* brush = resources.getResAnim(left ? "brush" : "brush_eraser");
@@ -81,19 +82,17 @@ public:
 
 
         renderer.draw(color, frame.getSrcRect(), destRect);
-        renderer.end();
+
 #else
-        //how to render actors to texture
-        Material::setCurrent(0);
 
         spActor actor = new ManageResTest;
         actor->setScale(0.5f);
 
         RenderState rs;
-        rs.material = STDMaterial::instance;
         actor->setAlpha(64);
         actor->render(rs);
-        Material::setCurrent(0);
 #endif
+
+        renderer.end();
     }
 };

@@ -279,7 +279,7 @@ namespace oxygine
 
     void STDRenderer::begin()
     {
-        OX_ASSERT(!_drawing);
+        //OX_ASSERT(!_drawing);
         OX_ASSERT(_vertices.empty() == true);
         _program = 0;
         _vertices.clear();
@@ -295,6 +295,9 @@ namespace oxygine
 
     void STDRenderer::end()
     {
+        if (!_drawing)
+            return;
+
         OX_ASSERT(_drawing);
         drawBatch();
 
@@ -582,7 +585,7 @@ namespace oxygine
         _uberShader = pr;
     }
 
-    void STDRenderer::beginSDFont(float contrast, float offset, const Color& outlineColor, float outlineOffset)
+    void STDRenderer::applySDF(float contrast, float offset, const Color& outlineColor, float outlineOffset)
     {
         if (_alpha)
         {
@@ -614,7 +617,7 @@ namespace oxygine
         _driver->setUniform("sdf_params", c);
     }
 
-    void STDRenderer::endSDFont()
+    void STDRenderer::endSDF()
     {
         drawBatch();
         _shaderFlags &= ~(UberShaderProgram::SDF | UberShaderProgram::SDF_OUTLINE);
@@ -623,7 +626,7 @@ namespace oxygine
         setShader(prog);
     }
 
-    void STDRenderer::beginElementRendering(bool basePremultiplied)
+    void STDRenderer::applySimpleMode(bool basePremultiplied)
     {
         if (_alpha)
         {
@@ -645,7 +648,7 @@ namespace oxygine
         }
     }
 
-    void STDRenderer::drawElement(const spNativeTexture& texture, unsigned int color, const RectF& src, const RectF& dest)
+    void STDRenderer::draw(const spNativeTexture& texture, unsigned int color, const RectF& src, const RectF& dest)
     {
         if (_base != texture)
         {

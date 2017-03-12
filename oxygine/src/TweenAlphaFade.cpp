@@ -24,9 +24,9 @@ namespace oxygine
             AffineTransform tr = _pp._transform * _actor->computeGlobalTransform();
 
             renderer->setTransform(tr);
-            renderer->beginElementRendering(true);
+            renderer->applySimpleMode(true);
             Color color = Color(Color::White).withAlpha(_a).premultiplied();
-            renderer->drawElement(rt, color.rgba(), src, dest);
+            renderer->draw(rt, color.rgba(), src, dest);
             renderer->drawBatch();
         }
 

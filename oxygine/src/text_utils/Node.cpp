@@ -155,7 +155,7 @@ namespace oxygine
                 const Symbol& s = _data[i];
                 if (!s.gl.texture)
                     continue;
-                dc.renderer->drawElement(s.gl.texture, dc.color.rgba(), s.gl.src, s.destRect);
+                dc.renderer->draw(s.gl.texture, dc.color.rgba(), s.gl.src, s.destRect);
             }
 
             drawChildren(dc);

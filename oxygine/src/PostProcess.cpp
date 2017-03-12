@@ -413,9 +413,8 @@ namespace oxygine
 
 
         RenderState rs;
-        STDMaterial* mat = STDMaterial::instance;
         STDRenderer* renderer = STDRenderer::instance;
-        rs.material = mat;
+
 
         RectF clip = vp.cast<RectF>();
         rs.clip = &clip;
@@ -433,9 +432,8 @@ namespace oxygine
             rs.transform = rs.transform * offset;
         }
 
-        mat->Material::render(actor, rs);
+        rs.material->Material::render(actor, rs);
 
-        //mat->finish();
         Material::setCurrent(0);
     }
 

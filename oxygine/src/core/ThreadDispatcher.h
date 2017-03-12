@@ -57,7 +57,7 @@ namespace oxygine
 
             callback    cb;
             void*       cbData;
-            
+
             std::function< void() >     cbFunction;
 
             unsigned int _id;
@@ -80,7 +80,7 @@ namespace oxygine
 
         //blocking
         void wait();
-        
+
         //blocking
         void get(message& ev);
 
@@ -90,7 +90,7 @@ namespace oxygine
 
         //blocking, sends message and waiting reply from other thread
         void* send(int msgid, void* arg1, void* arg2);
-        
+
         //blocking, sends callback and waiting until it is done
         void* sendCallback(void* arg1, void* arg2, callback cb, void* cbData, bool highPriority = false);
 

@@ -150,8 +150,7 @@ namespace oxygine
         Matrix vp = view * proj;
         STDRenderer::instance->setViewProj(vp);
 
-        RenderState rs;
-        rs.material = _material;
+        RenderState rs(_material);
         Point ds = core::getDisplaySize();
 
 

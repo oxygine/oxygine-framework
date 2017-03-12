@@ -71,13 +71,12 @@ namespace oxygine
 
         STDRenderer renderer(&cache);
         //STDRenderer::current = &renderer;
-        renderer.setViewProjTransform(STDRenderer::instance->getViewProjection());
+        renderer.setViewProj(STDRenderer::instance->getViewProjection());
         //renderer.begin();
         STDRenderer::current = &renderer;
         //STDMaterial mat;
 
         RenderState rs;
-        rs.material = STDMaterial::instance;
         RectF clip = RectF::huge();
         rs.clip = &clip;
 
