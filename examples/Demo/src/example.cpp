@@ -1,4 +1,4 @@
-#include "oxygine-framework.h"
+#include "oxygine/oxygine-framework.h"
 
 #include "test.h"
 #include "TestPerf.h"

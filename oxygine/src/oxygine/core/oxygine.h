@@ -1,7 +1,7 @@
 #pragma once
-#include "oxygine-include.h"
+#include "../oxygine-include.h"
 #include "../EventDispatcher.h"
-#include "math/Vector2.h"
+#include "../math/Vector2.h"
 #include <string>
 
 #if OXYGINE_SDL

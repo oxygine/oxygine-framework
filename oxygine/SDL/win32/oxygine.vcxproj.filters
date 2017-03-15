@@ -48,705 +48,705 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\math\AffineTransform.cpp">
+    <ClCompile Include="..\..\src\oxygine\math\AffineTransform.cpp">
       <Filter>src\math</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\pugixml\pugixml.cpp">
+    <ClCompile Include="..\..\src\oxygine\pugixml\pugixml.cpp">
       <Filter>src\pugi</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\utils\ImageUtils.cpp">
+    <ClCompile Include="..\..\src\oxygine\utils\ImageUtils.cpp">
       <Filter>src\utils</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\winnie_alloc\system_alloc.cpp">
+    <ClCompile Include="..\..\src\oxygine\winnie_alloc\system_alloc.cpp">
       <Filter>src\winnie_alloc</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\winnie_alloc\winnie_alloc.cpp">
+    <ClCompile Include="..\..\src\oxygine\winnie_alloc\winnie_alloc.cpp">
       <Filter>src\winnie_alloc</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\res\ResAnim.cpp">
+    <ClCompile Include="..\..\src\oxygine\res\ResAnim.cpp">
       <Filter>src\res</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\res\ResAtlas.cpp">
+    <ClCompile Include="..\..\src\oxygine\res\ResAtlas.cpp">
       <Filter>src\res</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\res\ResBuffer.cpp">
+    <ClCompile Include="..\..\src\oxygine\res\ResBuffer.cpp">
       <Filter>src\res</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\res\ResFont.cpp">
+    <ClCompile Include="..\..\src\oxygine\res\ResFont.cpp">
       <Filter>src\res</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\res\ResFontBM.cpp">
+    <ClCompile Include="..\..\src\oxygine\res\ResFontBM.cpp">
       <Filter>src\res</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\res\Resource.cpp">
+    <ClCompile Include="..\..\src\oxygine\res\Resource.cpp">
       <Filter>src\res</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\res\Resources.cpp">
+    <ClCompile Include="..\..\src\oxygine\res\Resources.cpp">
       <Filter>src\res</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\utils\stringUtils.cpp">
+    <ClCompile Include="..\..\src\oxygine\utils\stringUtils.cpp">
       <Filter>src\utils</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\res\ResStarlingAtlas.cpp">
+    <ClCompile Include="..\..\src\oxygine\res\ResStarlingAtlas.cpp">
       <Filter>src\res</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\text_utils\Aligner.cpp">
+    <ClCompile Include="..\..\src\oxygine\text_utils\Aligner.cpp">
       <Filter>src\text</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\text_utils\Node.cpp">
+    <ClCompile Include="..\..\src\oxygine\text_utils\Node.cpp">
       <Filter>src\text</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\text_utils\TextBuilder.cpp">
+    <ClCompile Include="..\..\src\oxygine\text_utils\TextBuilder.cpp">
       <Filter>src\text</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\dev_tools\DeveloperMenu.cpp">
+    <ClCompile Include="..\..\src\oxygine\dev_tools\DeveloperMenu.cpp">
       <Filter>src\dev_tools</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\dev_tools\TexturesInspector.cpp">
+    <ClCompile Include="..\..\src\oxygine\dev_tools\TexturesInspector.cpp">
       <Filter>src\dev_tools</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\dev_tools\TreeInspector.cpp">
+    <ClCompile Include="..\..\src\oxygine\dev_tools\TreeInspector.cpp">
       <Filter>src\dev_tools</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\dev_tools\TreeInspectorLine.cpp">
+    <ClCompile Include="..\..\src\oxygine\dev_tools\TreeInspectorLine.cpp">
       <Filter>src\dev_tools</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\dev_tools\TreeInspectorPage.cpp">
+    <ClCompile Include="..\..\src\oxygine\dev_tools\TreeInspectorPage.cpp">
       <Filter>src\dev_tools</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\dev_tools\TreeInspectorPreview.cpp">
+    <ClCompile Include="..\..\src\oxygine\dev_tools\TreeInspectorPreview.cpp">
       <Filter>src\dev_tools</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\gl\NativeTextureGLES.cpp">
+    <ClCompile Include="..\..\src\oxygine\core\gl\NativeTextureGLES.cpp">
       <Filter>src\gl</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\gl\oxgl.cpp">
+    <ClCompile Include="..\..\src\oxygine\core\gl\oxgl.cpp">
       <Filter>src\gl</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\gl\VideoDriverGLES20.cpp">
+    <ClCompile Include="..\..\src\oxygine\core\gl\VideoDriverGLES20.cpp">
       <Filter>src\gl</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\gl\VertexDeclarationGL.cpp">
+    <ClCompile Include="..\..\src\oxygine\core\gl\VertexDeclarationGL.cpp">
       <Filter>src\gl</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\gl\VideoDriverGL.cpp">
+    <ClCompile Include="..\..\src\oxygine\core\gl\VideoDriverGL.cpp">
       <Filter>src\gl</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\file.cpp">
+    <ClCompile Include="..\..\src\oxygine\core\file.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\FileSystem.cpp">
+    <ClCompile Include="..\..\src\oxygine\core\FileSystem.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\ImageData.cpp">
+    <ClCompile Include="..\..\src\oxygine\core\ImageData.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\ImageDataOperations.cpp">
+    <ClCompile Include="..\..\src\oxygine\core\ImageDataOperations.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\log.cpp">
+    <ClCompile Include="..\..\src\oxygine\core\log.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\Mem2Native.cpp">
+    <ClCompile Include="..\..\src\oxygine\core\Mem2Native.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\Mutex.cpp">
+    <ClCompile Include="..\..\src\oxygine\core\Mutex.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\NativeTexture.cpp">
+    <ClCompile Include="..\..\src\oxygine\core\NativeTexture.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\Object.cpp">
+    <ClCompile Include="..\..\src\oxygine\core\Object.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\oxygine.cpp">
+    <ClCompile Include="..\..\src\oxygine\core\oxygine.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\Renderer.cpp">
+    <ClCompile Include="..\..\src\oxygine\core\Renderer.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\STDFileSystem.cpp">
+    <ClCompile Include="..\..\src\oxygine\core\STDFileSystem.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\system_data.cpp">
+    <ClCompile Include="..\..\src\oxygine\core\system_data.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\Texture.cpp">
+    <ClCompile Include="..\..\src\oxygine\core\Texture.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\VideoDriver.cpp">
+    <ClCompile Include="..\..\src\oxygine\core\VideoDriver.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\ZipFileSystem.cpp">
+    <ClCompile Include="..\..\src\oxygine\core\ZipFileSystem.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\minizip\ioapi.c">
+    <ClCompile Include="..\..\src\oxygine\minizip\ioapi.c">
       <Filter>src\minizip</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\minizip\ioapi_mem.c">
+    <ClCompile Include="..\..\src\oxygine\minizip\ioapi_mem.c">
       <Filter>src\minizip</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\minizip\unzip.c">
+    <ClCompile Include="..\..\src\oxygine\minizip\unzip.c">
       <Filter>src\minizip</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Actor.cpp">
+    <ClCompile Include="..\..\src\oxygine\Actor.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\AnimationFrame.cpp">
+    <ClCompile Include="..\..\src\oxygine\AnimationFrame.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Box9Sprite.cpp">
+    <ClCompile Include="..\..\src\oxygine\Box9Sprite.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Button.cpp">
+    <ClCompile Include="..\..\src\oxygine\Button.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\ClipRectActor.cpp">
+    <ClCompile Include="..\..\src\oxygine\ClipRectActor.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Clock.cpp">
+    <ClCompile Include="..\..\src\oxygine\Clock.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\ColorRectSprite.cpp">
+    <ClCompile Include="..\..\src\oxygine\ColorRectSprite.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\DebugActor.cpp">
+    <ClCompile Include="..\..\src\oxygine\DebugActor.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Draggable.cpp">
+    <ClCompile Include="..\..\src\oxygine\Draggable.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\EventDispatcher.cpp">
+    <ClCompile Include="..\..\src\oxygine\EventDispatcher.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Font.cpp">
+    <ClCompile Include="..\..\src\oxygine\Font.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Input.cpp">
+    <ClCompile Include="..\..\src\oxygine\Input.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\MaskedSprite.cpp">
+    <ClCompile Include="..\..\src\oxygine\MaskedSprite.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\PointerState.cpp">
+    <ClCompile Include="..\..\src\oxygine\PointerState.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\ProgressBar.cpp">
+    <ClCompile Include="..\..\src\oxygine\ProgressBar.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\SlidingActor.cpp">
+    <ClCompile Include="..\..\src\oxygine\SlidingActor.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Sprite.cpp">
+    <ClCompile Include="..\..\src\oxygine\Sprite.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\VisualStyle.cpp">
+    <ClCompile Include="..\..\src\oxygine\VisualStyle.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\Restorable.cpp">
+    <ClCompile Include="..\..\src\oxygine\core\Restorable.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\res\CreateResourceContext.cpp">
+    <ClCompile Include="..\..\src\oxygine\res\CreateResourceContext.cpp">
       <Filter>src\res</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\UberShaderProgram.cpp">
+    <ClCompile Include="..\..\src\oxygine\core\UberShaderProgram.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\gl\ShaderProgramGL.cpp">
+    <ClCompile Include="..\..\src\oxygine\core\gl\ShaderProgramGL.cpp">
       <Filter>src\gl</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\InputText.cpp">
+    <ClCompile Include="..\..\src\oxygine\InputText.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\TextField.cpp">
+    <ClCompile Include="..\..\src\oxygine\TextField.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Stage.cpp">
+    <ClCompile Include="..\..\src\oxygine\Stage.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Polygon.cpp">
+    <ClCompile Include="..\..\src\oxygine\Polygon.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\STDRenderer.cpp">
+    <ClCompile Include="..\..\src\oxygine\STDRenderer.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\MaskedRenderer.cpp">
+    <ClCompile Include="..\..\src\oxygine\MaskedRenderer.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\TweenQueue.cpp">
+    <ClCompile Include="..\..\src\oxygine\TweenQueue.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Tween.cpp">
+    <ClCompile Include="..\..\src\oxygine\Tween.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Serializable.cpp">
+    <ClCompile Include="..\..\src\oxygine\Serializable.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Serialize.cpp">
+    <ClCompile Include="..\..\src\oxygine\Serialize.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\AsyncTask.cpp">
+    <ClCompile Include="..\..\src\oxygine\AsyncTask.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\WebImage.cpp">
+    <ClCompile Include="..\..\src\oxygine\WebImage.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\HttpRequestTask.cpp">
+    <ClCompile Include="..\..\src\oxygine\HttpRequestTask.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\curl\HttpRequestCurlTask.cpp">
+    <ClCompile Include="..\..\src\oxygine\core\curl\HttpRequestCurlTask.cpp">
       <Filter>src\core\curl</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\TweenAnim.cpp">
+    <ClCompile Include="..\..\src\oxygine\TweenAnim.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\utils\cdecode.c">
+    <ClCompile Include="..\..\src\oxygine\utils\cdecode.c">
       <Filter>src\utils</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\json\jsoncpp.cpp">
+    <ClCompile Include="..\..\src\oxygine\json\jsoncpp.cpp">
       <Filter>src\json</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\STDMaterial.cpp">
+    <ClCompile Include="..\..\src\oxygine\STDMaterial.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\TweenAlphaFade.cpp">
+    <ClCompile Include="..\..\src\oxygine\TweenAlphaFade.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Material.cpp">
+    <ClCompile Include="..\..\src\oxygine\Material.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\res\ResAtlasGeneric.cpp">
+    <ClCompile Include="..\..\src\oxygine\res\ResAtlasGeneric.cpp">
       <Filter>src\res</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\res\ResAtlasPrebuilt.cpp">
+    <ClCompile Include="..\..\src\oxygine\res\ResAtlasPrebuilt.cpp">
       <Filter>src\res</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\ThreadLoader.cpp">
+    <ClCompile Include="..\..\src\oxygine\ThreadLoader.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\PostProcess.cpp">
+    <ClCompile Include="..\..\src\oxygine\PostProcess.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\TweenOutline.cpp">
+    <ClCompile Include="..\..\src\oxygine\TweenOutline.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\ThreadDispatcher.cpp">
+    <ClCompile Include="..\..\src\oxygine\core\ThreadDispatcher.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\TweenGlow.cpp">
+    <ClCompile Include="..\..\src\oxygine\TweenGlow.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\key.cpp">
+    <ClCompile Include="..\..\src\oxygine\key.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\Image.cpp">
+    <ClCompile Include="..\..\src\oxygine\Image.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\res\SingleResAnim.cpp">
+    <ClCompile Include="..\..\src\oxygine\res\SingleResAnim.cpp">
       <Filter>src\res</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\utils\AtlasBuilder.cpp">
+    <ClCompile Include="..\..\src\oxygine\utils\AtlasBuilder.cpp">
       <Filter>src\utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\src\closure\closure.h">
+    <ClInclude Include="..\..\src\oxygine\closure\closure.h">
       <Filter>src\closure</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\closure\closure_impl.h">
+    <ClInclude Include="..\..\src\oxygine\closure\closure_impl.h">
       <Filter>src\closure</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\math\AffineTransform.h">
+    <ClInclude Include="..\..\src\oxygine\math\AffineTransform.h">
       <Filter>src\math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\math\Color.h">
+    <ClInclude Include="..\..\src\oxygine\math\Color.h">
       <Filter>src\math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\math\matrix.h">
+    <ClInclude Include="..\..\src\oxygine\math\matrix.h">
       <Filter>src\math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\math\Rect.h">
+    <ClInclude Include="..\..\src\oxygine\math\Rect.h">
       <Filter>src\math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\math\ScalarMath.h">
+    <ClInclude Include="..\..\src\oxygine\math\ScalarMath.h">
       <Filter>src\math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\math\vector2.h">
+    <ClInclude Include="..\..\src\oxygine\math\vector2.h">
       <Filter>src\math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\math\vector3.h">
+    <ClInclude Include="..\..\src\oxygine\math\vector3.h">
       <Filter>src\math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\math\vector4.h">
+    <ClInclude Include="..\..\src\oxygine\math\vector4.h">
       <Filter>src\math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\pugixml\pugiconfig.hpp">
+    <ClInclude Include="..\..\src\oxygine\pugixml\pugiconfig.hpp">
       <Filter>src\pugi</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\pugixml\pugixml.hpp">
+    <ClInclude Include="..\..\src\oxygine\pugixml\pugixml.hpp">
       <Filter>src\pugi</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\utils\ImageUtils.h">
+    <ClInclude Include="..\..\src\oxygine\utils\ImageUtils.h">
       <Filter>src\utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\utils\intrusive_list.h">
+    <ClInclude Include="..\..\src\oxygine\utils\intrusive_list.h">
       <Filter>src\utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\winnie_alloc\system_alloc.h">
+    <ClInclude Include="..\..\src\oxygine\winnie_alloc\system_alloc.h">
       <Filter>src\winnie_alloc</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\winnie_alloc\winnie_alloc.h">
+    <ClInclude Include="..\..\src\oxygine\winnie_alloc\winnie_alloc.h">
       <Filter>src\winnie_alloc</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\winnie_alloc\winnie_alloc_config.h">
+    <ClInclude Include="..\..\src\oxygine\winnie_alloc\winnie_alloc_config.h">
       <Filter>src\winnie_alloc</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\res\CreateResourceContext.h">
+    <ClInclude Include="..\..\src\oxygine\res\CreateResourceContext.h">
       <Filter>src\res</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\res\ResAnim.h">
+    <ClInclude Include="..\..\src\oxygine\res\ResAnim.h">
       <Filter>src\res</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\res\ResAtlas.h">
+    <ClInclude Include="..\..\src\oxygine\res\ResAtlas.h">
       <Filter>src\res</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\res\ResBuffer.h">
+    <ClInclude Include="..\..\src\oxygine\res\ResBuffer.h">
       <Filter>src\res</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\res\ResFont.h">
+    <ClInclude Include="..\..\src\oxygine\res\ResFont.h">
       <Filter>src\res</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\res\ResFontBM.h">
+    <ClInclude Include="..\..\src\oxygine\res\ResFontBM.h">
       <Filter>src\res</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\res\Resource.h">
+    <ClInclude Include="..\..\src\oxygine\res\Resource.h">
       <Filter>src\res</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\res\Resources.h">
+    <ClInclude Include="..\..\src\oxygine\res\Resources.h">
       <Filter>src\res</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\utils\stringUtils.h">
+    <ClInclude Include="..\..\src\oxygine\utils\stringUtils.h">
       <Filter>src\utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\res\ResStarlingAtlas.h">
+    <ClInclude Include="..\..\src\oxygine\res\ResStarlingAtlas.h">
       <Filter>src\res</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\text_utils\Aligner.h">
+    <ClInclude Include="..\..\src\oxygine\text_utils\Aligner.h">
       <Filter>src\text</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\text_utils\Node.h">
+    <ClInclude Include="..\..\src\oxygine\text_utils\Node.h">
       <Filter>src\text</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\text_utils\TextBuilder.h">
+    <ClInclude Include="..\..\src\oxygine\text_utils\TextBuilder.h">
       <Filter>src\text</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\dev_tools\DeveloperMenu.h">
+    <ClInclude Include="..\..\src\oxygine\dev_tools\DeveloperMenu.h">
       <Filter>src\dev_tools</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\dev_tools\TexturesInspector.h">
+    <ClInclude Include="..\..\src\oxygine\dev_tools\TexturesInspector.h">
       <Filter>src\dev_tools</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\dev_tools\TreeInspector.h">
+    <ClInclude Include="..\..\src\oxygine\dev_tools\TreeInspector.h">
       <Filter>src\dev_tools</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\dev_tools\TreeInspectorLine.h">
+    <ClInclude Include="..\..\src\oxygine\dev_tools\TreeInspectorLine.h">
       <Filter>src\dev_tools</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\dev_tools\TreeInspectorPage.h">
+    <ClInclude Include="..\..\src\oxygine\dev_tools\TreeInspectorPage.h">
       <Filter>src\dev_tools</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\dev_tools\TreeInspectorPreview.h">
+    <ClInclude Include="..\..\src\oxygine\dev_tools\TreeInspectorPreview.h">
       <Filter>src\dev_tools</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\core\gl\NativeTextureGLES.h">
+    <ClInclude Include="..\..\src\oxygine\core\gl\NativeTextureGLES.h">
       <Filter>src\gl</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\core\gl\oxgl.h">
+    <ClInclude Include="..\..\src\oxygine\core\gl\oxgl.h">
       <Filter>src\gl</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\core\gl\VideoDriverGLES20.h">
+    <ClInclude Include="..\..\src\oxygine\core\gl\VideoDriverGLES20.h">
       <Filter>src\gl</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\core\gl\VertexDeclarationGL.h">
+    <ClInclude Include="..\..\src\oxygine\core\gl\VertexDeclarationGL.h">
       <Filter>src\gl</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\core\gl\VideoDriverGL.h">
+    <ClInclude Include="..\..\src\oxygine\core\gl\VideoDriverGL.h">
       <Filter>src\gl</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\core\file.h">
+    <ClInclude Include="..\..\src\oxygine\core\file.h">
       <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\core\FileSystem.h">
+    <ClInclude Include="..\..\src\oxygine\core\FileSystem.h">
       <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\core\ImageData.h">
+    <ClInclude Include="..\..\src\oxygine\core\ImageData.h">
       <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\core\ImageDataOperations.h">
+    <ClInclude Include="..\..\src\oxygine\core\ImageDataOperations.h">
       <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\core\intrusive_ptr.h">
+    <ClInclude Include="..\..\src\oxygine\core\intrusive_ptr.h">
       <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\core\log.h">
+    <ClInclude Include="..\..\src\oxygine\core\log.h">
       <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\core\Mem2Native.h">
+    <ClInclude Include="..\..\src\oxygine\core\Mem2Native.h">
       <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\core\Mutex.h">
+    <ClInclude Include="..\..\src\oxygine\core\Mutex.h">
       <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\core\NativeTexture.h">
+    <ClInclude Include="..\..\src\oxygine\core\NativeTexture.h">
       <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\core\Object.h">
+    <ClInclude Include="..\..\src\oxygine\core\Object.h">
       <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\core\ox_debug.h">
+    <ClInclude Include="..\..\src\oxygine\core\ox_debug.h">
       <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\core\oxygine.h">
+    <ClInclude Include="..\..\src\oxygine\core\oxygine.h">
       <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\core\pixel.h">
+    <ClInclude Include="..\..\src\oxygine\core\pixel.h">
       <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\core\ref_counter.h">
+    <ClInclude Include="..\..\src\oxygine\core\ref_counter.h">
       <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\core\Renderer.h">
+    <ClInclude Include="..\..\src\oxygine\core\Renderer.h">
       <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\core\ShaderProgram.h">
+    <ClInclude Include="..\..\src\oxygine\core\ShaderProgram.h">
       <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\core\STDFileSystem.h">
+    <ClInclude Include="..\..\src\oxygine\core\STDFileSystem.h">
       <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\core\system_data.h">
+    <ClInclude Include="..\..\src\oxygine\core\system_data.h">
       <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\core\Texture.h">
+    <ClInclude Include="..\..\src\oxygine\core\Texture.h">
       <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\core\vertex.h">
+    <ClInclude Include="..\..\src\oxygine\core\vertex.h">
       <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\core\VertexDeclaration.h">
+    <ClInclude Include="..\..\src\oxygine\core\VertexDeclaration.h">
       <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\core\VideoDriver.h">
+    <ClInclude Include="..\..\src\oxygine\core\VideoDriver.h">
       <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\core\ZipFileSystem.h">
+    <ClInclude Include="..\..\src\oxygine\core\ZipFileSystem.h">
       <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\minizip\ioapi.h">
+    <ClInclude Include="..\..\src\oxygine\minizip\ioapi.h">
       <Filter>src\minizip</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\minizip\ioapi_mem.h">
+    <ClInclude Include="..\..\src\oxygine\minizip\ioapi_mem.h">
       <Filter>src\minizip</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\minizip\unzip.h">
+    <ClInclude Include="..\..\src\oxygine\minizip\unzip.h">
       <Filter>src\minizip</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Actor.h">
+    <ClInclude Include="..\..\src\oxygine\Actor.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\AnimationFrame.h">
+    <ClInclude Include="..\..\src\oxygine\AnimationFrame.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Box9Sprite.h">
+    <ClInclude Include="..\..\src\oxygine\Box9Sprite.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Button.h">
+    <ClInclude Include="..\..\src\oxygine\Button.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\ClipRectActor.h">
+    <ClInclude Include="..\..\src\oxygine\ClipRectActor.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Clock.h">
+    <ClInclude Include="..\..\src\oxygine\Clock.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\ColorRectSprite.h">
+    <ClInclude Include="..\..\src\oxygine\ColorRectSprite.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\DebugActor.h">
+    <ClInclude Include="..\..\src\oxygine\DebugActor.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Draggable.h">
+    <ClInclude Include="..\..\src\oxygine\Draggable.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Event.h">
+    <ClInclude Include="..\..\src\oxygine\Event.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\EventDispatcher.h">
+    <ClInclude Include="..\..\src\oxygine\EventDispatcher.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Font.h">
+    <ClInclude Include="..\..\src\oxygine\Font.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\InitActor.h">
+    <ClInclude Include="..\..\src\oxygine\InitActor.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Input.h">
+    <ClInclude Include="..\..\src\oxygine\Input.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\MaskedSprite.h">
+    <ClInclude Include="..\..\src\oxygine\MaskedSprite.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\oxygine-framework.h">
+    <ClInclude Include="..\..\src\oxygine\oxygine-framework.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\PointerState.h">
+    <ClInclude Include="..\..\src\oxygine\PointerState.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\ProgressBar.h">
+    <ClInclude Include="..\..\src\oxygine\ProgressBar.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\RenderState.h">
+    <ClInclude Include="..\..\src\oxygine\RenderState.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\SlidingActor.h">
+    <ClInclude Include="..\..\src\oxygine\SlidingActor.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Sprite.h">
+    <ClInclude Include="..\..\src\oxygine\Sprite.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\TextStyle.h">
+    <ClInclude Include="..\..\src\oxygine\TextStyle.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\UpdateState.h">
+    <ClInclude Include="..\..\src\oxygine\UpdateState.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\VisualStyle.h">
+    <ClInclude Include="..\..\src\oxygine\VisualStyle.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\core\Restorable.h">
+    <ClInclude Include="..\..\src\oxygine\core\Restorable.h">
       <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\core\UberShaderProgram.h">
+    <ClInclude Include="..\..\src\oxygine\core\UberShaderProgram.h">
       <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\core\gl\ShaderProgramGL.h">
+    <ClInclude Include="..\..\src\oxygine\core\gl\ShaderProgramGL.h">
       <Filter>src\gl</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\InputText.h">
+    <ClInclude Include="..\..\src\oxygine\InputText.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\TextField.h">
+    <ClInclude Include="..\..\src\oxygine\TextField.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Stage.h">
+    <ClInclude Include="..\..\src\oxygine\Stage.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Polygon.h">
+    <ClInclude Include="..\..\src\oxygine\Polygon.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\MaskedRenderer.h">
+    <ClInclude Include="..\..\src\oxygine\MaskedRenderer.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\STDRenderer.h">
+    <ClInclude Include="..\..\src\oxygine\STDRenderer.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\TweenQueue.h">
+    <ClInclude Include="..\..\src\oxygine\TweenQueue.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Tween.h">
+    <ClInclude Include="..\..\src\oxygine\Tween.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Serializable.h">
+    <ClInclude Include="..\..\src\oxygine\Serializable.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Serialize.h">
+    <ClInclude Include="..\..\src\oxygine\Serialize.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\TouchEvent.h">
+    <ClInclude Include="..\..\src\oxygine\TouchEvent.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\KeyEvent.h">
+    <ClInclude Include="..\..\src\oxygine\KeyEvent.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Property.h">
+    <ClInclude Include="..\..\src\oxygine\Property.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\AsyncTask.h">
+    <ClInclude Include="..\..\src\oxygine\AsyncTask.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\WebImage.h">
+    <ClInclude Include="..\..\src\oxygine\WebImage.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\HttpRequestTask.h">
+    <ClInclude Include="..\..\src\oxygine\HttpRequestTask.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\core\curl\HttpRequestCurlTask.h">
+    <ClInclude Include="..\..\src\oxygine\core\curl\HttpRequestCurlTask.h">
       <Filter>src\core\curl</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\oxygine_include.h">
+    <ClInclude Include="..\..\src\oxygine\oxygine_include.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\TweenAnim.h">
+    <ClInclude Include="..\..\src\oxygine\TweenAnim.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\utils\cdecode.h">
+    <ClInclude Include="..\..\src\oxygine\utils\cdecode.h">
       <Filter>src\utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\json\json.h">
+    <ClInclude Include="..\..\src\oxygine\json\json.h">
       <Filter>src\json</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\json\json-forwards.h">
+    <ClInclude Include="..\..\src\oxygine\json\json-forwards.h">
       <Filter>src\json</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\STDMaterial.h">
+    <ClInclude Include="..\..\src\oxygine\STDMaterial.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\TweenAlphaFade.h">
+    <ClInclude Include="..\..\src\oxygine\TweenAlphaFade.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Material.h">
+    <ClInclude Include="..\..\src\oxygine\Material.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\res\ResAtlasGeneric.h">
+    <ClInclude Include="..\..\src\oxygine\res\ResAtlasGeneric.h">
       <Filter>src\res</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\res\ResAtlasPrebuilt.h">
+    <ClInclude Include="..\..\src\oxygine\res\ResAtlasPrebuilt.h">
       <Filter>src\res</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\ThreadLoader.h">
+    <ClInclude Include="..\..\src\oxygine\ThreadLoader.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\math\OBBox.h">
+    <ClInclude Include="..\..\src\oxygine\math\OBBox.h">
       <Filter>src\math</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\PostProcess.h">
+    <ClInclude Include="..\..\src\oxygine\PostProcess.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\TweenOutline.h">
+    <ClInclude Include="..\..\src\oxygine\TweenOutline.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\core\ThreadDispatcher.h">
+    <ClInclude Include="..\..\src\oxygine\core\ThreadDispatcher.h">
       <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\TweenGlow.h">
+    <ClInclude Include="..\..\src\oxygine\TweenGlow.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\key.h">
+    <ClInclude Include="..\..\src\oxygine\key.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\Image.h">
+    <ClInclude Include="..\..\src\oxygine\Image.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\res\SingleResAnim.h">
+    <ClInclude Include="..\..\src\oxygine\res\SingleResAnim.h">
       <Filter>src\res</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\oxygine-forwards.h">
+    <ClInclude Include="..\..\src\oxygine\oxygine-forwards.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\oxygine-include.h">
+    <ClInclude Include="..\..\src\oxygine\oxygine-include.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\utils\AtlasBuilder.h">
+    <ClInclude Include="..\..\src\oxygine\utils\AtlasBuilder.h">
       <Filter>src\utils</Filter>
     </ClInclude>
   </ItemGroup>

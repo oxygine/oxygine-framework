@@ -1,9 +1,9 @@
 #pragma once
-#include "oxygine-include.h"
+#include "../oxygine-include.h"
 #include <string>
 #include <list>
 #include <string.h>
-#include "pugixml/pugixml.hpp"
+#include "../pugixml/pugixml.hpp"
 #include "closure/closure.h"
 #include "core/Object.h"
 #include "Resource.h"

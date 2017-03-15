@@ -1,6 +1,6 @@
 #pragma once
-#include "ClipRectActor.h"
-#include "res/Resources.h"
+#include "oxygine/ClipRectActor.h"
+#include "oxygine/res/Resources.h"
 
 using namespace oxygine;
 

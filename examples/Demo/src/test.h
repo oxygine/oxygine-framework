@@ -1,9 +1,9 @@
 #pragma once
-#include "Actor.h"
-#include "Button.h"
-#include "RenderState.h"
-#include "STDRenderer.h"
-#include "TextField.h"
+#include "oxygine/Actor.h"
+#include "oxygine/Button.h"
+#include "oxygine/RenderState.h"
+#include "oxygine/STDRenderer.h"
+#include "oxygine/TextField.h"
 using namespace oxygine;
 using namespace std;
 
