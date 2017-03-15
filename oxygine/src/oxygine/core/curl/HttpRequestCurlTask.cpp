@@ -1,6 +1,6 @@
 #include "HttpRequestCurlTask.h"
-#include "core/oxygine.h"
-#include "core/ThreadDispatcher.h"
+#include "../oxygine.h"
+#include "../ThreadDispatcher.h"
 #include "SDL.h"
 #include "pthread.h"
 

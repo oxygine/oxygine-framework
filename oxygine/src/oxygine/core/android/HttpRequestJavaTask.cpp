@@ -1,5 +1,5 @@
 #include "HttpRequestJavaTask.h"
-#include "core/log.h"
+#include "../core/log.h"
 
 namespace oxygine
 {

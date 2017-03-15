@@ -1,6 +1,6 @@
 #pragma once
 
-#include "oxygine/oxygine-framework.h"
+#include "oxygine-framework.h"
 
 using namespace oxygine;
 using namespace std;

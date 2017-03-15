@@ -33,7 +33,7 @@ endif(EMSCRIPTEN)
 
 
 set(OXYGINE_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/oxygine)
-set(OXYGINE_SRC ${OXYGINE_ROOT}/oxygine/src/oxygine)
+set(OXYGINE_SRC ${OXYGINE_ROOT}/src/oxygine)
 
 set(FOLDERS oxygine oxygine/closure oxygine/minizip oxygine/core
 			oxygine/core/gl oxygine/dev_tools oxygine/minizip 
@@ -99,7 +99,7 @@ elseif(MINGW)
 endif()
 
 if (OX_HAVE_LIBCURL)	
-	set(FOLDERS ${FOLDERS} src/core/curl)
+	set(FOLDERS ${FOLDERS} oxygine/core/curl)
 	include_directories(${THIRD_PARTY}/curl/)
 	set(OX_DEFINITIONS ${OX_DEFINITIONS} -DOX_HAVE_LIBCURL)
 endif(OX_HAVE_LIBCURL)	
@@ -125,8 +125,7 @@ foreach(ITEM ${FOLDERS})
 endforeach(ITEM)
 
 
-set(OXYGINE_INCLUDE_DIRS 
-	${OXYGINE_SRC}
+set(OXYGINE_INCLUDE_DIRS
 	${THIRD_PARTY}/pthreads/include/
 	${THIRD_PARTY}/zlib)
 
@@ -224,6 +223,7 @@ endif(NOT MSVC)
 set(CMAKE_CXX_FLAGS ${OXYGINE_CXX_FLAGS})
 
 add_definitions(${OX_DEFINITIONS})
+include_directories(${OXYGINE_SRC})
 include_directories(${OXYGINE_INCLUDE_DIRS})
 add_library(oxygine-framework STATIC ${SOURCES})
 
@@ -242,6 +242,7 @@ set(OXYGINE_DEFINITIONS
 
 set(OXYGINE_INCLUDE_DIRS
 	${OXYGINE_INCLUDE_DIRS}
+	${OXYGINE_ROOT}/src
 	PARENT_SCOPE)
 
 set(OXYGINE_JS_LIBRARIES

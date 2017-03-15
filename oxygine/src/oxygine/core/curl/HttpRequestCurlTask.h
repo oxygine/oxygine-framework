@@ -1,9 +1,9 @@
 #pragma once
 #include "curl/curl.h"
-#include "oxygine-include.h"
-#include "HttpRequestTask.h"
-#include "core/file.h"
-#include "core/ThreadDispatcher.h"
+#include "../../oxygine-include.h"
+#include "../../HttpRequestTask.h"
+#include "../file.h"
+#include "../ThreadDispatcher.h"
 
 namespace oxygine
 {

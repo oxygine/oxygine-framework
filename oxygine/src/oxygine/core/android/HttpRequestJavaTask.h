@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 denism. All rights reserved.
 //
 #pragma once
-#include "oxygine_include.h"
-#include "HttpRequestTask.h"
+#include "../../oxygine-include.h"
+#include "../../HttpRequestTask.h"
 #include "jniUtils.h"
 #include "jniHelper.h"
 

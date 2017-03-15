@@ -1,7 +1,7 @@
 #pragma once
-#include "oxygine_include.h"
+#include "../../oxygine-include.h"
 #include "jniHelper.h"
-#include "core/oxygine.h"
+#include "../oxygine.h"
 #include <string>
 
 namespace oxygine
