@@ -1,5 +1,5 @@
 #pragma once
-#include "Sprite.h"
+#include "oxygine-framework.h"
 using namespace oxygine;
 
 DECLARE_SMART(MyButton, spMyButton);

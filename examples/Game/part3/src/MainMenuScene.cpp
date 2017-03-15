@@ -1,6 +1,4 @@
 #include "MainMenuScene.h"
-#include "Sprite.h"
-#include "initActor.h"
 #include "res.h"
 #include "MyButton.h"
 #include "GameScene.h"
