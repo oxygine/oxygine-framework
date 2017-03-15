@@ -11,7 +11,7 @@ namespace oxygine
 
     class AnimationFrame;
     typedef std::vector<AnimationFrame> frames;
-
+    
     class AtlasBuilder
     {
     public:
@@ -31,7 +31,7 @@ namespace oxygine
         int _skipSize;
     };
 
-
+    typedef AtlasBuilder Atlas2;
 
     class MultiAtlas
     {
