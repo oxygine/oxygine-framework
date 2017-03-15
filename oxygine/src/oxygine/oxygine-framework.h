@@ -43,6 +43,11 @@
 #include "STDRenderer.h"
 #include "WebImage.h"
 #include "key.h"
+#include "Polygon.h"
+#include "TweenOutline.h"
+#include "TweenGlow.h"
+#include "TweenAlphaFade.h"
+
 
 //closure/
 #include "closure/closure.h"
@@ -69,14 +74,14 @@
 #include "core/VertexDeclaration.h"
 #include "core/VideoDriver.h"
 #include "core/STDFileSystem.h"
-
+#include "core/UberShaderProgram.h"
 
 //core/gl/
-//#include "core/gl/NativeTextureGLES.h"
-//#include "core/gl/oxgl.h"
-//#include "core/gl/VertexDeclarationGL.h"
-//#include "core/gl/VideoDriverGL.h"
-//#include "core/gl/VideoDriverGLES20.h"
+#include "core/gl/NativeTextureGLES.h"
+#include "core/gl/oxgl.h"
+#include "core/gl/VertexDeclarationGL.h"
+#include "core/gl/VideoDriverGLES20.h"
+#include "core/gl/ShaderProgramGL.h"
 
 //dev_tools/
 //#include "dev_tools/DeveloperMenu.h"

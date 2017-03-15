@@ -1,5 +1,5 @@
 #include "VertexDeclarationGL.h"
-#include "utils/stringUtils.h"
+#include "../../utils/stringUtils.h"
 namespace oxygine
 {
     void VertexDeclarationGL::init(bvertex_format fmt)

@@ -1,9 +1,5 @@
 #pragma once
 #include "test.h"
-#include "Polygon.h"
-#include "res/ResAnim.h"
-#include "core/NativeTexture.h"
-#include "AnimationFrame.h"
 
 class TestPolygon: public Test
 {

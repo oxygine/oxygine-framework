@@ -2,7 +2,7 @@
 #include "STDFileSystem.h"
 #include "file.h"
 #include "log.h"
-#include "utils/stringUtils.h"
+#include "../utils/stringUtils.h"
 #include "Object.h"
 
 #ifdef __S3E__

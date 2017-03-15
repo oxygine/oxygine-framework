@@ -1,6 +1,5 @@
 #pragma once
 #include "test.h"
-#include "core/UberShaderProgram.h"
 
 class TestSignedDistanceFont : public Test
 {

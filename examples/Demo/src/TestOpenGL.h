@@ -1,7 +1,5 @@
 #pragma once
 #include "test.h"
-#include "core/gl/oxgl.h"
-#include "core/gl/ShaderProgramGL.h"
 
 
 struct myVertex

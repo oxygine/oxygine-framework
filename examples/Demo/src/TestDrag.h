@@ -1,7 +1,6 @@
 #pragma once
 #include "test.h"
-#include "oxygine/Draggable.h"
-#include "oxygine/TweenOutline.h"
+
 class DraggableSprite: public Sprite
 {
 public:

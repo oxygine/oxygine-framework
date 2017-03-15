@@ -1,19 +1,19 @@
 #include "Resources.h"
 #include "Resource.h"
-#include "pugixml/pugixml.hpp"
-#include "core/file.h"
+#include "../pugixml/pugixml.hpp"
+#include "../core/file.h"
 #include <algorithm>
 
-#include "core/log.h"
+#include "../core/log.h"
 
 #include <stdio.h>
 #include "CreateResourceContext.h"
 
 #include "ResAnim.h"
 #include "ResFont.h"
-#include "utils/stringUtils.h"
+#include "../utils/stringUtils.h"
 
-#include "core/log.h"
+#include "../core/log.h"
 #include <stdarg.h>
 
 //#define FS_LOG(...) log::warning(__VA_ARGS__)

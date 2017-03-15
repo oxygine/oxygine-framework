@@ -1,10 +1,10 @@
 #include "Node.h"
-#include "Font.h"
-#include "pugixml/pugixml.hpp"
-#include "utils/stringUtils.h"
-#include "RenderState.h"
-#include "AnimationFrame.h"
-#include "res/ResFont.h"
+#include "../Font.h"
+#include "../pugixml/pugixml.hpp"
+#include "../utils/stringUtils.h"
+#include "../RenderState.h"
+#include "../AnimationFrame.h"
+#include "../res/ResFont.h"
 
 namespace oxygine
 {

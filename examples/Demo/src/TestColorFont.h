@@ -1,6 +1,6 @@
 #pragma once
 #include "test.h"
-#include "core/UberShaderProgram.h"
+
 
 DECLARE_SMART(ShaderTextField, spShaderTextField);
 class CustomShader : public Material

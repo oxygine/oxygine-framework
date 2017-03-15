@@ -1,7 +1,7 @@
 #include <string>
 #include "STDFileSystem.h"
 #include "log.h"
-#include "utils/stringUtils.h"
+#include "../utils/stringUtils.h"
 #include "Object.h"
 #include "file.h"
 #ifdef __APPLE__

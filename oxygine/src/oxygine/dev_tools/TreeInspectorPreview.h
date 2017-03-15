@@ -1,7 +1,7 @@
 #pragma once
-#include "oxygine-include.h"
-#include "Sprite.h"
-#include "core/VertexDeclaration.h"
+#include "../oxygine-include.h"
+#include "../Sprite.h"
+#include "../core/VertexDeclaration.h"
 
 namespace oxygine
 {

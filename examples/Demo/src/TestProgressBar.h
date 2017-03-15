@@ -1,6 +1,5 @@
 #pragma once
 #include "test.h"
-#include "ProgressBar.h"
 
 class TestProgressBar: public Test
 {

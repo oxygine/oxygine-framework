@@ -1,9 +1,6 @@
 #pragma once
 #include "test.h"
-#include "ClipRectActor.h"
-#include "WebImage.h"
-#include "ProgressBar.h"
-#include "HttpRequestTask.h"
+
 
 class TestHttp: public Test
 {

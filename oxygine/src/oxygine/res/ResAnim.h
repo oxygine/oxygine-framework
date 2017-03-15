@@ -1,8 +1,8 @@
 #pragma once
-#include "oxygine-include.h"
+#include "../oxygine-include.h"
 #include "Resource.h"
-#include "AnimationFrame.h"
-#include "core/Texture.h"
+#include "../AnimationFrame.h"
+#include "../core/Texture.h"
 #include <vector>
 
 namespace oxygine

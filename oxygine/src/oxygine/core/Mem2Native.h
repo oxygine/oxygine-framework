@@ -1,13 +1,13 @@
 #pragma once
-#include "oxygine-include.h"
+#include "../oxygine-include.h"
 #include "ref_counter.h"
 #include <vector>
 #include <list>
 #include "NativeTexture.h"
-#include "Image.h"
+#include "../Image.h"
 #include "Mutex.h"
 #include "ThreadDispatcher.h"
-#include "res/CreateResourceContext.h"
+#include "../res/CreateResourceContext.h"
 
 namespace oxygine
 {

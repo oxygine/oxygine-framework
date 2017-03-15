@@ -1,7 +1,7 @@
 #pragma once
-#include "oxygine-include.h"
-#include "math/Rect.h"
-#include "AnimationFrame.h"
+#include "../oxygine-include.h"
+#include "../math/Rect.h"
+#include "../AnimationFrame.h"
 #include <deque>
 
 
@@ -11,7 +11,7 @@ namespace oxygine
 
     class AnimationFrame;
     typedef std::vector<AnimationFrame> frames;
-    
+
     class AtlasBuilder
     {
     public:

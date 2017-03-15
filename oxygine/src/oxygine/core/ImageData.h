@@ -1,6 +1,6 @@
 #pragma once
-#include "oxygine-include.h"
-#include "math/Rect.h"
+#include "../oxygine-include.h"
+#include "../math/Rect.h"
 #include "pixel.h"
 
 namespace oxygine

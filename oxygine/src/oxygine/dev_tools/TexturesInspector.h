@@ -1,7 +1,7 @@
 #pragma once
-#include "oxygine-include.h"
-#include "Actor.h"
-#include "Box9Sprite.h"
+#include "../oxygine-include.h"
+#include "../Actor.h"
+#include "../Box9Sprite.h"
 
 namespace oxygine
 {

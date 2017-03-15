@@ -1,11 +1,6 @@
 #pragma once
 
 #include "test.h"
-#include "core/UberShaderProgram.h"
-#include "core/gl/VideoDriverGLES20.h"
-#include "core/gl/oxgl.h"
-#include "core/gl/ShaderProgramGL.h"
-
 
 class LightningMaterial : public Material
 {

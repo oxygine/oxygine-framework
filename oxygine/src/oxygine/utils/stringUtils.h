@@ -1,7 +1,7 @@
 #pragma once
-#include "oxygine-include.h"
+#include "../oxygine-include.h"
 #include <string>
-#include "math/Color.h"
+#include "../math/Color.h"
 #include <stdarg.h>
 
 namespace oxygine

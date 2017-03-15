@@ -1,7 +1,7 @@
 #include "AtlasBuilder.h"
-#include "core/Texture.h"
-#include "Image.h"
-#include "core/ImageDataOperations.h"
+#include "../core/Texture.h"
+#include "../Image.h"
+#include "../core/ImageDataOperations.h"
 
 namespace oxygine
 {

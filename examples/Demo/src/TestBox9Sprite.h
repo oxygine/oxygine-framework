@@ -1,6 +1,6 @@
 #pragma once
 #include "test.h"
-#include "Box9Sprite.h"
+
 class TestBox9Sprite: public Test
 {
 public:

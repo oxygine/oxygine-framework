@@ -1,8 +1,6 @@
 #pragma once
 #include "test.h"
-#include "TweenAlphaFade.h"
-#include "TweenOutline.h"
-#include "TweenGlow.h"
+
 #undef OUT
 
 

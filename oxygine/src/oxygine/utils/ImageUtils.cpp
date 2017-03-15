@@ -1,6 +1,6 @@
 #include "ImageUtils.h"
-#include "core/ImageData.h"
-#include "Image.h"
+#include "../core/ImageData.h"
+#include "../Image.h"
 //#include "png.h"
 extern "C"
 {

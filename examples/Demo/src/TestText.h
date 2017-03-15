@@ -1,6 +1,5 @@
 #pragma once
 #include "test.h"
-#include "oxygine-framework.h"
 #include <sstream>
 
 struct text_test

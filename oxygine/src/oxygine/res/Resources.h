@@ -4,8 +4,8 @@
 #include <list>
 #include <string.h>
 #include "../pugixml/pugixml.hpp"
-#include "closure/closure.h"
-#include "core/Object.h"
+#include "../closure/closure.h"
+#include "../core/Object.h"
 #include "Resource.h"
 #ifdef __S3E__
 #include <map>

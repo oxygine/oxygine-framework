@@ -1,13 +1,13 @@
 #include "ResStarlingAtlas.h"
 #include "CreateResourceContext.h"
-#include "core/file.h"
+#include "../core/file.h"
 #include "ResAnim.h"
 #include "Resources.h"
-#include "core/VideoDriver.h"
-#include "core/NativeTexture.h"
-#include "Image.h"
+#include "../core/VideoDriver.h"
+#include "../core/NativeTexture.h"
+#include "../Image.h"
 #include "CreateResourceContext.h"
-#include "utils/stringUtils.h"
+#include "../utils/stringUtils.h"
 
 namespace oxygine
 {

@@ -1,8 +1,8 @@
 #pragma once
-#include "oxygine-include.h"
+#include "../oxygine-include.h"
 #include <string>
-#include "core/Object.h"
-#include "pugixml/pugixml.hpp"
+#include "../core/Object.h"
+#include "../pugixml/pugixml.hpp"
 
 namespace oxygine
 {

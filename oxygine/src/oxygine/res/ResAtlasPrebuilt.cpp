@@ -3,7 +3,7 @@
 
 extern "C"
 {
-#include "utils/cdecode.h"
+#include "../utils/cdecode.h"
 }
 
 namespace oxygine

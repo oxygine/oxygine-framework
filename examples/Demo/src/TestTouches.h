@@ -1,6 +1,5 @@
 #pragma once
 #include "test.h"
-#include "utils/stringUtils.h"
 
 class TestTouches: public Test
 {

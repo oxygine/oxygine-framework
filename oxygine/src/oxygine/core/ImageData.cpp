@@ -1,5 +1,5 @@
 #include "ImageData.h"
-#include "utils/stringUtils.h"
+#include "../utils/stringUtils.h"
 namespace oxygine
 {
     int getBytesPerPixel(TextureFormat tf)

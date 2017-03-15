@@ -1,7 +1,7 @@
 #pragma once
 #include "../oxygine-include.h"
 #include "ScalarMath.h"
-//#include "math/vector3.h"
+//#include "../math/vector3.h"
 
 namespace oxygine
 {

@@ -1,9 +1,7 @@
 #pragma once
-#include "oxygine/Actor.h"
-#include "oxygine/Button.h"
-#include "oxygine/RenderState.h"
-#include "oxygine/STDRenderer.h"
-#include "oxygine/TextField.h"
+
+#include "oxygine/oxygine-framework.h"
+
 using namespace oxygine;
 using namespace std;
 

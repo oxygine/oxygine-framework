@@ -1,6 +1,6 @@
 #pragma once
-#include "oxygine-include.h"
-#include "math/Vector2.h"
+#include "../oxygine-include.h"
+#include "../math/Vector2.h"
 
 namespace oxygine
 {

@@ -1,5 +1,5 @@
 #pragma once
-#include "oxygine-include.h"
+#include "../oxygine-include.h"
 
 #include "Vector3.h"
 #include "Vector4.h"

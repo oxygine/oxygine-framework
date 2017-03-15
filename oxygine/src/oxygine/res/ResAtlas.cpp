@@ -1,7 +1,7 @@
 #include "ResAtlas.h"
-#include "Image.h"
+#include "../Image.h"
 #include "Resources.h"
-#include "core/VideoDriver.h"
+#include "../core/VideoDriver.h"
 #include "ResAtlasGeneric.h"
 #include "ResAtlasPrebuilt.h"
 

@@ -1,6 +1,6 @@
 #pragma once
 #include "test.h"
-#include "ClipRectActor.h"
+
 class TestClipRect: public Test
 {
 public:

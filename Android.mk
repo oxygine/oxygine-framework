@@ -20,7 +20,7 @@ LOCAL_MODULE    := oxygine-framework_static
 LOCAL_MODULE_FILENAME := liboxygine-framework
 LOCAL_CPP_EXTENSION := .cpp
 
-SRC := $(LOCAL_PATH)/oxygine/src
+SRC := $(LOCAL_PATH)/oxygine/src/oxygine
 
 LOCAL_SRC_FILES := \
 				$(subst $(LOCAL_PATH)/,, \

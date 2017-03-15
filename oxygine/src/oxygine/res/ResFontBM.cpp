@@ -1,14 +1,14 @@
 #include "ResFontBM.h"
-#include "Font.h"
+#include "../Font.h"
 #include <vector>
-#include "pugixml/pugixml.hpp"
-#include "Image.h"
-#include "core/NativeTexture.h"
-#include "core/VideoDriver.h"
-#include "core/file.h"
+#include "../pugixml/pugixml.hpp"
+#include "../Image.h"
+#include "../core/NativeTexture.h"
+#include "../core/VideoDriver.h"
+#include "../core/file.h"
 #include "CreateResourceContext.h"
-#include "utils/stringUtils.h"
-#include "core/Mem2Native.h"
+#include "../utils/stringUtils.h"
+#include "../core/Mem2Native.h"
 #include "Resources.h"
 namespace oxygine
 {

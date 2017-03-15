@@ -1,5 +1,5 @@
 #include "ImageDataOperations.h"
-#include "math/Color.h"
+#include "../math/Color.h"
 #include <string.h>
 
 namespace oxygine

@@ -1,8 +1,5 @@
 #pragma once
 #include "test.h"
-#include "InputText.h"
-
-
 
 
 DECLARE_SMART(TextWithBackground, spTextWithBackground);

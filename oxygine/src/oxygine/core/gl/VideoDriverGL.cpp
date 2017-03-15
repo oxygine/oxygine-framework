@@ -1,8 +1,8 @@
 #include "VideoDriverGL.h"
 #include "NativeTextureGLES.h"
 #include "oxgl.h"
-#include "math/Color.h"
-#include "utils/stringUtils.h"
+#include "../../math/Color.h"
+#include "../../utils/stringUtils.h"
 
 namespace oxygine
 {

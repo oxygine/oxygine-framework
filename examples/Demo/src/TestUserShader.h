@@ -1,9 +1,5 @@
 #pragma once
 #include "test.h"
-#include "core/UberShaderProgram.h"
-#include "core/gl/VideoDriverGLES20.h"
-#include "core/gl/oxgl.h"
-#include "STDMaterial.h"
 
 DECLARE_SMART(ShaderSprite, spShaderSprite);
 

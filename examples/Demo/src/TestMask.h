@@ -1,8 +1,7 @@
 #pragma once
 #include "test.h"
-#include "Polygon.h"
 #include "TestPolygon.h"
-#include "TweenOutline.h"
+
 
 class TestMask: public Test
 {

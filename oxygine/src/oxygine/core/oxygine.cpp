@@ -2,30 +2,30 @@
 #include <stdio.h>
 #include "log.h"
 #include "VideoDriver.h"
-#include "res/CreateResourceContext.h"
-#include "res/Resources.h"
+#include "../res/CreateResourceContext.h"
+#include "../res/Resources.h"
 
 
-#include "res/ResBuffer.h"
-#include "res/ResFontBM.h"
-#include "res/ResAtlas.h"
-#include "Image.h"
-#include "PointerState.h"
-#include "Input.h"
+#include "../res/ResBuffer.h"
+#include "../res/ResFontBM.h"
+#include "../res/ResAtlas.h"
+#include "../Image.h"
+#include "../PointerState.h"
+#include "../Input.h"
 
-#include "DebugActor.h"
-#include "Stage.h"
-#include "KeyEvent.h"
-#include "res/ResStarlingAtlas.h"
+#include "../DebugActor.h"
+#include "../Stage.h"
+#include "../KeyEvent.h"
+#include "../res/ResStarlingAtlas.h"
 
 
 #include "Mutex.h"
 
 #include "gl/oxgl.h"
-#include "winnie_alloc/winnie_alloc.h"
+#include "../winnie_alloc/winnie_alloc.h"
 #include "ThreadDispatcher.h"
-#include "PostProcess.h"
-#include "TextField.h"
+#include "../PostProcess.h"
+#include "../TextField.h"
 
 #ifdef __S3E__
 #include "s3e.h"
@@ -39,7 +39,7 @@
 
 
 #include "gl/VideoDriverGLES20.h"
-#include "STDMaterial.h"
+#include "../STDMaterial.h"
 
 
 #ifdef EMSCRIPTEN
@@ -49,7 +49,7 @@
 //#include <SDL_compat.h>
 #include <SDL_events.h>
 #elif __ANDROID__
-#include "core/android/jniUtils.h"
+#include "../core/android/jniUtils.h"
 #elif __APPLE__
 #include <TargetConditionals.h>
 #include "ios/ios.h"

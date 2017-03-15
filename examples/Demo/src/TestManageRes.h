@@ -1,8 +1,6 @@
 #pragma once
 #include "test.h"
-#include "ThreadLoader.h"
 #include "pthread.h"
-#include "core/oxygine.h"
 
 #ifdef EMSCRIPTEN
 #include <emscripten.h>

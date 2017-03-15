@@ -1,7 +1,7 @@
 #pragma once
-#include "oxygine-include.h"
+#include "../oxygine-include.h"
 #include "ResFont.h"
-#include "core/Texture.h"
+#include "../core/Texture.h"
 #include <vector>
 
 namespace oxygine

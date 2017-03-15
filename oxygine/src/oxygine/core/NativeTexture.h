@@ -1,7 +1,7 @@
 #pragma once
-#include "oxygine-include.h"
-#include "closure/closure.h"
-#include "core/Restorable.h"
+#include "../oxygine-include.h"
+#include "../closure/closure.h"
+#include "Restorable.h"
 #include "ox_debug.h"
 #include "Texture.h"
 

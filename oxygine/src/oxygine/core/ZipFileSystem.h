@@ -1,10 +1,10 @@
 #pragma once
-#include "oxygine-include.h"
+#include "../oxygine-include.h"
 #include <vector>
 #include "FileSystem.h"
-#include "minizip/unzip.h"
-#include "core/file.h"
-#include "core/Mutex.h"
+#include "../minizip/unzip.h"
+#include "../core/file.h"
+#include "../core/Mutex.h"
 
 namespace oxygine
 {

@@ -1,7 +1,5 @@
 #pragma once
 #include "test.h"
-#include "STDMaterial.h"
-#include "core/gl/oxgl.h"
 
 class TestRender2Texture : public Test
 {

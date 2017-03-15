@@ -1,6 +1,6 @@
 #pragma once
-#include "oxygine-include.h"
-#include "closure/closure.h"
+#include "../oxygine-include.h"
+#include "../closure/closure.h"
 #include <vector>
 
 namespace oxygine

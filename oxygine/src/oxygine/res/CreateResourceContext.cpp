@@ -1,8 +1,8 @@
 #include "CreateResourceContext.h"
-#include "core/NativeTexture.h"
-#include "Image.h"
-#include "core/ThreadDispatcher.h"
-#include "core/oxygine.h"
+#include "../core/NativeTexture.h"
+#include "../Image.h"
+#include "../core/ThreadDispatcher.h"
+#include "../core/oxygine.h"
 #include "pthread.h"
 
 namespace oxygine

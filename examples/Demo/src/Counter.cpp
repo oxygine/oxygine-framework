@@ -1,7 +1,5 @@
 #include "Counter.h"
-#include "utils/stringUtils.h"
-#include "Sprite.h"
-#include "res/Resources.h"
+
 
 DECLARE_SMART(Number, spNumber);
 class Number : public Actor

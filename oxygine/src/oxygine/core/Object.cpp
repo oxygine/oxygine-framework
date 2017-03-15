@@ -3,10 +3,10 @@
 #include <stdio.h>
 #include "log.h"
 #include "Mutex.h"
-#include "utils/stringUtils.h"
+#include "../utils/stringUtils.h"
 #include <string.h>
 #include <algorithm>
-#include "winnie_alloc/winnie_alloc.h"
+#include "../winnie_alloc/winnie_alloc.h"
 
 namespace oxygine
 {

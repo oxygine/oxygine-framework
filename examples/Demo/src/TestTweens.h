@@ -1,6 +1,5 @@
 #pragma once
 #include "test.h"
-#include "oxygine/ColorRectSprite.h"
 #include <typeinfo>
 
 class TweensTest: public Test

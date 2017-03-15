@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "NativeTextureGLES.h"
 #include "oxgl.h"
-#include "Image.h"
+#include "../../Image.h"
 #include "../NativeTexture.h"
 #include "../ImageDataOperations.h"
 #include "../file.h"

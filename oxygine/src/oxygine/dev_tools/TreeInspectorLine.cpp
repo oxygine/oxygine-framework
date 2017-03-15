@@ -2,11 +2,11 @@
 #include "TreeInspectorPage.h"
 #include "TreeInspectorPreview.h"
 #include "TreeInspector.h"
-#include "TextField.h"
-#include "res/ResFont.h"
-#include "res/Resources.h"
-#include "Stage.h"
-#include "DebugActor.h"
+#include "../TextField.h"
+#include "../res/ResFont.h"
+#include "../res/Resources.h"
+#include "../Stage.h"
+#include "../DebugActor.h"
 
 namespace oxygine
 {

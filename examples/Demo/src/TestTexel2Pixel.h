@@ -1,5 +1,6 @@
 #pragma once
 #include "test.h"
+
 class TestTexel2Pixel: public Test
 {
 public:

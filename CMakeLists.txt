@@ -33,12 +33,12 @@ endif(EMSCRIPTEN)
 
 
 set(OXYGINE_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/oxygine)
-set(OXYGINE_SRC ${OXYGINE_ROOT}/src)
+set(OXYGINE_SRC ${OXYGINE_ROOT}/oxygine/src/oxygine)
 
-set(FOLDERS src src/closure src/minizip src/core
-			src/core/gl src/dev_tools src/minizip 
-			src/math src/pugixml src/json src/res 
-			src/text_utils src/utils src/winnie_alloc)
+set(FOLDERS oxygine oxygine/closure oxygine/minizip oxygine/core
+			oxygine/core/gl oxygine/dev_tools oxygine/minizip 
+			oxygine/math oxygine/pugixml oxygine/json oxygine/res 
+			oxygine/text_utils oxygine/utils oxygine/winnie_alloc)
 
 
 if (EMSCRIPTEN)
@@ -116,9 +116,9 @@ endif(EMSCRIPTEN)
 
 foreach(ITEM ${FOLDERS})
 	file(GLOB FLS
-		${OXYGINE_ROOT}/${ITEM}/*.cpp
-		${OXYGINE_ROOT}/${ITEM}/*.c
-		${OXYGINE_ROOT}/${ITEM}/*.h)
+		${OXYGINE_ROOT}/src/${ITEM}/*.cpp
+		${OXYGINE_ROOT}/src/${ITEM}/*.c
+		${OXYGINE_ROOT}/src/${ITEM}/*.h)
 	set(SOURCES ${SOURCES} ${FLS})	
 	string(REPLACE / \\ SGROUP ${ITEM})
 	source_group(${SGROUP} FILES ${FLS})

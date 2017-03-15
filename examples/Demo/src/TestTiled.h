@@ -1,7 +1,5 @@
 #pragma once
 #include "test.h"
-#include "core/file.h"
-#include "res/SingleResAnim.h"
 
 // Bits on the far end of the 32-bit global tile ID are used for tile flags
 const unsigned FLIPPED_HORIZONTALLY_FLAG = 0x80000000;

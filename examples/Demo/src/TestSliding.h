@@ -1,8 +1,5 @@
 #pragma once
 #include "test.h"
-#include "ClipRectActor.h"
-#include "PointerState.h"
-#include "SlidingActor.h"
 
 class TestSliding: public Test
 {

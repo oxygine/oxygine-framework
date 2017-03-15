@@ -1,7 +1,7 @@
 #include "stringUtils.h"
 #include <string.h>
 #include <algorithm>
-#include "core/Object.h"
+#include "../core/Object.h"
 
 #ifdef __S3E__
 #include "IwUTF8.h"

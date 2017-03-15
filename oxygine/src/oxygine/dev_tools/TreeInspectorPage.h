@@ -1,6 +1,6 @@
 #pragma once
-#include "oxygine-include.h"
-#include "Actor.h"
+#include "../oxygine-include.h"
+#include "../Actor.h"
 
 namespace oxygine
 {
