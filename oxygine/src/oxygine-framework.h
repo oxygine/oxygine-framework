@@ -122,7 +122,7 @@
 //tree_inspector/internal/
 
 //utils/
-#include "utils/AtlasTool.h"
+#include "utils/AtlasBuilder.h"
 #include "utils/ImageUtils.h"
 #include "utils/intrusive_list.h"
 #include "utils/stringUtils.h"

@@ -206,7 +206,7 @@
     <ClCompile Include="..\..\src\utils\stringUtils.cpp" />
     <ClCompile Include="..\..\src\math\AffineTransform.cpp" />
     <ClCompile Include="..\..\src\pugixml\pugixml.cpp" />
-    <ClCompile Include="..\..\src\utils\AtlasTool.cpp" />
+    <ClCompile Include="..\..\src\utils\AtlasBuilder.cpp" />
     <ClCompile Include="..\..\src\utils\ImageUtils.cpp" />
     <ClCompile Include="..\..\src\VisualStyle.cpp" />
     <ClCompile Include="..\..\src\WebImage.cpp" />
@@ -339,7 +339,7 @@
     <ClInclude Include="..\..\src\math\vector4.h" />
     <ClInclude Include="..\..\src\pugixml\pugiconfig.hpp" />
     <ClInclude Include="..\..\src\pugixml\pugixml.hpp" />
-    <ClInclude Include="..\..\src\utils\AtlasTool.h" />
+    <ClInclude Include="..\..\src\utils\AtlasBuilder.h" />
     <ClInclude Include="..\..\src\utils\ImageUtils.h" />
     <ClInclude Include="..\..\src\utils\intrusive_list.h" />
     <ClInclude Include="..\..\src\VisualStyle.h" />

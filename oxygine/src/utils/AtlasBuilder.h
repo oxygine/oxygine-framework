@@ -3,59 +3,19 @@
 #include "math/Rect.h"
 #include "AnimationFrame.h"
 #include <deque>
-#include <list>
+
 
 namespace oxygine
 {
-    class AtlasNode
-    {
-    public:
-        AtlasNode(AtlasNode* parent, const Rect& rect);
-        ~AtlasNode();
-
-        AtlasNode* insert(int width, int height);
-
-        const Rect& getRect()const {return _rc;}
-        void setID(int id) {_id = id;}
-
-    private:
-        AtlasNode* _parent;
-        AtlasNode* _child[2];
-        Rect _rc;
-
-        int _id;
-    };
-
     DECLARE_SMART(Texture, spTexture);
 
     class AnimationFrame;
     typedef std::vector<AnimationFrame> frames;
 
-    class Atlas
+    class AtlasBuilder
     {
     public:
-        Atlas();
-        ~Atlas();
-
-        void init(int w, int h);
-        bool add(Texture* dest, const ImageData& src, Rect& srcRect);
-
-        spTexture   getTexture();
-        const Rect& getBounds() const {return _bounds;}
-
-        void clean();
-
-    private:
-        Rect _bounds;
-        AtlasNode* _tree;
-    };
-
-
-
-    class Atlas2
-    {
-    public:
-        Atlas2();
+        AtlasBuilder();
 
         void init(int w, int h, int skipSize = 3);
         void clean();

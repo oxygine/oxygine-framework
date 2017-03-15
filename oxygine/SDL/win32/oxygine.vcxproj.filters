@@ -54,9 +54,6 @@
     <ClCompile Include="..\..\src\pugixml\pugixml.cpp">
       <Filter>src\pugi</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\utils\AtlasTool.cpp">
-      <Filter>src\utils</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\utils\ImageUtils.cpp">
       <Filter>src\utils</Filter>
     </ClCompile>
@@ -348,6 +345,9 @@
     <ClCompile Include="..\..\src\res\SingleResAnim.cpp">
       <Filter>src\res</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\utils\AtlasBuilder.cpp">
+      <Filter>src\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\closure\closure.h">
@@ -385,9 +385,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\pugixml\pugixml.hpp">
       <Filter>src\pugi</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\utils\AtlasTool.h">
-      <Filter>src\utils</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\utils\ImageUtils.h">
       <Filter>src\utils</Filter>
@@ -748,6 +745,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\oxygine-include.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\utils\AtlasBuilder.h">
+      <Filter>src\utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

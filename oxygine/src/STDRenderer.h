@@ -67,7 +67,7 @@ namespace oxygine
 
         /**Begins rendering into RenderTexture or into primary framebuffer if rt is null*/
         void begin();
-        void begin(spNativeTexture nt, const Rect* viewport = 0);
+        void begin(spNativeTexture renderTarget, const Rect* viewport = 0);
         /**Completes started rendering and restores previous Frame Buffer.*/
         void end();
         /**initializes View + Projection matrices where TopLeft is (0,0) and RightBottom is (width, height). use flipU = true for render to texture*/
@@ -94,11 +94,11 @@ namespace oxygine
         STDRenderer* _previous;
         void setShader(ShaderProgram* prog);
 
-        void _drawBatch();
+        void xdrawBatch();
 
 
-        void _addVertices(const void* data, unsigned int size);
-        void _checkDrawBatch();
+        void xaddVertices(const void* data, unsigned int size);
+        void checkDrawBatch();
 
         std::vector<unsigned char> _vertices;
 
@@ -109,8 +109,8 @@ namespace oxygine
         Matrix _vp;
 
         virtual void preDrawBatch();
-        virtual void _begin();
-        virtual void _resetSettings();
+        virtual void xbegin();
+        virtual void xresetSettings();
         //virtual
         spNativeTexture _base;
         spNativeTexture _alpha;

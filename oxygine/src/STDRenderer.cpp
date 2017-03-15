@@ -215,7 +215,7 @@ namespace oxygine
     }
 
 
-    void STDRenderer::_drawBatch()
+    void STDRenderer::xdrawBatch()
     {
         size_t count = _vertices.size() / _vdecl->size;
         size_t indices = (count * 3) / 2;
@@ -230,7 +230,7 @@ namespace oxygine
         if (!_vertices.empty())
         {
             preDrawBatch();
-            _drawBatch();
+            xdrawBatch();
         }
     }
 
@@ -271,7 +271,7 @@ namespace oxygine
 
     void STDRenderer::resetSettings()
     {
-        _resetSettings();
+        xresetSettings();
         _driver->setState(IVideoDriver::STATE_BLEND, 0);
         _blend = blend_disabled;
         _program = 0;
@@ -286,7 +286,7 @@ namespace oxygine
         _transform.identity();
         resetSettings();
 
-        _begin();
+        xbegin();
 
         _drawing = true;
 
@@ -321,16 +321,16 @@ namespace oxygine
 
     void STDRenderer::addVertices(const void* data, unsigned int size)
     {
-        _addVertices(data, size);
-        _checkDrawBatch();
+        xaddVertices(data, size);
+        checkDrawBatch();
     }
 
-    void STDRenderer::_addVertices(const void* data, unsigned int size)
+    void STDRenderer::xaddVertices(const void* data, unsigned int size)
     {
         _vertices.insert(_vertices.end(), (const unsigned char*)data, (const unsigned char*)data + size);
     }
 
-    void STDRenderer::_checkDrawBatch()
+    void STDRenderer::checkDrawBatch()
     {
         if (_vertices.size() / sizeof(_vdecl->size) >= maxVertices)
             drawBatch();
@@ -501,7 +501,7 @@ namespace oxygine
         _transform = tr;
     }
 
-    void STDRenderer::_begin()
+    void STDRenderer::xbegin()
     {
         _base = 0;
         _alpha = 0;
@@ -528,7 +528,7 @@ namespace oxygine
         begin();
     }
 
-    void STDRenderer::_resetSettings()
+    void STDRenderer::xresetSettings()
     {
     }
 

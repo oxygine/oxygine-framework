@@ -1,7 +1,7 @@
 #include "ResAtlasGeneric.h"
 #include "core/ImageDataOperations.h"
 #include "Image.h"
-#include "utils/AtlasTool.h"
+#include "utils/AtlasBuilder.h"
 #include "core/VideoDriver.h"
 #include "Resources.h"
 #include <stdint.h>
@@ -19,7 +19,7 @@ namespace oxygine
     {
         spNativeTexture texture;
         Image mt;
-        Atlas2 atlas;
+        AtlasBuilder atlas;
     };
 
 
