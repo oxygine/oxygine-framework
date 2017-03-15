@@ -145,7 +145,7 @@ namespace oxygine
 
 
 #ifdef EMSCRIPTEN
-        _renderer->setTexture(df.base, df.alpha, df.premultiplied);//preload
+        STDRenderer::getCurrent()->setTexture(df.base, df.alpha, df.premultiplied);//preload
         if (base && base->getHandle())
 #else
         if (base)
