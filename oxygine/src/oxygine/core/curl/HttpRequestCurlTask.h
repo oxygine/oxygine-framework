@@ -20,7 +20,7 @@ namespace oxygine
     protected:
         void _setFileName(const std::string& name) {}
 
-        friend void* thread(void*);
+        friend void* curlThread(void*);
         friend void mainThreadFunc(const ThreadDispatcher::message& msg);
 
         static size_t cbWriteFunction(char* d, size_t n, size_t l, void* p);

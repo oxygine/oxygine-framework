@@ -50,6 +50,9 @@ namespace oxygine
         void onError();
         void onComplete();
 
+
+        void sync(const std::function< void()>& f);
+
         status _status;
 
         friend class AsyncTaskManager;
@@ -66,14 +69,10 @@ namespace oxygine
         virtual void _finalize(bool error) {}
         virtual void _dispatchComplete();
 
-        enum { customID = sysEventID('s', 'c', 's') };
-        bool syncEvent(int msgid, void* arg1 = 0, void* arg2 = 0);
-
     private:
 
         void _complete();
         void _error();
-        void _custom(const ThreadDispatcher::message& m) { _onCustom(m); }
 
 
         static void threadCB(const ThreadDispatcher::message&);

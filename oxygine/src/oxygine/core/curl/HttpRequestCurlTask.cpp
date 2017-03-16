@@ -17,62 +17,9 @@ namespace oxygine
         return new HttpRequestTaskCURL;
     }
 
-    const unsigned int ID_DONE = sysEventID('C', 'D', 'N');
-    const unsigned int ID_PROGRESS = sysEventID('C', 'P', 'R');
+    const unsigned int ID_FINISH = 3423;
 
-    void mainThreadFunc(const ThreadDispatcher::message& msg)
-    {
-        switch (msg.msgid)
-        {
-            case ID_DONE:
-            {
-                CURL* easy = (CURL*)msg.arg1;
-
-                HttpRequestTaskCURL* task = 0;
-                curl_easy_getinfo(easy, CURLINFO_PRIVATE, &task);
-
-                bool ok = (size_t)msg.arg2 == CURLE_OK;
-                if (ok)
-                {
-                    int response = 0;
-                    curl_easy_getinfo(easy, CURLINFO_RESPONSE_CODE, &response);
-                    task->_responseCode = response;
-                    //ok = response == 200;
-                }
-
-#if 0
-                const Uint8* data = SDL_GetKeyboardState(0);
-                static bool fail = false;
-
-                if (data[SDL_SCANCODE_N])
-                    fail = true;
-                if (data[SDL_SCANCODE_M])
-                    fail = false;
-
-                if (fail)
-                    ok = false;
-#endif
-
-                if (ok)
-                {
-                    task->onComplete();
-                }
-                else
-                    task->onError();
-
-                task->releaseRef();
-            } break;
-
-            case ID_PROGRESS:
-            {
-                HttpRequestTaskCURL* task = (HttpRequestTaskCURL*)msg.cbData;
-                task->dispatchProgress((int)(size_t)msg.arg2, (int)(size_t)msg.arg1);
-            } break;
-        }
-
-    }
-
-    void* thread(void*)
+    void* curlThread(void*)
     {
         while (true)
         {
@@ -85,7 +32,7 @@ namespace oxygine
                 ThreadDispatcher::peekMessage tmsg;
                 if (_messages.peek(tmsg, true))
                 {
-                    if (tmsg.msgid == 1)
+                    if (tmsg.msgid == ID_FINISH)
                         return 0;
                     curl_multi_add_handle(multi_handle, (CURL*)tmsg.arg1);
                 }
@@ -133,7 +80,25 @@ namespace oxygine
                         {
 #ifdef OX_HAS_CPP11 //msg broken in VS2010
                             curl_multi_remove_handle(multi_handle, msg->easy_handle);
-                            core::getMainThreadDispatcher().postCallback(ID_DONE, msg->easy_handle, (void*)msg->data.result, mainThreadFunc, 0);
+
+
+                            HttpRequestTaskCURL* task = 0;
+                            curl_easy_getinfo(msg->easy_handle, CURLINFO_PRIVATE, &task);
+
+                            bool ok = msg->data.result == CURLE_OK;
+                            if (ok)
+                            {
+                                int response = 0;
+                                curl_easy_getinfo(msg->easy_handle, CURLINFO_RESPONSE_CODE, &response);
+                                task->_responseCode = response;
+                            }
+
+                            if (ok)
+                                task->onComplete();
+                            else
+                                task->onError();
+
+                            task->releaseRef();
 #endif
                         }
                     }
@@ -151,12 +116,12 @@ namespace oxygine
             return;
         setCustomRequests(createCurl);
         multi_handle = curl_multi_init();
-        pthread_create(&_thread, 0, thread, 0);
+        pthread_create(&_thread, 0, curlThread, 0);
     }
 
     void HttpRequestTask::release()
     {
-        _messages.post(1, 0, 0);
+        _messages.post(ID_FINISH, 0, 0);
         pthread_join(_thread, 0);
 
         if (multi_handle)
@@ -171,7 +136,7 @@ namespace oxygine
 
     size_t HttpRequestTaskCURL::_cbXRefInfoFunction(curl_off_t dltotal, curl_off_t dlnow)
     {
-        core::getMainThreadDispatcher().postCallback(ID_PROGRESS, (void*)dltotal, (void*)dlnow, mainThreadFunc, this);
+        progress((int)dlnow, (int)dltotal);
 
         return 0;
     }
@@ -197,13 +162,9 @@ namespace oxygine
 
         size_t size = n * l;
         if (!_fname.empty())
-        {
             file::write(_handle, d, (unsigned int)size);
-        }
         else
-        {
             _response.insert(_response.end(), d, d + size);
-        }
 
         return size;
     }

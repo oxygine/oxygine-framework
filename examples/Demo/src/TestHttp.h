@@ -33,6 +33,7 @@ public:
         task = HttpRequestTask::create();
         task->setUrl("http://oxygine.org/emscripten/MPHello.js.gz");
         task->setFileName("somefile.abc");
+        addRef();//protect self from auto delete, will be released from TestHttp::loaded
         task->addEventListener(HttpRequestTask::COMPLETE, CLOSURE(this, &TestHttp::loaded));
         task->addEventListener(HttpRequestTask::PROGRESS, CLOSURE(this, &TestHttp::progress));
         task->run();
@@ -53,6 +54,7 @@ public:
         for (int i = 0; i < 256; ++i)
             postBody.push_back(i);
         task->setPostData(postBody);
+        addRef();//protect self from auto delete, will be released from TestHttp::onPostLoaded
         task->addEventListener(HttpRequestTask::COMPLETE, CLOSURE(this, &TestHttp::onPostLoaded));
         task->run();
 
@@ -100,6 +102,7 @@ public:
         {
             OX_ASSERT(res[i] == i);
         }
+        releaseRef();
     }
 
     void dateTimeLoaded(Event* event)
@@ -122,5 +125,7 @@ public:
         {
             notify("file loaded");
         }
+
+        releaseRef();
     }
 };

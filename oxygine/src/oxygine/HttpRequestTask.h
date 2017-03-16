@@ -53,6 +53,7 @@ namespace oxygine
         void setUrl(const std::string& url);
         void setFileName(const std::string& name);
         void setCacheEnabled(bool enabled);
+        /**by default only response code == 200 is succeded, other codes are dispatching Event::ERROR*/
         void setSuccessOnAnyResponseCode(bool en) { _successOnAnyResponceCode = en; }
 
     protected:

@@ -112,10 +112,10 @@ namespace oxygine
 
     void HttpRequestTask::progress(int loaded, int total)
     {
-        if (!syncEvent(customID, (void*)(size_t)loaded, (void*)(size_t)total))
+        sync([ = ]()
         {
             dispatchProgress(loaded, total);
-        }
+        });
     }
 
     void HttpRequestTask::_onError()

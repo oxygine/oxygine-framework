@@ -86,7 +86,10 @@ public:
         addButton("polygon", "Polygon");
         addButton("inputtext", "Input Text");
         addButton("openbrowser", "Open Browser");
-        addButton("http", "Http requests");
+
+        if (HttpRequestTask::create())
+            addButton("http", "Http requests");
+
         addButton("tweenpp", "Post Processing Tweens");
 
         _color = Color::Red;
