@@ -376,8 +376,6 @@ namespace oxygine
             return display;
 
         screen = actor.computeBounds(actor.computeGlobalTransform()).cast<Rect>();
-        if (screen.getWidth() < 0)
-            int q = 0;
         screen.size += Point(1, 1);
         screen.expand(_extend, _extend);
 
