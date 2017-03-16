@@ -3,7 +3,7 @@
 #include "HttpRequestCocoaTask.h"
 #include "file.h"
 #include "STDFileSystem.h"
-#include "core/log.h"
+#include "../log.h"
 using namespace oxygine;
 static char taskKey;
 

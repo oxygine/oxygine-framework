@@ -92,7 +92,7 @@ public:
         AnimationFrame frame = resources.getResAnim("bg")->getFrame(0);
         const RectF& srcRect = frame.getSrcRect();
 
-        int texture = (int)frame.getDiffuse().base->getHandle();
+        int texture = (int)(size_t)frame.getDiffuse().base->getHandle();
 
         glBindTexture(GL_TEXTURE_2D, texture);
 
