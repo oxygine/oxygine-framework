@@ -11,6 +11,9 @@ namespace oxygine
 
         void render(Actor* actor, const RenderState& rs)
         {
+            if (!_pp._rt)
+                return;
+
             int _a = lerp(_fadeIn ? 0 : 255, _fadeIn ? 255 : 0, _progress);
             STDRenderer* renderer = STDRenderer::getCurrent();
 
