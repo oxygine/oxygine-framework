@@ -30,7 +30,7 @@ public:
             }
 		)";
 
-        const char* fragmentShaderData = R"(\
+        const char* fragmentShaderData = R"(
             varying mediump vec2 v_uv;
             uniform lowp sampler2D base_texture;
                                       
