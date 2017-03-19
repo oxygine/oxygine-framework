@@ -39,7 +39,7 @@ LOCAL_SRC_FILES := \
 				$(wildcard $(SRC)/*.cpp) \
 				)
 
-SRC := oxygine/src
+SRC := oxygine/src/oxygine
 
 LOCAL_SRC_FILES += \
 				$(SRC)/core/android/jniUtils.cpp \

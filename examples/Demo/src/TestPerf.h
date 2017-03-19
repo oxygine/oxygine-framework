@@ -49,7 +49,7 @@ public:
                 spSprite sprite = new Sprite;
                 sprite->setResAnim(resources.getResAnim("anim"));
                 sprite->setAnchor(Vector2(0.5f, 0.5f));
-                sprite->setScale(0.05f);
+                sprite->setSize(getStage()->getSize()/20);
                 sprite->setPosition(scalar::randFloat(0, (float)getWidth()), scalar::randFloat(0, (float)getHeight()));
                 content->addChild(sprite);
             }
