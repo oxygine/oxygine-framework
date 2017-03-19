@@ -6,6 +6,7 @@
 #include "Stage.h"
 #include "Serialize.h"
 #include "Material.h"
+#include "core/UberShaderProgram.h"
 
 namespace oxygine
 {
@@ -221,6 +222,14 @@ namespace oxygine
             _frame = frame;
         _setSize(_frame.getSize().mult(_localScale));
 
+
+
+        STDMatData data = _mat->_data;
+        data._base = _frame.getDiffuse().base;
+        data._alpha = _frame.getDiffuse().alpha;
+        data._flags = _frame.getDiffuse().premultiplied ? 0 : UberShaderProgram::ALPHA_PREMULTIPLY;
+
+        _mat = mc().add(data);
 
         animFrameChanged(_frame);
     }

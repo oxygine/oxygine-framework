@@ -35,6 +35,7 @@ int mainloop()
         // Render all actors inside the stage. Actor::render will also be called for all its children
         getStage()->render(clearColor, viewport);
 
+        example_flush();
         core::swapDisplayBuffers();
     }
 
@@ -68,7 +69,7 @@ void run()
     getStage()->setSize(size);
 
     // DebugActor is a helper actor node. It shows FPS, memory usage and other useful stuff
-    DebugActor::show();
+    //DebugActor::show();
 
     // Initializes our example game. See example.cpp
     example_init();

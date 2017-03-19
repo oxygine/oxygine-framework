@@ -47,6 +47,7 @@
 #include "oxygine/TweenOutline.h"
 #include "oxygine/TweenGlow.h"
 #include "oxygine/TweenAlphaFade.h"
+#include "oxygine/MaterialX.h"
 
 
 //closure/

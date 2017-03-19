@@ -136,30 +136,11 @@ namespace oxygine
 
     void STDMaterial::doRender(Sprite* sprite, const RenderState& rs)
     {
-        Material::setCurrent(rs.material);
+        Color color = rs.getFinalColor(sprite->getColor());
+        if (sprite->getBlendMode() == blend_premultiplied_alpha)
+            color = color.premultiplied();
 
-        const AnimationFrame& frame = sprite->getAnimFrame();
-        const Diffuse& df = frame.getDiffuse();
-
-        const spNativeTexture& base = df.base;
-
-
-#ifdef EMSCRIPTEN
-        STDRenderer::getCurrent()->setTexture(df.base, df.alpha, df.premultiplied);//preload
-        if (base && base->getHandle())
-#else
-        if (base)
-#endif
-        {
-            STDRenderer* r = STDRenderer::getCurrent();
-            r->setBlendMode(sprite->getBlendMode());
-#ifndef EMSCRIPTEN
-            r->setTexture(df.base, df.alpha, df.premultiplied);//preload
-#endif
-
-            r->setTransform(rs.transform);
-            r->draw(rs.getFinalColor(sprite->getColor()), frame.getSrcRect(), sprite->getDestRect());
-        }
+        STDRenderer::getCurrent()->draw(sprite->_mat, rs.transform, color.rgba(), sprite->getAnimFrame().getSrcRect(), sprite->getDestRect());
     }
 
     void STDMaterial::doRender(TextField* tf, const RenderState& rs)
@@ -170,9 +151,6 @@ namespace oxygine
         if (!root)
             return;
 
-        Material::setCurrent(this);
-
-
 
         text::DrawContext dc;
 
@@ -182,13 +160,12 @@ namespace oxygine
         dc.color = tf->getStyle().color * dc.primary;
         dc.renderer = renderer;
 
-        renderer->setBlendMode(tf->getBlendMode());
+        //renderer->setBlendMode(tf->getBlendMode());
         renderer->setTransform(rs.transform);
 
         int sdfSize;
         if (tf->getFont()->isSDF(sdfSize))
         {
-
             if (tf->getFontSize())
                 scale = scale * tf->getFontSize() / sdfSize;
 
@@ -209,14 +186,11 @@ namespace oxygine
 
     void STDMaterial::doRender(ColorRectSprite* sprite, const RenderState& rs)
     {
-        Material::setCurrent(this);
+        Color color = rs.getFinalColor(sprite->getColor());
+        if (sprite->getBlendMode() == blend_premultiplied_alpha)
+            color = color.premultiplied();
 
-        STDRenderer* renderer = STDRenderer::getCurrent();
-
-        renderer->setBlendMode(sprite->getBlendMode());
-        renderer->setTexture(STDRenderer::white);
-        renderer->setTransform(rs.transform);
-        renderer->draw(rs.getFinalColor(sprite->getColor()), RectF(0, 0, 1, 1), sprite->getDestRect());
+        STDRenderer::getCurrent()->draw(sprite->_mat, rs.transform, color.rgba(), sprite->getAnimFrame().getSrcRect(), sprite->getDestRect());
     }
 
     void STDMaterial::doRender(ProgressBar*, const RenderState& rs)

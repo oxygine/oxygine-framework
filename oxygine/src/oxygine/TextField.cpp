@@ -328,7 +328,7 @@ namespace oxygine
                 _root = new text::TextNode(_text.c_str());
             }
 
-            text::Aligner rd(_style, font, scale, getSize());
+            text::Aligner rd(_style, _mat->_data , font, scale, getSize());
             rd.begin();
             _root->resize(rd);
             rd.end();

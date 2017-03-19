@@ -153,9 +153,9 @@ namespace oxygine
             for (size_t i = 0; i < _data.size(); ++i)
             {
                 const Symbol& s = _data[i];
-                if (!s.gl.texture)
+                if (!s.materialX)
                     continue;
-                dc.renderer->draw(s.gl.texture, dc.color.rgba(), s.gl.src, s.destRect);
+                dc.renderer->draw(s.materialX, dc.color.rgba(), s.gl.src, s.destRect);
             }
 
             drawChildren(dc);
@@ -198,6 +198,12 @@ namespace oxygine
                                 i += rd.putSymbol(s);
                             }
                         }
+
+                        STDMatData data = rd.data;
+                        data._base = gl->texture;
+
+
+                        s.materialX = mc().add(data);
                     }
                     ++i;
                     if (i < 0)

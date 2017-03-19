@@ -1,7 +1,7 @@
 #pragma once
 #include "oxygine-include.h"
 #include "Actor.h"
-
+#include "MaterialX.h"
 namespace oxygine
 {
     class VisualStyle
@@ -41,15 +41,19 @@ namespace oxygine
 
         void                    setColor(const Color& color);
         void                    setColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
-        void                    setBlendMode(blend_mode mode) { _vstyle.setBlendMode(mode); blendModeChanged(mode); }
+        void                    setBlendMode(blend_mode mode);
 
         typedef Property<Color, const Color&, VStyleActor, &VStyleActor::getColor, &VStyleActor::setColor> TweenColor;
 
         bool getBounds(RectF& b) const  override { b = getDestRect();  return true; }
 
+        spSTDMaterialX _mat;
+
     protected:
         virtual void blendModeChanged(blend_mode) {}
         VisualStyle _vstyle;
+
+
     };
 
 }

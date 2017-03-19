@@ -284,6 +284,8 @@ namespace oxygine
         _program = 0;
         _vertices.clear();
         _transform.identity();
+        for (int i = 0; i < MAX_TEXTURES; ++i)
+            _textures[i] = 0;
         resetSettings();
 
         xbegin();
@@ -300,6 +302,8 @@ namespace oxygine
 
         OX_ASSERT(_drawing);
         drawBatch();
+
+        flush();
 
         if (_prevRT)
         {
@@ -412,6 +416,7 @@ namespace oxygine
         _uberShader = &uberShader;
         _transform.identity();
         _drawing = false;
+        _baseShaderFlags = 0;
     }
 
     void STDRenderer::setBlendMode(blend_mode blend)
@@ -575,6 +580,128 @@ namespace oxygine
 
         addVertices(v, sizeof(v));
     }
+
+    void STDRenderer::draw(const spMaterialX& mat, unsigned int color, const RectF& srcRect, const RectF& destRect)
+    {
+        vertexPCT2 v[4];
+        fillQuadT(v, srcRect, destRect, _transform, color);
+        add(mat, v);
+    }
+
+    void STDRenderer::draw(const spMaterialX& mat, const AffineTransform& tr, unsigned int color, const RectF& srcRect, const RectF& destRect)
+    {
+        vertexPCT2 v[4];
+        fillQuadT(v, srcRect, destRect, tr, color);
+        add(mat, v);
+    }
+
+
+    void STDRenderer::setTextureNew(int sampler, spNativeTexture t)
+    {
+        if (_textures[sampler] == t)
+            return;
+        _textures[sampler] = t;
+        _driver->setTexture(sampler, t);
+    }
+
+    void STDRenderer::setShaderFlags(int flags)
+    {
+        ShaderProgram* sp = STDRenderer::uberShader.getShaderProgram(_baseShaderFlags | flags);
+        if (_program != sp)
+        {
+            _driver->setShaderProgram(sp);
+            _program = sp;
+        }
+
+        _driver->setUniform("mat", STDRenderer::getCurrent()->getViewProjection());
+    }
+
+    void STDRenderer::add(spMaterialX mat, vertexPCT2 vert[4])
+    {
+        batch& b = add(mat);
+
+        b.vertices.insert(b.vertices.end(), vert, vert + 4);
+        for (int i = 0; i < 4; ++i)
+        {
+            b.bbox.unite(Vector2(vert[i].x, vert[i].y));
+        }
+    }
+
+    STDRenderer::batch& STDRenderer::add(spMaterialX mat)
+    {
+        if (_batches.empty() || _batches.back().mat != mat)
+        {
+            batch b;
+            b.mat = mat;
+            b.bbox = RectF::invalidated();
+            _batches.push_back(b);
+            return _batches.back();
+        }
+        return _batches.back();
+    }
+
+    void STDRenderer::process()
+    {
+        for (int i = 0; i < (int)_batches.size() - 1; ++i)
+            process(i);
+    }
+
+    void STDRenderer::process(int j)
+    {
+        batch& my = _batches[j];
+        for (int i = j + 1; i < (int)_batches.size(); ++i)
+        {
+            batch& c = _batches[i];
+            if (c.mat == my.mat)
+            {
+                bool fail = false;
+                for (int n = i - 1; n > j; --n)
+                {
+                    batch& c2 = _batches[n];
+                    if (c2.bbox.isIntersecting(c.bbox))
+                    {
+                        fail = true;
+                        break;
+                    }
+                }
+
+                if (!fail)
+                {
+                    my.vertices.insert(my.vertices.end(), c.vertices.begin(), c.vertices.end());
+                    _batches.erase(_batches.begin() + i);
+
+                    //continue search
+                    --i;
+                }
+            }
+        }
+    }
+
+    void STDRenderer::flush()
+    {
+        process();
+
+        size_t num = _batches.size();
+        for (size_t i = 0; i < num; ++i)
+        {
+            batch& c = _batches[i];
+
+            size_t indices = (c.vertices.size() * 3) / 2;
+            if (!indices)
+                continue;
+
+            c.mat->apply();
+
+            IVideoDriver::instance->draw(IVideoDriver::PT_TRIANGLES, STDRenderer::getCurrent()->getVertexDeclaration(),
+                                         &c.vertices.front(), (unsigned int)c.vertices.size(),
+                                         &STDRenderer::indices16.front(), (unsigned int)indices);
+
+        }
+
+        log::messageln("batches %d", _batches.size());
+        _batches.clear();
+    }
+
 
     void STDRenderer::setUberShaderProgram(UberShaderProgram* pr)
     {

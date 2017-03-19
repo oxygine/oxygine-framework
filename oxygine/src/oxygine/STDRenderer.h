@@ -43,6 +43,7 @@ namespace oxygine
         unsigned int    getShaderFlags() const;
         const VertexDeclaration* getVertexDeclaration() const { return _vdecl; }
 
+        void setShaderFlags(int);
         void setViewProj(const Matrix& viewProj);
         void setVertexDeclaration(const VertexDeclaration* decl);
         void setUberShaderProgram(UberShaderProgram* pr);
@@ -54,6 +55,7 @@ namespace oxygine
         /**Sets World transformation.*/
         void setTransform(const Transform& world);
         void draw(const Color&, const RectF& srcRect, const RectF& destRect);
+        void setTextureNew(int sampler, spNativeTexture t);
 
         /**Draws existing batch immediately.*/
         void drawBatch();
@@ -65,6 +67,9 @@ namespace oxygine
         void applySimpleMode(bool basePremultiplied);
         /**used in pair with applySimpleMode/applySDF, fast, don't have excess checks*/
         void draw(const spNativeTexture& texture, unsigned int color, const RectF& src, const RectF& dest) override;
+        void draw(const spMaterialX& mat, unsigned int color, const RectF& src, const RectF& dest) override;
+        void draw(const spMaterialX& mat, const AffineTransform& transform, unsigned int color, const RectF& src, const RectF& dest);
+        void add(spMaterialX mat, vertexPCT2 vert[4]);
 
         /**Begins rendering into RenderTexture or into primary framebuffer if rt is null*/
         void begin();
@@ -74,6 +79,9 @@ namespace oxygine
         /**initializes View + Projection matrices where TopLeft is (0,0) and RightBottom is (width, height). use flipU = true for render to texture*/
         void initCoordinateSystem(int width, int height, bool flipU = false);
         void resetSettings();
+        void process();
+        void process(int);
+        void flush();
 
         virtual void addVertices(const void* data, unsigned int size);
 
@@ -90,6 +98,23 @@ namespace oxygine
         void setViewProjTransform(const Matrix& viewProj);
 
     protected:
+
+        struct batch
+        {
+            spMaterialX mat;
+            std::vector<vertexPCT2> vertices;
+            RectF bbox;
+        };
+
+        typedef std::vector<batch> batches;
+        batches _batches;
+
+        enum { MAX_TEXTURES = 4 };
+        spNativeTexture _textures[MAX_TEXTURES];
+
+        batch& add(spMaterialX mat);
+
+        int _baseShaderFlags;
         Transform _transform;
 
         STDRenderer* _previous;

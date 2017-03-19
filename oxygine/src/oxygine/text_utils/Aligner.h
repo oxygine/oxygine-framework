@@ -6,11 +6,13 @@
 #include "../TextStyle.h"
 #include "../Font.h"
 #include "../core/NativeTexture.h"
+#include "../MaterialX.h"
 
 namespace oxygine
 {
     struct glyph;
     class Font;
+
 
     namespace text
     {
@@ -22,12 +24,13 @@ namespace oxygine
             int code;
             glyph gl;
             RectF destRect;
+            spMaterialX materialX;
         };
 
         class Aligner
         {
         public:
-            Aligner(const TextStyle& style, const Font* font, float gscale, const Vector2& size);
+            Aligner(const TextStyle& style, const STDMatData& md, const Font* font, float gscale, const Vector2& size);
             ~Aligner();
 
 
@@ -47,6 +50,7 @@ namespace oxygine
             int height;
             int options;
 
+            const STDMatData& data;
 
             const Font* _font;
 

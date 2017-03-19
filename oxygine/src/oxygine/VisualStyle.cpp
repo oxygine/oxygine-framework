@@ -14,6 +14,10 @@ namespace oxygine
 
     VStyleActor::VStyleActor()
     {
+        STDMatData data;
+        data._blend = blend_premultiplied_alpha;
+
+        _mat = mc().add(data);
     }
 
     void VStyleActor::copyFrom(const VStyleActor& src, cloneOptions opt)
@@ -81,6 +85,18 @@ namespace oxygine
     void VStyleActor::setColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
     {
         setColor(Color(r, g, b, a));
+    }
+
+    void VStyleActor::setBlendMode(blend_mode mode)
+    {
+        _vstyle.setBlendMode(mode);
+
+        STDMatData data = _mat->_data;
+        data._blend = mode;
+
+        _mat = mc().add(data);
+
+        blendModeChanged(mode);
     }
 
 }
