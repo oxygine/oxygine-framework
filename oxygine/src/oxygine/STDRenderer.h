@@ -55,7 +55,7 @@ namespace oxygine
         /**Sets World transformation.*/
         void setTransform(const Transform& world);
         void draw(const Color&, const RectF& srcRect, const RectF& destRect);
-        void setTextureNew(int sampler, spNativeTexture t);
+        void setTextureNew(int sampler, const spNativeTexture& t);
 
         /**Draws existing batch immediately.*/
         void drawBatch();

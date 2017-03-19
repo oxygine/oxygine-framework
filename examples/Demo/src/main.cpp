@@ -63,7 +63,7 @@ void run()
 
 
     // Create the stage. Stage is a root node for all updateable and drawable objects
-    Stage::instance = new Stage(true);
+    Stage::instance = new Stage(false);
     Point size = core::getDisplaySize();
     getStage()->setSize(size);
 

@@ -1,54 +1,33 @@
 #pragma once
 #include "test.h"
 
-DECLARE_SMART(ShaderSprite, spShaderSprite);
-
-class ShaderSprite: public Sprite
+class MyTestMat : public MaterialTX<STDMatData>
 {
 public:
-    ShaderSprite(): _program(0), _val(0.5f, 0.5f, 0.5f, 0)
-    {
+    Vector4 uniform;
 
+    void init(size_t& hash)
+    {
+//        STDMatData::init(hash);
+  //      hash_combine(hash, uniform.x, uniform.y, uniform.z, uniform.w);
     }
 
-    void setShaderProgram(UberShaderProgram* p)
+    bool isSame(const MyTestMat& other)
     {
-        _program = p;
+    //    if (!STDMatData::isSame(other))
+      //      return false;
+        return uniform == other.uniform;
     }
 
-    const Vector4& getVal() const
+    void apply()
     {
-        return _val;
-    }
-
-    void setVal(const Vector4& v)
-    {
-        _val = v;
-    }
-
-    typedef Property<Vector4, const Vector4&, ShaderSprite, &ShaderSprite::getVal, &ShaderSprite::setVal>   TweenVal;
-
-private:
-    Vector4 _val;
-    UberShaderProgram* _program;
-    void setUniforms(IVideoDriver* driver, ShaderProgram* prog)
-    {
-        driver->setUniform("userValue", _val);
-    }
-
-    void doRender(const RenderState& rs) override
-    {
-        /* _program->setShaderUniformsCallback(CLOSURE(this, &ShaderSprite::setUniforms));
-         STDRenderer* renderer = safeCast<STDRenderer*>(rs.renderer);
-         renderer->setUberShaderProgram(_program);
-         Sprite::doRender(rs);
-         renderer->setUberShaderProgram(&Renderer::uberShader);
-
-         _program->setShaderUniformsCallback(UberShaderProgram::ShaderUniformsCallback());*/
+        //STDMatData::apply();
+        IVideoDriver::instance->setUniform("userValue", uniform);
     }
 };
 
-class TweenShader: public Tween, public Material
+
+class TweenShader: public Tween//, public Material
 {
 public:
     UberShaderProgram* _program;
@@ -63,7 +42,12 @@ public:
     void _start(Actor& actor) override
     {
         actor.setName("zzz");
-        actor.setMaterial(this);
+        Sprite& spr = (Sprite&)actor;
+
+//        MyTestMat data;
+        //data = spr._mat->_data;
+        //spr._mat = mc().add(data);
+        //actor.setMaterial(this);
     }
 
     void _update(Actor& actor, const UpdateState& us) override
@@ -81,6 +65,7 @@ public:
         driver->setUniform("userValue", _val);
     }
 
+    /*
     void apply(Material* prev) override
     {
         STDRenderer* renderer = STDRenderer::getCurrent();
@@ -98,6 +83,7 @@ public:
         STDRenderer* renderer = STDRenderer::getCurrent();
         renderer->drawBatch();
     }
+    */
 };
 
 

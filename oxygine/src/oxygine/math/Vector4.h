@@ -29,6 +29,7 @@ namespace oxygine
         VectorT4 operator / (T) const;
 
         VectorT3<T> xyz()const;
+        bool operator == (const VectorT4& r) const;
 
         inline T& operator[](int i) {return m[i];}
         inline const T& operator[](int i)const {return m[i];}
@@ -129,6 +130,12 @@ namespace oxygine
     {
         T is = T(1.0) / s;
         x *= is; y *= is; z *= is; w *= is; return (*this);
+    }
+
+    template <class T>
+    bool VectorT4<T>::operator == (const VectorT4& v) const
+    {
+        return x == v.x && y == v.y && z == v.z && w == v.w;
     }
 
     template <class T>

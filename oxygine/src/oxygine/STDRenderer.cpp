@@ -592,7 +592,7 @@ namespace oxygine
     }
 
 
-    void STDRenderer::setTextureNew(int sampler, spNativeTexture t)
+    void STDRenderer::setTextureNew(int sampler, const spNativeTexture& t)
     {
         if (_textures[sampler] == t)
             return;
@@ -606,10 +606,9 @@ namespace oxygine
         if (_program != sp)
         {
             _driver->setShaderProgram(sp);
+            _driver->setUniform("mat", _vp);
             _program = sp;
         }
-
-        _driver->setUniform("mat", STDRenderer::getCurrent()->getViewProjection());
     }
 
     void STDRenderer::add(const spMaterialX& mat, vertexPCT2 vert[4])
@@ -716,7 +715,7 @@ namespace oxygine
         if (!indices)
             return;
 
-        IVideoDriver::instance->draw(IVideoDriver::PT_TRIANGLES, STDRenderer::getCurrent()->getVertexDeclaration(),
+        IVideoDriver::instance->draw(IVideoDriver::PT_TRIANGLES, _vdecl,
                                      &_vertices.front(), (unsigned int)_vertices.size(),
                                      &STDRenderer::indices16.front(), (unsigned int)indices);
 

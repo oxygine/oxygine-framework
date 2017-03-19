@@ -7,7 +7,7 @@ namespace oxygine
 {
     spMaterialX currentMat;
 
-    bool STDMatData::operator==(const STDMatData& b) const
+    bool STDMatData::isSame(const STDMatData& b) const
     {
         if (_base != b._base)
             return false;
@@ -35,10 +35,27 @@ namespace oxygine
 
     void STDMatData::apply()
     {
-        STDRenderer::getCurrent()->setShaderFlags(_flags);
-        STDRenderer::getCurrent()->setTextureNew(UberShaderProgram::SAMPLER_BASE, _base);
-        STDRenderer::getCurrent()->setTextureNew(UberShaderProgram::SAMPLER_ALPHA, _alpha);
-        STDRenderer::getCurrent()->setBlendMode(_blend);
+        STDRenderer* r = STDRenderer::getCurrent();
+        r->setShaderFlags(_flags);
+        r->setTextureNew(UberShaderProgram::SAMPLER_BASE, _base);
+        r->setTextureNew(UberShaderProgram::SAMPLER_ALPHA, _alpha);
+        r->setBlendMode(_blend);
+    }
+
+    MaterialX::MaterialX(const MaterialX& other)
+    {
+        _hash = other._hash;
+        _compare = other._compare;
+    }
+
+    MaterialX::MaterialX(compare cmp) : _hash(0), _compare(cmp)
+    {
+
+    }
+
+    MaterialX::MaterialX() : _hash(0)
+    {
+
     }
 
 }

@@ -11,13 +11,9 @@ namespace oxygine
 
         typedef bool(*compare)(const MaterialX* a, const MaterialX* b);
 
-        MaterialX() {}
-        MaterialX(compare cmp) : _hash(0), _compare(cmp) {}
-        MaterialX(const MaterialX& other)
-        {
-            _hash = other._hash;
-            _compare = other._compare;
-        }
+        MaterialX();
+        MaterialX(compare cmp);
+        MaterialX(const MaterialX& other);
 
         size_t _hash;
         compare _compare;
@@ -29,6 +25,12 @@ namespace oxygine
 
     typedef intrusive_ptr<MaterialX> spMaterialX;
 
+
+    class STDMaterialX : public MaterialX
+    {
+    public:
+
+    };
 
 
     template<class T>
@@ -53,7 +55,7 @@ namespace oxygine
         template<class C>
         static bool cmp(const MaterialTX<C>& a, const MaterialTX<C>& b)
         {
-            return a._data == b._data;
+            return a._data.isSame(b._data);
         }
 
         void apply() override
@@ -91,10 +93,8 @@ namespace oxygine
         int             _flags;
 
         void init(size_t& hash);
-
         void apply();
-
-        bool operator == (const STDMatData& b) const;
+        bool isSame(const STDMatData& b) const;
     };
 
     typedef intrusive_ptr< MaterialTX<STDMatData> > spSTDMaterialX;
