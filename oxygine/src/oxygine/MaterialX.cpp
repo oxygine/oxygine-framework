@@ -29,7 +29,7 @@ namespace oxygine
     {
         hash_combine(hash, _base.get());
         hash_combine(hash, _alpha.get());
-        hash_combine(hash, _blend);
+        hash_combine(hash, (int)_blend);
         hash_combine(hash, _flags);
     }
 

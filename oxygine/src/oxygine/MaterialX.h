@@ -50,8 +50,8 @@ namespace oxygine
             hash_combine(_hash, _compare);
         }
 
-        template<class T>
-        static bool cmp(const MaterialTX<T>& a, const MaterialTX<T>& b)
+        template<class C>
+        static bool cmp(const MaterialTX<C>& a, const MaterialTX<C>& b)
         {
             return a._data == b._data;
         }

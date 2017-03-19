@@ -19,6 +19,7 @@
 #include "RenderState.h"
 #include "VisualStyle.h"
 
+//#define EXP_SORT
 
 namespace oxygine
 {
@@ -227,11 +228,7 @@ namespace oxygine
 
     void STDRenderer::drawBatch()
     {
-        if (!_vertices.empty())
-        {
-            preDrawBatch();
-            xdrawBatch();
-        }
+        flush();
     }
 
     void STDRenderer::initCoordinateSystem(int width, int height, bool flipU)
@@ -286,6 +283,7 @@ namespace oxygine
         _transform.identity();
         for (int i = 0; i < MAX_TEXTURES; ++i)
             _textures[i] = 0;
+        _currentMaterial = 0;
         resetSettings();
 
         xbegin();
@@ -302,8 +300,6 @@ namespace oxygine
 
         OX_ASSERT(_drawing);
         drawBatch();
-
-        flush();
 
         if (_prevRT)
         {
@@ -424,7 +420,7 @@ namespace oxygine
         if (_blend == blend)
             return;
 
-        drawBatch();
+        //drawBatch();
 
         if (blend == 0)
         {
@@ -616,8 +612,9 @@ namespace oxygine
         _driver->setUniform("mat", STDRenderer::getCurrent()->getViewProjection());
     }
 
-    void STDRenderer::add(spMaterialX mat, vertexPCT2 vert[4])
+    void STDRenderer::add(const spMaterialX& mat, vertexPCT2 vert[4])
     {
+#ifdef EXP_SORT
         batch& b = add(mat);
 
         b.vertices.insert(b.vertices.end(), vert, vert + 4);
@@ -625,7 +622,19 @@ namespace oxygine
         {
             b.bbox.unite(Vector2(vert[i].x, vert[i].y));
         }
+#else
+        if (_currentMaterial != mat)
+        {
+            flush();
+            mat->apply();
+            _currentMaterial = mat;
+        }
+        _vertices.insert(_vertices.end(), (unsigned char*)vert, (unsigned char*)(vert + 4));
+
+#endif
     }
+
+#ifdef EXP_SORT
 
     STDRenderer::batch& STDRenderer::add(spMaterialX mat)
     {
@@ -655,7 +664,8 @@ namespace oxygine
             if (c.mat == my.mat)
             {
                 bool fail = false;
-                for (int n = i - 1; n > j; --n)
+                for (int n = j + 1; n < i; ++n)
+                    //for (int n = i - 1; n > j; --n)
                 {
                     batch& c2 = _batches[n];
                     if (c2.bbox.isIntersecting(c.bbox))
@@ -676,9 +686,11 @@ namespace oxygine
             }
         }
     }
-
+#endif
     void STDRenderer::flush()
     {
+#ifdef EXP_SORT
+
         process();
 
         size_t num = _batches.size();
@@ -695,11 +707,21 @@ namespace oxygine
             IVideoDriver::instance->draw(IVideoDriver::PT_TRIANGLES, STDRenderer::getCurrent()->getVertexDeclaration(),
                                          &c.vertices.front(), (unsigned int)c.vertices.size(),
                                          &STDRenderer::indices16.front(), (unsigned int)indices);
-
         }
 
-        log::messageln("batches %d", _batches.size());
+        //log::messageln("batches %d", _batches.size());
         _batches.clear();
+#else
+        size_t indices = (_vertices.size() / sizeof(vertexPCT2) * 3) / 2;
+        if (!indices)
+            return;
+
+        IVideoDriver::instance->draw(IVideoDriver::PT_TRIANGLES, STDRenderer::getCurrent()->getVertexDeclaration(),
+                                     &_vertices.front(), (unsigned int)_vertices.size(),
+                                     &STDRenderer::indices16.front(), (unsigned int)indices);
+
+        _vertices.clear();
+#endif
     }
 
 

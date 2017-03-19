@@ -69,7 +69,7 @@ namespace oxygine
         void draw(const spNativeTexture& texture, unsigned int color, const RectF& src, const RectF& dest) override;
         void draw(const spMaterialX& mat, unsigned int color, const RectF& src, const RectF& dest) override;
         void draw(const spMaterialX& mat, const AffineTransform& transform, unsigned int color, const RectF& src, const RectF& dest);
-        void add(spMaterialX mat, vertexPCT2 vert[4]);
+        void add(const spMaterialX& mat, vertexPCT2 vert[4]);
 
         /**Begins rendering into RenderTexture or into primary framebuffer if rt is null*/
         void begin();
@@ -117,6 +117,7 @@ namespace oxygine
         int _baseShaderFlags;
         Transform _transform;
 
+        spMaterialX _currentMaterial;
         STDRenderer* _previous;
         void setShader(ShaderProgram* prog);
 
