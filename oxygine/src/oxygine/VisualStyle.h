@@ -41,13 +41,14 @@ namespace oxygine
 
         void                    setColor(const Color& color);
         void                    setColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
-        void                    setBlendMode(blend_mode mode) {_vstyle.setBlendMode(mode);}
+        void                    setBlendMode(blend_mode mode) { _vstyle.setBlendMode(mode); blendModeChanged(mode); }
 
         typedef Property<Color, const Color&, VStyleActor, &VStyleActor::getColor, &VStyleActor::setColor> TweenColor;
 
         bool getBounds(RectF& b) const  override { b = getDestRect();  return true; }
 
     protected:
+        virtual void blendModeChanged(blend_mode) {}
         VisualStyle _vstyle;
     };
 

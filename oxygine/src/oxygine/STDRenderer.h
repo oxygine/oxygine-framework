@@ -41,6 +41,7 @@ namespace oxygine
         const Matrix&   getViewProjection() const;
         IVideoDriver*   getDriver();
         unsigned int    getShaderFlags() const;
+        const VertexDeclaration* getVertexDeclaration() const { return _vdecl; }
 
         void setViewProj(const Matrix& viewProj);
         void setVertexDeclaration(const VertexDeclaration* decl);
