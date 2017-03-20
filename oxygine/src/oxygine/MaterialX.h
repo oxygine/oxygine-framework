@@ -19,18 +19,40 @@ namespace oxygine
         compare _compare;
 
         virtual void apply() = 0;
-
+        //virtual void init(size_t &);
         virtual MaterialX* clone() const = 0;
     };
 
     typedef intrusive_ptr<MaterialX> spMaterialX;
 
 
+    /*
     class STDMaterialX : public MaterialX
     {
     public:
+        spNativeTexture _base;
+        spNativeTexture _alpha;
+        blend_mode      _blend;
+        int             _flags;
 
+        void init(size_t& hash) override
+        {
+            hash_combine(hash, _base.get());
+            hash_combine(hash, _alpha.get());
+            hash_combine(hash, (int)_blend);
+            hash_combine(hash, _flags);
+        }
+
+        void apply() override
+        {
+            STDRenderer* r = STDRenderer::getCurrent();
+            r->setShaderFlags(_flags);
+            r->setTextureNew(UberShaderProgram::SAMPLER_BASE, _base);
+            r->setTextureNew(UberShaderProgram::SAMPLER_ALPHA, _alpha);
+            r->setBlendMode(_blend);
+        }
     };
+    */
 
 
     template<class T>
@@ -41,6 +63,8 @@ namespace oxygine
         typedef bool(*fcmp)(const MaterialTX<T>& a, const MaterialTX<T>& b);
 
         T _data;
+
+        MaterialTX() {}
 
         MaterialTX(const T& data) : _data(data)
         {

@@ -1,27 +1,59 @@
 #pragma once
 #include "test.h"
 
+template <class T>
+class IsSame
+{
+public:
+    static bool isSame(const T& a, const T &b)
+    {
+        return a.isSame(b);
+    }
+};
+template <class T>
+bool isSameF(const T &a, const T & b)
+{
+    return a.isSame(b);
+}
+
 class MyTestMat : public MaterialTX<STDMatData>
 {
 public:
     Vector4 uniform;
 
-    void init(size_t& hash)
+    //MyTestMat():MaterialTX<STDMatData>( {}
+    MyTestMat() {}
+    MyTestMat(const MyTestMat &other)
     {
-//        STDMatData::init(hash);
+        _data = other._data;
+        _data.init(_hash);
+
+        typedef bool(*fcmp)(const MyTestMat& a, const MyTestMat& b);
+        fcmp fn = &IsSame<MyTestMat>::isSame;
+        _compare = (compare)(fn);
+
+        hash_combine(_hash, _compare);
+
   //      hash_combine(hash, uniform.x, uniform.y, uniform.z, uniform.w);
     }
 
-    bool isSame(const MyTestMat& other)
+    bool isSame(const MyTestMat& other) const
     {
-    //    if (!STDMatData::isSame(other))
-      //      return false;
+        if (MaterialTX<STDMatData>::cmp(*this, other))
+            return false;
+
         return uniform == other.uniform;
     }
 
+    MyTestMat* clone() const override
+    {
+        return new MyTestMat(*this);
+    }
+    
+
     void apply()
     {
-        //STDMatData::apply();
+        MaterialTX<STDMatData>::apply();
         IVideoDriver::instance->setUniform("userValue", uniform);
     }
 };
@@ -44,6 +76,10 @@ public:
         actor.setName("zzz");
         Sprite& spr = (Sprite&)actor;
 
+        MyTestMat my;
+        my._data = spr._mat->_data;
+
+        spr._mat = mc().add2(my);
 //        MyTestMat data;
         //data = spr._mat->_data;
         //spr._mat = mc().add(data);
