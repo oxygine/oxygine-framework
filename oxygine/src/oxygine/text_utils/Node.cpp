@@ -199,11 +199,12 @@ namespace oxygine
                             }
                         }
 
-                        STDMatData data = rd.data;
-                        data._base = gl->texture;
+                        MaterialTX<STDMatData> mat;
+                        mat.data = rd.data;
+                        mat.data._base = gl->texture;
 
 
-                        s.materialX = mc().add(data);
+                        s.materialX = mc().add2(mat);
                     }
                     ++i;
                     if (i < 0)

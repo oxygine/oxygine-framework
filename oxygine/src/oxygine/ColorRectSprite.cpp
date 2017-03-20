@@ -13,10 +13,10 @@ namespace oxygine
 
     ColorRectSprite::ColorRectSprite()
     {
-        STDMatData data;
-        data._base = STDRenderer::white;
+        STDMaterialX mat;
+        mat.data._base = STDRenderer::white;
 
-        _mat = mc().add(data);
+        _mat = mc().add2(mat);
     }
 
     ColorRectSprite::~ColorRectSprite()

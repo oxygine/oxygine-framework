@@ -602,7 +602,7 @@ namespace oxygine
 
     void STDRenderer::setShaderFlags(int flags)
     {
-        ShaderProgram* sp = STDRenderer::uberShader.getShaderProgram(_baseShaderFlags | flags);
+        ShaderProgram* sp = _uberShader->getShaderProgram(_baseShaderFlags | flags);
         if (_program != sp)
         {
             _driver->setShaderProgram(sp);
@@ -729,7 +729,7 @@ namespace oxygine
         if (_uberShader == pr)
             return;
 
-        drawBatch();
+        //drawBatch();
         _uberShader = pr;
     }
 

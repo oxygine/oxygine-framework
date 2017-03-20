@@ -14,10 +14,10 @@ namespace oxygine
 
     VStyleActor::VStyleActor()
     {
-        STDMatData data;
-        data._blend = blend_premultiplied_alpha;
+        MaterialTX<STDMatData> mat;
+        mat.data._blend = blend_premultiplied_alpha;
 
-        _mat = mc().add(data);
+        _mat = mc().add2(mat);
     }
 
     void VStyleActor::copyFrom(const VStyleActor& src, cloneOptions opt)
@@ -91,10 +91,9 @@ namespace oxygine
     {
         _vstyle.setBlendMode(mode);
 
-        STDMatData data = _mat->_data;
-        data._blend = mode;
-
-        _mat = mc().add(data);
+        _mat = _mat->clone();
+        _mat->data._blend = mode;
+        _mat = mc().add2(*_mat.get());
 
         blendModeChanged(mode);
     }

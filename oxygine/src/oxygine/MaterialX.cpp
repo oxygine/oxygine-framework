@@ -17,25 +17,29 @@ namespace oxygine
             return false;
         if (_flags != b._flags)
             return false;
+        if (us != b.us)
+            return false;
         return true;
     }
 
-    STDMatData::STDMatData() : _blend(blend_alpha), _flags(0)
+    STDMatData::STDMatData() : _blend(blend_alpha), _flags(0), us(&STDRenderer::uberShader)
     {
 
     }
 
-    void STDMatData::init(size_t& hash)
+    void STDMatData::init(size_t& hash) const
     {
         hash_combine(hash, _base.get());
         hash_combine(hash, _alpha.get());
         hash_combine(hash, (int)_blend);
         hash_combine(hash, _flags);
+        hash_combine(hash, us);
     }
 
     void STDMatData::apply()
     {
         STDRenderer* r = STDRenderer::getCurrent();
+        r->setUberShaderProgram(us);
         r->setShaderFlags(_flags);
         r->setTextureNew(UberShaderProgram::SAMPLER_BASE, _base);
         r->setTextureNew(UberShaderProgram::SAMPLER_ALPHA, _alpha);
@@ -56,6 +60,13 @@ namespace oxygine
     MaterialX::MaterialX() : _hash(0)
     {
 
+    }
+
+    oxygine::MaterialX& MaterialX::operator=(const MaterialX& r)
+    {
+        _compare = r._compare;
+        _hash = r._hash;
+        return *this;
     }
 
 }

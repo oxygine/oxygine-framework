@@ -5,6 +5,25 @@
 namespace oxygine
 {
 
+
+#define MATX(cl) \
+    cl(){\
+        typedef bool (*fn)(const cl&a, const cl&b);\
+        fn f = &cl::cmp;\
+        _compare = (compare)f;\
+    }\
+    void copyFrom(const MaterialX &r) override {*this = (cl&)r;}\
+    cl* clone() const override {return new cl(*this);}\
+    void update(size_t &hash, compare &cm) const override {\
+        typedef bool (*fn)(const cl&a, const cl&b);\
+        fn f = &cl::cmp;\
+        cm = (compare)f;\
+        hash = 0;\
+        rehash(hash);\
+    }
+
+
+
     class MaterialX : public ref_counter
     {
     public:
@@ -12,6 +31,8 @@ namespace oxygine
         typedef bool(*compare)(const MaterialX* a, const MaterialX* b);
 
         MaterialX();
+
+        MaterialX& operator = (const MaterialX& r);
         MaterialX(compare cmp);
         MaterialX(const MaterialX& other);
 
@@ -19,8 +40,10 @@ namespace oxygine
         compare _compare;
 
         virtual void apply() = 0;
-        //virtual void init(size_t &);
         virtual MaterialX* clone() const = 0;
+        virtual void copyFrom(const MaterialX& r) = 0;
+        virtual void update(size_t& hash, compare&) const = 0;
+        virtual void rehash(size_t& hash) const = 0;
     };
 
     typedef intrusive_ptr<MaterialX> spMaterialX;
@@ -59,39 +82,33 @@ namespace oxygine
     class MaterialTX : public MaterialX
     {
     public:
+        MATX(MaterialTX<T>);
 
         typedef bool(*fcmp)(const MaterialTX<T>& a, const MaterialTX<T>& b);
 
-        T _data;
+        T data;
 
-        MaterialTX() {}
 
-        MaterialTX(const T& data) : _data(data)
+        MaterialTX(const T& dat) : data(dat)
         {
-            _data.init(_hash);
+        }
 
-            fcmp fn = &MaterialTX<T>::cmp;
-            _compare = (compare)(fn);
-
-            hash_combine(_hash, _compare);
+        void rehash(size_t& hash) const override
+        {
+            data.init(hash);
         }
 
         template<class C>
         static bool cmp(const MaterialTX<C>& a, const MaterialTX<C>& b)
         {
-            return a._data.isSame(b._data);
+            return a.data.isSame(b.data);
         }
 
         void apply() override
         {
-            _data.apply();
+            data.apply();
         }
 
-        MaterialTX<T>* clone() const override
-        {
-            MaterialTX<T>* copy = new MaterialTX<T>(*this);
-            return copy;
-        }
     };
 
 
@@ -114,12 +131,16 @@ namespace oxygine
         spNativeTexture _base;
         spNativeTexture _alpha;
         blend_mode      _blend;
+        UberShaderProgram* us;
         int             _flags;
 
-        void init(size_t& hash);
+        void init(size_t& hash) const;
         void apply();
         bool isSame(const STDMatData& b) const;
     };
+
+
+    typedef MaterialTX<STDMatData> STDMaterialX;
 
     typedef intrusive_ptr< MaterialTX<STDMatData> > spSTDMaterialX;
 
@@ -130,28 +151,39 @@ namespace oxygine
         typedef std::vector<spMaterialX> materials;
         materials _materials;
 
-        template<class T>
-        intrusive_ptr< MaterialTX<T> > add(const T& other)
-        {
-            MaterialTX<T> mat(other);
-            return add2(mat);
-        }
 
         template<class T>
         intrusive_ptr<T> add2(const T& other)
         {
-            for (auto m : _materials)
+            size_t hash;
+            MaterialX::compare cm;
+            other.update(hash, cm);
+
+            T* fre = 0;
+            for (auto m_ : _materials)
             {
-                if (m->_compare != other._compare)
+                MaterialX* mat = m_.get();
+                if (mat->_compare != cm)
                     continue;
-                if (m->_hash != other._hash)
+                if (mat->_ref_counter == 2)
+                    fre = (T*)mat;
+                if (mat->_hash != hash)
                     continue;
-                bool same = m->_compare(m.get(), &other);
+                bool same = cm(mat, &other);
                 if (same)
-                    return (T*)m.get();
+                    return (T*)mat;
+            }
+            if (fre)
+            {
+                fre->copyFrom(other);
+                fre->_hash = hash;
+                fre->_compare = cm;
+                return fre;
             }
 
             T* copy = other.clone();
+            copy->_hash = hash;
+            copy->_compare = cm;
             _materials.push_back(copy);
 
             return copy;

@@ -224,12 +224,13 @@ namespace oxygine
 
 
 
-        STDMatData data = _mat->_data;
-        data._base = _frame.getDiffuse().base;
-        data._alpha = _frame.getDiffuse().alpha;
-        data._flags = _frame.getDiffuse().premultiplied ? 0 : UberShaderProgram::ALPHA_PREMULTIPLY;
+        STDMaterialX mat;
+        mat.data = _mat->data;
+        mat.data._base = _frame.getDiffuse().base;
+        mat.data._alpha = _frame.getDiffuse().alpha;
+        mat.data._flags = _frame.getDiffuse().premultiplied ? 0 : UberShaderProgram::ALPHA_PREMULTIPLY;
 
-        _mat = mc().add(data);
+        _mat = mc().add2(mat);
 
         animFrameChanged(_frame);
     }

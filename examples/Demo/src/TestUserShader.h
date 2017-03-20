@@ -1,55 +1,28 @@
 #pragma once
 #include "test.h"
 
-template <class T>
-class IsSame
-{
-public:
-    static bool isSame(const T& a, const T &b)
-    {
-        return a.isSame(b);
-    }
-};
-template <class T>
-bool isSameF(const T &a, const T & b)
-{
-    return a.isSame(b);
-}
 
 class MyTestMat : public MaterialTX<STDMatData>
 {
 public:
-    Vector4 uniform;
+    MATX(MyTestMat);
 
-    //MyTestMat():MaterialTX<STDMatData>( {}
-    MyTestMat() {}
-    MyTestMat(const MyTestMat &other)
+    Vector4 uniform = Vector4(0.0f, 0.0f, 0.0f, 0.0f);
+
+
+    void rehash(size_t& hash) const override
     {
-        _data = other._data;
-        _data.init(_hash);
-
-        typedef bool(*fcmp)(const MyTestMat& a, const MyTestMat& b);
-        fcmp fn = &IsSame<MyTestMat>::isSame;
-        _compare = (compare)(fn);
-
-        hash_combine(_hash, _compare);
-
-  //      hash_combine(hash, uniform.x, uniform.y, uniform.z, uniform.w);
+        data.init(hash);
+        hash_combine(hash, uniform.x, uniform.y, uniform.z, uniform.w);
     }
 
-    bool isSame(const MyTestMat& other) const
+    static bool cmp(const MyTestMat& a, const MyTestMat& b)
     {
-        if (MaterialTX<STDMatData>::cmp(*this, other))
+        if (!MaterialTX<STDMatData>::cmp(a, b))
             return false;
 
-        return uniform == other.uniform;
+        return a.uniform == b.uniform;
     }
-
-    MyTestMat* clone() const override
-    {
-        return new MyTestMat(*this);
-    }
-    
 
     void apply()
     {
@@ -73,53 +46,38 @@ public:
 
     void _start(Actor& actor) override
     {
-        actor.setName("zzz");
         Sprite& spr = (Sprite&)actor;
 
         MyTestMat my;
-        my._data = spr._mat->_data;
+        my.data = spr._mat->data;
+        my.data.us = _program;
+        my.uniform = _val;
 
         spr._mat = mc().add2(my);
-//        MyTestMat data;
-        //data = spr._mat->_data;
-        //spr._mat = mc().add(data);
-        //actor.setMaterial(this);
     }
 
     void _update(Actor& actor, const UpdateState& us) override
     {
+        Sprite& spr = (Sprite&)actor;
+
         _val = lerp(Vector4(1, 1, 1, 0), Vector4(0, 0, 0, 0),  _percent);
+
+        MyTestMat my;
+        my.data = spr._mat->data;
+        my.data.us = _program;
+        my.uniform = _val;
+
+
+        spr._mat = mc().add2(my);
     }
 
     void _done(Actor& actor, const UpdateState& us) override
     {
-        actor.setMaterial(0);
+        Sprite& spr = (Sprite&)actor;
+        STDMaterialX mat;
+        mat.data = spr._mat->data;
+        spr._mat = mc().add2(mat);
     }
-
-    void setUniforms(IVideoDriver* driver, ShaderProgram* prog)
-    {
-        driver->setUniform("userValue", _val);
-    }
-
-    /*
-    void apply(Material* prev) override
-    {
-        STDRenderer* renderer = STDRenderer::getCurrent();
-        _program->setShaderUniformsCallback(CLOSURE(this, &TweenShader::setUniforms));
-        renderer->setUberShaderProgram(_program);
-    }
-
-    void doRender(Sprite* s, const RenderState& rs) override
-    {
-        STDMaterial::instance->doRender(s, rs);
-    }
-
-    void finish() override
-    {
-        STDRenderer* renderer = STDRenderer::getCurrent();
-        renderer->drawBatch();
-    }
-    */
 };
 
 
@@ -181,6 +139,8 @@ public:
             toggle("->shader:invert", 0, _shaderInvert)
         };
         addToggle("shader", t, 3);
+
+        addButton("blend", "blend");
     }
 
     ~TestUserShader()
@@ -198,6 +158,14 @@ public:
 
             _sprite->removeTweens();
             _sprite->addTween2(new TweenShader(shader), TweenOptions(3000).twoSides(true).loops(-1));
+        }
+    }
+
+    void clicked(string id)
+    {
+        if (id == "blend")
+        {
+            _sprite->setBlendMode(blend_disabled);
         }
     }
 };
