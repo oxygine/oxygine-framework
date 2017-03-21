@@ -230,7 +230,7 @@ namespace oxygine
         mat.data._alpha = _frame.getDiffuse().alpha;
         mat.data._flags = _frame.getDiffuse().premultiplied ? 0 : UberShaderProgram::ALPHA_PREMULTIPLY;
 
-        _mat = mc().add2(mat);
+        _mat = mc().cache(mat);
 
         animFrameChanged(_frame);
     }

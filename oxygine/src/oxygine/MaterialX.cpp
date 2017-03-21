@@ -7,7 +7,7 @@ namespace oxygine
 {
     spMaterialX currentMat;
 
-    bool STDMatData::isSame(const STDMatData& b) const
+    bool STDMatData::cmp(const STDMatData& b) const
     {
         if (_base != b._base)
             return false;
@@ -17,12 +17,12 @@ namespace oxygine
             return false;
         if (_flags != b._flags)
             return false;
-        if (us != b.us)
+        if (_uberShader != b._uberShader)
             return false;
         return true;
     }
 
-    STDMatData::STDMatData() : _blend(blend_alpha), _flags(0), us(&STDRenderer::uberShader)
+    STDMatData::STDMatData() : _blend(blend_alpha), _flags(0), _uberShader(&STDRenderer::uberShader)
     {
 
     }
@@ -33,13 +33,13 @@ namespace oxygine
         hash_combine(hash, _alpha.get());
         hash_combine(hash, (int)_blend);
         hash_combine(hash, _flags);
-        hash_combine(hash, us);
+        hash_combine(hash, _uberShader);
     }
 
     void STDMatData::apply()
     {
         STDRenderer* r = STDRenderer::getCurrent();
-        r->setUberShaderProgram(us);
+        r->setUberShaderProgram(_uberShader);
         r->setShaderFlags(_flags);
         r->setTextureNew(UberShaderProgram::SAMPLER_BASE, _base);
         r->setTextureNew(UberShaderProgram::SAMPLER_ALPHA, _alpha);

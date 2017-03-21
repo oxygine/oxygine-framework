@@ -17,7 +17,7 @@ namespace oxygine
         MaterialTX<STDMatData> mat;
         mat.data._blend = blend_premultiplied_alpha;
 
-        _mat = mc().add2(mat);
+        _mat = mc().cache(mat);
     }
 
     void VStyleActor::copyFrom(const VStyleActor& src, cloneOptions opt)
@@ -93,7 +93,7 @@ namespace oxygine
 
         _mat = _mat->clone();
         _mat->data._blend = mode;
-        _mat = mc().add2(*_mat.get());
+        _mat = mc().cache(*_mat.get());
 
         blendModeChanged(mode);
     }

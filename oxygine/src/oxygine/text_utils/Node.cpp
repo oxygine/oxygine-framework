@@ -204,7 +204,7 @@ namespace oxygine
                         mat.data._base = gl->texture;
 
 
-                        s.materialX = mc().add2(mat);
+                        s.materialX = mc().cache(mat);
                     }
                     ++i;
                     if (i < 0)

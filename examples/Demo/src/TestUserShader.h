@@ -2,10 +2,10 @@
 #include "test.h"
 
 
-class MyTestMat : public MaterialTX<STDMatData>
+class CustomUniformMat : public MaterialTX<STDMatData>
 {
 public:
-    MATX(MyTestMat);
+    MATX(CustomUniformMat);
 
     Vector4 uniform = Vector4(0.0f, 0.0f, 0.0f, 0.0f);
 
@@ -16,7 +16,7 @@ public:
         hash_combine(hash, uniform.x, uniform.y, uniform.z, uniform.w);
     }
 
-    static bool cmp(const MyTestMat& a, const MyTestMat& b)
+    static bool cmp(const CustomUniformMat& a, const CustomUniformMat& b)
     {
         if (!MaterialTX<STDMatData>::cmp(a, b))
             return false;
@@ -32,51 +32,30 @@ public:
 };
 
 
-class TweenShader: public Tween//, public Material
+class TweenUniform: public Tween
 {
 public:
-    UberShaderProgram* _program;
-    Vector4 _val;
-    TweenShader(UberShaderProgram* prog) : _program(prog), _val(0, 0, 0, 0) {}
-    ~TweenShader()
-    {
-        if (_client)
-            _client->setMaterial(0);
-    }
+    TweenUniform() {}
 
     void _start(Actor& actor) override
     {
+        upd(actor, Vector4(0,0,0,0));
+    }
+
+    void upd(Actor& actor, const Vector4 &val)
+    {
         Sprite& spr = (Sprite&)actor;
 
-        MyTestMat my;
-        my.data = spr._mat->data;
-        my.data.us = _program;
-        my.uniform = _val;
+        CustomUniformMat& my = *safeCast<CustomUniformMat*>(spr._mat.get());
+        my.uniform = val;
 
-        spr._mat = mc().add2(my);
+        spr._mat = mc().cache(my);
     }
 
     void _update(Actor& actor, const UpdateState& us) override
     {
-        Sprite& spr = (Sprite&)actor;
-
-        _val = lerp(Vector4(1, 1, 1, 0), Vector4(0, 0, 0, 0),  _percent);
-
-        MyTestMat my;
-        my.data = spr._mat->data;
-        my.data.us = _program;
-        my.uniform = _val;
-
-
-        spr._mat = mc().add2(my);
-    }
-
-    void _done(Actor& actor, const UpdateState& us) override
-    {
-        Sprite& spr = (Sprite&)actor;
-        STDMaterialX mat;
-        mat.data = spr._mat->data;
-        spr._mat = mc().add2(mat);
+        Vector4 val = lerp(Vector4(1, 1, 1, 0), Vector4(0, 0, 0, 0),  _percent);
+        upd(actor, val);
     }
 };
 
@@ -130,8 +109,6 @@ public:
         _sprite->setResAnim(resources.getResAnim("bg"));
         _sprite->attachTo(content);
 
-        //_sprite->addTween2(new TweenShader(_shaderInvert), TweenOptions(2000).twoSides(true).loops(-1));
-
         toggle t[] =
         {
             toggle("->shader:add color", 0, _shaderAddColor),
@@ -154,10 +131,16 @@ public:
     {
         if (id == "shader")
         {
+            _sprite->removeTweens();
+
             UberShaderProgram* shader = (UberShaderProgram*)data->data;
 
-            _sprite->removeTweens();
-            _sprite->addTween2(new TweenShader(shader), TweenOptions(3000).twoSides(true).loops(-1));
+            CustomUniformMat mat;
+            mat.data = _sprite->_mat->data;
+            mat.data._uberShader = shader;
+            _sprite->_mat = mc().cache(mat);
+
+            _sprite->addTween2(new TweenUniform(), TweenOptions(3000).twoSides(true).loops(-1));
         }
     }
 

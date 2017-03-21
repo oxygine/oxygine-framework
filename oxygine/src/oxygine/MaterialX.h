@@ -101,14 +101,13 @@ namespace oxygine
         template<class C>
         static bool cmp(const MaterialTX<C>& a, const MaterialTX<C>& b)
         {
-            return a.data.isSame(b.data);
+            return a.data.cmp(b.data);
         }
 
         void apply() override
         {
             data.apply();
         }
-
     };
 
 
@@ -128,15 +127,15 @@ namespace oxygine
     public:
         STDMatData();
 
-        spNativeTexture _base;
-        spNativeTexture _alpha;
-        blend_mode      _blend;
-        UberShaderProgram* us;
-        int             _flags;
+        spNativeTexture    _base;
+        spNativeTexture    _alpha;
+        blend_mode         _blend;
+        UberShaderProgram* _uberShader;
+        int                _flags;
 
         void init(size_t& hash) const;
         void apply();
-        bool isSame(const STDMatData& b) const;
+        bool cmp(const STDMatData& b) const;
     };
 
 
@@ -153,7 +152,7 @@ namespace oxygine
 
 
         template<class T>
-        intrusive_ptr<T> add2(const T& other)
+        intrusive_ptr<T> cache(const T& other)
         {
             size_t hash;
             MaterialX::compare cm;

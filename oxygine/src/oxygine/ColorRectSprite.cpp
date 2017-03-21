@@ -16,7 +16,7 @@ namespace oxygine
         STDMaterialX mat;
         mat.data._base = STDRenderer::white;
 
-        _mat = mc().add2(mat);
+        _mat = mc().cache(mat);
     }
 
     ColorRectSprite::~ColorRectSprite()
