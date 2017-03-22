@@ -188,6 +188,12 @@ namespace oxygine
         needRebuild();
     }
 
+    void TextField::matChanged()
+    {
+        log::warning("not optimal");
+        needRebuild();
+    }
+
     void TextField::setText(const std::string& str)
     {
         _flags &= ~flag_html;
@@ -328,7 +334,7 @@ namespace oxygine
                 _root = new text::TextNode(_text.c_str());
             }
 
-            text::Aligner rd(_style, _mat->data , font, scale, getSize());
+            text::Aligner rd(_style, _mat, font, scale, getSize());
             rd.begin();
             _root->resize(rd);
             rd.end();

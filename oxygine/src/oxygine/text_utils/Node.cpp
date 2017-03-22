@@ -5,6 +5,7 @@
 #include "../RenderState.h"
 #include "../AnimationFrame.h"
 #include "../res/ResFont.h"
+#include "STDMaterial.h"
 
 namespace oxygine
 {
@@ -199,12 +200,12 @@ namespace oxygine
                             }
                         }
 
-                        MaterialTX<STDMatData> mat;
-                        mat.data = rd.data;
-                        mat.data._base = gl->texture;
+                        spSTDMaterialX mat = rd.mat->clone();
+
+                        mat->data._base = gl->texture;
 
 
-                        s.materialX = mc().cache(mat);
+                        s.materialX = mc().cache(*mat.get());
                     }
                     ++i;
                     if (i < 0)

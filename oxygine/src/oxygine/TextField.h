@@ -122,6 +122,7 @@ namespace oxygine
 
         void needRebuild();
         void sizeChanged(const Vector2& size) override;
+        void matChanged() override;
     };
 }
 

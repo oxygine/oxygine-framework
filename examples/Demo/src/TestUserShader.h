@@ -39,10 +39,10 @@ public:
 
     void _start(Actor& actor) override
     {
-        upd(actor, Vector4(0,0,0,0));
+        upd(actor, Vector4(0, 0, 0, 0));
     }
 
-    void upd(Actor& actor, const Vector4 &val)
+    void upd(Actor& actor, const Vector4& val)
     {
         Sprite& spr = (Sprite&)actor;
 

@@ -30,7 +30,7 @@ namespace oxygine
         class Aligner
         {
         public:
-            Aligner(const TextStyle& style, const STDMatData& md, const Font* font, float gscale, const Vector2& size);
+            Aligner(const TextStyle& style, spSTDMaterialX mat, const Font* font, float gscale, const Vector2& size);
             ~Aligner();
 
 
@@ -50,7 +50,7 @@ namespace oxygine
             int height;
             int options;
 
-            const STDMatData& data;
+            spSTDMaterialX mat;
 
             const Font* _font;
 

@@ -94,8 +94,12 @@ namespace oxygine
         _mat = _mat->clone();
         _mat->data._blend = mode;
         _mat = mc().cache(*_mat.get());
-
-        blendModeChanged(mode);
+        matChanged();
     }
 
+    void VStyleActor::setMat(spSTDMaterialX mat)
+    {
+        _mat = mat;
+        matChanged();
+    }
 }

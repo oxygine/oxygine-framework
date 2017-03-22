@@ -47,10 +47,11 @@ namespace oxygine
 
         bool getBounds(RectF& b) const  override { b = getDestRect();  return true; }
 
+        void                    setMat(spSTDMaterialX mat);
         spSTDMaterialX _mat;
 
     protected:
-        virtual void blendModeChanged(blend_mode) {}
+        virtual void matChanged() {}
         VisualStyle _vstyle;
 
 
