@@ -43,6 +43,12 @@ uniform lowp sampler2D alpha_texture;
 #define DONT_MULT_BY_RESULT_COLOR
 #endif
 
+
+lowp vec4 modify_base_pre(lowp vec4);
+lowp vec4 modify_base(lowp vec4);
+lowp vec4 replaced_get_base();
+lowp vec4 replaced_get_color();
+
 lowp vec4 get_base()
 {
 	lowp vec4 base = texture2D(base_texture, result_uv);	

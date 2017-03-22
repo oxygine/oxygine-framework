@@ -45,9 +45,9 @@ def gen(module, data):
     return (fmtH % args, fmtCPP % args, )
     
 rs = gen("system", data.getvalue())
-with open("../../oxygine/src/core/system_data.h", "w") as fh:
+with open("../../oxygine/src/oxygine/core/system_data.h", "w") as fh:
     fh.write(rs[0])
-with open("../../oxygine/src/core/system_data.cpp", "w") as fh:
+with open("../../oxygine/src/oxygine/core/system_data.cpp", "w") as fh:
     fh.write(rs[1])
 
 with open("system.zip", "wb") as zp:
