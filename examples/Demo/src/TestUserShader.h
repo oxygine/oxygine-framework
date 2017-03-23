@@ -32,30 +32,36 @@ public:
 };
 
 
-class TweenUniform: public Tween
+class TweenUniform
 {
 public:
     TweenUniform() {}
 
-    void _start(Actor& actor) override
+    typedef Sprite type;
+
+    void init(Sprite& spr)
     {
-        upd(actor, Vector4(0, 0, 0, 0));
     }
 
-    void upd(Actor& actor, const Vector4& val)
+    void done(Sprite& spr)
     {
-        Sprite& spr = (Sprite&)actor;
+    }
 
+    void upd(Sprite& spr, const Vector4& val)
+    {
         CustomUniformMat& my = *safeCast<CustomUniformMat*>(spr._mat.get());
         my.uniform = val;
 
         spr._mat = mc().cache(my);
     }
 
-    void _update(Actor& actor, const UpdateState& us) override
+    void update(Sprite& spr, float p, const UpdateState& us)
     {
-        Vector4 val = lerp(Vector4(1, 1, 1, 0), Vector4(0, 0, 0, 0),  _percent);
-        upd(actor, val);
+        Vector4 val = lerp(Vector4(1, 1, 1, 0), Vector4(0, 0, 0, 0), p);
+        CustomUniformMat& my = *safeCast<CustomUniformMat*>(spr._mat.get());
+        my.uniform = val;
+
+        spr._mat = mc().cache(my);
     }
 };
 
@@ -140,7 +146,7 @@ public:
             mat.data._uberShader = shader;
             _sprite->_mat = mc().cache(mat);
 
-            _sprite->addTween2(new TweenUniform(), TweenOptions(3000).twoSides(true).loops(-1));
+            _sprite->addTween(TweenUniform(), TweenOptions(3000).twoSides(true).loops(-1));
         }
     }
 

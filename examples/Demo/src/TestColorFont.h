@@ -42,6 +42,7 @@ public:
                      R"(
                      #define MODIFY_BASE
                      #define DONT_MULT_BY_RESULT_COLOR)",
+
                      R"(
                      uniform lowp vec4 _black;
                      uniform lowp vec4 _white;

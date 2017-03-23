@@ -89,7 +89,7 @@ public:
         ResAnim* brush = resources.getResAnim("brush");
         AnimationFrame frame = brush->getFrame(0);
         const Diffuse& df = frame.getDiffuse();
-        renderer.setTexture(df.base);
+        renderer.setTextureNew(0, df.base);
         if (paint)
             renderer.setBlendMode(blend_premultiplied_alpha);
         else

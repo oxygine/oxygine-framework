@@ -41,8 +41,8 @@ public:
 		)";
 
 
-        int vs = ShaderProgramGL::createShader(GL_VERTEX_SHADER,   vertexShaderData, 0, 0);
-        int fs = ShaderProgramGL::createShader(GL_FRAGMENT_SHADER, fragmentShaderData, 0, 0);
+        int vs = ShaderProgramGL::createShader(GL_VERTEX_SHADER,   vertexShaderData);
+        int fs = ShaderProgramGL::createShader(GL_FRAGMENT_SHADER, fragmentShaderData);
 
         _program = oxglCreateProgram();
         oxglAttachShader(_program, vs);
@@ -76,6 +76,7 @@ public:
     void doRender(const RenderState& rs)
     {
         Material::setCurrent(0);
+        STDRenderer::getCurrent()->flush();
 
 
         glEnable(GL_BLEND);

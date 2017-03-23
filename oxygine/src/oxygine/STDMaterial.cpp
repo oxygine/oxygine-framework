@@ -136,6 +136,9 @@ namespace oxygine
 
     void STDMaterial::doRender(Sprite* sprite, const RenderState& rs)
     {
+        if (!sprite->getAnimFrame().getDiffuse().base)
+            return;
+
         Color color = rs.getFinalColor(sprite->getColor());
         if (sprite->getBlendMode() == blend_premultiplied_alpha)
             color = color.premultiplied();
