@@ -498,7 +498,7 @@ namespace oxygine
     template <class T>
     inline MatrixT<T>& MatrixT<T>::transpose(MatrixT& out, const MatrixT& mat)
     {
-        vector4* rows = (vector4*)out.ml;
+        vector4* rows = (vector4*)mat.ml;
         out = MatrixT(
                   rows[0].x, rows[1].x, rows[2].x, rows[3].x,
                   rows[0].y, rows[1].y, rows[2].y, rows[3].y,

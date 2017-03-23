@@ -1033,7 +1033,7 @@
 		C3E86F4316EBC8A500052915 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = denism;
 			};
 			buildConfigurationList = C3E86F4616EBC8A500052915 /* Build configuration list for PBXProject "oxygine_ios" */;
@@ -1193,7 +1193,7 @@
 					"$(THIRD_PARTY)/libpng",
 					"$(THIRD_PARTY)/libjpeg",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACOSX_DEPLOYMENT_TARGET = "";
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1229,7 +1229,7 @@
 					"$(THIRD_PARTY)/libpng",
 					"$(THIRD_PARTY)/libjpeg",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACOSX_DEPLOYMENT_TARGET = "";
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;

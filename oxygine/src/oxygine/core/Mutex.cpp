@@ -5,10 +5,20 @@
 
 namespace oxygine
 {
-    Mutex::Mutex()//:_handle(PTHREAD_MUTEX_INITIALIZER)
+    Mutex::Mutex(bool recursive)
     {
-        //_handle = PTHREAD_MUTEX_INITIALIZER;
-        pthread_mutex_init(&_handle, 0);
+        if (recursive)
+        {
+            pthread_mutexattr_t   mta;
+            pthread_mutexattr_init(&mta);
+            pthread_mutexattr_settype(&mta, PTHREAD_MUTEX_RECURSIVE);
+
+            pthread_mutex_init(&_handle, &mta);
+        }
+        else
+        {
+            pthread_mutex_init(&_handle, 0);
+        }
     }
 
     Mutex::~Mutex()
