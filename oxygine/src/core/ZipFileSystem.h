@@ -42,6 +42,7 @@ namespace oxygine
             const char* getZipFileName(int i) const { return _zps[i].name; }
 
         private:
+            friend class ZipFileSystem;
             void read(unzFile zp);
 
             bool _sort;

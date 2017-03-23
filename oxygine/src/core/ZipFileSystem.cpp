@@ -40,7 +40,7 @@ namespace oxygine
             return true;
         }
 
-        Zips::Zips(): _sort(false)
+        Zips::Zips(): _sort(false), _lock(true)
         {
 
         }
@@ -456,6 +456,8 @@ namespace oxygine
 
         FileSystem::status ZipFileSystem::_open(const char* file, const char* mode, error_policy ep, file::fileHandle*& fh)
         {
+            MutexAutoLock lock(_zips._lock);
+
             const file_entry* entry = _zips.getEntryByName(file);
             if (entry)
             {

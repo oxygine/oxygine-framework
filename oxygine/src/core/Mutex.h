@@ -12,7 +12,7 @@ namespace oxygine
     class Mutex
     {
     public:
-        Mutex();
+        Mutex(bool recursive = false);
         ~Mutex();
 
         void lock();
