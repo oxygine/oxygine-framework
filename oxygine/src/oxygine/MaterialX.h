@@ -44,6 +44,9 @@ namespace oxygine
         virtual void copyFrom(const MaterialX& r) = 0;
         virtual void update(size_t& hash, compare&) const = 0;
         virtual void rehash(size_t& hash) const = 0;
+
+        void render(const AffineTransform &tr, const Color& c, const RectF& src, const RectF& dest);
+        void render(const Color& c, const RectF& src, const RectF& dest);
     };
 
     typedef intrusive_ptr<MaterialX> spMaterialX;

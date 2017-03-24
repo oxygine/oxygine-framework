@@ -154,9 +154,9 @@ namespace oxygine
             for (size_t i = 0; i < _data.size(); ++i)
             {
                 const Symbol& s = _data[i];
-                if (!s.materialX)
+                if (!s.mat)
                     continue;
-                dc.renderer->draw(s.materialX, dc.color.rgba(), s.gl.src, s.destRect);
+                s.mat->render(dc.color, s.gl.src, s.destRect);
             }
 
             drawChildren(dc);
@@ -205,7 +205,7 @@ namespace oxygine
                         mat->data._base = gl->texture;
 
 
-                        s.materialX = mc().cache(*mat.get());
+                        s.mat = mc().cache(*mat.get());
                     }
                     ++i;
                     if (i < 0)

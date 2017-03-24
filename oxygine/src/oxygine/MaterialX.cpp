@@ -62,6 +62,16 @@ namespace oxygine
 
     }
 
+    void MaterialX::render(const AffineTransform &tr, const Color& c, const RectF& src, const RectF& dest)
+    {
+        STDRenderer::getCurrent()->draw(this, tr, c, src, dest);
+    }
+
+    void MaterialX::render(const Color& c, const RectF& src, const RectF& dest)
+    {
+        STDRenderer::getCurrent()->draw(this, c, src, dest);
+    }
+
     oxygine::MaterialX& MaterialX::operator=(const MaterialX& r)
     {
         _compare = r._compare;

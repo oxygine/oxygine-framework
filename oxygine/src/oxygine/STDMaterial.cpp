@@ -140,10 +140,8 @@ namespace oxygine
             return;
 
         Color color = rs.getFinalColor(sprite->getColor());
-        if (sprite->getBlendMode() == blend_premultiplied_alpha)
-            color = color.premultiplied();
 
-        STDRenderer::getCurrent()->draw(sprite->_mat, rs.transform, color.rgba(), sprite->getAnimFrame().getSrcRect(), sprite->getDestRect());
+        sprite->_mat->render(rs.transform, color, sprite->getAnimFrame().getSrcRect(), sprite->getDestRect());
     }
 
     void STDMaterial::doRender(TextField* tf, const RenderState& rs)
@@ -190,10 +188,8 @@ namespace oxygine
     void STDMaterial::doRender(ColorRectSprite* sprite, const RenderState& rs)
     {
         Color color = rs.getFinalColor(sprite->getColor());
-        if (sprite->getBlendMode() == blend_premultiplied_alpha)
-            color = color.premultiplied();
 
-        STDRenderer::getCurrent()->draw(sprite->_mat, rs.transform, color.rgba(), sprite->getAnimFrame().getSrcRect(), sprite->getDestRect());
+        sprite->_mat->render(rs.transform, color, sprite->getAnimFrame().getSrcRect(), sprite->getDestRect());
     }
 
     void STDMaterial::doRender(ProgressBar*, const RenderState& rs)

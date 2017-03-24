@@ -577,18 +577,20 @@ namespace oxygine
         addVertices(v, sizeof(v));
     }
 
-    void STDRenderer::draw(const spMaterialX& mat, unsigned int color, const RectF& srcRect, const RectF& destRect)
+    void STDRenderer::draw(MaterialX* mat, const Color& color, const RectF& srcRect, const RectF& destRect)
     {
-        vertexPCT2 v[4];
-        fillQuadT(v, srcRect, destRect, _transform, color);
-        add(mat, v);
+        draw(mat, _transform, color, srcRect, destRect);
     }
 
-    void STDRenderer::draw(const spMaterialX& mat, const AffineTransform& tr, unsigned int color, const RectF& srcRect, const RectF& destRect)
+    void STDRenderer::draw(MaterialX* mat, const AffineTransform& tr, const Color& color_, const RectF& srcRect, const RectF& destRect)
     {
+        Color color = color_;
+        //if (_blend == blend_premultiplied_alpha)
+            color = color.premultiplied();
+
         vertexPCT2 v[4];
-        fillQuadT(v, srcRect, destRect, tr, color);
-        add(mat, v);
+        fillQuadT(v, srcRect, destRect, tr, color.rgba());
+        draw(mat, v);
     }
 
 
@@ -611,10 +613,10 @@ namespace oxygine
         }
     }
 
-    void STDRenderer::add(const spMaterialX& mat, vertexPCT2 vert[4])
+    void STDRenderer::draw(MaterialX* mat, vertexPCT2 vert[4])
     {
 #ifdef EXP_SORT
-        batch& b = add(mat);
+        batch& b = draw(mat);
 
         b.vertices.insert(b.vertices.end(), vert, vert + 4);
         for (int i = 0; i < 4; ++i)
@@ -635,7 +637,7 @@ namespace oxygine
 
 #ifdef EXP_SORT
 
-    STDRenderer::batch& STDRenderer::add(spMaterialX mat)
+    STDRenderer::batch& STDRenderer::draw(spMaterialX mat)
     {
         if (_batches.empty() || _batches.back().mat != mat)
         {

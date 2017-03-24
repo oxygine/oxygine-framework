@@ -24,7 +24,7 @@ namespace oxygine
             int code;
             glyph gl;
             RectF destRect;
-            spMaterialX materialX;
+            spMaterialX mat;
         };
 
         class Aligner

@@ -67,9 +67,9 @@ namespace oxygine
         void applySimpleMode(bool basePremultiplied);
         /**used in pair with applySimpleMode/applySDF, fast, don't have excess checks*/
         void draw(const spNativeTexture& texture, unsigned int color, const RectF& src, const RectF& dest) override;
-        void draw(const spMaterialX& mat, unsigned int color, const RectF& src, const RectF& dest) override;
-        void draw(const spMaterialX& mat, const AffineTransform& transform, unsigned int color, const RectF& src, const RectF& dest);
-        void add(const spMaterialX& mat, vertexPCT2 vert[4]);
+        void draw(MaterialX* mat, const Color& color, const RectF& src, const RectF& dest) override;
+        void draw(MaterialX* mat, const AffineTransform& transform, const Color& color, const RectF& src, const RectF& dest);
+        void draw(MaterialX* mat, vertexPCT2 vert[4]);
 
         /**Begins rendering into RenderTexture or into primary framebuffer if rt is null*/
         void begin();
@@ -112,7 +112,7 @@ namespace oxygine
         enum { MAX_TEXTURES = 4 };
         spNativeTexture _textures[MAX_TEXTURES];
 
-        batch& add(spMaterialX mat);
+        batch& draw(spMaterialX mat);
 
         int _baseShaderFlags;
         Transform _transform;
