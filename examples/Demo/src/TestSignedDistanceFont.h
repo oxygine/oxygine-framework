@@ -53,6 +53,9 @@ public:
         txt->setWidth(getStage()->getWidth() / 2);
         txt->setAnchor(0.5f, 0.5f);
 
+        SDFMaterial sdf;
+
+        txt->setMat(mc().cache(sdf));
 
 
         addButton("scale+", "scale+");

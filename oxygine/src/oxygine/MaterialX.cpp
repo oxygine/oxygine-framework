@@ -5,7 +5,7 @@
 
 namespace oxygine
 {
-    spMaterialX currentMat;
+    spMaterialX MaterialX::current;
 
     bool STDMatData::cmp(const STDMatData& b) const
     {
@@ -22,7 +22,7 @@ namespace oxygine
         return true;
     }
 
-    STDMatData::STDMatData() : _blend(blend_alpha), _flags(0), _uberShader(&STDRenderer::uberShader)
+    STDMatData::STDMatData() : _blend(blend_premultiplied_alpha), _flags(0), _uberShader(&STDRenderer::uberShader)
     {
 
     }
@@ -64,11 +64,28 @@ namespace oxygine
 
     void MaterialX::render(const AffineTransform &tr, const Color& c, const RectF& src, const RectF& dest)
     {
+        /*
+        if (current.get() != this)
+        {
+            STDRenderer::getCurrent()->flush();
+            apply();
+            current = this;
+        }
+        */
         STDRenderer::getCurrent()->draw(this, tr, c, src, dest);
     }
 
     void MaterialX::render(const Color& c, const RectF& src, const RectF& dest)
     {
+        /*
+        if (current.get() != this)
+        {
+            STDRenderer::getCurrent()->flush();
+            apply();
+            current = this;
+        }
+        */
+
         STDRenderer::getCurrent()->draw(this, c, src, dest);
     }
 

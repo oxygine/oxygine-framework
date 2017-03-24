@@ -10,6 +10,8 @@ namespace oxygine
     public:
         MATX(SDFMaterial);
 
+        void init() override;
+
         Vector4 outlineColor = Vector4(0.0f, 0.0f, 0.0f, 0.0f);
         Vector4 outlineParams = Vector4(0.0f, 0.0f, 0.0f, 0.0f);
 
@@ -19,6 +21,7 @@ namespace oxygine
         static bool cmp(const SDFMaterial& a, const SDFMaterial& b);
 
         void apply();
+        void render(const Color& c, const RectF& src, const RectF& dest) override;
     };
 
     class STDRenderer : public IElementRenderer

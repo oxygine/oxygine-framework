@@ -837,6 +837,15 @@ namespace oxygine
     }
 
 
+    void SDFMaterial::init()
+    {
+        data._flags = UberShaderProgram::SDF;
+        //if (outlineOffset < offset)
+        data._flags |= UberShaderProgram::SDF_OUTLINE;
+        outlineParams = Vector4(0.25f, 6.25f, 0.15f, 12.5f);
+        outlineColor = Vector4(1, 1, 1, 1);
+    }
+
     void SDFMaterial::rehash(size_t& hash) const
     {
         data.init(hash);
@@ -857,6 +866,11 @@ namespace oxygine
         STDMaterialX::apply();
         IVideoDriver::instance->setUniform("sdf_outline_color", outlineColor);
         IVideoDriver::instance->setUniform("sdf_params", outlineParams);
+    }
+
+    void SDFMaterial::render(const Color& c, const RectF& src, const RectF& dest)
+    {
+        STDRenderer::getCurrent()->draw(this, c, src, dest);
     }
 
 }

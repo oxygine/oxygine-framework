@@ -11,6 +11,7 @@ namespace oxygine
         typedef bool (*fn)(const cl&a, const cl&b);\
         fn f = &cl::cmp;\
         _compare = (compare)f;\
+        init();\
     }\
     void copyFrom(const MaterialX &r) override {*this = (cl&)r;}\
     cl* clone() const override {return new cl(*this);}\
@@ -28,6 +29,8 @@ namespace oxygine
     {
     public:
 
+        static spMaterialX current;
+
         typedef bool(*compare)(const MaterialX* a, const MaterialX* b);
 
         MaterialX();
@@ -36,17 +39,19 @@ namespace oxygine
         MaterialX(compare cmp);
         MaterialX(const MaterialX& other);
 
+
         size_t _hash;
         compare _compare;
 
+        virtual void init() {}
         virtual void apply() = 0;
         virtual MaterialX* clone() const = 0;
         virtual void copyFrom(const MaterialX& r) = 0;
         virtual void update(size_t& hash, compare&) const = 0;
         virtual void rehash(size_t& hash) const = 0;
 
-        void render(const AffineTransform &tr, const Color& c, const RectF& src, const RectF& dest);
-        void render(const Color& c, const RectF& src, const RectF& dest);
+        virtual void render(const AffineTransform &tr, const Color& c, const RectF& src, const RectF& dest);
+        virtual void render(const Color& c, const RectF& src, const RectF& dest);
     };
 
     typedef intrusive_ptr<MaterialX> spMaterialX;
