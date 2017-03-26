@@ -20,7 +20,7 @@ namespace oxygine
 
         static bool cmp(const SDFMaterial& a, const SDFMaterial& b);
 
-        void apply();
+        void xapply();
         void render(const Color& c, const RectF& src, const RectF& dest) override;
     };
 
@@ -87,9 +87,12 @@ namespace oxygine
         void applySimpleMode(bool basePremultiplied);
         /**used in pair with applySimpleMode/applySDF, fast, don't have excess checks*/
         void draw(const spNativeTexture& texture, unsigned int color, const RectF& src, const RectF& dest) override;
+
+        /*
         void draw(MaterialX* mat, const Color& color, const RectF& src, const RectF& dest) override;
         void draw(MaterialX* mat, const AffineTransform& transform, const Color& color, const RectF& src, const RectF& dest);
         void draw(MaterialX* mat, vertexPCT2 vert[4]);
+        */
 
         /**Begins rendering into RenderTexture or into primary framebuffer if rt is null*/
         void begin();
@@ -137,7 +140,6 @@ namespace oxygine
         int _baseShaderFlags;
         Transform _transform;
 
-        spMaterialX _currentMaterial;
         STDRenderer* _previous;
         void setShader(ShaderProgram* prog);
 

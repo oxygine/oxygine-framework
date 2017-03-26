@@ -170,6 +170,10 @@ namespace oxygine
         Material::setCurrent(0);
 
         STDRenderer::getCurrent()->flush();
+
+        MaterialX::current->flush();
+
+        MaterialX::current = 0;
     }
 
     void Stage::render(const Color& clearColor, const Rect& viewport)

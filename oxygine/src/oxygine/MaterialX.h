@@ -44,7 +44,10 @@ namespace oxygine
         compare _compare;
 
         virtual void init() {}
-        virtual void apply() = 0;
+        
+        virtual void xapply() {}
+        virtual void xflush() {}
+
         virtual MaterialX* clone() const = 0;
         virtual void copyFrom(const MaterialX& r) = 0;
         virtual void update(size_t& hash, compare&) const = 0;
@@ -52,39 +55,13 @@ namespace oxygine
 
         virtual void render(const AffineTransform &tr, const Color& c, const RectF& src, const RectF& dest);
         virtual void render(const Color& c, const RectF& src, const RectF& dest);
+
+        void apply();
+        void flush();
+
     };
 
     typedef intrusive_ptr<MaterialX> spMaterialX;
-
-
-    /*
-    class STDMaterialX : public MaterialX
-    {
-    public:
-        spNativeTexture _base;
-        spNativeTexture _alpha;
-        blend_mode      _blend;
-        int             _flags;
-
-        void init(size_t& hash) override
-        {
-            hash_combine(hash, _base.get());
-            hash_combine(hash, _alpha.get());
-            hash_combine(hash, (int)_blend);
-            hash_combine(hash, _flags);
-        }
-
-        void apply() override
-        {
-            STDRenderer* r = STDRenderer::getCurrent();
-            r->setShaderFlags(_flags);
-            r->setTextureNew(UberShaderProgram::SAMPLER_BASE, _base);
-            r->setTextureNew(UberShaderProgram::SAMPLER_ALPHA, _alpha);
-            r->setBlendMode(_blend);
-        }
-    };
-    */
-
 
     template<class T>
     class MaterialTX : public MaterialX
@@ -112,11 +89,32 @@ namespace oxygine
             return a.data.cmp(b.data);
         }
 
-        void apply() override
+        void xapply() override
         {
             data.apply();
         }
+
+        void xflush() override
+        {
+            data.flush();
+        }
+
     };
+
+    /*
+    class STDMaterialX: public MaterialX
+    {
+    public:
+        MATX(STDMaterialX);
+
+        spNativeTexture    _base;
+        spNativeTexture    _alpha;
+        blend_mode         _blend;
+        UberShaderProgram* _uberShader;
+        int                _flags;
+
+    };
+    */
 
 
 
@@ -143,6 +141,7 @@ namespace oxygine
 
         void init(size_t& hash) const;
         void apply();
+        void flush();
         bool cmp(const STDMatData& b) const;
     };
 

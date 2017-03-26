@@ -24,9 +24,9 @@ public:
         return a.uniformBlack == b.uniformBlack;
     }
 
-    void apply() override
+    void xapply() override
     {
-        MaterialTX<STDMatData>::apply();
+        MaterialTX<STDMatData>::xapply();
         IVideoDriver::instance->setUniform("_black", uniformBlack);
     }
 };

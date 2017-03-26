@@ -156,6 +156,7 @@ namespace oxygine
                 const Symbol& s = _data[i];
                 if (!s.mat)
                     continue;
+                s.mat->apply();
                 s.mat->render(dc.color, s.gl.src, s.destRect);
             }
 

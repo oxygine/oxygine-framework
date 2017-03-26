@@ -46,6 +46,11 @@ namespace oxygine
         r->setBlendMode(_blend);
     }
 
+    void STDMatData::flush()
+    {
+        STDRenderer::getCurrent()->drawBatch();
+    }
+
     MaterialX::MaterialX(const MaterialX& other)
     {
         _hash = other._hash;
@@ -64,29 +69,30 @@ namespace oxygine
 
     void MaterialX::render(const AffineTransform &tr, const Color& c, const RectF& src, const RectF& dest)
     {
-        /*
-        if (current.get() != this)
-        {
-            STDRenderer::getCurrent()->flush();
-            apply();
-            current = this;
-        }
-        */
-        STDRenderer::getCurrent()->draw(this, tr, c, src, dest);
+        STDRenderer::getCurrent()->setTransform(tr);
+        STDRenderer::getCurrent()->draw(c, src, dest);
     }
 
     void MaterialX::render(const Color& c, const RectF& src, const RectF& dest)
     {
-        /*
-        if (current.get() != this)
+        STDRenderer::getCurrent()->draw(c, src, dest);
+    }
+
+    void MaterialX::apply()
+    {
+        if (current != this)
         {
-            STDRenderer::getCurrent()->flush();
-            apply();
+            if (current)
+                current->flush();
+            xapply();
             current = this;
         }
-        */
+    }
 
-        STDRenderer::getCurrent()->draw(this, c, src, dest);
+
+    void MaterialX::flush()
+    {
+        xflush();
     }
 
     oxygine::MaterialX& MaterialX::operator=(const MaterialX& r)

@@ -312,7 +312,7 @@ namespace oxygine
         _transform.identity();
         for (int i = 0; i < MAX_TEXTURES; ++i)
             _textures[i] = 0;
-        _currentMaterial = 0;
+        MaterialX::current = 0;
         resetSettings();
 
         xbegin();
@@ -604,21 +604,6 @@ namespace oxygine
         addVertices(v, sizeof(v));
     }
 
-    void STDRenderer::draw(MaterialX* mat, const Color& color, const RectF& srcRect, const RectF& destRect)
-    {
-        draw(mat, _transform, color, srcRect, destRect);
-    }
-
-    void STDRenderer::draw(MaterialX* mat, const AffineTransform& tr, const Color& color_, const RectF& srcRect, const RectF& destRect)
-    {
-        Color color = color_.premultiplied();
-
-        vertexPCT2 v[4];
-        fillQuadT(v, srcRect, destRect, tr, color.rgba());
-        draw(mat, v);
-    }
-
-
     void STDRenderer::setTextureNew(int sampler, const spNativeTexture& t)
     {
         if (_textures[sampler] == t)
@@ -637,6 +622,23 @@ namespace oxygine
             _program = sp;
         }
     }
+    /*
+
+
+    void STDRenderer::draw(MaterialX* mat, const Color& color, const RectF& srcRect, const RectF& destRect)
+    {
+    draw(mat, _transform, color, srcRect, destRect);
+    }
+
+    void STDRenderer::draw(MaterialX* mat, const AffineTransform& tr, const Color& color_, const RectF& srcRect, const RectF& destRect)
+    {
+    Color color = color_.premultiplied();
+
+    vertexPCT2 v[4];
+    fillQuadT(v, srcRect, destRect, tr, color.rgba());
+    draw(mat, v);
+    }
+
 
     void STDRenderer::draw(MaterialX* mat, vertexPCT2 vert[4])
     {
@@ -649,12 +651,6 @@ namespace oxygine
             b.bbox.unite(Vector2(vert[i].x, vert[i].y));
         }
 #else
-        if (_currentMaterial != mat)
-        {
-            flush();
-            mat->apply();
-            _currentMaterial = mat;
-        }
         _vertices.insert(_vertices.end(), (unsigned char*)vert, (unsigned char*)(vert + 4));
 
 #endif
@@ -713,6 +709,7 @@ namespace oxygine
         }
     }
 #endif
+*/
     void STDRenderer::flush()
     {
 #ifdef EXP_SORT
@@ -861,16 +858,16 @@ namespace oxygine
         return a.outlineColor == b.outlineColor && a.outlineParams == b.outlineParams;
     }
 
-    void SDFMaterial::apply()
+    void SDFMaterial::xapply()
     {
-        STDMaterialX::apply();
+        STDMaterialX::xapply();
         IVideoDriver::instance->setUniform("sdf_outline_color", outlineColor);
         IVideoDriver::instance->setUniform("sdf_params", outlineParams);
     }
 
     void SDFMaterial::render(const Color& c, const RectF& src, const RectF& dest)
     {
-        STDRenderer::getCurrent()->draw(this, c, src, dest);
+        //STDRenderer::getCurrent()->draw(this, c, src, dest);
     }
 
 }

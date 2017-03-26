@@ -141,6 +141,8 @@ namespace oxygine
 
         Color color = rs.getFinalColor(sprite->getColor());
 
+        sprite->_mat->apply();
+
         sprite->_mat->render(rs.transform, color, sprite->getAnimFrame().getSrcRect(), sprite->getDestRect());
     }
 

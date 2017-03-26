@@ -77,7 +77,10 @@ namespace oxygine
         if (!_verticesSize)
             return;
 
-        Material::setCurrent(rs.material);
+        _mat->apply();
+
+
+        //Material::setCurrent(rs.material);
 
         const Diffuse& df = _frame.getDiffuse();
 
