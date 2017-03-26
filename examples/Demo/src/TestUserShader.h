@@ -2,7 +2,7 @@
 #include "test.h"
 
 
-class CustomUniformMat : public MaterialTX<STDMatData>
+class CustomUniformMat : public STDMaterialX
 {
 public:
     MATX(CustomUniformMat);
@@ -12,21 +12,21 @@ public:
 
     void rehash(size_t& hash) const override
     {
-        data.init(hash);
+        STDMaterialX::rehash(hash);
         hash_combine(hash, uniform.x, uniform.y, uniform.z, uniform.w);
     }
 
     static bool cmp(const CustomUniformMat& a, const CustomUniformMat& b)
     {
-        if (!MaterialTX<STDMatData>::cmp(a, b))
+        if (!STDMaterialX::cmp(a, b))
             return false;
 
         return a.uniform == b.uniform;
     }
 
-    void apply()
+    void xapply()
     {
-        MaterialTX<STDMatData>::apply();
+        STDMaterialX::xapply();
         IVideoDriver::instance->setUniform("userValue", uniform);
     }
 };
@@ -142,8 +142,9 @@ public:
             UberShaderProgram* shader = (UberShaderProgram*)data->data;
 
             CustomUniformMat mat;
-            mat.data = _sprite->_mat->data;
-            mat.data._uberShader = shader;
+            _sprite->_mat->copyTo(mat);
+
+            mat._uberShader = shader;
             _sprite->_mat = mc().cache(mat);
 
             _sprite->addTween(TweenUniform(), TweenOptions(3000).twoSides(true).loops(-1));

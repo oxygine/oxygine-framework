@@ -225,9 +225,9 @@ namespace oxygine
 
 
         spSTDMaterialX mat = _mat->clone();
-        mat->data._base = _frame.getDiffuse().base;
-        mat->data._alpha = _frame.getDiffuse().alpha;
-        mat->data._flags = _frame.getDiffuse().premultiplied ? 0 : UberShaderProgram::ALPHA_PREMULTIPLY;
+        mat->_base = _frame.getDiffuse().base;
+        mat->_alpha = _frame.getDiffuse().alpha;
+        mat->_flags = _frame.getDiffuse().premultiplied ? 0 : UberShaderProgram::ALPHA_PREMULTIPLY;
 
         _mat = mc().cache(*mat.get());
 

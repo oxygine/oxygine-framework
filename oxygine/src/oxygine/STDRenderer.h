@@ -20,7 +20,7 @@ namespace oxygine
 
         static bool cmp(const SDFMaterial& a, const SDFMaterial& b);
 
-        void xapply();
+        void xapply() override;
         void render(const Color& c, const RectF& src, const RectF& dest) override;
     };
 

@@ -38,7 +38,7 @@ namespace oxygine
 
 
 
-    
+
 
     /*
 
@@ -642,7 +642,7 @@ namespace oxygine
 
     void STDRenderer::draw(MaterialX* mat, vertexPCT2 vert[4])
     {
-#ifdef EXP_SORT
+    #ifdef EXP_SORT
         batch& b = draw(mat);
 
         b.vertices.insert(b.vertices.end(), vert, vert + 4);
@@ -650,13 +650,13 @@ namespace oxygine
         {
             b.bbox.unite(Vector2(vert[i].x, vert[i].y));
         }
-#else
+    #else
         _vertices.insert(_vertices.end(), (unsigned char*)vert, (unsigned char*)(vert + 4));
 
-#endif
+    #endif
     }
 
-#ifdef EXP_SORT
+    #ifdef EXP_SORT
 
     STDRenderer::batch& STDRenderer::draw(spMaterialX mat)
     {
@@ -708,8 +708,8 @@ namespace oxygine
             }
         }
     }
-#endif
-*/
+    #endif
+    */
     void STDRenderer::flush()
     {
 #ifdef EXP_SORT
@@ -836,23 +836,23 @@ namespace oxygine
 
     void SDFMaterial::init()
     {
-        data._flags = UberShaderProgram::SDF;
+        _flags = UberShaderProgram::SDF;
         //if (outlineOffset < offset)
-        data._flags |= UberShaderProgram::SDF_OUTLINE;
+        _flags |= UberShaderProgram::SDF_OUTLINE;
         outlineParams = Vector4(0.25f, 6.25f, 0.15f, 12.5f);
         outlineColor = Vector4(1, 1, 1, 1);
     }
 
     void SDFMaterial::rehash(size_t& hash) const
     {
-        data.init(hash);
+        STDMaterialX::rehash(hash);
         hash_combine(hash, outlineColor.x, outlineColor.y, outlineColor.z, outlineColor.w);
         hash_combine(hash, outlineParams.x, outlineParams.y, outlineParams.z, outlineParams.w);
     }
 
     bool SDFMaterial::cmp(const SDFMaterial& a, const SDFMaterial& b)
     {
-        if (!MaterialTX<STDMatData>::cmp(a, b))
+        if (!STDMaterialX::cmp(a, b))
             return false;
 
         return a.outlineColor == b.outlineColor && a.outlineParams == b.outlineParams;
@@ -867,7 +867,7 @@ namespace oxygine
 
     void SDFMaterial::render(const Color& c, const RectF& src, const RectF& dest)
     {
-        //STDRenderer::getCurrent()->draw(this, c, src, dest);
+        STDRenderer::getCurrent()->draw(c, src, dest);
     }
 
 }

@@ -203,7 +203,7 @@ namespace oxygine
 
                         spSTDMaterialX mat = rd.mat->clone();
 
-                        mat->data._base = gl->texture;
+                        mat->_base = gl->texture;
 
 
                         s.mat = mc().cache(*mat.get());

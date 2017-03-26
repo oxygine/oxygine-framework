@@ -4,7 +4,7 @@
 
 namespace oxygine
 {
-
+    class MaterialCache;
 
 #define MATX(cl) \
     cl(){\
@@ -14,6 +14,7 @@ namespace oxygine
         init();\
     }\
     void copyFrom(const MaterialX &r) override {*this = (cl&)r;}\
+    void copyTo(cl &d) const{d = *this;}\
     cl* clone() const override {return new cl(*this);}\
     void update(size_t &hash, compare &cm) const override {\
         typedef bool (*fn)(const cl&a, const cl&b);\
@@ -44,7 +45,7 @@ namespace oxygine
         compare _compare;
 
         virtual void init() {}
-        
+
         virtual void xapply() {}
         virtual void xflush() {}
 
@@ -53,55 +54,25 @@ namespace oxygine
         virtual void update(size_t& hash, compare&) const = 0;
         virtual void rehash(size_t& hash) const = 0;
 
-        virtual void render(const AffineTransform &tr, const Color& c, const RectF& src, const RectF& dest);
+        virtual void render(const AffineTransform& tr, const Color& c, const RectF& src, const RectF& dest);
         virtual void render(const Color& c, const RectF& src, const RectF& dest);
 
         void apply();
         void flush();
 
+
+        template <class T>
+        void apply2(const T& f)
+        {
+            apply();
+            f();
+        }
     };
 
     typedef intrusive_ptr<MaterialX> spMaterialX;
 
-    template<class T>
-    class MaterialTX : public MaterialX
-    {
-    public:
-        MATX(MaterialTX<T>);
-
-        typedef bool(*fcmp)(const MaterialTX<T>& a, const MaterialTX<T>& b);
-
-        T data;
 
 
-        MaterialTX(const T& dat) : data(dat)
-        {
-        }
-
-        void rehash(size_t& hash) const override
-        {
-            data.init(hash);
-        }
-
-        template<class C>
-        static bool cmp(const MaterialTX<C>& a, const MaterialTX<C>& b)
-        {
-            return a.data.cmp(b.data);
-        }
-
-        void xapply() override
-        {
-            data.apply();
-        }
-
-        void xflush() override
-        {
-            data.flush();
-        }
-
-    };
-
-    /*
     class STDMaterialX: public MaterialX
     {
     public:
@@ -113,8 +84,16 @@ namespace oxygine
         UberShaderProgram* _uberShader;
         int                _flags;
 
+        static bool cmp(const STDMaterialX& a, const STDMaterialX& b);
+
+        void init() override;
+        void rehash(size_t& hash) const override;
+
+        void xapply() override;
+        void xflush() override;
     };
-    */
+
+    DECLARE_SMART(STDMaterialX, spSTDMaterialX);
 
 
 
@@ -128,27 +107,6 @@ namespace oxygine
         hash_combine(seed, rest...);
     }
 
-    class STDMatData
-    {
-    public:
-        STDMatData();
-
-        spNativeTexture    _base;
-        spNativeTexture    _alpha;
-        blend_mode         _blend;
-        UberShaderProgram* _uberShader;
-        int                _flags;
-
-        void init(size_t& hash) const;
-        void apply();
-        void flush();
-        bool cmp(const STDMatData& b) const;
-    };
-
-
-    typedef MaterialTX<STDMatData> STDMaterialX;
-
-    typedef intrusive_ptr< MaterialTX<STDMatData> > spSTDMaterialX;
 
     class MaterialCache
     {

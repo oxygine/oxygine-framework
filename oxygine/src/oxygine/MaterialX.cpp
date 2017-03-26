@@ -7,27 +7,29 @@ namespace oxygine
 {
     spMaterialX MaterialX::current;
 
-    bool STDMatData::cmp(const STDMatData& b) const
+    bool STDMaterialX::cmp(const STDMaterialX& a, const STDMaterialX& b)
     {
-        if (_base != b._base)
+        if (a._base != b._base)
             return false;
-        if (_alpha != b._alpha)
+        if (a._alpha != b._alpha)
             return false;
-        if (_blend != b._blend)
+        if (a._blend != b._blend)
             return false;
-        if (_flags != b._flags)
+        if (a._flags != b._flags)
             return false;
-        if (_uberShader != b._uberShader)
+        if (a._uberShader != b._uberShader)
             return false;
         return true;
     }
 
-    STDMatData::STDMatData() : _blend(blend_premultiplied_alpha), _flags(0), _uberShader(&STDRenderer::uberShader)
+    void STDMaterialX::init()
     {
-
+        _blend = blend_premultiplied_alpha;
+        _flags = 0;
+        _uberShader = &STDRenderer::uberShader;
     }
 
-    void STDMatData::init(size_t& hash) const
+    void STDMaterialX::rehash(size_t& hash) const
     {
         hash_combine(hash, _base.get());
         hash_combine(hash, _alpha.get());
@@ -36,7 +38,7 @@ namespace oxygine
         hash_combine(hash, _uberShader);
     }
 
-    void STDMatData::apply()
+    void STDMaterialX::xapply()
     {
         STDRenderer* r = STDRenderer::getCurrent();
         r->setUberShaderProgram(_uberShader);
@@ -46,7 +48,7 @@ namespace oxygine
         r->setBlendMode(_blend);
     }
 
-    void STDMatData::flush()
+    void STDMaterialX::xflush()
     {
         STDRenderer::getCurrent()->drawBatch();
     }
@@ -67,7 +69,7 @@ namespace oxygine
 
     }
 
-    void MaterialX::render(const AffineTransform &tr, const Color& c, const RectF& src, const RectF& dest)
+    void MaterialX::render(const AffineTransform& tr, const Color& c, const RectF& src, const RectF& dest)
     {
         STDRenderer::getCurrent()->setTransform(tr);
         STDRenderer::getCurrent()->draw(c, src, dest);

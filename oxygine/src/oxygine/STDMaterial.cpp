@@ -189,6 +189,8 @@ namespace oxygine
 
     void STDMaterial::doRender(ColorRectSprite* sprite, const RenderState& rs)
     {
+        sprite->_mat->apply();
+
         Color color = rs.getFinalColor(sprite->getColor());
 
         sprite->_mat->render(rs.transform, color, sprite->getAnimFrame().getSrcRect(), sprite->getDestRect());

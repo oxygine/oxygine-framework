@@ -77,36 +77,34 @@ namespace oxygine
         if (!_verticesSize)
             return;
 
-        _mat->apply();
 
 
-        //Material::setCurrent(rs.material);
-
-        const Diffuse& df = _frame.getDiffuse();
-
-        STDRenderer* renderer = STDRenderer::getCurrent();
-
-        renderer->setTexture(df.base, df.alpha, df.premultiplied);
-        renderer->setBlendMode(getBlendMode());
-
-        static std::vector<unsigned char> buff;
-        buff.clear();
-
-        buff.reserve(_verticesSize);
-        int num = _verticesSize / _vdecl->size;
-
-        const unsigned char* ptr = (const unsigned char*)_verticesData;
-        for (int i = 0; i < num; ++i)
+        _mat->apply2([ = ]()
         {
-            const Vector2* pos = (Vector2*)ptr;
-            Vector2 t = rs.transform.transform(*pos);
 
-            append(buff, t);
-            buff.insert(buff.end(), ptr + sizeof(t), ptr + sizeof(t) + _vdecl->size - sizeof(t));
+            STDRenderer* renderer = STDRenderer::getCurrent();
 
-            ptr += _vdecl->size;
-        }
 
-        renderer->addVertices(&buff.front(), (unsigned int) buff.size());
+            static std::vector<unsigned char> buff;
+            buff.clear();
+
+            buff.reserve(_verticesSize);
+            int num = _verticesSize / _vdecl->size;
+
+            const unsigned char* ptr = (const unsigned char*)_verticesData;
+            for (int i = 0; i < num; ++i)
+            {
+                const Vector2* pos = (Vector2*)ptr;
+                Vector2 t = rs.transform.transform(*pos);
+
+                append(buff, t);
+                buff.insert(buff.end(), ptr + sizeof(t), ptr + sizeof(t) + _vdecl->size - sizeof(t));
+
+                ptr += _vdecl->size;
+            }
+
+            renderer->addVertices(&buff.front(), (unsigned int)buff.size());
+
+        });
     }
 }

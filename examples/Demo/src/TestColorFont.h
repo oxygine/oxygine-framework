@@ -12,13 +12,13 @@ public:
 
     void rehash(size_t& hash) const override
     {
-        data.init(hash);
+        STDMaterialX::rehash(hash);
         hash_combine(hash, uniformBlack.x, uniformBlack.y, uniformBlack.z, uniformBlack.w);
     }
 
     static bool cmp(const ColoredShaderMat& a, const ColoredShaderMat& b)
     {
-        if (!MaterialTX<STDMatData>::cmp(a, b))
+        if (!STDMaterialX::cmp(a, b))
             return false;
 
         return a.uniformBlack == b.uniformBlack;
@@ -26,7 +26,7 @@ public:
 
     void xapply() override
     {
-        MaterialTX<STDMatData>::xapply();
+        STDMaterialX::xapply();
         IVideoDriver::instance->setUniform("_black", uniformBlack);
     }
 };
@@ -64,7 +64,7 @@ public:
 
     ShaderTextField() : _outer(Color::White)
     {
-        mat.data._uberShader = shader;
+        mat._uberShader = shader;
         mat.uniformBlack = _outer.toVector();
         _mat = mc().cache(mat);
     }
