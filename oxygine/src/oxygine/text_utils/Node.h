@@ -57,6 +57,9 @@ namespace oxygine
             virtual void xresize(Aligner& rd) {}
             virtual void xfinalPass(Aligner& rd) {}
 
+            void updateMaterial(const STDMaterialX& mat);
+            virtual void xupdateMaterial(const STDMaterialX& mat) {}
+
 
             Node* _firstChild;
             Node* _lastChild;
@@ -74,6 +77,7 @@ namespace oxygine
             void xresize(Aligner& rd) override;
             void xfinalPass(Aligner& rd) override;
             void draw(DrawContext& dc) override;
+            void xupdateMaterial(const STDMaterialX& mat) override;
 
             Symbol* getSymbol(int& pos) override;
 

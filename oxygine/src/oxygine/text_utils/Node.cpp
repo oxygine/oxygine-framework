@@ -100,6 +100,17 @@ namespace oxygine
 
 
 
+        void Node::updateMaterial(const STDMaterialX& mat)
+        {
+            Node* node = _firstChild;
+            while (node)
+            {
+                node->updateMaterial(mat);
+                node = node->_nextSibling;
+            }
+            xupdateMaterial(mat);
+        }
+
         /*
         bool test()
         {
@@ -151,7 +162,8 @@ namespace oxygine
 
         void TextNode::draw(DrawContext& dc)
         {
-            for (size_t i = 0; i < _data.size(); ++i)
+            size_t size = _data.size();
+            for (size_t i = 0; i < size; ++i)
             {
                 const Symbol& s = _data[i];
                 if (!s.mat)
@@ -161,6 +173,22 @@ namespace oxygine
             }
 
             drawChildren(dc);
+        }
+
+        void TextNode::xupdateMaterial(const STDMaterialX& mat)
+        {
+            for (size_t i = 0; i < _data.size(); ++i)
+            {
+                size_t size = _data.size();
+                for (size_t i = 0; i < size; ++i)
+                {
+                    Symbol& s = _data[i];
+
+                    spSTDMaterialX m = mat.clone();
+
+                    s.mat = mc().cache(mat);
+                }
+            }
         }
 
         int _defMissing = '?';

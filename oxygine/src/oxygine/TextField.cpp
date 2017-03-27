@@ -191,7 +191,13 @@ namespace oxygine
     void TextField::matChanged()
     {
         log::warning("not optimal");
-        needRebuild();
+        if (_flags & flag_rebuild)
+            return;
+
+        if (!_root)
+            return;
+
+        _root->updateMaterial(*_mat.get());
     }
 
     void TextField::setText(const std::string& str)
@@ -343,6 +349,29 @@ namespace oxygine
             rd.bounds = (rd.bounds.cast<RectF>() / rd.getScale()).cast<Rect>();
 
             _textRect = rd.bounds;
+        }
+        else
+        {
+            int sdfSize;
+            if (_style.font && _style.font->isSDF(sdfSize))
+            {
+                SDFMaterial *sdf = safeCast<SDFMaterial*>(_mat.get());
+                static float lastGS = 0;
+                if (lastGS != globalScale)
+                {
+                    if (getFontSize())
+                        scale = scale * getFontSize() / sdfSize;
+
+                    float contrast = 3.0f + scale * 8.0f;
+                    float offset = getWeight();
+                    float outline = getWeight() - getOutline();
+
+                    Vector4 vvv(offset, contrast, outline, contrast);
+                    sdf->outlineParams = vvv;
+                    matChanged();
+                }
+                lastGS = globalScale;
+            }
         }
 
         return _root;
