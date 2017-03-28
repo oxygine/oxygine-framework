@@ -81,7 +81,7 @@ public:
         addButton("usershader2", "Custom shaders and render");
         addButton("opengl", "OpenGL usage");
         addButton("multicolorfont", "Outer Font Color");
-        addButton("sdf", "Signed Distance Font");
+        addButton("sdf", "Signed Distance Field Font");
         addButton("mask", "Mask");
         addButton("polygon", "Polygon");
         addButton("inputtext", "Input Text");

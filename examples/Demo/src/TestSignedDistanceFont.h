@@ -12,22 +12,46 @@ public:
     float offset = 0.5f;
     float outline = 0.4f;
 
+    static UberShaderProgram *uberShader;
+
 
     static void initMaterial()
     {
+        uberShader = new UberShaderProgram();
+        uberShader->init(STDRenderer::uberShaderBody,
+            R"(
+                #define REPLACED_GET_BASE
+                #define DONT_MULT_BY_RESULT_COLOR
 
+                uniform lowp vec4 sdf_outline_color;
+                uniform mediump vec4 sdf_params;
+            )",
+
+            R"(
+#ifdef PS
+                lowp vec4 replaced_get_base()
+                {
+                    lowp float tx = texture2D(base_texture, result_uv).r;
+     
+                    
+                    lowp float b =   min((tx - sdf_params.z) * sdf_params.w, 1.0);
+                    lowp float a = clamp((tx - sdf_params.x) * sdf_params.y, 0.0, 1.0);
+	                lowp vec4 res = (sdf_outline_color + (result_color - sdf_outline_color)*a) * b;
+
+                    return res;
+                }
+#endif
+        )");
     }
 
     static void freeMaterial()
     {
-
+        delete uberShader;
     }
 
     void init() override 
     {
-        _flags = UberShaderProgram::SDF;
-        //if (outlineOffset < offset)
-        _flags |= UberShaderProgram::SDF_OUTLINE;
+        _uberShader = uberShader;
     }
 
 
@@ -61,6 +85,8 @@ public:
     }
 };
 
+UberShaderProgram *SDFMaterial::uberShader = 0;
+
 class TestSignedDistanceFont : public Test
 {
 public:
@@ -70,6 +96,8 @@ public:
     spTween t;
     TestSignedDistanceFont()
     {
+        SDFMaterial::initMaterial();
+
         font.initSD("sdf/font.fnt", 8);
         font.load();
 
@@ -128,6 +156,7 @@ public:
 
     ~TestSignedDistanceFont()
     {
+        SDFMaterial::freeMaterial();
     }
 
     void clicked(string id)
@@ -149,7 +178,7 @@ public:
         if (id == "weight-")
             mat->offset -= 0.01f;
 
-        _txt->setMat(mat);
+        //_txt->setMat(mat);
 
     }
 
