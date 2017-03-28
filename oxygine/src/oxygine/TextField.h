@@ -71,7 +71,7 @@ namespace oxygine
 
         /**Overwrites TextStyle font.*/
         void setFont(const ResFont* rs);
-        
+
         void setStyle(const TextStyle& st);
         /**Changes text utf-8 string*/
         void setText(const std::string& str);

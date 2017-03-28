@@ -223,13 +223,30 @@ namespace oxygine
         _setSize(_frame.getSize().mult(_localScale));
 
 
+        const Diffuse& df = _frame.getDiffuse();
+        if (df.base  != _mat->_base ||
+                df.alpha != _mat->_alpha)
+        {
+            spSTDMaterialX mat = _mat->clone();
 
-        spSTDMaterialX mat = _mat->clone();
-        mat->_base = _frame.getDiffuse().base;
-        mat->_alpha = _frame.getDiffuse().alpha;
-        mat->_flags = _frame.getDiffuse().premultiplied ? 0 : UberShaderProgram::ALPHA_PREMULTIPLY;
+            mat->_base  = df.base;
+            mat->_alpha = df.alpha;
 
-        _mat = mc().cache(*mat.get());
+            if (df.premultiplied)
+                mat->_flags &= ~UberShaderProgram::ALPHA_PREMULTIPLY;
+            else
+                mat->_flags |= UberShaderProgram::ALPHA_PREMULTIPLY;
+
+            if (df.alpha)
+                mat->_flags |= UberShaderProgram::SEPARATE_ALPHA;
+            else
+                mat->_flags &= ~UberShaderProgram::SEPARATE_ALPHA;
+
+
+            _mat = mc().cache(*mat.get());
+        }
+
+
 
         animFrameChanged(_frame);
     }

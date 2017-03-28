@@ -230,12 +230,16 @@ namespace oxygine
                             }
                         }
 
-                        spSTDMaterialX mat = rd.mat->clone();
+                        if (rd.mat->_base == gl->texture)
+                            s.mat = rd.mat;
+                        else
+                        {
+                            spSTDMaterialX mat = rd.mat->clone();
+                            mat->_base = gl->texture;
 
-                        mat->_base = gl->texture;
-
-
-                        s.mat = mc().cache(*mat.get());
+                            s.mat = mc().cache(*mat.get());
+                            rd.mat = s.mat;
+                        }
                     }
                     ++i;
                     if (i < 0)

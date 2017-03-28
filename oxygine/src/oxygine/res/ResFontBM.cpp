@@ -64,7 +64,7 @@ namespace oxygine
     {
         cleanup();
     }
-    
+
     const oxygine::Font* ResFontBM::getClosestFont(float worldScale, int styleFontSize, float& resScale) const
     {
         if (!styleFontSize)

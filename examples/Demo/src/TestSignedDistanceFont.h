@@ -12,14 +12,14 @@ public:
     float offset = 0.5f;
     float outline = 0.4f;
 
-    static UberShaderProgram *uberShader;
+    static UberShaderProgram* uberShader;
 
 
     static void initMaterial()
     {
         uberShader = new UberShaderProgram();
         uberShader->init(STDRenderer::uberShaderBody,
-            R"(
+                         R"(
                 #define REPLACED_GET_BASE
                 #define DONT_MULT_BY_RESULT_COLOR
 
@@ -27,7 +27,7 @@ public:
                 uniform mediump vec4 sdf_params;
             )",
 
-            R"(
+                         R"(
 #ifdef PS
                 lowp vec4 replaced_get_base()
                 {
@@ -49,7 +49,7 @@ public:
         delete uberShader;
     }
 
-    void init() override 
+    void init() override
     {
         _uberShader = uberShader;
     }
@@ -68,12 +68,12 @@ public:
         return a.outlineColor == b.outlineColor && a.offset == b.offset && a.outline == b.outline;
     }
 
-    void xapply() override 
+    void xapply() override
     {
         STDMaterialX::xapply();
 
-        const AffineTransform &tr = STDRenderer::getCurrent()->getTransform();
-        float scale = sqrt(tr.a *tr.a + tr.c * tr.c);
+        const AffineTransform& tr = STDRenderer::getCurrent()->getTransform();
+        float scale = sqrt(tr.a * tr.a + tr.c * tr.c);
         float contrast = 3.0f + scale * 8.0f;
 
         Vector4 sdfParams(offset, contrast, outline, contrast);
@@ -81,11 +81,11 @@ public:
 
         Vector4 color = outlineColor.toVector();
         IVideoDriver::instance->setUniform("sdf_outline_color", color);
-        
+
     }
 };
 
-UberShaderProgram *SDFMaterial::uberShader = 0;
+UberShaderProgram* SDFMaterial::uberShader = 0;
 
 class TestSignedDistanceFont : public Test
 {
@@ -139,9 +139,9 @@ public:
         txt->setAnchor(0.5f, 0.5f);
         txt->addTween(Actor::TweenRotationDegrees(360), 10000, -1);
 
-        SDFMaterial sdf;
+        spSDFMaterial sdf = new SDFMaterial;
 
-        txt->setMat(mc().cache(sdf));
+        txt->setMat(sdf);
 
 
         addButton("scale+", "scale+");
@@ -178,7 +178,7 @@ public:
         if (id == "weight-")
             mat->offset -= 0.01f;
 
-        //_txt->setMat(mat);
+        _txt->setMat(mat);
 
     }
 

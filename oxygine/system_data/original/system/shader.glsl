@@ -44,6 +44,7 @@ lowp vec4 replaced_get_color();
 lowp vec4 get_base()
 {
 	lowp vec4 base = texture2D(base_texture, result_uv);	
+	
 #ifdef SEPARATE_ALPHA
 	base.a = texture2D(alpha_texture, result_uv).r;	
 #endif
