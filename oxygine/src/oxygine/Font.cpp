@@ -95,9 +95,4 @@ namespace oxygine
     {
         return _scale;
     }
-
-    bool Font::isSDF() const
-    {
-        return _sdf;
-    }
 }

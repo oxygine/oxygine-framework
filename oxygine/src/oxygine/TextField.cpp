@@ -133,21 +133,6 @@ namespace oxygine
         needRebuild();
     }
 
-    void TextField::setOutlineColor(const Color& c)
-    {
-        _style.outlineColor = c;
-    }
-
-    void TextField::setOutline(float v)
-    {
-        _style.outline = v;
-    }
-
-    void TextField::setWeight(float v)
-    {
-        _style.weight = v;
-    }
-
     void TextField::setHAlign(TextStyle::HorizontalAlign align)
     {
         _style.hAlign = align;
@@ -265,24 +250,9 @@ namespace oxygine
         return _style.kerning;
     }
 
-    const Color& TextField::getOutlineColor() const
-    {
-        return _style.outlineColor;
-    }
-
-    float TextField::getOutline() const
-    {
-        return _style.outline;
-    }
-
     const oxygine::Color& TextField::getStyleColor() const
     {
         return _style.color;
-    }
-
-    float TextField::getWeight() const
-    {
-        return _style.weight;
     }
 
     float TextField::getBaselineScale() const
@@ -350,29 +320,6 @@ namespace oxygine
 
             _textRect = rd.bounds;
         }
-        else
-        {
-            int sdfSize;
-            if (_style.font && _style.font->isSDF(sdfSize))
-            {
-                SDFMaterial *sdf = safeCast<SDFMaterial*>(_mat.get());
-                static float lastGS = 0;
-                if (lastGS != globalScale)
-                {
-                    if (getFontSize())
-                        scale = scale * getFontSize() / sdfSize;
-
-                    float contrast = 3.0f + scale * 8.0f;
-                    float offset = getWeight();
-                    float outline = getWeight() - getOutline();
-
-                    Vector4 vvv(offset, contrast, outline, contrast);
-                    sdf->outlineParams = vvv;
-                    matChanged();
-                }
-                lastGS = globalScale;
-            }
-        }
 
         return _root;
     }
@@ -430,8 +377,6 @@ namespace oxygine
             stream << " linesOffset=" << s.linesOffset;
         if (!onlydiff || def.fontSize != s.fontSize)
             stream << " fontSize=" << s.fontSize;
-        if (!onlydiff || def.outline != s.outline)
-            stream << " outline=" << s.outline;
         if (s.font)
         {
             stream << " font='" << s.font->getName() << "'";

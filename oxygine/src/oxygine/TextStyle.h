@@ -34,9 +34,6 @@ namespace oxygine
             multiline(false),
             fontSize(0),
             breakLongWords(false),
-            outline(0.0f),
-            outlineColor(Color::Black),
-            weight(0.5f),
             baselineScale(1.0f),
             options(0) {}
 
@@ -52,14 +49,7 @@ namespace oxygine
         bool breakLongWords;//works with multiline flag. breakLongWords = false doesn't allow to break too long words
         Color color;
 
-
-
         int fontSize;
-
-
-        float outline;//works only with SD fonts, disabled by default = 0.0f, 0.5 - max outline
-        Color outlineColor;//works only with SD fonts
-        float weight;//works only with SD fonts, font weight, default = 0.5f,  0.0 - bold, 1.0 - thin
         float baselineScale;//baseline distance multiplier
 
 
@@ -86,9 +76,6 @@ namespace oxygine
 
         TextStyle withFontSize(int size) const { TextStyle st = *this; st.fontSize = size; return st; }
 
-        TextStyle withOutline(float outline) const { TextStyle st = *this; st.outline = outline; return st; }
-        TextStyle withOutlineColor(const Color& color) const { TextStyle st = *this; st.outlineColor = color; return st; }
-        TextStyle withWeight(float weight) const { TextStyle st = *this; st.weight = weight; return st; }
         TextStyle withOptions(unsigned int opt) const { TextStyle st = *this; st.options = opt; return st; }
     };
 

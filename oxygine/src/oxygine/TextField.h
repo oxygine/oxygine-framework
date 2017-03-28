@@ -71,14 +71,7 @@ namespace oxygine
 
         /**Overwrites TextStyle font.*/
         void setFont(const ResFont* rs);
-
-        /**Overwrites TextStyle outlineColor. works only with SD font*/
-        void setOutlineColor(const Color&);
-        /**Overwrites TextStyle outline. works only with SD font*/
-        void setOutline(float v);
-        /**Overwrites TextStyle outline. works only with SD font*/
-        void setWeight(float w);
-
+        
         void setStyle(const TextStyle& st);
         /**Changes text utf-8 string*/
         void setText(const std::string& str);
@@ -94,9 +87,6 @@ namespace oxygine
         void setHtmlText(const std::wstring& str);
 
         bool isOn(const Vector2& localPosition, float localScale = 1.0f) override;
-
-
-        typedef Property<Color, const Color&, TextField, &TextField::getOutlineColor, &TextField::setOutlineColor>  TweenOutlineColor;
 
 
     public:

@@ -5,25 +5,6 @@
 
 namespace oxygine
 {
-    class SDFMaterial : public STDMaterialX
-    {
-    public:
-        MATX(SDFMaterial);
-
-        void init() override;
-
-        Vector4 outlineColor = Vector4(0.0f, 0.0f, 0.0f, 0.0f);
-        Vector4 outlineParams = Vector4(0.0f, 0.0f, 0.0f, 0.0f);
-
-
-        void rehash(size_t& hash) const override;
-
-        static bool cmp(const SDFMaterial& a, const SDFMaterial& b);
-
-        void xapply() override;
-        void render(const Color& c, const RectF& src, const RectF& dest) override;
-    };
-
     class STDRenderer : public IElementRenderer
     {
     public:
@@ -61,6 +42,7 @@ namespace oxygine
         const Matrix&   getViewProjection() const;
         IVideoDriver*   getDriver();
         unsigned int    getShaderFlags() const;
+        const AffineTransform&  getTransform() const { return _transform; }
         const VertexDeclaration* getVertexDeclaration() const { return _vdecl; }
 
         void setShaderFlags(int);
@@ -80,9 +62,6 @@ namespace oxygine
         /**Draws existing batch immediately.*/
         void drawBatch();
 
-
-        void applySDF(float contrast, float offset, const Color& outlineColor, float outlineOffset);
-        void endSDF();
 
         void applySimpleMode(bool basePremultiplied);
         /**used in pair with applySimpleMode/applySDF, fast, don't have excess checks*/

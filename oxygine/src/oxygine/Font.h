@@ -61,7 +61,6 @@ namespace oxygine
         int             getBaselineDistance() const;
         int             getSize() const;
         float           getScale() const;
-        bool            isSDF() const;
 
     protected:
         const glyph* findGlyph(int code, const glyphOptions& opt) const;

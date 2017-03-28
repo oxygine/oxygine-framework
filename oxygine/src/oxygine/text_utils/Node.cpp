@@ -185,8 +185,9 @@ namespace oxygine
                     Symbol& s = _data[i];
 
                     spSTDMaterialX m = mat.clone();
+                    m->_base = s.mat->_base;
 
-                    s.mat = mc().cache(mat);
+                    s.mat = mc().cache(*m.get());
                 }
             }
         }

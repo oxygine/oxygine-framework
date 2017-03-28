@@ -64,14 +64,7 @@ namespace oxygine
     {
         cleanup();
     }
-
-
-    bool ResFontBM::isSDF(int& size) const
-    {
-        size = _font->getSize();
-        return _sdf;
-    }
-
+    
     const oxygine::Font* ResFontBM::getClosestFont(float worldScale, int styleFontSize, float& resScale) const
     {
         if (!styleFontSize)

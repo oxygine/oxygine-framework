@@ -1,6 +1,66 @@
 #pragma once
 #include "test.h"
 
+DECLARE_SMART(SDFMaterial, spSDFMaterial);
+class SDFMaterial : public STDMaterialX
+{
+public:
+    MATX(SDFMaterial);
+
+
+    Color outlineColor = Color(255, 255, 255, 255);
+    float offset = 0.5f;
+    float outline = 0.4f;
+
+
+    static void initMaterial()
+    {
+
+    }
+
+    static void freeMaterial()
+    {
+
+    }
+
+    void init() override 
+    {
+        _flags = UberShaderProgram::SDF;
+        //if (outlineOffset < offset)
+        _flags |= UberShaderProgram::SDF_OUTLINE;
+    }
+
+
+    void rehash(size_t& hash) const override
+    {
+        hash_combine(hash, this);
+    }
+
+    static bool cmp(const SDFMaterial& a, const SDFMaterial& b)
+    {
+        if (!STDMaterialX::cmp(a, b))
+            return false;
+
+        return a.outlineColor == b.outlineColor && a.offset == b.offset && a.outline == b.outline;
+    }
+
+    void xapply() override 
+    {
+        STDMaterialX::xapply();
+
+        const AffineTransform &tr = STDRenderer::getCurrent()->getTransform();
+        float scale = sqrt(tr.a *tr.a + tr.c * tr.c);
+        float contrast = 3.0f + scale * 8.0f;
+
+        Vector4 sdfParams(offset, contrast, outline, contrast);
+        IVideoDriver::instance->setUniform("sdf_params", sdfParams);
+
+        Vector4 color = outlineColor.toVector();
+        IVideoDriver::instance->setUniform("sdf_outline_color", color);
+        
+    }
+};
+
 class TestSignedDistanceFont : public Test
 {
 public:
@@ -43,15 +103,13 @@ public:
 
         st.multiline = true;
 
-        st.outlineColor = Color::White;
-        st.outline = 0.1f;
-
         txt->setStyle(st);
         txt->setColor(Color::CornflowerBlue);
         txt->setText("The quick brown fox jumps over the lazy dog. 1234567890.");
         txt->setPosition(getStage()->getSize() / 2);
         txt->setWidth(getStage()->getWidth() / 2);
         txt->setAnchor(0.5f, 0.5f);
+        txt->addTween(Actor::TweenRotationDegrees(360), 10000, -1);
 
         SDFMaterial sdf;
 
@@ -74,10 +132,12 @@ public:
 
     void clicked(string id)
     {
+        spSDFMaterial mat = safeSpCast<SDFMaterial>(_txt->_mat);
+
         if (id == "outline+")
-            _txt->setOutline(_txt->getOutline() + 0.01f);
+            mat->outline += 0.01f;
         if (id == "outline-")
-            _txt->setOutline(_txt->getOutline() - 0.01f);
+            mat->outline -= 0.01f;
 
         if (id == "scale+")
             _txt->addTween(TweenScale(_txt->getScale() * 1.5f), 300);
@@ -85,9 +145,12 @@ public:
             _txt->addTween(TweenScale(_txt->getScale() / 1.5f), 300);
 
         if (id == "weight+")
-            _txt->setWeight(_txt->getWeight() - 0.01f);
+            mat->offset += 0.01f;
         if (id == "weight-")
-            _txt->setWeight(_txt->getWeight() + 0.01f);
+            mat->offset -= 0.01f;
+
+        _txt->setMat(mat);
+
     }
 
     void toggleClicked(string id, const toggle* data)

@@ -757,46 +757,6 @@ namespace oxygine
         _uberShader = pr;
     }
 
-    void STDRenderer::applySDF(float contrast, float offset, const Color& outlineColor, float outlineOffset)
-    {
-        if (_alpha)
-        {
-            drawBatch();
-            _shaderFlags &= ~UberShaderProgram::SEPARATE_ALPHA;
-            _alpha = 0;
-        }
-
-        unsigned int shaderFlags = _shaderFlags;
-        shaderFlags |= UberShaderProgram::SDF;
-
-        if (outlineOffset < offset)
-            shaderFlags |= UberShaderProgram::SDF_OUTLINE;
-
-        if (_shaderFlags != shaderFlags)
-        {
-            drawBatch();
-        }
-
-        _shaderFlags = shaderFlags;
-
-        ShaderProgram* prog = _uberShader->getShaderProgram(_shaderFlags);
-        setShader(prog);
-
-        Vector4 c = outlineColor.toVector();
-        _driver->setUniform("sdf_outline_color", c);
-
-        c = Vector4(offset, contrast, outlineOffset, contrast);
-        _driver->setUniform("sdf_params", c);
-    }
-
-    void STDRenderer::endSDF()
-    {
-        drawBatch();
-        _shaderFlags &= ~(UberShaderProgram::SDF | UberShaderProgram::SDF_OUTLINE);
-
-        ShaderProgram* prog = _uberShader->getShaderProgram(_shaderFlags);
-        setShader(prog);
-    }
 
     void STDRenderer::applySimpleMode(bool basePremultiplied)
     {
@@ -832,42 +792,4 @@ namespace oxygine
         fillQuadT(v, src, dest, _transform, color);
         addVertices(v, sizeof(v));
     }
-
-
-    void SDFMaterial::init()
-    {
-        _flags = UberShaderProgram::SDF;
-        //if (outlineOffset < offset)
-        _flags |= UberShaderProgram::SDF_OUTLINE;
-        outlineParams = Vector4(0.25f, 6.25f, 0.15f, 12.5f);
-        outlineColor = Vector4(1, 1, 1, 1);
-    }
-
-    void SDFMaterial::rehash(size_t& hash) const
-    {
-        STDMaterialX::rehash(hash);
-        hash_combine(hash, outlineColor.x, outlineColor.y, outlineColor.z, outlineColor.w);
-        hash_combine(hash, outlineParams.x, outlineParams.y, outlineParams.z, outlineParams.w);
-    }
-
-    bool SDFMaterial::cmp(const SDFMaterial& a, const SDFMaterial& b)
-    {
-        if (!STDMaterialX::cmp(a, b))
-            return false;
-
-        return a.outlineColor == b.outlineColor && a.outlineParams == b.outlineParams;
-    }
-
-    void SDFMaterial::xapply()
-    {
-        STDMaterialX::xapply();
-        IVideoDriver::instance->setUniform("sdf_outline_color", outlineColor);
-        IVideoDriver::instance->setUniform("sdf_params", outlineParams);
-    }
-
-    void SDFMaterial::render(const Color& c, const RectF& src, const RectF& dest)
-    {
-        STDRenderer::getCurrent()->draw(c, src, dest);
-    }
-
 }

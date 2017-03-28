@@ -23,9 +23,6 @@ namespace oxygine
         void cleanup();
 
         const Font* getFont(const char* name = 0, int size = 0) const override;
-
-        bool isSDF(int& size) const override;
-
         const Font* getClosestFont(float worldScale, int styleFontSize, float& resScale) const override;
 
     private:
