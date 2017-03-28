@@ -232,6 +232,9 @@ namespace oxygine
             mat->_base  = df.base;
             mat->_alpha = df.alpha;
 
+            mat->_flags = df.flags;
+            /*
+
             if (df.premultiplied)
                 mat->_flags &= ~UberShaderProgram::ALPHA_PREMULTIPLY;
             else
@@ -241,6 +244,7 @@ namespace oxygine
                 mat->_flags |= UberShaderProgram::SEPARATE_ALPHA;
             else
                 mat->_flags &= ~UberShaderProgram::SEPARATE_ALPHA;
+                */
 
 
             _mat = mc().cache(*mat.get());

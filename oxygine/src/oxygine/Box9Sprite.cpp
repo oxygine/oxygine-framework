@@ -298,7 +298,7 @@ namespace oxygine
         {
             if (_guidesX.size() >= 2 || _guidesY.size() >= 2)
             {
-                renderer->setTexture(df.base, df.alpha, df.premultiplied);
+                //renderer->setTexture(df.base, df.alpha, df.premultiplied);
                 renderer->setBlendMode(getBlendMode());
                 renderer->setTransform(rs.transform);
 

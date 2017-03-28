@@ -9,10 +9,11 @@ namespace oxygine
     class Diffuse
     {
     public:
-        Diffuse(): premultiplied(true) {}
+        Diffuse(): flags(0) {}
         spNativeTexture base;
         spNativeTexture alpha;
-        bool premultiplied;
+        //bool premultiplied;
+        int flags;
     };
 
     class HitTestData

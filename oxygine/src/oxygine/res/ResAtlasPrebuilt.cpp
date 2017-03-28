@@ -1,5 +1,6 @@
 #include "ResAtlasPrebuilt.h"
 #include "Resources.h"
+#include "core/UberShaderProgram.h"
 
 extern "C"
 {
@@ -172,7 +173,13 @@ namespace oxygine
                         df.alpha = alpha;
 
                         //compressed data could not be premultiplied
-                        df.premultiplied = !compressed;
+                        //df.premultiplied = !compressed;
+
+                        if (compressed)
+                            df.flags |= UberShaderProgram::ALPHA_PREMULTIPLY;
+
+                        if (alpha)
+                            df.flags |= UberShaderProgram::SEPARATE_ALPHA;
 
                         size_t n = frames.size();
                         int column = n % columns;

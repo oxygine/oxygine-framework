@@ -433,7 +433,7 @@ namespace oxygine
                         AnimationFrame frame;
                         Diffuse df;
                         df.base = ad.texture;
-                        df.premultiplied = true;//!Renderer::getPremultipliedAlphaRender();
+                        //df.premultiplied = true;//!Renderer::getPremultipliedAlphaRender();
 
                         Vector2 fsize = Vector2((float)frame_width, (float)frame_height) * walker.getScaleFactor();
                         frame.init2(ra, x, y, df,

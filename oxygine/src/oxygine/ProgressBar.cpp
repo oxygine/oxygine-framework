@@ -124,7 +124,7 @@ namespace oxygine
         if (df.base)
         {
             renderer->setBlendMode(getBlendMode());
-            renderer->setTexture(df.base, df.alpha, df.premultiplied);
+            //renderer->setTexture(df.base, df.alpha, df.premultiplied);
 
             RectF destRect = inherited::getDestRect();
 
