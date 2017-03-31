@@ -59,10 +59,6 @@ namespace oxygine
         void draw(const Color&, const RectF& srcRect, const RectF& destRect);
         void setTextureNew(int sampler, const spNativeTexture& t);
 
-        /**Draws existing batch immediately.*/
-        void drawBatch();
-
-
         void applySimpleMode(bool basePremultiplied);
         /**used in pair with applySimpleMode/applySDF, fast, don't have excess checks*/
         void draw(const spNativeTexture& texture, unsigned int color, const RectF& src, const RectF& dest) override;
@@ -83,6 +79,8 @@ namespace oxygine
         void resetSettings();
         void process();
         void process(int);
+
+        /**Draws existing batch immediately.*/
         void flush();
 
         virtual void addVertices(const void* data, unsigned int size);

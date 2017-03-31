@@ -50,7 +50,7 @@ namespace oxygine
 
     void STDMaterialX::xflush()
     {
-        STDRenderer::getCurrent()->drawBatch();
+        STDRenderer::getCurrent()->flush();
     }
 
     MaterialX::MaterialX(const MaterialX& other)
