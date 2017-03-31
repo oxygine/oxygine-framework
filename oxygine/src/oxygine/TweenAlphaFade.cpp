@@ -30,7 +30,7 @@ namespace oxygine
             renderer->applySimpleMode(true);
             Color color = Color(Color::White).withAlpha(_a).premultiplied();
             renderer->draw(rt, color.rgba(), src, dest);
-            renderer->drawBatch();
+            renderer->flush();
         }
 
         bool _fadeIn;

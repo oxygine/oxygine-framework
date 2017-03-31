@@ -51,7 +51,7 @@ namespace oxygine
         bool vis = true;
         if (actor->getClipping())
         {
-            renderer->drawBatch();
+            renderer->flush();
 
             RectF ss_rect = getActorTransformedDestRect(actor, actor->getTransform() * parentRS.transform);
 
@@ -84,7 +84,7 @@ namespace oxygine
 
         if (actor->getClipping())
         {
-            renderer->drawBatch();
+            renderer->flush();
             driver->setScissorRect(scissorEnabled ? &scissorRect : 0);
         }
     }
@@ -110,7 +110,7 @@ namespace oxygine
 
             STDRenderer* original = STDRenderer::getCurrent();
 
-            original->drawBatch();
+            original->flush();
             original->end();
 
 

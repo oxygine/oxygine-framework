@@ -49,7 +49,7 @@ namespace oxygine
             color = Color::White;
             renderer->setBlendMode(blend_add);
             renderer->draw(_pp._rt, color.rgba(), src, dest);
-            renderer->drawBatch();
+            renderer->flush();
         }
 
         void _renderPP() override

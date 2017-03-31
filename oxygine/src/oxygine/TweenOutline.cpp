@@ -33,7 +33,7 @@ namespace oxygine
             renderer->applySimpleMode(true);
             Color color = Color(Color::White).withAlpha(255).premultiplied();
             renderer->draw(_pp._rt, color.rgba(), src, dest);
-            renderer->drawBatch();
+            renderer->flush();
 
 
             RenderState r = rs;

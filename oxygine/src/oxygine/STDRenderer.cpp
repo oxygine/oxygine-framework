@@ -226,7 +226,7 @@ namespace oxygine
 
     STDRenderer::~STDRenderer()
     {
-        drawBatch();
+        flush();
     }
 
     const oxygine::Matrix& STDRenderer::getViewProjection() const
@@ -255,11 +255,6 @@ namespace oxygine
         _vertices.clear();
     }
 
-    void STDRenderer::drawBatch()
-    {
-        flush();
-    }
-
     void STDRenderer::initCoordinateSystem(int width, int height, bool flipU)
     {
         Matrix view = makeViewMatrix(width, height, flipU);
@@ -285,7 +280,7 @@ namespace oxygine
     {
         _vp = viewProj;
         if (_drawing)
-            drawBatch();
+            flush();
 
         _driver->setUniform("mat", _vp);
     }
@@ -328,7 +323,7 @@ namespace oxygine
             return;
 
         OX_ASSERT(_drawing);
-        drawBatch();
+        flush();
 
         if (_prevRT)
         {
@@ -344,7 +339,7 @@ namespace oxygine
     void STDRenderer::setVertexDeclaration(const VertexDeclaration* decl)
     {
         if (_vdecl != decl)
-            drawBatch();
+            flush();
         _vdecl = decl;
     }
 
@@ -362,7 +357,7 @@ namespace oxygine
     void STDRenderer::checkDrawBatch()
     {
         if (_vertices.size() / sizeof(_vdecl->size) >= maxVertices)
-            drawBatch();
+            flush();
     }
 
     Matrix makeViewMatrix(int w, int h, bool flipU)
@@ -498,7 +493,7 @@ namespace oxygine
         if (base_ == _base && _alpha == alpha)
             return;
 
-        drawBatch();
+        flush();
 
         _renderTextureHook(base_);
         _renderTextureHook(alpha);
@@ -762,7 +757,7 @@ namespace oxygine
     {
         if (_alpha)
         {
-            drawBatch();
+            flush();
             _shaderFlags &= ~UberShaderProgram::SEPARATE_ALPHA;
             _alpha = 0;
         }
@@ -776,7 +771,7 @@ namespace oxygine
 
         if (_shaderFlags != shaderFlags)
         {
-            drawBatch();
+            flush();
         }
     }
 
@@ -784,7 +779,7 @@ namespace oxygine
     {
         if (_base != texture)
         {
-            drawBatch();
+            flush();
             _base = texture;
         }
 
