@@ -61,7 +61,7 @@ set(THIRD_PARTY ${OXYGINE_ROOT}/third_party/${PLATFORM})
 if (EMSCRIPTEN)
 	set(OX_HAVE_LIBPNG 1)
 	set(OX_HAVE_HTTP 1)	
-	set(OX_USE_SDL2 1)
+	set(OX_USE_SDL2 0)
 
 	set(SOURCES ${OXYGINE_SRC}/core/emscripten/HttpRequestEmscriptenTask.cpp)
 
@@ -137,6 +137,7 @@ set(OXYGINE_LIBRARY_DIRS
 	${THIRD_PARTY}/libraries)
 
 
+set(OPENGL_LIBRARIES )
 if (FORCE_GLES)
 	set(OPENGL_LIBRARIES libGLESv2.lib)
 endif(FORCE_GLES)
