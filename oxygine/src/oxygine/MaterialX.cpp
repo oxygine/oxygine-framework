@@ -6,6 +6,7 @@
 namespace oxygine
 {
     spMaterialX MaterialX::current;
+    spMaterialX MaterialX::null;
 
     bool STDMaterialX::cmp(const STDMaterialX& a, const STDMaterialX& b)
     {

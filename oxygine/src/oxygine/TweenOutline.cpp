@@ -16,28 +16,34 @@ namespace oxygine
 
         void render(Actor* actor, const RenderState& rs) override
         {
-            STDMaterial* mat = STDMaterial::instance;
+            if (!_pp._rt)
+                return;
+
+            spSTDMaterialX mat = new STDMaterialX;
+            mat->_base = _pp._rt;
+            mat->_blend = blend_premultiplied_alpha;
+            mat->apply();
+
             STDRenderer* renderer = STDRenderer::getCurrent();
 
+            spNativeTexture rt = _pp._rt;
             RectF src(0, 0,
-                      _pp._screen.getWidth() / (float)_pp._rt->getWidth() / _downsample,
-                      _pp._screen.getHeight() / (float)_pp._rt->getHeight() / _downsample);
-
+                      _pp._screen.getWidth() / (float)rt->getWidth(),
+                      _pp._screen.getHeight() / (float)rt->getHeight());
             RectF dest = _pp._screen.cast<RectF>();
 
-            renderer->setBlendMode(blend_premultiplied_alpha);
 
 
             AffineTransform tr = _pp._transform * _actor->computeGlobalTransform();
             renderer->setTransform(tr);
-            renderer->applySimpleMode(true);
+
+
             Color color = Color(Color::White).withAlpha(255).premultiplied();
-            renderer->draw(_pp._rt, color.rgba(), src, dest);
-            renderer->flush();
+            renderer->draw(rt, color.rgba(), src, dest);
 
 
             RenderState r = rs;
-            r.material = mat;
+            r.material = STDMaterial::instance;
             actor->setMaterial(_prevMaterial);
             actor->render(r);
             actor->setMaterial(this);

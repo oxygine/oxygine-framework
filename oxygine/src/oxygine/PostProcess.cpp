@@ -298,7 +298,7 @@ namespace oxygine
             Material::setCurrent(0);
 
             IVideoDriver* driver = IVideoDriver::instance;
-            driver->setState(IVideoDriver::STATE_BLEND, 0);
+            //driver->setState(IVideoDriver::STATE_BLEND, 0);
             spNativeTexture prevRT = driver->getRenderTarget();
 
             for (size_t i = 0; i < postProcessItems.size(); ++i)
@@ -398,6 +398,8 @@ namespace oxygine
 
 
         Material::setCurrent(0);
+        MaterialX::current = 0;
+
 
         IVideoDriver* driver = IVideoDriver::instance;
 
@@ -432,7 +434,10 @@ namespace oxygine
 
         rs.material->Material::render(actor, rs);
 
+        STDRenderer::current->flush();
+
         Material::setCurrent(0);
+        MaterialX::current = 0;
     }
 
 

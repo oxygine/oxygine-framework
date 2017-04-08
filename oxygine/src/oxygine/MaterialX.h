@@ -31,6 +31,7 @@ namespace oxygine
     public:
 
         static spMaterialX current;
+        static spMaterialX null;
 
         typedef bool(*compare)(const MaterialX* a, const MaterialX* b);
 
@@ -72,6 +73,13 @@ namespace oxygine
     typedef intrusive_ptr<MaterialX> spMaterialX;
 
 
+    class NullMaterialX : public MaterialX
+    {
+    public:
+        MATX(NullMaterialX);
+        static bool cmp(const NullMaterialX& a, const NullMaterialX& b) { return false; }
+        void rehash(size_t& hash) const override {}
+    };
 
     class STDMaterialX: public MaterialX
     {

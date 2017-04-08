@@ -14,6 +14,11 @@ namespace oxygine
             if (!_pp._rt)
                 return;
 
+            spSTDMaterialX mat = new STDMaterialX;
+            mat->_base = _pp._rt;
+            mat->_blend = blend_premultiplied_alpha;
+            mat->apply();
+
             int _a = lerp(_fadeIn ? 0 : 255, _fadeIn ? 255 : 0, _progress);
             STDRenderer* renderer = STDRenderer::getCurrent();
 
@@ -23,14 +28,14 @@ namespace oxygine
                       _pp._screen.getHeight() / (float)rt->getHeight());
             RectF dest = _pp._screen.cast<RectF>();
 
-            renderer->setBlendMode(blend_premultiplied_alpha);
-            AffineTransform tr = _pp._transform * _actor->computeGlobalTransform();
 
+
+            AffineTransform tr = _pp._transform * _actor->computeGlobalTransform();
             renderer->setTransform(tr);
-            renderer->applySimpleMode(true);
+
+
             Color color = Color(Color::White).withAlpha(_a).premultiplied();
             renderer->draw(rt, color.rgba(), src, dest);
-            renderer->flush();
         }
 
         bool _fadeIn;
