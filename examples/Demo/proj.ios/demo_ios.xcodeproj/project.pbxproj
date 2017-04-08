@@ -120,6 +120,7 @@
 		8F2AFB956EEAEED67C5B7571 /* TestDrag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestDrag.h; path = ../src/TestDrag.h; sourceTree = "<group>"; };
 		9223FE7E1C2D913D000B1FDA /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
 		AD18619A1D8EC97A0043AFA3 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		AD29BC851E8EDD2900B835BA /* TestOpenGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestOpenGL.h; path = ../src/TestOpenGL.h; sourceTree = "<group>"; };
 		AD349FD41E213F59009CC6ED /* TestCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestCamera.h; path = ../src/TestCamera.h; sourceTree = "<group>"; };
 		AD349FD51E213F59009CC6ED /* TestTiled.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestTiled.h; path = ../src/TestTiled.h; sourceTree = "<group>"; };
 		AD349FDA1E213F6D009CC6ED /* etc */ = {isa = PBXFileReference; lastKnownFileType = folder; name = etc; path = ../data/etc; sourceTree = "<group>"; };
@@ -244,6 +245,7 @@
 		04998D4417F8A9ED003441C3 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				AD29BC851E8EDD2900B835BA /* TestOpenGL.h */,
 				AD349FD41E213F59009CC6ED /* TestCamera.h */,
 				AD349FD51E213F59009CC6ED /* TestTiled.h */,
 				360377333740D8A2FD15BBE6 /* Counter.cpp */,
