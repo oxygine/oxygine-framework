@@ -295,7 +295,6 @@ namespace oxygine
         if (!postProcessItems.empty())
         {
             _renderingPP = true;
-            Material::setCurrent(0);
 
             IVideoDriver* driver = IVideoDriver::instance;
             //driver->setState(IVideoDriver::STATE_BLEND, 0);
@@ -397,7 +396,6 @@ namespace oxygine
         _transform = actor->computeGlobalTransform().inverted();
 
 
-        Material::setCurrent(0);
         MaterialX::current = 0;
 
 
@@ -432,11 +430,11 @@ namespace oxygine
             rs.transform = rs.transform * offset;
         }
 
-        rs.material->Material::render(actor, rs);
+        //OX_ASSERT(0);
+        STDMaterial::instance->Material::render(actor, rs);
 
         STDRenderer::current->flush();
 
-        Material::setCurrent(0);
         MaterialX::current = 0;
     }
 

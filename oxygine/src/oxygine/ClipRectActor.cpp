@@ -39,7 +39,7 @@ namespace oxygine
 
     void ClipRectActor::render(const RenderState& parentRS)
     {
-        parentRS.material->render(this, parentRS);
+        _rdelegate->render(this, parentRS);
     }
 
     void ClipRectActor::serialize(serializedata* data)

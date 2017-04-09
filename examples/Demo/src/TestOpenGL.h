@@ -75,7 +75,6 @@ public:
 
     void doRender(const RenderState& rs)
     {
-        Material::setCurrent(0);
         STDRenderer::getCurrent()->flush();
 
 

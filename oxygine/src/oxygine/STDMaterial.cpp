@@ -33,10 +33,6 @@ namespace oxygine
 
     void STDMaterial::render(ClipRectActor* actor, const RenderState& parentRS)
     {
-        //Material::render(actor, parentRS);
-        //return;
-        Material::setCurrent(this);
-
         RenderState rs = parentRS;
 
         const RectF* parentClippedRect = parentRS.clip;
@@ -91,9 +87,6 @@ namespace oxygine
 
     void STDMaterial::render(MaskedSprite* sprite, const RenderState& parentRS)
     {
-        Material::setCurrent(this);
-
-
         spSprite mask = sprite->getMask();
         if (mask && mask->getAnimFrame().getDiffuse().base)
         {

@@ -36,7 +36,7 @@ namespace oxygine
         _parent(0),
         _alpha(255),
         _stage(0),
-        _material(0)
+        _rdelegate(STDMaterial::instance)
     {
         _transform.identity();
         _transformInvert.identity();
@@ -59,7 +59,7 @@ namespace oxygine
         _alpha = src._alpha;
 
         _pressedOvered = 0;
-        _material = 0;
+        _rdelegate = src._rdelegate;
 
         _transform = src._transform;
         _transformInvert = src._transformInvert;
@@ -676,7 +676,7 @@ namespace oxygine
 
     void Actor::setMaterial(Material* mat)
     {
-        _material = mat;
+        _rdelegate = mat;
     }
 
 
@@ -1142,10 +1142,7 @@ namespace oxygine
 
     void Actor::render(const RenderState& parentRS)
     {
-        RenderState rs = parentRS;
-        if (_material)
-            rs.material = _material;
-        rs.material->render(this, rs);
+        _rdelegate->render(this, parentRS);
     }
 
     RectF Actor::getDestRect() const

@@ -29,7 +29,7 @@ namespace oxygine
         }
         _stage = this;
 
-        _material = STDMaterial::instance;
+        _rdelegate = STDMaterial::instance;
 
 #ifdef OXYGINE_SDL
         _window = 0;
@@ -139,7 +139,6 @@ namespace oxygine
 
     void Stage::render(const Color* clearColor, const Rect& viewport, const Matrix& view, const Matrix& proj)
     {
-        Material::setCurrent(0);
 
         IVideoDriver* driver = IVideoDriver::instance;
         driver->setViewport(viewport);
@@ -150,11 +149,9 @@ namespace oxygine
         Matrix vp = view * proj;
         STDRenderer::instance->setViewProj(vp);
 
-        RenderState rs(_material);
+        RenderState rs;
         Point ds = core::getDisplaySize();
 
-
-        Material::setCurrent(_material);
 
         RectF clip(0.0f, 0.0f, (float)ds.x, (float)ds.y);
         rs.clip = &clip;
@@ -167,7 +164,6 @@ namespace oxygine
 
         Actor::render(rs);
 
-        Material::setCurrent(0);
 
         STDRenderer::getCurrent()->flush();
 

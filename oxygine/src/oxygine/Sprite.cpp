@@ -291,7 +291,7 @@ namespace oxygine
 
     void Sprite::doRender(const RenderState& rs)
     {
-        rs.material->doRender(this, rs);
+        _rdelegate->doRender(this, rs);
     }
 
     void Sprite::serialize(serializedata* data)

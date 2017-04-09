@@ -43,7 +43,6 @@ namespace oxygine
 
 
             RenderState r = rs;
-            r.material = STDMaterial::instance;
             actor->setMaterial(_prevMaterial);
             actor->render(r);
             actor->setMaterial(this);

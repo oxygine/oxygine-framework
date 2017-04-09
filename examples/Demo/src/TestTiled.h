@@ -23,6 +23,7 @@ public:
     int height;
 
     spNativeTexture nt;
+    spSTDMaterialX mat;
 
     int tileWidth;
     int tileHeight;
@@ -75,11 +76,18 @@ public:
 
             }
         }
+ 
 
         nt = IVideoDriver::instance->createTexture();
         nt->init(dest.lock());
         nt->setClamp2Edge(true);
         nt->setLinearFilter(false);
+
+
+
+        mat = new STDMaterialX;
+        mat->_base = nt;
+        mat->_blend = blend_premultiplied_alpha;
     }
 
     Tiled(const std::string& tmx, const std::string& texture)
@@ -198,13 +206,11 @@ public:
 
     void doRender(const RenderState& rs)
     {
-        Material::setCurrent(rs.material);
+        mat->apply();
+
 
         STDRenderer* renderer = STDRenderer::getCurrent();
-        renderer->setTexture(nt);
         renderer->setTransform(rs.transform);
-        renderer->setBlendMode(blend_premultiplied_alpha);
-
 
         Transform world = rs.transform;
         world.invert();

@@ -40,10 +40,7 @@ namespace oxygine
 
     void MaskedSprite::render(const RenderState& parentRS)
     {
-        RenderState rs = parentRS;
-        if (_material)
-            rs.material = _material;
-        rs.material->render(this, rs);
+        _rdelegate->render(this, parentRS);
     }
 
 

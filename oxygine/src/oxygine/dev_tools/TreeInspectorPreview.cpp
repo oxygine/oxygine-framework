@@ -60,8 +60,6 @@ namespace oxygine
 
     Vector2 TreeInspectorPreview::render2cache(spActor item, const Vector2& size, bool child)
     {
-        Material::setCurrent(0);
-
         _render2cache = true;
 
         VideoDriverCache& cache = _videoCache;
@@ -93,11 +91,6 @@ namespace oxygine
         else
             item->doRender(rs);
 
-
-        Material::setCurrent(0);
-
-
-        //setSize(30, 30);
 
         RectF itemRect = cache._bounds;
         if (itemRect == RectF::invalidated())
@@ -153,12 +146,7 @@ namespace oxygine
     void TreeInspectorPreview::doRender(RenderState const& parentRenderState)
     {
         Sprite::doRender(parentRenderState);
-        Material::setCurrent(0);
-
-        //STDMaterial::instance->getRenderer()->drawBatch();
         _videoCache.render(parentRenderState.transform);
-        //STDMaterial::instance->getRenderer()->drawBatch();
-        //STDMaterial::instance->getRenderer()->resetSettings();
     }
 
     VideoDriverCache::VideoDriverCache()

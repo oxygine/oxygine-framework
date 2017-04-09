@@ -28,7 +28,6 @@ namespace oxygine
     class RenderState: public RState
     {
     public:
-        RenderState(Material* mat = STDMaterial::instance): material(mat) {}
-        Material* material;
+        RenderState(){}
     };
 }

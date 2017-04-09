@@ -417,7 +417,7 @@ namespace oxygine
 
     void TextField::doRender(RenderState const& rs)
     {
-        rs.material->doRender(this, rs);
+        _rdelegate->doRender(this, rs);
     }
 
     void TextField::serialize(serializedata* data)

@@ -26,7 +26,7 @@ namespace oxygine
 
     void ColorRectSprite::doRender(const RenderState& rs)
     {
-        rs.material->doRender(this, rs);
+        _rdelegate->doRender(this, rs);
     }
 
     void ColorRectSprite::sizeChanged(const Vector2& size)

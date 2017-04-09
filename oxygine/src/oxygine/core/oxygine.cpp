@@ -852,7 +852,7 @@ namespace oxygine
             Event ev(EVENT_EXIT);
             _dispatcher->dispatchEvent(&ev);
 
-            Material::setCurrent(0);
+
             STDRenderer::release();
             delete STDMaterial::instance;
             STDMaterial::instance = 0;

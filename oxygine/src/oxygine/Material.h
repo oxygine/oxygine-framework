@@ -6,9 +6,6 @@ namespace oxygine
     class Material
     {
     public:
-        static Material* currentMaterial;
-        static void setCurrent(Material*);
-
         virtual ~Material();
         virtual void apply(Material* prev = 0) {}
         virtual void finish() {}

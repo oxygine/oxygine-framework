@@ -114,10 +114,6 @@ namespace oxygine
         }
 
 
-        Material::setCurrent(rs.material);
-        //rs.material->doRender(this, rs);
-        ///*
-
         STDRenderer* renderer = STDRenderer::getCurrent();
 
         const Diffuse& df = _frame.getDiffuse();
