@@ -16,6 +16,7 @@ namespace oxygine
 
         void render(Actor* actor, const RenderState& rs) override
         {
+
             if (!_pp._rt)
                 return;
 
@@ -41,6 +42,7 @@ namespace oxygine
             Color color = Color(Color::White).withAlpha(255).premultiplied();
             renderer->draw(rt, color.rgba(), src, dest);
 
+			
 
             RenderState r = rs;
             actor->setMaterial(_prevMaterial);
@@ -57,6 +59,8 @@ namespace oxygine
 
             if (w < 0 || h < 0)
                 return;
+
+
 
             IVideoDriver* driver = IVideoDriver::instance;
             const VertexDeclarationGL* decl = static_cast<const VertexDeclarationGL*>(IVideoDriver::instance->getVertexDeclaration(vertexPCT2::FORMAT));

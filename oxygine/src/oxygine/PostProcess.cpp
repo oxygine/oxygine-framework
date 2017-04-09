@@ -23,6 +23,11 @@ namespace oxygine
         _ppBuilt = true;
 
 
+
+		IVideoDriver* driver = IVideoDriver::instance;
+
+
+
         file::Zips zp;
         zp.add(system_data, system_size);
 
@@ -45,8 +50,6 @@ namespace oxygine
         unsigned int v = ShaderProgramGL::createShader(GL_VERTEX_SHADER, (const char*)&vs_v.front());
         unsigned int ps = ShaderProgramGL::createShader(GL_FRAGMENT_SHADER, (const char*)&fs_blur.front());
 
-
-        IVideoDriver* driver = IVideoDriver::instance;
 
         shaderBlurV = new ShaderProgramGL(ShaderProgramGL::createProgram(v, ps, decl));
         driver->setShaderProgram(shaderBlurV);
@@ -300,6 +303,9 @@ namespace oxygine
             //driver->setState(IVideoDriver::STATE_BLEND, 0);
             spNativeTexture prevRT = driver->getRenderTarget();
 
+
+			ShaderProgram *sp = driver->getShaderProgram();
+
             for (size_t i = 0; i < postProcessItems.size(); ++i)
             {
                 PPTask* p = postProcessItems[i];
@@ -309,6 +315,7 @@ namespace oxygine
 
             postProcessItems.clear();
             driver->setRenderTarget(prevRT);
+			driver->setShaderProgram(sp);
             _renderingPP = false;
         }
 
@@ -431,9 +438,13 @@ namespace oxygine
         }
 
         //OX_ASSERT(0);
+		Material *rd = actor->getMaterial();
+		actor->setMaterial(STDMaterial::instance);
         STDMaterial::instance->Material::render(actor, rs);
 
         STDRenderer::current->flush();
+
+		actor->setMaterial(rd);
 
         MaterialX::current = 0;
     }
