@@ -1,6 +1,7 @@
 #include "HttpRequestTask.h"
 #include "core/file.h"
 #include "core/oxygine.h"
+#include "utils/stringUtils.h"
 
 namespace oxygine
 {
@@ -20,7 +21,7 @@ namespace oxygine
     void HttpRequestTask::init() {}
     void HttpRequestTask::release() {}
 #endif
-    HttpRequestTask::HttpRequestTask() : _loaded(0), _cacheEnabled(true), _successOnAnyResponceCode(false)
+    HttpRequestTask::HttpRequestTask() : _loaded(0), _cacheEnabled(true), _successOnAnyResponceCode(false), _continueDownload(false)
     {
 
     }
@@ -46,8 +47,9 @@ namespace oxygine
         _setUrl(url);
     }
 
-    void HttpRequestTask::setFileName(const std::string& name)
+    void HttpRequestTask::setFileName(const std::string& name, bool continueDownload)
     {
+		_continueDownload = continueDownload;
         _fname = name;
         _setFileName(name);
     }
@@ -93,7 +95,14 @@ namespace oxygine
         _response.clear();
         if (!_fname.empty())
         {
-            file::deleteFile(_fname, ep_ignore_error);
+			if (_continueDownload)
+			{
+				char str[255];
+				safe_sprintf(str, "bytes=%d", 1);
+				addHeader("Range", str);
+			}
+			else
+				file::deleteFile(_fname, ep_ignore_error);
         }
     }
 

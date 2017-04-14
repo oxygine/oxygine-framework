@@ -51,7 +51,7 @@ namespace oxygine
 
         void setPostData(const std::vector<unsigned char>& data);
         void setUrl(const std::string& url);
-        void setFileName(const std::string& name);
+        void setFileName(const std::string& name, bool continueDownload = false);
         void setCacheEnabled(bool enabled);
         void setSuccessOnAnyResponseCode(bool en) { _successOnAnyResponceCode = en; }
 
@@ -82,6 +82,8 @@ namespace oxygine
 
         int _responseCode;
         bool _successOnAnyResponceCode;
+
+		bool _continueDownload;
 
         typedef std::vector< std::pair<std::string, std::string> >  headers;
         headers _headers;

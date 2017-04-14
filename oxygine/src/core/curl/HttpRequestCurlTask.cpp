@@ -208,6 +208,17 @@ namespace oxygine
         return size;
     }
 
+	size_t HttpRequestTaskCURL::cbHeaderFunction(char* d, size_t n, size_t l, void* userData)
+	{
+		return ((HttpRequestTaskCURL*)userData)->_cbHeaderFunction(d, n, l);
+	}
+
+
+	size_t HttpRequestTaskCURL::_cbHeaderFunction(char* d, size_t n, size_t l)
+	{
+		return n*l;
+	}
+
     HttpRequestTaskCURL::HttpRequestTaskCURL() : _easy(0), _handle(0), _httpHeaders(0)
     {
         _easy = curl_easy_init();
@@ -232,8 +243,11 @@ namespace oxygine
     {
         curl_easy_setopt(_easy, CURLOPT_URL, _url.c_str());
         curl_easy_setopt(_easy, CURLOPT_PRIVATE, this);
-        curl_easy_setopt(_easy, CURLOPT_WRITEFUNCTION, HttpRequestTaskCURL::cbWriteFunction);
-        curl_easy_setopt(_easy, CURLOPT_WRITEDATA, this);
+		curl_easy_setopt(_easy, CURLOPT_WRITEFUNCTION, HttpRequestTaskCURL::cbWriteFunction);
+		curl_easy_setopt(_easy, CURLOPT_WRITEDATA, this);
+
+		curl_easy_setopt(_easy, CURLOPT_HEADERFUNCTION, HttpRequestTaskCURL::cbHeaderFunction);
+		curl_easy_setopt(_easy, CURLOPT_HEADERDATA, this);
 
 
         curl_easy_setopt(_easy, CURLOPT_NOPROGRESS, 0);
