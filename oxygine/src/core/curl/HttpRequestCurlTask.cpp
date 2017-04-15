@@ -66,7 +66,7 @@ namespace oxygine
             case ID_PROGRESS:
             {
                 HttpRequestTaskCURL* task = (HttpRequestTaskCURL*)msg.cbData;
-                task->dispatchProgress((int)(size_t)msg.arg2, (int)(size_t)msg.arg1);
+                //task->dispatchProgress((int)(size_t)msg.arg2, (int)(size_t)msg.arg1);
             } break;
         }
 
