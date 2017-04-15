@@ -1,2 +1,2 @@
-javah -force -jni -classpath bin/classes -o f.h org.oxygine.lib.HttpRequest.nativeHttpRequestResponseSuccess
+javah -force -jni -classpath build\intermediates\classes\debug\org\oxygine\lib\ -o f.h org.oxygine.lib.HttpRequest.nativeHttpRequestResponseSuccess
 PAUSE

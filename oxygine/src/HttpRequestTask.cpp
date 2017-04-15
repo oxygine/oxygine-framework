@@ -190,6 +190,11 @@ namespace oxygine
 		_fhandle = 0;
 	}
 
+	void HttpRequestTask::gotHeaders()
+	{
+
+	}
+
 	void HttpRequestTask::write(const void *data, unsigned int size)
 	{
 		if (_fhandle)

@@ -193,6 +193,8 @@ namespace oxygine
 		if (sscanf(d, "Content-Length: %d", &contentLength) == 1)
 		{
 			_expectedContentSize = contentLength;
+
+			gotHeaders();
 		}
 
 		int responseCode = 0;

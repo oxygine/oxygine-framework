@@ -1,3 +1,3 @@
 
-javap -s -p -classpath bin\classes\org\oxygine\lib\ HttpRequests
+javap -s -p -classpath build\intermediates\classes\debug\org\oxygine\lib\ HttpRequests
 PAUSE

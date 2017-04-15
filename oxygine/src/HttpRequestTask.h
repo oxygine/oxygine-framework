@@ -67,6 +67,7 @@ namespace oxygine
         void _dispatchComplete() override;
 		void _finalize(bool error) override;
 
+		void gotHeaders();
 		void write(const void *data, unsigned int size);
 
         //async
