@@ -190,20 +190,9 @@ namespace oxygine
 
     size_t HttpRequestTaskCURL::_cbWriteFunction(char* d, size_t n, size_t l)
     {
-        if (!_handle && !_fname.empty())
-        {
-            _handle = file::open(_fname, "wb");
-        }
-
-        size_t size = n * l;
-        if (!_fname.empty())
-        {
-            file::write(_handle, d, (unsigned int)size);
-        }
-        else
-        {
-            _response.insert(_response.end(), d, d + size);
-        }
+		size_t size = n * l;
+		if (!_continueDownload || _ok)
+			write(d, size);
 
         return size;
     }
@@ -216,19 +205,28 @@ namespace oxygine
 
 	size_t HttpRequestTaskCURL::_cbHeaderFunction(char* d, size_t n, size_t l)
 	{
-		return n*l;
+		size_t s = n*l;
+		if (_continueDownload && !_ok)
+		{
+			const char *GOOD1 = "HTTP/1.1 200 ";
+			const char *GOOD2 = "HTTP/1.1 206 ";
+			if (s >= sizeof(GOOD1) && (
+				memcmp(d, GOOD1, sizeof(GOOD1)) == 0 ||
+				memcmp(d, GOOD2, sizeof(GOOD2)) == 0))
+			{ 
+				_ok = true;
+			}
+		}
+		return s;
 	}
 
-    HttpRequestTaskCURL::HttpRequestTaskCURL() : _easy(0), _handle(0), _httpHeaders(0)
+    HttpRequestTaskCURL::HttpRequestTaskCURL() : _easy(0), _httpHeaders(0), _ok(false)
     {
         _easy = curl_easy_init();
     }
 
     HttpRequestTaskCURL::~HttpRequestTaskCURL()
     {
-        if (_handle)
-            file::close(_handle);
-        _handle = 0;
 
         if (_easy)
             curl_easy_cleanup(_easy);
@@ -280,16 +278,5 @@ namespace oxygine
 
         addRef();
         _messages.post(0, _easy, 0);
-    }
-
-    void HttpRequestTaskCURL::_finalize(bool error)
-    {
-        if (_handle)
-        {
-            file::close(_handle);
-            if (error)
-                file::deleteFile(_fname);
-        }
-        _handle = 0;
-    }
+	}
 }

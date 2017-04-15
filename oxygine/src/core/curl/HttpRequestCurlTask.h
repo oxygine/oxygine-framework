@@ -36,10 +36,9 @@ namespace oxygine
 
 
         void _run();
-        void _finalize(bool error);
 
+		bool _ok;
 
-        file::handle _handle;
         void* _easy;
         curl_slist* _httpHeaders;
     };

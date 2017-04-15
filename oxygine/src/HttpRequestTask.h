@@ -3,6 +3,7 @@
 #include "AsyncTask.h"
 #include <vector>
 #include <string>
+#include "core/file.h"
 
 namespace oxygine
 {
@@ -60,6 +61,9 @@ namespace oxygine
         void _onError() override;
         void _onComplete() override;
         void _dispatchComplete() override;
+		void _finalize(bool error) override;
+
+		void write(const void *data, unsigned int size);
 
         //async
         void progress(int loaded, int total);
@@ -76,6 +80,7 @@ namespace oxygine
         int _loaded;
         std::string _url;
         std::string _fname;
+		file::handle _fhandle;
         bool _cacheEnabled;
         std::vector<unsigned char> _response;
         std::vector<unsigned char> _postData;

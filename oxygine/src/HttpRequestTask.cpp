@@ -21,13 +21,16 @@ namespace oxygine
     void HttpRequestTask::init() {}
     void HttpRequestTask::release() {}
 #endif
-    HttpRequestTask::HttpRequestTask() : _loaded(0), _cacheEnabled(true), _successOnAnyResponceCode(false), _continueDownload(false)
+    HttpRequestTask::HttpRequestTask() : _loaded(0), _cacheEnabled(true), _successOnAnyResponceCode(false), _continueDownload(false), _fhandle(0)
     {
 
     }
     HttpRequestTask::~HttpRequestTask()
     {
         log::messageln("~HttpRequestTask");
+		if (_fhandle)
+			file::close(_fhandle);
+
     }
 
     void HttpRequestTask::setCustomRequests(createHttpRequestCallback cb)
@@ -95,14 +98,19 @@ namespace oxygine
         _response.clear();
         if (!_fname.empty())
         {
+			const char *mode = _continueDownload ? "ab" : "wb";
+			_fhandle = file::open(_fname, mode, ep_ignore_error);
+			
+			//return;
 			if (_continueDownload)
 			{
+				file::seek(_fhandle, 0, SEEK_END);
+				unsigned int size = file::tell(_fhandle);
+
 				char str[255];
-				safe_sprintf(str, "bytes=%d", 1);
+				safe_sprintf(str, "bytes=%d-", size);
 				addHeader("Range", str);
 			}
-			else
-				file::deleteFile(_fname, ep_ignore_error);
         }
     }
 
@@ -139,7 +147,7 @@ namespace oxygine
 
     void HttpRequestTask::_dispatchComplete()
     {
-        if (_responseCode == 200 || _successOnAnyResponceCode)
+        if (_responseCode == 200 || _responseCode == 206 || _successOnAnyResponceCode)
         {
             Event ev(COMPLETE);
             dispatchEvent(&ev);
@@ -150,5 +158,29 @@ namespace oxygine
             dispatchEvent(&ev);
         }
     }
+
+	void HttpRequestTask::_finalize(bool error)
+	{
+		if (_fhandle)
+		{
+			file::close(_fhandle);
+			_fhandle = 0;
+
+			if (error && !_continueDownload)
+				file::deleteFile(_fname);
+		}
+		_fhandle = 0;
+	}
+
+	void HttpRequestTask::write(const void *data, unsigned int size)
+	{
+		if (_fhandle)
+			file::write(_fhandle, data, size);
+		else
+		{
+			const char *p = (const char*)data;
+			_response.insert(_response.end(), p, p + size);
+		}
+	}
 
 }
