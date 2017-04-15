@@ -160,9 +160,9 @@ namespace oxygine
     }
 
 
-    size_t HttpRequestTaskCURL::cbWriteFunction(char* d, size_t n, size_t l, void* userData)
+    size_t HttpRequestTaskCURL::cbWriteFunction(char* d, size_t n, size_t l, HttpRequestTaskCURL* userData)
     {
-        return ((HttpRequestTaskCURL*)userData)->_cbWriteFunction(d, n, l);
+        return userData->_cbWriteFunction(d, n, l);
     }
 
 
@@ -170,15 +170,14 @@ namespace oxygine
     {
 		size_t size = n * l;
 
-		if (_ok)
-			write(d, size);
+		write(d, size);
 
         return size;
     }
 
-	size_t HttpRequestTaskCURL::cbHeaderFunction(char* d, size_t n, size_t l, void* userData)
+	size_t HttpRequestTaskCURL::cbHeaderFunction(char* d, size_t n, size_t l, HttpRequestTaskCURL* userData)
 	{
-		return ((HttpRequestTaskCURL*)userData)->_cbHeaderFunction(d, n, l);
+		return userData->_cbHeaderFunction(d, n, l);
 	}
 
 
@@ -193,22 +192,24 @@ namespace oxygine
 		if (sscanf(d, "Content-Length: %d", &contentLength) == 1)
 		{
 			_expectedContentSize = contentLength;
-
-			gotHeaders();
 		}
 
 		int responseCode = 0;
-		if (sscanf(d, "HTTP/1.1 %d ", &responseCode) == 1 || 
-			sscanf(d, "HTTP/1.0 %d ", &responseCode) == 1)
+		char ver[32];
+		if (sscanf(d, "HTTP/%s %d ", ver, &responseCode) == 2)
 		{
 			_responseCode = responseCode;
-			_ok = _responseCodeChecker(_responseCode);
+		}
+
+		if (d[0] == '\r' && d[1] == '\n')
+		{
+			gotHeaders();
 		}
 
 		return s;
 	}
 
-    HttpRequestTaskCURL::HttpRequestTaskCURL() : _easy(0), _httpHeaders(0), _ok(false)
+    HttpRequestTaskCURL::HttpRequestTaskCURL() : _easy(0), _httpHeaders(0)
     {
         _easy = curl_easy_init();
     }

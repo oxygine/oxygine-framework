@@ -39,6 +39,7 @@ namespace oxygine
         _expectedContentSize(0),
         _receivedContentSize(0),
         _fhandle(0),
+		_suitableResponse(false),
         _responseCodeChecker(_defaultChecker200)
     {
 
@@ -117,6 +118,7 @@ namespace oxygine
 
     void HttpRequestTask::_prerun()
     {
+		_suitableResponse = false;
         _receivedContentSize = 0;
         _expectedContentSize = 0;
         _responseCode = 0;
@@ -192,11 +194,14 @@ namespace oxygine
 
 	void HttpRequestTask::gotHeaders()
 	{
-
+		_suitableResponse = _responseCodeChecker(_responseCode);
 	}
 
 	void HttpRequestTask::write(const void *data, unsigned int size)
 	{
+		if (!_suitableResponse)
+			return;
+
 		if (_fhandle)
 			file::write(_fhandle, data, size);
 		else

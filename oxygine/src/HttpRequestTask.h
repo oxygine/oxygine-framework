@@ -90,6 +90,8 @@ namespace oxygine
         
         responseCodeChecker _responseCodeChecker;
 
+		bool _suitableResponse;
+
         int _responseCode;
         size_t _expectedContentSize;
         size_t _receivedContentSize;

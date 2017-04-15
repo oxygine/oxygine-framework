@@ -23,16 +23,14 @@ namespace oxygine
         friend void* thread(void*);
         friend void mainThreadFunc(const ThreadDispatcher::message& msg);
 
-		static size_t cbWriteFunction(char* d, size_t n, size_t l, void* p);
+		static size_t cbWriteFunction(char* d, size_t n, size_t l, HttpRequestTaskCURL* p);
 		size_t _cbWriteFunction(char* d, size_t n, size_t l);
 
-		static size_t cbHeaderFunction(char* d, size_t n, size_t l, void* p);
+		static size_t cbHeaderFunction(char* d, size_t n, size_t l, HttpRequestTaskCURL* p);
 		size_t _cbHeaderFunction(char* d, size_t n, size_t l);
 
 
         void _run();
-
-		bool _ok;
 
         void* _easy;
         curl_slist* _httpHeaders;
