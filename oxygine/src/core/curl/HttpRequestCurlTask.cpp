@@ -32,31 +32,9 @@ namespace oxygine
                 curl_easy_getinfo(easy, CURLINFO_PRIVATE, &task);
 
                 bool ok = (size_t)msg.arg2 == CURLE_OK;
-                if (ok)
-                {
-                    int response = 0;
-                    curl_easy_getinfo(easy, CURLINFO_RESPONSE_CODE, &response);
-                    task->_responseCode = response;
-                    //ok = response == 200;
-                }
-
-#if 0
-                const Uint8* data = SDL_GetKeyboardState(0);
-                static bool fail = false;
-
-                if (data[SDL_SCANCODE_N])
-                    fail = true;
-                if (data[SDL_SCANCODE_M])
-                    fail = false;
-
-                if (fail)
-                    ok = false;
-#endif
 
                 if (ok)
-                {
                     task->onComplete();
-                }
                 else
                     task->onError();
 
@@ -160,54 +138,54 @@ namespace oxygine
     }
 
 
-    size_t HttpRequestTaskCURL::cbWriteFunction(char* d, size_t n, size_t l, HttpRequestTaskCURL* userData)
+    size_t HttpRequestTaskCURL::cbWriteFunction(char* d, size_t n, size_t l, HttpRequestTaskCURL* This)
     {
-        return userData->_cbWriteFunction(d, n, l);
+        return This->_cbWriteFunction(d, n, l);
     }
 
 
     size_t HttpRequestTaskCURL::_cbWriteFunction(char* d, size_t n, size_t l)
     {
-		size_t size = n * l;
+        size_t size = n * l;
 
-		write(d, size);
+        write(d, size);
 
         return size;
     }
 
-	size_t HttpRequestTaskCURL::cbHeaderFunction(char* d, size_t n, size_t l, HttpRequestTaskCURL* userData)
-	{
-		return userData->_cbHeaderFunction(d, n, l);
-	}
+    size_t HttpRequestTaskCURL::cbHeaderFunction(char* d, size_t n, size_t l, HttpRequestTaskCURL* This)
+    {
+        return This->_cbHeaderFunction(d, n, l);
+    }
 
 
-	size_t HttpRequestTaskCURL::_cbHeaderFunction(char* d, size_t n, size_t l)
-	{
-		size_t s = n*l;
-		if (s > 255)//ignore unknown headers
-			return s;
+    size_t HttpRequestTaskCURL::_cbHeaderFunction(char* d, size_t n, size_t l)
+    {
+        size_t s = n * l;
+        if (s > 255)//ignore unknown headers
+            return s;
 
 
-		int contentLength = 0;
-		if (sscanf(d, "Content-Length: %d", &contentLength) == 1)
-		{
-			_expectedContentSize = contentLength;
-		}
+        int contentLength = 0;
+        if (sscanf(d, "Content-Length: %d", &contentLength) == 1)
+        {
+            _expectedContentSize = contentLength;
+        }
 
-		int responseCode = 0;
-		char ver[32];
-		if (sscanf(d, "HTTP/%s %d ", ver, &responseCode) == 2)
-		{
-			_responseCode = responseCode;
-		}
+        int responseCode = 0;
+        char ver[32];
+        if (sscanf(d, "HTTP/%s %d ", ver, &responseCode) == 2)
+        {
+            _responseCode = responseCode;
+        }
 
-		if (d[0] == '\r' && d[1] == '\n')
-		{
-			gotHeaders();
-		}
+        if (d[0] == '\r' && d[1] == '\n')
+        {
+            gotHeaders();
+        }
 
-		return s;
-	}
+        return s;
+    }
 
     HttpRequestTaskCURL::HttpRequestTaskCURL() : _easy(0), _httpHeaders(0)
     {
@@ -230,11 +208,11 @@ namespace oxygine
     {
         curl_easy_setopt(_easy, CURLOPT_URL, _url.c_str());
         curl_easy_setopt(_easy, CURLOPT_PRIVATE, this);
-		curl_easy_setopt(_easy, CURLOPT_WRITEFUNCTION, HttpRequestTaskCURL::cbWriteFunction);
-		curl_easy_setopt(_easy, CURLOPT_WRITEDATA, this);
+        curl_easy_setopt(_easy, CURLOPT_WRITEFUNCTION, HttpRequestTaskCURL::cbWriteFunction);
+        curl_easy_setopt(_easy, CURLOPT_WRITEDATA, this);
 
-		curl_easy_setopt(_easy, CURLOPT_HEADERFUNCTION, HttpRequestTaskCURL::cbHeaderFunction);
-		curl_easy_setopt(_easy, CURLOPT_HEADERDATA, this);
+        curl_easy_setopt(_easy, CURLOPT_HEADERFUNCTION, HttpRequestTaskCURL::cbHeaderFunction);
+        curl_easy_setopt(_easy, CURLOPT_HEADERDATA, this);
 
 
         curl_easy_setopt(_easy, CURLOPT_NOPROGRESS, 0);
@@ -260,5 +238,5 @@ namespace oxygine
 
         addRef();
         _messages.post(0, _easy, 0);
-	}
+    }
 }

@@ -55,28 +55,35 @@ namespace oxygine
         friend class AsyncTaskManager;
 
         bool _mainThreadSync;
-        bool _uiThreadSync;
 
         virtual void _prerun() {}
         virtual void _run() = 0;
         virtual void _onError() {}
         virtual void _onComplete() {}
         virtual void _onFinal(bool error) {}
-        virtual void _onCustom(const ThreadDispatcher::message&) {};
         virtual void _finalize(bool error) {}
         virtual void _dispatchComplete();
 
-        enum { customID = sysEventID('s', 'c', 's') };
-        bool syncEvent(int msgid, void* arg1 = 0, void* arg2 = 0);
+
+        template <class F>
+        void sync(const F& f)
+        {
+            if (_mainThreadSync)
+            {
+                addRef();
+                core::getMainThreadDispatcher().postCallback([ = ]()
+                {
+                    f();
+                    releaseRef();
+                });
+                return;
+            }
+            f();
+        }
 
     private:
 
         void _complete();
         void _error();
-        void _custom(const ThreadDispatcher::message& m) { _onCustom(m); }
-
-
-        static void threadCB(const ThreadDispatcher::message&);
-        void _threadCB(const ThreadDispatcher::message&);
     };
 }

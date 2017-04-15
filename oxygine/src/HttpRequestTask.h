@@ -56,8 +56,8 @@ namespace oxygine
         void setUrl(const std::string& url);
         void setFileName(const std::string& name, bool continueDownload = false);
         void setCacheEnabled(bool enabled);
-        
-        void setResponseCodeChecker(const responseCodeChecker &f){_responseCodeChecker = f;}
+
+        void setResponseCodeChecker(const responseCodeChecker& f) {_responseCodeChecker = f;}
         void setSuccessOnAnyResponseCode(bool en);
 
     protected:
@@ -65,10 +65,10 @@ namespace oxygine
         void _onError() override;
         void _onComplete() override;
         void _dispatchComplete() override;
-		void _finalize(bool error) override;
+        void _finalize(bool error) override;
 
-		void gotHeaders();
-		void write(const void *data, unsigned int size);
+        void gotHeaders();
+        void write(const void* data, unsigned int size);
 
         //async
         void asyncProgress(int delta, int loaded, int total);
@@ -83,20 +83,20 @@ namespace oxygine
 
         std::string _url;
         std::string _fname;
-		file::handle _fhandle;
+        file::handle _fhandle;
         bool _cacheEnabled;
         std::vector<unsigned char> _response;
         std::vector<unsigned char> _postData;
-        
+
         responseCodeChecker _responseCodeChecker;
 
-		bool _suitableResponse;
+        bool _suitableResponse;
 
         int _responseCode;
         size_t _expectedContentSize;
         size_t _receivedContentSize;
 
-		bool _continueDownload;
+        bool _continueDownload;
 
         typedef std::vector< std::pair<std::string, std::string> >  headers;
         headers _headers;

@@ -21,8 +21,8 @@ namespace oxygine
 
         void complete_();
         void progress_(int loaded, int total);
-		void gotHeader_(int respCode, int contentLen);
-		void write_(jbyteArray, int size);
+        void gotHeader_(int respCode, int contentLen);
+        void write_(jbyteArray, int size);
         void error_();
 
 

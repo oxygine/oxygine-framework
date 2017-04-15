@@ -21,36 +21,36 @@ namespace oxygine
     void HttpRequestTask::init() {}
     void HttpRequestTask::release() {}
 #endif
-    
+
     static HttpRequestTask::responseCodeChecker _defaultCheckerAny = [](int code)
     {
         return true;
     };
-    
-    
+
+
     static HttpRequestTask::responseCodeChecker _defaultChecker200 = [](int code)
     {
         return code == 200 || code == 206;
     };
-    
+
     HttpRequestTask::HttpRequestTask() :
         _cacheEnabled(true),
         _continueDownload(false),
         _expectedContentSize(0),
         _receivedContentSize(0),
         _fhandle(0),
-		_suitableResponse(false),
+        _suitableResponse(false),
         _responseCodeChecker(_defaultChecker200)
     {
+        _mainThreadSync = true;
 
     }
-    
+
     HttpRequestTask::~HttpRequestTask()
     {
         log::messageln("~HttpRequestTask");
-		if (_fhandle)
-			file::close(_fhandle);
-
+        if (_fhandle)
+            file::close(_fhandle);
     }
 
     void HttpRequestTask::setCustomRequests(createHttpRequestCallback cb)
@@ -72,7 +72,7 @@ namespace oxygine
 
     void HttpRequestTask::setFileName(const std::string& name, bool continueDownload)
     {
-		_continueDownload = continueDownload;
+        _continueDownload = continueDownload;
         _fname = name;
         _setFileName(name);
     }
@@ -87,7 +87,7 @@ namespace oxygine
     {
         _responseCodeChecker = any ? _defaultCheckerAny : _defaultChecker200;
     }
-    
+
     void HttpRequestTask::addHeader(const std::string& key, const std::string& value)
     {
         OX_ASSERT(!key.empty());
@@ -118,7 +118,7 @@ namespace oxygine
 
     void HttpRequestTask::_prerun()
     {
-		_suitableResponse = false;
+        _suitableResponse = false;
         _receivedContentSize = 0;
         _expectedContentSize = 0;
         _responseCode = 0;
@@ -126,22 +126,23 @@ namespace oxygine
         if (_fhandle)
             file::close(_fhandle);
         _fhandle = 0;
-        
+
         if (!_fname.empty())
         {
-			const char *mode = _continueDownload ? "ab" : "wb";
-			_fhandle = file::open(_fname, mode, ep_ignore_error);
-			
-			if (_continueDownload)
-			{
-				file::seek(_fhandle, 0, SEEK_END);
-				unsigned int size = file::tell(_fhandle);
+            const char* mode = _continueDownload ? "ab" : "wb";
+            _fhandle = file::open(_fname, mode, ep_ignore_error);
 
-				char str[255];
-				safe_sprintf(str, "bytes=%d-", size);
-				addHeader("Range", str);
+            if (_continueDownload)
+            {
+                file::seek(_fhandle, 0, SEEK_END);
+                unsigned int size = file::tell(_fhandle);
+
+                char str[255];
+                safe_sprintf(str, "bytes=%d-", size);
+                addHeader("Range", str);
+
                 _receivedContentSize = size;
-			}
+            }
         }
     }
 
@@ -153,9 +154,10 @@ namespace oxygine
 
     void HttpRequestTask::asyncProgress(int delta, int loaded, int total)
     {
-		core::getMainThreadDispatcher().postCallback([=]() {
-			dispatchProgress(delta, loaded, total);
-		});
+        sync([ = ]()
+        {
+            dispatchProgress(delta, loaded, total);
+        });
     }
 
     void HttpRequestTask::_onError()
@@ -170,47 +172,43 @@ namespace oxygine
 
     void HttpRequestTask::_dispatchComplete()
     {
-        bool ok = _responseCodeChecker(_responseCode);
-        
-		if (ok)
-			dispatchProgress(0, _expectedContentSize, _expectedContentSize);
-
-        Event ev(ok ? COMPLETE : ERROR);
+        Event ev(_suitableResponse ? COMPLETE : ERROR);
         dispatchEvent(&ev);
     }
 
-	void HttpRequestTask::_finalize(bool error)
-	{
-		if (_fhandle)
-		{
-			file::close(_fhandle);
-			_fhandle = 0;
+    void HttpRequestTask::_finalize(bool error)
+    {
+        if (_fhandle)
+        {
+            file::close(_fhandle);
+            _fhandle = 0;
 
-			if (error && !_continueDownload)
-				file::deleteFile(_fname);
-		}
-		_fhandle = 0;
-	}
+            if (error && !_continueDownload)
+                file::deleteFile(_fname);
+        }
+        _fhandle = 0;
+    }
 
-	void HttpRequestTask::gotHeaders()
-	{
-		_suitableResponse = _responseCodeChecker(_responseCode);
-	}
+    void HttpRequestTask::gotHeaders()
+    {
+        _suitableResponse = _responseCodeChecker(_responseCode);
+    }
 
-	void HttpRequestTask::write(const void *data, unsigned int size)
-	{
-		if (!_suitableResponse)
-			return;
+    void HttpRequestTask::write(const void* data, unsigned int size)
+    {
+        if (!_suitableResponse)
+            return;
 
-		if (_fhandle)
-			file::write(_fhandle, data, size);
-		else
-		{
-			const char *p = (const char*)data;
-			_response.insert(_response.end(), p, p + size);
-		}
+        if (_fhandle)
+            file::write(_fhandle, data, size);
+        else
+        {
+            const char* p = (const char*)data;
+            _response.insert(_response.end(), p, p + size);
+        }
+
         _receivedContentSize += size;
         asyncProgress(size, _receivedContentSize, _expectedContentSize);
-	}
+    }
 
 }

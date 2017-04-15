@@ -202,8 +202,6 @@ namespace oxygine
     
     void HttpRequestCocoaTask::_run()
     {
-        _mainThreadSync = true;
-        
         addRef();
         
         NSString *urlString = [NSString stringWithUTF8String:_url.c_str()];

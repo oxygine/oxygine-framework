@@ -3,12 +3,8 @@
 #include <typeinfo>
 namespace oxygine
 {
-    const int successID = sysEventID('s', 'c', 'm');
-    //const int customID = sysEventID('s', 'c', 'm');
-    const int runID = sysEventID('r', 'u', 'n');
-    const int errorID = sysEventID('s', 'e', 'r');
 
-    AsyncTask::AsyncTask() : _status(status_not_started), _mainThreadSync(false), _uiThreadSync(false)
+    AsyncTask::AsyncTask() : _status(status_not_started), _mainThreadSync(false)
     {
 
     }
@@ -25,36 +21,10 @@ namespace oxygine
 
         OX_ASSERT(_status == status_not_started);
         _status = status_inprogress;
-        if (!syncEvent(runID))
-            _run();
-    }
-
-    void AsyncTask::threadCB(const ThreadDispatcher::message& msg)
-    {
-        ((AsyncTask*)msg.cbData)->_threadCB(msg);
-    }
-
-    void AsyncTask::_threadCB(const ThreadDispatcher::message& msg)
-    {
-        switch (msg.msgid)
+        sync([ = ]()
         {
-            case successID:
-                _complete();
-                break;
-            case errorID:
-                _error();
-                break;
-            case runID:
-                _run();
-                break;
-            case customID:
-                _custom(msg);
-                break;
-            default:
-                break;
-        }
-        if (msg.msgid != customID)
-            releaseRef();
+            _run();
+        });
     }
 
     void AsyncTask::_complete()
@@ -89,29 +59,19 @@ namespace oxygine
         dispatchEvent(&ev);
     }
 
-
-    bool AsyncTask::syncEvent(int msgid, void* arg1, void* arg2)
-    {
-        if (_mainThreadSync)
-        {
-            if (msgid != customID)
-                addRef();
-            core::getMainThreadDispatcher().postCallback(msgid, arg1, arg2, AsyncTask::threadCB, this);
-            return true;
-        }
-
-        return false;
-    }
-
     void AsyncTask::onComplete()
     {
-        if (!syncEvent(successID, 0, 0))
+        sync([ = ]()
+        {
             _complete();
+        });
     }
 
     void AsyncTask::onError()
     {
-        if (!syncEvent(errorID, 0, 0))
+        sync([ = ]()
+        {
             _error();
+        });
     }
 }
