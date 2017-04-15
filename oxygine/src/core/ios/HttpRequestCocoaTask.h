@@ -16,8 +16,10 @@ namespace oxygine
         HttpRequestCocoaTask();
         ~HttpRequestCocoaTask();
 
-        void complete_(NSData* data, bool error, int respCode);
+        void write(NSData* data);
+        void complete_(bool error);
         void progress_(int loaded, int total);
+        void gotResponse(int resp);
 
     protected:
         void _run();

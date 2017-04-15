@@ -13,6 +13,7 @@ namespace oxygine
     public:
         static spHttpRequestTask create();
         typedef HttpRequestTask* (*createHttpRequestCallback)();
+        typedef std::function< bool(int) > responseCodeChecker;
         static void setCustomRequests(createHttpRequestCallback);
         static void init();
         static void release();
@@ -48,13 +49,16 @@ namespace oxygine
         /**swap version of getResponse if you want to modify result buffer inplace*/
         void getResponseSwap(std::vector<unsigned char>&);
         int  getResponseCode() const { return _responseCode; }
+        const responseCodeChecker& getResponseCodeChecker() const {return _responseCodeChecker;}
         void addHeader(const std::string& key, const std::string& value);
 
         void setPostData(const std::vector<unsigned char>& data);
         void setUrl(const std::string& url);
         void setFileName(const std::string& name, bool continueDownload = false);
         void setCacheEnabled(bool enabled);
-        void setSuccessOnAnyResponseCode(bool en) { _successOnAnyResponceCode = en; }
+        
+        void setResponseCodeChecker(const responseCodeChecker &f){_responseCodeChecker = f;}
+        void setSuccessOnAnyResponseCode(bool en);
 
     protected:
         void _prerun() override;
@@ -84,9 +88,10 @@ namespace oxygine
         bool _cacheEnabled;
         std::vector<unsigned char> _response;
         std::vector<unsigned char> _postData;
+        
+        responseCodeChecker _responseCodeChecker;
 
         int _responseCode;
-        bool _successOnAnyResponceCode;
 
 		bool _continueDownload;
 

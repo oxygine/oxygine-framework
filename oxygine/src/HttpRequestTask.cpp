@@ -21,10 +21,27 @@ namespace oxygine
     void HttpRequestTask::init() {}
     void HttpRequestTask::release() {}
 #endif
-    HttpRequestTask::HttpRequestTask() : _loaded(0), _cacheEnabled(true), _successOnAnyResponceCode(false), _continueDownload(false), _fhandle(0)
+    
+    static HttpRequestTask::responseCodeChecker _defaultCheckerAny = [](int code)
+    {
+        return true;
+    };
+    
+    
+    static HttpRequestTask::responseCodeChecker _defaultChecker200 = [](int code)
+    {
+        return code == 200 || code == 206;
+    };
+    
+    HttpRequestTask::HttpRequestTask() : _loaded(0),
+        _cacheEnabled(true),
+        _continueDownload(false),
+        _fhandle(0),
+        _responseCodeChecker(_defaultChecker200)
     {
 
     }
+    
     HttpRequestTask::~HttpRequestTask()
     {
         log::messageln("~HttpRequestTask");
@@ -63,6 +80,11 @@ namespace oxygine
         _setCacheEnabled(enabled);
     }
 
+    void HttpRequestTask::setSuccessOnAnyResponseCode(bool any)
+    {
+        _responseCodeChecker = any ? _defaultCheckerAny : _defaultChecker200;
+    }
+    
     void HttpRequestTask::addHeader(const std::string& key, const std::string& value)
     {
         OX_ASSERT(!key.empty());
@@ -147,7 +169,7 @@ namespace oxygine
 
     void HttpRequestTask::_dispatchComplete()
     {
-        if (_responseCode == 200 || _responseCode == 206 || _successOnAnyResponceCode)
+        if (_responseCodeChecker(_responseCode))
         {
             Event ev(COMPLETE);
             dispatchEvent(&ev);
