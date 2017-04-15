@@ -70,10 +70,9 @@ namespace oxygine
 		void write(const void *data, unsigned int size);
 
         //async
-        void progress(int loaded, int total);
+        void asyncProgress(int delta, int loaded, int total);
 
-        void _onCustom(const ThreadDispatcher::message& msg) override;
-        void dispatchProgress(int loaded, int total);
+        void dispatchProgress(int delta, int loaded, int total);
 
         virtual void _setFileName(const std::string& name) {}
         virtual void _setUrl(const std::string& url) {}
@@ -81,7 +80,6 @@ namespace oxygine
         virtual void _setCacheEnabled(bool enabled) {}
         virtual void _addHeader(const std::string& key, const std::string& value) {}
 
-        int _loaded;
         std::string _url;
         std::string _fname;
 		file::handle _fhandle;

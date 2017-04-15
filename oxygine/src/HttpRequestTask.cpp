@@ -33,7 +33,7 @@ namespace oxygine
         return code == 200 || code == 206;
     };
     
-    HttpRequestTask::HttpRequestTask() : _loaded(0),
+    HttpRequestTask::HttpRequestTask() :
         _cacheEnabled(true),
         _continueDownload(false),
         _expectedContentSize(0),
@@ -120,7 +120,6 @@ namespace oxygine
         _receivedContentSize = 0;
         _expectedContentSize = 0;
         _responseCode = 0;
-        _loaded = 0;
         _response.clear();
         if (_fhandle)
             file::close(_fhandle);
@@ -131,7 +130,6 @@ namespace oxygine
 			const char *mode = _continueDownload ? "ab" : "wb";
 			_fhandle = file::open(_fname, mode, ep_ignore_error);
 			
-			//return;
 			if (_continueDownload)
 			{
 				file::seek(_fhandle, 0, SEEK_END);
@@ -145,25 +143,17 @@ namespace oxygine
         }
     }
 
-    void HttpRequestTask::dispatchProgress(int loaded, int total)
+    void HttpRequestTask::dispatchProgress(int delta, int loaded, int total)
     {
-        int delta = loaded - _loaded;
-        _loaded = loaded;
         ProgressEvent event(delta, loaded, total);
         dispatchEvent(&event);
     }
 
-    void HttpRequestTask::_onCustom(const ThreadDispatcher::message& msg)
+    void HttpRequestTask::asyncProgress(int delta, int loaded, int total)
     {
-        dispatchProgress((int)(size_t)msg.arg1, (int)(size_t)msg.arg2);
-    }
-
-    void HttpRequestTask::progress(int loaded, int total)
-    {
-        if (!syncEvent(customID, (void*)(size_t)loaded, (void*)(size_t)total))
-        {
-            dispatchProgress(loaded, total);
-        }
+		core::getMainThreadDispatcher().postCallback([=]() {
+			dispatchProgress(delta, loaded, total);
+		});
     }
 
     void HttpRequestTask::_onError()
@@ -180,6 +170,9 @@ namespace oxygine
     {
         bool ok = _responseCodeChecker(_responseCode);
         
+		if (ok)
+			dispatchProgress(0, _expectedContentSize, _expectedContentSize);
+
         Event ev(ok ? COMPLETE : ERROR);
         dispatchEvent(&ev);
     }
@@ -207,7 +200,7 @@ namespace oxygine
 			_response.insert(_response.end(), p, p + size);
 		}
         _receivedContentSize += size;
-        progress(_receivedContentSize, _expectedContentSize);
+        asyncProgress(size, _receivedContentSize, _expectedContentSize);
 	}
 
 }
