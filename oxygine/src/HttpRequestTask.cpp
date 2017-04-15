@@ -36,6 +36,8 @@ namespace oxygine
     HttpRequestTask::HttpRequestTask() : _loaded(0),
         _cacheEnabled(true),
         _continueDownload(false),
+        _expectedContentSize(0),
+        _receivedContentSize(0),
         _fhandle(0),
         _responseCodeChecker(_defaultChecker200)
     {
@@ -115,9 +117,15 @@ namespace oxygine
 
     void HttpRequestTask::_prerun()
     {
+        _receivedContentSize = 0;
+        _expectedContentSize = 0;
         _responseCode = 0;
         _loaded = 0;
         _response.clear();
+        if (_fhandle)
+            file::close(_fhandle);
+        _fhandle = 0;
+        
         if (!_fname.empty())
         {
 			const char *mode = _continueDownload ? "ab" : "wb";
@@ -132,6 +140,7 @@ namespace oxygine
 				char str[255];
 				safe_sprintf(str, "bytes=%d-", size);
 				addHeader("Range", str);
+                _receivedContentSize = size;
 			}
         }
     }
@@ -169,16 +178,10 @@ namespace oxygine
 
     void HttpRequestTask::_dispatchComplete()
     {
-        if (_responseCodeChecker(_responseCode))
-        {
-            Event ev(COMPLETE);
-            dispatchEvent(&ev);
-        }
-        else
-        {
-            Event ev(ERROR);
-            dispatchEvent(&ev);
-        }
+        bool ok = _responseCodeChecker(_responseCode);
+        
+        Event ev(ok ? COMPLETE : ERROR);
+        dispatchEvent(&ev);
     }
 
 	void HttpRequestTask::_finalize(bool error)
@@ -203,6 +206,8 @@ namespace oxygine
 			const char *p = (const char*)data;
 			_response.insert(_response.end(), p, p + size);
 		}
+        _receivedContentSize += size;
+        progress(_receivedContentSize, _expectedContentSize);
 	}
 
 }

@@ -19,7 +19,7 @@ namespace oxygine
         void write(NSData* data);
         void complete_(bool error);
         void progress_(int loaded, int total);
-        void gotResponse(int resp);
+        void gotResponse(int resp, size_t expectedSize);
 
     protected:
         void _run();

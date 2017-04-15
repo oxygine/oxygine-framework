@@ -76,14 +76,18 @@ didReceiveResponse:(NSURLResponse *)response
     if ([response isKindOfClass:[NSHTTPURLResponse class]])
     {
         NSHTTPURLResponse *httpResponse = ((NSHTTPURLResponse *)response);
+        
+        long long size = [httpResponse expectedContentLength];
+        
         int resp = (int)httpResponse.statusCode;
         
         oxygine::HttpRequestCocoaTask* task = [self getTask:dataTask remove:false];
         if (task)
         {
-            task->gotResponse(resp);
+            task->gotResponse(resp, size);
             bool ok = task->getResponseCodeChecker()(resp);
             completionHandler(ok ? NSURLSessionResponseAllow : NSURLSessionResponseCancel);
+            return;
         }
     }
 
@@ -174,8 +178,8 @@ namespace oxygine
         const void *ptr = [data bytes];
         unsigned int len = [data length];
         HttpRequestTask::write(ptr, len);
-        
     }
+    
     void HttpRequestCocoaTask::complete_(bool error)
     {
         if (error)
@@ -186,9 +190,13 @@ namespace oxygine
         releaseRef();
     }
     
-    void HttpRequestCocoaTask::gotResponse(int resp)
+    void HttpRequestCocoaTask::gotResponse(int resp, size_t expectedSize)
     {
         _responseCode = resp;
+        
+        _expectedContentSize = _receivedContentSize + expectedSize;
+        
+        progress(_receivedContentSize, _expectedContentSize);
         
     }
     
@@ -211,7 +219,7 @@ namespace oxygine
             NSString *key = [NSString stringWithUTF8String:h.first.c_str()];
             NSString *value = [NSString stringWithUTF8String:h.second.c_str()];
             
-            [request setValue:key forHTTPHeaderField:value];
+            [request setValue:value forHTTPHeaderField:key];
         }
         
         if (!_postData.empty())
