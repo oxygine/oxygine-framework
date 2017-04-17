@@ -383,7 +383,7 @@ namespace oxygine
 
 #if TARGET_OS_IPHONE
             //ios bug workaround
-            flags &= ~SDL_WINDOW_FULLSCREEN;
+            //flags &= ~SDL_WINDOW_FULLSCREEN;
 #endif
 
             log::messageln("creating window %d %d", desc.w, desc.h);
