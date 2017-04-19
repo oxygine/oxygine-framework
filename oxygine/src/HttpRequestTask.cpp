@@ -192,6 +192,9 @@ namespace oxygine
     void HttpRequestTask::gotHeaders()
     {
         _suitableResponse = _responseCodeChecker(_responseCode);
+
+        if (_continueDownload)
+            asyncProgress(_receivedContentSize, _receivedContentSize, _expectedContentSize);
     }
 
     void HttpRequestTask::write(const void* data, unsigned int size)
