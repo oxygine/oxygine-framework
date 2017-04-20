@@ -56,7 +56,7 @@ namespace oxygine
 
         bool _mainThreadSync;
 
-        virtual void _prerun() {}
+        virtual bool _prerun() { return true; }
         virtual void _run() = 0;
         virtual void _onError() {}
         virtual void _onComplete() {}

@@ -61,7 +61,7 @@ namespace oxygine
         void setSuccessOnAnyResponseCode(bool en);
 
     protected:
-        void _prerun() override;
+        bool _prerun() override;
         void _onError() override;
         void _onComplete() override;
         void _dispatchComplete() override;

@@ -116,7 +116,7 @@ namespace oxygine
         return _fname;
     }
 
-    void HttpRequestTask::_prerun()
+    bool HttpRequestTask::_prerun()
     {
         _suitableResponse = false;
         _receivedContentSize = 0;
@@ -131,6 +131,12 @@ namespace oxygine
         {
             const char* mode = _continueDownload ? "ab" : "wb";
             _fhandle = file::open(_fname, mode, ep_ignore_error);
+            OX_ASSERT(_fhandle);
+
+            if (!_fhandle)
+            {
+                return false;
+            }
 
             if (_continueDownload)
             {
@@ -144,6 +150,7 @@ namespace oxygine
                 _receivedContentSize = size;
             }
         }
+        return true;
     }
 
     void HttpRequestTask::dispatchProgress(int delta, int loaded, int total)

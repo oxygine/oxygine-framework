@@ -16,14 +16,18 @@ namespace oxygine
 
     void AsyncTask::run()
     {
-        _prerun();
-        log::messageln("AsyncTask::run %d - %s", getObjectID(), typeid(*this).name());
-
         OX_ASSERT(_status == status_not_started);
         _status = status_inprogress;
+
+        bool ok = _prerun();
+        log::messageln("AsyncTask::run %d - %s", getObjectID(), typeid(*this).name());
+                
         sync([ = ]()
         {
-            _run();
+            if (ok)
+                _run();
+            else
+                _error();
         });
     }
 
