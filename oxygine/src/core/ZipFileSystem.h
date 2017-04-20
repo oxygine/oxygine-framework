@@ -5,6 +5,7 @@
 #include "minizip/unzip.h"
 #include "core/file.h"
 #include "core/Mutex.h"
+#include <unordered_map>
 
 namespace oxygine
 {
@@ -15,6 +16,7 @@ namespace oxygine
             unzFile zp;
             char name[128];
             unz_file_pos pos;
+            int refs;
         };
 
         class Zips
@@ -30,25 +32,19 @@ namespace oxygine
             void add(std::vector<char>& data);
             void remove(const char* name);
 
-            void update();
-
             bool read(const char* name, file::buffer& bf);
             bool read(const file_entry* entry, file::buffer& bf);
             bool isExists(const char* name);
 
-            const file_entry*   getEntryByName(const char* name);
-            const file_entry*   getEntry(int index);
-            size_t              getNumEntries() const;
-
-            const char* getZipFileName(int i) const { return _zps[i].name; }
+            file_entry*         getEntryByName(const char* name);            
+            const char*         getZipFileName(int i) const { return _zps[i].name; }
+            Mutex&              getMutex() { return _lock; }
 
         private:
             friend class ZipFileSystem;
             void read(unzFile zp);
 
-            bool _sort;
-
-            typedef std::vector<file_entry> files;
+            typedef std::unordered_map<std::string, file_entry> files;
             files _files;
 
             struct zpitem
@@ -83,6 +79,9 @@ namespace oxygine
             void reset();
 
         protected:
+
+            friend class fileHandleZip;
+            friend class fileHandleZipStreaming;
 
             Zips _zips;
 
