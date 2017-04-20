@@ -28,6 +28,7 @@ namespace oxygine
             void add(const char* name);
             void add(const unsigned char* data, unsigned int size);
             void add(std::vector<char>& data);
+            void remove(const char* name);
 
             void update();
 
@@ -74,6 +75,7 @@ namespace oxygine
 
             /**add zip from file*/
             void add(const char* zip);
+            void remove(const char* zip);
             //add zip from memory, data should not be deleted
             void add(const unsigned char* data, unsigned int size);
             //add zip from memory, vector would be swapped (emptied)

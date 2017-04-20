@@ -159,7 +159,33 @@ namespace oxygine
             return 0;
         }
 
+        void Zips::remove(const char* name)
+        {
+            MutexAutoLock al(_lock);
 
+            for (size_t i = 0; i < _zps.size(); ++i)
+            {
+                zpitem& item = _zps[i];
+                if (!strcmp(item.name, name))
+                {
+                    for (size_t n = 0; n < _files.size();)
+                    {
+                        file_entry& entry = _files[n];
+                        if (entry.zp == item.handle)
+                        {
+                            _files.erase(_files.begin() + n);
+                        }
+                        else
+                            ++n;
+                    }
+
+                    unzClose(item.handle);
+
+                    _zps.erase(_zps.begin() + i);
+                    break;
+                }
+            }
+        }
 
         void Zips::add(const char* name)
         {
@@ -284,7 +310,7 @@ namespace oxygine
         {
         public:
 
-            fileHandleZip(const file_entry* entry): _entry(entry)
+            fileHandleZip(FileSystem* fs, const file_entry* entry): fileHandle(fs), _entry(entry)
             {
                 int r = 0;
                 r = unzGoToFilePos(entry->zp, const_cast<unz_file_pos*>(&entry->pos));
@@ -340,7 +366,7 @@ namespace oxygine
             z_off_t _size;
             long _cpos;
 
-            fileHandleZipStreaming(const file_entry* entry, const Zips& z): _cpos(0)
+            fileHandleZipStreaming(FileSystem* fs, const file_entry* entry, const Zips& z): fileHandle(fs), _cpos(0)
             {
                 int r = 0;
                 r = unzGoToFilePos(entry->zp, const_cast<unz_file_pos*>(&entry->pos));
@@ -441,6 +467,11 @@ namespace oxygine
         }
 
 
+        void ZipFileSystem::remove(const char* zip)
+        {
+            _zips.remove(zip);
+        }
+
         void ZipFileSystem::reset()
         {
             _zips.reset();
@@ -462,9 +493,9 @@ namespace oxygine
             if (entry)
             {
                 if (*mode == 's')
-                    fh = new fileHandleZipStreaming(entry, _zips);
+                    fh = new fileHandleZipStreaming(this, entry, _zips);
                 else
-                    fh = new fileHandleZip(entry);
+                    fh = new fileHandleZip(this, entry);
                 return status_ok;
             }
 

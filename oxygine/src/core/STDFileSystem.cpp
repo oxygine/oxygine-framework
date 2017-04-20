@@ -124,7 +124,7 @@ namespace oxygine
         class fileHandleSTD: public fileHandle
         {
         public:
-            fileHandleSTD(oxHandle* fh): _handle(fh)
+            fileHandleSTD(FileSystem* fs, oxHandle* fh): fileHandle(fs), _handle(fh)
             {
             }
 
@@ -224,7 +224,7 @@ namespace oxygine
             if (!h)
                 return status_error;
 
-            fh = new fileHandleSTD(h);
+            fh = new fileHandleSTD(this, h);
             return status_ok;
         }
 

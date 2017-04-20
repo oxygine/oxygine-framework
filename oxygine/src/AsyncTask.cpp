@@ -21,7 +21,7 @@ namespace oxygine
 
         bool ok = _prerun();
         log::messageln("AsyncTask::run %d - %s", getObjectID(), typeid(*this).name());
-                
+
         sync([ = ]()
         {
             if (ok)
