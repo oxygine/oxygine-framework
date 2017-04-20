@@ -3,7 +3,7 @@
 #include "core/ThreadDispatcher.h"
 #include "EventDispatcher.h"
 #include "Event.h"
-
+#include "core/oxygine.h"
 #ifdef ERROR
 #undef ERROR
 #endif

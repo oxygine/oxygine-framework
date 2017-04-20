@@ -347,6 +347,8 @@ namespace oxygine
             //SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
+            
+            SDL_GL_SetAttribute(SDL_GL_RETAINED_BACKING, 0);
 
             if (desc.force_gles)
             {
