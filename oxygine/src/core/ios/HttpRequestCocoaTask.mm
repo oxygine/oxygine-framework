@@ -168,10 +168,6 @@ namespace oxygine
         
     }
     
-    void HttpRequestCocoaTask::progress_(int loaded, int total)
-    {
-        progress(loaded, total);
-    }
     
     void HttpRequestCocoaTask::write(NSData *data)
     {
@@ -193,11 +189,8 @@ namespace oxygine
     void HttpRequestCocoaTask::gotResponse(int resp, size_t expectedSize)
     {
         _responseCode = resp;
-        
         _expectedContentSize = _receivedContentSize + expectedSize;
-        
-        progress(_receivedContentSize, _expectedContentSize);
-        
+        gotHeaders();
     }
     
     void HttpRequestCocoaTask::_run()
