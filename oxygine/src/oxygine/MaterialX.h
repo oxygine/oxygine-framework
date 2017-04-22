@@ -55,8 +55,8 @@ namespace oxygine
         virtual void update(size_t& hash, compare&) const = 0;
         virtual void rehash(size_t& hash) const = 0;
 
-        virtual void render(const AffineTransform& tr, const Color& c, const RectF& src, const RectF& dest);
-        virtual void render(const Color& c, const RectF& src, const RectF& dest);
+        virtual void render(const AffineTransform& tr, const Color& c, const RectF& src, const RectF& dest) {}
+        virtual void render(const Color& c, const RectF& src, const RectF& dest) {}
 
         void apply();
         void flush();
@@ -99,6 +99,9 @@ namespace oxygine
 
         void xapply() override;
         void xflush() override;
+
+        void render(const AffineTransform& tr, const Color& c, const RectF& src, const RectF& dest) override;
+        void render(const Color& c, const RectF& src, const RectF& dest) override;
     };
 
     DECLARE_SMART(STDMaterialX, spSTDMaterialX);

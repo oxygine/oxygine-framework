@@ -53,6 +53,19 @@ namespace oxygine
         STDRenderer::getCurrent()->flush();
     }
 
+
+    void STDMaterialX::render(const AffineTransform& tr, const Color& c, const RectF& src, const RectF& dest)
+    {
+        STDRenderer::getCurrent()->setTransform(tr);
+        STDRenderer::getCurrent()->draw(c, src, dest);
+    }
+
+    void STDMaterialX::render(const Color& c, const RectF& src, const RectF& dest)
+    {
+        STDRenderer::getCurrent()->draw(c, src, dest);
+    }
+
+
     MaterialX::MaterialX(const MaterialX& other)
     {
         _hash = other._hash;
@@ -67,17 +80,6 @@ namespace oxygine
     MaterialX::MaterialX() : _hash(0)
     {
 
-    }
-
-    void MaterialX::render(const AffineTransform& tr, const Color& c, const RectF& src, const RectF& dest)
-    {
-        STDRenderer::getCurrent()->setTransform(tr);
-        STDRenderer::getCurrent()->draw(c, src, dest);
-    }
-
-    void MaterialX::render(const Color& c, const RectF& src, const RectF& dest)
-    {
-        STDRenderer::getCurrent()->draw(c, src, dest);
     }
 
     void MaterialX::apply()

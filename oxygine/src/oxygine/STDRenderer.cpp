@@ -293,10 +293,6 @@ namespace oxygine
         return _driver;
     }
 
-    unsigned int STDRenderer::getShaderFlags() const
-    {
-        return _shaderFlags;
-    }
 
     void STDRenderer::setViewProj(const Matrix& viewProj)
     {
@@ -441,7 +437,7 @@ namespace oxygine
 
 
 
-    STDRenderer::STDRenderer(IVideoDriver* driver) : _driver(driver), _vdecl(0), _uberShader(0), _shaderFlags(0)
+    STDRenderer::STDRenderer(IVideoDriver* driver) : _driver(driver), _vdecl(0), _uberShader(0)
     {
         if (!driver)
             driver = IVideoDriver::instance;
@@ -547,7 +543,7 @@ namespace oxygine
     }
 
 
-    void STDRenderer::setShaderFlags(int flags)
+    void STDRenderer::setShaderFlags(unsigned int flags)
     {
         ShaderProgram* sp = _uberShader->getShaderProgram(_baseShaderFlags | flags);
         setShader(sp);

@@ -65,7 +65,7 @@ namespace oxygine
         const AffineTransform&  getTransform() const { return _transform; }
         const VertexDeclaration* getVertexDeclaration() const { return _vdecl; }
 
-        void setShaderFlags(int);
+        void setShaderFlags(unsigned int);
         void setViewProj(const Matrix& viewProj);
         void setVertexDeclaration(const VertexDeclaration* decl);
         void setUberShaderProgram(UberShaderProgram* pr);
@@ -144,7 +144,6 @@ namespace oxygine
         UberShaderProgram* _uberShader;
 
         unsigned int _baseShaderFlags;
-        unsigned int _shaderFlags;
 
         bool _drawing;
 
