@@ -74,13 +74,10 @@ namespace oxygine
     public:
         MaskedRenderer(spNativeTexture mask, const RectF& srcRect, const RectF& destRect, const Transform& t, bool channelR, IVideoDriver*);
 
-        //void draw(const RState *rs, const RectF &destRect) OVERRIDE;
-
     protected:
         void shaderProgramChanged() override;
 
-        spNativeTexture _mask;
-        RectF _clipMask;
-        ClipUV _clipUV;
+        Vector3 _msk[4];
+        Vector4 _clipMask;
     };
 }
