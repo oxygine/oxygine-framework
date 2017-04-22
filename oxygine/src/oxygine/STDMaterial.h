@@ -13,9 +13,6 @@ namespace oxygine
 
         STDMaterial() {}
 
-        void apply(Material* prev) override;
-        void finish() override;
-
         void render(ClipRectActor*,     const RenderState& rs) override;
         void render(MaskedSprite*,      const RenderState& rs) override;
         void doRender(Sprite*,          const RenderState& rs) override;

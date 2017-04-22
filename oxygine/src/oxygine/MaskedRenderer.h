@@ -77,8 +77,7 @@ namespace oxygine
         //void draw(const RState *rs, const RectF &destRect) OVERRIDE;
 
     protected:
-        void preDrawBatch();
-        //void addVertices(const void *data, unsigned int size, const VertexDeclaration *decl) OVERRIDE;
+        void shaderProgramChanged() override;
 
         spNativeTexture _mask;
         RectF _clipMask;

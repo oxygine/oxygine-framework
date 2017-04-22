@@ -76,7 +76,7 @@ public:
 
             }
         }
- 
+
 
         nt = IVideoDriver::instance->createTexture();
         nt->init(dest.lock());

@@ -89,6 +89,9 @@ namespace oxygine
 
     void VStyleActor::setBlendMode(blend_mode mode)
     {
+        if (getBlendMode() == mode)
+            return;
+
         _vstyle.setBlendMode(mode);
 
         _mat = _mat->clone();

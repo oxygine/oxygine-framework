@@ -238,10 +238,11 @@ namespace oxygine
     {
         if (prog != _program)
         {
+            _program = prog;
             _driver->setShaderProgram(prog);
             _driver->setUniform("mat", _vp);
+            shaderProgramChanged();
         }
-        _program = prog;
     }
 
 
@@ -557,21 +558,6 @@ namespace oxygine
     {
     }
 
-    void STDRenderer::preDrawBatch()
-    {
-        ShaderProgram* prog = _uberShader->getShaderProgram(_shaderFlags);
-        setShader(prog);
-
-
-        _uberShader->apply(_driver, _base, _alpha);
-
-        UberShaderProgramBase::ShaderUniformsCallback cb = _uberShader->getShaderUniformsCallback();
-        if (cb)
-        {
-            cb(_driver, prog);
-        }
-    }
-
     void STDRenderer::draw(const Color& clr, const RectF& srcRect, const RectF& destRect)
     {
         Color color = clr.premultiplied();
@@ -610,12 +596,7 @@ namespace oxygine
     void STDRenderer::setShaderFlags(int flags)
     {
         ShaderProgram* sp = _uberShader->getShaderProgram(_baseShaderFlags | flags);
-        if (_program != sp)
-        {
-            _driver->setShaderProgram(sp);
-            _driver->setUniform("mat", _vp);
-            _program = sp;
-        }
+        setShader(sp);
     }
     /*
 

@@ -98,6 +98,7 @@ namespace oxygine
         void setViewProjTransform(const Matrix& viewProj);
 
     protected:
+        virtual void shaderProgramChanged() {}
 
         struct batch
         {
@@ -134,7 +135,6 @@ namespace oxygine
         ShaderProgram* _program;
         Matrix _vp;
 
-        virtual void preDrawBatch();
         virtual void xbegin();
         virtual void xresetSettings();
         //virtual

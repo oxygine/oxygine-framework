@@ -5,7 +5,9 @@
 
 namespace oxygine
 {
-    MaskedRenderer::MaskedRenderer(spNativeTexture mask, const RectF& srcRect, const RectF& destRect, const Transform& t, bool channelR, IVideoDriver* driver) : STDRenderer(driver), _mask(mask)
+    MaskedRenderer::MaskedRenderer(spNativeTexture mask,
+                                   const RectF& srcRect, const RectF& destRect,
+                                   const Transform& t, bool channelR, IVideoDriver* driver) : STDRenderer(driver), _mask(mask)
     {
         _clipUV = ClipUV(
                       t.transform(destRect.getLeftTop()),
@@ -19,19 +21,17 @@ namespace oxygine
         Vector2 v(1.0f / mask->getWidth(), 1.0f / mask->getHeight());
         _clipMask.expand(v, v);
 
-        _shaderFlags |= UberShaderProgram::MASK;
+        _baseShaderFlags |= UberShaderProgram::MASK;
         if (channelR)
-            _shaderFlags |= UberShaderProgram::MASK_R_CHANNEL;
-    }
-
-    void MaskedRenderer::preDrawBatch()
-    {
-        STDRenderer::preDrawBatch();
+            _baseShaderFlags |= UberShaderProgram::MASK_R_CHANNEL;
 
         _driver->setTexture(UberShaderProgram::SAMPLER_MASK, _mask);
+    }
 
-        Vector4 v(_clipMask.getLeft(), _clipMask.getTop(), _clipMask.getRight(), _clipMask.getBottom());
-        _driver->setUniform("clip_mask", v);
+    void MaskedRenderer::shaderProgramChanged()
+    {
+        Vector4 vc(_clipMask.getLeft(), _clipMask.getTop(), _clipMask.getRight(), _clipMask.getBottom());
+        _driver->setUniform("clip_mask", vc);
 
         Vector3 msk[4];
         _clipUV.get(msk);

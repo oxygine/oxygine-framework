@@ -11,28 +11,31 @@ namespace oxygine
     public:
         Color _color;
         int _downsample;
+        spSTDMaterialX _matx;
 
-        TweenOutlineImpl(const Color& c, const PostProcessOptions& opt) : TweenPostProcess(opt), _color(c), _downsample(1) {}
+        TweenOutlineImpl(const Color& c, const PostProcessOptions& opt) : TweenPostProcess(opt), _color(c), _downsample(1)
+        {
+            _matx = new STDMaterialX;
+            _matx->_blend = blend_premultiplied_alpha;
+        }
 
         void render(Actor* actor, const RenderState& rs) override
         {
-
             if (!_pp._rt)
                 return;
 
-            spSTDMaterialX mat = new STDMaterialX;
-            mat->_base = _pp._rt;
-            mat->_blend = blend_premultiplied_alpha;
-            mat->apply();
+            spNativeTexture rt = _pp._rt;
+
+            _matx->_base = rt;
+            _matx->apply();
 
             STDRenderer* renderer = STDRenderer::getCurrent();
 
-            spNativeTexture rt = _pp._rt;
+
             RectF src(0, 0,
                       _pp._screen.getWidth() / (float)rt->getWidth(),
                       _pp._screen.getHeight() / (float)rt->getHeight());
             RectF dest = _pp._screen.cast<RectF>();
-
 
 
             AffineTransform tr = _pp._transform * _actor->computeGlobalTransform();
@@ -42,7 +45,6 @@ namespace oxygine
             Color color = Color(Color::White).withAlpha(255).premultiplied();
             renderer->draw(rt, color.rgba(), src, dest);
 
-			
 
             RenderState r = rs;
             actor->setMaterial(_prevMaterial);

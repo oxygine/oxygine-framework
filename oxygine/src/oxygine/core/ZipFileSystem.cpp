@@ -64,8 +64,8 @@ namespace oxygine
                 entry.refs = 0;
                 entry.pos = pos;
                 entry.zp = zp;
-                
-                char *str = entry.name;
+
+                char* str = entry.name;
                 for (int i = 0; str[i]; i++)
                     str[i] = tolower(str[i]);
 
@@ -271,7 +271,7 @@ namespace oxygine
         file_entry* Zips::getEntryByName(const char* name)
         {
             char str[255];
-            char *p = str;
+            char* p = str;
             while (*name)
             {
                 *p = tolower(*name);
@@ -281,7 +281,7 @@ namespace oxygine
             *p = 0;
 
             files::iterator it = _files.find(str);
-            if (it != _files.end())            
+            if (it != _files.end())
                 return &it->second;
 
             return 0;
@@ -315,12 +315,12 @@ namespace oxygine
 
             void release()
             {
-                ZipFileSystem *zfs = static_cast<ZipFileSystem *>(_fs);
+                ZipFileSystem* zfs = static_cast<ZipFileSystem*>(_fs);
                 MutexAutoLock lock(zfs->_zips.getMutex());
                 _entry->refs--;
 
                 int r = unzCloseCurrentFile(_entry->zp);
-                OX_ASSERT(r == UNZ_OK);                
+                OX_ASSERT(r == UNZ_OK);
                 delete this;
             }
 
@@ -391,7 +391,7 @@ namespace oxygine
 
             ~fileHandleZipStreaming()
             {
-                ZipFileSystem *zfs = static_cast<ZipFileSystem *>(_fs);
+                ZipFileSystem* zfs = static_cast<ZipFileSystem*>(_fs);
                 MutexAutoLock lock(zfs->_zips.getMutex());
                 _entry->refs--;
             }

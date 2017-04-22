@@ -1,5 +1,4 @@
 #include "MaterialX.h"
-#include "STDRenderer.h"
 #include "core/UberShaderProgram.h"
 #include "STDRenderer.h"
 

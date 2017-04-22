@@ -7,8 +7,6 @@ namespace oxygine
     {
     public:
         virtual ~Material();
-        virtual void apply(Material* prev = 0) {}
-        virtual void finish() {}
 
         virtual void render(Actor*, const RenderState& rs);
         virtual void render(ClipRectActor*, const RenderState& rs) {}

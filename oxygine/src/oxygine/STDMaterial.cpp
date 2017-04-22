@@ -90,6 +90,8 @@ namespace oxygine
         spSprite mask = sprite->getMask();
         if (mask && mask->getAnimFrame().getDiffuse().base)
         {
+            MaterialX::null->apply();
+
             Transform t = mask->computeGlobalTransform();
 
             RectF maskDest = mask->getDestRect();
@@ -118,6 +120,8 @@ namespace oxygine
             sprite->Sprite::render(rs);
             mr.end();
 
+            MaterialX::null->apply();
+
             original->swapVerticesData(mr);
             original->begin();
         }
@@ -132,10 +136,10 @@ namespace oxygine
         if (!sprite->getAnimFrame().getDiffuse().base)
             return;
 
+
         Color color = rs.getFinalColor(sprite->getColor());
 
         sprite->_mat->apply();
-
         sprite->_mat->render(rs.transform, color, sprite->getAnimFrame().getSrcRect(), sprite->getDestRect());
     }
 
@@ -174,7 +178,7 @@ namespace oxygine
     {
 
     }
-
+    /*
     void STDMaterial::apply(Material* prev)
     {
         STDRenderer* cur = STDRenderer::getCurrent();
@@ -186,4 +190,5 @@ namespace oxygine
     {
         STDRenderer::getCurrent()->end();
     }
+    */
 }

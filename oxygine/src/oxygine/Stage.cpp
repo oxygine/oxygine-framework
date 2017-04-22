@@ -29,8 +29,6 @@ namespace oxygine
         }
         _stage = this;
 
-        _rdelegate = STDMaterial::instance;
-
 #ifdef OXYGINE_SDL
         _window = 0;
 #endif

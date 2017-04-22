@@ -57,7 +57,7 @@ public:
         anim = createAnim(false);
         anim->setPosition(sprite->getWidth(), sprite->getHeight() / 2);
         anim->attachTo(sprite);
-		
+
 
 
         _fullscreen = false;
@@ -103,7 +103,9 @@ public:
         opt.fullscreen(_fullscreen);
         opt.singleRender(_singleRender);
 
-		//_type = 1;
+
+
+        //_type = 1;
 
         spTween t;
         if (_type == 0)

@@ -24,7 +24,7 @@ namespace oxygine
 
 
 
-		IVideoDriver* driver = IVideoDriver::instance;
+        IVideoDriver* driver = IVideoDriver::instance;
 
 
 
@@ -304,7 +304,7 @@ namespace oxygine
             spNativeTexture prevRT = driver->getRenderTarget();
 
 
-			ShaderProgram *sp = driver->getShaderProgram();
+            ShaderProgram* sp = driver->getShaderProgram();
 
             for (size_t i = 0; i < postProcessItems.size(); ++i)
             {
@@ -315,7 +315,7 @@ namespace oxygine
 
             postProcessItems.clear();
             driver->setRenderTarget(prevRT);
-			driver->setShaderProgram(sp);
+            driver->setShaderProgram(sp);
             _renderingPP = false;
         }
 
@@ -438,13 +438,13 @@ namespace oxygine
         }
 
         //OX_ASSERT(0);
-		Material *rd = actor->getMaterial();
-		actor->setMaterial(STDMaterial::instance);
+        Material* rd = actor->getMaterial();
+        actor->setMaterial(STDMaterial::instance);
         STDMaterial::instance->Material::render(actor, rs);
 
         STDRenderer::current->flush();
 
-		actor->setMaterial(rd);
+        actor->setMaterial(rd);
 
         MaterialX::current = 0;
     }

@@ -28,6 +28,6 @@ namespace oxygine
     class RenderState: public RState
     {
     public:
-        RenderState(){}
+        RenderState() {}
     };
 }
