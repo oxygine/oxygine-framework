@@ -13,7 +13,7 @@ static HttpRequestTask *createTask()
     return new HttpRequestCocoaTask;
 }
 
-@interface HttpRequests:NSObject<NSURLSessionDownloadDelegate, NSURLSessionTaskDelegate, NSURLSessionDataDelegate>
+@interface HttpRequests:NSObject<NSURLSessionTaskDelegate, NSURLSessionDataDelegate>
 {
 }
 @end
@@ -34,52 +34,7 @@ static HttpRequestTask *createTask()
     oxygine::HttpRequestCocoaTask* task = (oxygine::HttpRequestCocoaTask*)taskValue.pointerValue;
     if (remove)
         objc_removeAssociatedObjects(object);
-    if (!task)
-        int q=0;
     return task;
-}
-
-#pragma mark - NSURLSessionDownloadDelegate
-
--(void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite
-{
-    oxygine::HttpRequestCocoaTask* task = [self getTask:downloadTask remove:false];
-    task->progress_((int) totalBytesWritten, (int) totalBytesExpectedToWrite);
-}
-
--(void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location {
-    
-    oxygine::HttpRequestCocoaTask* task = [self getTask:downloadTask remove:true];
-    
-    NSHTTPURLResponse *resp = (NSHTTPURLResponse*)[downloadTask response];
-    
-    long code = [resp statusCode];
-    
-    
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    
-    std::string dest = oxygine::file::wfs().getFullPath(task->getFileName().c_str());
-    NSURL *destUrl = [NSURL fileURLWithPath:[NSString stringWithUTF8String:dest.c_str()]];
-    
-    NSError *fileManagerError;
-    
-    [fileManager removeItemAtURL:destUrl error:&fileManagerError];
-    
-    /*
-    if (code == 200)
-    {
-        [fileManager copyItemAtURL:location toURL:destUrl error:&fileManagerError];
-    
-        task->complete_(nil,  false);
-    }
-    else
-    {
-        task->complete_(nil, true);
-        
-    }
-    */
-
-    task->complete_(nil, false, (int)code);
 }
 
 #pragma mark - NSURLSessionTaskDelegate
@@ -91,26 +46,13 @@ static HttpRequestTask *createTask()
     
     oxygine::HttpRequestCocoaTask* httpRequestTask = [self getTask:task remove:true];
     
-    if (error) {
-        NSData* resumeData = [error.userInfo objectForKey:NSURLSessionDownloadTaskResumeData];
-        if (resumeData) {
-            NSURLSessionTask *rt = [session downloadTaskWithResumeData:resumeData];
-            [rt resume];
-            
-            NSValue *taskValue = [NSValue valueWithPointer:httpRequestTask];
-            objc_setAssociatedObject(rt, &taskKey, taskValue, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-        }
-        else
-        {
-            httpRequestTask->complete_(/* data */ nil, /* error */ true, 0);
-        }
+    if (error)
+    {
+        httpRequestTask->complete_(true);
     }
-    
-    if (!error) {
-        // didFinishDownloadingToURL will be called in this case,
-        // which will save the file and signal completion.
-    } else {
-        
+    else
+    {
+        httpRequestTask->complete_(false);
     }
 }
 
@@ -118,13 +60,40 @@ static HttpRequestTask *createTask()
 #pragma mark - NSURLSessionDataDelegate
 
 // Not used yet (using completion handler for data tasks)
-//- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask  didReceiveData:(NSData *)data{
-//    oxygine::HttpRequestCocoaTask* task = [self getTask:dataTask remove:true];
-//    log::messageln("nssessiond complete %x", dataTask);
-//    //if (!task)
-//    //    return;
-//    task->complete_(data);
-//}
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask  didReceiveData:(NSData *)data
+{
+    oxygine::HttpRequestCocoaTask* task = [self getTask:dataTask remove:false];
+    if (!task)
+        return;
+    task->write(data);
+}
+
+- (void)URLSession:(NSURLSession *)session
+          dataTask:(NSURLSessionDataTask *)dataTask
+didReceiveResponse:(NSURLResponse *)response
+ completionHandler:(void (^)(NSURLSessionResponseDisposition disposition))completionHandler
+{
+    if ([response isKindOfClass:[NSHTTPURLResponse class]])
+    {
+        NSHTTPURLResponse *httpResponse = ((NSHTTPURLResponse *)response);
+        
+        long long size = [httpResponse expectedContentLength];
+        
+        int resp = (int)httpResponse.statusCode;
+        
+        oxygine::HttpRequestCocoaTask* task = [self getTask:dataTask remove:false];
+        if (task)
+        {
+            task->gotResponse(resp, size);
+            bool ok = task->getResponseCodeChecker()(resp);
+            completionHandler(ok ? NSURLSessionResponseAllow : NSURLSessionResponseCancel);
+            return;
+        }
+    }
+
+    
+    completionHandler(NSURLSessionResponseAllow);
+}
 
 #pragma mark -
 
@@ -199,88 +168,58 @@ namespace oxygine
         
     }
     
-    void HttpRequestCocoaTask::progress_(int loaded, int total)
+    
+    void HttpRequestCocoaTask::write(NSData *data)
     {
-        progress(loaded, total);
+        const void *ptr = [data bytes];
+        unsigned int len = [data length];
+        HttpRequestTask::write(ptr, len);
     }
     
-    void HttpRequestCocoaTask::complete_(NSData *data, bool error, int respCode)
+    void HttpRequestCocoaTask::complete_(bool error)
     {
-        _responseCode = respCode;
-        
         if (error)
             onError();
         else
-        {
-            if (data)
-            {
-                const void *ptr = [data bytes];
-                size_t len = [data length];
-                _response.assign((const char*)ptr, (const char*)ptr + len);
-            }
-            
             onComplete();
-        }
         
         releaseRef();
     }
     
+    void HttpRequestCocoaTask::gotResponse(int resp, size_t expectedSize)
+    {
+        _responseCode = resp;
+        _expectedContentSize = _receivedContentSize + expectedSize;
+        gotHeaders();
+    }
+    
     void HttpRequestCocoaTask::_run()
     {
-        _mainThreadSync = true;
-        
         addRef();
+        
         NSString *urlString = [NSString stringWithUTF8String:_url.c_str()];
-        NSURL *url =[NSURL URLWithString:urlString];
+        NSURL *url = [NSURL URLWithString:urlString];
         
         NSURLSession *session = _cacheEnabled ? _getDefaultSession() : _getEphemeralSession();
         
         NSURLSessionTask *task = 0;
-        if (_fname.empty())
+        
+        NSMutableURLRequest *request = [NSMutableURLRequest	requestWithURL:url];
+        for (const auto& h:_headers)
         {
-            NSMutableURLRequest *request = [NSMutableURLRequest	requestWithURL:url];
-            if (!_postData.empty())
-            {
-                request.HTTPBody = [NSData dataWithBytes:_postData.data() length:_postData.size()];
-                request.HTTPMethod = @"POST";
-            }
+            NSString *key = [NSString stringWithUTF8String:h.first.c_str()];
+            NSString *value = [NSString stringWithUTF8String:h.second.c_str()];
             
-            task = [session dataTaskWithRequest:request
-                              completionHandler:^(NSData *data,
-                                                  NSURLResponse *response,
-                                                  NSError *error) {
-                                  // handle response
-                                  
-                                  
-                                  if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
-                                      NSHTTPURLResponse *httpResponse = ((NSHTTPURLResponse *)response);
-                                      _responseCode = (int)httpResponse.statusCode;
-                                      //if (statusCode != 200)
-                                       //   httpError = true;
-                                  }
-                                  
-                                  if (error)
-                                  {
-                                      onError();
-                                  }
-                                  else
-                                  {
-                                      if (data)
-                                      {
-                                          const void *ptr = data.bytes;
-                                          size_t len = data.length;
-                                          _response.assign((const char*)ptr, (const char*)ptr + len);
-                                      }
-                                      
-                                      onComplete();
-                                  }
-                                  releaseRef();
-                              }];
+            [request setValue:value forHTTPHeaderField:key];
         }
-        else
+        
+        if (!_postData.empty())
         {
-            task = [session downloadTaskWithURL:url];
+            request.HTTPBody = [NSData dataWithBytes:_postData.data() length:_postData.size()];
+            request.HTTPMethod = @"POST";
         }
+            
+        task = [session dataTaskWithRequest:request];
         
         NSValue *taskValue = [NSValue valueWithPointer:this];
         objc_setAssociatedObject(task, &taskKey, taskValue, OBJC_ASSOCIATION_RETAIN_NONATOMIC);

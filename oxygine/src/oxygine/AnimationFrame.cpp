@@ -54,16 +54,10 @@ namespace oxygine
     {
         AnimationFrame f = *this;
         if (vertical)
-        {
-            f._srcRect.setY(_srcRect.getBottom());
-            f._srcRect.setHeight(-_srcRect.getHeight());
-        }
+            f.flipY();
 
         if (horizontal)
-        {
-            f._srcRect.setX(_srcRect.getRight());
-            f._srcRect.setWidth(-_srcRect.getWidth());
-        }
+            f.flipX();
 
         return f;
     }
@@ -72,12 +66,14 @@ namespace oxygine
     {
         _srcRect.setX(_srcRect.getRight());
         _srcRect.setWidth(-_srcRect.getWidth());
+        _destRect.pos.x = _frameSize.x - _destRect.getRight();
     }
 
     void AnimationFrame::flipY()
     {
         _srcRect.setY(_srcRect.getBottom());
         _srcRect.setHeight(-_srcRect.getHeight());
+        _destRect.pos.y = _frameSize.y - _destRect.getBottom();
     }
 
     AnimationFrame::AnimationFrame(spNativeTexture t)

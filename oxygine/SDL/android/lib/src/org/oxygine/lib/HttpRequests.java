@@ -21,9 +21,10 @@ import java.net.URL;
 
 class RequestDetails {
     public String url;
-    public String fileName;
     public byte[] postData;
     public long handle;
+    public String[] headerKeys;
+    public String[] headerValues;
 };
 
 
@@ -65,11 +66,11 @@ class HttpRequest extends AsyncTask<RequestDetails, Integer, String> {
     public HttpRequest() {
     }
 
-    public static native void nativeHttpRequestResponseSuccess(long handle, byte[] data, int code);
+    public static native void nativeHttpRequestSuccess(long handle);
+    public static native void nativeHttpRequestError(long handle);
+    public static native void nativeHttpRequestGotHeader(long handle, int code, int contentLength);
+    public static native void nativeHttpRequestWrite(long handle, byte[] data, int size);
 
-    public static native void nativeHttpRequestResponseProgress(long handle, int loaded, int total);
-
-    public static native void nativeHttpRequestResponseError(long handle, int code);
 
     private Proxy detectProxy() {
         try {
@@ -91,14 +92,14 @@ class HttpRequest extends AsyncTask<RequestDetails, Integer, String> {
     @Override
     protected String doInBackground(RequestDetails... details_) {
         InputStream input = null;
-        OutputStream output = null;
+
         HttpURLConnection connection = null;
         RequestDetails details = details_[0];
 
-        int respCode = 0;
 
         try {
             URL url = new URL(details.url);
+
             Proxy proxy = detectProxy();
             if (proxy != null)
                 connection = (HttpURLConnection) url.openConnection(proxy);
@@ -106,108 +107,48 @@ class HttpRequest extends AsyncTask<RequestDetails, Integer, String> {
                 connection = (HttpURLConnection) url.openConnection();
 
             connection.setInstanceFollowRedirects(true);
-            
+
+            for (int i = 0; i < details.headerKeys.length; ++i)
+            {
+                String key = details.headerKeys[i];
+                String value = details.headerValues[i];
+
+                connection.setRequestProperty(key, value);
+            }
+
             if (details.postData != null) {
                 connection.setDoOutput(true);
-                //connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
                 connection.setRequestMethod("POST");
                 connection.getOutputStream().write(details.postData);
             }
 
-            //connection.connect();
 
-            /*
 
-            boolean redirect = false;
+            int respCode = connection.getResponseCode();
+            nativeHttpRequestGotHeader(details.handle, respCode, connection.getContentLength());
 
-            int status = conn.getResponseCode();
-            if (status != HttpURLConnection.HTTP_OK) {
-                if (status == HttpURLConnection.HTTP_MOVED_TEMP || status == HttpURLConnection.HTTP_MOVED_PERM || status == HttpURLConnection.HTTP_SEE_OTHER)
-                    redirect = true;
-            }
 
-            if (redirect) {
-
-                // get redirect url from "location" header field
-                String newUrl = conn.getHeaderField("Location");
-
-                // get the cookie if need, for login
-                String cookies = conn.getHeaderField("Set-Cookie");
-
-                // open the new connnection again
-                conn = (HttpURLConnection) new URL(newUrl).openConnection();
-                conn.setRequestProperty("Cookie", cookies);
-                conn.addRequestProperty("Accept-Language", "en-US,en;q=0.8");
-                conn.addRequestProperty("User-Agent", "Mozilla");
-                conn.addRequestProperty("Referer", "google.com");
-
-                System.out.println("Redirect to URL : " + newUrl);
-            }
-            */
-
-            // expect HTTP 200 OK, so we don't mistakenly save error report
-            // instead of the file
-            respCode = connection.getResponseCode();
-            //if (respCode != HttpURLConnection.HTTP_OK) {
-            //    nativeHttpRequestResponseError(details.handle, respCode);
-            //    return "Server returned HTTP " + respCode + " " + connection.getResponseMessage();
-            //}
-
-            // this will be useful to display download percentage
-            // might be -1: server did not report the length
-            int fileLength = connection.getContentLength();
-
-            // download the file
             if (respCode >= 400 && respCode <= 599)
                 input = connection.getErrorStream();
             else
                 input = connection.getInputStream();
 
 
-            ByteArrayOutputStream bt = null;
-
-
-            if (details.fileName != null)
-                output = new FileOutputStream(OxygineActivity.instance.getFilesDir() + "/" + details.fileName);
-            else {
-                bt = new ByteArrayOutputStream();
-                output = bt;
-            }
-
             byte data[] = new byte[4096];
-            int total = 0;
             int count;
 
-            nativeHttpRequestResponseProgress(details.handle, 0, fileLength);
+            while ((count = input.read(data)) != -1)
+                nativeHttpRequestWrite(details.handle, data, count);
 
-            while ((count = input.read(data)) != -1) {
-                // allow canceling with back button
-                /*
-                if (isCancelled()) {
-                    input.close();
-                    return null;
-                }
-                */
-                total += count;
-                // publishing the progress....
-                //if (fileLength > 0) // only if total length is known
-                //    publishProgress((int) (total * 100 / fileLength));
-                output.write(data, 0, count);
-                nativeHttpRequestResponseProgress(details.handle, total, fileLength);
-            }
-            if (bt != null)
-                nativeHttpRequestResponseSuccess(details.handle, bt.toByteArray(), respCode);
-            else
-                nativeHttpRequestResponseSuccess(details.handle, null, respCode);
+
+            nativeHttpRequestSuccess(details.handle);
 
         } catch (Exception e) {
-            nativeHttpRequestResponseError(details.handle, respCode);
+            nativeHttpRequestError(details.handle);
             Log.v("HttpRequest", "error: " + e.toString());
             return e.toString();
         } finally {
             try {
-                if (output != null)
-                    output.close();
                 if (input != null)
                     input.close();
             } catch (IOException ignored) {
@@ -231,68 +172,36 @@ class HttpRequest extends AsyncTask<RequestDetails, Integer, String> {
         //mProgressDialog.show();
     }
 
-    @Override
-    protected void onProgressUpdate(Integer... progress) {
-        super.onProgressUpdate(progress);
-        // if we get here, length is known, now set indeterminate to false
-        /*
-        mProgressDialog.setIndeterminate(false);
-        mProgressDialog.setMax(100);
-        mProgressDialog.setProgress(progress[0]);
-        */
-    }
 
     @Override
     protected void onPostExecute(String result) {
         mWakeLock.release();
-        /*
-        mProgressDialog.dismiss();
-        if (result != null)
-            Toast.makeText(context,"Download error: "+result, Toast.LENGTH_LONG).show();
-        else
-            Toast.makeText(context,"File downloaded", Toast.LENGTH_SHORT).show();
-            */
-    }
-}
-
-class HttpHandler {
-    //private RequestQueue _queue;
-    public HttpHandler() {
-        //_queue = Volley.newRequestQueue(OxygineActivity.instance);
-    }
-
-    public HttpRequestHolder createRequest(final RequestDetails details) {
-
-        //HttpRequest r = new HttpRequest(url, fname, post, handle);
-        //_queue.add(r);
-
-        HttpRequestHolder downloadTask = new HttpRequestHolder();
-        downloadTask.run(details);
-
-        return downloadTask;
     }
 }
 
 
 public class HttpRequests {
-    static private HttpHandler _handler;
 
     static public void init() {
-        _handler = new HttpHandler();
+
     }
 
     static public void release() {
-        _handler = null;
+
     }
 
-    static public HttpRequestHolder createRequest(String url, String fname, byte[] post, long handle) {
+    static public HttpRequestHolder createRequest(String url, String[] headerKeys, String[] headerValues, byte[] post, long handle) {
 
         RequestDetails details = new RequestDetails();
-        details.fileName = fname;
         details.url = url;
         details.postData = post;
         details.handle = handle;
+        details.headerKeys = headerKeys;
+        details.headerValues = headerValues;
 
-        return _handler.createRequest(details);
+        HttpRequestHolder downloadTask = new HttpRequestHolder();
+        downloadTask.run(details);
+
+        return downloadTask;
     }
 }

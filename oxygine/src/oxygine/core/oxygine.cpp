@@ -348,6 +348,8 @@ namespace oxygine
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 
+            SDL_GL_SetAttribute(SDL_GL_RETAINED_BACKING, 0);
+
             if (desc.force_gles)
             {
                 SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
@@ -383,7 +385,12 @@ namespace oxygine
 
 #if TARGET_OS_IPHONE
             //ios bug workaround
-            flags &= ~SDL_WINDOW_FULLSCREEN;
+            //flags &= ~SDL_WINDOW_FULLSCREEN;
+#endif
+
+#if TARGET_OS_IPHONE || defined(__ANDROID__)
+            desc.w = -1;
+            desc.h = -1;
 #endif
 
             log::messageln("creating window %d %d", desc.w, desc.h);

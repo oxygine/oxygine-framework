@@ -7,16 +7,20 @@ namespace oxygine
     namespace file
     {
         class buffer;
+        class FileSystem;
 
         class fileHandle: public ObjectBase
         {
         public:
+            fileHandle(FileSystem* fs): _fs(fs) {}
             virtual void release() = 0;
             virtual unsigned int read(void* dest, unsigned int size) = 0;
             virtual unsigned int write(const void* src, unsigned int size) = 0;
             virtual unsigned int getSize() const = 0;
             virtual int          seek(unsigned int offset, int whence) = 0;
             virtual unsigned int tell() const = 0;
+
+            FileSystem* _fs;
         };
 
 

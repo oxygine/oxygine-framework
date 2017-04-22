@@ -3,6 +3,7 @@
 #include "AsyncTask.h"
 #include <vector>
 #include <string>
+#include "core/file.h"
 
 namespace oxygine
 {
@@ -12,6 +13,7 @@ namespace oxygine
     public:
         static spHttpRequestTask create();
         typedef HttpRequestTask* (*createHttpRequestCallback)();
+        typedef std::function< bool(int) > responseCodeChecker;
         static void setCustomRequests(createHttpRequestCallback);
         static void init();
         static void release();
@@ -47,26 +49,32 @@ namespace oxygine
         /**swap version of getResponse if you want to modify result buffer inplace*/
         void getResponseSwap(std::vector<unsigned char>&);
         int  getResponseCode() const { return _responseCode; }
+        const responseCodeChecker& getResponseCodeChecker() const {return _responseCodeChecker;}
         void addHeader(const std::string& key, const std::string& value);
 
         void setPostData(const std::vector<unsigned char>& data);
         void setUrl(const std::string& url);
-        void setFileName(const std::string& name);
+        void setFileName(const std::string& name, bool continueDownload = false);
         void setCacheEnabled(bool enabled);
-        /**by default only response code == 200 is succeded, other codes are dispatching Event::ERROR*/
-        void setSuccessOnAnyResponseCode(bool en) { _successOnAnyResponceCode = en; }
+
+        void setResponseCodeChecker(const responseCodeChecker& f) {_responseCodeChecker = f;}
+		/**by default only response code == 200 is succeded, other codes are dispatching Event::ERROR*/
+        void setSuccessOnAnyResponseCode(bool en);
 
     protected:
-        void _prerun() override;
+        bool _prerun() override;
         void _onError() override;
         void _onComplete() override;
         void _dispatchComplete() override;
+        void _finalize(bool error) override;
+
+        void gotHeaders();
+        void write(const void* data, unsigned int size);
 
         //async
-        void progress(int loaded, int total);
+        void asyncProgress(int delta, int loaded, int total);
 
-        void _onCustom(const ThreadDispatcher::message& msg) override;
-        void dispatchProgress(int loaded, int total);
+        void dispatchProgress(int delta, int loaded, int total);
 
         virtual void _setFileName(const std::string& name) {}
         virtual void _setUrl(const std::string& url) {}
@@ -74,15 +82,22 @@ namespace oxygine
         virtual void _setCacheEnabled(bool enabled) {}
         virtual void _addHeader(const std::string& key, const std::string& value) {}
 
-        int _loaded;
         std::string _url;
         std::string _fname;
+        file::handle _fhandle;
         bool _cacheEnabled;
         std::vector<unsigned char> _response;
         std::vector<unsigned char> _postData;
 
+        responseCodeChecker _responseCodeChecker;
+
+        bool _suitableResponse;
+
         int _responseCode;
-        bool _successOnAnyResponceCode;
+        size_t _expectedContentSize;
+        size_t _receivedContentSize;
+
+        bool _continueDownload;
 
         typedef std::vector< std::pair<std::string, std::string> >  headers;
         headers _headers;

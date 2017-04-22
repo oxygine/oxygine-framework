@@ -40,7 +40,7 @@ namespace oxygine
             return true;
         }
 
-        Zips::Zips(): _sort(false), _lock(true)
+        Zips::Zips(): _lock(true)
         {
 
         }
@@ -61,15 +61,22 @@ namespace oxygine
 
                 file_entry entry;
                 unzGetCurrentFileInfo(zp, 0, entry.name, sizeof(entry.name) - 1, 0, 0, 0, 0);
+                entry.refs = 0;
                 entry.pos = pos;
                 entry.zp = zp;
+                
+                char *str = entry.name;
+                for (int i = 0; str[i]; i++)
+                    str[i] = tolower(str[i]);
 
-                _files.push_back(entry);
+
+                OX_ASSERT(_files.find(entry.name) == _files.end());
+
+                _files[entry.name] = entry;
 
             }
             while (unzGoToNextFile(zp) != UNZ_END_OF_LIST_OF_FILE);
 
-            _sort = true;
         }
 
         void Zips::add(const unsigned char* data, unsigned int size)
@@ -159,7 +166,34 @@ namespace oxygine
             return 0;
         }
 
+        void Zips::remove(const char* name)
+        {
+            MutexAutoLock al(_lock);
 
+            for (size_t i = 0; i < _zps.size(); ++i)
+            {
+                zpitem& item = _zps[i];
+                if (!strcmp(item.name, name))
+                {
+                    for (files::iterator it = _files.begin(); it != _files.end();)
+                    {
+                        file_entry& entry = it->second;
+                        if (entry.zp == item.handle)
+                        {
+                            OX_ASSERT(entry.refs == 0);
+                            it = _files.erase(it);
+                        }
+                        else
+                            ++it;
+                    }
+
+                    unzClose(item.handle);
+
+                    _zps.erase(_zps.begin() + i);
+                    break;
+                }
+            }
+        }
 
         void Zips::add(const char* name)
         {
@@ -189,18 +223,6 @@ namespace oxygine
             _zps.push_back(item);
 
             read(zp);
-        }
-
-        void Zips::update()
-        {
-            std::sort(_files.begin(), _files.end(), sortFiles);
-#ifdef OX_DEBUG
-            for (int i = 0; i < (int)_files.size() - 1; ++i)
-            {
-                OX_ASSERT(strcmp(_files[i].name, _files[i + 1].name) != 0);
-            }
-#endif
-            log::messageln("ZipFS, total files: %d", _files.size());
         }
 
         bool Zips::isExists(const char* name)
@@ -234,43 +256,40 @@ namespace oxygine
                 unzClose(f.handle);
             }
 
+
+#ifdef OX_DEBUG
+            for (files::iterator i = _files.begin(); i != _files.end(); ++i)
+            {
+                OX_ASSERT(i->second.refs == 0);
+            }
+
+#endif
             _zps.clear();
             _files.clear();
         }
 
-
-        bool findEntry(const file_entry& g, const char* name)
+        file_entry* Zips::getEntryByName(const char* name)
         {
-            return strcmp_cns(g.name, name) < 0;
-        }
-
-        const file_entry* Zips::getEntryByName(const char* name)
-        {
-            if (_sort)
+            char str[255];
+            char *p = str;
+            while (*name)
             {
-                update();
-                _sort = false;
+                *p = tolower(*name);
+                name++;
+                ++p;
             }
+            *p = 0;
 
-            files::const_iterator it = std::lower_bound(_files.begin(), _files.end(), name, findEntry);
-            if (it != _files.end())
-            {
-                const file_entry& g = *it;
-                if (!strcmp_cns(g.name, name))
-                    return &g;
-            }
+            files::iterator it = _files.find(str);
+            if (it != _files.end())            
+                return &it->second;
 
             return 0;
         }
 
+        /*
         const file_entry* Zips::getEntry(int index)
         {
-            if (_sort)
-            {
-                update();
-                _sort = false;
-            }
-
             return &_files[index];
         }
 
@@ -278,25 +297,30 @@ namespace oxygine
         {
             return _files.size();
         }
+        */
 
 
         class fileHandleZip: public fileHandle
         {
         public:
 
-            fileHandleZip(const file_entry* entry): _entry(entry)
+            fileHandleZip(FileSystem* fs, file_entry* entry): fileHandle(fs), _entry(entry)
             {
-                int r = 0;
-                r = unzGoToFilePos(entry->zp, const_cast<unz_file_pos*>(&entry->pos));
+                int r = unzGoToFilePos(entry->zp, const_cast<unz_file_pos*>(&entry->pos));
                 OX_ASSERT(r == UNZ_OK);
                 r = unzOpenCurrentFile(entry->zp);
                 OX_ASSERT(r == UNZ_OK);
+                _entry->refs++;
             }
 
             void release()
             {
+                ZipFileSystem *zfs = static_cast<ZipFileSystem *>(_fs);
+                MutexAutoLock lock(zfs->_zips.getMutex());
+                _entry->refs--;
+
                 int r = unzCloseCurrentFile(_entry->zp);
-                OX_ASSERT(r == UNZ_OK);
+                OX_ASSERT(r == UNZ_OK);                
                 delete this;
             }
 
@@ -329,7 +353,7 @@ namespace oxygine
                 return (unsigned int) file_info.uncompressed_size;
             }
 
-            const file_entry* _entry;
+            file_entry* _entry;
         };
 
         class fileHandleZipStreaming : public fileHandle
@@ -339,8 +363,9 @@ namespace oxygine
             z_off_t _pos;
             z_off_t _size;
             long _cpos;
+            file_entry* _entry;
 
-            fileHandleZipStreaming(const file_entry* entry, const Zips& z): _cpos(0)
+            fileHandleZipStreaming(FileSystem* fs, file_entry* entry, const Zips& z): fileHandle(fs), _cpos(0), _entry(entry)
             {
                 int r = 0;
                 r = unzGoToFilePos(entry->zp, const_cast<unz_file_pos*>(&entry->pos));
@@ -361,11 +386,14 @@ namespace oxygine
                 file::seek(_h, static_cast<unsigned int>(_pos), SEEK_SET);
 
                 unzCloseCurrentFile(entry->zp);
+                entry->refs++;
             }
 
             ~fileHandleZipStreaming()
             {
-                int q = 0;
+                ZipFileSystem *zfs = static_cast<ZipFileSystem *>(_fs);
+                MutexAutoLock lock(zfs->_zips.getMutex());
+                _entry->refs--;
             }
 
             void release()
@@ -441,6 +469,11 @@ namespace oxygine
         }
 
 
+        void ZipFileSystem::remove(const char* zip)
+        {
+            _zips.remove(zip);
+        }
+
         void ZipFileSystem::reset()
         {
             _zips.reset();
@@ -458,13 +491,13 @@ namespace oxygine
         {
             MutexAutoLock lock(_zips._lock);
 
-            const file_entry* entry = _zips.getEntryByName(file);
+            file_entry* entry = _zips.getEntryByName(file);
             if (entry)
             {
                 if (*mode == 's')
-                    fh = new fileHandleZipStreaming(entry, _zips);
+                    fh = new fileHandleZipStreaming(this, entry, _zips);
                 else
-                    fh = new fileHandleZip(entry);
+                    fh = new fileHandleZip(this, entry);
                 return status_ok;
             }
 

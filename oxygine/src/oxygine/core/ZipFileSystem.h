@@ -5,6 +5,7 @@
 #include "../minizip/unzip.h"
 #include "../core/file.h"
 #include "../core/Mutex.h"
+#include <unordered_map>
 
 namespace oxygine
 {
@@ -15,6 +16,7 @@ namespace oxygine
             unzFile zp;
             char name[128];
             unz_file_pos pos;
+            int refs;
         };
 
         class Zips
@@ -28,26 +30,21 @@ namespace oxygine
             void add(const char* name);
             void add(const unsigned char* data, unsigned int size);
             void add(std::vector<char>& data);
-
-            void update();
+            void remove(const char* name);
 
             bool read(const char* name, file::buffer& bf);
             bool read(const file_entry* entry, file::buffer& bf);
             bool isExists(const char* name);
 
-            const file_entry*   getEntryByName(const char* name);
-            const file_entry*   getEntry(int index);
-            size_t              getNumEntries() const;
-
-            const char* getZipFileName(int i) const { return _zps[i].name; }
+            file_entry*         getEntryByName(const char* name);            
+            const char*         getZipFileName(int i) const { return _zps[i].name; }
+            Mutex&              getMutex() { return _lock; }
 
         private:
             friend class ZipFileSystem;
             void read(unzFile zp);
 
-            bool _sort;
-
-            typedef std::vector<file_entry> files;
+            typedef std::unordered_map<std::string, file_entry> files;
             files _files;
 
             struct zpitem
@@ -74,6 +71,7 @@ namespace oxygine
 
             /**add zip from file*/
             void add(const char* zip);
+            void remove(const char* zip);
             //add zip from memory, data should not be deleted
             void add(const unsigned char* data, unsigned int size);
             //add zip from memory, vector would be swapped (emptied)
@@ -81,6 +79,9 @@ namespace oxygine
             void reset();
 
         protected:
+
+            friend class fileHandleZip;
+            friend class fileHandleZipStreaming;
 
             Zips _zips;
 

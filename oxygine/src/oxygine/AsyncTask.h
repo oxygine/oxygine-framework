@@ -3,7 +3,7 @@
 #include "core/ThreadDispatcher.h"
 #include "EventDispatcher.h"
 #include "Event.h"
-
+#include "core/oxygine.h"
 #ifdef ERROR
 #undef ERROR
 #endif
@@ -58,24 +58,35 @@ namespace oxygine
         friend class AsyncTaskManager;
 
         bool _mainThreadSync;
-        bool _uiThreadSync;
 
-        virtual void _prerun() {}
+        virtual bool _prerun() { return true; }
         virtual void _run() = 0;
         virtual void _onError() {}
         virtual void _onComplete() {}
         virtual void _onFinal(bool error) {}
-        virtual void _onCustom(const ThreadDispatcher::message&) {};
         virtual void _finalize(bool error) {}
         virtual void _dispatchComplete();
+
+
+        template <class F>
+        void sync(const F& f)
+        {
+            if (_mainThreadSync)
+            {
+                addRef();
+                core::getMainThreadDispatcher().postCallback([ = ]()
+                {
+                    f();
+                    releaseRef();
+                });
+                return;
+            }
+            f();
+        }
 
     private:
 
         void _complete();
         void _error();
-
-
-        static void threadCB(const ThreadDispatcher::message&);
-        void _threadCB(const ThreadDispatcher::message&);
     };
 }
