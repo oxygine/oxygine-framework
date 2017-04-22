@@ -5,6 +5,26 @@
 
 namespace oxygine
 {
+    class RenderStateCache
+    {
+    public:
+        RenderStateCache(IVideoDriver* d);
+
+        void setTexture(int sampler, const spNativeTexture& t);
+        void setBlendMode(blend_mode blend);
+        bool setShader(ShaderProgram* prog);
+
+    protected:
+        enum { MAX_TEXTURES = 8 };
+
+        blend_mode      _blend;
+        spNativeTexture _textures[MAX_TEXTURES];
+        ShaderProgram*  _program;
+        IVideoDriver* _driver;
+    };
+
+    RenderStateCache& rc();
+
     class STDRenderer : public IElementRenderer
     {
     public:
@@ -49,25 +69,14 @@ namespace oxygine
         void setViewProj(const Matrix& viewProj);
         void setVertexDeclaration(const VertexDeclaration* decl);
         void setUberShaderProgram(UberShaderProgram* pr);
-        /**Sets blend mode. Default value is blend_premultiplied_alpha*/
-        void setBlendMode(blend_mode blend);
-        /**Sets texture. If texture is null White texture would be used.*/
-        void setTexture(const spNativeTexture& base, const spNativeTexture& alpha, bool basePremultiplied = true);
-        void setTexture(const spNativeTexture& base, bool basePremultiplied = true);
+
         /**Sets World transformation.*/
         void setTransform(const Transform& world);
         void draw(const Color&, const RectF& srcRect, const RectF& destRect);
-        void setTextureNew(int sampler, const spNativeTexture& t);
 
         void applySimpleMode(bool basePremultiplied);
         /**used in pair with applySimpleMode/applySDF, fast, don't have excess checks*/
         void draw(const spNativeTexture& texture, unsigned int color, const RectF& src, const RectF& dest) override;
-
-        /*
-        void draw(MaterialX* mat, const Color& color, const RectF& src, const RectF& dest) override;
-        void draw(MaterialX* mat, const AffineTransform& transform, const Color& color, const RectF& src, const RectF& dest);
-        void draw(MaterialX* mat, vertexPCT2 vert[4]);
-        */
 
         /**Begins rendering into RenderTexture or into primary framebuffer if rt is null*/
         void begin();
@@ -77,8 +86,6 @@ namespace oxygine
         /**initializes View + Projection matrices where TopLeft is (0,0) and RightBottom is (width, height). use flipU = true for render to texture*/
         void initCoordinateSystem(int width, int height, bool flipU = false);
         void resetSettings();
-        void process();
-        void process(int);
 
         /**Draws existing batch immediately.*/
         void flush();
@@ -110,15 +117,11 @@ namespace oxygine
         typedef std::vector<batch> batches;
         batches _batches;
 
-        enum { MAX_TEXTURES = 4 };
-        spNativeTexture _textures[MAX_TEXTURES];
 
         batch& draw(spMaterialX mat);
 
-        int _baseShaderFlags;
         Transform _transform;
 
-        STDRenderer* _previous;
         void setShader(ShaderProgram* prog);
 
         void xdrawBatch();
@@ -127,23 +130,20 @@ namespace oxygine
         void xaddVertices(const void* data, unsigned int size);
         void checkDrawBatch();
 
-        std::vector<unsigned char> _vertices;
+        std::vector<unsigned char> _verticesData;
 
         const VertexDeclaration* _vdecl;
 
         IVideoDriver* _driver;
-        ShaderProgram* _program;
         Matrix _vp;
 
         virtual void xbegin();
         virtual void xresetSettings();
-        //virtual
-        spNativeTexture _base;
-        spNativeTexture _alpha;
 
-        blend_mode _blend;
 
         UberShaderProgram* _uberShader;
+
+        unsigned int _baseShaderFlags;
         unsigned int _shaderFlags;
 
         bool _drawing;

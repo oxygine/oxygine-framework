@@ -38,7 +38,7 @@ namespace oxygine
 
             RectF dest = _pp._screen.cast<RectF>();
 
-            renderer->setBlendMode(blend_premultiplied_alpha);
+            rc().setBlendMode(blend_premultiplied_alpha);
 
 
             AffineTransform tr = _pp._transform * _actor->computeGlobalTransform();
@@ -46,7 +46,7 @@ namespace oxygine
             renderer->applySimpleMode(true);
             Color color = Color(Color::White).withAlpha(255).premultiplied();
             color = Color::White;
-            renderer->setBlendMode(blend_add);
+            rc().setBlendMode(blend_add);
             renderer->draw(_pp._rt, color.rgba(), src, dest);
             renderer->flush();
         }

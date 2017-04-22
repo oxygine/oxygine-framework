@@ -37,35 +37,58 @@ namespace oxygine
     std::vector<unsigned char> STDRenderer::uberShaderBody;
 
 
-
-
-
-    /*
-
-
-    unsigned int shaderFlags = _shaderFlags;
-    shaderFlags |= UberShaderProgram::SDF;
-
-    if (outlineOffset < offset)
-        shaderFlags |= UberShaderProgram::SDF_OUTLINE;
-
-    if (_shaderFlags != shaderFlags)
+    RenderStateCache& rc()
     {
-        drawBatch();
+        static RenderStateCache r(IVideoDriver::instance);
+        return r;
     }
 
-    _shaderFlags = shaderFlags;
+    RenderStateCache::RenderStateCache(IVideoDriver* d) : _driver(d), _program(0)
+    {
+        _blend = blend_disabled;
+    }
 
-    ShaderProgram* prog = _uberShader->getShaderProgram(_shaderFlags);
-    setShader(prog);
 
-    Vector4 c = outlineColor.toVector();
-    _driver->setUniform("sdf_outline_color", c);
+    void RenderStateCache::setTexture(int sampler, const spNativeTexture& t)
+    {
+        OX_ASSERT(sampler < MAX_TEXTURES);
+        if (_textures[sampler] == t)
+            return;
+        _textures[sampler] = t;
+        _driver->setTexture(sampler, t);
+    }
 
-    c = Vector4(offset, contrast, outlineOffset, contrast);
-    _driver->setUniform("sdf_params", c);
-    */
 
+    void RenderStateCache::setBlendMode(blend_mode blend)
+    {
+        if (_blend == blend)
+            return;
+
+        //drawBatch();
+
+        if (blend == 0)
+            _driver->setState(IVideoDriver::STATE_BLEND, 0);
+        else
+        {
+            IVideoDriver::BLEND_TYPE src = static_cast<IVideoDriver::BLEND_TYPE>(blend >> 16);
+            IVideoDriver::BLEND_TYPE dest = static_cast<IVideoDriver::BLEND_TYPE>(blend & 0xFFFF);
+            _driver->setBlendFunc(src, dest);
+            _driver->setState(IVideoDriver::STATE_BLEND, 1);
+        }
+        _blend = blend;
+
+    }
+
+
+    bool RenderStateCache::setShader(ShaderProgram* prog)
+    {
+        if (_program == prog)
+            return false;
+
+        _program = prog;
+        _driver->setShaderProgram(prog);
+        return true;
+    }
 
     void nullTextureHook(const spNativeTexture&)
     {
@@ -236,10 +259,8 @@ namespace oxygine
 
     void STDRenderer::setShader(ShaderProgram* prog)
     {
-        if (prog != _program)
+        if (rc().setShader(prog))
         {
-            _program = prog;
-            _driver->setShaderProgram(prog);
             _driver->setUniform("mat", _vp);
             shaderProgramChanged();
         }
@@ -248,12 +269,12 @@ namespace oxygine
 
     void STDRenderer::xdrawBatch()
     {
-        size_t count = _vertices.size() / _vdecl->size;
+        size_t count = _verticesData.size() / _vdecl->size;
         size_t indices = (count * 3) / 2;
 
-        getDriver()->draw(IVideoDriver::PT_TRIANGLES, _vdecl, &_vertices.front(), (unsigned int)count, &indices16.front(), (unsigned int)indices);
+        getDriver()->draw(IVideoDriver::PT_TRIANGLES, _vdecl, &_verticesData.front(), (unsigned int)count, &indices16.front(), (unsigned int)indices);
 
-        _vertices.clear();
+        _verticesData.clear();
     }
 
     void STDRenderer::initCoordinateSystem(int width, int height, bool flipU)
@@ -294,20 +315,16 @@ namespace oxygine
     void STDRenderer::resetSettings()
     {
         xresetSettings();
-        _driver->setState(IVideoDriver::STATE_BLEND, 0);
-        _blend = blend_disabled;
-        _program = 0;
+        //_driver->setState(IVideoDriver::STATE_BLEND, 0);
     }
 
     void STDRenderer::begin()
     {
         //OX_ASSERT(!_drawing);
-        OX_ASSERT(_vertices.empty() == true);
-        _program = 0;
-        _vertices.clear();
+        OX_ASSERT(_verticesData.empty() == true);
+        _verticesData.clear();
         _transform.identity();
-        for (int i = 0; i < MAX_TEXTURES; ++i)
-            _textures[i] = 0;
+
         MaterialX::current = 0;
         resetSettings();
 
@@ -352,12 +369,12 @@ namespace oxygine
 
     void STDRenderer::xaddVertices(const void* data, unsigned int size)
     {
-        _vertices.insert(_vertices.end(), (const unsigned char*)data, (const unsigned char*)data + size);
+        _verticesData.insert(_verticesData.end(), (const unsigned char*)data, (const unsigned char*)data + size);
     }
 
     void STDRenderer::checkDrawBatch()
     {
-        if (_vertices.size() / sizeof(_vdecl->size) >= maxVertices)
+        if (_verticesData.size() / sizeof(_vdecl->size) >= maxVertices)
             flush();
     }
 
@@ -424,7 +441,7 @@ namespace oxygine
 
 
 
-    STDRenderer::STDRenderer(IVideoDriver* driver) : _driver(driver), _program(0), _vdecl(0), _previous(0), _uberShader(0), _shaderFlags(0), _blend(blend_disabled)
+    STDRenderer::STDRenderer(IVideoDriver* driver) : _driver(driver), _vdecl(0), _uberShader(0), _shaderFlags(0)
     {
         if (!driver)
             driver = IVideoDriver::instance;
@@ -440,27 +457,6 @@ namespace oxygine
         _baseShaderFlags = 0;
     }
 
-    void STDRenderer::setBlendMode(blend_mode blend)
-    {
-        if (_blend == blend)
-            return;
-
-        //drawBatch();
-
-        if (blend == 0)
-        {
-            _driver->setState(IVideoDriver::STATE_BLEND, 0);
-        }
-        else
-        {
-            IVideoDriver::BLEND_TYPE src  = static_cast<IVideoDriver::BLEND_TYPE>(blend >> 16);
-            IVideoDriver::BLEND_TYPE dest = static_cast<IVideoDriver::BLEND_TYPE>(blend & 0xFFFF);
-            _driver->setBlendFunc(src, dest);
-            _driver->setState(IVideoDriver::STATE_BLEND, 1);
-        }
-        _blend = blend;
-
-    }
 
     template <class T>
     void append(std::vector<unsigned char>& buff, const T& t)
@@ -480,47 +476,14 @@ namespace oxygine
 
     void STDRenderer::swapVerticesData(STDRenderer& r)
     {
-        std::swap(_vertices, r._vertices);
+        std::swap(_verticesData, r._verticesData);
     }
 
     void STDRenderer::swapVerticesData(std::vector<unsigned char>& data)
     {
-        std::swap(data, _vertices);
+        std::swap(data, _verticesData);
     }
 
-
-    void STDRenderer::setTexture(const spNativeTexture& base_, const spNativeTexture& alpha, bool basePremultiplied)
-    {
-        if (base_ == _base && _alpha == alpha)
-            return;
-
-        flush();
-
-        _renderTextureHook(base_);
-        _renderTextureHook(alpha);
-
-        spNativeTexture base = base_;
-        if (base == 0 || base->getHandle() == 0)
-            base = white;
-
-        if (basePremultiplied)
-            _shaderFlags &= ~UberShaderProgram::ALPHA_PREMULTIPLY;
-        else
-            _shaderFlags |= UberShaderProgram::ALPHA_PREMULTIPLY;
-
-        if (alpha)
-            _shaderFlags |= UberShaderProgram::SEPARATE_ALPHA;
-        else
-            _shaderFlags &= ~UberShaderProgram::SEPARATE_ALPHA;
-
-        _base = base;
-        _alpha = alpha;
-    }
-
-    void STDRenderer::setTexture(const spNativeTexture& base_, bool basePremultiplied)
-    {
-        setTexture(base_, 0, basePremultiplied);
-    }
 
     void STDRenderer::setTransform(const Transform& tr)
     {
@@ -529,9 +492,6 @@ namespace oxygine
 
     void STDRenderer::xbegin()
     {
-        _base = 0;
-        _alpha = 0;
-        _blend = blend_disabled;
     }
 
     void STDRenderer::begin(spNativeTexture nt, const Rect* viewport)
@@ -565,8 +525,8 @@ namespace oxygine
         vertexPCT2 v[4];
         fillQuadT(v, srcRect, destRect, _transform, color.rgba());
 
-
-#ifdef OXYGINE_DEBUG_T2P
+        /*
+        #ifdef OXYGINE_DEBUG_T2P
         if (_base != white && _showTexel2PixelErrors)
         {
             Rect viewport;
@@ -580,18 +540,12 @@ namespace oxygine
                 fillQuadT(v, srcRect, destRect, _transform, b.rgba());
             }
         }
-#endif
+        #endif
+        */
 
         addVertices(v, sizeof(v));
     }
 
-    void STDRenderer::setTextureNew(int sampler, const spNativeTexture& t)
-    {
-        if (_textures[sampler] == t)
-            return;
-        _textures[sampler] = t;
-        _driver->setTexture(sampler, t);
-    }
 
     void STDRenderer::setShaderFlags(int flags)
     {
@@ -711,15 +665,15 @@ namespace oxygine
         //log::messageln("batches %d", _batches.size());
         _batches.clear();
 #else
-        size_t indices = (_vertices.size() / sizeof(vertexPCT2) * 3) / 2;
+        size_t indices = (_verticesData.size() / sizeof(vertexPCT2) * 3) / 2;
         if (!indices)
             return;
 
         IVideoDriver::instance->draw(IVideoDriver::PT_TRIANGLES, _vdecl,
-                                     &_vertices.front(), (unsigned int)_vertices.size(),
+                                     &_verticesData.front(), (unsigned int)_verticesData.size(),
                                      &STDRenderer::indices16.front(), (unsigned int)indices);
 
-        _vertices.clear();
+        _verticesData.clear();
 #endif
     }
 
@@ -736,6 +690,7 @@ namespace oxygine
 
     void STDRenderer::applySimpleMode(bool basePremultiplied)
     {
+        /*
         if (_alpha)
         {
             flush();
@@ -754,10 +709,13 @@ namespace oxygine
         {
             flush();
         }
+        */
+        OX_ASSERT(0);
     }
 
     void STDRenderer::draw(const spNativeTexture& texture, unsigned int color, const RectF& src, const RectF& dest)
     {
+        /*
         if (_base != texture)
         {
             flush();
@@ -767,5 +725,9 @@ namespace oxygine
         vertexPCT2 v[4];
         fillQuadT(v, src, dest, _transform, color);
         addVertices(v, sizeof(v));
+        */
+        OX_ASSERT(0);
     }
+
+
 }
