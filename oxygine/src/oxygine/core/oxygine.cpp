@@ -500,6 +500,7 @@ namespace oxygine
             STDRenderer::instance = new STDRenderer;
             STDMaterial::instance = new STDMaterial;
             MaterialX::null       = new NullMaterialX;
+            MaterialX::current = MaterialX::null;
 
             STDRenderer::current = STDRenderer::instance;
 

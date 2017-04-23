@@ -86,8 +86,7 @@ namespace oxygine
     {
         if (current != this)
         {
-            if (current)
-                current->flush();
+            current->flush();
             xapply();
             current = this;
         }

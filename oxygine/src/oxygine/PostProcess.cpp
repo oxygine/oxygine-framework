@@ -403,7 +403,7 @@ namespace oxygine
         _transform = actor->computeGlobalTransform().inverted();
 
 
-        MaterialX::current = 0;
+        MaterialX::null->apply();
 
 
         IVideoDriver* driver = IVideoDriver::instance;
@@ -446,7 +446,7 @@ namespace oxygine
 
         actor->setMaterial(rd);
 
-        MaterialX::current = 0;
+        MaterialX::null->apply();
     }
 
 

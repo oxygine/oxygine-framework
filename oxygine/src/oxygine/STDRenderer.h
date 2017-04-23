@@ -10,6 +10,8 @@ namespace oxygine
     public:
         RenderStateCache(IVideoDriver* d);
 
+        const spNativeTexture& getTexture(int sampler) { return _textures[sampler]; }
+
         void setTexture(int sampler, const spNativeTexture& t);
         void setBlendMode(blend_mode blend);
         bool setShader(ShaderProgram* prog);
@@ -126,8 +128,6 @@ namespace oxygine
         UberShaderProgram* _uberShader;
 
         unsigned int _baseShaderFlags;
-
-        bool _drawing;
 
         spNativeTexture _prevRT;
     };

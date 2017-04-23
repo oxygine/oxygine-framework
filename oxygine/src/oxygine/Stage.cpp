@@ -161,13 +161,9 @@ namespace oxygine
         }
 
         Actor::render(rs);
-
-
         STDRenderer::getCurrent()->flush();
 
-        MaterialX::current->flush();
-
-        MaterialX::current = 0;
+        MaterialX::null->apply();
     }
 
     void Stage::render(const Color& clearColor, const Rect& viewport)

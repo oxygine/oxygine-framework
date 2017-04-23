@@ -297,9 +297,7 @@ namespace oxygine
     void STDRenderer::setViewProj(const Matrix& viewProj)
     {
         _vp = viewProj;
-        if (_drawing)
-            flush();
-
+        flush();
         _driver->setUniform("mat", _vp);
     }
 
@@ -316,27 +314,20 @@ namespace oxygine
 
     void STDRenderer::begin()
     {
-        //OX_ASSERT(!_drawing);
         OX_ASSERT(_verticesData.empty() == true);
         _verticesData.clear();
         _transform.identity();
 
-        MaterialX::current = 0;
+        MaterialX::null->apply();
         resetSettings();
 
         xbegin();
-
-        _drawing = true;
 
         current = this;
     }
 
     void STDRenderer::end()
     {
-        if (!_drawing)
-            return;
-
-        OX_ASSERT(_drawing);
         flush();
 
         if (_prevRT)
@@ -345,9 +336,6 @@ namespace oxygine
             _prevRT = 0;
         }
 
-        //current = 0;
-
-        _drawing = false;
     }
 
     void STDRenderer::setVertexDeclaration(const VertexDeclaration* decl)
@@ -449,7 +437,6 @@ namespace oxygine
 
         _uberShader = &uberShader;
         _transform.identity();
-        _drawing = false;
         _baseShaderFlags = 0;
     }
 
@@ -492,7 +479,6 @@ namespace oxygine
 
     void STDRenderer::begin(spNativeTexture nt, const Rect* viewport)
     {
-        OX_ASSERT(!_drawing);
         OX_ASSERT(_prevRT == 0);
         _prevRT = _driver->getRenderTarget();
         _driver->setRenderTarget(nt);
@@ -521,23 +507,26 @@ namespace oxygine
         vertexPCT2 v[4];
         fillQuadT(v, srcRect, destRect, _transform, color.rgba());
 
-        /*
-        #ifdef OXYGINE_DEBUG_T2P
-        if (_base != white && _showTexel2PixelErrors)
-        {
-            Rect viewport;
-            _driver->getViewport(viewport);
 
-            bool t = checkT2P(viewport, _vp, &v[0], &v[3], _base->getWidth(), _base->getHeight());
-            if (!t)
+#ifdef OXYGINE_DEBUG_T2P
+        if (_showTexel2PixelErrors)
+        {
+            spNativeTexture base = rc().getTexture(UberShaderProgram::SAMPLER_BASE);
+            if (base != white)
             {
-                float c = (sinf((float)getTimeMS() / 200 + v[0].x * v[0].y) + 1) / 2.0f;
-                Color b = lerp(Color(rand() % 255, rand() % 255, rand() % 255, 255), color, c);
-                fillQuadT(v, srcRect, destRect, _transform, b.rgba());
+                Rect viewport;
+                _driver->getViewport(viewport);
+
+                bool t = checkT2P(viewport, _vp, &v[0], &v[3], base->getWidth(), base->getHeight());
+                if (!t)
+                {
+                    float c = (sinf((float)getTimeMS() / 200 + v[0].x * v[0].y) + 1) / 2.0f;
+                    Color b = lerp(Color(rand() % 255, rand() % 255, rand() % 255, 255), color, c);
+                    fillQuadT(v, srcRect, destRect, _transform, b.rgba());
+                }
             }
         }
-        #endif
-        */
+#endif
 
         addVertices(v, sizeof(v));
     }
