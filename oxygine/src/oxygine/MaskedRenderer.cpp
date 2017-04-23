@@ -28,7 +28,7 @@ namespace oxygine
         clipUV.get(_msk);
         _clipMask = Vector4(clipMask.getLeft(), clipMask.getTop(), clipMask.getRight(), clipMask.getBottom());
 
-        _driver->setTexture(UberShaderProgram::SAMPLER_MASK, mask);
+        rc().setTexture(UberShaderProgram::SAMPLER_MASK, mask);
     }
 
     void MaskedRenderer::shaderProgramChanged()

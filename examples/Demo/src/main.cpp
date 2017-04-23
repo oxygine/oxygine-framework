@@ -30,7 +30,7 @@ int mainloop()
 
     if (core::beginRendering())
     {
-        Color clearColor(233, 32, 32, 255);
+        Color clearColor(32, 32, 32, 255);
         Rect viewport(Point(0, 0), core::getDisplaySize());
         // Render all actors inside the stage. Actor::render will also be called for all its children
         getStage()->render(clearColor, viewport);

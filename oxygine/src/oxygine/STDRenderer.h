@@ -59,11 +59,10 @@ namespace oxygine
         STDRenderer(IVideoDriver* driver = 0);
         virtual ~STDRenderer();
 
-        const Matrix&   getViewProjection() const;
-        IVideoDriver*   getDriver();
-        unsigned int    getShaderFlags() const;
-        const AffineTransform&  getTransform() const { return _transform; }
-        const VertexDeclaration* getVertexDeclaration() const { return _vdecl; }
+        const Matrix&               getViewProjection() const;
+        IVideoDriver*               getDriver();
+        const AffineTransform&      getTransform() const { return _transform; }
+        const VertexDeclaration*    getVertexDeclaration() const { return _vdecl; }
 
         void setShaderFlags(unsigned int);
         void setViewProj(const Matrix& viewProj);
@@ -72,11 +71,7 @@ namespace oxygine
 
         /**Sets World transformation.*/
         void setTransform(const Transform& world);
-        void draw(const Color&, const RectF& srcRect, const RectF& destRect);
-
-        void applySimpleMode(bool basePremultiplied);
-        /**used in pair with applySimpleMode/applySDF, fast, don't have excess checks*/
-        void draw(const spNativeTexture& texture, unsigned int color, const RectF& src, const RectF& dest) override;
+        void addQuad(const Color&, const RectF& srcRect, const RectF& destRect);
 
         /**Begins rendering into RenderTexture or into primary framebuffer if rt is null*/
         void begin();
@@ -106,19 +101,6 @@ namespace oxygine
 
     protected:
         virtual void shaderProgramChanged() {}
-
-        struct batch
-        {
-            spMaterialX mat;
-            std::vector<vertexPCT2> vertices;
-            RectF bbox;
-        };
-
-        typedef std::vector<batch> batches;
-        batches _batches;
-
-
-        batch& draw(spMaterialX mat);
 
         Transform _transform;
 

@@ -57,12 +57,12 @@ namespace oxygine
     void STDMaterialX::render(const AffineTransform& tr, const Color& c, const RectF& src, const RectF& dest)
     {
         STDRenderer::getCurrent()->setTransform(tr);
-        STDRenderer::getCurrent()->draw(c, src, dest);
+        STDRenderer::getCurrent()->addQuad(c, src, dest);
     }
 
     void STDMaterialX::render(const Color& c, const RectF& src, const RectF& dest)
     {
-        STDRenderer::getCurrent()->draw(c, src, dest);
+        STDRenderer::getCurrent()->addQuad(c, src, dest);
     }
 
 

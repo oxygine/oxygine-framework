@@ -348,6 +348,7 @@ namespace oxygine
         s << "update=" << aligned(getStage()->_statUpdate, 2) << "ms ";
         s << "render=" << aligned(vstats.duration, 2) << "ms ";
         s << "textures=" << aligned(NativeTexture::created, 2) << " ";
+        s << "mats=" << aligned(mc()._materials.size(), 2) << " ";
 
 #ifdef __APPLE__
         size_t mem;

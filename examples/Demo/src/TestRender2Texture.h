@@ -98,7 +98,7 @@ public:
             oxglBlendEquation(GL_FUNC_REVERSE_SUBTRACT);
         }
 
-        renderer.draw(color, frame.getSrcRect(), destRect);
+        renderer.addQuad(color, frame.getSrcRect(), destRect);
         renderer.end();
         if (!paint)
             oxglBlendEquation(GL_FUNC_ADD);//restore to default value

@@ -140,7 +140,7 @@ namespace oxygine
                 MaterialX* mat = m_.get();
                 if (mat->_compare != cm)
                     continue;
-                if (mat->_ref_counter == 2)
+                if (mat->_ref_counter == 1)
                     fre = (T*)mat;
                 if (mat->_hash != hash)
                     continue;

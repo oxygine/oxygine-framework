@@ -514,7 +514,7 @@ namespace oxygine
     {
     }
 
-    void STDRenderer::draw(const Color& clr, const RectF& srcRect, const RectF& destRect)
+    void STDRenderer::addQuad(const Color& clr, const RectF& srcRect, const RectF& destRect)
     {
         Color color = clr.premultiplied();
 
@@ -548,119 +548,9 @@ namespace oxygine
         ShaderProgram* sp = _uberShader->getShaderProgram(_baseShaderFlags | flags);
         setShader(sp);
     }
-    /*
 
-
-    void STDRenderer::draw(MaterialX* mat, const Color& color, const RectF& srcRect, const RectF& destRect)
-    {
-    draw(mat, _transform, color, srcRect, destRect);
-    }
-
-    void STDRenderer::draw(MaterialX* mat, const AffineTransform& tr, const Color& color_, const RectF& srcRect, const RectF& destRect)
-    {
-    Color color = color_.premultiplied();
-
-    vertexPCT2 v[4];
-    fillQuadT(v, srcRect, destRect, tr, color.rgba());
-    draw(mat, v);
-    }
-
-
-    void STDRenderer::draw(MaterialX* mat, vertexPCT2 vert[4])
-    {
-    #ifdef EXP_SORT
-        batch& b = draw(mat);
-
-        b.vertices.insert(b.vertices.end(), vert, vert + 4);
-        for (int i = 0; i < 4; ++i)
-        {
-            b.bbox.unite(Vector2(vert[i].x, vert[i].y));
-        }
-    #else
-        _vertices.insert(_vertices.end(), (unsigned char*)vert, (unsigned char*)(vert + 4));
-
-    #endif
-    }
-
-    #ifdef EXP_SORT
-
-    STDRenderer::batch& STDRenderer::draw(spMaterialX mat)
-    {
-        if (_batches.empty() || _batches.back().mat != mat)
-        {
-            batch b;
-            b.mat = mat;
-            b.bbox = RectF::invalidated();
-            _batches.push_back(b);
-            return _batches.back();
-        }
-        return _batches.back();
-    }
-
-    void STDRenderer::process()
-    {
-        for (int i = 0; i < (int)_batches.size() - 1; ++i)
-            process(i);
-    }
-
-    void STDRenderer::process(int j)
-    {
-        batch& my = _batches[j];
-        for (int i = j + 1; i < (int)_batches.size(); ++i)
-        {
-            batch& c = _batches[i];
-            if (c.mat == my.mat)
-            {
-                bool fail = false;
-                for (int n = j + 1; n < i; ++n)
-                    //for (int n = i - 1; n > j; --n)
-                {
-                    batch& c2 = _batches[n];
-                    if (c2.bbox.isIntersecting(c.bbox))
-                    {
-                        fail = true;
-                        break;
-                    }
-                }
-
-                if (!fail)
-                {
-                    my.vertices.insert(my.vertices.end(), c.vertices.begin(), c.vertices.end());
-                    _batches.erase(_batches.begin() + i);
-
-                    //continue search
-                    --i;
-                }
-            }
-        }
-    }
-    #endif
-    */
     void STDRenderer::flush()
     {
-#ifdef EXP_SORT
-
-        process();
-
-        size_t num = _batches.size();
-        for (size_t i = 0; i < num; ++i)
-        {
-            batch& c = _batches[i];
-
-            size_t indices = (c.vertices.size() * 3) / 2;
-            if (!indices)
-                continue;
-
-            c.mat->apply();
-
-            IVideoDriver::instance->draw(IVideoDriver::PT_TRIANGLES, STDRenderer::getCurrent()->getVertexDeclaration(),
-                                         &c.vertices.front(), (unsigned int)c.vertices.size(),
-                                         &STDRenderer::indices16.front(), (unsigned int)indices);
-        }
-
-        //log::messageln("batches %d", _batches.size());
-        _batches.clear();
-#else
         size_t indices = (_verticesData.size() / sizeof(vertexPCT2) * 3) / 2;
         if (!indices)
             return;
@@ -670,7 +560,6 @@ namespace oxygine
                                      &STDRenderer::indices16.front(), (unsigned int)indices);
 
         _verticesData.clear();
-#endif
     }
 
 
@@ -679,51 +568,6 @@ namespace oxygine
         if (_uberShader == pr)
             return;
 
-        //drawBatch();
         _uberShader = pr;
     }
-
-
-    void STDRenderer::applySimpleMode(bool basePremultiplied)
-    {
-        /*
-        if (_alpha)
-        {
-            flush();
-            _shaderFlags &= ~UberShaderProgram::SEPARATE_ALPHA;
-            _alpha = 0;
-        }
-
-        unsigned int shaderFlags = _shaderFlags;
-
-        if (basePremultiplied)
-            shaderFlags &= ~UberShaderProgram::ALPHA_PREMULTIPLY;
-        else
-            shaderFlags |= UberShaderProgram::ALPHA_PREMULTIPLY;
-
-        if (_shaderFlags != shaderFlags)
-        {
-            flush();
-        }
-        */
-        OX_ASSERT(0);
-    }
-
-    void STDRenderer::draw(const spNativeTexture& texture, unsigned int color, const RectF& src, const RectF& dest)
-    {
-        /*
-        if (_base != texture)
-        {
-            flush();
-            _base = texture;
-        }
-
-        vertexPCT2 v[4];
-        fillQuadT(v, src, dest, _transform, color);
-        addVertices(v, sizeof(v));
-        */
-        OX_ASSERT(0);
-    }
-
-
 }

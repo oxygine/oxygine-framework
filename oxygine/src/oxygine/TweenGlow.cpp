@@ -43,11 +43,11 @@ namespace oxygine
 
             AffineTransform tr = _pp._transform * _actor->computeGlobalTransform();
             renderer->setTransform(tr);
-            renderer->applySimpleMode(true);
+            //renderer->applySimpleMode(true);
             Color color = Color(Color::White).withAlpha(255).premultiplied();
             color = Color::White;
             rc().setBlendMode(blend_add);
-            renderer->draw(_pp._rt, color.rgba(), src, dest);
+            //renderer->draw(_pp._rt, color.rgba(), src, dest);
             renderer->flush();
         }
 

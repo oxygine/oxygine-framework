@@ -7,7 +7,7 @@
 
 namespace oxygine
 {
-    VisualStyle::VisualStyle(): _color(255, 255, 255, 255), _blend(blend_premultiplied_alpha)
+    VisualStyle::VisualStyle(): _color(Color::White), _blend(blend_premultiplied_alpha)
     {
 
     }
@@ -16,6 +16,7 @@ namespace oxygine
     {
         STDMaterialX mat;
         mat._blend = blend_premultiplied_alpha;
+        mat._base = STDRenderer::white;
 
         _mat = mc().cache(mat);
     }
@@ -102,6 +103,8 @@ namespace oxygine
 
     void VStyleActor::setMat(spSTDMaterialX mat)
     {
+        if (_mat == mat)
+            return;
         _mat = mat;
         matChanged();
     }

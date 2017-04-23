@@ -43,7 +43,7 @@ namespace oxygine
 
 
             Color color = Color(Color::White).withAlpha(255).premultiplied();
-            renderer->draw(rt, color.rgba(), src, dest);
+            renderer->addQuad(color.rgba(), src, dest);
 
 
             RenderState r = rs;

@@ -331,7 +331,7 @@ namespace oxygine
                         RectF srcRect(_guidesX[xgi], _guidesY[ygi], _guidesX[xgi + 1] - _guidesX[xgi], _guidesY[ygi + 1] - _guidesY[ygi]);
                         RectF destRect(_pointsX[xc], _pointsY[yc], _pointsX[xc + 1] - _pointsX[xc], _pointsY[yc + 1] - _pointsY[yc]);
 
-                        renderer->draw(color, srcRect, destRect);
+                        renderer->addQuad(color, srcRect, destRect);
 
                     }
                 }

@@ -199,7 +199,7 @@ public:
 
                 Rect dest(x * tileWidth, y * tileHeight, tileWidth, tileHeight);
                 RectF destF = dest.cast<RectF>();
-                renderer->draw(color, srcUV, destF);
+                renderer->addQuad(color, srcUV, destF);
             }
         }
     }

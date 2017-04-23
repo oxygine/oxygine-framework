@@ -221,8 +221,6 @@ namespace oxygine
     {
     public:
         virtual ~IElementRenderer() {}
-        virtual void draw(const spNativeTexture& texture, unsigned int color, const RectF& src, const RectF& dest) = 0;
-        //virtual void draw(MaterialX* mat, const Color& color, const RectF& src, const RectF& dest) = 0;
     };
 
     /**Returns View matrix where Left Top corner is (0,0), and right bottom is (w,h)*/
