@@ -27,7 +27,18 @@ namespace oxygine
 
     RenderStateCache& rc();
 
-    class STDRenderer : public IElementRenderer
+    class ShaderProgramChangedHook
+    {
+    public:
+        ShaderProgramChangedHook(): prev(0), next(0) {}
+
+        ShaderProgramChangedHook* prev;
+        ShaderProgramChangedHook* next;
+
+        std::function< void() > hook;
+    };
+
+    class STDRenderer : public IElementRenderer, public ShaderProgramChangedHook
     {
     public:
 
@@ -65,11 +76,13 @@ namespace oxygine
         IVideoDriver*               getDriver();
         const AffineTransform&      getTransform() const { return _transform; }
         const VertexDeclaration*    getVertexDeclaration() const { return _vdecl; }
+        unsigned int                getBaseShaderFlags() const { return _baseShaderFlags; }
 
         void setShaderFlags(unsigned int);
         void setViewProj(const Matrix& viewProj);
         void setVertexDeclaration(const VertexDeclaration* decl);
         void setUberShaderProgram(UberShaderProgram* pr);
+        void setBaseShaderFlags(unsigned int fl);
 
         /**Sets World transformation.*/
         void setTransform(const Transform& world);
@@ -101,6 +114,9 @@ namespace oxygine
         OXYGINE_DEPRECATED
         void setViewProjTransform(const Matrix& viewProj);
 
+        void pushShaderSetHook(ShaderProgramChangedHook* hook);
+        void popShaderSetHook();
+
     protected:
         virtual void shaderProgramChanged() {}
 
@@ -124,6 +140,8 @@ namespace oxygine
         virtual void xbegin();
         virtual void xresetSettings();
 
+        ShaderProgramChangedHook* _sphookFirst;
+        ShaderProgramChangedHook* _sphookLast;
 
         UberShaderProgram* _uberShader;
 

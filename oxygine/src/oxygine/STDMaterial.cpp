@@ -11,6 +11,8 @@
 #include "ClipRectActor.h"
 #include "core/oxygine.h"
 #include "res/ResFont.h"
+#include "core/UberShaderProgram.h"
+#include "core/NativeTexture.h"
 
 namespace oxygine
 {
@@ -87,48 +89,100 @@ namespace oxygine
 
     void STDMaterial::render(MaskedSprite* sprite, const RenderState& parentRS)
     {
-        spSprite mask = sprite->getMask();
-        if (mask && mask->getAnimFrame().getDiffuse().base)
-        {
-            MaterialX::null->apply();
+        spSprite maskSprite = sprite->getMask();
 
-            Transform t = mask->computeGlobalTransform();
+        const Diffuse& df = maskSprite->getAnimFrame().getDiffuse();
 
-            RectF maskDest = mask->getDestRect();
-            RectF maskSrc = mask->getSrcRect();
-
-            const Diffuse& df = mask->getAnimFrame().getDiffuse();
-
-            bool useR = sprite->getUseRChannel();
-            bool rchannel       = useR ? true    : (df.alpha ? true     : false);
-            spNativeTexture msk = useR ? df.base : (df.alpha ? df.alpha : df.base);
-
-            STDRenderer* original = STDRenderer::getCurrent();
-
-            original->flush();
-            original->end();
-
-
-
-            MaskedRenderer mr(msk, maskSrc, maskDest, t, rchannel, original->getDriver());
-            original->swapVerticesData(mr);
-
-            mr.setViewProj(original->getViewProjection());
-            mr.begin();
-
-            RenderState rs = parentRS;
-            sprite->Sprite::render(rs);
-            mr.end();
-
-            MaterialX::null->apply();
-
-            original->swapVerticesData(mr);
-            original->begin();
-        }
-        else
+        if (!maskSprite || !df.base)
         {
             sprite->Sprite::render(parentRS);
+            return;
         }
+
+
+        MaterialX::null->apply();
+
+        Transform world = maskSprite->computeGlobalTransform();
+
+        RectF maskDest = maskSprite->getDestRect();
+        RectF maskSrc = maskSprite->getSrcRect();
+
+
+        bool useR           = sprite->getUseRChannel();
+        bool rchannel               = useR ? true    : (df.alpha ? true     : false);
+        spNativeTexture maskTexture = useR ? df.base : (df.alpha ? df.alpha : df.base);
+
+        STDRenderer* renderer = STDRenderer::getCurrent();
+
+
+
+#if 1
+        ClipUV clipUV = ClipUV(
+                            world.transform(maskDest.getLeftTop()),
+                            world.transform(maskDest.getRightTop()),
+                            world.transform(maskDest.getLeftBottom()),
+                            maskSrc.getLeftTop(),
+                            maskSrc.getRightTop(),
+                            maskSrc.getLeftBottom());
+
+        Vector2 v(1.0f / maskTexture->getWidth(), 1.0f / maskTexture->getHeight());
+        maskSrc.expand(v, v);
+
+
+
+        int sflags = renderer->getBaseShaderFlags();
+        int baseShaderFlags = sflags;
+
+        baseShaderFlags |= UberShaderProgram::MASK;
+        if (rchannel)
+            baseShaderFlags |= UberShaderProgram::MASK_R_CHANNEL;
+
+        Vector3 msk[4];
+
+        clipUV.get(msk);
+        Vector4 clipMask = Vector4(maskSrc.getLeft(), maskSrc.getTop(), maskSrc.getRight(), maskSrc.getBottom());
+
+        rc().setTexture(UberShaderProgram::SAMPLER_MASK, maskTexture);
+
+
+
+        ShaderProgramChangedHook hook;
+        hook.hook = [&]()
+        {
+
+            IVideoDriver::instance->setUniform("clip_mask", clipMask);
+            IVideoDriver::instance->setUniform("msk", msk, 4);
+
+        };
+
+
+        renderer->pushShaderSetHook(&hook);
+        renderer->setBaseShaderFlags(baseShaderFlags);
+
+        sprite->Sprite::render(parentRS);
+
+        MaterialX::null->apply();
+
+        renderer->popShaderSetHook();
+        renderer->setBaseShaderFlags(sflags);
+#else
+
+        MaskedRenderer mr(maskTexture, maskSrc, maskDest, world, rchannel, renderer->getDriver());
+        renderer->swapVerticesData(mr);
+
+        mr.setViewProj(renderer->getViewProjection());
+        mr.begin();
+
+        RenderState rs = parentRS;
+        sprite->Sprite::render(rs);
+        mr.end();
+
+        MaterialX::null->apply();
+
+        renderer->swapVerticesData(mr);
+        renderer->begin();
+#endif
+
     }
 
     void STDMaterial::doRender(Sprite* sprite, const RenderState& rs)

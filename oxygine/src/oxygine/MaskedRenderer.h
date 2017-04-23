@@ -80,4 +80,9 @@ namespace oxygine
         Vector3 _msk[4];
         Vector4 _clipMask;
     };
+
+    class ApplyMask
+    {
+    public:
+    };
 }

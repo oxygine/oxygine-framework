@@ -261,8 +261,15 @@ namespace oxygine
     {
         if (rc().setShader(prog))
         {
-            _driver->setUniform("mat", _vp);
+            //_driver->setUniform("mat", _vp);
             shaderProgramChanged();
+
+            ShaderProgramChangedHook* hook = _sphookFirst;
+            while (hook)
+            {
+                hook->hook();
+                hook = hook->next;
+            }
         }
     }
 
@@ -304,6 +311,19 @@ namespace oxygine
     void STDRenderer::setViewProjTransform(const Matrix& viewProj)
     {
         setViewProj(viewProj);
+    }
+
+    void STDRenderer::pushShaderSetHook(ShaderProgramChangedHook* hook)
+    {
+        _sphookLast->next = hook;
+        hook->prev = _sphookLast;
+        _sphookLast = hook;
+    }
+
+    void STDRenderer::popShaderSetHook()
+    {
+        _sphookLast = _sphookLast->prev;
+        _sphookLast->next = 0;
     }
 
     void STDRenderer::resetSettings()
@@ -438,6 +458,14 @@ namespace oxygine
         _uberShader = &uberShader;
         _transform.identity();
         _baseShaderFlags = 0;
+
+        _sphookFirst = this;
+        _sphookLast  = this;
+
+        hook = [ = ]()
+        {
+            _driver->setUniform("mat", _vp);
+        };
     }
 
 
@@ -559,4 +587,10 @@ namespace oxygine
 
         _uberShader = pr;
     }
+
+    void STDRenderer::setBaseShaderFlags(unsigned int fl)
+    {
+        _baseShaderFlags = fl;
+    }
+
 }
