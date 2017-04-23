@@ -43,15 +43,37 @@ namespace oxygine
         return r;
     }
 
-    RenderStateCache::RenderStateCache(IVideoDriver* d) : _driver(d), _program(0)
+    RenderStateCache::RenderStateCache(IVideoDriver* d) : _driver(d)
     {
-        _blend = blend_disabled;
+        reset();
     }
 
+    void RenderStateCache::reset()
+    {
+        for (int i = 0; i < MAX_TEXTURES; ++i)
+        {
+            _textures[i] = 0;
+        }
+        _blend = blend_disabled;
+        _driver->setState(IVideoDriver::STATE_BLEND, 0);
+        _program = 0;
+    }
 
     void RenderStateCache::setTexture(int sampler, const spNativeTexture& t)
     {
         OX_ASSERT(sampler < MAX_TEXTURES);
+#ifdef OX_DEBUG
+
+        if (_textures[sampler])
+        {
+            GLint whichID;
+            oxglActiveTexture(GL_TEXTURE0 + sampler);
+            glGetIntegerv(GL_TEXTURE_BINDING_2D, &whichID);
+
+            OX_ASSERT(_textures[sampler]->getHandle() == (nativeTextureHandle)whichID);
+        }
+
+#endif
         if (_textures[sampler] == t)
             return;
         _textures[sampler] = t;
@@ -64,7 +86,6 @@ namespace oxygine
         if (_blend == blend)
             return;
 
-        //drawBatch();
 
         if (blend == 0)
             _driver->setState(IVideoDriver::STATE_BLEND, 0);

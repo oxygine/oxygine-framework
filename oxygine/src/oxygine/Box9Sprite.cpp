@@ -288,17 +288,15 @@ namespace oxygine
         if (!_prepared)
             prepare();
 
-        //_vstyle._apply(rs);
-        const Diffuse& df = _frame.getDiffuse();
+
+        _mat->apply();
 
         STDRenderer* renderer = STDRenderer::getCurrent();
 
-        if (df.base)
+        if (_mat->_base)
         {
             if (_guidesX.size() >= 2 || _guidesY.size() >= 2)
             {
-                //renderer->setTexture(df.base, df.alpha, df.premultiplied);
-                rc().setBlendMode(getBlendMode());
                 renderer->setTransform(rs.transform);
 
                 Color color = rs.getFinalColor(getColor());

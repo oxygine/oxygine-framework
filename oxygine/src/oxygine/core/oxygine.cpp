@@ -601,8 +601,10 @@ namespace oxygine
             bool ready = STDRenderer::isReady();
             if (ready)
             {
+                rc().reset();
                 IVideoDriver::_stats.start = getTimeMS();
                 updatePortProcessItems();
+                rc().reset();
             }
             else
             {

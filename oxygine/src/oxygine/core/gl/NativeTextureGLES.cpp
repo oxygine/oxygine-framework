@@ -89,6 +89,7 @@ namespace oxygine
     {
         GLuint id = 0;
         glGenTextures(1, &id);
+        oxglActiveTexture(GL_TEXTURE7);
         glBindTexture(GL_TEXTURE_2D, id);
 
         unsigned int f = GL_LINEAR;
@@ -199,6 +200,7 @@ namespace oxygine
 
     void NativeTextureGLES::setLinearFilter(bool enable)
     {
+        oxglActiveTexture(GL_TEXTURE7);
         glBindTexture(GL_TEXTURE_2D, (GLuint) _id);
 
         unsigned int f = enable ? GL_LINEAR : GL_NEAREST;
@@ -209,6 +211,7 @@ namespace oxygine
 
     void NativeTextureGLES::setClamp2Edge(bool clamp2edge)
     {
+        oxglActiveTexture(GL_TEXTURE7);
         glBindTexture(GL_TEXTURE_2D, (GLuint) _id);
 
         unsigned int f = clamp2edge ? GL_CLAMP_TO_EDGE : GL_REPEAT;
@@ -315,6 +318,7 @@ namespace oxygine
 
         if (_lockFlags & lock_write)
         {
+            oxglActiveTexture(GL_TEXTURE7);
             glBindTexture(GL_TEXTURE_2D, (GLuint) _id);
             GLenum er = glGetError();
 
@@ -354,6 +358,7 @@ namespace oxygine
         ImageData data = data_;
         assert(_width >= data.w - x);
         assert(_height >= data.h - y);
+        oxglActiveTexture(GL_TEXTURE7);
         glBindTexture(GL_TEXTURE_2D, (GLuint) _id);
 
         glPixel glp = SurfaceFormat2GL(_format);

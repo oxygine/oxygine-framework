@@ -15,6 +15,7 @@ namespace oxygine
         void setTexture(int sampler, const spNativeTexture& t);
         void setBlendMode(blend_mode blend);
         bool setShader(ShaderProgram* prog);
+        void reset();
 
     protected:
         enum { MAX_TEXTURES = 8 };
@@ -116,6 +117,8 @@ namespace oxygine
 
         void pushShaderSetHook(ShaderProgramChangedHook* hook);
         void popShaderSetHook();
+
+        bool isEmpty() const { return _verticesData.empty(); }
 
     protected:
         virtual void shaderProgramChanged() {}
