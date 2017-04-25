@@ -36,7 +36,7 @@ namespace oxygine
             bool read(const file_entry* entry, file::buffer& bf);
             bool isExists(const char* name);
 
-            file_entry*         getEntryByName(const char* name);            
+            file_entry*         getEntryByName(const char* name);
             const char*         getZipFileName(int i) const { return _zps[i].name; }
             Mutex&              getMutex() { return _lock; }
 

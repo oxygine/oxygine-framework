@@ -84,7 +84,12 @@ namespace oxygine
         std::string _url;
         std::string _fname;
         file::handle _fhandle;
+        bool _writeFileError;
         bool _cacheEnabled;
+
+        bool _progressDispatched;
+        unsigned int _progressDeltaDelayed;
+
         std::vector<unsigned char> _response;
         std::vector<unsigned char> _postData;
 

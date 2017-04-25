@@ -118,11 +118,14 @@ namespace oxygine
 
     bool HttpRequestTask::_prerun()
     {
+        _progressDeltaDelayed = 0;
+        _progressDispatched = false;
         _suitableResponse = false;
         _receivedContentSize = 0;
         _expectedContentSize = 0;
         _responseCode = 0;
         _response.clear();
+        _writeFileError = false;
         if (_fhandle)
             file::close(_fhandle);
         _fhandle = 0;
@@ -161,9 +164,18 @@ namespace oxygine
 
     void HttpRequestTask::asyncProgress(int delta, int loaded, int total)
     {
+        if (_progressDispatched && loaded != total)//dispatch progress only once per frame
+        {
+            _progressDeltaDelayed += delta;
+            return;
+        }
+
+        _progressDispatched = true;
         sync([ = ]()
         {
-            dispatchProgress(delta, loaded, total);
+            _progressDispatched = false;
+            dispatchProgress(delta + _progressDeltaDelayed, loaded, total);
+            _progressDeltaDelayed = 0;
         });
     }
 
@@ -179,7 +191,10 @@ namespace oxygine
 
     void HttpRequestTask::_dispatchComplete()
     {
-        Event ev(_suitableResponse ? COMPLETE : ERROR);
+        unsigned int id = _suitableResponse ? COMPLETE : ERROR;
+        if (_writeFileError)
+            id = ERROR;
+        Event ev(id);
         dispatchEvent(&ev);
     }
 
@@ -209,8 +224,16 @@ namespace oxygine
         if (!_suitableResponse)
             return;
 
+
         if (_fhandle)
-            file::write(_fhandle, data, size);
+        {
+            unsigned int written = file::write(_fhandle, data, size);
+            if (written != size)
+            {
+                _writeFileError = true;
+                return;
+            }
+        }
         else
         {
             const char* p = (const char*)data;

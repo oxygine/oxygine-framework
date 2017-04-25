@@ -72,11 +72,11 @@ namespace oxygine
         unsigned int read(handle, buffer& dest);
 
         /**Writes bytes to file*/
-        void write(handle, const void* data, unsigned int size);
+        unsigned int write(handle, const void* data, unsigned int size);
 
         /**Writes bytes to file*/
-        void write(const std::string& file, const buffer& data, error_policy ep = ep_show_error);
-        void write(const std::string& file, const void* data, unsigned int size, error_policy ep = ep_show_error);
+        unsigned int write(const std::string& file, const buffer& data, error_policy ep = ep_show_error);
+        unsigned int write(const std::string& file, const void* data, unsigned int size, error_policy ep = ep_show_error);
 
         /**Is file exists?*/
         bool exists(const std::string& file);
