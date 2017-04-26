@@ -75,7 +75,7 @@ public:
 
     void doRender(const RenderState& rs)
     {
-        STDRenderer::getCurrent()->flush();
+		MaterialX::null->apply();
 
 
         glEnable(GL_BLEND);
@@ -141,6 +141,9 @@ public:
         oxglDisableVertexAttribArray(1);
 
         CHECKGL();
+
+		//reset states to defaults after direct opengl usage
+		rc().reset();
     }
 };
 
