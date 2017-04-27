@@ -66,15 +66,17 @@ namespace oxygine
 
 
         template <class F>
-        void sync(const F& f)
+        void sync(const F& f, bool addref = true)
         {
             if (_mainThreadSync)
             {
-                addRef();
+                if (addref)
+                    addRef();
                 core::getMainThreadDispatcher().postCallback([ = ]()
                 {
                     f();
-                    releaseRef();
+                    if (addref)
+                        releaseRef();
                 });
                 return;
             }

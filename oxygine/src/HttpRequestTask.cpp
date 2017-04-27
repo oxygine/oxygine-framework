@@ -176,7 +176,7 @@ namespace oxygine
             _progressDispatched = false;
             dispatchProgress(delta + _progressDeltaDelayed, loaded, total);
             _progressDeltaDelayed = 0;
-        });
+        }, false);
     }
 
     void HttpRequestTask::_onError()
@@ -230,6 +230,7 @@ namespace oxygine
             unsigned int written = file::write(_fhandle, data, size);
             if (written != size)
             {
+                log::messageln("WRITE FILE ERROR %d %d", written, size);
                 _writeFileError = true;
                 return;
             }
