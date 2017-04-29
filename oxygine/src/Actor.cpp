@@ -1510,7 +1510,7 @@ namespace oxygine
 		ntl.x = std::min(tl.x, br.x);
 		ntl.y = std::min(tl.y, br.y);
 
-        return RectF(tl, size);
+        return RectF(ntl, size);
     }
 
 
