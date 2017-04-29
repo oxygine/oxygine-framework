@@ -71,13 +71,19 @@ namespace oxygine
             if (_mainThreadSync)
             {
                 if (addref)
-                    addRef();
-                core::getMainThreadDispatcher().postCallback([ = ]()
                 {
-                    f();
-                    if (addref)
+                    addRef();
+                    core::getMainThreadDispatcher().postCallback([ = ]()
+                    {
+                        f();
                         releaseRef();
-                });
+                    });
+                }
+                else
+                {
+                    core::getMainThreadDispatcher().postCallback(f);
+                }
+
                 return;
             }
             f();

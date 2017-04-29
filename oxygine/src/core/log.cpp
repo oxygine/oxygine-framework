@@ -4,7 +4,7 @@
 #include <stdarg.h>
 #include <string.h>
 #include "utils/stringUtils.h"
-
+#include "oxygine.h"
 
 
 
@@ -41,6 +41,12 @@ namespace oxygine
 
     namespace log
     {
+        int64 startTime = getTimeUTCMS();
+        int getTime()
+        {
+            return getTimeUTCMS() - startTime;
+        }
+
         void enable()
         {
             _enabled = true;
@@ -133,7 +139,7 @@ namespace oxygine
         void message_va(const char* format, va_list args)
         {
             char tm[16];
-            safe_sprintf(tm, "%03d", getTimeMS());
+            safe_sprintf(tm, "%03d", getTime());
             out_prefix(0, tm, format, args);
         }
 
@@ -148,7 +154,7 @@ namespace oxygine
         void warning_va(const char* format, va_list args)
         {
             char tm[32];
-            safe_sprintf(tm, "%03d warning: ", getTimeMS());
+            safe_sprintf(tm, "%03d warning: ", getTime());
 
             out_line_prefix(0, tm, format, args);
         }
@@ -164,7 +170,7 @@ namespace oxygine
         void error_va(const char* format, va_list args)
         {
             char tm[32];
-            safe_sprintf(tm, "%03d error: ", getTimeMS());
+            safe_sprintf(tm, "%03d error: ", getTime());
             out_line_prefix(_eh, tm, format, args);
         }
 
@@ -179,7 +185,7 @@ namespace oxygine
         void messageln_va(const char* format, va_list args)
         {
             char tm[16];
-            safe_sprintf(tm, "%03d ", getTimeMS());
+            safe_sprintf(tm, "%03d ", getTime());
             out_line_prefix(0, tm, format, args);
         }
     }
