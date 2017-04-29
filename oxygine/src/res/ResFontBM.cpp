@@ -492,15 +492,17 @@ namespace oxygine
         if (fb.empty())
             return;
 
-        if (!(fb[0] == '<' && fb[1] == '?' && fb[2] == 'x'))
+        pugi::xml_document doc;
+        bool isXml = doc.load_buffer_inplace(&fb.data[0], fb.data.size());
+
+        if (!isXml)
         {
             _createFontFromTxt(context, reinterpret_cast<char*>(fb.getData()), path, downsample);
             return;
         }
         /////////////////////////////////////////////////
 
-        pugi::xml_document doc;
-        doc.load_buffer_inplace(&fb.data[0], fb.data.size());
+
 
 
         pugi::xml_node root = doc.first_child();
