@@ -1502,7 +1502,13 @@ namespace oxygine
         tl = tr.transform(tl);
         br = tr.transform(br);
 
-        Vector2 size = br - tl;
+        Vector2 size = Vector2(
+			abs(br.x - tl.x),
+			abs(br.y - tl.y));
+
+        Vector2 ntl;
+		ntl.x = std::min(tl.x, br.x);
+		ntl.y = std::min(tl.y, br.y);
 
         return RectF(tl, size);
     }
