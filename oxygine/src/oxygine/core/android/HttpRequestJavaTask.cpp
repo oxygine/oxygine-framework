@@ -48,12 +48,12 @@ namespace oxygine
 
     HttpRequestJavaTask::HttpRequestJavaTask(): _handle(0)
     {
-
+        log::messageln("HttpRequestJavaTask %x", this);
     }
 
     HttpRequestJavaTask::~HttpRequestJavaTask()
     {
-        log::messageln("~HttpRequestJavaTask");
+        log::messageln("~HttpRequestJavaTask %x", this);
     }
 
     void HttpRequestJavaTask::_run()
@@ -108,7 +108,7 @@ namespace oxygine
 
         write(data, size);
 
-        env->ReleaseByteArrayElements(jdata, data, 0);
+        env->ReleaseByteArrayElements(jdata, data, JNI_ABORT);
     }
 
     void HttpRequestJavaTask::complete_()

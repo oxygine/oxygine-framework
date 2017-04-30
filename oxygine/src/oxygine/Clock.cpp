@@ -179,8 +179,6 @@ namespace oxygine
         int64 t = tm.dwLowDateTime + (int64(tm.dwHighDateTime) << 32);
         int64 utc = (t - 116444736000000000LL) / 10000;
         return utc;
-#elif __ANDROID__
-        return jniGetTimeUTCMS();
 #elif EMSCRIPTEN
         struct timeval tv;
         gettimeofday(&tv, NULL);
@@ -188,7 +186,7 @@ namespace oxygine
             (unsigned long long)(tv.tv_sec) * 1000 +
             (unsigned long long)(tv.tv_usec) / 1000;
         return tm;
-#elif __APPLE__
+#elif __APPLE__ || __ANDROID__
         struct timeval tv;
         gettimeofday(&tv, NULL);
         int64 tm =

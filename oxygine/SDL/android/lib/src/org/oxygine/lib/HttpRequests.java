@@ -144,8 +144,8 @@ class HttpRequest extends AsyncTask<RequestDetails, Integer, String> {
             nativeHttpRequestSuccess(details.handle);
 
         } catch (Exception e) {
-            nativeHttpRequestError(details.handle);
             Log.v("HttpRequest", "error: " + e.toString());
+            nativeHttpRequestError(details.handle);            
             return e.toString();
         } finally {
             try {

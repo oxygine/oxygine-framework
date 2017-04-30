@@ -206,23 +206,23 @@ namespace oxygine
             return t;
         }
 
-        void write(handle fh_, const void* data, unsigned int size)
+        unsigned int  write(handle fh_, const void* data, unsigned int size)
         {
             fileHandle* fh = (fileHandle*)fh_;
-            fh->write(data, size);
+            return fh->write(data, size);
         }
 
-        void write(const std::string& file, const buffer& data, error_policy ep)
+        unsigned int write(const std::string& file, const buffer& data, error_policy ep)
         {
-            write(file, data.getData(), data.getSize(), ep);
+            return write(file, data.getData(), data.getSize(), ep);
         }
 
-        void write(const std::string& file, const void* data, unsigned int size, error_policy ep)
+        unsigned int write(const std::string& file, const void* data, unsigned int size, error_policy ep)
         {
             autoClose ac(open(file, "wb", ep));
             if (!ac.getHandle())
-                return;
-            write(ac.getHandle(), data, size);
+                return 0;
+            return write(ac.getHandle(), data, size);
         }
 
         unsigned int size(handle fh_)

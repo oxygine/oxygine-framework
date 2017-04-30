@@ -3,6 +3,7 @@
 #include "core/ThreadDispatcher.h"
 #include "SDL.h"
 #include "pthread.h"
+#include "key.h"
 
 namespace oxygine
 {
@@ -83,6 +84,14 @@ namespace oxygine
 
                     /* get file descriptors from the transfers */
                     curl_multi_fdset(multi_handle, &fdread, &fdwrite, &fdexcep, &maxfd);
+
+#ifdef OX_DEBUG___
+                    if (fdread.fd_count > 0)
+                    {
+                        if (key::isPressed(SDL_SCANCODE_P))
+                            closesocket(fdread.fd_array[0]);
+                    }
+#endif
 
                     if (maxfd == -1)
                     {
@@ -194,7 +203,7 @@ namespace oxygine
 
     HttpRequestTaskCURL::~HttpRequestTaskCURL()
     {
-
+        log::messageln("~HttpRequestTaskCURL");
         if (_easy)
             curl_easy_cleanup(_easy);
         _easy = 0;
