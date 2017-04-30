@@ -1,1 +1,1 @@
-#include "core/oxygine.h"
+#include "oxygine/core/oxygine.h"

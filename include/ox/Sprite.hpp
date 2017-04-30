@@ -1,1 +1,1 @@
-#include "Sprite.h"
+#include "oxygine/actor/Sprite.h"

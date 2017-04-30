@@ -1,1 +1,1 @@
-#include "res/Resources.h"
+#include "oxygine/res/Resources.h"

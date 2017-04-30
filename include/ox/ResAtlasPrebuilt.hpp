@@ -1,0 +1,1 @@
+#include "oxygine/res/ResAtlasPrebuilt.h"

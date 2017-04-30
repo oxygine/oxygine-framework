@@ -1,1 +1,1 @@
-#include "DebugActor.h"
+#include "oxygine/actor/DebugActor.h"

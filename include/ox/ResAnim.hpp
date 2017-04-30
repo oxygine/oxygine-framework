@@ -1,1 +1,1 @@
-#include "res/ResAnim.h"
+#include "oxygine/res/ResAnim.h"

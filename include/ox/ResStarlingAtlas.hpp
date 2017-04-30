@@ -1,1 +1,1 @@
-#include "res/ResStarlingAtlas.h"
+#include "oxygine/res/ResStarlingAtlas.h"

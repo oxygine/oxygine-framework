@@ -1,1 +1,1 @@
-#include "MaskedSprite.h"
+#include "oxygine/actor/MaskedSprite.h"

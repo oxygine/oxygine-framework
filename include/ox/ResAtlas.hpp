@@ -1,1 +1,1 @@
-#include "res/ResAtlas.h"
+#include "oxygine/res/ResAtlas.h"
