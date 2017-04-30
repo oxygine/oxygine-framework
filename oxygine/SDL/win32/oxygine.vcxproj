@@ -169,6 +169,7 @@
     <ClCompile Include="..\..\src\oxygine\MaskedSprite.cpp" />
     <ClCompile Include="..\..\src\oxygine\Material.cpp" />
     <ClCompile Include="..\..\src\oxygine\Image.cpp" />
+    <ClCompile Include="..\..\src\oxygine\MaterialCache.cpp" />
     <ClCompile Include="..\..\src\oxygine\MaterialX.cpp" />
     <ClCompile Include="..\..\src\oxygine\minizip\ioapi.c" />
     <ClCompile Include="..\..\src\oxygine\minizip\ioapi_mem.c" />
@@ -282,6 +283,7 @@
     <ClInclude Include="..\..\src\oxygine\MaskedRenderer.h" />
     <ClInclude Include="..\..\src\oxygine\MaskedSprite.h" />
     <ClInclude Include="..\..\src\oxygine\Material.h" />
+    <ClInclude Include="..\..\src\oxygine\MaterialCache.h" />
     <ClInclude Include="..\..\src\oxygine\MaterialX.h" />
     <ClInclude Include="..\..\src\oxygine\math\OBBox.h" />
     <ClInclude Include="..\..\src\oxygine\Image.h" />

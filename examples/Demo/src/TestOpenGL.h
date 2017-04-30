@@ -75,7 +75,7 @@ public:
 
     void doRender(const RenderState& rs)
     {
-		MaterialX::null->apply();
+        MaterialX::null->apply();
 
 
         glEnable(GL_BLEND);
@@ -142,8 +142,8 @@ public:
 
         CHECKGL();
 
-		//reset states to defaults after direct opengl usage
-		rc().reset();
+        //reset states to defaults after direct opengl usage
+        rc().reset();
     }
 };
 

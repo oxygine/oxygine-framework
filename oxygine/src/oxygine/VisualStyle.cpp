@@ -4,6 +4,7 @@
 #include "RenderState.h"
 #include "Serialize.h"
 #include "utils/stringUtils.h"
+#include "MaterialCache.h"
 
 namespace oxygine
 {

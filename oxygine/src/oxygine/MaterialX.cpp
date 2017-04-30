@@ -1,6 +1,8 @@
 #include "MaterialX.h"
 #include "core/UberShaderProgram.h"
+#include "core/oxygine.h"
 #include "STDRenderer.h"
+#include "MaterialCache.h"
 
 namespace oxygine
 {
@@ -104,5 +106,4 @@ namespace oxygine
         _hash = r._hash;
         return *this;
     }
-
 }

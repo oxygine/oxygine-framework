@@ -7,6 +7,7 @@
 #include "Serialize.h"
 #include "Material.h"
 #include "core/UberShaderProgram.h"
+#include "MaterialCache.h"
 
 namespace oxygine
 {

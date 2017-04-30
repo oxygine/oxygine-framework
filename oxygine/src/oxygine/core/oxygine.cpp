@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "log.h"
 #include "VideoDriver.h"
+#include "../MaterialCache.h"
 #include "../res/CreateResourceContext.h"
 #include "../res/Resources.h"
 
@@ -862,6 +863,7 @@ namespace oxygine
             Event ev(EVENT_EXIT);
             _dispatcher->dispatchEvent(&ev);
 
+            mc().clear();
 
             STDRenderer::release();
             delete STDMaterial::instance;

@@ -39,7 +39,7 @@ namespace oxygine
         std::function< void() > hook;
     };
 
-    class STDRenderer : public IElementRenderer, public ShaderProgramChangedHook
+    class STDRenderer : public ShaderProgramChangedHook
     {
     public:
 
@@ -96,7 +96,6 @@ namespace oxygine
         void end();
         /**initializes View + Projection matrices where TopLeft is (0,0) and RightBottom is (width, height). use flipU = true for render to texture*/
         void initCoordinateSystem(int width, int height, bool flipU = false);
-        void resetSettings();
 
         /**Draws existing batch immediately.*/
         void flush();
@@ -141,7 +140,6 @@ namespace oxygine
         Matrix _vp;
 
         virtual void xbegin();
-        virtual void xresetSettings();
 
         ShaderProgramChangedHook* _sphookFirst;
         ShaderProgramChangedHook* _sphookLast;

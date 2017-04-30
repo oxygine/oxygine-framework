@@ -6,7 +6,7 @@
 #include "../AnimationFrame.h"
 #include "../res/ResFont.h"
 #include "STDMaterial.h"
-
+#include "../MaterialCache.h"
 namespace oxygine
 {
     namespace text

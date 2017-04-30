@@ -1,4 +1,5 @@
 #pragma once
+#include "oxygine-include.h"
 #include "core/ref_counter.h"
 #include "core/Renderer.h"
 
@@ -105,73 +106,4 @@ namespace oxygine
     };
 
     DECLARE_SMART(STDMaterialX, spSTDMaterialX);
-
-
-
-    inline void hash_combine(std::size_t& seed) { }
-
-    template <typename T, typename... Rest>
-    inline void hash_combine(std::size_t& seed, const T& v, Rest... rest)
-    {
-        std::hash<T> hasher;
-        seed ^= hasher(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
-        hash_combine(seed, rest...);
-    }
-
-
-    class MaterialCache
-    {
-    public:
-
-        typedef std::vector<spMaterialX> materials;
-        materials _materials;
-
-
-        template<class T>
-        intrusive_ptr<T> cache(const T& other)
-        {
-            size_t hash;
-            MaterialX::compare cm;
-            other.update(hash, cm);
-
-            T* fre = 0;
-            for (auto m_ : _materials)
-            {
-                MaterialX* mat = m_.get();
-                if (mat->_compare != cm)
-                    continue;
-                if (mat->_ref_counter == 1)
-                    fre = (T*)mat;
-                if (mat->_hash != hash)
-                    continue;
-                bool same = cm(mat, &other);
-                if (same)
-                    return (T*)mat;
-            }
-            if (fre)
-            {
-                fre->copyFrom(other);
-                fre->_hash = hash;
-                fre->_compare = cm;
-                return fre;
-            }
-
-            T* copy = other.clone();
-            copy->_hash = hash;
-            copy->_compare = cm;
-            _materials.push_back(copy);
-
-            return copy;
-        }
-    };
-
-    inline MaterialCache& mc()
-    {
-        static MaterialCache cache;
-        return cache;
-    }
-
-
-    extern spMaterialX currentMat;
-
 }

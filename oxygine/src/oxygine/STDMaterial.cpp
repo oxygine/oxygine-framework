@@ -212,7 +212,6 @@ namespace oxygine
 
         dc.primary = rs.getFinalColor(tf->getColor()).premultiplied();
         dc.color = tf->getStyle().color * dc.primary;
-        dc.renderer = renderer;
 
         //renderer->setBlendMode(tf->getBlendMode());
         renderer->setTransform(rs.transform);

@@ -351,6 +351,9 @@
     <ClCompile Include="..\..\src\oxygine\MaterialX.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\oxygine\MaterialCache.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\oxygine\closure\closure.h">
@@ -753,6 +756,9 @@
       <Filter>src\utils</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\oxygine\MaterialX.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\oxygine\MaterialCache.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

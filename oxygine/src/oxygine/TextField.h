@@ -37,10 +37,7 @@ namespace oxygine
         bool                        getMultiline() const;
         bool                        getBreakLongWords() const;
         text::Symbol*               getSymbolAt(int pos) const;
-        const Color&                getOutlineColor() const;
-        float                       getOutline() const;
         const Color&                getStyleColor() const;
-        float                       getWeight() const;
         float                       getBaselineScale() const;
         unsigned int                getOptions() const;
 

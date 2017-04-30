@@ -3,6 +3,7 @@
 #include "Material.h"
 #include "Serialize.h"
 #include "utils/stringUtils.h"
+#include "MaterialCache.h"
 
 namespace oxygine
 {

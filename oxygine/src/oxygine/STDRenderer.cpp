@@ -347,12 +347,6 @@ namespace oxygine
         _sphookLast->next = 0;
     }
 
-    void STDRenderer::resetSettings()
-    {
-        xresetSettings();
-        //_driver->setState(IVideoDriver::STATE_BLEND, 0);
-    }
-
     void STDRenderer::begin()
     {
         OX_ASSERT(_verticesData.empty() == true);
@@ -360,7 +354,6 @@ namespace oxygine
         _transform.identity();
 
         MaterialX::null->apply();
-        resetSettings();
 
         xbegin();
 
@@ -545,9 +538,6 @@ namespace oxygine
         begin();
     }
 
-    void STDRenderer::xresetSettings()
-    {
-    }
 
     void STDRenderer::addQuad(const Color& clr, const RectF& srcRect, const RectF& destRect)
     {

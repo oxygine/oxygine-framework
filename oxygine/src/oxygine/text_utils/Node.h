@@ -20,8 +20,6 @@ namespace oxygine
     class Aligner;
     class STDRenderer;
     class RenderState;
-    class TextRenderer2;
-    class IElementRenderer;
 
     namespace text
     {
@@ -31,11 +29,10 @@ namespace oxygine
         class DrawContext
         {
         public:
-            DrawContext(): renderer(0) {}
+            DrawContext() {}
 
             Color color;
             Color primary;
-            IElementRenderer* renderer;
         };
 
         class Node: public PoolObject

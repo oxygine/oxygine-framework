@@ -217,12 +217,6 @@ namespace oxygine
     class MaterialX;
     typedef intrusive_ptr<MaterialX> spMaterialX;
 
-    class IElementRenderer
-    {
-    public:
-        virtual ~IElementRenderer() {}
-    };
-
     /**Returns View matrix where Left Top corner is (0,0), and right bottom is (w,h)*/
     Matrix makeViewMatrix(int w, int h, bool flipU = false);
 }
