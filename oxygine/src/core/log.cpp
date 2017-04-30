@@ -41,9 +41,9 @@ namespace oxygine
 
     namespace log
     {
-        int64 startTime = getTimeUTCMS();
         int getTime()
         {
+            static int64 startTime = getTimeUTCMS();
             return getTimeUTCMS() - startTime;
         }
 
