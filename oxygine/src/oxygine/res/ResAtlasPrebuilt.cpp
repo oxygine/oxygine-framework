@@ -1,6 +1,6 @@
 #include "ResAtlasPrebuilt.h"
 #include "Resources.h"
-#include "core/UberShaderProgram.h"
+#include "../core/UberShaderProgram.h"
 
 extern "C"
 {
