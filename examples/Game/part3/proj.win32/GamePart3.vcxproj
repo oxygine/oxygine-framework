@@ -30,6 +30,8 @@
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0'">v140</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v140_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '15.0'">v141</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '15.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v141_xp</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -47,6 +49,8 @@
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0'">v140</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '14.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v140_xp</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '15.0'">v141</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '15.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v141_xp</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -117,7 +121,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="../src/Enemy.cpp" /><ClCompile Include="../src/Game.cpp" /><ClCompile Include="../src/GameScene.cpp" /><ClCompile Include="../src/Joystick.cpp" /><ClCompile Include="../src/MainMenuScene.cpp" /><ClCompile Include="../src/MyButton.cpp" /><ClCompile Include="../src/Player.cpp" /><ClCompile Include="../src/Rocket.cpp" /><ClCompile Include="../src/Scene.cpp" /><ClCompile Include="../src/Unit.cpp" /><ClCompile Include="../src/main.cpp" /><ClCompile Include="../src/example.cpp" /><ClCompile Include="../src/res.cpp" />
+    <ClCompile Include="../src/Enemy.cpp" /><ClCompile Include="../src/Game.cpp" /><ClCompile Include="../src/GameScene.cpp" /><ClCompile Include="../src/Joystick.cpp" /><ClCompile Include="../src/MainMenuScene.cpp" /><ClCompile Include="../src/MyButton.cpp" /><ClCompile Include="../src/Player.cpp" /><ClCompile Include="../src/Rocket.cpp" /><ClCompile Include="../src/Scene.cpp" /><ClCompile Include="../src/Unit.cpp" /><ClCompile Include="../src/example.cpp" /><ClCompile Include="../src/main.cpp" /><ClCompile Include="../src/res.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="../src/Enemy.h" /><ClInclude Include="../src/Game.h" /><ClInclude Include="../src/GameScene.h" /><ClInclude Include="../src/Joystick.h" /><ClInclude Include="../src/MainMenuScene.h" /><ClInclude Include="../src/MyButton.h" /><ClInclude Include="../src/Player.h" /><ClInclude Include="../src/Rocket.h" /><ClInclude Include="../src/Scene.h" /><ClInclude Include="../src/Unit.h" /><ClInclude Include="../src/example.h" /><ClInclude Include="../src/res.h" />
