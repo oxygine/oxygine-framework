@@ -1,5 +1,5 @@
 #include "VisualStyle.h"
-#include "Actor.h"
+#include "actor/Actor.h"
 #include <sstream>
 #include "RenderState.h"
 #include "Serialize.h"

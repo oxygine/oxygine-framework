@@ -1,5 +1,5 @@
 #include "PostProcess.h"
-#include "Actor.h"
+#include "actor/Actor.h"
 #include "core/gl/VertexDeclarationGL.h"
 #include "core/gl/ShaderProgramGL.h"
 #include "core/oxygine.h"

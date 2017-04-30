@@ -7,7 +7,6 @@
 #include "core/ZipFileSystem.h"
 #include "core/system_data.h"
 #include "math/Rect.h"
-#include "Actor.h"
 #include "Image.h"
 #include "core/ImageDataOperations.h"
 #include "AnimationFrame.h"

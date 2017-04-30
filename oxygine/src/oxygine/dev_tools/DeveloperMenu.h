@@ -1,7 +1,7 @@
 #pragma once
 #include "../oxygine-include.h"
-#include "../ClipRectActor.h"
-#include "../ColorRectSprite.h"
+#include "../actor/ClipRectActor.h"
+#include "../actor/ColorRectSprite.h"
 #include "../Draggable.h"
 
 namespace oxygine

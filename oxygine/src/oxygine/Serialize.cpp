@@ -1,13 +1,13 @@
 #include "Serialize.h"
-#include "Sprite.h"
-#include "TextField.h"
-#include "ColorRectSprite.h"
-#include "ClipRectActor.h"
-#include "ProgressBar.h"
-#include "SlidingActor.h"
-#include "Polygon.h"
-#include "MaskedSprite.h"
-#include "Box9Sprite.h"
+#include "actor/Sprite.h"
+#include "actor/TextField.h"
+#include "actor/ColorRectSprite.h"
+#include "actor/ClipRectActor.h"
+#include "actor/ProgressBar.h"
+#include "actor/SlidingActor.h"
+#include "actor/Polygon.h"
+#include "actor/MaskedSprite.h"
+#include "actor/Box9Sprite.h"
 
 namespace oxygine
 {

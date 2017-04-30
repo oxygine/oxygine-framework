@@ -1,6 +1,6 @@
 #pragma once
 #include "../oxygine-include.h"
-#include "../Sprite.h"
+#include "../actor/Sprite.h"
 #include "../core/VertexDeclaration.h"
 
 namespace oxygine

@@ -46,6 +46,9 @@
     <Filter Include="src\json">
       <UniqueIdentifier>{5363bb12-7b88-4a51-8310-818b944e0238}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\actor">
+      <UniqueIdentifier>{969670a7-a5c7-4510-9635-59c4787ea429}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\oxygine\math\AffineTransform.cpp">
@@ -189,28 +192,10 @@
     <ClCompile Include="..\..\src\oxygine\minizip\unzip.c">
       <Filter>src\minizip</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\oxygine\Actor.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\oxygine\AnimationFrame.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\oxygine\Box9Sprite.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\oxygine\Button.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\oxygine\ClipRectActor.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\oxygine\Clock.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\oxygine\ColorRectSprite.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\oxygine\DebugActor.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\oxygine\Draggable.cpp">
@@ -225,19 +210,7 @@
     <ClCompile Include="..\..\src\oxygine\Input.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\oxygine\MaskedSprite.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\oxygine\PointerState.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\oxygine\ProgressBar.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\oxygine\SlidingActor.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\oxygine\Sprite.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\oxygine\VisualStyle.cpp">
@@ -256,15 +229,6 @@
       <Filter>src\gl</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\oxygine\InputText.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\oxygine\TextField.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\oxygine\Stage.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\oxygine\Polygon.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\oxygine\STDRenderer.cpp">
@@ -286,9 +250,6 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\oxygine\AsyncTask.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\oxygine\WebImage.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\oxygine\HttpRequestTask.cpp">
@@ -353,6 +314,48 @@
     </ClCompile>
     <ClCompile Include="..\..\src\oxygine\MaterialCache.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\oxygine\actor\Actor.cpp">
+      <Filter>src\actor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\oxygine\actor\Box9Sprite.cpp">
+      <Filter>src\actor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\oxygine\actor\Button.cpp">
+      <Filter>src\actor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\oxygine\actor\ClipRectActor.cpp">
+      <Filter>src\actor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\oxygine\actor\ColorRectSprite.cpp">
+      <Filter>src\actor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\oxygine\actor\DebugActor.cpp">
+      <Filter>src\actor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\oxygine\actor\MaskedSprite.cpp">
+      <Filter>src\actor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\oxygine\actor\Polygon.cpp">
+      <Filter>src\actor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\oxygine\actor\ProgressBar.cpp">
+      <Filter>src\actor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\oxygine\actor\SlidingActor.cpp">
+      <Filter>src\actor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\oxygine\actor\Sprite.cpp">
+      <Filter>src\actor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\oxygine\actor\Stage.cpp">
+      <Filter>src\actor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\oxygine\actor\TextField.cpp">
+      <Filter>src\actor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\oxygine\actor\WebImage.cpp">
+      <Filter>src\actor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -557,28 +560,10 @@
     <ClInclude Include="..\..\src\oxygine\minizip\unzip.h">
       <Filter>src\minizip</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\oxygine\Actor.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\oxygine\AnimationFrame.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\oxygine\Box9Sprite.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\oxygine\Button.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\oxygine\ClipRectActor.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\oxygine\Clock.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\oxygine\ColorRectSprite.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\oxygine\DebugActor.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\oxygine\Draggable.h">
@@ -599,25 +584,13 @@
     <ClInclude Include="..\..\src\oxygine\Input.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\oxygine\MaskedSprite.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\oxygine\oxygine-framework.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\oxygine\PointerState.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\oxygine\ProgressBar.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\oxygine\RenderState.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\oxygine\SlidingActor.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\oxygine\Sprite.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\oxygine\TextStyle.h">
@@ -639,15 +612,6 @@
       <Filter>src\gl</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\oxygine\InputText.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\oxygine\TextField.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\oxygine\Stage.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\oxygine\Polygon.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\oxygine\MaskedRenderer.h">
@@ -678,9 +642,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\oxygine\AsyncTask.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\oxygine\WebImage.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\oxygine\HttpRequestTask.h">
@@ -760,6 +721,48 @@
     </ClInclude>
     <ClInclude Include="..\..\src\oxygine\MaterialCache.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\oxygine\actor\Actor.h">
+      <Filter>src\actor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\oxygine\actor\Box9Sprite.h">
+      <Filter>src\actor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\oxygine\actor\Button.h">
+      <Filter>src\actor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\oxygine\actor\ClipRectActor.h">
+      <Filter>src\actor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\oxygine\actor\ColorRectSprite.h">
+      <Filter>src\actor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\oxygine\actor\DebugActor.h">
+      <Filter>src\actor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\oxygine\actor\MaskedSprite.h">
+      <Filter>src\actor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\oxygine\actor\Polygon.h">
+      <Filter>src\actor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\oxygine\actor\ProgressBar.h">
+      <Filter>src\actor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\oxygine\actor\SlidingActor.h">
+      <Filter>src\actor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\oxygine\actor\Sprite.h">
+      <Filter>src\actor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\oxygine\actor\Stage.h">
+      <Filter>src\actor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\oxygine\actor\TextField.h">
+      <Filter>src\actor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\oxygine\actor\WebImage.h">
+      <Filter>src\actor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

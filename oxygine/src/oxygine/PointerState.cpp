@@ -1,5 +1,5 @@
 #include "PointerState.h"
-#include "Actor.h"
+#include "actor/Actor.h"
 namespace oxygine
 {
     PointerState::PointerState(): _index(1)

@@ -1,6 +1,6 @@
 #include "TreeInspector.h"
 #include "../initActor.h"
-#include "../ColorRectSprite.h"
+#include "../actor/ColorRectSprite.h"
 #include "../RenderState.h"
 #include "../Clock.h"
 
@@ -13,12 +13,12 @@
 
 #include "../Image.h"
 #include "../Font.h"
-#include "../Stage.h"
+#include "../actor/Stage.h"
 
-#include "../TextField.h"
-#include "../DebugActor.h"
+#include "../actor/TextField.h"
+#include "../actor/DebugActor.h"
 
-#include "../SlidingActor.h"
+#include "../actor/SlidingActor.h"
 
 namespace oxygine
 {

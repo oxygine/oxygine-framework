@@ -1,6 +1,6 @@
 #include "TweenGlow.h"
 #include "STDMaterial.h"
-#include "Actor.h"
+#include "actor/Actor.h"
 #include "RenderState.h"
 
 #include "core/gl/VertexDeclarationGL.h"

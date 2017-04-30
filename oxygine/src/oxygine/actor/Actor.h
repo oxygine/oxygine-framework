@@ -1,15 +1,15 @@
 #pragma once
 #include "oxygine-include.h"
-#include "oxygine-forwards.h"
-#include "core/Object.h"
-#include "core/Renderer.h"
-#include "math/Rect.h"
-#include "math/AffineTransform.h"
-#include "utils/intrusive_list.h"
-#include "Serializable.h"
-#include "EventDispatcher.h"
-#include "TouchEvent.h"
-#include "Tween.h"
+#include "../oxygine-forwards.h"
+#include "../core/Object.h"
+#include "../core/Renderer.h"
+#include "../math/Rect.h"
+#include "../math/AffineTransform.h"
+#include "../utils/intrusive_list.h"
+#include "../Serializable.h"
+#include "../EventDispatcher.h"
+#include "../TouchEvent.h"
+#include "../Tween.h"
 
 namespace oxygine
 {

@@ -14,8 +14,8 @@
 #include "../PointerState.h"
 #include "../Input.h"
 
-#include "../DebugActor.h"
-#include "../Stage.h"
+#include "../actor/DebugActor.h"
+#include "../actor/Stage.h"
 #include "../KeyEvent.h"
 #include "../res/ResStarlingAtlas.h"
 
@@ -26,7 +26,7 @@
 #include "../winnie_alloc/winnie_alloc.h"
 #include "ThreadDispatcher.h"
 #include "../PostProcess.h"
-#include "../TextField.h"
+#include "../actor/TextField.h"
 
 #ifdef __S3E__
 #include "s3e.h"

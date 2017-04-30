@@ -5,8 +5,8 @@
     You can start from example.cpp and example.h, which main functions are called from here.
 */
 #include "oxygine/core/oxygine.h"
-#include "oxygine/Stage.h"
-#include "oxygine/DebugActor.h"
+#include "oxygine/actor/Stage.h"
+#include "oxygine/actor/DebugActor.h"
 #include "example.h"
 
 

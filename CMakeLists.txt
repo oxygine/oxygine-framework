@@ -37,7 +37,7 @@ set(OXYGINE_SRC ${OXYGINE_ROOT}/src/oxygine)
 
 set(FOLDERS oxygine oxygine/closure oxygine/minizip oxygine/core
 			oxygine/core/gl oxygine/dev_tools oxygine/minizip 
-			oxygine/math oxygine/pugixml oxygine/json oxygine/res 
+			oxygine/math oxygine/actor oxygine/pugixml oxygine/json oxygine/res 
 			oxygine/text_utils oxygine/utils oxygine/winnie_alloc)
 
 

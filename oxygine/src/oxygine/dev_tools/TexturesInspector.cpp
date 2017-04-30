@@ -1,13 +1,13 @@
 #include "TexturesInspector.h"
 #include "../core/NativeTexture.h"
 #include "../AnimationFrame.h"
-#include "../Sprite.h"
+#include "../actor/Sprite.h"
 #include "../initActor.h"
-#include "../SlidingActor.h"
-#include "../DebugActor.h"
+#include "../actor/SlidingActor.h"
+#include "../actor/DebugActor.h"
 #include "../res/Resources.h"
-#include "../TextField.h"
-#include "../ColorRectSprite.h"
+#include "../actor/TextField.h"
+#include "../actor/ColorRectSprite.h"
 #include "../utils/stringUtils.h"
 
 namespace oxygine

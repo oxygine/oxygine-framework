@@ -1,5 +1,5 @@
 #include "Input.h"
-#include "Stage.h"
+#include "actor/Stage.h"
 #include "core/log.h"
 #include <string.h>
 

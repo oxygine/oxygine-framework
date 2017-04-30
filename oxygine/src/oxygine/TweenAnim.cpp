@@ -1,5 +1,5 @@
 #include "TweenAnim.h"
-#include "Sprite.h"
+#include "actor/Sprite.h"
 #include "res/ResAnim.h"
 
 namespace oxygine

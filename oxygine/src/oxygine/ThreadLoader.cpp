@@ -3,7 +3,7 @@
 #include "res/Resources.h"
 #include "res/Resource.h"
 #include "core/oxygine.h"
-#include "Stage.h"
+#include "actor/Stage.h"
 
 namespace oxygine
 {
