@@ -1,13 +1,13 @@
 #include <sstream>
 #include "Sprite.h"
-#include "res/ResAnim.h"
-#include "RenderState.h"
-#include "utils/stringUtils.h"
+#include "../res/ResAnim.h"
+#include "../RenderState.h"
+#include "../utils/stringUtils.h"
 #include "Stage.h"
-#include "Serialize.h"
-#include "Material.h"
-#include "core/UberShaderProgram.h"
-#include "MaterialCache.h"
+#include "../Serialize.h"
+#include "../Material.h"
+#include "../core/UberShaderProgram.h"
+#include "../MaterialCache.h"
 
 namespace oxygine
 {

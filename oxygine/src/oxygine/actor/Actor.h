@@ -1,5 +1,5 @@
 #pragma once
-#include "oxygine-include.h"
+#include "../oxygine-include.h"
 #include "../oxygine-forwards.h"
 #include "../core/Object.h"
 #include "../core/Renderer.h"

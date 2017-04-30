@@ -1,7 +1,7 @@
 #include "WebImage.h"
-#include "res/ResAnim.h"
-#include "Image.h"
-#include "HttpRequestTask.h"
+#include "../res/ResAnim.h"
+#include "../Image.h"
+#include "../HttpRequestTask.h"
 #include "Sprite.h"
 #include <vector>
 

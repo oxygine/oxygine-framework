@@ -1,20 +1,20 @@
 #include "Actor.h"
-#include "core/Texture.h"
-#include "res/ResAnim.h"
+#include "../core/Texture.h"
+#include "../res/ResAnim.h"
 #include "Stage.h"
-#include "Clock.h"
-#include "Tween.h"
-#include "math/AffineTransform.h"
+#include "../Clock.h"
+#include "../Tween.h"
+#include "../math/AffineTransform.h"
 #include <sstream>
 #include <typeinfo>
 #define _USE_MATH_DEFINES
 #include <math.h>
-#include "utils/stringUtils.h"
-#include "RenderState.h"
+#include "../utils/stringUtils.h"
+#include "../RenderState.h"
 #include <stdio.h>
-#include "Serialize.h"
-#include "Material.h"
-#include "math/OBBox.h"
+#include "../Serialize.h"
+#include "../Material.h"
+#include "../math/OBBox.h"
 
 namespace oxygine
 {

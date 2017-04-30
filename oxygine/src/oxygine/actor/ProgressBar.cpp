@@ -1,10 +1,10 @@
 #include "ProgressBar.h"
-#include "RenderState.h"
+#include "../RenderState.h"
 #include <sstream>
-#include "Serialize.h"
-#include "Material.h"
-#include "STDRenderer.h"
-#include "STDMaterial.h"
+#include "../Serialize.h"
+#include "../Material.h"
+#include "../STDRenderer.h"
+#include "../STDMaterial.h"
 
 namespace oxygine
 {

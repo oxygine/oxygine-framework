@@ -1,8 +1,8 @@
 #include "Button.h"
 #include "Stage.h"
 #include "DebugActor.h"
-#include "res/ResAnim.h"
-#include "res/Resources.h"
+#include "../res/ResAnim.h"
+#include "../res/Resources.h"
 
 namespace oxygine
 {

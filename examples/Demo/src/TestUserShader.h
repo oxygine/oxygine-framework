@@ -24,7 +24,7 @@ public:
         return a.uniform == b.uniform;
     }
 
-    void xapply()
+    void xapply() override
     {
         STDMaterialX::xapply();
         IVideoDriver::instance->setUniform("userValue", uniform);

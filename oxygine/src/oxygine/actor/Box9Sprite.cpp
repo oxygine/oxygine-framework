@@ -1,14 +1,14 @@
 #include "Box9Sprite.h"
-#include "res/ResAnim.h"
-#include "math/ScalarMath.h"
-#include "RenderState.h"
-#include "Serialize.h"
+#include "../res/ResAnim.h"
+#include "../math/ScalarMath.h"
+#include "../RenderState.h"
+#include "../Serialize.h"
 #include <sstream>
-#include "STDRenderer.h"
+#include "../STDRenderer.h"
 #include "DebugActor.h"
-#include "res/ResAnim.h"
-#include "res/Resources.h"
-#include "STDMaterial.h"
+#include "../res/ResAnim.h"
+#include "../res/Resources.h"
+#include "../STDMaterial.h"
 
 namespace oxygine
 {

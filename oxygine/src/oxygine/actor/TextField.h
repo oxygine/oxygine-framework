@@ -1,8 +1,8 @@
 #pragma once
-#include "oxygine-include.h"
+#include "../oxygine-include.h"
 #include "Actor.h"
-#include "TextStyle.h"
-#include "VisualStyle.h"
+#include "../TextStyle.h"
+#include "../VisualStyle.h"
 
 namespace oxygine
 {

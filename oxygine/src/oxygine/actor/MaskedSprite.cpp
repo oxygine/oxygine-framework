@@ -1,8 +1,8 @@
 #include "MaskedSprite.h"
-#include "RenderState.h"
-#include "MaskedRenderer.h"
-#include "Serialize.h"
-#include "Material.h"
+#include "../RenderState.h"
+#include "../MaskedRenderer.h"
+#include "../Serialize.h"
+#include "../Material.h"
 
 namespace oxygine
 {

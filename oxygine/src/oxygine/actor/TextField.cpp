@@ -2,18 +2,18 @@
 
 
 #include "TextField.h"
-#include "Font.h"
+#include "../Font.h"
 #include "DebugActor.h"
-#include "res/Resources.h"
-#include "RenderState.h"
+#include "../res/Resources.h"
+#include "../RenderState.h"
 
-#include "utils/stringUtils.h"
-#include "core/gl/VideoDriverGLES20.h"
-#include "text_utils/TextBuilder.h"
-#include "text_utils/Node.h"
-#include "Serialize.h"
+#include "../utils/stringUtils.h"
+#include "../core/gl/VideoDriverGLES20.h"
+#include "../text_utils/TextBuilder.h"
+#include "../text_utils/Node.h"
+#include "../Serialize.h"
 
-#include "Material.h"
+#include "../Material.h"
 
 namespace oxygine
 {

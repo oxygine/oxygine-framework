@@ -1,42 +1,42 @@
 #include <sstream>
-#include "core/oxygine.h"
+#include "../core/oxygine.h"
 
-#include "res/ResAnim.h"
-#include "res/ResFont.h"
-#include "res/Resources.h"
+#include "../res/ResAnim.h"
+#include "../res/ResFont.h"
+#include "../res/Resources.h"
 
-#include "utils/stringUtils.h"
-#include "core/NativeTexture.h"
-#include "core/ZipFileSystem.h"
-#include "core/system_data.h"
-#include "STDRenderer.h"
-#include "MaterialCache.h"
+#include "../utils/stringUtils.h"
+#include "../core/NativeTexture.h"
+#include "../core/ZipFileSystem.h"
+#include "../core/system_data.h"
+#include "../STDRenderer.h"
+#include "../MaterialCache.h"
 
-#include "dev_tools/DeveloperMenu.h"
-#include "dev_tools/TreeInspector.h"
-#include "dev_tools/TexturesInspector.h"
+#include "../dev_tools/DeveloperMenu.h"
+#include "../dev_tools/TreeInspector.h"
+#include "../dev_tools/TexturesInspector.h"
 
-#include "STDRenderer.h"
+#include "../STDRenderer.h"
 #include "DebugActor.h"
 #include "Stage.h"
 #include "TextField.h"
 #include "ColorRectSprite.h"
 #include "Button.h"
-#include "Event.h"
-#include "RenderState.h"
-#include "initActor.h"
+#include "../Event.h"
+#include "../RenderState.h"
+#include "../initActor.h"
 #include "MaskedSprite.h"
-#include "STDMaterial.h"
+#include "../STDMaterial.h"
 
 #include <stdio.h>
 #include <stdarg.h>
 #include <iomanip>
-#include "core/oxygine.h"
+#include "../core/oxygine.h"
 
 #ifdef __S3E__
-#include "s3eMemory.h"
+#include "../s3eMemory.h"
 #elif __APPLE__
-#include "core/ios/ios.h"
+#include "../core/ios/ios.h"
 #endif
 
 #ifndef __S3E__

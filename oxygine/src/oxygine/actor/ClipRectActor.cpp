@@ -1,10 +1,10 @@
 #include "ClipRectActor.h"
 #include "Stage.h"
-#include "core/log.h"
-#include "core/oxygine.h"
-#include "RenderState.h"
-#include "Serialize.h"
-#include "Material.h"
+#include "../core/log.h"
+#include "../core/oxygine.h"
+#include "../RenderState.h"
+#include "../Serialize.h"
+#include "../Material.h"
 
 namespace oxygine
 {

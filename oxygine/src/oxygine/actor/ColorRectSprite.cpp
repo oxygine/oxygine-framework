@@ -1,9 +1,9 @@
 #include "ColorRectSprite.h"
-#include "RenderState.h"
-#include "Material.h"
-#include "Serialize.h"
-#include "utils/stringUtils.h"
-#include "MaterialCache.h"
+#include "../RenderState.h"
+#include "../Material.h"
+#include "../Serialize.h"
+#include "../utils/stringUtils.h"
+#include "../MaterialCache.h"
 
 namespace oxygine
 {
