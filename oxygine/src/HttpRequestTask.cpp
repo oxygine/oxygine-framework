@@ -133,7 +133,7 @@ namespace oxygine
         if (!_fname.empty())
         {
             const char* mode = _continueDownload ? "ab" : "wb";
-            _fhandle = file::open(_fname, mode, ep_ignore_error);
+            _fhandle = file::open(_fname, mode);
             OX_ASSERT(_fhandle);
 
             if (!_fhandle)
