@@ -18,6 +18,8 @@ namespace oxygine
     std::string     jniGetPackage();
     bool            jniIsNetworkAvailable();
 
+	int64			jniGetFreeSpace(const char *);
+
     bool            jniExit();
     void            jniRestartApp();
     void            jniMoveTaskToBack();

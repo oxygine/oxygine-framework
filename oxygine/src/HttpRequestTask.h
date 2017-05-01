@@ -57,6 +57,7 @@ namespace oxygine
         void setFileName(const std::string& name, bool continueDownload = false);
         void setCacheEnabled(bool enabled);
 
+
         void setResponseCodeChecker(const responseCodeChecker& f) {_responseCodeChecker = f;}
         void setSuccessOnAnyResponseCode(bool en);
 

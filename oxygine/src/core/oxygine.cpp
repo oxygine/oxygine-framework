@@ -16,6 +16,7 @@
 #include "DebugActor.h"
 #include "Stage.h"
 #include "KeyEvent.h"
+#include "STDFileSystem.h"
 #include "res/ResStarlingAtlas.h"
 
 
@@ -1012,7 +1013,19 @@ namespace oxygine
         return true;
     }
 
-    std::string     getLanguage()
+	int64 getFreeSpace(const char *fullpath /*= 0*/)
+	{
+#ifdef __ANDROID__
+		if (fullpath)
+			return jniGetFreeSpace(fullpath);
+		return jniGetFreeSpace(file::wfs().getFullPath("").c_str());
+#else
+#endif
+		return 123;
+		return std::numeric_limits<int64>::max();
+	}
+
+	std::string     getLanguage()
     {
 #ifdef __ANDROID__
         return jniGetLanguage();

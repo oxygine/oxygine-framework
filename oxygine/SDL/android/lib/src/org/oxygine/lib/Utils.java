@@ -9,7 +9,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.provider.Settings;
 import android.app.PendingIntent;
-
+import android.os.StatFs;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -20,6 +20,13 @@ public class Utils {
 
     public static long getTimeUTCMS() {
         return System.currentTimeMillis();
+    }
+
+    public static long getFreeSpace(String path) {
+        StatFs fs = new StatFs(path);
+        long blocks = fs.getFreeBlocks();
+        long blsize = fs.getBlockSize();
+        return blocks * blsize;
     }
 
     public static String getLanguage() {

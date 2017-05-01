@@ -14,6 +14,7 @@ jmethodID _jUtils_getLanguage = 0;
 jmethodID _jUtils_getPackage = 0;
 jmethodID _jUtils_getProperty = 0;
 jmethodID _jUtils_isNetworkAvailable = 0;
+jmethodID _jUtils_getFreeSpace = 0;
 jmethodID _jRunnable_run = 0;
 
 namespace oxygine
@@ -44,8 +45,11 @@ namespace oxygine
             _jUtils = (jclass)env->NewGlobalRef(env->FindClass("org/oxygine/lib/Utils"));
             JNI_NOT_NULL(_jUtils);
 
-            _jUtils_getTimeUTCMS = env->GetStaticMethodID(_jUtils, "getTimeUTCMS", "()J");
-            JNI_NOT_NULL(_jUtils_getTimeUTCMS);
+			_jUtils_getTimeUTCMS = env->GetStaticMethodID(_jUtils, "getTimeUTCMS", "()J");
+			JNI_NOT_NULL(_jUtils_getTimeUTCMS);
+
+			_jUtils_getFreeSpace = env->GetStaticMethodID(_jUtils, "getFreeSpace", "(Ljava/lang/String;)J");
+			JNI_NOT_NULL(_jUtils_getFreeSpace);
 
             _jUtils_getLanguage = env->GetStaticMethodID(_jUtils, "getLanguage", "()Ljava/lang/String;");
             JNI_NOT_NULL(_jUtils_getLanguage);
@@ -74,20 +78,11 @@ namespace oxygine
 
     int64 jniGetTimeUTCMS()
     {
-        try
-        {
-            JNIEnv* env = jniGetEnv();
-            LOCAL_REF_HOLDER(env);
+        JNIEnv* env = jniGetEnv();
+        LOCAL_REF_HOLDER(env);
 
-            jlong value = env->CallStaticLongMethod(_jUtils, _jUtils_getTimeUTCMS);
-            return value;
-        }
-        catch (const notFound&)
-        {
-
-        }
-
-        return 0;
+        jlong value = env->CallStaticLongMethod(_jUtils, _jUtils_getTimeUTCMS);
+        return value;
     }
 
     std::string     jniGetLanguage()
@@ -127,6 +122,19 @@ namespace oxygine
 
         return false;
     }
+
+
+	int64			jniGetFreeSpace(const char *path)
+	{
+		JNIEnv* env = jniGetEnv();
+		LOCAL_REF_HOLDER(env);
+
+		jstring jarg = env->NewStringUTF(path);
+		jlong value = env->CallStaticLongMethod(_jUtils, _jUtils_getFreeSpace, jarg);
+		return value;
+
+		
+	}
 
     bool            jniExit()
     {
