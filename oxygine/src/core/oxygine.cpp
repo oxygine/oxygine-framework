@@ -1019,9 +1019,10 @@ namespace oxygine
 		if (fullpath)
 			return jniGetFreeSpace(fullpath);
 		return jniGetFreeSpace(file::wfs().getFullPath("").c_str());
-#else
+#elif __APPLE__
+        return iosGetFreeDiskspace();
 #endif
-		return 123;
+        
 		return std::numeric_limits<int64>::max();
 	}
 
