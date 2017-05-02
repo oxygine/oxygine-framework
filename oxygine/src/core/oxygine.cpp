@@ -324,7 +324,7 @@ namespace oxygine
             log::messageln("SDL build");
 
 
-            SDL_SetHint(SDL_HINT_VIDEO_ALLOW_SCREENSAVER, "1");
+            SDL_SetHint(SDL_HINT_VIDEO_ALLOW_SCREENSAVER, desc.allow_screensaver ? "1" : "0");
 
             SDL_Init(SDL_INIT_VIDEO);
 
@@ -358,11 +358,21 @@ namespace oxygine
 
             SDL_GL_SetAttribute(SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 1);
 
-            int flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN;
+            int flags = SDL_WINDOW_OPENGL;
 
 #if TARGET_OS_IPHONE
+            flags |= SDL_WINDOW_SHOWN;
             flags |= SDL_WINDOW_BORDERLESS;
             flags |= SDL_WINDOW_ALLOW_HIGHDPI;
+#else
+            if(desc.show_window)
+                flags |= SDL_WINDOW_SHOWN;
+
+            if(desc.borderless)
+                flags |= SDL_WINDOW_BORDERLESS;
+
+            if(desc.resizable)
+                flags |= SDL_WINDOW_RESIZABLE;
 #endif
 
             //SDL_DisplayMode mode;
