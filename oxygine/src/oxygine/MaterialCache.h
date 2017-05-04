@@ -3,6 +3,7 @@
 #include "core/ref_counter.h"
 #include "core/intrusive_ptr.h"
 #include <vector>
+#include <unordered_map>
 
 namespace oxygine
 {
@@ -32,7 +33,7 @@ namespace oxygine
         size_t getTotalMaterials() const { return _materials.size(); }
 
     protected:
-        typedef std::vector<spMaterialX> materials;
+        typedef std::unordered_multimap<size_t, spMaterialX> materials;
         materials _materials;
 
         MaterialX* clone_(const MaterialX& other);

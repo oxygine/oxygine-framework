@@ -10,32 +10,32 @@ namespace oxygine
         MaterialX::compare cm;
         other.update(hash, cm);
 
-        MaterialX* free = 0;
-        for (auto m_ : _materials)
+
+        materials::iterator itl = _materials.lower_bound(hash);
+                
+        if (itl != _materials.end())
         {
-            MaterialX* mat = m_.get();
-            if (mat->_compare != cm)
-                continue;
-            if (mat->_ref_counter == 1)
-                free = mat;
-            if (mat->_hash != hash)
-                continue;
-            bool same = cm(mat, &other);
-            if (same)
-                return mat;
+            MaterialX *sec = itl->second.get();
+            if (cm(sec, &other))
+                return sec;
+
+            ++itl;
+
+            //same hash but not same object
+            materials::iterator ith = _materials.upper_bound(hash);
+            for(; itl != ith; itl++)
+            { 
+                MaterialX *sec = itl->second.get();
+                if (cm(sec, &other))
+                    return sec;
+            }
         }
-        if (free)
-        {
-            free->copyFrom(other);
-            free->_hash = hash;
-            free->_compare = cm;
-            return free;
-        }
+
 
         MaterialX* copy = other.clone();
         copy->_hash = hash;
         copy->_compare = cm;
-        _materials.push_back(copy);
+        _materials.insert(std::make_pair(hash, copy));
 
         return copy;
     }

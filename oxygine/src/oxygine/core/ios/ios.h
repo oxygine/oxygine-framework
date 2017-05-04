@@ -16,4 +16,6 @@ namespace oxygine
 
     void iosGetMemoryUsage(size_t& a);
     void iosNavigate(const char*);
+    
+    int64 iosGetFreeDiskspace();
 }

@@ -49,12 +49,15 @@ Resources resources;
 spStage stage2;
 #endif
 
+
 class TestActor: public Test
 {
 public:
 
     TestActor()
     {
+
+
 
         _x = 90;//getStage()->getWidth()/2.0f;
         _y = 80;
@@ -165,7 +168,7 @@ void example_init()
     //Load resources in xml file
     resources.loadXML("xmls/res.xml");
     Test::init();
-
+    
     Test::instance = new TestActor;
     getStage()->addChild(Test::instance);
 
