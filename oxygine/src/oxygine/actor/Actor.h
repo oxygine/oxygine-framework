@@ -9,7 +9,7 @@
 #include "../Serializable.h"
 #include "../EventDispatcher.h"
 #include "../TouchEvent.h"
-#include "../Tween.h"
+#include "../tween/Tween.h"
 
 namespace oxygine
 {

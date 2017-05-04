@@ -1,7 +1,7 @@
 #pragma once
 #include "oxygine-include.h"
 #include "Tween.h"
-#include "PostProcess.h"
+#include "../PostProcess.h"
 
 namespace oxygine
 {

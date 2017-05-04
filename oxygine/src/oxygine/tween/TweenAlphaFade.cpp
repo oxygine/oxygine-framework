@@ -1,6 +1,6 @@
 #include "TweenAlphaFade.h"
-#include "STDMaterial.h"
-#include "actor/Actor.h"
+#include "../STDMaterial.h"
+#include "../actor/Actor.h"
 
 namespace oxygine
 {

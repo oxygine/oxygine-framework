@@ -1,6 +1,6 @@
 #include "Tween.h"
-#include "actor/Actor.h"
-#include "actor/ColorRectSprite.h"
+#include "../actor/Actor.h"
+#include "../actor/ColorRectSprite.h"
 #include <limits.h>
 
 namespace oxygine

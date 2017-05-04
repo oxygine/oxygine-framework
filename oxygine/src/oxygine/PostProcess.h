@@ -4,7 +4,7 @@
 #include "core/NativeTexture.h"
 #include "core/Renderer.h"
 #include "Material.h"
-#include "Tween.h"
+#include "tween/Tween.h"
 
 namespace oxygine
 {

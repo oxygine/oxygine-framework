@@ -6,7 +6,7 @@
 #include "Actor.h"
 #include "../AnimationFrame.h"
 #include "../VisualStyle.h"
-#include "../TweenAnim.h"
+#include "../tween/TweenAnim.h"
 
 namespace oxygine
 {

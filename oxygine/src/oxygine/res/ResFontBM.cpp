@@ -8,7 +8,6 @@
 #include "../core/file.h"
 #include "CreateResourceContext.h"
 #include "../utils/stringUtils.h"
-#include "../core/Mem2Native.h"
 #include "Resources.h"
 namespace oxygine
 {

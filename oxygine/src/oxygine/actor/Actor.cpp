@@ -3,7 +3,7 @@
 #include "../res/ResAnim.h"
 #include "Stage.h"
 #include "../Clock.h"
-#include "../Tween.h"
+#include "../tween/Tween.h"
 #include "../math/AffineTransform.h"
 #include <sstream>
 #include <typeinfo>

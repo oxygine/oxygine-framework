@@ -33,7 +33,7 @@
 #include "MaskedSprite.h"
 #include "TextField.h"
 #include "TextStyle.h"
-#include "Tween.h"
+#include "tween/Tween.h"
 #include "TweenQueue.h"
 #include "TouchEvent.h"
 #include "KeyEvent.h"
