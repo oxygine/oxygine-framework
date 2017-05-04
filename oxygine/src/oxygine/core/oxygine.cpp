@@ -5,7 +5,7 @@
 #include "../MaterialCache.h"
 #include "../res/CreateResourceContext.h"
 #include "../res/Resources.h"
-
+#include "STDFileSystem.h"
 
 #include "../res/ResBuffer.h"
 #include "../res/ResFontBM.h"

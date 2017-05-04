@@ -1,5 +1,5 @@
 #include "test.h"
-#include "oxygine/oxygine-framework.h"
+#include "oxygine-framework.h"
 
 Resources Test::resourcesUI;
 file::STDFileSystem extfs(true);

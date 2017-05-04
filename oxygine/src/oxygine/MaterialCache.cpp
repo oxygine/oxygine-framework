@@ -14,7 +14,7 @@ namespace oxygine
         other.update(hash, cm);
 
 
-        materials::iterator itl = _materials.lower_bound(hash);
+        materials::iterator itl = _materials.find(hash);
 
         if (itl != _materials.end())
         {
@@ -22,11 +22,14 @@ namespace oxygine
             if (cm == sec->_compare && cm(sec, &other))
                 return sec;
 
-            ++itl;
+            //hash collision?
 
-            //same hash but not same object
-            materials::iterator ith = _materials.upper_bound(hash);
-            for (; itl != ith; itl++)
+            std::pair<materials::iterator, materials::iterator> it = _materials.equal_range(hash);
+
+            itl = it.first;
+            itl++;//skip first, already checked
+
+            for (; itl != it.second; itl++)
             {
                 MaterialX* sec = itl->second.get();
                 if (cm == sec->_compare && cm(sec, &other))
