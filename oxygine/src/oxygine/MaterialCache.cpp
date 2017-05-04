@@ -5,28 +5,31 @@ namespace oxygine
 {
     MaterialX* MaterialCache::clone_(const MaterialX& other)
     {
-        OX_ASSERT(core::isMainThread());
+        //OX_ASSERT(core::isMainThread());
+
+        MutexAutoLock alock(_lock);
+
         size_t hash;
         MaterialX::compare cm;
         other.update(hash, cm);
 
 
         materials::iterator itl = _materials.lower_bound(hash);
-                
+
         if (itl != _materials.end())
         {
-            MaterialX *sec = itl->second.get();
-            if (cm(sec, &other))
+            MaterialX* sec = itl->second.get();
+            if (cm == sec->_compare && cm(sec, &other))
                 return sec;
 
             ++itl;
 
             //same hash but not same object
             materials::iterator ith = _materials.upper_bound(hash);
-            for(; itl != ith; itl++)
-            { 
-                MaterialX *sec = itl->second.get();
-                if (cm(sec, &other))
+            for (; itl != ith; itl++)
+            {
+                MaterialX* sec = itl->second.get();
+                if (cm == sec->_compare && cm(sec, &other))
                     return sec;
             }
         }

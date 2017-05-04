@@ -168,7 +168,7 @@ void example_init()
     //Load resources in xml file
     resources.loadXML("xmls/res.xml");
     Test::init();
-    
+
     Test::instance = new TestActor;
     getStage()->addChild(Test::instance);
 

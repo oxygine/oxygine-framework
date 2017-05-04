@@ -2,6 +2,7 @@
 #include "oxygine-include.h"
 #include "core/ref_counter.h"
 #include "core/intrusive_ptr.h"
+#include "core/Mutex.h"
 #include <vector>
 #include <unordered_map>
 
@@ -35,6 +36,8 @@ namespace oxygine
     protected:
         typedef std::unordered_multimap<size_t, spMaterialX> materials;
         materials _materials;
+
+        Mutex _lock;
 
         MaterialX* clone_(const MaterialX& other);
     };
