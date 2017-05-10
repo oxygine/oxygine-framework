@@ -3,22 +3,7 @@
 
 namespace oxygine
 {
-    /*
-    int key2hash(int g)
-    {
-        int k = g;
-        if ((g & 0xC0) == 0xC0)
-        {
-            k = k >> 8;
-        }
-        k = k & 0x3f;
-        //log::messageln("key: %d  hash: %d", g, k);
-        return k;
-        //return g;
-    }
-    */
-
-    Font::Font() : _size(0), _baselineDistance(0), _scale(1.0f), _sdf(false)
+    Font::Font() : _size(0), _baselineDistance(0), _scale(1.0f), _sdf(false), _ignoreOptions(true)
     {
     }
 
@@ -53,7 +38,7 @@ namespace oxygine
     {
         glyph g;
         g.ch = code;
-        g.opt = opt;
+        g.opt = _ignoreOptions ? 0 : opt;
         glyphs::const_iterator it = _glyphs.find(g);
         if (it != _glyphs.end())
         {
