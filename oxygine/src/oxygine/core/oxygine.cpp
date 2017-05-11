@@ -602,10 +602,10 @@ namespace oxygine
             bool ready = STDRenderer::isReady();
             if (ready)
             {
-                rc().reset();
+                rsCache().reset();
                 IVideoDriver::_stats.start = getTimeMS();
                 updatePortProcessItems();
-                rc().reset();
+                rsCache().reset();
             }
             else
             {

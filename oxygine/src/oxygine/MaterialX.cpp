@@ -45,9 +45,9 @@ namespace oxygine
         STDRenderer* r = STDRenderer::getCurrent();
         r->setUberShaderProgram(_uberShader);
         r->setShaderFlags(_flags);
-        rc().setTexture(UberShaderProgram::SAMPLER_BASE, _base);
-        rc().setTexture(UberShaderProgram::SAMPLER_ALPHA, _alpha);
-        rc().setBlendMode(_blend);
+        rsCache().setTexture(UberShaderProgram::SAMPLER_BASE, _base);
+        rsCache().setTexture(UberShaderProgram::SAMPLER_ALPHA, _alpha);
+        rsCache().setBlendMode(_blend);
     }
 
     void STDMaterialX::xflush()

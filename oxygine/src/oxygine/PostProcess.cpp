@@ -315,7 +315,8 @@ namespace oxygine
 
             postProcessItems.clear();
             driver->setRenderTarget(prevRT);
-            driver->setShaderProgram(sp);
+            if (sp)
+                driver->setShaderProgram(sp);
             _renderingPP = false;
         }
 

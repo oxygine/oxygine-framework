@@ -36,26 +36,30 @@ namespace oxygine
     std::vector<unsigned char> STDRenderer::uberShaderBody;
 
 
-    RenderStateCache& rc()
+    RenderStateCache& rsCache()
     {
         static RenderStateCache r(IVideoDriver::instance);
         return r;
     }
 
-    RenderStateCache::RenderStateCache(IVideoDriver* d) : _driver(d)
+    RenderStateCache::RenderStateCache(IVideoDriver* d) : _driver(d), _blend(blend_disabled), _program(0)
     {
         reset();
     }
 
     void RenderStateCache::reset()
     {
-        for (int i = 0; i < MAX_TEXTURES; ++i)
-        {
-            _textures[i] = 0;
-        }
+        resetTextures();
+
         _blend = blend_disabled;
         _driver->setState(IVideoDriver::STATE_BLEND, 0);
         _program = 0;
+    }
+
+    void RenderStateCache::resetTextures()
+    {
+        for (int i = 0; i < MAX_TEXTURES; ++i)
+            _textures[i] = 0;
     }
 
     void RenderStateCache::setTexture(int sampler, const spNativeTexture& t)
@@ -279,7 +283,7 @@ namespace oxygine
 
     void STDRenderer::setShader(ShaderProgram* prog)
     {
-        if (rc().setShader(prog))
+        if (rsCache().setShader(prog))
         {
             //_driver->setUniform("mat", _vp);
             shaderProgramChanged();
@@ -549,7 +553,7 @@ namespace oxygine
 #ifdef OXYGINE_DEBUG_T2P
         if (_showTexel2PixelErrors)
         {
-            spNativeTexture base = rc().getTexture(UberShaderProgram::SAMPLER_BASE);
+            spNativeTexture base = rsCache().getTexture(UberShaderProgram::SAMPLER_BASE);
             if (base != white)
             {
                 Rect viewport;

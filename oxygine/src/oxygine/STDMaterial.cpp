@@ -142,7 +142,7 @@ namespace oxygine
         clipUV.get(msk);
         Vector4 clipMask = Vector4(maskSrc.getLeft(), maskSrc.getTop(), maskSrc.getRight(), maskSrc.getBottom());
 
-        rc().setTexture(UberShaderProgram::SAMPLER_MASK, maskTexture);
+        rsCache().setTexture(UberShaderProgram::SAMPLER_MASK, maskTexture);
 
 
 

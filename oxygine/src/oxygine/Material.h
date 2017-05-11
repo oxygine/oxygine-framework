@@ -15,5 +15,7 @@ namespace oxygine
         virtual void doRender(TextField*, const RenderState& rs) {}
         virtual void doRender(ColorRectSprite*, const RenderState& rs) {}
         virtual void doRender(ProgressBar*, const RenderState& rs) {}
+
+        static void setCurrent(void*) {}
     };
 }

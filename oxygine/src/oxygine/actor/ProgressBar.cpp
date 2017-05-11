@@ -119,7 +119,7 @@ namespace oxygine
         const Diffuse& df = _frame.getDiffuse();
         if (df.base)
         {
-            rc().setBlendMode(getBlendMode());
+            rsCache().setBlendMode(getBlendMode());
             //renderer->setTexture(df.base, df.alpha, df.premultiplied);
 
             RectF destRect = inherited::getDestRect();

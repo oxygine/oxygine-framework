@@ -15,18 +15,20 @@ namespace oxygine
         void setTexture(int sampler, const spNativeTexture& t);
         void setBlendMode(blend_mode blend);
         bool setShader(ShaderProgram* prog);
+
         void reset();
+        void resetTextures();
 
     protected:
         enum { MAX_TEXTURES = 8 };
 
-        blend_mode      _blend;
         spNativeTexture _textures[MAX_TEXTURES];
         ShaderProgram*  _program;
-        IVideoDriver* _driver;
+        IVideoDriver*   _driver;
+        blend_mode      _blend;
     };
 
-    RenderStateCache& rc();
+    RenderStateCache& rsCache();
 
     class ShaderProgramChangedHook
     {
