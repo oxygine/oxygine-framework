@@ -7,7 +7,10 @@
 
 namespace oxygine
 {
-    DECLARE_SMART(HttpRequestTask, spHttpRequestTask);
+    //DECLARE_SMART(HttpRequestTask, spHttpRequestTask);
+    class HttpRequestTask;
+    typedef std::shared_ptr<HttpRequestTask> spHttpRequestTask;
+
     class HttpRequestTask: public AsyncTask
     {
     public:

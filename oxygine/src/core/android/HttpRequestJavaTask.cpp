@@ -81,15 +81,16 @@ namespace oxygine
         }
 
 
-        addRef();
+        //addRef();
+        void* ptr = new spAsyncTask(shared_from_this());
         _handle = env->NewGlobalRef(env->CallStaticObjectMethod(_jHttpRequestsClass, _jCreateRequestMethod,
-                                    jurl, jkeys, jvalues, jpost, (jlong)this));
+                                    jurl, jkeys, jvalues, jpost, (jlong)ptr));
     }
 
     void HttpRequestJavaTask::error_()
     {
         onError();
-        releaseRef();
+        //releaseRef();
     }
 
     void HttpRequestJavaTask::gotHeader_(int respCode, int contentLen)
@@ -112,7 +113,7 @@ namespace oxygine
     void HttpRequestJavaTask::complete_()
     {
         onComplete();
-        releaseRef();
+        //releaseRef();
     }
 
     void HttpRequestJavaTask::_finaliaze(bool)
@@ -135,27 +136,30 @@ extern "C"
 
     JNIEXPORT void JNICALL Java_org_oxygine_lib_HttpRequest_nativeHttpRequestSuccess(JNIEnv* env, jclass, jlong handle)
     {
-        oxygine::HttpRequestJavaTask* task = (oxygine::HttpRequestJavaTask*)handle;
-        task->complete_();
+        oxygine::spAsyncTask* task = (oxygine::spAsyncTask*)handle;
+        static_cast<oxygine::HttpRequestJavaTask*>(task->get())->complete_();
+        delete task;
+        //task->complete_();
     }
 
     JNIEXPORT void JNICALL Java_org_oxygine_lib_HttpRequest_nativeHttpRequestError(JNIEnv* env, jclass, jlong handle)
     {
-        oxygine::HttpRequestJavaTask* task = (oxygine::HttpRequestJavaTask*)handle;
-        task->error_();
+        oxygine::spAsyncTask* task = (oxygine::spAsyncTask*)handle;
+        static_cast<oxygine::HttpRequestJavaTask*>(task->get())->error_();
+        delete task;
     }
 
     JNIEXPORT void JNICALL Java_org_oxygine_lib_HttpRequest_nativeHttpRequestWrite(JNIEnv* env, jclass,
             jlong handle, jbyteArray array, jint size)
     {
-        oxygine::HttpRequestJavaTask* task = (oxygine::HttpRequestJavaTask*)handle;
-        task->write_(array, size);
+        oxygine::spAsyncTask* task = (oxygine::spAsyncTask*)handle;
+        static_cast<oxygine::HttpRequestJavaTask*>(task->get())->write_(array, size);
     }
 
     JNIEXPORT void JNICALL Java_org_oxygine_lib_HttpRequest_nativeHttpRequestGotHeader(JNIEnv* env, jclass,
             jlong handle, jint respCode, jint contentLen)
     {
-        oxygine::HttpRequestJavaTask* task = (oxygine::HttpRequestJavaTask*)handle;
-        task->gotHeader_(respCode, contentLen);
+        oxygine::spAsyncTask* task = (oxygine::spAsyncTask*)handle;
+        static_cast<oxygine::HttpRequestJavaTask*>(task->get())->gotHeader_(respCode, contentLen);
     }
 }

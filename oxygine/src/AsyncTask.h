@@ -4,13 +4,15 @@
 #include "EventDispatcher.h"
 #include "Event.h"
 #include "core/oxygine.h"
+#include <memory>
+
 #ifdef ERROR
 #undef ERROR
 #endif
 
 namespace oxygine
 {
-    DECLARE_SMART(AsyncTask, spAsyncTask);
+    //DECLARE_SMART(AsyncTask, spAsyncTask);
 
     class AsyncTaskEvent: public Event
     {
@@ -20,7 +22,7 @@ namespace oxygine
     };
 
 
-    class AsyncTask: public EventDispatcher
+    class AsyncTask: public EventDispatcher, public std::enable_shared_from_this<AsyncTask>
     {
     public:
         enum
@@ -50,6 +52,8 @@ namespace oxygine
         void onError();
         void onComplete();
 
+
+
         status _status;
 
         friend class AsyncTaskManager;
@@ -72,15 +76,16 @@ namespace oxygine
             {
                 if (addref)
                 {
-                    addRef();
+                    //addRef();
                     if (!core::isMainThread())
                         sleep(10);
 
+                    std::shared_ptr<AsyncTask> task = shared_from_this();
 
-                    core::getMainThreadDispatcher().postCallback([ = ]()
+                    core::getMainThreadDispatcher().postCallback([f, task]()
                     {
                         f();
-                        releaseRef();
+                        //releaseRef();
                     });
                 }
                 else

@@ -1,6 +1,8 @@
 #include "AsyncTask.h"
 #include "core/oxygine.h"
 #include <typeinfo>
+
+
 namespace oxygine
 {
 #define LOGD(arg) (log::messageln("at: %s (%d) %s", getName().c_str(), getObjectID(), arg))
@@ -8,6 +10,7 @@ namespace oxygine
     AsyncTask::AsyncTask() : _status(status_not_started), _mainThreadSync(false)
     {
         setName("AsyncTask");
+        _ref_counter = 999999;
     }
 
     AsyncTask::~AsyncTask()

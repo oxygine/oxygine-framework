@@ -1,7 +1,7 @@
 #pragma  once
 #include "core/ref_counter.h"
 #include "closure/closure.h"
-
+#include <memory>
 
 #ifdef OXYGINE_SDL
 typedef struct SDL_Window SDL_Window;
@@ -37,7 +37,7 @@ namespace oxygine
     class intrusive_ptr;
 
     DECLARE_SMART(Actor, spActor);
-    DECLARE_SMART(AsyncTask, spAsyncTask);
+    //DECLARE_SMART(AsyncTask, spAsyncTask);
     DECLARE_SMART(Box9Sprite, spBox9Sprite);
     DECLARE_SMART(Button, spButton);
     DECLARE_SMART(ClipRectActor, spClipRectActor);
@@ -46,7 +46,7 @@ namespace oxygine
     DECLARE_SMART(DebugActor, spDebugActor);
     DECLARE_SMART(DragHandler, spDragHandler);
     DECLARE_SMART(EventDispatcher, spEventDispatcher);
-    DECLARE_SMART(HttpRequestTask, spHttpRequestTask);
+    //DECLARE_SMART(HttpRequestTask, spHttpRequestTask);
     DECLARE_SMART(InputText, spInputText);
     DECLARE_SMART(MaskedSprite, spMaskedSprite);
     DECLARE_SMART(NativeTexture, spNativeTexture);
@@ -68,6 +68,12 @@ namespace oxygine
     DECLARE_SMART(Tween, spTween);
     DECLARE_SMART(TweenQueue, spTweenQueue);
     DECLARE_SMART(WebImage, spWebImage);
+
+    class HttpRequestTask;
+    typedef std::shared_ptr<HttpRequestTask> spHttpRequestTask;
+
+    class AsyncTask;
+    typedef std::shared_ptr<AsyncTask> spAsyncTask;
 
     class Actor;
     class AnimationFrame;

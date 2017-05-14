@@ -3,6 +3,7 @@
 #include "core/oxygine.h"
 #include "utils/stringUtils.h"
 
+
 namespace oxygine
 {
     HttpRequestTask* createNullHttpTask()
@@ -14,7 +15,7 @@ namespace oxygine
 
     spHttpRequestTask HttpRequestTask::create()
     {
-        return _createRequestsCallback();
+        return spHttpRequestTask(_createRequestsCallback());
     }
 
 #if OX_NO_HTTP
