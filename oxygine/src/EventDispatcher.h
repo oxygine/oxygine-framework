@@ -23,14 +23,15 @@ namespace oxygine
 #define  EventID(str) EventIDc11(str)
 
 
-    DECLARE_SMART(EventDispatcher, spEventDispatcher);
-    class EventDispatcher: public Object
+
+    template<class T>
+    class EventDispatcherT: public T
     {
         INHERITED(Object);
     public:
-        EventDispatcher(const EventDispatcher& ed): inherited(ed), _lastID(0), _listeners(0) {}
-        EventDispatcher();
-        ~EventDispatcher();
+        EventDispatcherT(const EventDispatcherT& ed): inherited(ed), _lastID(0), _listeners(0) {}
+        EventDispatcherT();
+        ~EventDispatcherT();
 
         int addEventListener(eventType, const EventCallback&);
 
@@ -76,4 +77,9 @@ namespace oxygine
         typedef std::vector<listener> listeners;
         listeners* _listeners;
     };
+
+    class EventDispatcher: public EventDispatcherT<Object>
+    {};
+
+    DECLARE_SMART(EventDispatcher, spEventDispatcher);
 }

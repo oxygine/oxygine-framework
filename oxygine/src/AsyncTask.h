@@ -4,6 +4,7 @@
 #include "EventDispatcher.h"
 #include "Event.h"
 #include "core/oxygine.h"
+#include <memory>
 #ifdef ERROR
 #undef ERROR
 #endif

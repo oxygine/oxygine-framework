@@ -8,18 +8,21 @@
 
 namespace oxygine
 {
-    EventDispatcher::EventDispatcher(): _lastID(0), _listeners(0)
+    template<class T>
+    EventDispatcherT<T>::EventDispatcherT(): _lastID(0), _listeners(0)
     {
 
     }
 
-    EventDispatcher::~EventDispatcher()
+    template<class T>
+    EventDispatcherT<T>::~EventDispatcherT()
     {
         __doCheck();
         delete _listeners;
     }
 
-    int EventDispatcher::addEventListener(eventType et, const EventCallback& cb)
+    template<class T>
+    int EventDispatcherT<T>::addEventListener(eventType et, const EventCallback& cb)
     {
         __doCheck();
 
@@ -50,7 +53,8 @@ namespace oxygine
         return ls.id;
     }
 
-    void EventDispatcher::removeEventListener(int id)
+    template<class T>
+    void EventDispatcherT<T>::removeEventListener(int id)
     {
         __doCheck();
 
@@ -68,7 +72,8 @@ namespace oxygine
         }
     }
 
-    void EventDispatcher::removeEventListener(eventType et, const EventCallback& cb)
+    template<class T>
+    void EventDispatcherT<T>::removeEventListener(eventType et, const EventCallback& cb)
     {
         __doCheck();
 
@@ -89,7 +94,8 @@ namespace oxygine
         }
     }
 
-    bool EventDispatcher::hasEventListeners(void* CallbackThis)
+    template<class T>
+    bool EventDispatcherT<T>::hasEventListeners(void* CallbackThis)
     {
         __doCheck();
         if (!_listeners)
@@ -104,7 +110,8 @@ namespace oxygine
         return false;
     }
 
-    bool EventDispatcher::hasEventListeners(eventType et, const EventCallback& cb)
+    template<class T>
+    bool EventDispatcherT<T>::hasEventListeners(eventType et, const EventCallback& cb)
     {
         __doCheck();
         if (!_listeners)
@@ -119,7 +126,8 @@ namespace oxygine
         return false;
     }
 
-    void EventDispatcher::removeEventListeners(void* CallbackThis)
+    template<class T>
+    void EventDispatcherT<T>::removeEventListeners(void* CallbackThis)
     {
         __doCheck();
         if (!_listeners)
@@ -137,17 +145,19 @@ namespace oxygine
         }
     }
 
-    void EventDispatcher::removeAllEventListeners()
+    template<class T>
+    void EventDispatcherT<T>::removeAllEventListeners()
     {
         delete _listeners;
         _listeners = 0;
     }
 
 
-    void EventDispatcher::dispatchEvent(Event* event)
+    template<class T>
+    void EventDispatcherT<T>::dispatchEvent(Event* event)
     {
-        if (!event->target)
-            event->target = this;
+//        if (!event->target)
+  //          event->target = this;
 
         __doCheck();
         if (!_listeners)
@@ -181,7 +191,7 @@ namespace oxygine
         for (size_t i = 0; i != num; ++i)
         {
             listenerbase& ls = copy[i];
-            event->currentTarget = this;
+            //event->currentTarget = this;
             event->listenerID = ls.id;
             ls.cb(event);
             if (event->stopsImmediatePropagation)
@@ -199,10 +209,13 @@ namespace oxygine
 #endif
     }
 
-    int EventDispatcher::getListenersCount() const
+    template<class T>
+    int EventDispatcherT<T>::getListenersCount() const
     {
         if (!_listeners)
             return 0;
         return (int)_listeners->size();
     }
+
+    template class EventDispatcherT<Object>;
 }
