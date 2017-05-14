@@ -28,13 +28,27 @@ static HttpRequestTask *createTask()
     return self;
 }
 
--(oxygine::HttpRequestCocoaTask*) getTask:(NSObject*)object remove:(BOOL)remove
+-(oxygine::HttpRequestCocoaTask*) getTask:(NSObject*)object
 {
     NSValue *taskValue = objc_getAssociatedObject(object, &taskKey);
-    oxygine::HttpRequestCocoaTask* task = (oxygine::HttpRequestCocoaTask*)taskValue.pointerValue;
-    if (remove)
-        objc_removeAssociatedObjects(object);
+    oxygine::spAsyncTask *sp = ((oxygine::spAsyncTask*)taskValue.pointerValue);
+    oxygine::HttpRequestCocoaTask* task = static_cast<oxygine::HttpRequestCocoaTask*>(sp->get());
+    /*
+     if (remove)
+     {
+     objc_removeAssociatedObjects(object);
+     sadsa
+     }
+     */
     return task;
+}
+
+
+-(void) removeTask:(NSObject*)object
+{
+    NSValue *taskValue = objc_getAssociatedObject(object, &taskKey);
+    oxygine::spAsyncTask *sp = ((oxygine::spAsyncTask*)taskValue.pointerValue);
+    delete sp;
 }
 
 #pragma mark - NSURLSessionTaskDelegate
@@ -44,7 +58,7 @@ static HttpRequestTask *createTask()
     NSLog(@"Session %@ download task %@ finished downloading with error %@\n",session, task, error);
     
     
-    oxygine::HttpRequestCocoaTask* httpRequestTask = [self getTask:task remove:true];
+    oxygine::HttpRequestCocoaTask* httpRequestTask = [self getTask:task];
     
     if (error)
     {
@@ -54,6 +68,8 @@ static HttpRequestTask *createTask()
     {
         httpRequestTask->complete_(false);
     }
+    
+    [self removeTask:task];
 }
 
 
@@ -62,7 +78,7 @@ static HttpRequestTask *createTask()
 // Not used yet (using completion handler for data tasks)
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask  didReceiveData:(NSData *)data
 {
-    oxygine::HttpRequestCocoaTask* task = [self getTask:dataTask remove:false];
+    oxygine::HttpRequestCocoaTask* task = [self getTask:dataTask];
     if (!task)
         return;
     task->write(data);
@@ -81,7 +97,7 @@ didReceiveResponse:(NSURLResponse *)response
         
         int resp = (int)httpResponse.statusCode;
         
-        oxygine::HttpRequestCocoaTask* task = [self getTask:dataTask remove:false];
+        oxygine::HttpRequestCocoaTask* task = [self getTask:dataTask];
         if (task)
         {
             task->gotResponse(resp, size);
@@ -183,7 +199,7 @@ namespace oxygine
         else
             onComplete();
         
-        releaseRef();
+        //releaseRef();
     }
     
     void HttpRequestCocoaTask::gotResponse(int resp, size_t expectedSize)
@@ -195,7 +211,7 @@ namespace oxygine
     
     void HttpRequestCocoaTask::_run()
     {
-        addRef();
+        //addRef();
         
         NSString *urlString = [NSString stringWithUTF8String:_url.c_str()];
         NSURL *url = [NSURL URLWithString:urlString];
@@ -221,7 +237,9 @@ namespace oxygine
             
         task = [session dataTaskWithRequest:request];
         
-        NSValue *taskValue = [NSValue valueWithPointer:this];
+        oxygine::spAsyncTask *ptr = new oxygine::spAsyncTask(shared_from_this());
+        
+        NSValue *taskValue = [NSValue valueWithPointer:ptr];
         objc_setAssociatedObject(task, &taskKey, taskValue, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         
         log::messageln("created task session: %x", task);
