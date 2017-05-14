@@ -73,6 +73,10 @@ namespace oxygine
                 if (addref)
                 {
                     addRef();
+                    if (!core::isMainThread())
+                        sleep(10);
+
+
                     core::getMainThreadDispatcher().postCallback([ = ]()
                     {
                         f();
