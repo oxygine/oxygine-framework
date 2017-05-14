@@ -45,11 +45,11 @@ namespace oxygine
             _jUtils = (jclass)env->NewGlobalRef(env->FindClass("org/oxygine/lib/Utils"));
             JNI_NOT_NULL(_jUtils);
 
-			_jUtils_getTimeUTCMS = env->GetStaticMethodID(_jUtils, "getTimeUTCMS", "()J");
-			JNI_NOT_NULL(_jUtils_getTimeUTCMS);
+            _jUtils_getTimeUTCMS = env->GetStaticMethodID(_jUtils, "getTimeUTCMS", "()J");
+            JNI_NOT_NULL(_jUtils_getTimeUTCMS);
 
-			_jUtils_getFreeSpace = env->GetStaticMethodID(_jUtils, "getFreeSpace", "(Ljava/lang/String;)J");
-			JNI_NOT_NULL(_jUtils_getFreeSpace);
+            _jUtils_getFreeSpace = env->GetStaticMethodID(_jUtils, "getFreeSpace", "(Ljava/lang/String;)J");
+            JNI_NOT_NULL(_jUtils_getFreeSpace);
 
             _jUtils_getLanguage = env->GetStaticMethodID(_jUtils, "getLanguage", "()Ljava/lang/String;");
             JNI_NOT_NULL(_jUtils_getLanguage);
@@ -124,17 +124,17 @@ namespace oxygine
     }
 
 
-	int64			jniGetFreeSpace(const char *path)
-	{
-		JNIEnv* env = jniGetEnv();
-		LOCAL_REF_HOLDER(env);
+    int64           jniGetFreeSpace(const char* path)
+    {
+        JNIEnv* env = jniGetEnv();
+        LOCAL_REF_HOLDER(env);
 
-		jstring jarg = env->NewStringUTF(path);
-		jlong value = env->CallStaticLongMethod(_jUtils, _jUtils_getFreeSpace, jarg);
-		return value;
+        jstring jarg = env->NewStringUTF(path);
+        jlong value = env->CallStaticLongMethod(_jUtils, _jUtils_getFreeSpace, jarg);
+        return value;
 
-		
-	}
+
+    }
 
     bool            jniExit()
     {

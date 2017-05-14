@@ -32,7 +32,7 @@ namespace oxygine
     bool            isNetworkAvailable();
 
 
-	int64			getFreeSpace(const char *fullpath = 0);
+    int64           getFreeSpace(const char* fullpath = 0);
 
     /**returns locale. ISO 639-1 */
     std::string     getLanguage();

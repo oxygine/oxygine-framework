@@ -42,13 +42,13 @@ namespace oxygine
         _suitableResponse(false),
         _responseCodeChecker(_defaultChecker200)
     {
-        _mainThreadSync = true;
+        setName("HttpRequestTask");
 
+        _mainThreadSync = true;
     }
 
     HttpRequestTask::~HttpRequestTask()
     {
-        log::messageln("~HttpRequestTask");
         if (_fhandle)
             file::close(_fhandle);
     }
@@ -181,7 +181,7 @@ namespace oxygine
 
     void HttpRequestTask::_onError()
     {
-        log::warning("http request error: %s", _url.c_str());
+        log::warning("http request error (%d): %s", _responseCode , _url.c_str());
     }
 
     void HttpRequestTask::_onComplete()

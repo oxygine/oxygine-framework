@@ -48,12 +48,10 @@ namespace oxygine
 
     HttpRequestJavaTask::HttpRequestJavaTask(): _handle(0)
     {
-        log::messageln("HttpRequestJavaTask %x", this);
     }
 
     HttpRequestJavaTask::~HttpRequestJavaTask()
     {
-        log::messageln("~HttpRequestJavaTask %x", this);
     }
 
     void HttpRequestJavaTask::_run()

@@ -1013,20 +1013,20 @@ namespace oxygine
         return true;
     }
 
-	int64 getFreeSpace(const char *fullpath /*= 0*/)
-	{
+    int64 getFreeSpace(const char* fullpath /*= 0*/)
+    {
 #ifdef __ANDROID__
-		if (fullpath)
-			return jniGetFreeSpace(fullpath);
-		return jniGetFreeSpace(file::wfs().getFullPath("").c_str());
+        if (fullpath)
+            return jniGetFreeSpace(fullpath);
+        return jniGetFreeSpace(file::wfs().getFullPath("").c_str());
 #elif __APPLE__
         return iosGetFreeDiskspace();
 #endif
-        
-		return std::numeric_limits<int64>::max();
-	}
 
-	std::string     getLanguage()
+        return std::numeric_limits<int64>::max();
+    }
+
+    std::string     getLanguage()
     {
 #ifdef __ANDROID__
         return jniGetLanguage();

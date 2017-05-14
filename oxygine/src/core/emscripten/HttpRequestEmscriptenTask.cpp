@@ -48,7 +48,6 @@ namespace oxygine
     {
         addRef();
 
-        log::messageln("HttpRequestEmscriptenTask::_run %s", _url.c_str());
         const char* method = _postData.empty() ? "GET" : "POST";
         if (!_postData.empty())
             _postData.push_back(0);
