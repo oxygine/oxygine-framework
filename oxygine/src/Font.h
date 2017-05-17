@@ -74,6 +74,7 @@ namespace oxygine
         typedef std::unordered_set<glyph, GlyphHasher> glyphs;
 #endif
         glyphs _glyphs;
+        bool _ignoreOptions;
 
         float _scale;
         bool _sdf;
