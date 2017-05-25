@@ -44,7 +44,7 @@ namespace oxygine
         int getTime()
         {
             static int64 startTime = getTimeUTCMS();
-            return getTimeUTCMS() - startTime;
+            return (int)(getTimeUTCMS() - startTime);
         }
 
         void enable()
