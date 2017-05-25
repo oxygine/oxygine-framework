@@ -1421,6 +1421,18 @@ namespace oxygine
         return t;
     }
 
+
+
+    spTween setTimeout(timeMS dur, const EventCallback& cb, spActor root)
+    {
+        if (!root)
+            root = getStage();
+        dur = std::max(dur, 1);
+        spTween t = root->addTween(TweenDummy(), dur);
+        t->setDoneCallback(cb);
+        return t;
+    }
+
     Transform getGlobalTransform2(spActor child, Actor* parent)
     {
         Transform t;
