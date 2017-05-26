@@ -21,19 +21,16 @@ namespace oxygine
 
     void HttpRequestEmscriptenTask::_onload(void* data, unsigned size)
     {
-        log::messageln("HttpRequestEmscriptenTask::_onload");
-        _response.assign((char*)data, (char*)data + size);
-        if (!_fname.empty())
-        {
-            file::write(_fname.c_str(), data, size);
-        }
+        _responseCode = 200;
+        gotHeaders();
+        write(data, size);
+
         onComplete();
         releaseRef();
     }
 
     void HttpRequestEmscriptenTask::_onerror(int, const char*)
     {
-        log::messageln("HttpRequestEmscriptenTask::_onerror");
         onError();
         releaseRef();
     }
