@@ -32,7 +32,7 @@ public:
         EventCallback cb = CLOSURE(this, &MainActor::buttonClicked);
         button->addEventListener(TouchEvent::CLICK, cb);
 
-#ifdef CLOSURE_FUNCTION //if your compiler supports lambda
+#if CLOSURE_FUNCTION //if your compiler supports lambda
 
         button->addEventListener(TouchEvent::CLICK, [](Event * e)->void
         {
