@@ -28,6 +28,9 @@ namespace oxygine
         VectorT3& operator*=(T);
         VectorT3& operator/=(T);
 
+        bool operator < (const VectorT3&) const;
+        bool operator > (const VectorT3&) const;
+
         template<class R>
         operator VectorT3<R> ()const;
 
@@ -159,6 +162,18 @@ namespace oxygine
     {
         T is = T(1.0) / s;
         x *= is; y *= is; z *= is; return (*this);
+    }
+
+    template <class T>
+    bool VectorT3<T>::operator < (const VectorT3& v) const
+    {
+        return scalar::sqrt(x*x + y*y + z*z) < scalar::sqrt(v.x*v.x + v.y*v.y + v.z*v.z);
+    }
+
+    template <class T>
+    bool VectorT3<T>::operator > (const VectorT3& v) const
+    {
+        return scalar::sqrt(x*x + y*y + z*z) > scalar::sqrt(v.x*v.x + v.y*v.y + v.z*v.z);
     }
 
     template <class T>

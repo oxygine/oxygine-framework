@@ -22,6 +22,9 @@ namespace oxygine
         VectorT2 operator - (const VectorT2&) const;
         VectorT2 operator - () const;
 
+        bool operator < (const VectorT2&) const;
+        bool operator > (const VectorT2&) const;
+
         void set(T x_, T y_) {x = x_; y = y_;}
         void setZero() {x = 0; y = 0;}
 
@@ -136,6 +139,18 @@ namespace oxygine
     VectorT2<T> VectorT2<T>::operator - () const
     {
         return VectorT2<T>(-x, -y);
+    }
+
+    template <class T>
+    bool VectorT2<T>::operator < (const VectorT2& v) const
+    {
+        return scalar::sqrt(x*x + y*y) < scalar::sqrt(v.x*v.x + v.y*v.y);
+    }
+
+    template <class T>
+    bool VectorT2<T>::operator > (const VectorT2& v) const
+    {
+        return scalar::sqrt(x*x + y*y) > scalar::sqrt(v.x*v.x + v.y*v.y);
     }
 
     template <class T>
