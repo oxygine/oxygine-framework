@@ -92,10 +92,10 @@ namespace oxygine
             }
             f();
         }
-
-    private:
-
+        
         void _complete();
         void _error();
+
+    private:
     };
 }
