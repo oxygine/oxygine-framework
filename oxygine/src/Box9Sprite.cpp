@@ -338,6 +338,7 @@ namespace oxygine
                 }
             }
         }
+        renderer->drawBatch();
     }
 
     void Box9Sprite::serialize(serializedata* data)
