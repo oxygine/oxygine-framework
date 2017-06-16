@@ -88,7 +88,8 @@ namespace oxygine
 
     void HttpRequestJavaTask::error_()
     {
-        core::getMainThreadDispatcher().postCallback([ = ]() {
+        core::getMainThreadDispatcher().postCallback([ = ]()
+        {
             _error();
             releaseRef();
         });
@@ -113,7 +114,8 @@ namespace oxygine
 
     void HttpRequestJavaTask::complete_()
     {
-        core::getMainThreadDispatcher().postCallback([ = ]() {
+        core::getMainThreadDispatcher().postCallback([ = ]()
+        {
             _complete();
             releaseRef();
         });
