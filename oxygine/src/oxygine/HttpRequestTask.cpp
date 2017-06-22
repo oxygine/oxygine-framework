@@ -226,7 +226,7 @@ namespace oxygine
 
 
         if (_fhandle)
-        { 
+        {
             unsigned int written = file::write(_fhandle, data, (unsigned int)size);
             if (written != size)
             {

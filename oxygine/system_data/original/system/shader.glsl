@@ -76,6 +76,8 @@ lowp vec2 my_step(lowp vec2 a, lowp vec2 b)
 	return step(a, b);
 #endif
 }
+
+lowp vec4 get_color()
 {
 
 #ifdef REPLACED_GET_BASE
