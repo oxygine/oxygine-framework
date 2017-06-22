@@ -32,12 +32,9 @@ namespace oxygine
 
         for (size_t i = 0; i < sz; ++i)
         {
-            jstring obj = (jstring)env->GetObjectArrayElement(jarray, i);
-            const char* str = env->GetStringUTFChars(obj, 0);
-
+            jstring jstr = (jstring)env->GetObjectArrayElement(jarray, i);
+            std::string str = jniGetString(env, jstr);
             res.emplace_back(str);
-
-            env->ReleaseStringUTFChars(obj, str);
         }
     }
 }

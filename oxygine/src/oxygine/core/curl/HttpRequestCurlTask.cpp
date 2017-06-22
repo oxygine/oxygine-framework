@@ -203,7 +203,6 @@ namespace oxygine
 
     HttpRequestTaskCURL::~HttpRequestTaskCURL()
     {
-        log::messageln("~HttpRequestTaskCURL");
         if (_easy)
             curl_easy_cleanup(_easy);
         _easy = 0;

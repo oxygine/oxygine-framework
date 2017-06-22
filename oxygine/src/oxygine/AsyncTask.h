@@ -76,6 +76,10 @@ namespace oxygine
                 if (addref)
                 {
                     addRef();
+                    if (!core::isMainThread())
+                        sleep(10);
+
+
                     core::getMainThreadDispatcher().postCallback([ = ]()
                     {
                         f();
@@ -92,9 +96,9 @@ namespace oxygine
             f();
         }
 
-    private:
-
         void _complete();
         void _error();
+
+    private:
     };
 }

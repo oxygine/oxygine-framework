@@ -3,15 +3,16 @@
 #include <typeinfo>
 namespace oxygine
 {
+#define LOGD(arg) (log::messageln("at: %s (%d) %s", getName().c_str(), getObjectID(), arg))
 
     AsyncTask::AsyncTask() : _status(status_not_started), _mainThreadSync(false)
     {
-
+        setName("AsyncTask");
     }
 
     AsyncTask::~AsyncTask()
     {
-
+        LOGD("~");
     }
 
     void AsyncTask::sync(const std::function< void()>& f)
@@ -29,8 +30,15 @@ namespace oxygine
         OX_ASSERT(_status == status_not_started);
         _status = status_inprogress;
 
+        LOGD("run");
+
         bool ok = _prerun();
-        log::messageln("AsyncTask::run %d - %s", getObjectID(), typeid(*this).name());
+
+        if (!ok)
+        {
+            LOGD("_prerun not ok");
+        }
+
 
         sync([ = ]()
         {
@@ -43,8 +51,7 @@ namespace oxygine
 
     void AsyncTask::_complete()
     {
-        OX_ASSERT(core::isMainThread());
-        log::messageln("AsyncTask::_complete %d - %s", getObjectID(), typeid(*this).name());
+        LOGD("_complete");
 
         _status = status_completed;
         _onFinal(false);
@@ -63,8 +70,8 @@ namespace oxygine
 
     void AsyncTask::_error()
     {
-        OX_ASSERT(core::isMainThread());
-        log::messageln("AsyncTask::_error %d - %s", getObjectID(), typeid(*this).name());
+        LOGD("_error");
+
 
         _status = status_failed;
         _onFinal(true);

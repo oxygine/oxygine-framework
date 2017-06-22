@@ -65,8 +65,17 @@ lowp vec4 get_base()
 
 	return base;
 }
-
-lowp vec4 get_color()
+lowp vec2 my_step(lowp vec2 a, lowp vec2 b)
+{
+#ifdef ANDROID
+	lowp vec2 r;
+	r.x = a.x < b.x  ? 1.0 : 0.0;
+	r.y = a.y < b.y  ? 1.0 : 0.0;
+	return r;
+#else
+	return step(a, b);
+#endif
+}
 {
 
 #ifdef REPLACED_GET_BASE
@@ -78,8 +87,8 @@ lowp vec4 get_color()
 
 
 #ifdef MASK
-	mediump vec2 uv2 = clamp(result_uv2, clip_mask.xy, clip_mask.zw);
-	lowp vec4 mask = texture2D(mask_texture, uv2);
+	//mediump vec2 uv2 = clamp(result_uv2, clip_mask.xy, clip_mask.zw);
+	lowp vec4 mask = texture2D(mask_texture, result_uv2);
 
 #ifdef MASK_R_CHANNEL
 	lowp float mask_alpha = mask.r + 0.001;	
@@ -87,7 +96,11 @@ lowp vec4 get_color()
 	lowp float mask_alpha = mask.a + 0.001;
 #endif
 
-	base = base * mask_alpha;
+	lowp vec2 sc1 = my_step(clip_mask.xy, result_uv2.xy);
+	lowp vec2 sc2 = my_step(result_uv2.xy, clip_mask.zw);
+	lowp float m = mask_alpha * sc1.x * sc1.y * sc2.x * sc2.y;
+
+	base = base * m;
 #endif
 
 #ifdef DONT_MULT_BY_RESULT_COLOR

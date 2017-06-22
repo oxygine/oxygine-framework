@@ -31,11 +31,11 @@ namespace oxygine
         {
         public:
             enum {EVENT = PROGRESS};
-            ProgressEvent(int Delta, int Loaded, int Total) : Event(PROGRESS), delta(Delta), loaded(Loaded), total(Total) {};
+            ProgressEvent(size_t Delta, size_t Loaded, size_t Total) : Event(PROGRESS), delta(Delta), loaded(Loaded), total(Total) {};
 
-            int delta;
-            int loaded;
-            int total;
+            size_t delta;
+            size_t loaded;
+            size_t total;
         };
 
         HttpRequestTask();
@@ -70,12 +70,12 @@ namespace oxygine
         void _finalize(bool error) override;
 
         void gotHeaders();
-        void write(const void* data, unsigned int size);
+        void write(const void* data, size_t size);
 
         //async
-        void asyncProgress(int delta, int loaded, int total);
+        void asyncProgress(size_t delta, size_t loaded, size_t total);
 
-        void dispatchProgress(int delta, int loaded, int total);
+        void dispatchProgress(size_t delta, size_t loaded, size_t total);
 
         virtual void _setFileName(const std::string& name) {}
         virtual void _setUrl(const std::string& url) {}
