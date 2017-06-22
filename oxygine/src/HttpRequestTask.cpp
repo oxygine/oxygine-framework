@@ -156,13 +156,13 @@ namespace oxygine
         return true;
     }
 
-    void HttpRequestTask::dispatchProgress(int delta, int loaded, int total)
+    void HttpRequestTask::dispatchProgress(size_t delta, size_t loaded, size_t total)
     {
         ProgressEvent event(delta, loaded, total);
         dispatchEvent(&event);
     }
 
-    void HttpRequestTask::asyncProgress(int delta, int loaded, int total)
+    void HttpRequestTask::asyncProgress(size_t delta, size_t loaded, size_t total)
     {
         if (_progressDispatched && loaded != total)//dispatch progress only once per frame
         {
@@ -219,15 +219,15 @@ namespace oxygine
             asyncProgress(_receivedContentSize, _receivedContentSize, _expectedContentSize);
     }
 
-    void HttpRequestTask::write(const void* data, unsigned int size)
+    void HttpRequestTask::write(const void* data, size_t size)
     {
         if (!_suitableResponse)
             return;
 
 
         if (_fhandle)
-        {
-            unsigned int written = file::write(_fhandle, data, size);
+        { 
+            unsigned int written = file::write(_fhandle, data, (unsigned int)size);
             if (written != size)
             {
                 log::messageln("WRITE FILE ERROR %d %d", written, size);

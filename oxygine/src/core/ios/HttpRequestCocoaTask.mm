@@ -77,7 +77,7 @@ didReceiveResponse:(NSURLResponse *)response
     {
         NSHTTPURLResponse *httpResponse = ((NSHTTPURLResponse *)response);
         
-        long long size = [httpResponse expectedContentLength];
+        size_t size = size_t([httpResponse expectedContentLength]);
         
         int resp = (int)httpResponse.statusCode;
         
@@ -172,7 +172,7 @@ namespace oxygine
     void HttpRequestCocoaTask::write(NSData *data)
     {
         const void *ptr = [data bytes];
-        unsigned int len = [data length];
+        size_t len = [data length];
         HttpRequestTask::write(ptr, len);
     }
     
