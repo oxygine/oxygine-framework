@@ -85,7 +85,7 @@ void run()
 
 #if TARGET_OS_IPHONE || TARGET_OS_SIMULATOR
     // On iPhone mainloop is called automatically by CADisplayLink, see int main() below
-    return;
+    //return;
 #endif
 
     // This is the main game loop.
@@ -151,7 +151,7 @@ extern "C"
 
 #if TARGET_OS_IPHONE || TARGET_OS_SIMULATOR
         // If parameter 2 is set to 1, refresh rate will be 60 fps, 2 - 30 fps, 3 - 15 fps.
-        SDL_iPhoneSetAnimationCallback(core::getWindow(), 1, one, nullptr);
+        //SDL_iPhoneSetAnimationCallback(core::getWindow(), 1, one, nullptr);
 #endif
 
 #if EMSCRIPTEN
