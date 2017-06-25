@@ -119,6 +119,7 @@ namespace oxygine
         /**add callback would be called when tween done.  Could be added more than one.
         setDoneCallback is faster because it doesn't allocate memory for list internally*/
         void addDoneCallback(const EventCallback& cb);
+		void addDoneCallback(int percent, const EventCallback& cb);
         /**set Easing function*/
         void setEase(EASE ease) { _ease = ease; }
         /**set Global Easing function */
@@ -184,6 +185,8 @@ namespace oxygine
 
         EventCallback _cbDone;
         Actor* _client;
+
+		std::list< std::pair< int, EventCallback > >		m_CompleteEvents;
 
         spObject _data;
     };
