@@ -391,6 +391,8 @@ namespace oxygine
             stream << " " << (s.breakLongWords ? "breakLongWords=1" : "breakLongWords=0");
         if (!onlydiff || def.kerning != s.kerning)
             stream << " kerning=" << s.kerning;
+        if (!onlydiff || def.baselineScale != s.baselineScale)
+            stream << " baselineScale=" << s.baselineScale;
         if (!onlydiff || def.linesOffset != s.linesOffset)
             stream << " linesOffset=" << s.linesOffset;
         if (!onlydiff || def.fontSize != s.fontSize)
