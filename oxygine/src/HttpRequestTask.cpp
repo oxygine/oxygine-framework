@@ -116,6 +116,11 @@ namespace oxygine
         return _fname;
     }
 
+    const std::string& HttpRequestTask::getUrl() const
+    {
+        return _url;
+    }
+
     bool HttpRequestTask::_prerun()
     {
         _progressDeltaDelayed = 0;

@@ -44,6 +44,7 @@ namespace oxygine
         const std::vector<unsigned char>&   getResponse() const;
         const std::vector<unsigned char>&   getPostData() const;
         const std::string&                  getFileName() const;
+        const std::string&                  getUrl() const;
 
 
         /**swap version of getResponse if you want to modify result buffer inplace*/
