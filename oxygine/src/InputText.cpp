@@ -107,6 +107,9 @@ namespace oxygine
     void InputText::updateText()
     {
         _textActor->setText(_txt);
+
+        Event evnt(EVENT_TEXT_CHANGED);
+        dispatchEvent(&evnt);
     }
 
     bool findCode(const char* str, int c)
@@ -210,7 +213,7 @@ namespace oxygine
                     break;
                     case SDLK_RETURN:
                     {
-                        Event evnt(Event::COMPLETE);
+                        Event evnt(EVENT_COMPLETE);
                         dispatchEvent(&evnt);
                     }
                     break;
