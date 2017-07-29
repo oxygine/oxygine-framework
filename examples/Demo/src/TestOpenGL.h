@@ -143,7 +143,7 @@ public:
         CHECKGL();
 
         //reset states to defaults after direct opengl usage
-        rc().reset();
+        rsCache().reset();
     }
 };
 

@@ -89,12 +89,12 @@ public:
         ResAnim* brush = resources.getResAnim("brush");
         AnimationFrame frame = brush->getFrame(0);
         const Diffuse& df = frame.getDiffuse();
-        rc().setTexture(0, df.base);
+        rsCache().setTexture(0, df.base);
         if (paint)
-            rc().setBlendMode(blend_premultiplied_alpha);
+            rsCache().setBlendMode(blend_premultiplied_alpha);
         else
         {
-            rc().setBlendMode(blend_add);
+            rsCache().setBlendMode(blend_add);
             oxglBlendEquation(GL_FUNC_REVERSE_SUBTRACT);
         }
 

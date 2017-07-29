@@ -27,7 +27,7 @@
 #include "ThreadDispatcher.h"
 #include "../PostProcess.h"
 #include "../actor/TextField.h"
-
+#include "../InputText.h"
 #ifdef __S3E__
 #include "s3e.h"
 #include "IwGL.h"

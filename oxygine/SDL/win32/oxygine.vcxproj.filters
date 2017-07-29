@@ -49,6 +49,9 @@
     <Filter Include="src\actor">
       <UniqueIdentifier>{969670a7-a5c7-4510-9635-59c4787ea429}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\tween">
+      <UniqueIdentifier>{a6234509-4f2a-4666-966c-a848e4aae3e6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\oxygine\math\AffineTransform.cpp">
@@ -150,9 +153,6 @@
     <ClCompile Include="..\..\src\oxygine\core\log.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\oxygine\core\Mem2Native.cpp">
-      <Filter>src\core</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\oxygine\core\Mutex.cpp">
       <Filter>src\core</Filter>
     </ClCompile>
@@ -237,12 +237,6 @@
     <ClCompile Include="..\..\src\oxygine\MaskedRenderer.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\oxygine\TweenQueue.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\oxygine\Tween.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\oxygine\Serializable.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -258,9 +252,6 @@
     <ClCompile Include="..\..\src\oxygine\core\curl\HttpRequestCurlTask.cpp">
       <Filter>src\core\curl</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\oxygine\TweenAnim.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\oxygine\utils\cdecode.c">
       <Filter>src\utils</Filter>
     </ClCompile>
@@ -268,9 +259,6 @@
       <Filter>src\json</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\oxygine\STDMaterial.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\oxygine\TweenAlphaFade.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\oxygine\Material.cpp">
@@ -288,14 +276,8 @@
     <ClCompile Include="..\..\src\oxygine\PostProcess.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\oxygine\TweenOutline.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\oxygine\core\ThreadDispatcher.cpp">
       <Filter>src\core</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\oxygine\TweenGlow.cpp">
-      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\oxygine\key.cpp">
       <Filter>src</Filter>
@@ -356,6 +338,24 @@
     </ClCompile>
     <ClCompile Include="..\..\src\oxygine\actor\WebImage.cpp">
       <Filter>src\actor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\oxygine\tween\Tween.cpp">
+      <Filter>src\tween</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\oxygine\tween\TweenAlphaFade.cpp">
+      <Filter>src\tween</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\oxygine\tween\TweenAnim.cpp">
+      <Filter>src\tween</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\oxygine\tween\TweenGlow.cpp">
+      <Filter>src\tween</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\oxygine\tween\TweenOutline.cpp">
+      <Filter>src\tween</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\oxygine\tween\TweenQueue.cpp">
+      <Filter>src\tween</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -500,9 +500,6 @@
     <ClInclude Include="..\..\src\oxygine\core\log.h">
       <Filter>src\core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\oxygine\core\Mem2Native.h">
-      <Filter>src\core</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\oxygine\core\Mutex.h">
       <Filter>src\core</Filter>
     </ClInclude>
@@ -620,12 +617,6 @@
     <ClInclude Include="..\..\src\oxygine\STDRenderer.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\oxygine\TweenQueue.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\oxygine\Tween.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\oxygine\Serializable.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -653,9 +644,6 @@
     <ClInclude Include="..\..\src\oxygine\oxygine_include.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\oxygine\TweenAnim.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\oxygine\utils\cdecode.h">
       <Filter>src\utils</Filter>
     </ClInclude>
@@ -666,9 +654,6 @@
       <Filter>src\json</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\oxygine\STDMaterial.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\oxygine\TweenAlphaFade.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\oxygine\Material.h">
@@ -689,14 +674,8 @@
     <ClInclude Include="..\..\src\oxygine\PostProcess.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\oxygine\TweenOutline.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\oxygine\core\ThreadDispatcher.h">
       <Filter>src\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\oxygine\TweenGlow.h">
-      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\oxygine\key.h">
       <Filter>src</Filter>
@@ -763,6 +742,24 @@
     </ClInclude>
     <ClInclude Include="..\..\src\oxygine\actor\WebImage.h">
       <Filter>src\actor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\oxygine\tween\Tween.h">
+      <Filter>src\tween</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\oxygine\tween\TweenAlphaFade.h">
+      <Filter>src\tween</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\oxygine\tween\TweenAnim.h">
+      <Filter>src\tween</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\oxygine\tween\TweenGlow.h">
+      <Filter>src\tween</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\oxygine\tween\TweenOutline.h">
+      <Filter>src\tween</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\oxygine\tween\TweenQueue.h">
+      <Filter>src\tween</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
