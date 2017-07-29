@@ -17,19 +17,25 @@ namespace oxygine
         ~WebImage();
 
         void load(const std::string& url);
+        void load(spHttpRequestTask task);
         void unload();
 
     private:
+        void _load(spHttpRequestTask task);
+
         void loaded(Event*);
         void error(Event*);
         void sizeChanged(const Vector2& size) override;
         void fit();
+
+        void init();
 
         ResAnim _rs;
 
         spSprite _image;
 
         spHttpRequestTask _http;
+        bool _allowSwap;
     };
 }
 

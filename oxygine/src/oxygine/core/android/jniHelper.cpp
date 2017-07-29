@@ -37,4 +37,16 @@ namespace oxygine
             res.emplace_back(str);
         }
     }
+
+    jobjectArray jniGetObjectStringArray(const vector<std::string>& src, JNIEnv* env)
+    {
+        jobjectArray res = env->NewObjectArray(src.size(), env->FindClass("java/lang/String"), nullptr);
+
+        for (size_t i = 0; i < src.size(); ++i)
+        {
+            env->SetObjectArrayElement(res, i, env->NewStringUTF(src[i].c_str()));
+        }
+
+        return res;
+    }
 }

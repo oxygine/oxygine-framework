@@ -1,6 +1,7 @@
 #pragma once
 #include "oxygine-include.h"
 #include "EventDispatcher.h"
+#include "Event.h"
 #include <string>
 
 #ifndef __S3E__
@@ -14,6 +15,9 @@ namespace oxygine
     class InputText: public EventDispatcher
     {
     public:
+        enum {EVENT_TEXT_CHANGED = sysEventID('I', 'T', 'C') };
+        enum {EVENT_COMPLETE = Event::COMPLETE};
+
         InputText();
         ~InputText();
 

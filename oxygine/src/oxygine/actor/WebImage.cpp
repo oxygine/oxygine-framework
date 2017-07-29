@@ -15,7 +15,7 @@ namespace oxygine
     }
 
 
-    WebImage::WebImage() : _http(0)
+    WebImage::WebImage() : _http(0), _allowSwap(false)
     {
         setSize(64, 64);
         _image = new Sprite;
@@ -30,15 +30,42 @@ namespace oxygine
 
     void WebImage::load(const std::string& url)
     {
+        _allowSwap = true;
         _image->setResAnim(0);
 
-        _http = HttpRequestTask::create();
-        if (!_http)
+        spHttpRequestTask task = HttpRequestTask::create();
+        if (!task)
             return;
-        _http->setUrl(url);
-        _http->run();
+        task->setUrl(url);
+        task->run();
 
-        addRef();//protect actor for delete
+        _load(task);
+    }
+
+    void WebImage::load(spHttpRequestTask task)
+    {
+        _allowSwap = false;
+        _image->setResAnim(0);
+        _load(task);
+    }
+
+    void WebImage::_load(spHttpRequestTask task)
+    {
+        _http = task;
+
+        if (task->getStatus() == HttpRequestTask::status_completed)
+        {
+            init();
+            return;
+        }
+
+        if (task->getStatus() == HttpRequestTask::status_failed)
+        {
+            return;
+        }
+
+
+        addRef();//protect actor from delete
         _http->addEventListener(AsyncTask::COMPLETE, CLOSURE(this, &WebImage::loaded));
         _http->addEventListener(AsyncTask::ERROR, CLOSURE(this, &WebImage::error));
     }
@@ -47,6 +74,30 @@ namespace oxygine
     {
         dispatchEvent(e);
         releaseRef();
+        _http = 0;
+    }
+
+    void WebImage::init()
+    {
+        file::buffer bf;
+        if (_allowSwap)
+        {
+            _http->getResponseSwap(bf.data);
+            _allowSwap = false;
+        }
+        else
+        {
+            bf.data = _http->getResponse();
+        }
+
+        Image mt;
+        if (mt.init(bf, true))
+        {
+            _rs.init(&mt);
+            _image->setResAnim(&_rs);
+
+            fit();
+        }
         _http = 0;
     }
 
@@ -61,18 +112,7 @@ namespace oxygine
 
         dispatchEvent(e);
 
-        file::buffer bf;
-        _http->getResponseSwap(bf.data);
-
-        Image mt;
-        if (mt.init(bf, true))
-        {
-            _rs.init(&mt);
-            _image->setResAnim(&_rs);
-
-            fit();
-        }
-
+        init();
         _http = 0;
         releaseRef();
     }

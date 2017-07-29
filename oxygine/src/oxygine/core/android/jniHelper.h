@@ -48,4 +48,6 @@ namespace oxygine
 
     std::string jniGetString(JNIEnv* env, jstring jstr);
     void        jniGetStringArray(vector<std::string>& res, JNIEnv* env, jobjectArray jarray);
+    jobjectArray jniGetObjectStringArray(const vector<std::string>& src, JNIEnv* env);
+
 }

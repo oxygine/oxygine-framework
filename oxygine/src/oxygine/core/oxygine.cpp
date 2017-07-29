@@ -103,83 +103,6 @@ namespace oxygine
 
     static pthread_t _mainThread;
 
-#ifdef __S3E__
-
-    int32 pointerEvent(void* sysData, void* u)
-    {
-        s3ePointerEvent* ev = (s3ePointerEvent*)sysData;
-        int type = 0;
-        switch (ev->m_Button)
-        {
-            case S3E_POINTER_BUTTON_SELECT:
-                type = ev->m_Pressed ? TouchEvent::TOUCH_DOWN : TouchEvent::TOUCH_UP;
-                break;
-            case S3E_POINTER_BUTTON_MOUSEWHEELUP:
-                type = TouchEvent::WHEEL_UP;
-                break;
-            case S3E_POINTER_BUTTON_MOUSEWHEELDOWN:
-                type = TouchEvent::WHEEL_DOWN;
-                break;
-        }
-
-        MouseButton b = MouseButton_Left;
-        switch (ev->m_Button)
-        {
-            case S3E_POINTER_BUTTON_LEFTMOUSE: b = MouseButton_Left; break;
-            case S3E_POINTER_BUTTON_RIGHTMOUSE: b = MouseButton_Right; break;
-            case S3E_POINTER_BUTTON_MIDDLEMOUSE: b = MouseButton_Middle; break;
-        }
-
-        Input::instance.sendPointerButtonEvent(getStage(), b, (float)ev->m_x, (float)ev->m_y, 1.0f, type, &Input::instance._pointerMouse);
-
-        return 0;
-    }
-
-    int32 pointerMotionEvent(void* sysData, void* u)
-    {
-        s3ePointerMotionEvent* ev = (s3ePointerMotionEvent*)sysData;
-
-        Input::instance.sendPointerMotionEvent(getStage(), (float)ev->m_x, (float)ev->m_y, 1.0f, &Input::instance._pointerMouse);
-        return 0;
-    }
-
-    int32 pointerTouchEvent(void* sysData, void* u)
-    {
-        Input* This = (Input*)u;
-        s3ePointerTouchEvent* ev = (s3ePointerTouchEvent*)sysData;
-        int id = ev->m_TouchID + 1;
-
-        Input::instance.sendPointerButtonEvent(getStage(), MouseButton_Touch, (float)ev->m_x, (float)ev->m_y, 1.0f, ev->m_Pressed ? TouchEvent::TOUCH_DOWN : TouchEvent::TOUCH_UP, Input::instance.getTouchByIndex(id));
-
-        return 0;
-    }
-
-    int32 pointerTouchMotionEvent(void* sysData, void* u)
-    {
-        Input* This = (Input*)u;
-        s3ePointerTouchMotionEvent* ev = (s3ePointerTouchMotionEvent*)sysData;
-        int id = ev->m_TouchID + 1;
-
-        Input::instance.sendPointerMotionEvent(getStage(), (float)ev->m_x, (float)ev->m_y, 1.0f, Input::instance.getTouchByIndex(id));
-
-        return 0;
-    }
-
-    int32 applicationPause(void* systemData, void* userData)
-    {
-        Event ev(Stage::DEACTIVATE);
-        getStage()->dispatchEvent(&ev);
-        return 0;
-    }
-
-    int32 applicationUnPause(void* systemData, void* userData)
-    {
-        Event ev(Stage::ACTIVATE);
-        getStage()->dispatchEvent(&ev);
-        return 0;
-    }
-#endif
-
     namespace key
     {
         void update();
@@ -854,6 +777,8 @@ namespace oxygine
         {
             log::messageln("core::release");
 
+            InputText::stopAnyInput();
+
             _threadMessages.clear();
             _uiMessages.clear();
 
@@ -881,6 +806,7 @@ namespace oxygine
                 Stage::instance->cleanup();
             Stage::instance = 0;
             file::free();
+
 
             Resources::unregisterResourceType("atlas");
             Resources::unregisterResourceType("buffer");

@@ -32,18 +32,10 @@ namespace oxygine
 
     void InputText::start(spTextField ta)
     {
-#ifdef __S3E__
-        log::error("InputText isn't implemented for MARMALADE");
-#endif
-
         addRef();
 
-        //if (_active == this)
-        //  return;
         if (_active)
-        {
             _active->stop();
-        }
 
         _active = this;
 
@@ -51,12 +43,26 @@ namespace oxygine
 
         core::getDispatcher()->addEventListener(core::EVENT_SYSTEM, CLOSURE(this, &InputText::_onSysEvent));
 
-#ifndef __S3E__
         SDL_StartTextInput();
-#endif
-        //log::messageln("InputText::start  %x", this);
+
         _txt = "";
         updateText();
+    }
+
+
+
+    void InputText::stop()
+    {
+        if (!_textActor)
+            return;
+
+        SDL_StopTextInput();
+        core::getDispatcher()->removeEventListeners(this);
+
+        _active = 0;
+        _textActor = 0;
+        //log::messageln("InputText::stop  %x", this);
+        releaseRef();
     }
 
     void InputText::setAllowedSymbols(const std::string& utf8str)
@@ -84,19 +90,6 @@ namespace oxygine
         _maxLength = v;
     }
 
-    void InputText::stop()
-    {
-#ifndef __S3E__
-        SDL_StopTextInput();
-#endif
-        core::getDispatcher()->removeEventListeners(this);
-
-        _active = 0;
-        _textActor = 0;
-        //log::messageln("InputText::stop  %x", this);
-        releaseRef();
-    }
-
     void InputText::_onSysEvent(Event* event)
     {
 #ifndef __S3E__
@@ -107,6 +100,9 @@ namespace oxygine
     void InputText::updateText()
     {
         _textActor->setText(_txt);
+
+        Event evnt(EVENT_TEXT_CHANGED);
+        dispatchEvent(&evnt);
     }
 
     bool findCode(const char* str, int c)
@@ -210,7 +206,7 @@ namespace oxygine
                     break;
                     case SDLK_RETURN:
                     {
-                        Event evnt(Event::COMPLETE);
+                        Event evnt(EVENT_COMPLETE);
                         dispatchEvent(&evnt);
                     }
                     break;
