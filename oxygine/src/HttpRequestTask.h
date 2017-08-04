@@ -69,6 +69,8 @@ namespace oxygine
         void _dispatchComplete() override;
         void _finalize(bool error) override;
 
+        std::string _getRunInfo() const override { return _url; }
+
         void gotHeaders();
         void write(const void* data, size_t size);
 
