@@ -57,6 +57,8 @@ namespace oxygine
         int getListenersCount() const;
         int getLastListenerID() const { return _lastID; }
 
+        const EventCallback& getListenerByIndex(int index) const { return (*_listeners)[index].cb; }
+
 
     protected:
 
