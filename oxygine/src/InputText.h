@@ -30,6 +30,7 @@ namespace oxygine
         void setDisallowedSymbols(const std::string& utf8str);
         void setDisallowedSymbols(const std::wstring& str);
         void setMaxTextLength(int);
+        void showCursor(bool show);
 
         static void stopAnyInput();
 
@@ -39,6 +40,9 @@ namespace oxygine
         std::string _allowed;
         std::string _disallowed;
         std::string _txt;
+
+        spColorRectSprite _cursor;
+
         int _maxLength;
         void updateText();
         static InputText* _active;
