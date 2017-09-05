@@ -88,6 +88,10 @@
 
 #define OXYGINE_ASSERT2LOG 1
 
+#ifdef EMSCRIPTEN
+void emscStackTrace();
+#endif
+
 namespace oxygine { namespace log { void error(const char* format, ...); } }
 
 #define OX_LOG_ERROR(x)     if (!(x)) {oxygine::log::error("Assert! %s in %s:%d", #x, __FILE__, __LINE__);}

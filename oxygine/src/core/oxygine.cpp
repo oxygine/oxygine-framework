@@ -73,8 +73,23 @@ extern "C"
 #endif
 
 
-#if EMSCRIPTEN
+#ifdef EMSCRIPTEN
 #   define HANDLE_FOCUS_LOST 0
+
+void emscStackTrace()
+{
+    EM_ASM({
+        console.log(new Error().stack);
+        /*
+        try {
+            throw new Error();
+        } catch (e) {
+            print(e.stack);
+        } 
+        */
+    });
+}
+
 #elif !SDL_VIDEO_OPENGL
 #   define HANDLE_FOCUS_LOST 1
 #else
