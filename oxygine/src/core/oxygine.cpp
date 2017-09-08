@@ -78,14 +78,15 @@ extern "C"
 
 void emscStackTrace()
 {
-    EM_ASM({
+    EM_ASM(
+    {
         console.log(new Error().stack);
         /*
         try {
             throw new Error();
         } catch (e) {
             print(e.stack);
-        } 
+        }
         */
     });
 }

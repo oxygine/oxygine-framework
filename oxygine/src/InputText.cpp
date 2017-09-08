@@ -54,7 +54,7 @@ namespace oxygine
             fs = _textActor->getFont()->getSize();
         float h = fs * 0.9f;
         _cursor->setSize(h / 10.0f, h);
-        
+
         _cursor->setColor(_textActor->getColor() * _textActor->getStyle().color);
 
         core::getDispatcher()->addEventListener(core::EVENT_SYSTEM, CLOSURE(this, &InputText::_onSysEvent));
@@ -119,7 +119,7 @@ namespace oxygine
         _textActor->setText(_txt);
         float x = _textActor->getTextRect().getRight();
         _cursor->setX(x);
-        
+
 
         Event evnt(EVENT_TEXT_CHANGED);
         dispatchEvent(&evnt);
