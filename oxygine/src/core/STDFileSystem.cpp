@@ -4,8 +4,13 @@
 #include "utils/stringUtils.h"
 #include "Object.h"
 #include "file.h"
+
 #ifdef __APPLE__
 #include <unistd.h>
+#endif
+
+#ifndef _WIN32
+#include <dirent.h>
 #endif
 
 
@@ -185,8 +190,7 @@ namespace oxygine
                 while (!r && (p = readdir(d)))
                 {
                     int r2 = -1;
-                    char *buf;
-                    size_t len;
+                    char buf[512];
 
                     /* Skip the names "." and ".." as we don't want to recurse on them. */
                     if (!strcmp(p->d_name, ".") || !strcmp(p->d_name, ".."))
@@ -194,28 +198,20 @@ namespace oxygine
                         continue;
                     }
 
-                    len = path_len + strlen(p->d_name) + 2;
-                    buf = malloc(len);
+                    struct stat statbuf;
 
-                    if (buf)
+                    sprintf(buf, "%s/%s", path, p->d_name);
+
+                    if (!stat(buf, &statbuf))
                     {
-                        struct stat statbuf;
-
-                        snprintf(buf, len, "%s/%s", path, p->d_name);
-
-                        if (!stat(buf, &statbuf))
+                        if (S_ISDIR(statbuf.st_mode))
                         {
-                            if (S_ISDIR(statbuf.st_mode))
-                            {
-                                r2 = remove_directory(buf);
-                            }
-                            else
-                            {
-                                r2 = unlink(buf);
-                            }
+                            r2 = remove_directory(buf);
                         }
-
-                        free(buf);
+                        else
+                        {
+                            r2 = unlink(buf);
+                        }
                     }
 
                     r = r2;
