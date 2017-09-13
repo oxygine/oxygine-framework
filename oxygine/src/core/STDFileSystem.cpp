@@ -5,12 +5,9 @@
 #include "Object.h"
 #include "file.h"
 
-#ifdef __APPLE__
-#include <unistd.h>
-#endif
-
 #ifndef _WIN32
 #include <dirent.h>
+#include <unistd.h>
 #endif
 
 
@@ -177,7 +174,6 @@ namespace oxygine
         int remove_directory(const char *path)
         {
 #ifndef WIN32
-#ifndef EMSCRIPTEN
             DIR *d = opendir(path);
             size_t path_len = strlen(path);
             int r = -1;
@@ -227,8 +223,6 @@ namespace oxygine
             }
 
             return r;
-#endif
-            return -1;
 #else
             // subdirectories have been found
             HANDLE          hFile;                       // Handle to directory
