@@ -788,7 +788,9 @@ namespace oxygine
         {
             log::messageln("core::release");
 
+#ifndef OXYGINE_EDITOR
             InputText::stopAnyInput();
+#endif
 
             _threadMessages.clear();
             _uiMessages.clear();

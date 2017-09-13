@@ -171,6 +171,9 @@ namespace oxygine
 
 
 
+#ifdef OXYGINE_EDITOR
+        int remove_directory(const char *path){return -1;}
+#else
         int remove_directory(const char *path)
         {
 #ifndef WIN32
@@ -261,6 +264,8 @@ namespace oxygine
             return 0;
 #endif
         }
+
+#endif
 
 
 
