@@ -3,7 +3,8 @@
 #include <typeinfo>
 namespace oxygine
 {
-#define LOGD(arg) (log::messageln("at: %s (%d) %s", getName().c_str(), getObjectID(), arg))
+#define LOGD(...)  (log::messageln("at: %s (%d) %s",    getName().c_str(), getObjectID(), __VA_ARGS__))
+#define LOGD2(...) (log::messageln("at: %s (%d) %s %s", getName().c_str(), getObjectID(), __VA_ARGS__))
 
     AsyncTask::AsyncTask() : _status(status_not_started), _mainThreadSync(false)
     {
@@ -30,7 +31,8 @@ namespace oxygine
         OX_ASSERT(_status == status_not_started);
         _status = status_inprogress;
 
-        LOGD("run");
+        //todo! replace with LOGD
+        log::messageln("at: %s (%d) %s %s", getName().c_str(), getObjectID(), "run:", _getRunInfo().c_str());
 
         bool ok = _prerun();
 

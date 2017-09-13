@@ -66,6 +66,7 @@ namespace oxygine
         virtual void _onFinal(bool error) {}
         virtual void _finalize(bool error) {}
         virtual void _dispatchComplete();
+        virtual std::string _getRunInfo() const { return ""; }
 
 
         template <class F>

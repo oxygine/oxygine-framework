@@ -4,7 +4,9 @@
 #include "../utils/stringUtils.h"
 #include "Object.h"
 #include "file.h"
-#ifdef __APPLE__
+
+#ifndef _WIN32
+#include <dirent.h>
 #include <unistd.h>
 #endif
 
@@ -167,6 +169,102 @@ namespace oxygine
             oxHandle* _handle;
         };
 
+
+
+        int remove_directory(const char *path)
+        {
+#ifndef WIN32
+            DIR *d = opendir(path);
+            size_t path_len = strlen(path);
+            int r = -1;
+
+            if (d)
+            {
+                struct dirent *p;
+
+                r = 0;
+
+                while (!r && (p = readdir(d)))
+                {
+                    int r2 = -1;
+                    char buf[512];
+
+                    /* Skip the names "." and ".." as we don't want to recurse on them. */
+                    if (!strcmp(p->d_name, ".") || !strcmp(p->d_name, ".."))
+                    {
+                        continue;
+                    }
+
+                    struct stat statbuf;
+
+                    sprintf(buf, "%s/%s", path, p->d_name);
+
+                    if (!stat(buf, &statbuf))
+                    {
+                        if (S_ISDIR(statbuf.st_mode))
+                        {
+                            r2 = remove_directory(buf);
+                        }
+                        else
+                        {
+                            r2 = unlink(buf);
+                        }
+                    }
+
+                    r = r2;
+                }
+
+                closedir(d);
+            }
+
+            if (!r)
+            {
+                r = rmdir(path);
+            }
+
+            return r;
+#else
+            // subdirectories have been found
+            HANDLE          hFile;                       // Handle to directory
+            std::string     root = path;
+            std::string     strFilePath;                 // Filepath
+            std::string     strPattern;                  // Pattern
+            WIN32_FIND_DATA FileInformation;             // File information
+
+
+            strPattern = root + "\\*.*";
+            hFile = ::FindFirstFile(strPattern.c_str(), &FileInformation);
+            if (hFile == INVALID_HANDLE_VALUE)
+                return -1;
+            
+            do
+            {
+                if (FileInformation.cFileName[0] != '.')
+                {
+                    strFilePath.erase();
+                    strFilePath = root + "\\" + FileInformation.cFileName;
+
+                    if (FileInformation.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+                    {
+                        remove_directory(strFilePath.c_str());
+                    }
+                    else
+                    {
+                        DeleteFile(strFilePath.c_str());
+                    }
+                }
+            } while (::FindNextFile(hFile, &FileInformation) == TRUE);
+
+            // Close handle
+            ::FindClose(hFile);
+
+            return 0;
+#endif
+        }
+
+
+
+
         STDFileSystem::STDFileSystem(bool readonly): FileSystem(readonly)
         {
         }
@@ -265,16 +363,9 @@ namespace oxygine
         FileSystem::status STDFileSystem::_deleteDirectory(const char* path)
         {
             char buff[512];
-            _getFullPath(path, buff);
+            _getFullPath(path, buff);           
 
-#if __S3E__
-            return (s3eFileDeleteDirectory(buff) == S3E_RESULT_SUCCESS ? status_ok : status_error);
-#elif _WIN32
-            return (_mkdir(buff) != -1 ? status_ok : status_error);
-#else
-            return (mkdir(buff, 0777) != -1 ? status_ok : status_error);
-#endif
-            return status_error;
+            return remove_directory(buff) != -1 ? status_ok : status_error;
         }
 
         FileSystem::status STDFileSystem::_renameFile(const char* src, const char* dest)

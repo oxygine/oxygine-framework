@@ -10,13 +10,13 @@ The JsonCpp library's source code, including accompanying documentation,
 tests and demonstration applications, are licensed under the following
 conditions...
 
-The author (Baptiste Lepilleur) explicitly disclaims copyright in all
+Baptiste Lepilleur and The JsonCpp Authors explicitly disclaim copyright in all
 jurisdictions which recognize such a disclaimer. In such jurisdictions,
 this software is released into the Public Domain.
 
 In jurisdictions which do not recognize Public Domain property (e.g. Germany as of
-2010), this software is Copyright (c) 2007-2010 by Baptiste Lepilleur, and is
-released under the terms of the MIT License (see below).
+2010), this software is Copyright (c) 2007-2010 by Baptiste Lepilleur and
+The JsonCpp Authors, and is released under the terms of the MIT License (see below).
 
 In jurisdictions which recognize Public Domain property, the user of this
 software may choose to accept it either as 1) Public Domain, 2) under the
@@ -31,7 +31,7 @@ described in clear, concise terms at:
 The full text of the MIT License follows:
 
 ========================================================================
-Copyright (c) 2007-2010 Baptiste Lepilleur
+Copyright (c) 2007-2010 Baptiste Lepilleur and The JsonCpp Authors
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
@@ -84,13 +84,23 @@ license you like.
 // Beginning of content of file: src/lib_json/json_tool.h
 // //////////////////////////////////////////////////////////////////////
 
-// Copyright 2007-2010 Baptiste Lepilleur
+// Copyright 2007-2010 Baptiste Lepilleur and The JsonCpp Authors
 // Distributed under MIT license, or public domain if desired and
 // recognized in your jurisdiction.
 // See file LICENSE for detail or copy at http://jsoncpp.sourceforge.net/LICENSE
 
 #ifndef LIB_JSONCPP_JSON_TOOL_H_INCLUDED
 #define LIB_JSONCPP_JSON_TOOL_H_INCLUDED
+
+
+// Also support old flag NO_LOCALE_SUPPORT
+#ifdef NO_LOCALE_SUPPORT
+#define JSONCPP_NO_LOCALE_SUPPORT
+#endif
+
+#ifndef JSONCPP_NO_LOCALE_SUPPORT
+#include <clocale>
+#endif
 
 /* This header provides common string manipulation support, such as UTF-8,
  * portable conversion from/to string...
@@ -100,11 +110,20 @@ license you like.
 
 namespace Json
 {
+    static char getDecimalPoint()
+    {
+#ifdef JSONCPP_NO_LOCALE_SUPPORT
+        return '\0';
+#else
+        struct lconv* lc = localeconv();
+        return lc ? *(lc->decimal_point) : '\0';
+#endif
+    }
 
 /// Converts a unicode code-point to UTF-8.
-    static inline std::string codePointToUTF8(unsigned int cp)
+    static inline JSONCPP_STRING codePointToUTF8(unsigned int cp)
     {
-        std::string result;
+        JSONCPP_STRING result;
 
         // based on description from http://en.wikipedia.org/wiki/UTF-8
 
@@ -161,7 +180,7 @@ namespace Json
         *--current = 0;
         do
         {
-            *--current = static_cast<signed char>(value % 10U + static_cast<unsigned>('0'));
+            *--current = static_cast<char>(value % 10U + static_cast<unsigned>('0'));
             value /= 10;
         }
         while (value != 0);
@@ -184,6 +203,22 @@ namespace Json
         }
     }
 
+    static inline void fixNumericLocaleInput(char* begin, char* end)
+    {
+        char decimalPoint = getDecimalPoint();
+        if (decimalPoint != '\0' && decimalPoint != '.')
+        {
+            while (begin < end)
+            {
+                if (*begin == '.')
+                {
+                    *begin = decimalPoint;
+                }
+                ++begin;
+            }
+        }
+    }
+
 } // namespace Json {
 
 #endif // LIB_JSONCPP_JSON_TOOL_H_INCLUDED
@@ -201,7 +236,8 @@ namespace Json
 // Beginning of content of file: src/lib_json/json_reader.cpp
 // //////////////////////////////////////////////////////////////////////
 
-// Copyright 2007-2011 Baptiste Lepilleur
+// Copyright 2007-2011 Baptiste Lepilleur and The JsonCpp Authors
+// Copyright (C) 2016 InfoTeCS JSC. All rights reserved.
 // Distributed under MIT license, or public domain if desired and
 // recognized in your jurisdiction.
 // See file LICENSE for detail or copy at http://jsoncpp.sourceforge.net/LICENSE
@@ -220,9 +256,26 @@ namespace Json
 #include <sstream>
 #include <memory>
 #include <set>
+#include <limits>
 
-#if defined(_MSC_VER) && _MSC_VER < 1500 // VC++ 8.0 and below
+#if defined(_MSC_VER)
+#if !defined(WINCE) && defined(__STDC_SECURE_LIB__) && _MSC_VER >= 1500 // VC++ 9.0 and above 
+#define snprintf sprintf_s
+#elif _MSC_VER >= 1900 // VC++ 14.0 and above
+#define snprintf std::snprintf
+#else
 #define snprintf _snprintf
+#endif
+#elif defined(__ANDROID__) || defined(__QNXNTO__)
+#define snprintf snprintf
+#elif __cplusplus >= 201103L
+#if !defined(__MINGW32__) && !defined(__CYGWIN__)
+#define snprintf std::snprintf
+#endif
+#endif
+
+#if defined(__QNXNTO__)
+#define sscanf std::sscanf
 #endif
 
 #if defined(_MSC_VER) && _MSC_VER >= 1400 // VC++ 8.0
@@ -230,20 +283,29 @@ namespace Json
 #pragma warning(disable : 4996)
 #endif
 
-static int const stackLimit_g = 1000;
-static int       stackDepth_g = 0;  // see readValue()
+// Define JSONCPP_DEPRECATED_STACK_LIMIT as an appropriate integer at compile time to change the stack limit
+#if !defined(JSONCPP_DEPRECATED_STACK_LIMIT)
+#define JSONCPP_DEPRECATED_STACK_LIMIT 1000
+#endif
+
+static size_t const stackLimit_g = JSONCPP_DEPRECATED_STACK_LIMIT; // see readValue()
 
 namespace Json
 {
 
+#if __cplusplus >= 201103L || (defined(_CPPLIB_VER) && _CPPLIB_VER >= 520)
+    typedef std::unique_ptr<CharReader> CharReaderPtr;
+#else
     typedef std::auto_ptr<CharReader>   CharReaderPtr;
+#endif
 
 // Implementation of class Features
 // ////////////////////////////////
 
     Features::Features()
-        : allowComments_(true), strictRoot_(false)
-    {}
+        : allowComments_(true), strictRoot_(false),
+          allowDroppedNullPlaceholders_(false), allowNumericKeys_(false) {}
+
     Features Features::all() { return Features(); }
 
     Features Features::strictMode()
@@ -251,13 +313,15 @@ namespace Json
         Features features;
         features.allowComments_ = false;
         features.strictRoot_ = true;
+        features.allowDroppedNullPlaceholders_ = false;
+        features.allowNumericKeys_ = false;
         return features;
     }
 
 // Implementation of class Reader
 // ////////////////////////////////
 
-    static bool containsNewLine(Reader::Location begin, Reader::Location end)
+    bool Reader::containsNewLine(Reader::Location begin, Reader::Location end)
     {
         for (; begin < end; ++begin)
             if (*begin == '\n' || *begin == '\r')
@@ -282,7 +346,7 @@ namespace Json
     bool
     Reader::parse(const std::string& document, Value& root, bool collectComments)
     {
-        document_ = document;
+        document_.assign(document.begin(), document.end());
         const char* begin = document_.c_str();
         const char* end = begin + document_.length();
         return parse(begin, end, root, collectComments);
@@ -295,11 +359,11 @@ namespace Json
         // Those would allow streamed input from a file, if parse() were a
         // template function.
 
-        // Since std::string is reference-counted, this at least does not
+        // Since JSONCPP_STRING is reference-counted, this at least does not
         // create an extra copy.
-        std::string doc;
+        JSONCPP_STRING doc;
         std::getline(sin, doc, (char)EOF);
-        return parse(doc, root, collectComments);
+        return parse(doc.data(), doc.data() + doc.size(), root, collectComments);
     }
 
     bool Reader::parse(const char* beginDoc,
@@ -318,13 +382,12 @@ namespace Json
         current_ = begin_;
         lastValueEnd_ = 0;
         lastValue_ = 0;
-        commentsBefore_ = "";
+        commentsBefore_.clear();
         errors_.clear();
         while (!nodes_.empty())
             nodes_.pop();
         nodes_.push(&root);
 
-        stackDepth_g = 0;  // Yes, this is bad coding, but options are limited.
         bool successful = readValue();
         Token token;
         skipCommentTokens(token);
@@ -350,12 +413,10 @@ namespace Json
 
     bool Reader::readValue()
     {
-        // This is a non-reentrant way to support a stackLimit. Terrible!
-        // But this deprecated class has a security problem: Bad input can
-        // cause a seg-fault. This seems like a fair, binary-compatible way
-        // to prevent the problem.
-        if (stackDepth_g >= stackLimit_g) throwRuntimeError("Exceeded stackLimit in readValue().");
-        ++stackDepth_g;
+        // readValue() may call itself only if it calls readObject() or ReadArray().
+        // These methods execute nodes_.push() just before and nodes_.pop)() just after calling readValue().
+        // parse() executes one nodes_.push(), so > instead of >=.
+        if (nodes_.size() > stackLimit_g) throwRuntimeError("Exceeded stackLimit in readValue().");
 
         Token token;
         skipCommentTokens(token);
@@ -364,16 +425,18 @@ namespace Json
         if (collectComments_ && !commentsBefore_.empty())
         {
             currentValue().setComment(commentsBefore_, commentBefore);
-            commentsBefore_ = "";
+            commentsBefore_.clear();
         }
 
         switch (token.type_)
         {
             case tokenObjectBegin:
                 successful = readObject(token);
+                currentValue().setOffsetLimit(current_ - begin_);
                 break;
             case tokenArrayBegin:
                 successful = readArray(token);
+                currentValue().setOffsetLimit(current_ - begin_);
                 break;
             case tokenNumber:
                 successful = decodeNumber(token);
@@ -385,22 +448,43 @@ namespace Json
             {
                 Value v(true);
                 currentValue().swapPayload(v);
+                currentValue().setOffsetStart(token.start_ - begin_);
+                currentValue().setOffsetLimit(token.end_ - begin_);
             }
             break;
             case tokenFalse:
             {
                 Value v(false);
                 currentValue().swapPayload(v);
+                currentValue().setOffsetStart(token.start_ - begin_);
+                currentValue().setOffsetLimit(token.end_ - begin_);
             }
             break;
             case tokenNull:
             {
                 Value v;
                 currentValue().swapPayload(v);
+                currentValue().setOffsetStart(token.start_ - begin_);
+                currentValue().setOffsetLimit(token.end_ - begin_);
             }
             break;
-            // Else, fall through...
+            case tokenArraySeparator:
+            case tokenObjectEnd:
+            case tokenArrayEnd:
+                if (features_.allowDroppedNullPlaceholders_)
+                {
+                    // "Un-read" the current token and mark the current value as a null
+                    // token.
+                    current_--;
+                    Value v;
+                    currentValue().swapPayload(v);
+                    currentValue().setOffsetStart(current_ - begin_ - 1);
+                    currentValue().setOffsetLimit(current_ - begin_);
+                    break;
+                } // Else, fall through...
             default:
+                currentValue().setOffsetStart(token.start_ - begin_);
+                currentValue().setOffsetLimit(token.end_ - begin_);
                 return addError("Syntax error: value, object or array expected.", token);
         }
 
@@ -410,7 +494,6 @@ namespace Json
             lastValue_ = &currentValue();
         }
 
-        --stackDepth_g;
         return successful;
     }
 
@@ -553,10 +636,10 @@ namespace Json
         return true;
     }
 
-    static std::string normalizeEOL(Reader::Location begin, Reader::Location end)
+    JSONCPP_STRING Reader::normalizeEOL(Reader::Location begin, Reader::Location end)
     {
-        std::string normalized;
-        normalized.reserve(end - begin);
+        JSONCPP_STRING normalized;
+        normalized.reserve(static_cast<size_t>(end - begin));
         Reader::Location current = begin;
         while (current != end)
         {
@@ -581,7 +664,7 @@ namespace Json
     Reader::addComment(Location begin, Location end, CommentPlacement placement)
     {
         assert(collectComments_);
-        const std::string& normalized = normalizeEOL(begin, end);
+        const JSONCPP_STRING& normalized = normalizeEOL(begin, end);
         if (placement == commentAfterOnSameLine)
         {
             assert(lastValue_ != 0);
@@ -595,7 +678,7 @@ namespace Json
 
     bool Reader::readCStyleComment()
     {
-        while (current_ != end_)
+        while ((current_ + 1) < end_)
         {
             Char c = getNextChar();
             if (c == '*' && *current_ == '/')
@@ -629,28 +712,28 @@ namespace Json
         char c = '0'; // stopgap for already consumed character
         // integral part
         while (c >= '0' && c <= '9')
-            c = (current_ = p) < end_ ? *p++ : 0;
+            c = (current_ = p) < end_ ? *p++ : '\0';
         // fractional part
         if (c == '.')
         {
-            c = (current_ = p) < end_ ? *p++ : 0;
+            c = (current_ = p) < end_ ? *p++ : '\0';
             while (c >= '0' && c <= '9')
-                c = (current_ = p) < end_ ? *p++ : 0;
+                c = (current_ = p) < end_ ? *p++ : '\0';
         }
         // exponential part
         if (c == 'e' || c == 'E')
         {
-            c = (current_ = p) < end_ ? *p++ : 0;
+            c = (current_ = p) < end_ ? *p++ : '\0';
             if (c == '+' || c == '-')
-                c = (current_ = p) < end_ ? *p++ : 0;
+                c = (current_ = p) < end_ ? *p++ : '\0';
             while (c >= '0' && c <= '9')
-                c = (current_ = p) < end_ ? *p++ : 0;
+                c = (current_ = p) < end_ ? *p++ : '\0';
         }
     }
 
     bool Reader::readString()
     {
-        Char c = 0;
+        Char c = '\0';
         while (current_ != end_)
         {
             c = getNextChar();
@@ -662,12 +745,13 @@ namespace Json
         return c == '"';
     }
 
-    bool Reader::readObject(Token& /*tokenStart*/)
+    bool Reader::readObject(Token& tokenStart)
     {
         Token tokenName;
-        std::string name;
+        JSONCPP_STRING name;
         Value init(objectValue);
         currentValue().swapPayload(init);
+        currentValue().setOffsetStart(tokenStart.start_ - begin_);
         while (readToken(tokenName))
         {
             bool initialTokenOk = true;
@@ -677,11 +761,18 @@ namespace Json
                 break;
             if (tokenName.type_ == tokenObjectEnd && name.empty()) // empty object
                 return true;
-            name = "";
+            name.clear();
             if (tokenName.type_ == tokenString)
             {
                 if (!decodeString(tokenName, name))
                     return recoverFromError(tokenObjectEnd);
+            }
+            else if (tokenName.type_ == tokenNumber && features_.allowNumericKeys_)
+            {
+                Value numberName;
+                if (!decodeNumber(tokenName, numberName))
+                    return recoverFromError(tokenObjectEnd);
+                name = JSONCPP_STRING(numberName.asCString());
             }
             else
             {
@@ -719,12 +810,13 @@ namespace Json
                    "Missing '}' or object member name", tokenName, tokenObjectEnd);
     }
 
-    bool Reader::readArray(Token& /*tokenStart*/)
+    bool Reader::readArray(Token& tokenStart)
     {
         Value init(arrayValue);
         currentValue().swapPayload(init);
+        currentValue().setOffsetStart(tokenStart.start_ - begin_);
         skipSpaces();
-        if (*current_ == ']') // empty array
+        if (current_ != end_ && *current_ == ']') // empty array
         {
             Token endArray;
             readToken(endArray);
@@ -766,6 +858,8 @@ namespace Json
         if (!decodeNumber(token, decoded))
             return false;
         currentValue().swapPayload(decoded);
+        currentValue().setOffsetStart(token.start_ - begin_);
+        currentValue().setOffsetLimit(token.end_ - begin_);
         return true;
     }
 
@@ -789,7 +883,7 @@ namespace Json
             Char c = *current++;
             if (c < '0' || c > '9')
                 return decodeDouble(token, decoded);
-            Value::UInt digit(c - '0');
+            Value::UInt digit(static_cast<Value::UInt>(c - '0'));
             if (value >= threshold)
             {
                 // We've hit or exceeded the max value divided by 10 (rounded down). If
@@ -821,16 +915,18 @@ namespace Json
         if (!decodeDouble(token, decoded))
             return false;
         currentValue().swapPayload(decoded);
+        currentValue().setOffsetStart(token.start_ - begin_);
+        currentValue().setOffsetLimit(token.end_ - begin_);
         return true;
     }
 
     bool Reader::decodeDouble(Token& token, Value& decoded)
     {
         double value = 0;
-        std::string buffer(token.start_, token.end_);
-        std::istringstream is(buffer);
+        JSONCPP_STRING buffer(token.start_, token.end_);
+        JSONCPP_ISTRINGSTREAM is(buffer);
         if (!(is >> value))
-            return addError("'" + std::string(token.start_, token.end_) +
+            return addError("'" + JSONCPP_STRING(token.start_, token.end_) +
                             "' is not a number.",
                             token);
         decoded = value;
@@ -839,17 +935,19 @@ namespace Json
 
     bool Reader::decodeString(Token& token)
     {
-        std::string decoded_string;
+        JSONCPP_STRING decoded_string;
         if (!decodeString(token, decoded_string))
             return false;
         Value decoded(decoded_string);
         currentValue().swapPayload(decoded);
+        currentValue().setOffsetStart(token.start_ - begin_);
+        currentValue().setOffsetLimit(token.end_ - begin_);
         return true;
     }
 
-    bool Reader::decodeString(Token& token, std::string& decoded)
+    bool Reader::decodeString(Token& token, JSONCPP_STRING& decoded)
     {
-        decoded.reserve(token.end_ - token.start_ - 2);
+        decoded.reserve(static_cast<size_t>(token.end_ - token.start_ - 2));
         Location current = token.start_ + 1; // skip '"'
         Location end = token.end_ - 1;       // do not include '"'
         while (current != end)
@@ -945,14 +1043,14 @@ namespace Json
     bool Reader::decodeUnicodeEscapeSequence(Token& token,
             Location& current,
             Location end,
-            unsigned int& unicode)
+            unsigned int& ret_unicode)
     {
         if (end - current < 4)
             return addError(
                        "Bad unicode escape sequence in string: four digits expected.",
                        token,
                        current);
-        unicode = 0;
+        int unicode = 0;
         for (int index = 0; index < 4; ++index)
         {
             Char c = *current++;
@@ -969,11 +1067,12 @@ namespace Json
                            token,
                            current);
         }
+        ret_unicode = static_cast<unsigned int>(unicode);
         return true;
     }
 
     bool
-    Reader::addError(const std::string& message, Token& token, Location extra)
+    Reader::addError(const JSONCPP_STRING& message, Token& token, Location extra)
     {
         ErrorInfo info;
         info.token_ = token;
@@ -985,7 +1084,7 @@ namespace Json
 
     bool Reader::recoverFromError(TokenType skipUntilToken)
     {
-        int errorCount = int(errors_.size());
+        size_t const errorCount = errors_.size();
         Token skip;
         for (;;)
         {
@@ -998,7 +1097,7 @@ namespace Json
         return false;
     }
 
-    bool Reader::addErrorAndRecover(const std::string& message,
+    bool Reader::addErrorAndRecover(const JSONCPP_STRING& message,
                                     Token& token,
                                     TokenType skipUntilToken)
     {
@@ -1043,32 +1142,24 @@ namespace Json
         ++line;
     }
 
-    std::string Reader::getLocationLineAndColumn(Location location) const
+    JSONCPP_STRING Reader::getLocationLineAndColumn(Location location) const
     {
         int line, column;
         getLocationLineAndColumn(location, line, column);
         char buffer[18 + 16 + 16 + 1];
-#if defined(_MSC_VER) && defined(__STDC_SECURE_LIB__)
-#if defined(WINCE)
-        _snprintf(buffer, sizeof(buffer), "Line %d, Column %d", line, column);
-#else
-        sprintf_s(buffer, sizeof(buffer), "Line %d, Column %d", line, column);
-#endif
-#else
         snprintf(buffer, sizeof(buffer), "Line %d, Column %d", line, column);
-#endif
         return buffer;
     }
 
 // Deprecated. Preserved for backward compatibility
-    std::string Reader::getFormatedErrorMessages() const
+    JSONCPP_STRING Reader::getFormatedErrorMessages() const
     {
         return getFormattedErrorMessages();
     }
 
-    std::string Reader::getFormattedErrorMessages() const
+    JSONCPP_STRING Reader::getFormattedErrorMessages() const
     {
-        std::string formattedMessage;
+        JSONCPP_STRING formattedMessage;
         for (Errors::const_iterator itError = errors_.begin();
                 itError != errors_.end();
                 ++itError)
@@ -1084,15 +1175,70 @@ namespace Json
         return formattedMessage;
     }
 
-// Reader
-/////////////////////////
+    std::vector<Reader::StructuredError> Reader::getStructuredErrors() const
+    {
+        std::vector<Reader::StructuredError> allErrors;
+        for (Errors::const_iterator itError = errors_.begin();
+                itError != errors_.end();
+                ++itError)
+        {
+            const ErrorInfo& error = *itError;
+            Reader::StructuredError structured;
+            structured.offset_start = error.token_.start_ - begin_;
+            structured.offset_limit = error.token_.end_ - begin_;
+            structured.message = error.message_;
+            allErrors.push_back(structured);
+        }
+        return allErrors;
+    }
+
+    bool Reader::pushError(const Value& value, const JSONCPP_STRING& message)
+    {
+        ptrdiff_t const length = end_ - begin_;
+        if (value.getOffsetStart() > length
+                || value.getOffsetLimit() > length)
+            return false;
+        Token token;
+        token.type_ = tokenError;
+        token.start_ = begin_ + value.getOffsetStart();
+        token.end_ = end_ + value.getOffsetLimit();
+        ErrorInfo info;
+        info.token_ = token;
+        info.message_ = message;
+        info.extra_ = 0;
+        errors_.push_back(info);
+        return true;
+    }
+
+    bool Reader::pushError(const Value& value, const JSONCPP_STRING& message, const Value& extra)
+    {
+        ptrdiff_t const length = end_ - begin_;
+        if (value.getOffsetStart() > length
+                || value.getOffsetLimit() > length
+                || extra.getOffsetLimit() > length)
+            return false;
+        Token token;
+        token.type_ = tokenError;
+        token.start_ = begin_ + value.getOffsetStart();
+        token.end_ = begin_ + value.getOffsetLimit();
+        ErrorInfo info;
+        info.token_ = token;
+        info.message_ = message;
+        info.extra_ = begin_ + extra.getOffsetStart();
+        errors_.push_back(info);
+        return true;
+    }
+
+    bool Reader::good() const
+    {
+        return !errors_.size();
+    }
 
 // exact copy of Features
     class OurFeatures
     {
     public:
         static OurFeatures all();
-        OurFeatures();
         bool allowComments_;
         bool strictRoot_;
         bool allowDroppedNullPlaceholders_;
@@ -1100,19 +1246,12 @@ namespace Json
         bool allowSingleQuotes_;
         bool failIfExtra_;
         bool rejectDupKeys_;
+        bool allowSpecialFloats_;
         int stackLimit_;
     };  // OurFeatures
 
 // exact copy of Implementation of class Features
 // ////////////////////////////////
-
-    OurFeatures::OurFeatures()
-        : allowComments_(true), strictRoot_(false)
-        , allowDroppedNullPlaceholders_(false), allowNumericKeys_(false)
-        , allowSingleQuotes_(false)
-        , failIfExtra_(false)
-    {
-    }
 
     OurFeatures OurFeatures::all() { return OurFeatures(); }
 
@@ -1127,9 +1266,9 @@ namespace Json
         typedef const Char* Location;
         struct StructuredError
         {
-            size_t offset_start;
-            size_t offset_limit;
-            std::string message;
+            ptrdiff_t offset_start;
+            ptrdiff_t offset_limit;
+            JSONCPP_STRING message;
         };
 
         OurReader(OurFeatures const& features);
@@ -1137,7 +1276,11 @@ namespace Json
                    const char* endDoc,
                    Value& root,
                    bool collectComments = true);
-        std::string getFormattedErrorMessages() const;
+        JSONCPP_STRING getFormattedErrorMessages() const;
+        std::vector<StructuredError> getStructuredErrors() const;
+        bool pushError(const Value& value, const JSONCPP_STRING& message);
+        bool pushError(const Value& value, const JSONCPP_STRING& message, const Value& extra);
+        bool good() const;
 
     private:
         OurReader(OurReader const&);  // no impl
@@ -1155,6 +1298,9 @@ namespace Json
             tokenTrue,
             tokenFalse,
             tokenNull,
+            tokenNaN,
+            tokenPosInf,
+            tokenNegInf,
             tokenArraySeparator,
             tokenMemberSeparator,
             tokenComment,
@@ -1173,7 +1319,7 @@ namespace Json
         {
         public:
             Token token_;
-            std::string message_;
+            JSONCPP_STRING message_;
             Location extra_;
         };
 
@@ -1187,14 +1333,14 @@ namespace Json
         bool readCppStyleComment();
         bool readString();
         bool readStringSingleQuote();
-        void readNumber();
+        bool readNumber(bool checkInf);
         bool readValue();
         bool readObject(Token& token);
         bool readArray(Token& token);
         bool decodeNumber(Token& token);
         bool decodeNumber(Token& token, Value& decoded);
         bool decodeString(Token& token);
-        bool decodeString(Token& token, std::string& decoded);
+        bool decodeString(Token& token, JSONCPP_STRING& decoded);
         bool decodeDouble(Token& token);
         bool decodeDouble(Token& token, Value& decoded);
         bool decodeUnicodeCodePoint(Token& token,
@@ -1205,9 +1351,9 @@ namespace Json
                                          Location& current,
                                          Location end,
                                          unsigned int& unicode);
-        bool addError(const std::string& message, Token& token, Location extra = 0);
+        bool addError(const JSONCPP_STRING& message, Token& token, Location extra = 0);
         bool recoverFromError(TokenType skipUntilToken);
-        bool addErrorAndRecover(const std::string& message,
+        bool addErrorAndRecover(const JSONCPP_STRING& message,
                                 Token& token,
                                 TokenType skipUntilToken);
         void skipUntilSpace();
@@ -1215,21 +1361,23 @@ namespace Json
         Char getNextChar();
         void
         getLocationLineAndColumn(Location location, int& line, int& column) const;
-        std::string getLocationLineAndColumn(Location location) const;
+        JSONCPP_STRING getLocationLineAndColumn(Location location) const;
         void addComment(Location begin, Location end, CommentPlacement placement);
         void skipCommentTokens(Token& token);
+
+        static JSONCPP_STRING normalizeEOL(Location begin, Location end);
+        static bool containsNewLine(Location begin, Location end);
 
         typedef std::stack<Value*> Nodes;
         Nodes nodes_;
         Errors errors_;
-        std::string document_;
+        JSONCPP_STRING document_;
         Location begin_;
         Location end_;
         Location current_;
         Location lastValueEnd_;
         Value* lastValue_;
-        std::string commentsBefore_;
-        int stackDepth_;
+        JSONCPP_STRING commentsBefore_;
 
         OurFeatures const features_;
         bool collectComments_;
@@ -1237,9 +1385,18 @@ namespace Json
 
 // complete copy of Read impl, for OurReader
 
+    bool OurReader::containsNewLine(OurReader::Location begin, OurReader::Location end)
+    {
+        for (; begin < end; ++begin)
+            if (*begin == '\n' || *begin == '\r')
+                return true;
+        return false;
+    }
+
     OurReader::OurReader(OurFeatures const& features)
         : errors_(), document_(), begin_(), end_(), current_(), lastValueEnd_(),
-          lastValue_(), commentsBefore_(), features_(features), collectComments_()
+          lastValue_(), commentsBefore_(),
+          features_(features), collectComments_()
     {
     }
 
@@ -1259,19 +1416,18 @@ namespace Json
         current_ = begin_;
         lastValueEnd_ = 0;
         lastValue_ = 0;
-        commentsBefore_ = "";
+        commentsBefore_.clear();
         errors_.clear();
         while (!nodes_.empty())
             nodes_.pop();
         nodes_.push(&root);
 
-        stackDepth_ = 0;
         bool successful = readValue();
         Token token;
         skipCommentTokens(token);
         if (features_.failIfExtra_)
         {
-            if (token.type_ != tokenError && token.type_ != tokenEndOfStream)
+            if ((features_.strictRoot_ || token.type_ != tokenError) && token.type_ != tokenEndOfStream)
             {
                 addError("Extra non-whitespace after JSON value.", token);
                 return false;
@@ -1299,8 +1455,8 @@ namespace Json
 
     bool OurReader::readValue()
     {
-        if (stackDepth_ >= features_.stackLimit_) throwRuntimeError("Exceeded stackLimit in readValue().");
-        ++stackDepth_;
+        //  To preserve the old behaviour we cast size_t to int.
+        if (static_cast<int>(nodes_.size()) > features_.stackLimit_) throwRuntimeError("Exceeded stackLimit in readValue().");
         Token token;
         skipCommentTokens(token);
         bool successful = true;
@@ -1308,16 +1464,18 @@ namespace Json
         if (collectComments_ && !commentsBefore_.empty())
         {
             currentValue().setComment(commentsBefore_, commentBefore);
-            commentsBefore_ = "";
+            commentsBefore_.clear();
         }
 
         switch (token.type_)
         {
             case tokenObjectBegin:
                 successful = readObject(token);
+                currentValue().setOffsetLimit(current_ - begin_);
                 break;
             case tokenArrayBegin:
                 successful = readArray(token);
+                currentValue().setOffsetLimit(current_ - begin_);
                 break;
             case tokenNumber:
                 successful = decodeNumber(token);
@@ -1329,18 +1487,48 @@ namespace Json
             {
                 Value v(true);
                 currentValue().swapPayload(v);
+                currentValue().setOffsetStart(token.start_ - begin_);
+                currentValue().setOffsetLimit(token.end_ - begin_);
             }
             break;
             case tokenFalse:
             {
                 Value v(false);
                 currentValue().swapPayload(v);
+                currentValue().setOffsetStart(token.start_ - begin_);
+                currentValue().setOffsetLimit(token.end_ - begin_);
             }
             break;
             case tokenNull:
             {
                 Value v;
                 currentValue().swapPayload(v);
+                currentValue().setOffsetStart(token.start_ - begin_);
+                currentValue().setOffsetLimit(token.end_ - begin_);
+            }
+            break;
+            case tokenNaN:
+            {
+                Value v(std::numeric_limits<double>::quiet_NaN());
+                currentValue().swapPayload(v);
+                currentValue().setOffsetStart(token.start_ - begin_);
+                currentValue().setOffsetLimit(token.end_ - begin_);
+            }
+            break;
+            case tokenPosInf:
+            {
+                Value v(std::numeric_limits<double>::infinity());
+                currentValue().swapPayload(v);
+                currentValue().setOffsetStart(token.start_ - begin_);
+                currentValue().setOffsetLimit(token.end_ - begin_);
+            }
+            break;
+            case tokenNegInf:
+            {
+                Value v(-std::numeric_limits<double>::infinity());
+                currentValue().swapPayload(v);
+                currentValue().setOffsetStart(token.start_ - begin_);
+                currentValue().setOffsetLimit(token.end_ - begin_);
             }
             break;
             case tokenArraySeparator:
@@ -1353,9 +1541,13 @@ namespace Json
                     current_--;
                     Value v;
                     currentValue().swapPayload(v);
+                    currentValue().setOffsetStart(current_ - begin_ - 1);
+                    currentValue().setOffsetLimit(current_ - begin_);
                     break;
                 } // else, fall through ...
             default:
+                currentValue().setOffsetStart(token.start_ - begin_);
+                currentValue().setOffsetLimit(token.end_ - begin_);
                 return addError("Syntax error: value, object or array expected.", token);
         }
 
@@ -1365,7 +1557,6 @@ namespace Json
             lastValue_ = &currentValue();
         }
 
-        --stackDepth_;
         return successful;
     }
 
@@ -1430,9 +1621,19 @@ namespace Json
             case '7':
             case '8':
             case '9':
-            case '-':
                 token.type_ = tokenNumber;
-                readNumber();
+                readNumber(false);
+                break;
+            case '-':
+                if (readNumber(true))
+                {
+                    token.type_ = tokenNumber;
+                }
+                else
+                {
+                    token.type_ = tokenNegInf;
+                    ok = features_.allowSpecialFloats_ && match("nfinity", 7);
+                }
                 break;
             case 't':
                 token.type_ = tokenTrue;
@@ -1445,6 +1646,28 @@ namespace Json
             case 'n':
                 token.type_ = tokenNull;
                 ok = match("ull", 3);
+                break;
+            case 'N':
+                if (features_.allowSpecialFloats_)
+                {
+                    token.type_ = tokenNaN;
+                    ok = match("aN", 2);
+                }
+                else
+                {
+                    ok = false;
+                }
+                break;
+            case 'I':
+                if (features_.allowSpecialFloats_)
+                {
+                    token.type_ = tokenPosInf;
+                    ok = match("nfinity", 7);
+                }
+                else
+                {
+                    ok = false;
+                }
                 break;
             case ',':
                 token.type_ = tokenArraySeparator;
@@ -1515,11 +1738,35 @@ namespace Json
         return true;
     }
 
+    JSONCPP_STRING OurReader::normalizeEOL(OurReader::Location begin, OurReader::Location end)
+    {
+        JSONCPP_STRING normalized;
+        normalized.reserve(static_cast<size_t>(end - begin));
+        OurReader::Location current = begin;
+        while (current != end)
+        {
+            char c = *current++;
+            if (c == '\r')
+            {
+                if (current != end && *current == '\n')
+                    // convert dos EOL
+                    ++current;
+                // convert Mac EOL
+                normalized += '\n';
+            }
+            else
+            {
+                normalized += c;
+            }
+        }
+        return normalized;
+    }
+
     void
     OurReader::addComment(Location begin, Location end, CommentPlacement placement)
     {
         assert(collectComments_);
-        const std::string& normalized = normalizeEOL(begin, end);
+        const JSONCPP_STRING& normalized = normalizeEOL(begin, end);
         if (placement == commentAfterOnSameLine)
         {
             assert(lastValue_ != 0);
@@ -1533,7 +1780,7 @@ namespace Json
 
     bool OurReader::readCStyleComment()
     {
-        while (current_ != end_)
+        while ((current_ + 1) < end_)
         {
             Char c = getNextChar();
             if (c == '*' && *current_ == '/')
@@ -1561,29 +1808,35 @@ namespace Json
         return true;
     }
 
-    void OurReader::readNumber()
+    bool OurReader::readNumber(bool checkInf)
     {
         const char* p = current_;
+        if (checkInf && p != end_ && *p == 'I')
+        {
+            current_ = ++p;
+            return false;
+        }
         char c = '0'; // stopgap for already consumed character
         // integral part
         while (c >= '0' && c <= '9')
-            c = (current_ = p) < end_ ? *p++ : 0;
+            c = (current_ = p) < end_ ? *p++ : '\0';
         // fractional part
         if (c == '.')
         {
-            c = (current_ = p) < end_ ? *p++ : 0;
+            c = (current_ = p) < end_ ? *p++ : '\0';
             while (c >= '0' && c <= '9')
-                c = (current_ = p) < end_ ? *p++ : 0;
+                c = (current_ = p) < end_ ? *p++ : '\0';
         }
         // exponential part
         if (c == 'e' || c == 'E')
         {
-            c = (current_ = p) < end_ ? *p++ : 0;
+            c = (current_ = p) < end_ ? *p++ : '\0';
             if (c == '+' || c == '-')
-                c = (current_ = p) < end_ ? *p++ : 0;
+                c = (current_ = p) < end_ ? *p++ : '\0';
             while (c >= '0' && c <= '9')
-                c = (current_ = p) < end_ ? *p++ : 0;
+                c = (current_ = p) < end_ ? *p++ : '\0';
         }
+        return true;
     }
     bool OurReader::readString()
     {
@@ -1614,12 +1867,13 @@ namespace Json
         return c == '\'';
     }
 
-    bool OurReader::readObject(Token& /*tokenStart*/)
+    bool OurReader::readObject(Token& tokenStart)
     {
         Token tokenName;
-        std::string name;
+        JSONCPP_STRING name;
         Value init(objectValue);
         currentValue().swapPayload(init);
+        currentValue().setOffsetStart(tokenStart.start_ - begin_);
         while (readToken(tokenName))
         {
             bool initialTokenOk = true;
@@ -1629,7 +1883,7 @@ namespace Json
                 break;
             if (tokenName.type_ == tokenObjectEnd && name.empty()) // empty object
                 return true;
-            name = "";
+            name.clear();
             if (tokenName.type_ == tokenString)
             {
                 if (!decodeString(tokenName, name))
@@ -1656,7 +1910,7 @@ namespace Json
             if (name.length() >= (1U << 30)) throwRuntimeError("keylength >= 2^30");
             if (features_.rejectDupKeys_ && currentValue().isMember(name))
             {
-                std::string msg = "Duplicate key: '" + name + "'";
+                JSONCPP_STRING msg = "Duplicate key: '" + name + "'";
                 return addErrorAndRecover(
                            msg, tokenName, tokenObjectEnd);
             }
@@ -1685,12 +1939,13 @@ namespace Json
                    "Missing '}' or object member name", tokenName, tokenObjectEnd);
     }
 
-    bool OurReader::readArray(Token& /*tokenStart*/)
+    bool OurReader::readArray(Token& tokenStart)
     {
         Value init(arrayValue);
         currentValue().swapPayload(init);
+        currentValue().setOffsetStart(tokenStart.start_ - begin_);
         skipSpaces();
-        if (*current_ == ']') // empty array
+        if (current_ != end_ && *current_ == ']') // empty array
         {
             Token endArray;
             readToken(endArray);
@@ -1732,6 +1987,8 @@ namespace Json
         if (!decodeNumber(token, decoded))
             return false;
         currentValue().swapPayload(decoded);
+        currentValue().setOffsetStart(token.start_ - begin_);
+        currentValue().setOffsetLimit(token.end_ - begin_);
         return true;
     }
 
@@ -1755,7 +2012,7 @@ namespace Json
             Char c = *current++;
             if (c < '0' || c > '9')
                 return decodeDouble(token, decoded);
-            Value::UInt digit(c - '0');
+            Value::UInt digit(static_cast<Value::UInt>(c - '0'));
             if (value >= threshold)
             {
                 // We've hit or exceeded the max value divided by 10 (rounded down). If
@@ -1785,6 +2042,8 @@ namespace Json
         if (!decodeDouble(token, decoded))
             return false;
         currentValue().swapPayload(decoded);
+        currentValue().setOffsetStart(token.start_ - begin_);
+        currentValue().setOffsetLimit(token.end_ - begin_);
         return true;
     }
 
@@ -1793,13 +2052,14 @@ namespace Json
         double value = 0;
         const int bufferSize = 32;
         int count;
-        int length = int(token.end_ - token.start_);
+        ptrdiff_t const length = token.end_ - token.start_;
 
         // Sanity check to avoid buffer overflow exploits.
         if (length < 0)
         {
             return addError("Unable to parse token length", token);
         }
+        size_t const ulength = static_cast<size_t>(length);
 
         // Avoid using a string constant for the format control string given to
         // sscanf, as this can cause hard to debug crashes on OS X. See here for more
@@ -1811,18 +2071,19 @@ namespace Json
         if (length <= bufferSize)
         {
             Char buffer[bufferSize + 1];
-            memcpy(buffer, token.start_, length);
+            memcpy(buffer, token.start_, ulength);
             buffer[length] = 0;
+            fixNumericLocaleInput(buffer, buffer + length);
             count = sscanf(buffer, format, &value);
         }
         else
         {
-            std::string buffer(token.start_, token.end_);
+            JSONCPP_STRING buffer(token.start_, token.end_);
             count = sscanf(buffer.c_str(), format, &value);
         }
 
         if (count != 1)
-            return addError("'" + std::string(token.start_, token.end_) +
+            return addError("'" + JSONCPP_STRING(token.start_, token.end_) +
                             "' is not a number.",
                             token);
         decoded = value;
@@ -1831,17 +2092,19 @@ namespace Json
 
     bool OurReader::decodeString(Token& token)
     {
-        std::string decoded_string;
+        JSONCPP_STRING decoded_string;
         if (!decodeString(token, decoded_string))
             return false;
         Value decoded(decoded_string);
         currentValue().swapPayload(decoded);
+        currentValue().setOffsetStart(token.start_ - begin_);
+        currentValue().setOffsetLimit(token.end_ - begin_);
         return true;
     }
 
-    bool OurReader::decodeString(Token& token, std::string& decoded)
+    bool OurReader::decodeString(Token& token, JSONCPP_STRING& decoded)
     {
-        decoded.reserve(token.end_ - token.start_ - 2);
+        decoded.reserve(static_cast<size_t>(token.end_ - token.start_ - 2));
         Location current = token.start_ + 1; // skip '"'
         Location end = token.end_ - 1;       // do not include '"'
         while (current != end)
@@ -1937,14 +2200,14 @@ namespace Json
     bool OurReader::decodeUnicodeEscapeSequence(Token& token,
             Location& current,
             Location end,
-            unsigned int& unicode)
+            unsigned int& ret_unicode)
     {
         if (end - current < 4)
             return addError(
                        "Bad unicode escape sequence in string: four digits expected.",
                        token,
                        current);
-        unicode = 0;
+        int unicode = 0;
         for (int index = 0; index < 4; ++index)
         {
             Char c = *current++;
@@ -1961,11 +2224,12 @@ namespace Json
                            token,
                            current);
         }
+        ret_unicode = static_cast<unsigned int>(unicode);
         return true;
     }
 
     bool
-    OurReader::addError(const std::string& message, Token& token, Location extra)
+    OurReader::addError(const JSONCPP_STRING& message, Token& token, Location extra)
     {
         ErrorInfo info;
         info.token_ = token;
@@ -1977,7 +2241,7 @@ namespace Json
 
     bool OurReader::recoverFromError(TokenType skipUntilToken)
     {
-        int errorCount = int(errors_.size());
+        size_t errorCount = errors_.size();
         Token skip;
         for (;;)
         {
@@ -1990,7 +2254,7 @@ namespace Json
         return false;
     }
 
-    bool OurReader::addErrorAndRecover(const std::string& message,
+    bool OurReader::addErrorAndRecover(const JSONCPP_STRING& message,
                                        Token& token,
                                        TokenType skipUntilToken)
     {
@@ -2035,26 +2299,18 @@ namespace Json
         ++line;
     }
 
-    std::string OurReader::getLocationLineAndColumn(Location location) const
+    JSONCPP_STRING OurReader::getLocationLineAndColumn(Location location) const
     {
         int line, column;
         getLocationLineAndColumn(location, line, column);
         char buffer[18 + 16 + 16 + 1];
-#if defined(_MSC_VER) && defined(__STDC_SECURE_LIB__)
-#if defined(WINCE)
-        _snprintf(buffer, sizeof(buffer), "Line %d, Column %d", line, column);
-#else
-        sprintf_s(buffer, sizeof(buffer), "Line %d, Column %d", line, column);
-#endif
-#else
         snprintf(buffer, sizeof(buffer), "Line %d, Column %d", line, column);
-#endif
         return buffer;
     }
 
-    std::string OurReader::getFormattedErrorMessages() const
+    JSONCPP_STRING OurReader::getFormattedErrorMessages() const
     {
-        std::string formattedMessage;
+        JSONCPP_STRING formattedMessage;
         for (Errors::const_iterator itError = errors_.begin();
                 itError != errors_.end();
                 ++itError)
@@ -2070,6 +2326,65 @@ namespace Json
         return formattedMessage;
     }
 
+    std::vector<OurReader::StructuredError> OurReader::getStructuredErrors() const
+    {
+        std::vector<OurReader::StructuredError> allErrors;
+        for (Errors::const_iterator itError = errors_.begin();
+                itError != errors_.end();
+                ++itError)
+        {
+            const ErrorInfo& error = *itError;
+            OurReader::StructuredError structured;
+            structured.offset_start = error.token_.start_ - begin_;
+            structured.offset_limit = error.token_.end_ - begin_;
+            structured.message = error.message_;
+            allErrors.push_back(structured);
+        }
+        return allErrors;
+    }
+
+    bool OurReader::pushError(const Value& value, const JSONCPP_STRING& message)
+    {
+        ptrdiff_t length = end_ - begin_;
+        if (value.getOffsetStart() > length
+                || value.getOffsetLimit() > length)
+            return false;
+        Token token;
+        token.type_ = tokenError;
+        token.start_ = begin_ + value.getOffsetStart();
+        token.end_ = end_ + value.getOffsetLimit();
+        ErrorInfo info;
+        info.token_ = token;
+        info.message_ = message;
+        info.extra_ = 0;
+        errors_.push_back(info);
+        return true;
+    }
+
+    bool OurReader::pushError(const Value& value, const JSONCPP_STRING& message, const Value& extra)
+    {
+        ptrdiff_t length = end_ - begin_;
+        if (value.getOffsetStart() > length
+                || value.getOffsetLimit() > length
+                || extra.getOffsetLimit() > length)
+            return false;
+        Token token;
+        token.type_ = tokenError;
+        token.start_ = begin_ + value.getOffsetStart();
+        token.end_ = begin_ + value.getOffsetLimit();
+        ErrorInfo info;
+        info.token_ = token;
+        info.message_ = message;
+        info.extra_ = begin_ + extra.getOffsetStart();
+        errors_.push_back(info);
+        return true;
+    }
+
+    bool OurReader::good() const
+    {
+        return !errors_.size();
+    }
+
 
     class OurCharReader : public CharReader
     {
@@ -2082,9 +2397,9 @@ namespace Json
             : collectComments_(collectComments)
             , reader_(features)
         {}
-        virtual bool parse(
+        bool parse(
             char const* beginDoc, char const* endDoc,
-            Value* root, std::string* errs)
+            Value* root, JSONCPP_STRING* errs) JSONCPP_OVERRIDE
         {
             bool ok = reader_.parse(beginDoc, endDoc, *root, collectComments_);
             if (errs)
@@ -2113,9 +2428,10 @@ namespace Json
         features.stackLimit_ = settings_["stackLimit"].asInt();
         features.failIfExtra_ = settings_["failIfExtra"].asBool();
         features.rejectDupKeys_ = settings_["rejectDupKeys"].asBool();
+        features.allowSpecialFloats_ = settings_["allowSpecialFloats"].asBool();
         return new OurCharReader(collectComments, features);
     }
-    static void getValidReaderKeys(std::set<std::string>* valid_keys)
+    static void getValidReaderKeys(std::set<JSONCPP_STRING>* valid_keys)
     {
         valid_keys->clear();
         valid_keys->insert("collectComments");
@@ -2127,19 +2443,20 @@ namespace Json
         valid_keys->insert("stackLimit");
         valid_keys->insert("failIfExtra");
         valid_keys->insert("rejectDupKeys");
+        valid_keys->insert("allowSpecialFloats");
     }
     bool CharReaderBuilder::validate(Json::Value* invalid) const
     {
         Json::Value my_invalid;
         if (!invalid) invalid = &my_invalid;  // so we do not need to test for NULL
         Json::Value& inv = *invalid;
-        std::set<std::string> valid_keys;
+        std::set<JSONCPP_STRING> valid_keys;
         getValidReaderKeys(&valid_keys);
         Value::Members keys = settings_.getMemberNames();
         size_t n = keys.size();
         for (size_t i = 0; i < n; ++i)
         {
-            std::string const& key = keys[i];
+            JSONCPP_STRING const& key = keys[i];
             if (valid_keys.find(key) == valid_keys.end())
             {
                 inv[key] = settings_[key];
@@ -2147,7 +2464,7 @@ namespace Json
         }
         return 0u == inv.size();
     }
-    Value& CharReaderBuilder::operator[](std::string key)
+    Value& CharReaderBuilder::operator[](JSONCPP_STRING key)
     {
         return settings_[key];
     }
@@ -2160,8 +2477,10 @@ namespace Json
         (*settings)["allowDroppedNullPlaceholders"] = false;
         (*settings)["allowNumericKeys"] = false;
         (*settings)["allowSingleQuotes"] = false;
+        (*settings)["stackLimit"] = 1000;
         (*settings)["failIfExtra"] = true;
         (*settings)["rejectDupKeys"] = true;
+        (*settings)["allowSpecialFloats"] = false;
 //! [CharReaderBuilderStrictMode]
     }
 // static
@@ -2177,6 +2496,7 @@ namespace Json
         (*settings)["stackLimit"] = 1000;
         (*settings)["failIfExtra"] = false;
         (*settings)["rejectDupKeys"] = false;
+        (*settings)["allowSpecialFloats"] = false;
 //! [CharReaderBuilderDefaults]
     }
 
@@ -2184,12 +2504,12 @@ namespace Json
 // global functions
 
     bool parseFromStream(
-        CharReader::Factory const& fact, std::istream& sin,
-        Value* root, std::string* errs)
+        CharReader::Factory const& fact, JSONCPP_ISTREAM& sin,
+        Value* root, JSONCPP_STRING* errs)
     {
-        std::ostringstream ssin;
+        JSONCPP_OSTRINGSTREAM ssin;
         ssin << sin.rdbuf();
-        std::string doc = ssin.str();
+        JSONCPP_STRING doc = ssin.str();
         char const* begin = doc.data();
         char const* end = begin + doc.size();
         // Note that we do not actually need a null-terminator.
@@ -2197,10 +2517,10 @@ namespace Json
         return reader->parse(begin, end, root, errs);
     }
 
-    std::istream& operator>>(std::istream& sin, Value& root)
+    JSONCPP_ISTREAM& operator>>(JSONCPP_ISTREAM& sin, Value& root)
     {
         CharReaderBuilder b;
-        std::string errs;
+        JSONCPP_STRING errs;
         bool ok = parseFromStream(b, sin, &root, &errs);
         if (!ok)
         {
@@ -2208,7 +2528,7 @@ namespace Json
                     "Error from reader: %s",
                     errs.c_str());
 
-            throwRuntimeError("reader error");
+            throwRuntimeError(errs);
         }
         return sin;
     }
@@ -2228,7 +2548,7 @@ namespace Json
 // Beginning of content of file: src/lib_json/json_valueiterator.inl
 // //////////////////////////////////////////////////////////////////////
 
-// Copyright 2007-2010 Baptiste Lepilleur
+// Copyright 2007-2010 Baptiste Lepilleur and The JsonCpp Authors
 // Distributed under MIT license, or public domain if desired and
 // recognized in your jurisdiction.
 // See file LICENSE for detail or copy at http://jsoncpp.sourceforge.net/LICENSE
@@ -2336,13 +2656,13 @@ namespace Json
         return Value::UInt(-1);
     }
 
-    std::string ValueIteratorBase::name() const
+    JSONCPP_STRING ValueIteratorBase::name() const
     {
         char const* keey;
         char const* end;
         keey = memberName(&end);
-        if (!keey) return std::string();
-        return std::string(keey, end);
+        if (!keey) return JSONCPP_STRING();
+        return JSONCPP_STRING(keey, end);
     }
 
     char const* ValueIteratorBase::memberName() const
@@ -2377,6 +2697,9 @@ namespace Json
         const Value::ObjectValues::iterator& current)
         : ValueIteratorBase(current) {}
 
+    ValueConstIterator::ValueConstIterator(ValueIterator const& other)
+        : ValueIteratorBase(other) {}
+
     ValueConstIterator& ValueConstIterator::
     operator=(const ValueIteratorBase& other)
     {
@@ -2398,7 +2721,10 @@ namespace Json
         : ValueIteratorBase(current) {}
 
     ValueIterator::ValueIterator(const ValueConstIterator& other)
-        : ValueIteratorBase(other) {}
+        : ValueIteratorBase(other)
+    {
+        throwRuntimeError("ConstIterator to Iterator should never be allowed.");
+    }
 
     ValueIterator::ValueIterator(const ValueIterator& other)
         : ValueIteratorBase(other) {}
@@ -2424,7 +2750,7 @@ namespace Json
 // Beginning of content of file: src/lib_json/json_value.cpp
 // //////////////////////////////////////////////////////////////////////
 
-// Copyright 2011 Baptiste Lepilleur
+// Copyright 2011 Baptiste Lepilleur and The JsonCpp Authors
 // Distributed under MIT license, or public domain if desired and
 // recognized in your jurisdiction.
 // See file LICENSE for detail or copy at http://jsoncpp.sourceforge.net/LICENSE
@@ -2456,13 +2782,24 @@ namespace Json
 #if defined(__ARMEL__)
 #define ALIGNAS(byte_alignment) __attribute__((aligned(byte_alignment)))
 #else
-// This exists for binary compatibility only. Use nullRef.
-    const Value Value::null;
 #define ALIGNAS(byte_alignment)
 #endif
-    static const unsigned char ALIGNAS(8) kNull[sizeof(Value)] = { 0 };
-    const unsigned char& kNullRef = kNull[0];
-    const Value& Value::nullRef = reinterpret_cast<const Value&>(kNullRef);
+//static const unsigned char ALIGNAS(8) kNull[sizeof(Value)] = { 0 };
+//const unsigned char& kNullRef = kNull[0];
+//const Value& Value::null = reinterpret_cast<const Value&>(kNullRef);
+//const Value& Value::nullRef = null;
+
+// static
+    Value const& Value::nullSingleton()
+    {
+        static Value const nullStatic;
+        return nullStatic;
+    }
+
+// for backwards compatibility, we'll leave these global references around, but DO NOT
+// use them in JSONCPP library code any more!
+    Value const& Value::null = Value::nullSingleton();
+    Value const& Value::nullRef = Value::nullSingleton();
 
     const Int Value::minInt = Int(~(UInt(-1) / 2));
     const Int Value::maxInt = Int(UInt(-1) / 2);
@@ -2484,12 +2821,15 @@ namespace Json
     template <typename T, typename U>
     static inline bool InRange(double d, T min, U max)
     {
+        // The casts can lose precision, but we are looking only for
+        // an approximate range. Might fail on edge cases though. ~cdunn
+        //return d >= static_cast<double>(min) && d <= static_cast<double>(max);
         return d >= min && d <= max;
     }
 #else  // if !defined(JSON_USE_INT64_DOUBLE_CONVERSION)
     static inline double integerToDouble(Json::UInt64 value)
     {
-        return static_cast<double>(Int64(value / 2)) * 2.0 + Int64(value & 1);
+        return static_cast<double>(Int64(value / 2)) * 2.0 + static_cast<double>(Int64(value & 1));
     }
 
     template <typename T> static inline double integerToDouble(T value)
@@ -2516,7 +2856,7 @@ namespace Json
     {
         // Avoid an integer overflow in the call to malloc below by limiting length
         // to a sane value.
-        if (length >= (size_t)Value::maxInt)
+        if (length >= static_cast<size_t>(Value::maxInt))
             length = Value::maxInt - 1;
 
         char* newString = static_cast<char*>(malloc(length + 1));
@@ -2539,7 +2879,7 @@ namespace Json
     {
         // Avoid an integer overflow in the call to malloc below by limiting length
         // to a sane value.
-        JSON_ASSERT_MESSAGE(length <= (unsigned)Value::maxInt - sizeof(unsigned) - 1U,
+        JSON_ASSERT_MESSAGE(length <= static_cast<unsigned>(Value::maxInt) - sizeof(unsigned) - 1U,
                             "in Json::Value::duplicateAndPrefixStringValue(): "
                             "length too big for prefixing");
         unsigned actualLength = length + static_cast<unsigned>(sizeof(unsigned)) + 1U;
@@ -2572,7 +2912,33 @@ namespace Json
     }
     /** Free the string duplicated by duplicateStringValue()/duplicateAndPrefixStringValue().
      */
-    static inline void releaseStringValue(char* value) { free(value); }
+#if JSONCPP_USING_SECURE_MEMORY
+    static inline void releasePrefixedStringValue(char* value)
+    {
+        unsigned length = 0;
+        char const* valueDecoded;
+        decodePrefixedString(true, value, &length, &valueDecoded);
+        size_t const size = sizeof(unsigned) + length + 1U;
+        memset(value, 0, size);
+        free(value);
+    }
+    static inline void releaseStringValue(char* value, unsigned length)
+    {
+        // length==0 => we allocated the strings memory
+        size_t size = (length == 0) ? strlen(value) : length;
+        memset(value, 0, size);
+        free(value);
+    }
+#else // !JSONCPP_USING_SECURE_MEMORY
+    static inline void releasePrefixedStringValue(char* value)
+    {
+        free(value);
+    }
+    static inline void releaseStringValue(char* value, unsigned)
+    {
+        free(value);
+    }
+#endif // JSONCPP_USING_SECURE_MEMORY
 
 } // namespace Json
 
@@ -2591,26 +2957,26 @@ namespace Json
 namespace Json
 {
 
-    Exception::Exception(std::string const& msg)
+    Exception::Exception(JSONCPP_STRING const& msg)
         : msg_(msg)
     {}
-    Exception::~Exception() throw()
+    Exception::~Exception() JSONCPP_NOEXCEPT
     {}
-    char const* Exception::what() const throw()
+    char const* Exception::what() const JSONCPP_NOEXCEPT
     {
         return msg_.c_str();
     }
-    RuntimeError::RuntimeError(std::string const& msg)
+    RuntimeError::RuntimeError(JSONCPP_STRING const& msg)
         : Exception(msg)
     {}
-    LogicError::LogicError(std::string const& msg)
+    LogicError::LogicError(JSONCPP_STRING const& msg)
         : Exception(msg)
     {}
-    void throwRuntimeError(std::string const& msg)
+    JSONCPP_NORETURN void throwRuntimeError(JSONCPP_STRING const& msg)
     {
         throw RuntimeError(msg);
     }
-    void throwLogicError(std::string const& msg)
+    JSONCPP_NORETURN void throwLogicError(JSONCPP_STRING const& msg)
     {
         throw LogicError(msg);
     }
@@ -2623,19 +2989,20 @@ namespace Json
 // //////////////////////////////////////////////////////////////////
 // //////////////////////////////////////////////////////////////////
 
-    Value::CommentInfo::CommentInfo() : comment_(0) {}
+    Value::CommentInfo::CommentInfo() : comment_(0)
+    {}
 
     Value::CommentInfo::~CommentInfo()
     {
         if (comment_)
-            releaseStringValue(comment_);
+            releaseStringValue(comment_, 0u);
     }
 
     void Value::CommentInfo::setComment(const char* text, size_t len)
     {
         if (comment_)
         {
-            releaseStringValue(comment_);
+            releaseStringValue(comment_, 0u);
             comment_ = 0;
         }
         JSON_ASSERT(text != 0);
@@ -2668,21 +3035,31 @@ namespace Json
     }
 
     Value::CZString::CZString(const CZString& other)
-        : cstr_(other.storage_.policy_ != noDuplication && other.cstr_ != 0
-                ? duplicateStringValue(other.cstr_, other.storage_.length_)
-                : other.cstr_)
     {
-        storage_.policy_ = (other.cstr_
-                            ? (static_cast<DuplicationPolicy>(other.storage_.policy_) == noDuplication
-                               ? noDuplication : duplicate)
-                            : static_cast<DuplicationPolicy>(other.storage_.policy_));
+        cstr_ = (other.storage_.policy_ != noDuplication && other.cstr_ != 0
+                 ? duplicateStringValue(other.cstr_, other.storage_.length_)
+                 : other.cstr_);
+        storage_.policy_ = static_cast<unsigned>(other.cstr_
+                           ? (static_cast<DuplicationPolicy>(other.storage_.policy_) == noDuplication
+                              ? noDuplication : duplicate)
+                           : static_cast<DuplicationPolicy>(other.storage_.policy_)) & 3U;
         storage_.length_ = other.storage_.length_;
     }
+
+#if JSON_HAS_RVALUE_REFERENCES
+    Value::CZString::CZString(CZString&& other)
+        : cstr_(other.cstr_), index_(other.index_)
+    {
+        other.cstr_ = nullptr;
+    }
+#endif
 
     Value::CZString::~CZString()
     {
         if (cstr_ && storage_.policy_ == duplicate)
-            releaseStringValue(const_cast<char*>(cstr_));
+        {
+            releaseStringValue(const_cast<char*>(cstr_), storage_.length_ + 1u); //+1 for null terminating character for sake of completeness but not actually necessary
+        }
     }
 
     void Value::CZString::swap(CZString& other)
@@ -2691,11 +3068,22 @@ namespace Json
         std::swap(index_, other.index_);
     }
 
-    Value::CZString& Value::CZString::operator=(CZString other)
+    Value::CZString& Value::CZString::operator=(const CZString& other)
     {
-        swap(other);
+        cstr_ = other.cstr_;
+        index_ = other.index_;
         return *this;
     }
+
+#if JSON_HAS_RVALUE_REFERENCES
+    Value::CZString& Value::CZString::operator=(CZString&& other)
+    {
+        cstr_ = other.cstr_;
+        index_ = other.index_;
+        other.cstr_ = nullptr;
+        return *this;
+    }
+#endif
 
     bool Value::CZString::operator<(const CZString& other) const
     {
@@ -2704,7 +3092,8 @@ namespace Json
         // Assume both are strings.
         unsigned this_len = this->storage_.length_;
         unsigned other_len = other.storage_.length_;
-        unsigned min_len = std::min(this_len, other_len);
+        unsigned min_len = std::min<unsigned>(this_len, other_len);
+        JSON_ASSERT(this->cstr_ && other.cstr_);
         int comp = memcmp(this->cstr_, other.cstr_, min_len);
         if (comp < 0) return true;
         if (comp > 0) return false;
@@ -2719,6 +3108,7 @@ namespace Json
         unsigned this_len = this->storage_.length_;
         unsigned other_len = other.storage_.length_;
         if (this_len != other_len) return false;
+        JSON_ASSERT(this->cstr_ && other.cstr_);
         int comp = memcmp(this->cstr_, other.cstr_, this_len);
         return comp == 0;
     }
@@ -2744,6 +3134,7 @@ namespace Json
      */
     Value::Value(ValueType vtype)
     {
+        static char const emptyString[] = "";
         initBasic(vtype);
         switch (vtype)
         {
@@ -2757,7 +3148,8 @@ namespace Json
                 value_.real_ = 0.0;
                 break;
             case stringValue:
-                value_.string_ = 0;
+                // allocated_ == false, so this is safe.
+                value_.string_ = const_cast<char*>(static_cast<char const*>(emptyString));
                 break;
             case arrayValue:
             case objectValue:
@@ -2804,6 +3196,7 @@ namespace Json
     Value::Value(const char* value)
     {
         initBasic(stringValue, true);
+        JSON_ASSERT_MESSAGE(value != NULL, "Null Value Passed to Value Constructor");
         value_.string_ = duplicateAndPrefixStringValue(value, static_cast<unsigned>(strlen(value)));
     }
 
@@ -2814,7 +3207,7 @@ namespace Json
             duplicateAndPrefixStringValue(beginValue, static_cast<unsigned>(endValue - beginValue));
     }
 
-    Value::Value(const std::string& value)
+    Value::Value(const JSONCPP_STRING& value)
     {
         initBasic(stringValue, true);
         value_.string_ =
@@ -2844,7 +3237,7 @@ namespace Json
     Value::Value(Value const& other)
         : type_(other.type_), allocated_(false)
         ,
-          comments_(0)
+          comments_(0), start_(other.start_), limit_(other.limit_)
     {
         switch (type_)
         {
@@ -2891,6 +3284,15 @@ namespace Json
         }
     }
 
+#if JSON_HAS_RVALUE_REFERENCES
+// Move constructor
+    Value::Value(Value&& other)
+    {
+        initBasic(nullValue);
+        swap(other);
+    }
+#endif
+
     Value::~Value()
     {
         switch (type_)
@@ -2903,7 +3305,7 @@ namespace Json
                 break;
             case stringValue:
                 if (allocated_)
-                    releaseStringValue(value_.string_);
+                    releasePrefixedStringValue(value_.string_);
                 break;
             case arrayValue:
             case objectValue:
@@ -2913,14 +3315,14 @@ namespace Json
                 JSON_ASSERT_UNREACHABLE;
         }
 
-        if (comments_)
-            delete[] comments_;
+        delete[] comments_;
+
+        value_.uint_ = 0;
     }
 
-    Value& Value::operator=(const Value& other)
+    Value& Value::operator=(Value other)
     {
-        Value temp(other);
-        swap(temp);
+        swap(other);
         return *this;
     }
 
@@ -2935,10 +3337,27 @@ namespace Json
         other.allocated_ = temp2 & 0x1;
     }
 
+    void Value::copyPayload(const Value& other)
+    {
+        type_ = other.type_;
+        value_ = other.value_;
+        allocated_ = other.allocated_;
+    }
+
     void Value::swap(Value& other)
     {
         swapPayload(other);
         std::swap(comments_, other.comments_);
+        std::swap(start_, other.start_);
+        std::swap(limit_, other.limit_);
+    }
+
+    void Value::copy(const Value& other)
+    {
+        copyPayload(other);
+        comments_ = other.comments_;
+        start_ = other.start_;
+        limit_ = other.limit_;
     }
 
     ValueType Value::type() const { return type_; }
@@ -2982,7 +3401,8 @@ namespace Json
                 char const* other_str;
                 decodePrefixedString(this->allocated_, this->value_.string_, &this_len, &this_str);
                 decodePrefixedString(other.allocated_, other.value_.string_, &other_len, &other_str);
-                unsigned min_len = std::min(this_len, other_len);
+                unsigned min_len = std::min<unsigned>(this_len, other_len);
+                JSON_ASSERT(this_str && other_str);
                 int comp = memcmp(this_str, other_str, min_len);
                 if (comp < 0) return true;
                 if (comp > 0) return false;
@@ -3042,6 +3462,7 @@ namespace Json
                 decodePrefixedString(this->allocated_, this->value_.string_, &this_len, &this_str);
                 decodePrefixedString(other.allocated_, other.value_.string_, &other_len, &other_str);
                 if (this_len != other_len) return false;
+                JSON_ASSERT(this_str && other_str);
                 int comp = memcmp(this_str, other_str, this_len);
                 return comp == 0;
             }
@@ -3068,6 +3489,19 @@ namespace Json
         return this_str;
     }
 
+#if JSONCPP_USING_SECURE_MEMORY
+    unsigned Value::getCStringLength() const
+    {
+        JSON_ASSERT_MESSAGE(type_ == stringValue,
+                            "in Json::Value::asCString(): requires stringValue");
+        if (value_.string_ == 0) return 0;
+        unsigned this_len;
+        char const* this_str;
+        decodePrefixedString(this->allocated_, this->value_.string_, &this_len, &this_str);
+        return this_len;
+    }
+#endif
+
     bool Value::getString(char const** str, char const** cend) const
     {
         if (type_ != stringValue) return false;
@@ -3078,7 +3512,7 @@ namespace Json
         return true;
     }
 
-    std::string Value::asString() const
+    JSONCPP_STRING Value::asString() const
     {
         switch (type_)
         {
@@ -3090,7 +3524,7 @@ namespace Json
                 unsigned this_len;
                 char const* this_str;
                 decodePrefixedString(this->allocated_, this->value_.string_, &this_len, &this_str);
-                return std::string(this_str, this_len);
+                return JSONCPP_STRING(this_str, this_len);
             }
             case booleanValue:
                 return value_.bool_ ? "true" : "false";
@@ -3103,7 +3537,6 @@ namespace Json
             default:
                 JSON_FAIL_MESSAGE("Type is not convertible to string");
         }
-        return "";
     }
 
 #ifdef JSON_USE_CPPTL
@@ -3139,7 +3572,6 @@ namespace Json
                 break;
         }
         JSON_FAIL_MESSAGE("Value is not convertible to Int.");
-        return 0;
     }
 
     Value::UInt Value::asUInt() const
@@ -3164,7 +3596,6 @@ namespace Json
                 break;
         }
         JSON_FAIL_MESSAGE("Value is not convertible to UInt.");
-        return 0;
     }
 
 #if defined(JSON_HAS_INT64)
@@ -3190,7 +3621,6 @@ namespace Json
                 break;
         }
         JSON_FAIL_MESSAGE("Value is not convertible to Int64.");
-        return 0;
     }
 
     Value::UInt64 Value::asUInt64() const
@@ -3214,7 +3644,6 @@ namespace Json
                 break;
         }
         JSON_FAIL_MESSAGE("Value is not convertible to UInt64.");
-        return 0;
     }
 #endif // if defined(JSON_HAS_INT64)
 
@@ -3258,7 +3687,6 @@ namespace Json
                 break;
         }
         JSON_FAIL_MESSAGE("Value is not convertible to double.");
-        return 0.0;
     }
 
     float Value::asFloat() const
@@ -3271,7 +3699,8 @@ namespace Json
 #if !defined(JSON_USE_INT64_DOUBLE_CONVERSION)
                 return static_cast<float>(value_.uint_);
 #else  // if !defined(JSON_USE_INT64_DOUBLE_CONVERSION)
-                return integerToDouble(value_.uint_);
+                // This can fail (silently?) if the value is bigger than MAX_FLOAT.
+                return static_cast<float>(integerToDouble(value_.uint_));
 #endif // if !defined(JSON_USE_INT64_DOUBLE_CONVERSION)
             case realValue:
                 return static_cast<float>(value_.real_);
@@ -3283,7 +3712,6 @@ namespace Json
                 break;
         }
         JSON_FAIL_MESSAGE("Value is not convertible to float.");
-        return 0.0f;
     }
 
     bool Value::asBool() const
@@ -3305,7 +3733,6 @@ namespace Json
                 break;
         }
         JSON_FAIL_MESSAGE("Value is not convertible to bool.");
-        return false;
     }
 
     bool Value::isConvertibleTo(ValueType other) const
@@ -3315,7 +3742,7 @@ namespace Json
             case nullValue:
                 return (isNumeric() && asDouble() == 0.0) ||
                        (type_ == booleanValue && value_.bool_ == false) ||
-                       (type_ == stringValue && asString() == "") ||
+                       (type_ == stringValue && asString().empty()) ||
                        (type_ == arrayValue && value_.map_->size() == 0) ||
                        (type_ == objectValue && value_.map_->size() == 0) ||
                        type_ == nullValue;
@@ -3385,6 +3812,8 @@ namespace Json
         JSON_ASSERT_MESSAGE(type_ == nullValue || type_ == arrayValue ||
                             type_ == objectValue,
                             "in Json::Value::clear(): requires complex value");
+        start_ = 0;
+        limit_ = 0;
         switch (type_)
         {
             case arrayValue:
@@ -3413,7 +3842,7 @@ namespace Json
             {
                 value_.map_->erase(index);
             }
-            assert(size() == newSize);
+            JSON_ASSERT(size() == newSize);
         }
     }
 
@@ -3429,7 +3858,7 @@ namespace Json
         if (it != value_.map_->end() && (*it).first == key)
             return (*it).second;
 
-        ObjectValues::value_type defaultValue(key, nullRef);
+        ObjectValues::value_type defaultValue(key, nullSingleton());
         it = value_.map_->insert(it, defaultValue);
         return (*it).second;
     }
@@ -3448,11 +3877,11 @@ namespace Json
             type_ == nullValue || type_ == arrayValue,
             "in Json::Value::operator[](ArrayIndex)const: requires arrayValue");
         if (type_ == nullValue)
-            return nullRef;
+            return nullSingleton();
         CZString key(index);
         ObjectValues::const_iterator it = value_.map_->find(key);
         if (it == value_.map_->end())
-            return nullRef;
+            return nullSingleton();
         return (*it).second;
     }
 
@@ -3469,6 +3898,8 @@ namespace Json
         type_ = vtype;
         allocated_ = allocated;
         comments_ = 0;
+        start_ = 0;
+        limit_ = 0;
     }
 
 // Access an object value by name, create a null member if it does not exist.
@@ -3487,7 +3918,7 @@ namespace Json
         if (it != value_.map_->end() && (*it).first == actualKey)
             return (*it).second;
 
-        ObjectValues::value_type defaultValue(actualKey, nullRef);
+        ObjectValues::value_type defaultValue(actualKey, nullSingleton());
         it = value_.map_->insert(it, defaultValue);
         Value& value = (*it).second;
         return value;
@@ -3507,7 +3938,7 @@ namespace Json
         if (it != value_.map_->end() && (*it).first == actualKey)
             return (*it).second;
 
-        ObjectValues::value_type defaultValue(actualKey, nullRef);
+        ObjectValues::value_type defaultValue(actualKey, nullSingleton());
         it = value_.map_->insert(it, defaultValue);
         Value& value = (*it).second;
         return value;
@@ -3516,7 +3947,7 @@ namespace Json
     Value Value::get(ArrayIndex index, const Value& defaultValue) const
     {
         const Value* value = &((*this)[index]);
-        return value == &nullRef ? defaultValue : *value;
+        return value == &nullSingleton() ? defaultValue : *value;
     }
 
     bool Value::isValidIndex(ArrayIndex index) const { return index < size(); }
@@ -3535,13 +3966,13 @@ namespace Json
     const Value& Value::operator[](const char* key) const
     {
         Value const* found = find(key, key + strlen(key));
-        if (!found) return nullRef;
+        if (!found) return nullSingleton();
         return *found;
     }
-    Value const& Value::operator[](std::string const& key) const
+    Value const& Value::operator[](JSONCPP_STRING const& key) const
     {
         Value const* found = find(key.data(), key.data() + key.length());
-        if (!found) return nullRef;
+        if (!found) return nullSingleton();
         return *found;
     }
 
@@ -3550,7 +3981,7 @@ namespace Json
         return resolveReference(key, key + strlen(key));
     }
 
-    Value& Value::operator[](const std::string& key)
+    Value& Value::operator[](const JSONCPP_STRING& key)
     {
         return resolveReference(key.data(), key.data() + key.length());
     }
@@ -3568,12 +3999,16 @@ namespace Json
     Value const& Value::operator[](CppTL::ConstString const& key) const
     {
         Value const* found = find(key.c_str(), key.end_c_str());
-        if (!found) return nullRef;
+        if (!found) return nullSingleton();
         return *found;
     }
 #endif
 
     Value& Value::append(const Value& value) { return (*this)[size()] = value; }
+
+#if JSON_HAS_RVALUE_REFERENCES
+    Value& Value::append(Value&& value) { return (*this)[size()] = value; }
+#endif
 
     Value Value::get(char const* key, char const* cend, Value const& defaultValue) const
     {
@@ -3584,7 +4019,7 @@ namespace Json
     {
         return get(key, key + strlen(key), defaultValue);
     }
-    Value Value::get(std::string const& key, Value const& defaultValue) const
+    Value Value::get(JSONCPP_STRING const& key, Value const& defaultValue) const
     {
         return get(key.data(), key.data() + key.length(), defaultValue);
     }
@@ -3608,7 +4043,7 @@ namespace Json
     {
         return removeMember(key, key + strlen(key), removed);
     }
-    bool Value::removeMember(std::string const& key, Value* removed)
+    bool Value::removeMember(JSONCPP_STRING const& key, Value* removed)
     {
         return removeMember(key.data(), key.data() + key.length(), removed);
     }
@@ -3617,13 +4052,13 @@ namespace Json
         JSON_ASSERT_MESSAGE(type_ == nullValue || type_ == objectValue,
                             "in Json::Value::removeMember(): requires objectValue");
         if (type_ == nullValue)
-            return nullRef;
+            return nullSingleton();
 
         Value removed;  // null
         removeMember(key, key + strlen(key), &removed);
         return removed; // still null if removeMember() did nothing
     }
-    Value Value::removeMember(const std::string& key)
+    Value Value::removeMember(const JSONCPP_STRING& key)
     {
         return removeMember(key.c_str());
     }
@@ -3672,7 +4107,7 @@ namespace Json
     {
         return isMember(key, key + strlen(key));
     }
-    bool Value::isMember(std::string const& key) const
+    bool Value::isMember(JSONCPP_STRING const& key) const
     {
         return isMember(key.data(), key.data() + key.length());
     }
@@ -3697,8 +4132,8 @@ namespace Json
         ObjectValues::const_iterator itEnd = value_.map_->end();
         for (; it != itEnd; ++it)
         {
-            members.push_back(std::string((*it).first.data(),
-                                          (*it).first.length()));
+            members.push_back(JSONCPP_STRING((*it).first.data(),
+                                             (*it).first.length()));
         }
         return members;
     }
@@ -3743,7 +4178,11 @@ namespace Json
         switch (type_)
         {
             case intValue:
+#if defined(JSON_HAS_INT64)
                 return value_.int_ >= minInt && value_.int_ <= maxInt;
+#else
+                return true;
+#endif
             case uintValue:
                 return value_.uint_ <= UInt(maxInt);
             case realValue:
@@ -3760,9 +4199,17 @@ namespace Json
         switch (type_)
         {
             case intValue:
+#if defined(JSON_HAS_INT64)
                 return value_.int_ >= 0 && LargestUInt(value_.int_) <= LargestUInt(maxUInt);
+#else
+                return value_.int_ >= 0;
+#endif
             case uintValue:
+#if defined(JSON_HAS_INT64)
                 return value_.uint_ <= maxUInt;
+#else
+                return true;
+#endif
             case realValue:
                 return value_.real_ >= 0 && value_.real_ <= maxUInt &&
                        IsIntegral(value_.real_);
@@ -3818,16 +4265,29 @@ namespace Json
 
     bool Value::isIntegral() const
     {
+        switch (type_)
+        {
+            case intValue:
+            case uintValue:
+                return true;
+            case realValue:
 #if defined(JSON_HAS_INT64)
-        return isInt64() || isUInt64();
+                // Note that maxUInt64 (= 2^64 - 1) is not exactly representable as a
+                // double, so double(maxUInt64) will be rounded up to 2^64. Therefore we
+                // require the value to be strictly less than the limit.
+                return value_.real_ >= double(minInt64) && value_.real_ < maxUInt64AsDouble && IsIntegral(value_.real_);
 #else
-        return isInt() || isUInt();
-#endif
+                return value_.real_ >= minInt && value_.real_ <= maxUInt && IsIntegral(value_.real_);
+#endif // JSON_HAS_INT64
+            default:
+                break;
+        }
+        return false;
     }
 
-    bool Value::isDouble() const { return type_ == realValue || isIntegral(); }
+    bool Value::isDouble() const { return type_ == intValue || type_ == uintValue || type_ == realValue; }
 
-    bool Value::isNumeric() const { return isIntegral() || isDouble(); }
+    bool Value::isNumeric() const { return isDouble(); }
 
     bool Value::isString() const { return type_ == stringValue; }
 
@@ -3852,7 +4312,7 @@ namespace Json
         setComment(comment, strlen(comment), placement);
     }
 
-    void Value::setComment(const std::string& comment, CommentPlacement placement)
+    void Value::setComment(const JSONCPP_STRING& comment, CommentPlacement placement)
     {
         setComment(comment.c_str(), comment.length(), placement);
     }
@@ -3862,17 +4322,30 @@ namespace Json
         return comments_ != 0 && comments_[placement].comment_ != 0;
     }
 
-    std::string Value::getComment(CommentPlacement placement) const
+    JSONCPP_STRING Value::getComment(CommentPlacement placement) const
     {
         if (hasComment(placement))
             return comments_[placement].comment_;
         return "";
     }
 
-    std::string Value::toStyledString() const
+    void Value::setOffsetStart(ptrdiff_t start) { start_ = start; }
+
+    void Value::setOffsetLimit(ptrdiff_t limit) { limit_ = limit; }
+
+    ptrdiff_t Value::getOffsetStart() const { return start_; }
+
+    ptrdiff_t Value::getOffsetLimit() const { return limit_; }
+
+    JSONCPP_STRING Value::toStyledString() const
     {
-        StyledWriter writer;
-        return writer.write(*this);
+        StreamWriterBuilder builder;
+
+        JSONCPP_STRING out = this->hasComment(commentBefore) ? "\n" : "";
+        out += Json::writeString(builder, *this);
+        out += "\n";
+
+        return out;
     }
 
     Value::const_iterator Value::begin() const
@@ -3946,13 +4419,13 @@ namespace Json
     PathArgument::PathArgument(const char* key)
         : key_(key), index_(), kind_(kindKey) {}
 
-    PathArgument::PathArgument(const std::string& key)
+    PathArgument::PathArgument(const JSONCPP_STRING& key)
         : key_(key.c_str()), index_(), kind_(kindKey) {}
 
 // class Path
 // //////////////////////////////////////////////////////////////////
 
-    Path::Path(const std::string& path,
+    Path::Path(const JSONCPP_STRING& path,
                const PathArgument& a1,
                const PathArgument& a2,
                const PathArgument& a3,
@@ -3960,6 +4433,7 @@ namespace Json
                const PathArgument& a5)
     {
         InArgs in;
+        in.reserve(5);
         in.push_back(&a1);
         in.push_back(&a2);
         in.push_back(&a3);
@@ -3968,7 +4442,7 @@ namespace Json
         makePath(path, in);
     }
 
-    void Path::makePath(const std::string& path, const InArgs& in)
+    void Path::makePath(const JSONCPP_STRING& path, const InArgs& in)
     {
         const char* current = path.c_str();
         const char* end = current + path.length();
@@ -3987,7 +4461,7 @@ namespace Json
                         index = index * 10 + ArrayIndex(*current - '0');
                     args_.push_back(index);
                 }
-                if (current == end || *current++ != ']')
+                if (current == end || *++current != ']')
                     invalidPath(path, int(current - path.c_str()));
             }
             else if (*current == '%')
@@ -3995,7 +4469,7 @@ namespace Json
                 addPathInArg(path, in, itInArg, PathArgument::kindKey);
                 ++current;
             }
-            else if (*current == '.')
+            else if (*current == '.' || *current == ']')
             {
                 ++current;
             }
@@ -4004,12 +4478,12 @@ namespace Json
                 const char* beginName = current;
                 while (current != end && !strchr("[.", *current))
                     ++current;
-                args_.push_back(std::string(beginName, current));
+                args_.push_back(JSONCPP_STRING(beginName, current));
             }
         }
     }
 
-    void Path::addPathInArg(const std::string& /*path*/,
+    void Path::addPathInArg(const JSONCPP_STRING& /*path*/,
                             const InArgs& in,
                             InArgs::const_iterator& itInArg,
                             PathArgument::Kind kind)
@@ -4024,11 +4498,11 @@ namespace Json
         }
         else
         {
-            args_.push_back(**itInArg);
+            args_.push_back(**itInArg++);
         }
     }
 
-    void Path::invalidPath(const std::string& /*path*/, int /*location*/)
+    void Path::invalidPath(const JSONCPP_STRING& /*path*/, int /*location*/)
     {
         // Error: invalid path.
     }
@@ -4044,6 +4518,7 @@ namespace Json
                 if (!node->isArray() || !node->isValidIndex(arg.index_))
                 {
                     // Error: unable to resolve path (array value expected at position...
+                    return Value::null;
                 }
                 node = &((*node)[arg.index_]);
             }
@@ -4052,12 +4527,14 @@ namespace Json
                 if (!node->isObject())
                 {
                     // Error: unable to resolve path (object value expected at position...)
+                    return Value::null;
                 }
                 node = &((*node)[arg.key_]);
-                if (node == &Value::nullRef)
+                if (node == &Value::nullSingleton())
                 {
                     // Error: unable to resolve path (object has no member named '' at
                     // position...)
+                    return Value::null;
                 }
             }
         }
@@ -4081,7 +4558,7 @@ namespace Json
                 if (!node->isObject())
                     return defaultValue;
                 node = &((*node)[arg.key_]);
-                if (node == &Value::nullRef)
+                if (node == &Value::nullSingleton())
                     return defaultValue;
             }
         }
@@ -4129,7 +4606,7 @@ namespace Json
 // Beginning of content of file: src/lib_json/json_writer.cpp
 // //////////////////////////////////////////////////////////////////////
 
-// Copyright 2011 Baptiste Lepilleur
+// Copyright 2011 Baptiste Lepilleur and The JsonCpp Authors
 // Distributed under MIT license, or public domain if desired and
 // recognized in your jurisdiction.
 // See file LICENSE for detail or copy at http://jsoncpp.sourceforge.net/LICENSE
@@ -4151,21 +4628,44 @@ namespace Json
 #include <float.h>
 #define isfinite _finite
 #elif defined(__sun) && defined(__SVR4) //Solaris
+#if !defined(isfinite)
 #include <ieeefp.h>
 #define isfinite finite
+#endif
+#elif defined(_AIX)
+#if !defined(isfinite)
+#include <math.h>
+#define isfinite finite
+#endif
+#elif defined(__hpux)
+#if !defined(isfinite)
+#if defined(__ia64) && !defined(finite)
+#define isfinite(x) ((sizeof(x) == sizeof(float) ? \
+                      _Isfinitef(x) : _IsFinite(x)))
+#else
+#include <math.h>
+#define isfinite finite
+#endif
+#endif
 #else
 #include <cmath>
+#if !(defined(__QNXNTO__)) // QNX already defines isfinite
 #define isfinite std::isfinite
 #endif
+#endif
 
-#if defined(_MSC_VER) && _MSC_VER < 1500 // VC++ 8.0 and below
+#if defined(_MSC_VER)
+#if !defined(WINCE) && defined(__STDC_SECURE_LIB__) && _MSC_VER >= 1500 // VC++ 9.0 and above
+#define snprintf sprintf_s
+#elif _MSC_VER >= 1900 // VC++ 14.0 and above
+#define snprintf std::snprintf
+#else
 #define snprintf _snprintf
-#elif defined(__ANDROID__)
+#endif
+#elif defined(__ANDROID__) || defined(__QNXNTO__)
 #define snprintf snprintf
 #elif __cplusplus >= 201103L
-#ifdef __MINGW32__
-#define snprintf snprintf
-#else
+#if !defined(__MINGW32__) && !defined(__CYGWIN__)
 #define snprintf std::snprintf
 #endif
 #endif
@@ -4184,7 +4684,11 @@ namespace Json
 namespace Json
 {
 
+#if __cplusplus >= 201103L || (defined(_CPPLIB_VER) && _CPPLIB_VER >= 520)
+    typedef std::unique_ptr<StreamWriter> StreamWriterPtr;
+#else
     typedef std::auto_ptr<StreamWriter>   StreamWriterPtr;
+#endif
 
     static bool containsControlCharacter(const char* str)
     {
@@ -4208,7 +4712,7 @@ namespace Json
         return false;
     }
 
-    std::string valueToString(LargestInt value)
+    JSONCPP_STRING valueToString(LargestInt value)
     {
         UIntToStringBuffer buffer;
         char* current = buffer + sizeof(buffer);
@@ -4230,7 +4734,7 @@ namespace Json
         return current;
     }
 
-    std::string valueToString(LargestUInt value)
+    JSONCPP_STRING valueToString(LargestUInt value)
     {
         UIntToStringBuffer buffer;
         char* current = buffer + sizeof(buffer);
@@ -4241,80 +4745,84 @@ namespace Json
 
 #if defined(JSON_HAS_INT64)
 
-    std::string valueToString(Int value)
+    JSONCPP_STRING valueToString(Int value)
     {
         return valueToString(LargestInt(value));
     }
 
-    std::string valueToString(UInt value)
+    JSONCPP_STRING valueToString(UInt value)
     {
         return valueToString(LargestUInt(value));
     }
 
 #endif // # if defined(JSON_HAS_INT64)
 
-    std::string valueToString(double value)
+    namespace
     {
-        // Allocate a buffer that is more than large enough to store the 16 digits of
-        // precision requested below.
-        char buffer[32];
-        int len = -1;
+        JSONCPP_STRING valueToString(double value, bool useSpecialFloats, unsigned int precision)
+        {
+            // Allocate a buffer that is more than large enough to store the 16 digits of
+            // precision requested below.
+            char buffer[36];
+            int len = -1;
 
-// Print into the buffer. We need not request the alternative representation
-// that always has a decimal point because JSON doesn't distingish the
-// concepts of reals and integers.
-#if defined(_MSC_VER) && defined(__STDC_SECURE_LIB__) // Use secure version with
-        // visual studio 2005 to
-        // avoid warning.
-#if defined(WINCE)
-        len = _snprintf(buffer, sizeof(buffer), "%.17g", value);
-#else
-        len = sprintf_s(buffer, sizeof(buffer), "%.17g", value);
-#endif
-#else
-        if (isfinite(value))
-        {
-            len = snprintf(buffer, sizeof(buffer), "%.17g", value);
-        }
-        else
-        {
-            // IEEE standard states that NaN values will not compare to themselves
-            if (value != value)
+            char formatString[15];
+            snprintf(formatString, sizeof(formatString), "%%.%dg", precision);
+
+            // Print into the buffer. We need not request the alternative representation
+            // that always has a decimal point because JSON doesn't distingish the
+            // concepts of reals and integers.
+            if (isfinite(value))
             {
-                len = snprintf(buffer, sizeof(buffer), "null");
-            }
-            else if (value < 0)
-            {
-                len = snprintf(buffer, sizeof(buffer), "-1e+9999");
+                len = snprintf(buffer, sizeof(buffer), formatString, value);
+                fixNumericLocale(buffer, buffer + len);
+
+                // try to ensure we preserve the fact that this was given to us as a double on input
+                if (!strchr(buffer, '.') && !strchr(buffer, 'e'))
+                {
+                    strcat(buffer, ".0");
+                }
+
             }
             else
             {
-                len = snprintf(buffer, sizeof(buffer), "1e+9999");
+                // IEEE standard states that NaN values will not compare to themselves
+                if (value != value)
+                {
+                    len = snprintf(buffer, sizeof(buffer), useSpecialFloats ? "NaN" : "null");
+                }
+                else if (value < 0)
+                {
+                    len = snprintf(buffer, sizeof(buffer), useSpecialFloats ? "-Infinity" : "-1e+9999");
+                }
+                else
+                {
+                    len = snprintf(buffer, sizeof(buffer), useSpecialFloats ? "Infinity" : "1e+9999");
+                }
             }
-            // For those, we do not need to call fixNumLoc, but it is fast.
+            assert(len >= 0);
+            return buffer;
         }
-#endif
-        assert(len >= 0);
-        fixNumericLocale(buffer, buffer + len);
-        return buffer;
     }
 
-    std::string valueToString(bool value) { return value ? "true" : "false"; }
+    JSONCPP_STRING valueToString(double value) { return valueToString(value, false, 17); }
 
-    std::string valueToQuotedString(const char* value)
+    JSONCPP_STRING valueToString(bool value) { return value ? "true" : "false"; }
+
+    JSONCPP_STRING valueToQuotedString(const char* value)
     {
         if (value == NULL)
             return "";
         // Not sure how to handle unicode...
         if (strpbrk(value, "\"\\\b\f\n\r\t") == NULL &&
                 !containsControlCharacter(value))
-            return std::string("\"") + value + "\"";
+            return JSONCPP_STRING("\"") + value + "\"";
         // We have to walk value and escape any special characters.
-        // Appending to std::string is not efficient, but this should be rare.
+        // Appending to JSONCPP_STRING is not efficient, but this should be rare.
         // (Note: forward slashes are *not* rare, but I am not escaping them.)
-        std::string::size_type maxsize =
+        JSONCPP_STRING::size_type maxsize =
             strlen(value) * 2 + 3; // allescaped+quotes+NULL
-        std::string result;
+        JSONCPP_STRING result;
         result.reserve(maxsize); // to avoid lots of mallocs
         result += "\"";
         for (const char* c = value; *c != 0; ++c)
@@ -4353,7 +4861,7 @@ namespace Json
                 default:
                     if (isControlCharacter(*c))
                     {
-                        std::ostringstream oss;
+                        JSONCPP_OSTRINGSTREAM oss;
                         oss << "\\u" << std::hex << std::uppercase << std::setfill('0')
                             << std::setw(4) << static_cast<int>(*c);
                         result += oss.str();
@@ -4388,20 +4896,20 @@ namespace Json
         }
         return NULL;
     }
-    static std::string valueToQuotedStringN(const char* value, unsigned length)
+    static JSONCPP_STRING valueToQuotedStringN(const char* value, unsigned length)
     {
         if (value == NULL)
             return "";
         // Not sure how to handle unicode...
         if (strnpbrk(value, "\"\\\b\f\n\r\t", length) == NULL &&
                 !containsControlCharacter0(value, length))
-            return std::string("\"") + value + "\"";
+            return JSONCPP_STRING("\"") + value + "\"";
         // We have to walk value and escape any special characters.
-        // Appending to std::string is not efficient, but this should be rare.
+        // Appending to JSONCPP_STRING is not efficient, but this should be rare.
         // (Note: forward slashes are *not* rare, but I am not escaping them.)
-        std::string::size_type maxsize =
+        JSONCPP_STRING::size_type maxsize =
             length * 2 + 3; // allescaped+quotes+NULL
-        std::string result;
+        JSONCPP_STRING result;
         result.reserve(maxsize); // to avoid lots of mallocs
         result += "\"";
         char const* end = value + length;
@@ -4441,7 +4949,7 @@ namespace Json
                 default:
                     if ((isControlCharacter(*c)) || (*c == 0))
                     {
-                        std::ostringstream oss;
+                        JSONCPP_OSTRINGSTREAM oss;
                         oss << "\\u" << std::hex << std::uppercase << std::setfill('0')
                             << std::setw(4) << static_cast<int>(*c);
                         result += oss.str();
@@ -4465,15 +4973,21 @@ namespace Json
 // //////////////////////////////////////////////////////////////////
 
     FastWriter::FastWriter()
-        : yamlCompatiblityEnabled_(false) {}
+        : yamlCompatiblityEnabled_(false), dropNullPlaceholders_(false),
+          omitEndingLineFeed_(false) {}
 
     void FastWriter::enableYAMLCompatibility() { yamlCompatiblityEnabled_ = true; }
 
-    std::string FastWriter::write(const Value& root)
+    void FastWriter::dropNullPlaceholders() { dropNullPlaceholders_ = true; }
+
+    void FastWriter::omitEndingLineFeed() { omitEndingLineFeed_ = true; }
+
+    JSONCPP_STRING FastWriter::write(const Value& root)
     {
-        document_ = "";
+        document_.clear();
         writeValue(root);
-        document_ += "\n";
+        if (!omitEndingLineFeed_)
+            document_ += "\n";
         return document_;
     }
 
@@ -4482,7 +4996,8 @@ namespace Json
         switch (value.type())
         {
             case nullValue:
-                document_ += "null";
+                if (!dropNullPlaceholders_)
+                    document_ += "null";
                 break;
             case intValue:
                 document_ += valueToString(value.asLargestInt());
@@ -4495,7 +5010,7 @@ namespace Json
                 break;
             case stringValue:
             {
-                // Is NULL possible for value.string_?
+                // Is NULL possible for value.string_? No.
                 char const* str;
                 char const* end;
                 bool ok = value.getString(&str, &end);
@@ -4508,8 +5023,8 @@ namespace Json
             case arrayValue:
             {
                 document_ += '[';
-                int size = value.size();
-                for (int index = 0; index < size; ++index)
+                ArrayIndex size = value.size();
+                for (ArrayIndex index = 0; index < size; ++index)
                 {
                     if (index > 0)
                         document_ += ',';
@@ -4524,7 +5039,7 @@ namespace Json
                 for (Value::Members::iterator it = members.begin(); it != members.end();
                         ++it)
                 {
-                    const std::string& name = *it;
+                    const JSONCPP_STRING& name = *it;
                     if (it != members.begin())
                         document_ += ',';
                     document_ += valueToQuotedStringN(name.data(), static_cast<unsigned>(name.length()));
@@ -4542,11 +5057,11 @@ namespace Json
     StyledWriter::StyledWriter()
         : rightMargin_(74), indentSize_(3), addChildValues_() {}
 
-    std::string StyledWriter::write(const Value& root)
+    JSONCPP_STRING StyledWriter::write(const Value& root)
     {
-        document_ = "";
+        document_.clear();
         addChildValues_ = false;
-        indentString_ = "";
+        indentString_.clear();
         writeCommentBeforeValue(root);
         writeValue(root);
         writeCommentAfterValueOnSameLine(root);
@@ -4572,7 +5087,7 @@ namespace Json
                 break;
             case stringValue:
             {
-                // Is NULL possible for value.string_?
+                // Is NULL possible for value.string_? No.
                 char const* str;
                 char const* end;
                 bool ok = value.getString(&str, &end);
@@ -4598,7 +5113,7 @@ namespace Json
                     Value::Members::iterator it = members.begin();
                     for (;;)
                     {
-                        const std::string& name = *it;
+                        const JSONCPP_STRING& name = *it;
                         const Value& childValue = value[name];
                         writeCommentBeforeValue(childValue);
                         writeWithIndent(valueToQuotedString(name.c_str()));
@@ -4672,29 +5187,28 @@ namespace Json
 
     bool StyledWriter::isMultineArray(const Value& value)
     {
-        int size = value.size();
+        ArrayIndex const size = value.size();
         bool isMultiLine = size * 3 >= rightMargin_;
         childValues_.clear();
-        for (int index = 0; index < size && !isMultiLine; ++index)
+        for (ArrayIndex index = 0; index < size && !isMultiLine; ++index)
         {
             const Value& childValue = value[index];
-            isMultiLine =
-                isMultiLine || ((childValue.isArray() || childValue.isObject()) &&
-                                childValue.size() > 0);
+            isMultiLine = ((childValue.isArray() || childValue.isObject()) &&
+                           childValue.size() > 0);
         }
         if (!isMultiLine) // check if line length > max line length
         {
             childValues_.reserve(size);
             addChildValues_ = true;
-            int lineLength = 4 + (size - 1) * 2; // '[ ' + ', '*n + ' ]'
-            for (int index = 0; index < size; ++index)
+            ArrayIndex lineLength = 4 + (size - 1) * 2; // '[ ' + ', '*n + ' ]'
+            for (ArrayIndex index = 0; index < size; ++index)
             {
                 if (hasCommentForValue(value[index]))
                 {
                     isMultiLine = true;
                 }
                 writeValue(value[index]);
-                lineLength += int(childValues_[index].length());
+                lineLength += static_cast<ArrayIndex>(childValues_[index].length());
             }
             addChildValues_ = false;
             isMultiLine = isMultiLine || lineLength >= rightMargin_;
@@ -4702,7 +5216,7 @@ namespace Json
         return isMultiLine;
     }
 
-    void StyledWriter::pushValue(const std::string& value)
+    void StyledWriter::pushValue(const JSONCPP_STRING& value)
     {
         if (addChildValues_)
             childValues_.push_back(value);
@@ -4723,17 +5237,17 @@ namespace Json
         document_ += indentString_;
     }
 
-    void StyledWriter::writeWithIndent(const std::string& value)
+    void StyledWriter::writeWithIndent(const JSONCPP_STRING& value)
     {
         writeIndent();
         document_ += value;
     }
 
-    void StyledWriter::indent() { indentString_ += std::string(indentSize_, ' '); }
+    void StyledWriter::indent() { indentString_ += JSONCPP_STRING(indentSize_, ' '); }
 
     void StyledWriter::unindent()
     {
-        assert(int(indentString_.size()) >= indentSize_);
+        assert(indentString_.size() >= indentSize_);
         indentString_.resize(indentString_.size() - indentSize_);
     }
 
@@ -4744,13 +5258,13 @@ namespace Json
 
         document_ += "\n";
         writeIndent();
-        const std::string& comment = root.getComment(commentBefore);
-        std::string::const_iterator iter = comment.begin();
+        const JSONCPP_STRING& comment = root.getComment(commentBefore);
+        JSONCPP_STRING::const_iterator iter = comment.begin();
         while (iter != comment.end())
         {
             document_ += *iter;
             if (*iter == '\n' &&
-                    (iter != comment.end() && *(iter + 1) == '/'))
+                    ((iter + 1) != comment.end() && *(iter + 1) == '/'))
                 writeIndent();
             ++iter;
         }
@@ -4782,15 +5296,15 @@ namespace Json
 // Class StyledStreamWriter
 // //////////////////////////////////////////////////////////////////
 
-    StyledStreamWriter::StyledStreamWriter(std::string indentation)
+    StyledStreamWriter::StyledStreamWriter(JSONCPP_STRING indentation)
         : document_(NULL), rightMargin_(74), indentation_(indentation),
           addChildValues_() {}
 
-    void StyledStreamWriter::write(std::ostream& out, const Value& root)
+    void StyledStreamWriter::write(JSONCPP_OSTREAM& out, const Value& root)
     {
         document_ = &out;
         addChildValues_ = false;
-        indentString_ = "";
+        indentString_.clear();
         indented_ = true;
         writeCommentBeforeValue(root);
         if (!indented_) writeIndent();
@@ -4819,7 +5333,7 @@ namespace Json
                 break;
             case stringValue:
             {
-                // Is NULL possible for value.string_?
+                // Is NULL possible for value.string_? No.
                 char const* str;
                 char const* end;
                 bool ok = value.getString(&str, &end);
@@ -4845,7 +5359,7 @@ namespace Json
                     Value::Members::iterator it = members.begin();
                     for (;;)
                     {
-                        const std::string& name = *it;
+                        const JSONCPP_STRING& name = *it;
                         const Value& childValue = value[name];
                         writeCommentBeforeValue(childValue);
                         writeWithIndent(valueToQuotedString(name.c_str()));
@@ -4921,29 +5435,28 @@ namespace Json
 
     bool StyledStreamWriter::isMultineArray(const Value& value)
     {
-        int size = value.size();
+        ArrayIndex const size = value.size();
         bool isMultiLine = size * 3 >= rightMargin_;
         childValues_.clear();
-        for (int index = 0; index < size && !isMultiLine; ++index)
+        for (ArrayIndex index = 0; index < size && !isMultiLine; ++index)
         {
             const Value& childValue = value[index];
-            isMultiLine =
-                isMultiLine || ((childValue.isArray() || childValue.isObject()) &&
-                                childValue.size() > 0);
+            isMultiLine = ((childValue.isArray() || childValue.isObject()) &&
+                           childValue.size() > 0);
         }
         if (!isMultiLine) // check if line length > max line length
         {
             childValues_.reserve(size);
             addChildValues_ = true;
-            int lineLength = 4 + (size - 1) * 2; // '[ ' + ', '*n + ' ]'
-            for (int index = 0; index < size; ++index)
+            ArrayIndex lineLength = 4 + (size - 1) * 2; // '[ ' + ', '*n + ' ]'
+            for (ArrayIndex index = 0; index < size; ++index)
             {
                 if (hasCommentForValue(value[index]))
                 {
                     isMultiLine = true;
                 }
                 writeValue(value[index]);
-                lineLength += int(childValues_[index].length());
+                lineLength += static_cast<ArrayIndex>(childValues_[index].length());
             }
             addChildValues_ = false;
             isMultiLine = isMultiLine || lineLength >= rightMargin_;
@@ -4951,7 +5464,7 @@ namespace Json
         return isMultiLine;
     }
 
-    void StyledStreamWriter::pushValue(const std::string& value)
+    void StyledStreamWriter::pushValue(const JSONCPP_STRING& value)
     {
         if (addChildValues_)
             childValues_.push_back(value);
@@ -4968,7 +5481,7 @@ namespace Json
         *document_ << '\n' << indentString_;
     }
 
-    void StyledStreamWriter::writeWithIndent(const std::string& value)
+    void StyledStreamWriter::writeWithIndent(const JSONCPP_STRING& value)
     {
         if (!indented_) writeIndent();
         *document_ << value;
@@ -4989,13 +5502,13 @@ namespace Json
             return;
 
         if (!indented_) writeIndent();
-        const std::string& comment = root.getComment(commentBefore);
-        std::string::const_iterator iter = comment.begin();
+        const JSONCPP_STRING& comment = root.getComment(commentBefore);
+        JSONCPP_STRING::const_iterator iter = comment.begin();
         while (iter != comment.end())
         {
             *document_ << *iter;
             if (*iter == '\n' &&
-                    (iter != comment.end() && *(iter + 1) == '/'))
+                    ((iter + 1) != comment.end() && *(iter + 1) == '/'))
                 // writeIndent();  // would include newline
                 *document_ << indentString_;
             ++iter;
@@ -5041,44 +5554,50 @@ namespace Json
     struct BuiltStyledStreamWriter : public StreamWriter
     {
         BuiltStyledStreamWriter(
-            std::string const& indentation,
+            JSONCPP_STRING const& indentation,
             CommentStyle::Enum cs,
-            std::string const& colonSymbol,
-            std::string const& nullSymbol,
-            std::string const& endingLineFeedSymbol);
-        virtual int write(Value const& root, std::ostream* sout);
+            JSONCPP_STRING const& colonSymbol,
+            JSONCPP_STRING const& nullSymbol,
+            JSONCPP_STRING const& endingLineFeedSymbol,
+            bool useSpecialFloats,
+            unsigned int precision);
+        int write(Value const& root, JSONCPP_OSTREAM* sout) JSONCPP_OVERRIDE;
     private:
         void writeValue(Value const& value);
         void writeArrayValue(Value const& value);
         bool isMultineArray(Value const& value);
-        void pushValue(std::string const& value);
+        void pushValue(JSONCPP_STRING const& value);
         void writeIndent();
-        void writeWithIndent(std::string const& value);
+        void writeWithIndent(JSONCPP_STRING const& value);
         void indent();
         void unindent();
         void writeCommentBeforeValue(Value const& root);
         void writeCommentAfterValueOnSameLine(Value const& root);
         static bool hasCommentForValue(const Value& value);
 
-        typedef std::vector<std::string> ChildValues;
+        typedef std::vector<JSONCPP_STRING> ChildValues;
 
         ChildValues childValues_;
-        std::string indentString_;
-        int rightMargin_;
-        std::string indentation_;
+        JSONCPP_STRING indentString_;
+        unsigned int rightMargin_;
+        JSONCPP_STRING indentation_;
         CommentStyle::Enum cs_;
-        std::string colonSymbol_;
-        std::string nullSymbol_;
-        std::string endingLineFeedSymbol_;
+        JSONCPP_STRING colonSymbol_;
+        JSONCPP_STRING nullSymbol_;
+        JSONCPP_STRING endingLineFeedSymbol_;
         bool addChildValues_ : 1;
         bool indented_ : 1;
+        bool useSpecialFloats_ : 1;
+        unsigned int precision_;
     };
     BuiltStyledStreamWriter::BuiltStyledStreamWriter(
-        std::string const& indentation,
+        JSONCPP_STRING const& indentation,
         CommentStyle::Enum cs,
-        std::string const& colonSymbol,
-        std::string const& nullSymbol,
-        std::string const& endingLineFeedSymbol)
+        JSONCPP_STRING const& colonSymbol,
+        JSONCPP_STRING const& nullSymbol,
+        JSONCPP_STRING const& endingLineFeedSymbol,
+        bool useSpecialFloats,
+        unsigned int precision)
         : rightMargin_(74)
         , indentation_(indentation)
         , cs_(cs)
@@ -5087,14 +5606,16 @@ namespace Json
         , endingLineFeedSymbol_(endingLineFeedSymbol)
         , addChildValues_(false)
         , indented_(false)
+        , useSpecialFloats_(useSpecialFloats)
+        , precision_(precision)
     {
     }
-    int BuiltStyledStreamWriter::write(Value const& root, std::ostream* sout)
+    int BuiltStyledStreamWriter::write(Value const& root, JSONCPP_OSTREAM* sout)
     {
         sout_ = sout;
         addChildValues_ = false;
         indented_ = true;
-        indentString_ = "";
+        indentString_.clear();
         writeCommentBeforeValue(root);
         if (!indented_) writeIndent();
         indented_ = true;
@@ -5118,11 +5639,11 @@ namespace Json
                 pushValue(valueToString(value.asLargestUInt()));
                 break;
             case realValue:
-                pushValue(valueToString(value.asDouble()));
+                pushValue(valueToString(value.asDouble(), useSpecialFloats_, precision_));
                 break;
             case stringValue:
             {
-                // Is NULL is possible for value.string_?
+                // Is NULL is possible for value.string_? No.
                 char const* str;
                 char const* end;
                 bool ok = value.getString(&str, &end);
@@ -5148,7 +5669,7 @@ namespace Json
                     Value::Members::iterator it = members.begin();
                     for (;;)
                     {
-                        std::string const& name = *it;
+                        JSONCPP_STRING const& name = *it;
                         Value const& childValue = value[name];
                         writeCommentBeforeValue(childValue);
                         writeWithIndent(valueToQuotedStringN(name.data(), static_cast<unsigned>(name.length())));
@@ -5215,7 +5736,7 @@ namespace Json
                 for (unsigned index = 0; index < size; ++index)
                 {
                     if (index > 0)
-                        *sout_ << ", ";
+                        *sout_ << ((!indentation_.empty()) ? ", " : ",");
                     *sout_ << childValues_[index];
                 }
                 if (!indentation_.empty()) *sout_ << " ";
@@ -5226,29 +5747,28 @@ namespace Json
 
     bool BuiltStyledStreamWriter::isMultineArray(Value const& value)
     {
-        int size = value.size();
+        ArrayIndex const size = value.size();
         bool isMultiLine = size * 3 >= rightMargin_;
         childValues_.clear();
-        for (int index = 0; index < size && !isMultiLine; ++index)
+        for (ArrayIndex index = 0; index < size && !isMultiLine; ++index)
         {
             Value const& childValue = value[index];
-            isMultiLine =
-                isMultiLine || ((childValue.isArray() || childValue.isObject()) &&
-                                childValue.size() > 0);
+            isMultiLine = ((childValue.isArray() || childValue.isObject()) &&
+                           childValue.size() > 0);
         }
         if (!isMultiLine) // check if line length > max line length
         {
             childValues_.reserve(size);
             addChildValues_ = true;
-            int lineLength = 4 + (size - 1) * 2; // '[ ' + ', '*n + ' ]'
-            for (int index = 0; index < size; ++index)
+            ArrayIndex lineLength = 4 + (size - 1) * 2; // '[ ' + ', '*n + ' ]'
+            for (ArrayIndex index = 0; index < size; ++index)
             {
                 if (hasCommentForValue(value[index]))
                 {
                     isMultiLine = true;
                 }
                 writeValue(value[index]);
-                lineLength += int(childValues_[index].length());
+                lineLength += static_cast<ArrayIndex>(childValues_[index].length());
             }
             addChildValues_ = false;
             isMultiLine = isMultiLine || lineLength >= rightMargin_;
@@ -5256,7 +5776,7 @@ namespace Json
         return isMultiLine;
     }
 
-    void BuiltStyledStreamWriter::pushValue(std::string const& value)
+    void BuiltStyledStreamWriter::pushValue(JSONCPP_STRING const& value)
     {
         if (addChildValues_)
             childValues_.push_back(value);
@@ -5278,7 +5798,7 @@ namespace Json
         }
     }
 
-    void BuiltStyledStreamWriter::writeWithIndent(std::string const& value)
+    void BuiltStyledStreamWriter::writeWithIndent(JSONCPP_STRING const& value)
     {
         if (!indented_) writeIndent();
         *sout_ << value;
@@ -5300,13 +5820,13 @@ namespace Json
             return;
 
         if (!indented_) writeIndent();
-        const std::string& comment = root.getComment(commentBefore);
-        std::string::const_iterator iter = comment.begin();
+        const JSONCPP_STRING& comment = root.getComment(commentBefore);
+        JSONCPP_STRING::const_iterator iter = comment.begin();
         while (iter != comment.end())
         {
             *sout_ << *iter;
             if (*iter == '\n' &&
-                    (iter != comment.end() && *(iter + 1) == '/'))
+                    ((iter + 1) != comment.end() && *(iter + 1) == '/'))
                 // writeIndent();  // would write extra newline
                 *sout_ << indentString_;
             ++iter;
@@ -5355,10 +5875,12 @@ namespace Json
     {}
     StreamWriter* StreamWriterBuilder::newStreamWriter() const
     {
-        std::string indentation = settings_["indentation"].asString();
-        std::string cs_str = settings_["commentStyle"].asString();
+        JSONCPP_STRING indentation = settings_["indentation"].asString();
+        JSONCPP_STRING cs_str = settings_["commentStyle"].asString();
         bool eyc = settings_["enableYAMLCompatibility"].asBool();
         bool dnp = settings_["dropNullPlaceholders"].asBool();
+        bool usf = settings_["useSpecialFloats"].asBool();
+        unsigned int pre = settings_["precision"].asUInt();
         CommentStyle::Enum cs = CommentStyle::All;
         if (cs_str == "All")
         {
@@ -5372,7 +5894,7 @@ namespace Json
         {
             throwRuntimeError("commentStyle must be 'All' or 'None'");
         }
-        std::string colonSymbol = " : ";
+        JSONCPP_STRING colonSymbol = " : ";
         if (eyc)
         {
             colonSymbol = ": ";
@@ -5381,36 +5903,39 @@ namespace Json
         {
             colonSymbol = ":";
         }
-        std::string nullSymbol = "null";
+        JSONCPP_STRING nullSymbol = "null";
         if (dnp)
         {
-            nullSymbol = "";
+            nullSymbol.clear();
         }
-        std::string endingLineFeedSymbol = "";
+        if (pre > 17) pre = 17;
+        JSONCPP_STRING endingLineFeedSymbol;
         return new BuiltStyledStreamWriter(
                    indentation, cs,
-                   colonSymbol, nullSymbol, endingLineFeedSymbol);
+                   colonSymbol, nullSymbol, endingLineFeedSymbol, usf, pre);
     }
-    static void getValidWriterKeys(std::set<std::string>* valid_keys)
+    static void getValidWriterKeys(std::set<JSONCPP_STRING>* valid_keys)
     {
         valid_keys->clear();
         valid_keys->insert("indentation");
         valid_keys->insert("commentStyle");
         valid_keys->insert("enableYAMLCompatibility");
         valid_keys->insert("dropNullPlaceholders");
+        valid_keys->insert("useSpecialFloats");
+        valid_keys->insert("precision");
     }
     bool StreamWriterBuilder::validate(Json::Value* invalid) const
     {
         Json::Value my_invalid;
         if (!invalid) invalid = &my_invalid;  // so we do not need to test for NULL
         Json::Value& inv = *invalid;
-        std::set<std::string> valid_keys;
+        std::set<JSONCPP_STRING> valid_keys;
         getValidWriterKeys(&valid_keys);
         Value::Members keys = settings_.getMemberNames();
         size_t n = keys.size();
         for (size_t i = 0; i < n; ++i)
         {
-            std::string const& key = keys[i];
+            JSONCPP_STRING const& key = keys[i];
             if (valid_keys.find(key) == valid_keys.end())
             {
                 inv[key] = settings_[key];
@@ -5418,7 +5943,7 @@ namespace Json
         }
         return 0u == inv.size();
     }
-    Value& StreamWriterBuilder::operator[](std::string key)
+    Value& StreamWriterBuilder::operator[](JSONCPP_STRING key)
     {
         return settings_[key];
     }
@@ -5430,18 +5955,20 @@ namespace Json
         (*settings)["indentation"] = "\t";
         (*settings)["enableYAMLCompatibility"] = false;
         (*settings)["dropNullPlaceholders"] = false;
+        (*settings)["useSpecialFloats"] = false;
+        (*settings)["precision"] = 17;
         //! [StreamWriterBuilderDefaults]
     }
 
-    std::string writeString(StreamWriter::Factory const& builder, Value const& root)
+    JSONCPP_STRING writeString(StreamWriter::Factory const& builder, Value const& root)
     {
-        std::ostringstream sout;
+        JSONCPP_OSTRINGSTREAM sout;
         StreamWriterPtr const writer(builder.newStreamWriter());
         writer->write(root, &sout);
         return sout.str();
     }
 
-    std::ostream& operator<<(std::ostream& sout, Value const& root)
+    JSONCPP_OSTREAM& operator<<(JSONCPP_OSTREAM& sout, Value const& root)
     {
         StreamWriterBuilder builder;
         StreamWriterPtr const writer(builder.newStreamWriter());

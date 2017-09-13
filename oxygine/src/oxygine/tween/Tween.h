@@ -100,17 +100,18 @@ namespace oxygine
         /**if you reset internal Tween state it could be reused and added to actor again */
         void reset();
 
-        int         getLoops() const { return _loops; }
-        timeMS      getDuration() const { return _duration; }
-        timeMS      getElapsed() const { return _elapsed; }
-        EASE        getEase() const { return _ease; }
-        EASE        getGlobalEase() const { return _globalEase; }
-        timeMS      getDelay() const { return _delay; }
-        Actor*      getClient() const { return _client; }
-        float       getPercent() const { return _percent; }
-        spObject    getDataObject() const { return _data; }
-        spTween     getNextSibling() { return intr_list::getNextSibling(); }
-        spTween     getPrevSibling() { return intr_list::getPrevSibling(); }
+        int                     getLoops() const { return _loops; }
+        timeMS                  getDuration() const { return _duration; }
+        timeMS                  getElapsed() const { return _elapsed; }
+        EASE                    getEase() const { return _ease; }
+        EASE                    getGlobalEase() const { return _globalEase; }
+        timeMS                  getDelay() const { return _delay; }
+        Actor*                  getClient() const { return _client; }
+        float                   getPercent() const { return _percent; }
+        spObject                getDataObject() const { return _data; }
+        spTween                 getNextSibling() { return intr_list::getNextSibling(); }
+        spTween                 getPrevSibling() { return intr_list::getPrevSibling(); }
+        const EventCallback&    getDoneCallback() const { return _cbDone; }
 
         bool        isStarted() const { return _status != status_not_started; }
         bool        isDone() const { return _status == status_remove; }

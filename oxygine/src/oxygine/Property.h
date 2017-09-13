@@ -32,6 +32,16 @@ namespace oxygine
             set(t, _dest);
         }
 
+        const value& getDest() const
+        {
+            return _dest;
+        }
+
+        const value& getSrc() const
+        {
+            return _src;
+        }
+
         void update(type& t, float p, const UpdateState& us)
         {
             OX_ASSERT(_initialized);

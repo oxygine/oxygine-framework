@@ -143,7 +143,7 @@ public:
         //saveImage(dest.lock(), "test.tga");
     }
 
-    void drawLayer(int startX, int startY, int endX, int endY, const layer& l)
+    void drawLayer(const Transform& transform, int startX, int startY, int endX, int endY, const layer& l)
     {
         const std::vector<unsigned int>& tiles = l.tiles;
 
@@ -153,6 +153,7 @@ public:
 
         float tw = 1.0f / nt->getWidth();
         float th = 1.0f / nt->getHeight();
+
 
         for (int y = startY; y < endY; ++y)
         {
@@ -179,17 +180,6 @@ public:
 
 
                 Rect src(col * (tileWidth + 2) + 1, row * (tileHeight + 2) + 1, tileWidth, tileHeight);
-                if (flipped_horizontally)
-                {
-                    src.pos.x += tileWidth;
-                    src.size.x *= -1;
-                }
-
-                if (flipped_vertically)
-                {
-                    src.pos.y += tileHeight;
-                    src.size.y *= -1;
-                }
 
                 RectF srcUV = src.cast<RectF>();
                 srcUV.pos.x *= tw;
@@ -199,7 +189,94 @@ public:
 
                 Rect dest(x * tileWidth, y * tileHeight, tileWidth, tileHeight);
                 RectF destF = dest.cast<RectF>();
-                renderer->addQuad(color, srcUV, destF);
+
+
+                //based on fillQuadT
+                unsigned int rgba = color.premultiplied().rgba();
+                const RectF& srcRect = srcUV;
+                const RectF& destRect = destF;
+
+                float u = srcRect.pos.x;
+                float v = srcRect.pos.y;
+
+                float du = srcRect.size.x;
+                float dv = srcRect.size.y;
+
+                vertexPCT2 vert[4];
+                vertexPCT2 vt;
+                vertexPCT2* pv = vert;
+                vt.color = rgba;
+
+                const Vector2& pos = destRect.pos;
+                const Vector2& size = destRect.size;
+
+                Vector2 p1(pos.x, pos.y);
+                Vector2 p2(pos.x, pos.y + size.y);
+                Vector2 p3(pos.x + size.x, pos.y);
+                Vector2 p4(pos.x + size.x, pos.y + size.y);
+
+
+                p1 = transform.transform(p1);
+                p2 = transform.transform(p2);
+                p3 = transform.transform(p3);
+                p4 = transform.transform(p4);
+
+                if (flipped_horizontally)
+                {
+                    std::swap(p1, p3);
+                    std::swap(p2, p4);
+                }
+
+                if (flipped_vertically)
+                {
+                    std::swap(p1, p2);
+                    std::swap(p3, p4);
+                }
+
+
+                if (flipped_diagonally)
+                {
+                    Vector2 t = p3;
+                    p3 = p4;
+                    p4 = p2;
+                    p2 = p1;
+                    p1 = t;
+
+                    std::swap(p1, p2);
+                    std::swap(p3, p4);
+                }
+
+                vt.z = 0;
+
+                vt.x = p1.x;
+                vt.y = p1.y;
+                vt.u = u;
+                vt.v = v;
+                *pv = vt;
+                ++pv;
+
+                vt.x = p2.x;
+                vt.y = p2.y;
+                vt.u = u;
+                vt.v = v + dv;
+                *pv = vt;
+                ++pv;
+
+                vt.x = p3.x;
+                vt.y = p3.y;
+                vt.u = u + du;
+                vt.v = v;
+                *pv = vt;
+                ++pv;
+
+                vt.x = p4.x;
+                vt.y = p4.y;
+                vt.u = u + du;
+                vt.v = v + dv;
+                *pv = vt;
+                ++pv;
+
+                renderer->addVertices(vert, sizeof(vert));
             }
         }
     }
@@ -228,7 +305,7 @@ public:
         int endY   = std::min(height, int(bottomRight.y / tileHeight) + 1);
 
         for (std::list<layer>::const_iterator i = layers.begin(); i != layers.end(); ++i)
-            drawLayer(startX, startY, endX, endY, *i);
+            drawLayer(rs.transform, startX, startY, endX, endY, *i);
     }
 };
 

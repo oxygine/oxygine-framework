@@ -2,7 +2,8 @@
 #include "actor/TextField.h"
 #include "utils/stringUtils.h"
 #include "core/oxygine.h"
-
+#include "ColorRectSprite.h"
+#include "res/ResFont.h"
 #ifndef __S3E__
 #include "SDL_keyboard.h"
 #include "SDL_events.h"
@@ -14,7 +15,14 @@ namespace oxygine
 
     InputText::InputText(): _maxLength(0)
     {
+        _cursor = new ColorRectSprite;
+        _cursor->addTween(Actor::TweenAlpha(0), 400, -1, true);
+        _cursor->setVisible(false);
+    }
 
+    void InputText::showCursor(bool show)
+    {
+        _cursor->setVisible(show);
     }
 
     InputText::~InputText()
@@ -40,6 +48,14 @@ namespace oxygine
         _active = this;
 
         _textActor = ta;
+        _cursor->attachTo(_textActor);
+        int fs = _textActor->getFontSize();
+        if (fs == 0)
+            fs = _textActor->getFont()->getSize();
+        float h = fs * 0.9f;
+        _cursor->setSize(h / 10.0f, h);
+
+        _cursor->setColor(_textActor->getColor() * _textActor->getStyle().color);
 
         core::getDispatcher()->addEventListener(core::EVENT_SYSTEM, CLOSURE(this, &InputText::_onSysEvent));
 
@@ -59,6 +75,7 @@ namespace oxygine
         SDL_StopTextInput();
         core::getDispatcher()->removeEventListeners(this);
 
+        _cursor->detach();
         _active = 0;
         _textActor = 0;
         //log::messageln("InputText::stop  %x", this);
@@ -100,6 +117,9 @@ namespace oxygine
     void InputText::updateText()
     {
         _textActor->setText(_txt);
+        float x = _textActor->getTextRect().getRight();
+        _cursor->setX(x);
+
 
         Event evnt(EVENT_TEXT_CHANGED);
         dispatchEvent(&evnt);
