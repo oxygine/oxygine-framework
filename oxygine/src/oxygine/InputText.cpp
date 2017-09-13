@@ -2,7 +2,7 @@
 #include "actor/TextField.h"
 #include "utils/stringUtils.h"
 #include "core/oxygine.h"
-#include "ColorRectSprite.h"
+#include "actor/ColorRectSprite.h"
 #include "res/ResFont.h"
 #ifndef __S3E__
 #include "SDL_keyboard.h"
