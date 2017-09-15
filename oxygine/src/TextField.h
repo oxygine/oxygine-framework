@@ -14,6 +14,8 @@ namespace oxygine
         static void setDefaultFont(ResFont*);
         static ResFont* getDefaultFont();
 
+        enum {EVENT_REBUILD = sysEventID('T','F','r') };
+
         DECLARE_COPYCLONE_NEW(TextField);
         TextField();
         ~TextField();

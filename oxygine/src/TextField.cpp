@@ -337,6 +337,9 @@ namespace oxygine
             rd.bounds = (rd.bounds.cast<RectF>() / rd.getScale()).cast<Rect>();
 
             _textRect = rd.bounds;
+
+            Event ev(EVENT_REBUILD);
+            dispatchEvent(&ev);
         }
 
         return _root;
