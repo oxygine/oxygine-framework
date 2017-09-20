@@ -20,6 +20,9 @@ namespace oxygine
         void load(spHttpRequestTask task);
         void unload();
 
+        void serialize(serializedata*) override;
+        void deserialize(const deserializedata*) override;
+
     private:
         void _load(spHttpRequestTask task);
 

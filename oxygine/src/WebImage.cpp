@@ -3,6 +3,7 @@
 #include "Image.h"
 #include "HttpRequestTask.h"
 #include "Sprite.h"
+#include "Serialize.h"
 #include <vector>
 
 namespace oxygine
@@ -137,5 +138,16 @@ namespace oxygine
     void WebImage::sizeChanged(const Vector2& size)
     {
         fit();
+    }
+
+    void WebImage::serialize(serializedata* data)
+    {
+        inherited::serialize(data);
+        data->node.set_name("WebImage");
+    }
+
+    void WebImage::deserialize(const deserializedata* data)
+    {
+        inherited::deserialize(data);
     }
 }
