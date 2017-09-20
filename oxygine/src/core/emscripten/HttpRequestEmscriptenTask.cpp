@@ -35,14 +35,18 @@ namespace oxygine
         releaseRef();
     }
 
-    void HttpRequestEmscriptenTask::_onprogress(int, int)
+    void HttpRequestEmscriptenTask::_onprogress(int a, int b)
     {
-        Event ev(HttpRequestTask::PROGRESS);
-        dispatchEvent(&ev);
+        log::messageln(" HttpRequestEmscriptenTask::_onprogress %d %d", a, b);
+        dispatchProgress(a - _loaded, a, b);
+        _loaded = a;
+        //Event ev(HttpRequestTask::PROGRESS);        
+        //dispatchEvent(&ev);
     }
 
     void HttpRequestEmscriptenTask::_run()
     {
+        _loaded = 0;
         addRef();
 
         const char* method = _postData.empty() ? "GET" : "POST";

@@ -24,6 +24,8 @@ namespace oxygine
         void _onprogress(int, int);
 
         void _run();
+
+        int _loaded;
     };
 }
 
