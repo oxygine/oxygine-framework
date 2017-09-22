@@ -121,8 +121,19 @@ namespace oxygine
         return _url;
     }
 
+    size_t HttpRequestTask::getReceivedSize() const
+    {
+        return _receivedContentSize;
+    }
+
+    size_t HttpRequestTask::getExpectedSize() const
+    {
+        return _expectedContentSize;
+    }
+
     bool HttpRequestTask::_prerun()
     {
+        _firstTimeProgressDispatched = false;
         _progressDeltaDelayed = 0;
         _progressDispatched = false;
         _suitableResponse = false;
@@ -162,9 +173,11 @@ namespace oxygine
     }
 
     void HttpRequestTask::dispatchProgress(size_t delta, size_t loaded, size_t total)
-    {
-        ProgressEvent event(delta, loaded, total);
-        dispatchEvent(&event);
+    {        
+        ProgressEvent event(delta, loaded, total, !_firstTimeProgressDispatched);
+        _firstTimeProgressDispatched = true;
+
+        dispatchEvent(&event);        
     }
 
     void HttpRequestTask::asyncProgress(size_t delta, size_t loaded, size_t total)

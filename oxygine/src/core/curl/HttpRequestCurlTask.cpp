@@ -177,8 +177,8 @@ namespace oxygine
 
         int contentLength = 0;
         if (sscanf(d, "Content-Length: %d", &contentLength) == 1)
-        {
-            _expectedContentSize = contentLength;
+        {            
+            _expectedContentSize = contentLength;            
         }
 
         int responseCode = 0;
