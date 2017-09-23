@@ -31,7 +31,7 @@ namespace oxygine
         {
         public:
             enum {EVENT = PROGRESS};
-            ProgressEvent(size_t Delta, size_t Loaded, size_t Total, bool First) : Event(PROGRESS), delta(Delta), loaded(Loaded), total(Total), first(First){};
+            ProgressEvent(size_t Delta, size_t Loaded, size_t Total, bool First) : Event(PROGRESS), delta(Delta), loaded(Loaded), total(Total), first(First) {};
 
             size_t delta;
             size_t loaded;
@@ -94,6 +94,7 @@ namespace oxygine
         bool _writeFileError;
         bool _cacheEnabled;
         bool _firstTimeProgressDispatched;
+        bool _progressOnWrite;
 
         bool _progressDispatched;
         unsigned int _progressDeltaDelayed;

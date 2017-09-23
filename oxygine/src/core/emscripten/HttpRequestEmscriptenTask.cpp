@@ -19,6 +19,11 @@ namespace oxygine
     {
     }
 
+    HttpRequestEmscriptenTask::HttpRequestEmscriptenTask()
+    {
+        _progressOnWrite = false;//manual send
+    }
+
     void HttpRequestEmscriptenTask::_onload(void* data, unsigned size)
     {
         _responseCode = 200;

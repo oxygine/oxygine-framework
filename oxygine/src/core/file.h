@@ -92,6 +92,7 @@ namespace oxygine
 
         /**Makes directory. Not recursive*/
         bool makeDirectory(const std::string& path);
+        void makeDirectories(const std::string& path);
 
         /**Deletes empty directory*/
         void deleteDirectory(const std::string& path);

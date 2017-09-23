@@ -35,6 +35,7 @@ namespace oxygine
 
     HttpRequestTask::HttpRequestTask() :
         _cacheEnabled(true),
+        _progressOnWrite(true),
         _continueDownload(false),
         _expectedContentSize(0),
         _receivedContentSize(0),
@@ -173,11 +174,11 @@ namespace oxygine
     }
 
     void HttpRequestTask::dispatchProgress(size_t delta, size_t loaded, size_t total)
-    {        
+    {
         ProgressEvent event(delta, loaded, total, !_firstTimeProgressDispatched);
         _firstTimeProgressDispatched = true;
 
-        dispatchEvent(&event);        
+        dispatchEvent(&event);
     }
 
     void HttpRequestTask::asyncProgress(size_t delta, size_t loaded, size_t total)
@@ -258,6 +259,9 @@ namespace oxygine
             const char* p = (const char*)data;
             _response.insert(_response.end(), p, p + size);
         }
+
+        if (!_progressOnWrite)
+            return;
 
         _receivedContentSize += size;
         asyncProgress(size, _receivedContentSize, _expectedContentSize);
