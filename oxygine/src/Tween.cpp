@@ -69,6 +69,10 @@ namespace oxygine
         addEventListener(TweenEvent::DONE, cb);
     }
 
+	void Tween::addDoneCallback(int percent, const EventCallback& cb)
+	{
+		m_CompleteEvents.push_back(std::make_pair(percent, cb));
+	}
 
 
     float Tween::_calcEase(float v)
@@ -183,6 +187,25 @@ namespace oxygine
 
                         _status = status_done;
                     }
+
+					 int perc = int( _percent * 100.f );
+					 for (std::list< std::pair< int, EventCallback > >::iterator it = m_CompleteEvents.begin(), it_end = m_CompleteEvents.end(); it != it_end;)
+					 {
+						 int percent = (*it).first;
+						 EventCallback & cb = (*it).second;
+						 if (perc >= percent)
+						 {
+							 TweenEvent ev(this, &us);
+							 ev.target = ev.currentTarget = &actor;
+							 ev.tween = this;
+
+							 if (cb)
+								 cb(&ev);
+							 it = m_CompleteEvents.erase(it);
+							 continue;
+						 }
+						 ++it;
+					 }					 
                 }
                 _update(*_client, us);
             }
