@@ -7,6 +7,7 @@ namespace oxygine
     class HttpRequestEmscriptenTask: public HttpRequestTask
     {
     public:
+        HttpRequestEmscriptenTask();
 
     private:
         /*

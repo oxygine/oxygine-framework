@@ -1,1 +1,1 @@
-#include "oxygine/MemoryTexture.h"
+#include "oxygine/Image.h"

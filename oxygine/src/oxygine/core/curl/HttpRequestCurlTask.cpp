@@ -174,21 +174,26 @@ namespace oxygine
         if (s > 255)//ignore unknown headers
             return s;
 
+        char buff[512];
+        int i = 0;
+        for (; i < s; ++i)
+            buff[i] = tolower(d[i]);
+        buff[i] = 0;
 
         int contentLength = 0;
-        if (sscanf(d, "Content-Length: %d", &contentLength) == 1)
+        if (sscanf(buff, "content-length: %d", &contentLength) == 1)
         {
             _expectedContentSize = contentLength;
         }
 
         int responseCode = 0;
         char ver[32];
-        if (sscanf(d, "HTTP/%s %d ", ver, &responseCode) == 2)
+        if (sscanf(buff, "http/%s %d ", ver, &responseCode) == 2)
         {
             _responseCode = responseCode;
         }
 
-        if (d[0] == '\r' && d[1] == '\n')
+        if (buff[0] == '\r' && buff[1] == '\n')
         {
             gotHeaders();
         }

@@ -8,6 +8,7 @@
 #include "actor/Polygon.h"
 #include "actor/MaskedSprite.h"
 #include "actor/Box9Sprite.h"
+#include "actor/WebImage.h"
 
 namespace oxygine
 {
@@ -27,6 +28,7 @@ namespace oxygine
         CREATE(ClipRectActor);
         CREATE(Polygon);
         CREATE(MaskedSprite);
+        CREATE(WebImage);
 
 
         return 0;

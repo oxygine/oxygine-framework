@@ -2,6 +2,7 @@
 #include "../oxygine-include.h"
 #include "Actor.h"
 #include "../res/ResAnim.h"
+#include "../HttpRequestTask.h"
 #include <string>
 
 namespace oxygine
@@ -11,7 +12,7 @@ namespace oxygine
     {
         INHERITED(Actor);
     public:
-        DECLARE_COPYCLONE(WebImage);
+        DECLARE_COPYCLONE_NEW(WebImage);
 
         WebImage();
         ~WebImage();
@@ -19,6 +20,9 @@ namespace oxygine
         void load(const std::string& url);
         void load(spHttpRequestTask task);
         void unload();
+
+        void serialize(serializedata*) override;
+        void deserialize(const deserializedata*) override;
 
     private:
         void _load(spHttpRequestTask task);

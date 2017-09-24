@@ -3,13 +3,14 @@
 #include "../Image.h"
 #include "../HttpRequestTask.h"
 #include "Sprite.h"
+#include "Serialize.h"
 #include <vector>
 
 namespace oxygine
 {
-
-    WebImage::WebImage(const WebImage& src, copyOptions opt) : Actor(src, opt)
+    void WebImage::copyFrom(const WebImage& src, cloneOptions opt)
     {
+        inherited::copyFrom(src, opt);
         _http = 0;
         _image = getChildT<Sprite>("_child_");
     }
@@ -137,5 +138,16 @@ namespace oxygine
     void WebImage::sizeChanged(const Vector2& size)
     {
         fit();
+    }
+
+    void WebImage::serialize(serializedata* data)
+    {
+        inherited::serialize(data);
+        data->node.set_name("WebImage");
+    }
+
+    void WebImage::deserialize(const deserializedata* data)
+    {
+        inherited::deserialize(data);
     }
 }

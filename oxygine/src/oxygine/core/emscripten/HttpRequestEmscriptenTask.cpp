@@ -19,6 +19,11 @@ namespace oxygine
     {
     }
 
+    HttpRequestEmscriptenTask::HttpRequestEmscriptenTask()
+    {
+        _progressOnWrite = false;//manual send
+    }
+
     void HttpRequestEmscriptenTask::_onload(void* data, unsigned size)
     {
         _responseCode = 200;
@@ -35,10 +40,13 @@ namespace oxygine
         releaseRef();
     }
 
-    void HttpRequestEmscriptenTask::_onprogress(int, int)
+    void HttpRequestEmscriptenTask::_onprogress(int a, int b)
     {
-        Event ev(HttpRequestTask::PROGRESS);
-        dispatchEvent(&ev);
+        log::messageln(" HttpRequestEmscriptenTask::_onprogress %d %d", a, b);
+        int delta = a - _receivedContentSize;
+        _receivedContentSize = a;
+        _expectedContentSize = b;
+        dispatchProgress(delta, _receivedContentSize, b);
     }
 
     void HttpRequestEmscriptenTask::_run()

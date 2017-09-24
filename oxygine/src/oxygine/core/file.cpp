@@ -245,6 +245,26 @@ namespace oxygine
             return _nfs.makeDirectory(path.c_str()) == FileSystem::status_ok;
         }
 
+        void makeDirectories(const std::string& path_)
+        {
+            std::string path = path::normalize(path_);
+
+            std::string folder;
+            std::string str = path;
+            do
+            {
+                size_t pos = str.find('/');
+                if (pos == str.npos)
+                    break;
+
+                folder += str.substr(0, pos) + "/";
+                makeDirectory(folder.c_str());
+                str = str.substr(pos + 1, str.size() - pos);
+
+            }
+            while (1);
+        }
+
         void deleteDirectory(const std::string& path)
         {
             _nfs.deleteDirectory(path.c_str());

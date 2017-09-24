@@ -171,16 +171,19 @@ namespace oxygine
 
 
 
-        int remove_directory(const char *path)
+#ifdef OXYGINE_EDITOR
+        int remove_directory(const char* path) {return -1;}
+#else
+        int remove_directory(const char* path)
         {
 #ifndef WIN32
-            DIR *d = opendir(path);
+            DIR* d = opendir(path);
             size_t path_len = strlen(path);
             int r = -1;
 
             if (d)
             {
-                struct dirent *p;
+                struct dirent* p;
 
                 r = 0;
 
@@ -236,7 +239,7 @@ namespace oxygine
             hFile = ::FindFirstFile(strPattern.c_str(), &FileInformation);
             if (hFile == INVALID_HANDLE_VALUE)
                 return -1;
-            
+
             do
             {
                 if (FileInformation.cFileName[0] != '.')
@@ -253,7 +256,8 @@ namespace oxygine
                         DeleteFile(strFilePath.c_str());
                     }
                 }
-            } while (::FindNextFile(hFile, &FileInformation) == TRUE);
+            }
+            while (::FindNextFile(hFile, &FileInformation) == TRUE);
 
             // Close handle
             ::FindClose(hFile);
@@ -261,6 +265,8 @@ namespace oxygine
             return 0;
 #endif
         }
+
+#endif
 
 
 
@@ -363,7 +369,7 @@ namespace oxygine
         FileSystem::status STDFileSystem::_deleteDirectory(const char* path)
         {
             char buff[512];
-            _getFullPath(path, buff);           
+            _getFullPath(path, buff);
 
             return remove_directory(buff) != -1 ? status_ok : status_error;
         }

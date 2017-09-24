@@ -31,11 +31,12 @@ namespace oxygine
         {
         public:
             enum {EVENT = PROGRESS};
-            ProgressEvent(size_t Delta, size_t Loaded, size_t Total) : Event(PROGRESS), delta(Delta), loaded(Loaded), total(Total) {};
+            ProgressEvent(size_t Delta, size_t Loaded, size_t Total, bool First) : Event(PROGRESS), delta(Delta), loaded(Loaded), total(Total), first(First) {};
 
             size_t delta;
             size_t loaded;
             size_t total;
+            bool first;
         };
 
         HttpRequestTask();
@@ -45,7 +46,8 @@ namespace oxygine
         const std::vector<unsigned char>&   getPostData() const;
         const std::string&                  getFileName() const;
         const std::string&                  getUrl() const;
-
+        size_t                              getReceivedSize() const;
+        size_t                              getExpectedSize() const;
 
         /**swap version of getResponse if you want to modify result buffer inplace*/
         void getResponseSwap(std::vector<unsigned char>&);
@@ -62,6 +64,7 @@ namespace oxygine
         void setResponseCodeChecker(const responseCodeChecker& f) {_responseCodeChecker = f;}
         /**by default only response code == 200 is succeded, other codes are dispatching Event::ERROR*/
         void setSuccessOnAnyResponseCode(bool en);
+        void setExpectedSize(size_t size) { _expectedContentSize = size; }
 
     protected:
         bool _prerun() override;
@@ -91,6 +94,8 @@ namespace oxygine
         file::handle _fhandle;
         bool _writeFileError;
         bool _cacheEnabled;
+        bool _firstTimeProgressDispatched;
+        bool _progressOnWrite;
 
         bool _progressDispatched;
         unsigned int _progressDeltaDelayed;
