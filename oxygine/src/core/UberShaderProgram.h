@@ -54,8 +54,9 @@ namespace oxygine
             MASK_R_CHANNEL = 1 << 2,
             MASK = 1 << 3,
             SDF = 1 << 4,
+            ADD_COLOR = 1 << 5,
             SDF_OUTLINE = 1 << 1,//same as SEPARATE_ALPHA
-            _SIZE = 1 << 5
+            _SIZE = 1 << 6
         };
 
         enum

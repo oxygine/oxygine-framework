@@ -66,6 +66,9 @@ namespace oxygine
             if (flags & MASK)
                 strcat(prepend, "#define MASK\n");
 
+            if (flags & ADD_COLOR)
+                strcat(prepend, "#define ADD_COLOR\n");
+
             if (flags & SDF)
             {
                 strcat(prepend, "#define SDF\n");

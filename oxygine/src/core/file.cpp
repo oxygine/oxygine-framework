@@ -102,6 +102,8 @@ namespace oxygine
 
         handle open(const std::string& file_, const char* mode, error_policy ep)
         {
+            if (file_ == "sounds/button_click.mp3")
+                int q = 0;
 
 #ifdef OX_DEBUG
             if (!strstr(mode, "b"))
