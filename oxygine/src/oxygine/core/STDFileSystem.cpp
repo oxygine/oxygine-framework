@@ -232,11 +232,11 @@ namespace oxygine
             std::string     root = path;
             std::string     strFilePath;                 // Filepath
             std::string     strPattern;                  // Pattern
-            WIN32_FIND_DATA FileInformation;             // File information
+            WIN32_FIND_DATAA FileInformation;             // File information
 
 
             strPattern = root + "\\*.*";
-            hFile = ::FindFirstFile(strPattern.c_str(), &FileInformation);
+            hFile = ::FindFirstFileA(strPattern.c_str(), &FileInformation);
             if (hFile == INVALID_HANDLE_VALUE)
                 return -1;
 
@@ -253,11 +253,11 @@ namespace oxygine
                     }
                     else
                     {
-                        DeleteFile(strFilePath.c_str());
+                        DeleteFileA(strFilePath.c_str());
                     }
                 }
             }
-            while (::FindNextFile(hFile, &FileInformation) == TRUE);
+            while (::FindNextFileA(hFile, &FileInformation) == TRUE);
 
             // Close handle
             ::FindClose(hFile);

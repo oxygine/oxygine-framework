@@ -53,6 +53,7 @@ namespace oxygine
             SEPARATE_ALPHA = 1 << 1,
             MASK_R_CHANNEL = 1 << 2,
             MASK = 1 << 3,
+            ADD_COLOR = 1 << 4,
             _SIZE = 1 << 5
         };
 

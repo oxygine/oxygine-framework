@@ -66,6 +66,9 @@ namespace oxygine
             if (flags & MASK)
                 strcat(prepend, "#define MASK\n");
 
+            if (flags & ADD_COLOR)
+                strcat(prepend, "#define ADD_COLOR\n");
+
             char* end = prepend + strlen(prepend);
             strcat(prepend, "#define program_main_ps main\n");
             strcat(prepend, "#define PS\n");

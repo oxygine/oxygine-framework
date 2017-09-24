@@ -13,7 +13,7 @@ namespace oxygine
 
     AsyncTask::~AsyncTask()
     {
-        LOGD("~");
+        //LOGD("~");
     }
 
     void AsyncTask::sync(const std::function< void()>& f)

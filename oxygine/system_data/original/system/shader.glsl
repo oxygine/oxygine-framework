@@ -31,6 +31,7 @@ void program_main_vs()
 
 #ifdef PS
 uniform lowp vec4 clip_mask;
+uniform lowp vec4 add_color;
 uniform lowp sampler2D base_texture;
 uniform lowp sampler2D mask_texture;
 uniform lowp sampler2D alpha_texture;
@@ -107,10 +108,16 @@ lowp vec4 get_color()
 
 #ifdef DONT_MULT_BY_RESULT_COLOR
 	//for your purposes
-	return base;
+	lowp vec4 res = base;
 #else
-	return base * result_color;
+	lowp vec4 res = base * result_color;
 #endif	
+
+#ifdef ADD_COLOR
+	res = res + add_color * res.a;
+#endif
+
+	return res;
 }
 
 
