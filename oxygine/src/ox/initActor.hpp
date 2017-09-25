@@ -1,1 +1,1 @@
-#include "oxygine/InitActor.h"
+#include "oxygine/initActor.h"
