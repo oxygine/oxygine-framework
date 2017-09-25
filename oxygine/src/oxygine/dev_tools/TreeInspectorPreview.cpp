@@ -155,8 +155,8 @@ namespace oxygine
 
     void TreeInspectorPreview::doRender(RenderState const& parentRenderState)
     {
-        rsCache().reset();
         MaterialX::null->apply();
+        rsCache().reset();        
         Sprite::doRender(parentRenderState);
         MaterialX::null->apply();
         _videoCache.render(parentRenderState.transform);
