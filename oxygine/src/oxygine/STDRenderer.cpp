@@ -65,9 +65,9 @@ namespace oxygine
     void RenderStateCache::setTexture(int sampler, const spNativeTexture& t)
     {
         OX_ASSERT(sampler < MAX_TEXTURES);
-#ifdef OX_DEBUG
 
-        if (_textures[sampler])
+#ifdef OX_DEBUG
+        if (_textures[sampler] && _driver == IVideoDriver::instance)
         {
             GLint whichID;
             oxglActiveTexture(GL_TEXTURE0 + sampler);
@@ -75,8 +75,8 @@ namespace oxygine
 
             OX_ASSERT(_textures[sampler]->getHandle() == (nativeTextureHandle)whichID);
         }
-
 #endif
+
         if (_textures[sampler] == t)
             return;
         _textures[sampler] = t;
@@ -101,6 +101,11 @@ namespace oxygine
         }
         _blend = blend;
 
+    }
+
+    void RenderStateCache::changeDriver(IVideoDriver *d)        
+    {
+        _driver = d;
     }
 
 
@@ -586,7 +591,7 @@ namespace oxygine
         if (!indices)
             return;
 
-        IVideoDriver::instance->draw(IVideoDriver::PT_TRIANGLES, _vdecl,
+        _driver->draw(IVideoDriver::PT_TRIANGLES, _vdecl,
                                      &_verticesData.front(), (unsigned int)_verticesData.size(),
                                      &STDRenderer::indices16.front(), (unsigned int)indices);
 

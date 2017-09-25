@@ -64,6 +64,12 @@ namespace oxygine
 
         VideoDriverCache& cache = _videoCache;
 
+        MaterialX::null->apply();
+        rsCache().reset();
+        rsCache().changeDriver(&cache);
+        
+        
+
 
         STDRenderer* original = STDRenderer::getCurrent();
 
@@ -90,6 +96,10 @@ namespace oxygine
         }
         else
             item->doRender(rs);
+
+        rsCache().changeDriver(IVideoDriver::instance);
+        rsCache().reset();
+        MaterialX::null->apply();
 
 
         RectF itemRect = cache._bounds;
@@ -145,8 +155,12 @@ namespace oxygine
 
     void TreeInspectorPreview::doRender(RenderState const& parentRenderState)
     {
+        rsCache().reset();
+        MaterialX::null->apply();
         Sprite::doRender(parentRenderState);
+        MaterialX::null->apply();
         _videoCache.render(parentRenderState.transform);
+        rsCache().reset();
     }
 
     VideoDriverCache::VideoDriverCache()
@@ -310,16 +324,16 @@ namespace oxygine
         b.numVertices = 0;
     }
 
-    void VideoDriverCache::draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData, unsigned int numVertices, const unsigned short* indicesData, unsigned int numIndices)
+    void VideoDriverCache::draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData, unsigned int verticesDataSize, const unsigned short* indicesData, unsigned int numIndices)
     {
         if (!numIndices)
             return;
 
         current().vdecl = decl;
         current().pt = pt;
-        current().numVertices = numVertices;
+        current().numVertices = verticesDataSize / decl->size;
         current().numIndices = numIndices;
-        current().vertices.assign((const char*)verticesData, (const char*)verticesData + decl->size * numVertices);
+        current().vertices.assign((const char*)verticesData, (const char*)verticesData + verticesDataSize);
         current().indices.assign(indicesData, indicesData + numIndices);
 
         nextBatch();

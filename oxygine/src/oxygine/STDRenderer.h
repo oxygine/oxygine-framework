@@ -9,6 +9,8 @@ namespace oxygine
     {
     public:
         RenderStateCache(IVideoDriver* d);
+        
+
 
         const spNativeTexture& getTexture(int sampler) { return _textures[sampler]; }
 
@@ -18,6 +20,8 @@ namespace oxygine
 
         void reset();
         void resetTextures();
+
+        void changeDriver(IVideoDriver *d);//used for DebugActor
 
     protected:
         enum { MAX_TEXTURES = 8 };
