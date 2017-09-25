@@ -42,7 +42,7 @@ namespace oxygine
 
     void HttpRequestEmscriptenTask::_onprogress(int a, int b)
     {
-        log::messageln(" HttpRequestEmscriptenTask::_onprogress %d %d", a, b);
+        //log::messageln(" HttpRequestEmscriptenTask::_onprogress %d %d", a, b);
         int delta = a - _receivedContentSize;
         _receivedContentSize = a;
         _expectedContentSize = b;

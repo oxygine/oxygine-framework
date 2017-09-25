@@ -3,7 +3,7 @@
 #include "../Image.h"
 #include "../HttpRequestTask.h"
 #include "Sprite.h"
-#include "Serialize.h"
+#include "../Serialize.h"
 #include <vector>
 
 namespace oxygine
