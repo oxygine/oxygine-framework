@@ -21,11 +21,14 @@ namespace oxygine
             return false;
         if (a._uberShader != b._uberShader)
             return false;
+        if (a._addColor != b._addColor)
+            return false;
         return true;
     }
 
     void STDMaterialX::init()
     {
+        _addColor = 0;
         _blend = blend_premultiplied_alpha;
         _flags = 0;
         _uberShader = &STDRenderer::uberShader;
@@ -38,13 +41,23 @@ namespace oxygine
         hash_combine(hash, (int)_blend);
         hash_combine(hash, _flags);
         hash_combine(hash, _uberShader);
+        hash_combine(hash, _addColor.argb);
     }
 
     void STDMaterialX::xapply()
     {
         STDRenderer* r = STDRenderer::getCurrent();
         r->setUberShaderProgram(_uberShader);
-        r->setShaderFlags(_flags);
+
+        if (_addColor.argb)
+        {
+            r->setShaderFlags(_flags | UberShaderProgram::ADD_COLOR);
+            Vector4 vec = _addColor.toVector();
+            r->getDriver()->setUniform("add_color", vec);
+        }
+        else
+            r->setShaderFlags(_flags);
+
         rsCache().setTexture(UberShaderProgram::SAMPLER_BASE, _base);
         rsCache().setTexture(UberShaderProgram::SAMPLER_ALPHA, _alpha);
         rsCache().setBlendMode(_blend);

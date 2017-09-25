@@ -91,6 +91,7 @@ namespace oxygine
         spNativeTexture    _alpha;
         blend_mode         _blend;
         UberShaderProgram* _uberShader;
+        Color              _addColor;
         int                _flags;
 
         static bool cmp(const STDMaterialX& a, const STDMaterialX& b);
