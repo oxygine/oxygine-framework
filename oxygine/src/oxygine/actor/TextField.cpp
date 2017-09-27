@@ -115,7 +115,7 @@ namespace oxygine
         needRebuild();
     }
 
-    void TextField::setOptions(unsigned int opt)
+    void TextField::setOptions(size_t opt)
     {
         _style.options = opt;
         needRebuild();
@@ -261,7 +261,7 @@ namespace oxygine
         return _style.baselineScale;
     }
 
-    unsigned int TextField::getOptions() const
+    size_t TextField::getOptions() const
     {
         return _style.options;
     }

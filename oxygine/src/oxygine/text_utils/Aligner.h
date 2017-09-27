@@ -48,7 +48,7 @@ namespace oxygine
             Rect bounds;
             int width;
             int height;
-            int options;
+            size_t options;
 
             spSTDMaterialX mat;
 

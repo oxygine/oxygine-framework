@@ -41,7 +41,7 @@ namespace oxygine
         text::Symbol*               getSymbolAt(int pos) const;
         const Color&                getStyleColor() const;
         float                       getBaselineScale() const;
-        unsigned int                getOptions() const;
+        size_t                      getOptions() const;
 
 
         bool getBounds(RectF&) const override;
@@ -66,7 +66,7 @@ namespace oxygine
         /**Overwrites TextStyle color*/
         void setStyleColor(const Color&);
         /**Overwrites TextStyle options*/
-        void setOptions(unsigned int opt);
+        void setOptions(size_t opt);
 
         /**Overwrites TextStyle font.*/
         void setFont(const ResFont* rs);

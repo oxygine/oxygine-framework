@@ -206,7 +206,7 @@ namespace oxygine
                 int i = 0;
                 const Font* font = rd._font;
 
-                const int opt = rd.options;
+                const size_t opt = rd.options;
 
                 while (i != (int)_data.size())
                 {
@@ -281,7 +281,7 @@ namespace oxygine
                 return;
             }
 
-            unsigned int prevOpt = rd.options;
+            size_t prevOpt = rd.options;
             rd.options = options;
             resizeChildren(rd);
             rd.options = prevOpt;
