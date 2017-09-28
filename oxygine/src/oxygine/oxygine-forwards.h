@@ -127,7 +127,7 @@ namespace oxygine
     typedef int copyOptions;//deprecated typedef
     typedef int eventType;
     typedef unsigned int dumpOptions;
-    typedef unsigned int glyphOptions;
+    typedef size_t glyphOptions;
     typedef void* nativeTextureHandle;
 
 
