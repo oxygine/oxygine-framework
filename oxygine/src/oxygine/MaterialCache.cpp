@@ -5,8 +5,6 @@ namespace oxygine
 {
     MaterialX* MaterialCache::clone_(const MaterialX& other)
     {
-        //OX_ASSERT(core::isMainThread());
-
         MutexAutoLock alock(_lock);
 
         size_t hash;
@@ -46,8 +44,26 @@ namespace oxygine
         return copy;
     }
 
+    void MaterialCache::removeUnused()
+    {
+        MutexAutoLock alock(_lock);
+
+        //std::pair<materials::iterator, materials::iterator> it = _materials.begin();
+
+        materials fresh;
+        for (auto it = _materials.begin(); it != _materials.end(); it++) {
+            if (it->second->_ref_counter > 1)
+            {
+                fresh.insert(std::make_pair(it->second->_hash, it->second));
+            }
+        }
+
+        std::swap(fresh, _materials);
+    }
+
     void MaterialCache::clear()
     {
+        MutexAutoLock alock(_lock);
         _materials.clear();
     }
 

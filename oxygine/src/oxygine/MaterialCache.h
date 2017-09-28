@@ -31,6 +31,7 @@ namespace oxygine
         }
 
         void clear();
+        void removeUnused();
         size_t getTotalMaterials() const { return _materials.size(); }
 
     protected:

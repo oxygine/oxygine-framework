@@ -797,6 +797,7 @@ namespace oxygine
             InputText::stopAnyInput();
 #endif
 
+            rsCache().reset();
             _threadMessages.clear();
             _uiMessages.clear();
 
