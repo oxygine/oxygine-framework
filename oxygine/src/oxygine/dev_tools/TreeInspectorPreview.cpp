@@ -416,11 +416,11 @@ namespace oxygine
             }
 
             if (b.numIndices)
-                instance->draw(b.pt, b.vdecl, &modified.front(), b.numVertices, &b.indices.front(), b.numIndices);
+                instance->draw(b.pt, b.vdecl, &modified.front(), b.numVertices * b.vdecl->size, &b.indices.front(), b.numIndices);
             else
             {
                 if (b.numVertices)
-                    instance->draw(b.pt, b.vdecl, &modified.front(), b.numVertices);
+                    instance->draw(b.pt, b.vdecl, &modified.front(), b.numVertices * b.vdecl->size);
             }
         }
     }
