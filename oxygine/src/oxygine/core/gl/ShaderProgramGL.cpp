@@ -83,6 +83,8 @@ namespace oxygine
     {
         GLuint shader = oxglCreateShader(type);
 
+        checkGLError();
+
         const char* sources[16];
         const char** ptr = &sources[0];
 

@@ -332,6 +332,7 @@ namespace oxygine
         current().vdecl = decl;
         current().pt = pt;
         current().numVertices = verticesDataSize / decl->size;
+        OX_ASSERT(current().numVertices != 0);
         current().numIndices = numIndices;
         current().vertices.assign((const char*)verticesData, (const char*)verticesData + verticesDataSize);
         current().indices.assign(indicesData, indicesData + numIndices);
@@ -339,12 +340,12 @@ namespace oxygine
         nextBatch();
     }
 
-    void VideoDriverCache::draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData, unsigned int numVertices)
+    void VideoDriverCache::draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData, unsigned int verticesDataSize)
     {
         current().vdecl = decl;
         current().pt = pt;
-        current().numVertices = numVertices;
-        current().vertices.assign((const char*)verticesData, (const char*)verticesData + current().vdecl->size * numVertices);
+        current().numVertices = verticesDataSize/decl->size;
+        current().vertices.assign((const char*)verticesData, (const char*)verticesData + verticesDataSize);
         nextBatch();
     }
 
