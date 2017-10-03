@@ -35,15 +35,36 @@ namespace oxygine
 
     void STDMaterial::render(ClipRectActor* actor, const RenderState& parentRS)
     {
+        STDRenderer* renderer = STDRenderer::getCurrent();
+        IVideoDriver* driver = renderer->getDriver();
+
         RenderState rs = parentRS;
+        if (actor->getName() == "aaa")
+        {
+            renderer->flush();
+
+            Rect scissorRect(0, 0, 0, 0);
+            bool scissorEnabled = driver->getScissorRect(scissorRect);
+
+            Rect r(0, 0, 100, 100);
+            driver->setScissorRect(&r);
+
+            //actor->Actor::render(rs);
+            //renderer->flush();
+
+            driver->setScissorRect(0);
+
+            return;
+        }
+        
 
         const RectF* parentClippedRect = parentRS.clip;
         RectF clippedRect = *parentClippedRect;
         rs.clip = &clippedRect;
 
         Rect scissorRect(0, 0, 0, 0);
-        STDRenderer* renderer = STDRenderer::getCurrent();
-        IVideoDriver* driver = renderer->getDriver();
+        
+        
         bool scissorEnabled = driver->getScissorRect(scissorRect);
 
         bool vis = true;

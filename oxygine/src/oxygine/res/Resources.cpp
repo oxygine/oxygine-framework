@@ -199,11 +199,10 @@ namespace oxygine
         char destTail[255];
         path::split(xmlFile.c_str(), destHead, destTail);
 
-        std::string prebuilt_folder = opt._prebuilFolder + "/" + destTail + ".ox/";
+        std::string prebuilt_folder = path::normalize(opt._prebuilFolder + "/" + destTail + ".ox/");
+
         if (prebuilt_folder[0] == '/')
-        {
             prebuilt_folder.erase(prebuilt_folder.begin());
-        }
 
         file::buffer fb_meta;
         pugi::xml_document doc_meta;

@@ -21,6 +21,7 @@ How to build. Steps:
   JDK 
   	example: "c:\Program Files (x86)\Java\jdk1.6.0_26\bin\"
 
+- *emsc bug and workaround http://oxygine.org/forum/viewtopic.php?f=6&t=3295
 
 - Select any example from examples folder. For example "Demo"
 - Go to folder oxygine-framework/examples/Demo/proj.cmake
@@ -36,3 +37,4 @@ How to build. Steps:
 
 example:
 	python gen_template.py MyProject -t cmake -d path/to/MyProject/
+
