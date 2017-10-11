@@ -299,7 +299,7 @@ namespace oxygine
         void removedFromStage();
         virtual void onAdded2Stage() {}
         virtual void onRemovedFromStage() {}
-        virtual void transformUpdated() {}
+        virtual void transformUpdated();
 
         virtual void calcBounds2(RectF& bounds, const Transform& transform) const;
 

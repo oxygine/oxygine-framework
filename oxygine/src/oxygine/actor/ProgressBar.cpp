@@ -113,13 +113,16 @@ namespace oxygine
             return;
         }
 
+        _mat->apply();
 
         STDRenderer* renderer = STDRenderer::getCurrent();
 
         const Diffuse& df = _frame.getDiffuse();
         if (df.base)
         {
-            rsCache().setBlendMode(getBlendMode());
+
+            unsigned int color = rs.getFinalColor(getColor()).rgba();
+            //rsCache().setBlendMode(getBlendMode());
             //renderer->setTexture(df.base, df.alpha, df.premultiplied);
 
             RectF destRect = inherited::getDestRect();
@@ -296,15 +299,14 @@ namespace oxygine
                 p2 = rs.transform.transform(p2);
                 p3 = rs.transform.transform(p3);
 
-                unsigned int rgba = getColor().rgba();
 
-                fill_tex_coord(*pv, rgba, p1, u1, v1);
+                fill_tex_coord(*pv, color, p1, u1, v1);
                 pv++;
-                fill_tex_coord(*pv, rgba, p2, u2, v2);
+                fill_tex_coord(*pv, color, p2, u2, v2);
                 pv++;
-                fill_tex_coord(*pv, rgba, p3, u3, v3);
+                fill_tex_coord(*pv, color, p3, u3, v3);
                 pv++;
-                fill_tex_coord(*pv, rgba, p2, u2, v2);
+                fill_tex_coord(*pv, color, p2, u2, v2);
                 pv++;
 
 
