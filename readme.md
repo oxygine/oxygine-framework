@@ -12,20 +12,20 @@ At the basis of the engine there is a scene graph, that is similar to Flash. In 
 
 Source code is available under MIT license (use for free anywhere).
 
-##SDK includes:
+## SDK includes:
 - Source code, libraries
 - Necessary tools, documentation
 - Examples
 - Demo for testing and demonstration of base features
 
-##Supported platforms:
+## Supported platforms:
 - Android
 - iOS
 - Windows
 - MacOSX
 - Emscripten (web)
 
-##Examples of code:
+## Examples of code:
 
 ```cpp
 //create sprite and display it
@@ -47,7 +47,7 @@ sprite->addEventListener(TouchEvent::CLICK, [sprite](Event*){
 });
 ```		     
 
-##Features:
+## Features:
 - Programming language is C++.
 - For rendering OpenGL(ES) 2.0 is used. Custom shaders supported.
 - Compressed textures supported.
@@ -79,5 +79,5 @@ You could build it on top of Marmalade, SDL2 or adapt it for your platform. Oxyg
 And this is not everything. There are a lot of easy-to-use features, this framework is not a monster and is clear and intuitive. Viewing a couple of examples is enough to understand how it works.
 
 
-##Contacts
+## Contacts
 You can find more information at [oxygine.org](http://oxygine.org)
