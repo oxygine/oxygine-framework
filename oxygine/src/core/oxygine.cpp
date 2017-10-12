@@ -793,7 +793,7 @@ namespace oxygine
         }
 #endif
 
-        bool update()
+        bool code_update(bool useWait)
         {
 #ifndef OXYGINE_EDITOR
             key::update();
@@ -830,11 +830,24 @@ namespace oxygine
 
             bool done = false;
             SDL_Event event;
-            while (SDL_PollEvent(&event))
+
+            if (useWait) // If we use SDL_WaitEvent, we shouldn't go to loop and that's why we return control after event occurs
             {
+                if (SDL_WaitEvent(&event))
+                {
 #if !EMSCRIPTEN //emscripten build handles events from EventsFilter
-                SDL_handleEvent(event, done);
+                    SDL_handleEvent(event, done);
 #endif
+                }
+            }
+            else
+            {
+                while (SDL_PollEvent(&event))
+                {
+#if !EMSCRIPTEN //emscripten build handles events from EventsFilter
+                    SDL_handleEvent(event, done);
+#endif
+                }
             }
 
             return done;
@@ -842,6 +855,16 @@ namespace oxygine
 
             log::warning("update not implemented");
             return true;
+        }
+
+        bool update()
+        {
+            return code_update(false); // Will call SDL_PollEvent
+        }
+
+        bool waitUntilEvent()
+        {
+            return code_update(true); // Will call SDL_WaitEvent
         }
 
         void release()
