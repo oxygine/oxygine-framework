@@ -32,6 +32,7 @@ namespace oxygine
 
         _frame = src._frame;
         _localScale = src._localScale;
+        _mat = src._mat;
         animFrameChanged(_frame);
 
         _vstyle = src._vstyle;
