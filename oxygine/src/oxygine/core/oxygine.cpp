@@ -107,6 +107,8 @@ namespace oxygine
 
     bool _useTouchAPI = false;
 
+    bool _renderEnabled = true;
+
 #ifdef OXYGINE_SDL
     static SDL_Window* _window = 0;
     static SDL_GLContext _context = 0;
@@ -515,11 +517,15 @@ namespace oxygine
 
         bool isReady2Render()
         {
+            if (!_renderEnabled)
+                return false;
             return STDRenderer::isReady();
         }
 
         bool  beginRendering(window w)
         {
+            if (!_renderEnabled)
+                return false;
 
 #ifdef OXYGINE_SDL
             SDL_Window* wnd = w;
