@@ -15,26 +15,48 @@ namespace oxygine
     Vector2 fitSize(const Vector2& destSize, const Vector2& src);
     const Vector2 itemSize(256.0f, 256.0f);
 
-    class TextureLine: public Box9Sprite
+    class TextureLine: public Sprite
     {
     public:
         TextureLine(spNativeTexture t)
         {
-            setVerticalMode(Box9Sprite::TILING_FULL);
-            setHorizontalMode(Box9Sprite::TILING_FULL);
-            Sprite::setResAnim(DebugActor::resSystem->getResAnim("checker"));
+            //setVerticalMode(Box9Sprite::TILING_FULL);
+            //setHorizontalMode(Box9Sprite::TILING_FULL);
+            //setResAnim(DebugActor::resSystem->getResAnim("checker"));
 
             AnimationFrame f;
             Vector2 s = fitSize(itemSize, Vector2((float)t->getWidth(), (float)t->getHeight()));
+            //setSize(s);
 
-            setSize(s);
+
+            AnimationFrame fr = DebugActor::resSystem->getResAnim("checker")->getFrame(0);
+            Vector2 uv = s;
+            RectF srcRect = fr.getSrcRect();
+            uv.x = std::min(uv.x, fr.getDestRect().getWidth());
+            uv.y = std::min(uv.y, fr.getDestRect().getHeight());
+
+            const Diffuse& dfx = fr.getDiffuse();
+            srcRect.size.x = uv.x / (float)dfx.base->getWidth();
+            srcRect.size.y = uv.y / (float)dfx.base->getHeight();
+
+            RectF destRect = fr.getDestRect();
+            destRect.size = s;
+
+            AnimationFrame cfr;
+            cfr.init(0, dfx, srcRect, destRect, s);
+
+            setAnimFrame(cfr);
+
+
 
             Diffuse df;
             df.base = t;
+            df.flags = 1;
+
 
             f.init(0, df, RectF(0, 0, 1.0f, 1.0f), RectF(0, 0, s.x, s.y), s);
             spSprite image = initActor(new Sprite,
-                                       arg_blend = blend_disabled,
+                                       arg_blend = blend_premultiplied_alpha,
                                        arg_resAnim = f);
             addChild(image);
 

@@ -51,7 +51,8 @@ namespace oxygine
         //std::pair<materials::iterator, materials::iterator> it = _materials.begin();
 
         materials fresh;
-        for (auto it = _materials.begin(); it != _materials.end(); it++) {
+        for (auto it = _materials.begin(); it != _materials.end(); it++)
+        {
             if (it->second->_ref_counter > 1)
             {
                 fresh.insert(std::make_pair(it->second->_hash, it->second));

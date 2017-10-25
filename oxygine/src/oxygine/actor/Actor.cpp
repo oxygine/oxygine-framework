@@ -168,11 +168,7 @@ namespace oxygine
 
     RectF Actor::computeBounds(const Transform& transform) const
     {
-        RectF bounds(
-            std::numeric_limits<float>::max() / 2,
-            std::numeric_limits<float>::max() / 2,
-            -std::numeric_limits<float>::max(),
-            -std::numeric_limits<float>::max());
+        RectF bounds = RectF::invalidated();
 
         calcBounds2(bounds, transform);
 

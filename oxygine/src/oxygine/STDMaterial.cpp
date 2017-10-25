@@ -56,15 +56,15 @@ namespace oxygine
 
             return;
         }
-        
+
 
         const RectF* parentClippedRect = parentRS.clip;
         RectF clippedRect = *parentClippedRect;
         rs.clip = &clippedRect;
 
         Rect scissorRect(0, 0, 0, 0);
-        
-        
+
+
         bool scissorEnabled = driver->getScissorRect(scissorRect);
 
         bool vis = true;
@@ -111,10 +111,14 @@ namespace oxygine
     void STDMaterial::render(MaskedSprite* sprite, const RenderState& parentRS)
     {
         spSprite maskSprite = sprite->getMask();
+        if (!maskSprite)
+        {
+            sprite->Sprite::render(parentRS);
+            return;
+        }
 
         const Diffuse& df = maskSprite->getAnimFrame().getDiffuse();
-
-        if (!maskSprite || !df.base)
+        if (!df.base)
         {
             sprite->Sprite::render(parentRS);
             return;

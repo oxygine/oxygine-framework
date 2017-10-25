@@ -375,14 +375,27 @@ namespace oxygine
         if (_options._flags & PostProcessOptions::flag_screen)
             return _screen;
 
-        Rect screen;
-
         Rect display(Point(0, 0), core::getDisplaySize());
 
         if (_options._flags & PostProcessOptions::flag_fullscreen)
             return display;
 
-        screen = actor.computeBounds(actor.computeGlobalTransform()).cast<Rect>();
+        RectF bounds = RectF::invalidated();
+        AffineTransform transform = actor.computeGlobalTransform();
+        if (_options._flags & PostProcessOptions::flag_fixedBounds)
+        {
+            const RectF& fb = _options._fixedBounds;
+            bounds.unite(transform.transform(fb.getLeftTop()));
+            bounds.unite(transform.transform(fb.getRightTop()));
+            bounds.unite(transform.transform(fb.getRightBottom()));
+            bounds.unite(transform.transform(fb.getLeftBottom()));
+        }
+        else
+            bounds = actor.computeBounds(transform);
+
+        Rect screen;
+        screen = bounds.cast<Rect>();
+
         screen.size += Point(1, 1);
         screen.expand(_extend, _extend);
 

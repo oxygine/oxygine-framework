@@ -67,8 +67,8 @@ namespace oxygine
         MaterialX::null->apply();
         rsCache().reset();
         rsCache().changeDriver(&cache);
-        
-        
+
+
 
 
         STDRenderer* original = STDRenderer::getCurrent();
@@ -156,7 +156,7 @@ namespace oxygine
     void TreeInspectorPreview::doRender(RenderState const& parentRenderState)
     {
         MaterialX::null->apply();
-        rsCache().reset();        
+        rsCache().reset();
         Sprite::doRender(parentRenderState);
         MaterialX::null->apply();
         _videoCache.render(parentRenderState.transform);
@@ -344,7 +344,7 @@ namespace oxygine
     {
         current().vdecl = decl;
         current().pt = pt;
-        current().numVertices = verticesDataSize/decl->size;
+        current().numVertices = verticesDataSize / decl->size;
         current().vertices.assign((const char*)verticesData, (const char*)verticesData + verticesDataSize);
         nextBatch();
     }

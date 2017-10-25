@@ -103,7 +103,7 @@ namespace oxygine
 
     }
 
-    void RenderStateCache::changeDriver(IVideoDriver *d)        
+    void RenderStateCache::changeDriver(IVideoDriver* d)
     {
         _driver = d;
     }
@@ -592,8 +592,8 @@ namespace oxygine
             return;
 
         _driver->draw(IVideoDriver::PT_TRIANGLES, _vdecl,
-                                     &_verticesData.front(), (unsigned int)_verticesData.size(),
-                                     &STDRenderer::indices16.front(), (unsigned int)indices);
+                      &_verticesData.front(), (unsigned int)_verticesData.size(),
+                      &STDRenderer::indices16.front(), (unsigned int)indices);
 
         _verticesData.clear();
     }
