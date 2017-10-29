@@ -139,8 +139,6 @@ namespace oxygine
 
     void Actor::transformUpdated()
     {
-        if (getName() == "qwe")
-            int q = 0;
     }
 
     void Actor::calcBounds2(RectF& bounds, const Transform& transform) const
@@ -497,8 +495,6 @@ namespace oxygine
 
     void Actor::setPosition(const Vector2& pos)
     {
-        if (getName() == "qwe")
-            int q = 0;
         if (_pos == pos)
             return;
         _pos = pos;
