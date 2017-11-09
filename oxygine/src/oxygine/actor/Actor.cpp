@@ -1420,14 +1420,19 @@ namespace oxygine
 
 
 
-    spTween setTimeout(timeMS dur, const EventCallback& cb, spActor root)
+    spTween setTimeout(timeMS dur, const EventCallback& cb, Actor* root)
     {
         if (!root)
-            root = getStage();
+            root = getStage().get();
         dur = std::max(dur, 1);
         spTween t = root->addTween(TweenDummy(), dur);
         t->setDoneCallback(cb);
         return t;
+    }
+
+    spTween setTimeout(timeMS dur, const EventCallback& cb, spActor root)
+    {
+        return setTimeout(dur, cb, root.get());
     }
 
     Transform getGlobalTransform2(spActor child, Actor* parent)

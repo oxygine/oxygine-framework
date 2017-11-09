@@ -386,6 +386,7 @@ namespace oxygine
 
 
     /*Runs callback in time ms.Stage used as default actor*/
+    spTween setTimeout(timeMS dur, const EventCallback& cb, Actor* root);
     spTween setTimeout(timeMS dur, const EventCallback& cb, spActor root = 0);
 
     Vector2 convert_local2stage(spActor child, const Vector2& pos, spActor root = 0);
