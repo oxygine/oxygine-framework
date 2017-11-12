@@ -665,6 +665,8 @@ namespace oxygine
                             if (stage)
                                 stage->dispatchEvent(&ev);
 
+                            mc().clear();
+
                             if (!focus)
                                 focusLost();
 #endif
