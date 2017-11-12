@@ -354,7 +354,7 @@ def processRS(context, walker):
     border = as_int(image_el.getAttribute("border"))
 
     trim = as_bool(image_el.getAttribute("trim"), True)
-    extend = as_bool(image_el.getAttribute("extend"), True)
+    extend = as_bool(image_el.getAttribute("extend"), False)
     
     if not extend:
         pass

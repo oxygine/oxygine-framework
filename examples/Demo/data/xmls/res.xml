@@ -10,7 +10,7 @@
 
 		<image file="palette.png"/>		
 		<image file="snow.png"/>
-		<image file="edges.png"/>
+		<image file="edges.png" trim="false" extend="true"/>
 		
 		<image file="flower.png"/>
 		
