@@ -175,7 +175,7 @@ namespace oxygine
             return s;
 
         char buff[512];
-        int i = 0;
+        size_t i = 0;
         for (; i < s; ++i)
             buff[i] = tolower(d[i]);
         buff[i] = 0;

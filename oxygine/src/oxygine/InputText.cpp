@@ -117,7 +117,7 @@ namespace oxygine
     void InputText::updateText()
     {
         _textActor->setText(_txt);
-        float x = _textActor->getTextRect().getRight();
+        float x = static_cast<float>(_textActor->getTextRect().getRight());
         _cursor->setX(x);
 
 
