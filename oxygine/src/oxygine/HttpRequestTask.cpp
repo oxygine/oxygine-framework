@@ -84,6 +84,16 @@ namespace oxygine
         _setCacheEnabled(enabled);
     }
 
+    spObject HttpRequestTask::getObject() const
+    {
+        return _object;
+    }
+
+    void HttpRequestTask::setObject(spObject obj)
+    {
+        _object = obj;
+    }
+
     void HttpRequestTask::setSuccessOnAnyResponseCode(bool any)
     {
         _responseCodeChecker = any ? _defaultCheckerAny : _defaultChecker200;

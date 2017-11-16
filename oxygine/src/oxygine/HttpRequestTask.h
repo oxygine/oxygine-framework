@@ -48,6 +48,7 @@ namespace oxygine
         const std::string&                  getUrl() const;
         size_t                              getReceivedSize() const;
         size_t                              getExpectedSize() const;
+        spObject                            getObject() const;
 
         /**swap version of getResponse if you want to modify result buffer inplace*/
         void getResponseSwap(std::vector<unsigned char>&);
@@ -59,7 +60,7 @@ namespace oxygine
         void setUrl(const std::string& url);
         void setFileName(const std::string& name, bool continueDownload = false);
         void setCacheEnabled(bool enabled);
-
+        void setObject(spObject obj);
 
         void setResponseCodeChecker(const responseCodeChecker& f) {_responseCodeChecker = f;}
         /**by default only response code == 200 is succeded, other codes are dispatching Event::ERROR*/
@@ -110,6 +111,8 @@ namespace oxygine
         int _responseCode;
         size_t _expectedContentSize;
         size_t _receivedContentSize;
+
+        spObject _object;
 
         bool _continueDownload;
 
