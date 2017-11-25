@@ -345,7 +345,8 @@ namespace oxygine
             flag_touchChildrenEnabled   = 1 << 5,
             flag_cull                   = 1 << 6,
             flag_fastTransform          = 1 << 7,
-            flag_reserved               = 1 << 8,
+            flag_boundsNoChildren       = 1 << 8,
+            flag_reserved               = 1 << 9,
             flag_last                   = flag_reserved
         };
 

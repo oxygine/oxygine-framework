@@ -144,15 +144,18 @@ namespace oxygine
 
     void Actor::calcBounds2(RectF& bounds, const Transform& transform) const
     {
-        const Actor* c = getFirstChild().get();
-        while (c)
+        if (!(_flags & flag_boundsNoChildren))
         {
-            if (c->getVisible())
+            const Actor* c = getFirstChild().get();
+            while (c)
             {
-                Transform tr = c->getTransform() * transform;
-                c->calcBounds2(bounds, tr);
+                if (c->getVisible())
+                {
+                    Transform tr = c->getTransform() * transform;
+                    c->calcBounds2(bounds, tr);
+                }
+                c = c->getNextSibling().get();
             }
-            c = c->getNextSibling().get();
         }
 
         RectF rect;
