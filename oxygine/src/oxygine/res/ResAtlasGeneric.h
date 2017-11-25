@@ -1,5 +1,6 @@
 #pragma once
 #include "ResAtlas.h"
+
 namespace oxygine
 {
 

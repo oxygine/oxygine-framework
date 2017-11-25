@@ -1,6 +1,6 @@
 #include "Button.h"
-#include "Stage.h"
 #include "DebugActor.h"
+#include "Stage.h"
 #include "../res/ResAnim.h"
 #include "../res/Resources.h"
 

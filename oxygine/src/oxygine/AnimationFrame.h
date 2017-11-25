@@ -1,8 +1,8 @@
 #pragma once
 #include "oxygine-include.h"
-#include "math/Rect.h"
-#include "core/Texture.h"
 #include "core/NativeTexture.h"
+#include "core/Texture.h"
+#include "math/Rect.h"
 
 namespace oxygine
 {

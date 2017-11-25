@@ -1,8 +1,8 @@
 #include "NativeTexture.h"
-#include "../Image.h"
 #include "ImageDataOperations.h"
 #include "file.h"
 #include "log.h"
+#include "../Image.h"
 #include <stdio.h>
 
 namespace oxygine

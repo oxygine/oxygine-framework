@@ -1,7 +1,7 @@
 #include "TweenOutline.h"
+#include "../RenderState.h"
 #include "../STDMaterial.h"
 #include "../actor/Actor.h"
-#include "../RenderState.h"
 #include "../core/gl/VertexDeclarationGL.h"
 
 namespace oxygine

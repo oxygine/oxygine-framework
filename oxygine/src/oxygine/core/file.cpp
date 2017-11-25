@@ -1,9 +1,9 @@
-#include <string>
-#include "STDFileSystem.h"
 #include "file.h"
+#include "Object.h"
+#include "STDFileSystem.h"
 #include "log.h"
 #include "../utils/stringUtils.h"
-#include "Object.h"
+#include <string>
 
 #ifdef __S3E__
 #include <s3eFile.h>

@@ -1,7 +1,7 @@
 #pragma once
-#include <vector>
-#include "Restorable.h"
 #include "Object.h"
+#include "Restorable.h"
+#include <vector>
 
 namespace oxygine
 {

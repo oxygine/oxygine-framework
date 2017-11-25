@@ -1,9 +1,9 @@
 #pragma once
 #include "../oxygine-include.h"
-#include "../closure/closure.h"
 #include "Restorable.h"
-#include "ox_debug.h"
 #include "Texture.h"
+#include "ox_debug.h"
+#include "../closure/closure.h"
 
 namespace oxygine
 {

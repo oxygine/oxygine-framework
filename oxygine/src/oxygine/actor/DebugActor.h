@@ -2,7 +2,6 @@
 #include "../oxygine-include.h"
 #include "Actor.h"
 
-
 namespace oxygine
 {
     DECLARE_SMART(DebugActor, spDebugActor);

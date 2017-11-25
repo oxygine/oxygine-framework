@@ -1,8 +1,8 @@
 #include "Image.h"
-#include "math/Rect.h"
 #include "core/ImageDataOperations.h"
 #include "core/file.h"
 #include "core/log.h"
+#include "math/Rect.h"
 #include "utils/ImageUtils.h"
 #include <stdint.h>
 

@@ -1,8 +1,8 @@
 #include "UberShaderProgram.h"
-#include "vertex.h"
-#include "gl/VideoDriverGLES20.h"
-#include "gl/ShaderProgramGL.h"
 #include "NativeTexture.h"
+#include "vertex.h"
+#include "gl/ShaderProgramGL.h"
+#include "gl/VideoDriverGLES20.h"
 
 namespace oxygine
 {

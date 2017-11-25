@@ -1,12 +1,13 @@
 #include "Polygon.h"
-#include "../Serialize.h"
+#include "../Material.h"
 #include "../RenderState.h"
+#include "../STDMaterial.h"
+#include "../STDRenderer.h"
+#include "../Serialize.h"
+#include "../core/UberShaderProgram.h"
 #include "../core/VertexDeclaration.h"
 #include <sstream>
-#include "../core/UberShaderProgram.h"
-#include "../STDRenderer.h"
-#include "../Material.h"
-#include "../STDMaterial.h"
+
 namespace oxygine
 {
     Polygon::Polygon() : _verticesSize(0), _verticesData(0), _own(false), _vdecl(0)

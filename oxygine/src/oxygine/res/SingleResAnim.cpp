@@ -1,7 +1,8 @@
 #include "SingleResAnim.h"
 #include "../Image.h"
-#include "../core/VideoDriver.h"
 #include "../core/NativeTexture.h"
+#include "../core/VideoDriver.h"
+
 namespace oxygine
 {
     void makeAlpha(const ImageData& srcImage, Rect& bounds, std::vector<unsigned char>& alpha, HitTestData& adata, bool hittest);

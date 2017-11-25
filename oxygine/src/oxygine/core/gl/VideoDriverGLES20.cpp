@@ -4,11 +4,11 @@
 #include "oxgl.h"
 #include "../../math/Color.h"
 #include "../../utils/stringUtils.h"
-#include "../vertex.h"
+#include "../ZipFileSystem.h"
 #include "../file.h"
 #include "../log.h"
-#include "../ZipFileSystem.h"
 #include "../system_data.h"
+#include "../vertex.h"
 
 #if OXYGINE_SDL
 #include "SDL_config.h"

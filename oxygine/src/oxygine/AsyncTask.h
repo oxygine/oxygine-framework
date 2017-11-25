@@ -1,9 +1,10 @@
 #pragma once
 #include "oxygine-include.h"
-#include "core/ThreadDispatcher.h"
-#include "EventDispatcher.h"
 #include "Event.h"
+#include "EventDispatcher.h"
+#include "core/ThreadDispatcher.h"
 #include "core/oxygine.h"
+
 #ifdef ERROR
 #undef ERROR
 #endif

@@ -1,11 +1,11 @@
 #pragma once
 #include "../oxygine-include.h"
-#include "../core/Texture.h"
-#include "../math/Rect.h"
-#include "../res/ResAnim.h"
 #include "Actor.h"
 #include "../AnimationFrame.h"
 #include "../VisualStyle.h"
+#include "../core/Texture.h"
+#include "../math/Rect.h"
+#include "../res/ResAnim.h"
 #include "../tween/TweenAnim.h"
 
 namespace oxygine

@@ -1,7 +1,7 @@
 #include "Resource.h"
-#include <stdio.h>
-#include "../utils/stringUtils.h"
 #include "CreateResourceContext.h"
+#include "../utils/stringUtils.h"
+#include <stdio.h>
 
 namespace oxygine
 {

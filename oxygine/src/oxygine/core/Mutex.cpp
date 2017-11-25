@@ -2,7 +2,6 @@
 #include "ox_debug.h"
 #include "pthread.h"
 
-
 namespace oxygine
 {
     Mutex::Mutex(bool recursive)

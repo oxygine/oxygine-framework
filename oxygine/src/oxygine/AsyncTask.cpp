@@ -1,6 +1,7 @@
 #include "AsyncTask.h"
 #include "core/oxygine.h"
 #include <typeinfo>
+
 namespace oxygine
 {
 #define LOGD(...)  (log::messageln("at: %s (%d) %s",    getName().c_str(), getObjectID(), __VA_ARGS__))

@@ -1,7 +1,6 @@
 #pragma once
 #include "../../oxygine-include.h"
 
-
 #if __S3E__
 #   include "IwImage.h"
 #   include "IwGL.h"

@@ -1,6 +1,7 @@
 #pragma once
-#include "../ShaderProgram.h"
 #include "oxgl.h"
+#include "../ShaderProgram.h"
+
 namespace oxygine
 {
     class VertexDeclarationGL;

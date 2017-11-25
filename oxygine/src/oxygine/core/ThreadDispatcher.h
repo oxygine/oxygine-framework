@@ -1,7 +1,7 @@
 #pragma once
 #include "../oxygine-include.h"
-#include <vector>
 #include <functional>
+#include <vector>
 
 #if defined(_WIN32) && !defined(__MINGW32__)
 typedef struct pthread_mutex_t_* pthread_mutex_t;

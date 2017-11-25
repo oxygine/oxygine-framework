@@ -1,7 +1,7 @@
 #include "jniUtils.h"
 #include "jniHelper.h"
-#include "../log.h"
 #include "../ThreadDispatcher.h"
+#include "../log.h"
 
 using namespace oxygine;
 

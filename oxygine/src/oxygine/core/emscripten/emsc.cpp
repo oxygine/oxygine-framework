@@ -1,4 +1,5 @@
 #include "emsc.h"
+
 namespace oxygine
 {
     void emscSyncFS(bool read)

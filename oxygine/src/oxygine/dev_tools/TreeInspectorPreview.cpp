@@ -1,13 +1,13 @@
 #include "TreeInspectorPreview.h"
 #include "TreeInspector.h"
+#include "../RenderState.h"
+#include "../STDMaterial.h"
+#include "../STDRenderer.h"
+#include "../actor/DebugActor.h"
 #include "../actor/Stage.h"
 #include "../actor/TextField.h"
-#include "../res/Resources.h"
-#include "../RenderState.h"
-#include "../STDRenderer.h"
-#include "../STDMaterial.h"
-#include "../actor/DebugActor.h"
 #include "../core/NativeTexture.h"
+#include "../res/Resources.h"
 
 namespace oxygine
 {

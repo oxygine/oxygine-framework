@@ -1,5 +1,6 @@
 #include "EventDispatcher.h"
 #include "Event.h"
+
 #ifdef __MINGW32__
 #include <malloc.h>
 #endif

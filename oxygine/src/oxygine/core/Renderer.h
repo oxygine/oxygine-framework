@@ -1,12 +1,11 @@
 #pragma once
 #include "../oxygine-include.h"
-#include <vector>
-
-#include "../math/Color.h"
-#include "../math/Rect.h"
-#include "../math/AffineTransform.h"
 #include "NativeTexture.h"
 #include "VideoDriver.h"
+#include "../math/AffineTransform.h"
+#include "../math/Color.h"
+#include "../math/Rect.h"
+#include <vector>
 
 #if OXYGINE_NO_SUBPIXEL_RENDERING
 #define SNAP_PIXEL(arg) floor(arg)

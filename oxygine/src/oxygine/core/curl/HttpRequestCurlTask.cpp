@@ -1,9 +1,9 @@
 #include "HttpRequestCurlTask.h"
-#include "core/oxygine.h"
-#include "core/ThreadDispatcher.h"
 #include "SDL.h"
-#include "pthread.h"
 #include "key.h"
+#include "pthread.h"
+#include "core/ThreadDispatcher.h"
+#include "core/oxygine.h"
 
 namespace oxygine
 {

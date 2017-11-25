@@ -1,6 +1,7 @@
 #pragma once
 #include "../oxygine-include.h"
 #include "vertex.h"
+
 namespace oxygine
 {
     class VertexDeclaration

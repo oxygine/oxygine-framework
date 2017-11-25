@@ -1,4 +1,5 @@
 #include "ResFont.h"
+
 namespace oxygine
 {
     const oxygine::Font* ResFont::getClosestFont(float worldScale, int styleFontSize, float& resScale) const

@@ -1,6 +1,7 @@
 #pragma once
 #include "../oxygine-include.h"
 #include "Sprite.h"
+
 namespace oxygine
 {
     DECLARE_SMART(Box9Sprite, spBox9Sprite);

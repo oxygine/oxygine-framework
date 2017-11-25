@@ -1,6 +1,7 @@
 #pragma once
 #include "../oxygine-include.h"
 #include "../core/file.h"
+
 namespace oxygine
 {
     class ImageData;

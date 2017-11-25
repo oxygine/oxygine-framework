@@ -1,7 +1,7 @@
 #pragma once
 #include "../oxygine-include.h"
-#include "Vector2.h"
 #include "Rect.h"
+#include "Vector2.h"
 
 namespace oxygine
 {

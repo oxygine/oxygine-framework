@@ -1,12 +1,13 @@
 #include "Actor.h"
-#include "../core/Texture.h"
-#include "../res/ResAnim.h"
 #include "Stage.h"
 #include "../Clock.h"
-#include "../tween/Tween.h"
+#include "../core/Texture.h"
 #include "../math/AffineTransform.h"
+#include "../res/ResAnim.h"
+#include "../tween/Tween.h"
 #include <sstream>
 #include <typeinfo>
+
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include "../utils/stringUtils.h"

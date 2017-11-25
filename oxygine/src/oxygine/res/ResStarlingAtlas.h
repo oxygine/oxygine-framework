@@ -1,6 +1,7 @@
 #pragma once
 #include "../oxygine-include.h"
 #include "Resource.h"
+
 namespace oxygine
 {
     class ResStarlingAtlas: public Resource

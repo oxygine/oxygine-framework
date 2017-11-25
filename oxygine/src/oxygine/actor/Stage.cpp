@@ -1,10 +1,10 @@
 #include "Stage.h"
+#include "../Clock.h"
+#include "../RenderState.h"
+#include "../STDMaterial.h"
 #include "../core/oxygine.h"
 #include "../math/Rect.h"
-#include "../RenderState.h"
-#include "../Clock.h"
 #include <sstream>
-#include "../STDMaterial.h"
 
 #ifdef OXYGINE_SDL
 #include "SDL.h"

@@ -1,11 +1,11 @@
-#include <string.h>
-#include <map>
-#include "../minizip/ioapi_mem.h"
-#include "../core/ZipFileSystem.h"
+#include "ZipFileSystem.h"
 #include "../core/Object.h"
+#include "../minizip/ioapi_mem.h"
 #include "../utils/stringUtils.h"
-#include <algorithm>
 //#include "../utils/utils.h"
+#include <algorithm>
+#include <map>
+#include <string.h>
 
 #ifdef __S3E__
 #include "s3eFile.h"

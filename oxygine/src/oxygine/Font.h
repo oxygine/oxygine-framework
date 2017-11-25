@@ -2,6 +2,7 @@
 #include "oxygine-include.h"
 #include "core/Object.h"
 #include "math/Rect.h"
+
 #ifdef __S3E__
 #include <set>
 #else

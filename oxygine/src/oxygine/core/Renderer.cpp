@@ -1,17 +1,15 @@
 #include "Renderer.h"
-#include "../math/Rect.h"
-#include "../Image.h"
 #include "ImageDataOperations.h"
-#include "../AnimationFrame.h"
+#include "UberShaderProgram.h"
 #include "VertexDeclaration.h"
-#include "gl/VideoDriverGLES20.h"
-
 #include "ZipFileSystem.h"
 #include "system_data.h"
-#include "UberShaderProgram.h"
-
+#include "../AnimationFrame.h"
+#include "../Image.h"
 #include "../RenderState.h"
 #include "../VisualStyle.h"
+#include "../math/Rect.h"
+#include "gl/VideoDriverGLES20.h"
 
 namespace oxygine
 {

@@ -1,6 +1,7 @@
 #include "MaterialCache.h"
-#include "core/oxygine.h"
 #include "MaterialX.h"
+#include "core/oxygine.h"
+
 namespace oxygine
 {
     MaterialX* MaterialCache::clone_(const MaterialX& other)

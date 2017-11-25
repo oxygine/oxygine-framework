@@ -1,7 +1,7 @@
 #pragma once
 #include "oxygine-include.h"
-#include "core/ref_counter.h"
 #include "core/Renderer.h"
+#include "core/ref_counter.h"
 
 namespace oxygine
 {

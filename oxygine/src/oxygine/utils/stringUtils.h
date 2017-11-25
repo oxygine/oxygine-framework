@@ -1,8 +1,8 @@
 #pragma once
 #include "../oxygine-include.h"
-#include <string>
 #include "../math/Color.h"
 #include <stdarg.h>
+#include <string>
 
 namespace oxygine
 {

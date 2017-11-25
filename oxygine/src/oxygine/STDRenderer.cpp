@@ -1,22 +1,17 @@
 #include "STDRenderer.h"
+#include "AnimationFrame.h"
+#include "Image.h"
+#include "RenderState.h"
+#include "STDMaterial.h"
+#include "VisualStyle.h"
+#include "core/ImageDataOperations.h"
 #include "core/UberShaderProgram.h"
 #include "core/VertexDeclaration.h"
-#include "STDMaterial.h"
-#include "Image.h"
-#include "core/file.h"
 #include "core/ZipFileSystem.h"
+#include "core/file.h"
+#include "core/gl/VideoDriverGLES20.h"
 #include "core/system_data.h"
 #include "math/Rect.h"
-#include "Image.h"
-#include "core/ImageDataOperations.h"
-#include "AnimationFrame.h"
-#include "core/VertexDeclaration.h"
-#include "core/gl/VideoDriverGLES20.h"
-
-#include "core/UberShaderProgram.h"
-
-#include "RenderState.h"
-#include "VisualStyle.h"
 
 //#define EXP_SORT
 

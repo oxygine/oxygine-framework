@@ -1,9 +1,9 @@
 #pragma once
 #include "../oxygine-include.h"
+#include "Aligner.h"
 #include "../core/Object.h"
 #include "../math/Color.h"
 #include "../math/Vector2.h"
-#include "Aligner.h"
 #include <string>
 #include <vector>
 

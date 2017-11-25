@@ -1,10 +1,10 @@
 #include "VisualStyle.h"
-#include "actor/Actor.h"
-#include <sstream>
+#include "MaterialCache.h"
 #include "RenderState.h"
 #include "Serialize.h"
+#include "actor/Actor.h"
 #include "utils/stringUtils.h"
-#include "MaterialCache.h"
+#include <sstream>
 
 namespace oxygine
 {

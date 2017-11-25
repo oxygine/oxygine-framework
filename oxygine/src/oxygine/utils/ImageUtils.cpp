@@ -1,7 +1,8 @@
 #include "ImageUtils.h"
-#include "../core/ImageData.h"
 #include "../Image.h"
+#include "../core/ImageData.h"
 //#include "png.h"
+
 extern "C"
 {
 #ifdef OX_HAVE_LIBJPEG

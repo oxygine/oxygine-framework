@@ -1,12 +1,11 @@
-#include <stdio.h>
 #include "NativeTextureGLES.h"
 #include "oxgl.h"
 #include "../../Image.h"
-#include "../NativeTexture.h"
 #include "../ImageDataOperations.h"
+#include "../NativeTexture.h"
 #include "../file.h"
 #include "../log.h"
-
+#include <stdio.h>
 
 namespace oxygine
 {

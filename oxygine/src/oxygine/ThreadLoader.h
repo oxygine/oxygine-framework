@@ -1,10 +1,10 @@
 #pragma once
 #include "oxygine-include.h"
+#include "Event.h"
 #include "EventDispatcher.h"
 #include "pthread.h"
 #include "core/ThreadDispatcher.h"
 #include <functional>
-#include "Event.h"
 
 namespace oxygine
 {

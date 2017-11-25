@@ -1,5 +1,6 @@
 #include "AnimationFrame.h"
 #include "res/ResAnim.h"
+
 namespace oxygine
 {
     void AnimationFrame::init(ResAnim* rs, const Diffuse& df, const RectF& srcRect, const RectF& destRect, const Vector2& frame_size)

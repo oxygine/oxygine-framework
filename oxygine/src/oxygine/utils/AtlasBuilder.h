@@ -1,9 +1,8 @@
 #pragma once
 #include "../oxygine-include.h"
-#include "../math/Rect.h"
 #include "../AnimationFrame.h"
+#include "../math/Rect.h"
 #include <deque>
-
 
 namespace oxygine
 {

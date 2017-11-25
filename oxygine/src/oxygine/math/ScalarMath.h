@@ -1,6 +1,5 @@
 #pragma once
 #include "../oxygine-include.h"
-
 #include <math.h>
 #include <stdlib.h>
 
