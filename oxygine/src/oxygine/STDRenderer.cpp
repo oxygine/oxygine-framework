@@ -68,7 +68,7 @@ namespace oxygine
             oxglActiveTexture(GL_TEXTURE0 + sampler);
             glGetIntegerv(GL_TEXTURE_BINDING_2D, &whichID);
 
-            OX_ASSERT(_textures[sampler]->getHandle() == (nativeTextureHandle)whichID);
+            OX_ASSERT(_textures[sampler]->getHandle() == (nativeTextureHandle)(size_t)whichID);
         }
 #endif
 

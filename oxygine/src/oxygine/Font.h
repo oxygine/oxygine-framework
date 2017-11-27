@@ -39,7 +39,7 @@ namespace oxygine
     {
         std::size_t operator()(const glyph& k) const
         {
-            return std::hash<int>()(k.ch + k.opt);
+            return std::hash<size_t>()(k.ch + k.opt);
         }
     };
 
