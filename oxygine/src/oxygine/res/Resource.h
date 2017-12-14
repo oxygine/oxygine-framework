@@ -25,6 +25,7 @@ namespace oxygine
         pugi::xml_attribute getAttribute(const char* attr) const;
         pugi::xml_node      getNode() const {return _node;}
         bool                getUseLoadCounter() const {return _useLoadCounter;}
+        int                 getLoadCounter() const { return _loadCounter; }
         Resource*           getParent() const {return _parent;}
 
 
