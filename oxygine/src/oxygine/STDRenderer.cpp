@@ -47,7 +47,8 @@ namespace oxygine
         resetTextures();
 
         _blend = blend_disabled;
-        _driver->setState(IVideoDriver::STATE_BLEND, 0);
+        if (_driver)
+            _driver->setState(IVideoDriver::STATE_BLEND, 0);
         _program = 0;
     }
 
