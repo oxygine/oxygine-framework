@@ -15,7 +15,7 @@ items = (
     examples + "Game/Part5",
     examples + "HelloWorld",
     examples + "Match3",
-    parent + "oxygine-freetype/example/game/project/",
+    parent + "oxygine-freetype/examples/HelloFreeType/",
     parent + "oxygine-sound/examples/SoundDemo/",
     parent + "oxygine-flow/examples/HelloFlow/",
     parent + "oxygine-game/my_awesome_game/project/src/",
