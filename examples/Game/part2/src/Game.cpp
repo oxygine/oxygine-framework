@@ -23,6 +23,7 @@ void Game::init()
     spSprite sky = new Sprite;
     sky->setResAnim(res::ui.getResAnim("sky"));
     sky->attachTo(this);
+    sky->setSize(getSize());
 
     //create player ship
     _player = new Player;

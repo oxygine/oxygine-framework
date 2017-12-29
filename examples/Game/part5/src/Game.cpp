@@ -23,6 +23,7 @@ void Game::init()
     spSprite sky = new Sprite;
     sky->setResAnim(res::ui.getResAnim("sky"));
     sky->attachTo(this);
+    sky->setSize(getSize());
 
     //create separate layer for elements virtual joystick and other UI in future
     _ui = new Actor;
