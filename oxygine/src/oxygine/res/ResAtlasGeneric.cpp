@@ -1,12 +1,12 @@
 #include "ResAtlasGeneric.h"
-#include "../core/ImageDataOperations.h"
-#include "../Image.h"
-#include "../utils/AtlasBuilder.h"
-#include "../core/VideoDriver.h"
 #include "Resources.h"
-#include <stdint.h>
-#include "../utils/stringUtils.h"
+#include "../Image.h"
+#include "../core/ImageDataOperations.h"
+#include "../core/VideoDriver.h"
+#include "../utils/AtlasBuilder.h"
 #include "../utils/ImageUtils.h"
+#include "../utils/stringUtils.h"
+#include <stdint.h>
 
 namespace oxygine
 {

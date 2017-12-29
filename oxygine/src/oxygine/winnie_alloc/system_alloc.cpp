@@ -5,7 +5,6 @@
 
 #include "system_alloc.h"
 
-
 void *SystemAlloc(size_t size)
 {
   return malloc(size);

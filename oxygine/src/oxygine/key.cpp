@@ -1,4 +1,5 @@
 #include "key.h"
+
 #ifdef __S3E__
 #   include "s3eKeyboard.h"
 #else

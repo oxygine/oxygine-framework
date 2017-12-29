@@ -7,9 +7,9 @@
 //
 #pragma once
 #include "../../oxygine-include.h"
-#include "../../HttpRequestTask.h"
-#include "jniUtils.h"
 #include "jniHelper.h"
+#include "jniUtils.h"
+#include "../../HttpRequestTask.h"
 
 namespace oxygine
 {

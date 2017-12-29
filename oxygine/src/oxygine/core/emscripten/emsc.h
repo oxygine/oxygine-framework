@@ -1,6 +1,7 @@
 #pragma once
-#include "oxygine_include.h"
 #include "Event.h"
+#include "oxygine_include.h"
+
 namespace oxygine
 {
     class EmscSyncFsEvent: public Event

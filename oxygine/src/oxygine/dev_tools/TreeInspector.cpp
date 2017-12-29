@@ -1,24 +1,19 @@
 #include "TreeInspector.h"
-#include "../initActor.h"
-#include "../actor/ColorRectSprite.h"
-#include "../RenderState.h"
-#include "../Clock.h"
-
 #include "TreeInspectorPage.h"
 #include "TreeInspectorPreview.h"
-
+#include "../Clock.h"
+#include "../Font.h"
+#include "../Image.h"
+#include "../RenderState.h"
+#include "../actor/ColorRectSprite.h"
+#include "../actor/DebugActor.h"
+#include "../actor/SlidingActor.h"
+#include "../actor/Stage.h"
+#include "../actor/TextField.h"
+#include "../initActor.h"
 #include "../res/ResAnim.h"
 #include "../res/ResFontBM.h"
 #include "../res/Resources.h"
-
-#include "../Image.h"
-#include "../Font.h"
-#include "../actor/Stage.h"
-
-#include "../actor/TextField.h"
-#include "../actor/DebugActor.h"
-
-#include "../actor/SlidingActor.h"
 
 namespace oxygine
 {

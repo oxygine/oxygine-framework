@@ -1,9 +1,9 @@
 #include "WebImage.h"
-#include "../res/ResAnim.h"
-#include "../Image.h"
-#include "../HttpRequestTask.h"
 #include "Sprite.h"
+#include "../HttpRequestTask.h"
+#include "../Image.h"
 #include "../Serialize.h"
+#include "../res/ResAnim.h"
 #include <vector>
 
 namespace oxygine

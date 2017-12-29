@@ -1,9 +1,9 @@
 #include "HttpRequestCurlTask.h"
-#include "core/oxygine.h"
-#include "core/ThreadDispatcher.h"
 #include "SDL.h"
-#include "pthread.h"
 #include "key.h"
+#include "pthread.h"
+#include "core/ThreadDispatcher.h"
+#include "core/oxygine.h"
 
 namespace oxygine
 {
@@ -175,7 +175,7 @@ namespace oxygine
             return s;
 
         char buff[512];
-        int i = 0;
+        size_t i = 0;
         for (; i < s; ++i)
             buff[i] = tolower(d[i]);
         buff[i] = 0;

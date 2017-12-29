@@ -1,7 +1,8 @@
 #pragma once
 #include "oxygine-include.h"
-#include "actor/Actor.h"
 #include "MaterialX.h"
+#include "actor/Actor.h"
+
 namespace oxygine
 {
     class VisualStyle

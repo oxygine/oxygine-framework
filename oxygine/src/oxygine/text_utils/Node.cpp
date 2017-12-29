@@ -1,12 +1,13 @@
 #include "Node.h"
-#include "../Font.h"
-#include "../pugixml/pugixml.hpp"
-#include "../utils/stringUtils.h"
-#include "../RenderState.h"
 #include "../AnimationFrame.h"
-#include "../res/ResFont.h"
-#include "../STDMaterial.h"
+#include "../Font.h"
 #include "../MaterialCache.h"
+#include "../RenderState.h"
+#include "../STDMaterial.h"
+#include "../pugixml/pugixml.hpp"
+#include "../res/ResFont.h"
+#include "../utils/stringUtils.h"
+
 namespace oxygine
 {
     namespace text

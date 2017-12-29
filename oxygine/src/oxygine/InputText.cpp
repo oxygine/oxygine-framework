@@ -1,9 +1,10 @@
 #include "InputText.h"
-#include "actor/TextField.h"
-#include "utils/stringUtils.h"
-#include "core/oxygine.h"
 #include "actor/ColorRectSprite.h"
+#include "actor/TextField.h"
+#include "core/oxygine.h"
 #include "res/ResFont.h"
+#include "utils/stringUtils.h"
+
 #ifndef __S3E__
 #include "SDL_keyboard.h"
 #include "SDL_events.h"
@@ -117,7 +118,7 @@ namespace oxygine
     void InputText::updateText()
     {
         _textActor->setText(_txt);
-        float x = _textActor->getTextRect().getRight();
+        float x = static_cast<float>(_textActor->getTextRect().getRight());
         _cursor->setX(x);
 
 

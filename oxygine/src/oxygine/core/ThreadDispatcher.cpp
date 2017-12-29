@@ -1,7 +1,7 @@
 #include "ThreadDispatcher.h"
+#include "Mutex.h"
 #include "log.h"
 #include "pthread.h"
-#include "Mutex.h"
 
 namespace oxygine
 {

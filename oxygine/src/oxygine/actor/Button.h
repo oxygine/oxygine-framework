@@ -1,6 +1,7 @@
 #pragma once
 #include "../oxygine-include.h"
 #include "Sprite.h"
+
 namespace oxygine
 {
     DECLARE_SMART(Button, spButton);

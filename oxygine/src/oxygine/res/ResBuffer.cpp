@@ -1,6 +1,6 @@
 #include "ResBuffer.h"
-#include "Resources.h"
 #include "CreateResourceContext.h"
+#include "Resources.h"
 
 namespace oxygine
 {

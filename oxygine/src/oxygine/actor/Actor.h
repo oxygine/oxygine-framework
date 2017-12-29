@@ -1,15 +1,15 @@
 #pragma once
 #include "../oxygine-include.h"
-#include "../oxygine-forwards.h"
+#include "../EventDispatcher.h"
+#include "../Serializable.h"
+#include "../TouchEvent.h"
 #include "../core/Object.h"
 #include "../core/Renderer.h"
-#include "../math/Rect.h"
 #include "../math/AffineTransform.h"
-#include "../utils/intrusive_list.h"
-#include "../Serializable.h"
-#include "../EventDispatcher.h"
-#include "../TouchEvent.h"
+#include "../math/Rect.h"
+#include "../oxygine-forwards.h"
 #include "../tween/Tween.h"
+#include "../utils/intrusive_list.h"
 
 namespace oxygine
 {
@@ -345,7 +345,8 @@ namespace oxygine
             flag_touchChildrenEnabled   = 1 << 5,
             flag_cull                   = 1 << 6,
             flag_fastTransform          = 1 << 7,
-            flag_reserved               = 1 << 8,
+            flag_boundsNoChildren       = 1 << 8,
+            flag_reserved               = 1 << 9,
             flag_last                   = flag_reserved
         };
 
@@ -386,6 +387,7 @@ namespace oxygine
 
 
     /*Runs callback in time ms.Stage used as default actor*/
+    spTween setTimeout(timeMS dur, const EventCallback& cb, Actor* root);
     spTween setTimeout(timeMS dur, const EventCallback& cb, spActor root = 0);
 
     Vector2 convert_local2stage(spActor child, const Vector2& pos, spActor root = 0);

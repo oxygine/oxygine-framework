@@ -1,12 +1,13 @@
 #pragma once
 #include "../oxygine-include.h"
-#include <string>
-#include <list>
-#include <string.h>
-#include "../pugixml/pugixml.hpp"
+#include "Resource.h"
 #include "../closure/closure.h"
 #include "../core/Object.h"
-#include "Resource.h"
+#include "../pugixml/pugixml.hpp"
+#include <list>
+#include <string.h>
+#include <string>
+
 #ifdef __S3E__
 #include <map>
 #else

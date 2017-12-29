@@ -1,7 +1,7 @@
 #include "TextBuilder.h"
 #include "Node.h"
-#include "../utils/stringUtils.h"
 #include "../pugixml/pugixml.hpp"
+#include "../utils/stringUtils.h"
 
 namespace oxygine
 {

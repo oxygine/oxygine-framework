@@ -1,8 +1,9 @@
 #pragma once
 #include "oxygine-include.h"
-#include "closure/closure.h"
-#include "Input.h"
 #include "EventDispatcher.h"
+#include "Input.h"
+#include "closure/closure.h"
+
 #undef OUT
 
 namespace oxygine

@@ -1,8 +1,8 @@
 #pragma once
 #include "../oxygine-include.h"
 #include "Actor.h"
-#include "../res/ResAnim.h"
 #include "../HttpRequestTask.h"
+#include "../res/ResAnim.h"
 #include <string>
 
 namespace oxygine

@@ -1,22 +1,17 @@
 #include "STDRenderer.h"
+#include "AnimationFrame.h"
+#include "Image.h"
+#include "RenderState.h"
+#include "STDMaterial.h"
+#include "VisualStyle.h"
+#include "core/ImageDataOperations.h"
 #include "core/UberShaderProgram.h"
 #include "core/VertexDeclaration.h"
-#include "STDMaterial.h"
-#include "Image.h"
-#include "core/file.h"
 #include "core/ZipFileSystem.h"
+#include "core/file.h"
+#include "core/gl/VideoDriverGLES20.h"
 #include "core/system_data.h"
 #include "math/Rect.h"
-#include "Image.h"
-#include "core/ImageDataOperations.h"
-#include "AnimationFrame.h"
-#include "core/VertexDeclaration.h"
-#include "core/gl/VideoDriverGLES20.h"
-
-#include "core/UberShaderProgram.h"
-
-#include "RenderState.h"
-#include "VisualStyle.h"
 
 //#define EXP_SORT
 
@@ -52,7 +47,8 @@ namespace oxygine
         resetTextures();
 
         _blend = blend_disabled;
-        _driver->setState(IVideoDriver::STATE_BLEND, 0);
+        if (_driver)
+            _driver->setState(IVideoDriver::STATE_BLEND, 0);
         _program = 0;
     }
 
@@ -73,7 +69,7 @@ namespace oxygine
             oxglActiveTexture(GL_TEXTURE0 + sampler);
             glGetIntegerv(GL_TEXTURE_BINDING_2D, &whichID);
 
-            OX_ASSERT(_textures[sampler]->getHandle() == (nativeTextureHandle)whichID);
+            OX_ASSERT(_textures[sampler]->getHandle() == (nativeTextureHandle)(size_t)whichID);
         }
 #endif
 

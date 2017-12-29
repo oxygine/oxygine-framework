@@ -1,11 +1,11 @@
 #include "SlidingActor.h"
 #include "ClipRectActor.h"
-#include "../PointerState.h"
-#include "../UpdateState.h"
-//#include "../Draggable.h"
-#include "../initActor.h"
-#include "../Serialize.h"
 #include "Stage.h"
+#include "../PointerState.h"
+#include "../Serialize.h"
+#include "../UpdateState.h"
+#include "../initActor.h"
+//#include "../Draggable.h"
 
 namespace oxygine
 {

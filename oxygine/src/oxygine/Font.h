@@ -2,6 +2,7 @@
 #include "oxygine-include.h"
 #include "core/Object.h"
 #include "math/Rect.h"
+
 #ifdef __S3E__
 #include <set>
 #else
@@ -38,7 +39,7 @@ namespace oxygine
     {
         std::size_t operator()(const glyph& k) const
         {
-            return std::hash<int>()(k.ch + k.opt);
+            return std::hash<size_t>()(k.ch + k.opt);
         }
     };
 

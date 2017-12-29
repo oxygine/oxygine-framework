@@ -1,10 +1,9 @@
 #include "ResAtlas.h"
-#include "../Image.h"
-#include "Resources.h"
-#include "../core/VideoDriver.h"
 #include "ResAtlasGeneric.h"
 #include "ResAtlasPrebuilt.h"
-
+#include "Resources.h"
+#include "../Image.h"
+#include "../core/VideoDriver.h"
 
 #ifdef __S3E__
 #include "IwImage.h"

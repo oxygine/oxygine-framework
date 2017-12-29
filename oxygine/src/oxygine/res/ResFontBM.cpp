@@ -1,14 +1,15 @@
 #include "ResFontBM.h"
+#include "CreateResourceContext.h"
+#include "Resources.h"
 #include "../Font.h"
-#include <vector>
-#include "../pugixml/pugixml.hpp"
 #include "../Image.h"
 #include "../core/NativeTexture.h"
 #include "../core/VideoDriver.h"
 #include "../core/file.h"
-#include "CreateResourceContext.h"
+#include "../pugixml/pugixml.hpp"
 #include "../utils/stringUtils.h"
-#include "Resources.h"
+#include <vector>
+
 namespace oxygine
 {
     Resource* ResFontBM::create(CreateResourceContext& context)

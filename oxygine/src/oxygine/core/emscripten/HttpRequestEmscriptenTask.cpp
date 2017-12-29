@@ -1,6 +1,6 @@
 #include "HttpRequestEmscriptenTask.h"
-#include <emscripten.h>
 #include "core/file.h"
+#include <emscripten.h>
 
 namespace oxygine
 {

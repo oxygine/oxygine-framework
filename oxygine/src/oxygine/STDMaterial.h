@@ -1,7 +1,7 @@
 #pragma once
 #include "oxygine-include.h"
-#include "STDRenderer.h"
 #include "Material.h"
+#include "STDRenderer.h"
 
 namespace oxygine
 {

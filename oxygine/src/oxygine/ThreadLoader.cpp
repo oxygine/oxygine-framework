@@ -1,9 +1,9 @@
 #include "ThreadLoader.h"
 #include "Event.h"
-#include "res/Resources.h"
-#include "res/Resource.h"
-#include "core/oxygine.h"
 #include "actor/Stage.h"
+#include "core/oxygine.h"
+#include "res/Resource.h"
+#include "res/Resources.h"
 
 namespace oxygine
 {

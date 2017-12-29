@@ -1,6 +1,7 @@
 #pragma once
 #include "oxygine-include.h"
 #include "Event.h"
+
 #undef OUT
 namespace oxygine
 {

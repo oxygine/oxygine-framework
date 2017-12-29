@@ -1,8 +1,8 @@
 #pragma once
 #include "oxygine-include.h"
 #include "EventDispatcher.h"
-#include "closure/closure.h"
 #include "PointerState.h"
+#include "closure/closure.h"
 
 namespace oxygine
 {

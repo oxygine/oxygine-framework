@@ -1,6 +1,7 @@
 #pragma once
 #include "../oxygine-include.h"
 #include "FileSystem.h"
+
 namespace oxygine
 {
     namespace file

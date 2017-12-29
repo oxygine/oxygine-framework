@@ -1,5 +1,4 @@
 #include "jniHelper.h"
-
 extern "C"
 {
     JNIEnv* Android_JNI_GetEnv(void);
@@ -44,7 +43,9 @@ namespace oxygine
 
         for (size_t i = 0; i < src.size(); ++i)
         {
+            env->PushLocalFrame(1);
             env->SetObjectArrayElement(res, i, env->NewStringUTF(src[i].c_str()));
+            env->PopLocalFrame(0);
         }
 
         return res;

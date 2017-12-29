@@ -1,9 +1,8 @@
 #include "TreeInspectorPage.h"
-#include "TreeInspectorLine.h"
 #include "TreeInspector.h"
+#include "TreeInspectorLine.h"
 #include "../actor/Button.h"
 #include "../res/Resources.h"
-
 
 namespace oxygine
 {

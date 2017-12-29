@@ -1,8 +1,8 @@
 #include "MaterialX.h"
+#include "MaterialCache.h"
+#include "STDRenderer.h"
 #include "core/UberShaderProgram.h"
 #include "core/oxygine.h"
-#include "STDRenderer.h"
-#include "MaterialCache.h"
 
 namespace oxygine
 {

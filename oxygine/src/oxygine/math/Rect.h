@@ -106,6 +106,7 @@ namespace oxygine
 
         point2 getCenter() const {return pos + size / 2;}
         point2 getSize() const {return size;}
+        point2 getPosition() const { return pos; }
         point2 getLeftTop() const {return pos;}
         point2 getRightBottom() const {return pos + size;}
         point2 getRightTop() const {return point2(getRight(), getTop());}

@@ -1,12 +1,13 @@
 #include "Actor.h"
-#include "../core/Texture.h"
-#include "../res/ResAnim.h"
 #include "Stage.h"
 #include "../Clock.h"
-#include "../tween/Tween.h"
+#include "../core/Texture.h"
 #include "../math/AffineTransform.h"
+#include "../res/ResAnim.h"
+#include "../tween/Tween.h"
 #include <sstream>
 #include <typeinfo>
+
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include "../utils/stringUtils.h"
@@ -143,15 +144,18 @@ namespace oxygine
 
     void Actor::calcBounds2(RectF& bounds, const Transform& transform) const
     {
-        const Actor* c = getFirstChild().get();
-        while (c)
+        if (!(_flags & flag_boundsNoChildren))
         {
-            if (c->getVisible())
+            const Actor* c = getFirstChild().get();
+            while (c)
             {
-                Transform tr = c->getTransform() * transform;
-                c->calcBounds2(bounds, tr);
+                if (c->getVisible())
+                {
+                    Transform tr = c->getTransform() * transform;
+                    c->calcBounds2(bounds, tr);
+                }
+                c = c->getNextSibling().get();
             }
-            c = c->getNextSibling().get();
         }
 
         RectF rect;
@@ -1420,14 +1424,19 @@ namespace oxygine
 
 
 
-    spTween setTimeout(timeMS dur, const EventCallback& cb, spActor root)
+    spTween setTimeout(timeMS dur, const EventCallback& cb, Actor* root)
     {
         if (!root)
-            root = getStage();
+            root = getStage().get();
         dur = std::max(dur, 1);
         spTween t = root->addTween(TweenDummy(), dur);
         t->setDoneCallback(cb);
         return t;
+    }
+
+    spTween setTimeout(timeMS dur, const EventCallback& cb, spActor root)
+    {
+        return setTimeout(dur, cb, root.get());
     }
 
     Transform getGlobalTransform2(spActor child, Actor* parent)

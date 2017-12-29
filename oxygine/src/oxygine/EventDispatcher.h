@@ -1,8 +1,8 @@
 #pragma once
 #include "oxygine-include.h"
-#include <list>
-#include "core/Object.h"
 #include "closure/closure.h"
+#include "core/Object.h"
+#include <list>
 
 namespace oxygine
 {

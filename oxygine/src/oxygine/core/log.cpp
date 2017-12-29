@@ -1,11 +1,9 @@
 #include "log.h"
-
-#include <stdio.h>
-#include <stdarg.h>
-#include <string.h>
-#include "../utils/stringUtils.h"
 #include "../core/oxygine.h"
-
+#include "../utils/stringUtils.h"
+#include <stdarg.h>
+#include <stdio.h>
+#include <string.h>
 
 #if defined(ANDROID)
 #include <android/log.h>

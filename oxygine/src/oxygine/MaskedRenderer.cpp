@@ -1,7 +1,7 @@
 #include "MaskedRenderer.h"
-#include "core/VertexDeclaration.h"
-#include "core/UberShaderProgram.h"
 #include "RenderState.h"
+#include "core/UberShaderProgram.h"
+#include "core/VertexDeclaration.h"
 
 namespace oxygine
 {

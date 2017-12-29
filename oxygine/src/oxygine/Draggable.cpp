@@ -1,7 +1,7 @@
 #include "Draggable.h"
-#include "math/AffineTransform.h"
 #include "actor/Actor.h"
 #include "actor/Stage.h"
+#include "math/AffineTransform.h"
 
 namespace oxygine
 {

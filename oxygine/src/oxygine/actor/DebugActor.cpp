@@ -1,37 +1,30 @@
-#include <sstream>
+#include "DebugActor.h"
+#include "Button.h"
+#include "ColorRectSprite.h"
+#include "MaskedSprite.h"
+#include "Stage.h"
+#include "TextField.h"
+#include "../Event.h"
+#include "../MaterialCache.h"
+#include "../RenderState.h"
+#include "../STDMaterial.h"
+#include "../STDRenderer.h"
+#include "../core/NativeTexture.h"
+#include "../core/ZipFileSystem.h"
 #include "../core/oxygine.h"
-
+#include "../core/system_data.h"
+#include "../dev_tools/DeveloperMenu.h"
+#include "../dev_tools/TexturesInspector.h"
+#include "../dev_tools/TreeInspector.h"
+#include "../initActor.h"
 #include "../res/ResAnim.h"
 #include "../res/ResFont.h"
 #include "../res/Resources.h"
-
 #include "../utils/stringUtils.h"
-#include "../core/NativeTexture.h"
-#include "../core/ZipFileSystem.h"
-#include "../core/system_data.h"
-#include "../STDRenderer.h"
-#include "../MaterialCache.h"
-
-#include "../dev_tools/DeveloperMenu.h"
-#include "../dev_tools/TreeInspector.h"
-#include "../dev_tools/TexturesInspector.h"
-
-#include "../STDRenderer.h"
-#include "DebugActor.h"
-#include "Stage.h"
-#include "TextField.h"
-#include "ColorRectSprite.h"
-#include "Button.h"
-#include "../Event.h"
-#include "../RenderState.h"
-#include "../initActor.h"
-#include "MaskedSprite.h"
-#include "../STDMaterial.h"
-
-#include <stdio.h>
-#include <stdarg.h>
 #include <iomanip>
-#include "../core/oxygine.h"
+#include <sstream>
+#include <stdarg.h>
+#include <stdio.h>
 
 #ifdef __S3E__
 #include "../s3eMemory.h"
@@ -349,7 +342,7 @@ namespace oxygine
         s << "update=" << aligned(getStage()->_statUpdate, 2) << "ms ";
         s << "render=" << aligned(vstats.duration, 2) << "ms ";
         s << "textures=" << aligned(NativeTexture::created, 2) << " ";
-        s << "mats=" << aligned(mc().getTotalMaterials(), 2) << " ";
+        s << "mats=" << aligned((int)mc().getTotalMaterials(), 2) << " ";
 
 #ifdef __APPLE__
         size_t mem;
@@ -492,12 +485,18 @@ namespace oxygine
     {
         TouchEvent* te = safeCast<TouchEvent*>(ev);
         spActor actor = safeSpCast<Actor>(ev->target);
+
+        Transform tr = actor->computeGlobalTransform();
+        //Vector2 lt = actor->local2stage();
+        //Vector2 rb = actor->local2stage(actor->getSize());
+
         spColorRectSprite cr = new ColorRectSprite;
         cr->setTouchEnabled(false);
         cr->setColor(Color(rand() % 255, rand() % 255, rand() % 255, 0));
         cr->setSize(actor->getSize());
         cr->addTween(ColorRectSprite::TweenColor(Color(Color::White, 200)), 700, 1, true, 0, Tween::ease_inCubic)->detachWhenDone();
-        actor->addChild(cr);
+        cr->setTransform(tr);
+        getStage()->addChild(cr);
         std::string dmp = actor->dump(0);
         log::messageln(">>>>>>>>>>>>>>>>>>>>\ntouched actor '%s' local pos: (%.0f,%.0f), pos: (%.0f,%.0f)\n%s",
                        actor->getName().c_str(),

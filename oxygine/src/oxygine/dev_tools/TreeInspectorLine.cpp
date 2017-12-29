@@ -1,12 +1,12 @@
 #include "TreeInspectorLine.h"
+#include "TreeInspector.h"
 #include "TreeInspectorPage.h"
 #include "TreeInspectorPreview.h"
-#include "TreeInspector.h"
+#include "../actor/DebugActor.h"
+#include "../actor/Stage.h"
 #include "../actor/TextField.h"
 #include "../res/ResFont.h"
 #include "../res/Resources.h"
-#include "../actor/Stage.h"
-#include "../actor/DebugActor.h"
 
 namespace oxygine
 {

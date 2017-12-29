@@ -1,8 +1,8 @@
 #include "FileSystem.h"
-#include "../utils/stringUtils.h"
-#include <string.h>
-#include <algorithm>
 #include "file.h"
+#include "../utils/stringUtils.h"
+#include <algorithm>
+#include <string.h>
 
 namespace oxygine
 {

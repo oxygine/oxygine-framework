@@ -1,6 +1,6 @@
 #pragma once
-#include <string>
 #include "../ImageData.h"
+#include <string>
 
 namespace oxygine
 {

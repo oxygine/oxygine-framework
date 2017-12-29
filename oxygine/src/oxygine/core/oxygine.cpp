@@ -1,33 +1,29 @@
 #include "oxygine.h"
-#include <stdio.h>
-#include "log.h"
-#include "VideoDriver.h"
-#include "../MaterialCache.h"
-#include "../res/CreateResourceContext.h"
-#include "../res/Resources.h"
+#include "Mutex.h"
 #include "STDFileSystem.h"
-
-#include "../res/ResBuffer.h"
-#include "../res/ResFontBM.h"
-#include "../res/ResAtlas.h"
+#include "ThreadDispatcher.h"
+#include "VideoDriver.h"
+#include "log.h"
 #include "../Image.h"
-#include "../PointerState.h"
 #include "../Input.h"
-
+#include "../InputText.h"
+#include "../KeyEvent.h"
+#include "../MaterialCache.h"
+#include "../PointerState.h"
+#include "../PostProcess.h"
 #include "../actor/DebugActor.h"
 #include "../actor/Stage.h"
-#include "../KeyEvent.h"
-#include "../res/ResStarlingAtlas.h"
-
-
-#include "Mutex.h"
-
-#include "gl/oxgl.h"
-#include "../winnie_alloc/winnie_alloc.h"
-#include "ThreadDispatcher.h"
-#include "../PostProcess.h"
 #include "../actor/TextField.h"
-#include "../InputText.h"
+#include "../res/CreateResourceContext.h"
+#include "../res/ResAtlas.h"
+#include "../res/ResBuffer.h"
+#include "../res/ResFontBM.h"
+#include "../res/ResStarlingAtlas.h"
+#include "../res/Resources.h"
+#include "../winnie_alloc/winnie_alloc.h"
+#include "gl/oxgl.h"
+#include <stdio.h>
+
 #ifdef __S3E__
 #include "s3e.h"
 #include "IwGL.h"
@@ -664,6 +660,8 @@ namespace oxygine
                             spStage stage = getStageByWindow(event.window.windowID);
                             if (stage)
                                 stage->dispatchEvent(&ev);
+
+                            mc().clear();
 
                             if (!focus)
                                 focusLost();

@@ -1,9 +1,9 @@
 #pragma once
 #include "../../oxygine-include.h"
+#include "VideoDriverGL.h"
 #include "../../core/Restorable.h"
 #include "../ShaderProgram.h"
 #include "../file.h"
-#include "VideoDriverGL.h"
 
 namespace oxygine
 {

@@ -1,8 +1,8 @@
 #include "ResAnim.h"
+#include "Resources.h"
 #include "../Image.h"
 #include "../core/NativeTexture.h"
 #include "../core/VideoDriver.h"
-#include "Resources.h"
 
 namespace oxygine
 {

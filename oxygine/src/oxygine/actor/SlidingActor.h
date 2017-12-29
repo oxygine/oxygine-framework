@@ -1,9 +1,9 @@
 #pragma once
 #include "../oxygine-include.h"
 #include "Actor.h"
-#include "../math/Vector2.h"
-#include "../Draggable.h"
 #include "ClipRectActor.h"
+#include "../Draggable.h"
+#include "../math/Vector2.h"
 
 namespace oxygine
 {

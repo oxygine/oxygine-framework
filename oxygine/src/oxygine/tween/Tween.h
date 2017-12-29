@@ -1,16 +1,14 @@
 #pragma once
 #include "oxygine-include.h"
-#include "../core/Object.h"
-#include "../closure/closure.h"
-#include "../utils/intrusive_list.h"
-#include "../UpdateState.h"
-
-#include "../EventDispatcher.h"
 #include "../Event.h"
+#include "../EventDispatcher.h"
 #include "../Property.h"
-
-#include <stdint.h>
+#include "../UpdateState.h"
+#include "../closure/closure.h"
+#include "../core/Object.h"
+#include "../utils/intrusive_list.h"
 #include <limits>
+#include <stdint.h>
 
 namespace oxygine
 {

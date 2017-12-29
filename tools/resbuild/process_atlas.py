@@ -351,10 +351,11 @@ def processRS(context, walker):
     frame_width = as_int(image_el.getAttribute("frame_width"))
     rows = as_int(image_el.getAttribute("rows"))
     frame_height = as_int(image_el.getAttribute("frame_height"))
-    border = as_int(image_el.getAttribute("border"))
+    border_attr = image_el.getAttribute("border")
+
 
     trim = as_bool(image_el.getAttribute("trim"), True)
-    extend = as_bool(image_el.getAttribute("extend"), True)
+    extend = as_bool(image_el.getAttribute("extend"), False)
     
     if not extend:
         pass
@@ -472,7 +473,7 @@ def processRS(context, walker):
                 r, g, b, a = frame_image.split()
                 tt = context.args.trim_threshold
                 if tt:
-                	a = a.point(lambda p: p - tt)
+                    a = a.point(lambda p: p - tt)
 
                 if walker.hit_test:
                     adata = makeAlpha(a)
@@ -488,12 +489,12 @@ def processRS(context, walker):
 
             fr = frame(frame_image, frame_bbox, image_el, resAnim, adata, extend)
             
-            if border:
-                fr.border_left = fr.border_right = fr.border_top = fr.border_bottom = border
+            if border_attr:
+                fr.border_left = fr.border_right = fr.border_top = fr.border_bottom = as_int(border_attr)
                 
                 
-            if not extend:
-                fr.border_left = fr.border_right = fr.border_top = fr.border_bottom = 0
+            #if not extend:
+            #    fr.border_left = fr.border_right = fr.border_top = fr.border_bottom = 0
 
             for f in resAnim.frames:
                 if isImagesIdentical(f.image, fr.image):                    
@@ -563,9 +564,8 @@ class atlas_Processor(process.Process):
                     p += 8 - v
                 return p
             sz = frame.image.size
-            if frame.extend:
-                return align_pixel(sz[0] + frame.border_left + frame.border_right), align_pixel(sz[1] + frame.border_top + frame.border_bottom)
-            return sz
+
+            return align_pixel(sz[0] + frame.border_left + frame.border_right), align_pixel(sz[1] + frame.border_top + frame.border_bottom)
 
         def get_original_frame_size(frame):
             sz = frame.image.size

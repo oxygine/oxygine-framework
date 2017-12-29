@@ -1,11 +1,11 @@
 #include "DeveloperMenu.h"
-#include "../actor/ColorRectSprite.h"
 #include "../actor/ClipRectActor.h"
-#include "../actor/TextField.h"
+#include "../actor/ColorRectSprite.h"
 #include "../actor/DebugActor.h"
-#include "../res/Resources.h"
-#include "../res/ResFont.h"
+#include "../actor/TextField.h"
 #include "../initActor.h"
+#include "../res/ResFont.h"
+#include "../res/Resources.h"
 
 namespace oxygine
 {

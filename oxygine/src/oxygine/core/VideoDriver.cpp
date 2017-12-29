@@ -1,8 +1,7 @@
 #include "VideoDriver.h"
 #include "NativeTexture.h"
-#include "../math/Color.h"
 #include "ShaderProgram.h"
-
+#include "../math/Color.h"
 
 namespace oxygine
 {

@@ -1,7 +1,8 @@
 #include "Aligner.h"
 #include "../Font.h"
-#include <assert.h>
 #include "../res/ResFont.h"
+#include <assert.h>
+
 namespace oxygine
 {
     namespace text
