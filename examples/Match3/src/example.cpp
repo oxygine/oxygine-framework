@@ -21,11 +21,13 @@ void example_init()
     spSprite bg = new Sprite;
     bg->setResAnim(res.getResAnim("bg"));
     bg->attachTo(getStage());
+    bg->setSize(getStage()->getSize());
 
     board.init(6, 5);
 
     spActor view = board.getView();
-    view->setPosition(getStage()->getSize() / 2 - view->getSize() / 2);
+    view->setScale(getStage()->getHeight()/view->getHeight());
+    view->setPosition(getStage()->getSize() / 2 - view->getScaledSize() / 2);
     getStage()->addChild(view);
 }
 

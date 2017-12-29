@@ -69,7 +69,7 @@ void Jewel::fall(const Vector2& pos)
 spTween Jewel::swap(const Vector2& pos)
 {
     _swaping = true;
-    spTween tween = _view->addTween(Actor::TweenPosition(pos), 500);
+    spTween tween = _view->addTween(Actor::TweenPosition(pos), 200);
     tween->addDoneCallback(CLOSURE(this, &Jewel::swapped));
     return tween;
 }
