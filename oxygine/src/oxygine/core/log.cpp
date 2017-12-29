@@ -49,6 +49,7 @@ namespace oxygine
         void enable()
         {
             _enabled = true;
+            messageln("***log enabled***");
         }
 
         void disable()
