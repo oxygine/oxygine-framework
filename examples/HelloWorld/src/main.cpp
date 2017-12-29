@@ -4,9 +4,9 @@
     If you just started here and don't understand the code completely, feel free to come back later.
     You can start from example.cpp and example.h, which main functions are called from here.
 */
-#include "oxygine/core/oxygine.h"
-#include "oxygine/Stage.h"
-#include "oxygine/DebugActor.h"
+#include "ox/oxygine.hpp"
+#include "ox/Stage.hpp"
+#include "ox/DebugActor.hpp"
 #include "example.h"
 
 
@@ -35,7 +35,6 @@ int mainloop()
         // Render all actors inside the stage. Actor::render will also be called for all its children
         getStage()->render(clearColor, viewport);
 
-        example_flush();
         core::swapDisplayBuffers();
     }
 
@@ -64,12 +63,12 @@ void run()
 
 
     // Create the stage. Stage is a root node for all updateable and drawable objects
-    Stage::instance = new Stage(true);
+    Stage::instance = new Stage();
     Point size = core::getDisplaySize();
     getStage()->setSize(size);
 
     // DebugActor is a helper actor node. It shows FPS, memory usage and other useful stuff
-    //DebugActor::show();
+    DebugActor::show();
 
     // Initializes our example game. See example.cpp
     example_init();

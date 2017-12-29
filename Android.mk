@@ -15,6 +15,13 @@ include $(PREBUILT_STATIC_LIBRARY)
 
 
 include $(CLEAR_VARS)
+LOCAL_MODULE := ox_zlib_static
+LOCAL_MODULE_FILENAME := z
+LOCAL_SRC_FILES := $(OXYGINE_LIBS)/libz.a
+include $(PREBUILT_STATIC_LIBRARY) 
+
+
+include $(CLEAR_VARS)
 
 LOCAL_MODULE    := oxygine-framework_static
 LOCAL_MODULE_FILENAME := liboxygine-framework
@@ -68,9 +75,9 @@ LOCAL_C_INCLUDES := $(OXYGINE_SRC)/ \
 LOCAL_CFLAGS := -DUSE_FILE32API -DOX_HAVE_LIBJPEG=1 -DOX_HAVE_LIBPNG=1
 
 LOCAL_EXPORT_CFLAGS := $(LOCAL_CFLAGS)
-LOCAL_EXPORT_LDLIBS += -lGLESv2 -llog -lz
+LOCAL_EXPORT_LDLIBS += -lGLESv2 -llog
 LOCAL_EXPORT_C_INCLUDES += $(LOCAL_C_INCLUDES)
-LOCAL_WHOLE_STATIC_LIBRARIES := ox_libpng_static ox_libjpeg_static
+LOCAL_WHOLE_STATIC_LIBRARIES := ox_libpng_static ox_libjpeg_static ox_zlib_static
 					
 include $(BUILD_STATIC_LIBRARY)
 
