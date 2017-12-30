@@ -13,10 +13,10 @@ GameScene::GameScene()
     _game->attachTo(_view);
 
     //create menu button
-    spActor btn = initActor(new MyButton,
-                            arg_resAnim = res::ui.getResAnim("menu"),
-                            arg_anchor = Vector2(0.5f, 0.5f),
-                            arg_attachTo = _view);
+    spSprite btn = new MyButton;
+    btn->setResAnim(res::ui.getResAnim("menu"));
+    btn->setAnchor(0.5f, 0.5f);
+    btn->attachTo(_view);
 
     //align it to top right
     btn->setX(_view->getWidth() - btn->getWidth() / 2);

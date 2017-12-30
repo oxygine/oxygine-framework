@@ -38,10 +38,10 @@ void MyButton::setText(const string& txt)
 
         //attach it to MyButton and set the same size as button
         //text would be centered
-        _text = initActor(new TextField,
-                          arg_style = style,
-                          arg_size = getSize(),
-                          arg_attachTo = this);
+        _text = new TextField;
+        _text->setStyle(style);
+        _text->setSize(getSize());
+        _text->attachTo(this);
     }
 
     _text->setText(txt);
