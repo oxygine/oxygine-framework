@@ -69,3 +69,4 @@ oxygine/SDL/win32/oxygine.vcxproj.user
 **/.vs/
 **/local.properties
 **/.externalNativeBuild
+**/data/*.dll
