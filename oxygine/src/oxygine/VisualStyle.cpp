@@ -79,6 +79,11 @@ namespace oxygine
         return _vstyle.getColor();
     }
 
+    const Color& VStyleActor::getAddColor() const
+    {
+        return _mat->_addColor;
+    }
+
     void VStyleActor::setColor(const Color& color)
     {
         _vstyle.setColor(color);
@@ -87,6 +92,22 @@ namespace oxygine
     void VStyleActor::setColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
     {
         setColor(Color(r, g, b, a));
+    }
+
+    void VStyleActor::setAddColor(const Color& color)
+    {
+        if (getAddColor() == color)
+            return;
+
+        _mat = _mat->clone();
+        _mat->_addColor = color;
+        _mat = mc().cache(*_mat.get());
+        matChanged();
+    }
+
+    void VStyleActor::setAddColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a /*= 0*/)
+    {
+        setAddColor(Color(r, g, b, a));
     }
 
     void VStyleActor::setBlendMode(blend_mode mode)
