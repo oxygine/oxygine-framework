@@ -11,11 +11,11 @@ namespace oxygine
     public:
         Color _color;
         int _downsample;
-        spSTDMaterialX _matx;
+        spSTDMaterial _matx;
 
         TweenOutlineImpl(const Color& c, const PostProcessOptions& opt) : TweenPostProcess(opt), _color(c), _downsample(1)
         {
-            _matx = new STDMaterialX;
+            _matx = new STDMaterial;
             _matx->_blend = blend_premultiplied_alpha;
         }
 

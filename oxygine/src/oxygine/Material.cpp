@@ -1,4 +1,4 @@
-#include "MaterialX.h"
+#include "Material.h"
 #include "MaterialCache.h"
 #include "STDRenderer.h"
 #include "core/UberShaderProgram.h"
@@ -6,10 +6,10 @@
 
 namespace oxygine
 {
-    spMaterialX MaterialX::current;
-    spMaterialX MaterialX::null;
+    spMaterialX Material::current;
+    spMaterialX Material::null;
 
-    bool STDMaterialX::cmp(const STDMaterialX& a, const STDMaterialX& b)
+    bool STDMaterial::cmp(const STDMaterial& a, const STDMaterial& b)
     {
         if (a._base != b._base)
             return false;
@@ -26,7 +26,7 @@ namespace oxygine
         return true;
     }
 
-    void STDMaterialX::init()
+    void STDMaterial::init()
     {
         _addColor = 0;
         _blend = blend_premultiplied_alpha;
@@ -34,7 +34,7 @@ namespace oxygine
         _uberShader = &STDRenderer::uberShader;
     }
 
-    void STDMaterialX::rehash(size_t& hash) const
+    void STDMaterial::rehash(size_t& hash) const
     {
         hash_combine(hash, _base.get());
         hash_combine(hash, _alpha.get());
@@ -44,7 +44,7 @@ namespace oxygine
         hash_combine(hash, _addColor.argb);
     }
 
-    void STDMaterialX::xapply()
+    void STDMaterial::xapply()
     {
         STDRenderer* r = STDRenderer::getCurrent();
         r->setUberShaderProgram(_uberShader);
@@ -63,41 +63,41 @@ namespace oxygine
         rsCache().setBlendMode(_blend);
     }
 
-    void STDMaterialX::xflush()
+    void STDMaterial::xflush()
     {
         STDRenderer::getCurrent()->flush();
     }
 
 
-    void STDMaterialX::render(const AffineTransform& tr, const Color& c, const RectF& src, const RectF& dest)
+    void STDMaterial::render(const AffineTransform& tr, const Color& c, const RectF& src, const RectF& dest)
     {
         STDRenderer::getCurrent()->setTransform(tr);
         STDRenderer::getCurrent()->addQuad(c, src, dest);
     }
 
-    void STDMaterialX::render(const Color& c, const RectF& src, const RectF& dest)
+    void STDMaterial::render(const Color& c, const RectF& src, const RectF& dest)
     {
         STDRenderer::getCurrent()->addQuad(c, src, dest);
     }
 
 
-    MaterialX::MaterialX(const MaterialX& other)
+    Material::Material(const Material& other)
     {
         _hash = other._hash;
         _compare = other._compare;
     }
 
-    MaterialX::MaterialX(compare cmp) : _hash(0), _compare(cmp)
+    Material::Material(compare cmp) : _hash(0), _compare(cmp)
     {
 
     }
 
-    MaterialX::MaterialX() : _hash(0)
+    Material::Material() : _hash(0)
     {
 
     }
 
-    void MaterialX::apply()
+    void Material::apply()
     {
         if (current != this)
         {
@@ -108,12 +108,12 @@ namespace oxygine
     }
 
 
-    void MaterialX::flush()
+    void Material::flush()
     {
         xflush();
     }
 
-    oxygine::MaterialX& MaterialX::operator=(const MaterialX& r)
+    oxygine::Material& Material::operator=(const Material& r)
     {
         _compare = r._compare;
         _hash = r._hash;

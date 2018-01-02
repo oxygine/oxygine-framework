@@ -15,7 +15,7 @@ namespace oxygine
 
     VStyleActor::VStyleActor()
     {
-        STDMaterialX mat;
+        STDMaterial mat;
         mat._blend = blend_premultiplied_alpha;
         mat._base = STDRenderer::white;
 
@@ -123,7 +123,7 @@ namespace oxygine
         matChanged();
     }
 
-    void VStyleActor::setMat(spSTDMaterialX mat)
+    void VStyleActor::setMat(spSTDMaterial mat)
     {
         //if (_mat == mat)
         //    return;

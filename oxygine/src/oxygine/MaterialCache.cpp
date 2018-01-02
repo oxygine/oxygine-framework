@@ -1,15 +1,15 @@
 #include "MaterialCache.h"
-#include "MaterialX.h"
+#include "Material.h"
 #include "core/oxygine.h"
 
 namespace oxygine
 {
-    MaterialX* MaterialCache::clone_(const MaterialX& other)
+    Material* MaterialCache::clone_(const Material& other)
     {
         MutexAutoLock alock(_lock);
 
         size_t hash;
-        MaterialX::compare cm;
+        Material::compare cm;
         other.update(hash, cm);
 
 
@@ -17,7 +17,7 @@ namespace oxygine
 
         if (itl != _materials.end())
         {
-            MaterialX* sec = itl->second.get();
+            Material* sec = itl->second.get();
             if (cm == sec->_compare && cm(sec, &other))
                 return sec;
 
@@ -30,14 +30,14 @@ namespace oxygine
 
             for (; itl != it.second; itl++)
             {
-                MaterialX* sec = itl->second.get();
+                Material* sec = itl->second.get();
                 if (cm == sec->_compare && cm(sec, &other))
                     return sec;
             }
         }
 
 
-        MaterialX* copy = other.clone();
+        Material* copy = other.clone();
         copy->_hash = hash;
         copy->_compare = cm;
         _materials.insert(std::make_pair(hash, copy));

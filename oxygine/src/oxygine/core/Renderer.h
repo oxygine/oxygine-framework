@@ -213,8 +213,8 @@ namespace oxygine
         ++pv;
     }
 
-    class MaterialX;
-    typedef intrusive_ptr<MaterialX> spMaterialX;
+    class Material;
+    typedef intrusive_ptr<Material> spMaterialX;
 
     /**Returns View matrix where Left Top corner is (0,0), and right bottom is (w,h)*/
     Matrix makeViewMatrix(int w, int h, bool flipU = false);

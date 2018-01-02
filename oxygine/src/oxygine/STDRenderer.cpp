@@ -357,7 +357,7 @@ namespace oxygine
         _verticesData.clear();
         _transform.identity();
 
-        MaterialX::null->apply();
+        Material::null->apply();
 
         xbegin();
 

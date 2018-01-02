@@ -229,7 +229,7 @@ namespace oxygine
         if (df.base  != _mat->_base ||
                 df.alpha != _mat->_alpha)
         {
-            spSTDMaterialX mat = _mat->clone();
+            spSTDMaterial mat = _mat->clone();
 
             mat->_base  = df.base;
             mat->_alpha = df.alpha;

@@ -1,6 +1,6 @@
 #pragma once
 #include "oxygine-include.h"
-#include "MaterialX.h"
+#include "Material.h"
 #include "actor/Actor.h"
 
 namespace oxygine
@@ -52,8 +52,8 @@ namespace oxygine
 
         bool getBounds(RectF& b) const  override { b = getDestRect();  return true; }
 
-        void                    setMat(spSTDMaterialX mat);
-        spSTDMaterialX _mat;
+        void                    setMat(spSTDMaterial mat);
+        spSTDMaterial _mat;
 
     protected:
         virtual void matChanged() {}

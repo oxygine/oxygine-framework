@@ -18,8 +18,8 @@ namespace oxygine
         hash_combine(seed, rest...);
     }
 
-    class MaterialX;
-    typedef intrusive_ptr<MaterialX> spMaterialX;
+    class Material;
+    typedef intrusive_ptr<Material> spMaterialX;
 
     class MaterialCache
     {
@@ -40,7 +40,7 @@ namespace oxygine
 
         Mutex _lock;
 
-        MaterialX* clone_(const MaterialX& other);
+        Material* clone_(const Material& other);
     };
 
     MaterialCache& mc();

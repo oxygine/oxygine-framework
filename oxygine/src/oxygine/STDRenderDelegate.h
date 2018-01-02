@@ -5,7 +5,7 @@
 
 namespace oxygine
 {
-    DECLARE_SMART(STDRenderDelegate, spSTDMaterial);
+    DECLARE_SMART(STDRenderDelegate, spSTDRenderDelegate);
     class STDRenderDelegate : public RenderDelegate
     {
     public:

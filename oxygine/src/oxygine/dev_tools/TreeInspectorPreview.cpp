@@ -64,7 +64,7 @@ namespace oxygine
 
         VideoDriverCache& cache = _videoCache;
 
-        MaterialX::null->apply();
+        Material::null->apply();
         rsCache().reset();
         rsCache().changeDriver(&cache);
 
@@ -99,7 +99,7 @@ namespace oxygine
 
         rsCache().changeDriver(IVideoDriver::instance);
         rsCache().reset();
-        MaterialX::null->apply();
+        Material::null->apply();
 
 
         RectF itemRect = cache._bounds;
@@ -155,10 +155,10 @@ namespace oxygine
 
     void TreeInspectorPreview::doRender(RenderState const& parentRenderState)
     {
-        MaterialX::null->apply();
+        Material::null->apply();
         rsCache().reset();
         Sprite::doRender(parentRenderState);
-        MaterialX::null->apply();
+        Material::null->apply();
         _videoCache.render(parentRenderState.transform);
         rsCache().reset();
     }

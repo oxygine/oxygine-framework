@@ -101,7 +101,7 @@ namespace oxygine
 
 
 
-        void Node::updateMaterial(const STDMaterialX& mat)
+        void Node::updateMaterial(const STDMaterial& mat)
         {
             Node* node = _firstChild;
             while (node)
@@ -177,7 +177,7 @@ namespace oxygine
             drawChildren(dc);
         }
 
-        void TextNode::xupdateMaterial(const STDMaterialX& mat)
+        void TextNode::xupdateMaterial(const STDMaterial& mat)
         {
             for (size_t i = 0; i < _data.size(); ++i)
             {
@@ -186,7 +186,7 @@ namespace oxygine
                 {
                     Symbol& s = _data[i];
 
-                    spSTDMaterialX m = mat.clone();
+                    spSTDMaterial m = mat.clone();
                     m->_base = s.mat->_base;
 
                     s.mat = mc().cache(*m.get());
@@ -236,7 +236,7 @@ namespace oxygine
                             s.mat = rd.mat;
                         else
                         {
-                            spSTDMaterialX mat = rd.mat->clone();
+                            spSTDMaterial mat = rd.mat->clone();
                             mat->_base = gl->texture;
 
                             s.mat = mc().cache(*mat.get());

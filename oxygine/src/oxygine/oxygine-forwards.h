@@ -58,7 +58,7 @@ namespace oxygine
     DECLARE_SMART(ResBuffer, spResBuffer);
     DECLARE_SMART(ResFont, spResFont);
     DECLARE_SMART(Resource, spResource);
-    DECLARE_SMART(STDRenderDelegate, spSTDMaterial);
+    DECLARE_SMART(STDRenderDelegate, spSTDRenderDelegate);
     DECLARE_SMART(SlidingActor, spSlidingActor);
     DECLARE_SMART(Sprite, spSprite);
     DECLARE_SMART(Stage, spStage);
@@ -68,7 +68,7 @@ namespace oxygine
     DECLARE_SMART(Tween, spTween);
     DECLARE_SMART(TweenQueue, spTweenQueue);
     DECLARE_SMART(WebImage, spWebImage);
-    DECLARE_SMART(MaterialX, spMaterialX);
+    DECLARE_SMART(Material, spMaterialX);
 
     class Actor;
     class AnimationFrame;

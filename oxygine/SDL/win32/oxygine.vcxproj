@@ -176,7 +176,7 @@
     <ClCompile Include="..\..\src\oxygine\RenderDelegate.cpp" />
     <ClCompile Include="..\..\src\oxygine\Image.cpp" />
     <ClCompile Include="..\..\src\oxygine\MaterialCache.cpp" />
-    <ClCompile Include="..\..\src\oxygine\MaterialX.cpp" />
+    <ClCompile Include="..\..\src\oxygine\Material.cpp" />
     <ClCompile Include="..\..\src\oxygine\minizip\ioapi.c" />
     <ClCompile Include="..\..\src\oxygine\minizip\ioapi_mem.c" />
     <ClCompile Include="..\..\src\oxygine\minizip\unzip.c" />
@@ -289,7 +289,7 @@
     <ClInclude Include="..\..\src\oxygine\MaskedRenderer.h" />
     <ClInclude Include="..\..\src\oxygine\RenderDelegate.h" />
     <ClInclude Include="..\..\src\oxygine\MaterialCache.h" />
-    <ClInclude Include="..\..\src\oxygine\MaterialX.h" />
+    <ClInclude Include="..\..\src\oxygine\Material.h" />
     <ClInclude Include="..\..\src\oxygine\math\OBBox.h" />
     <ClInclude Include="..\..\src\oxygine\Image.h" />
     <ClInclude Include="..\..\src\oxygine\minizip\ioapi.h" />

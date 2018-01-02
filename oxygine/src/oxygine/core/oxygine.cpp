@@ -472,8 +472,8 @@ namespace oxygine
 
             STDRenderer::instance = new STDRenderer;
             STDRenderDelegate::instance = new STDRenderDelegate;
-            MaterialX::null       = new NullMaterialX;
-            MaterialX::current = MaterialX::null;
+            Material::null       = new NullMaterialX;
+            Material::current = Material::null;
 
             STDRenderer::current = STDRenderer::instance;
 

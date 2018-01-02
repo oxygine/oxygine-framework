@@ -1,7 +1,7 @@
 #pragma once
 #include "../oxygine-include.h"
 #include "../Font.h"
-#include "../MaterialX.h"
+#include "../Material.h"
 #include "../TextStyle.h"
 #include "../core/NativeTexture.h"
 #include "../math/Color.h"
@@ -24,13 +24,13 @@ namespace oxygine
             int code;
             glyph gl;
             RectF destRect;
-            spSTDMaterialX mat;
+            spSTDMaterial mat;
         };
 
         class Aligner
         {
         public:
-            Aligner(const TextStyle& style, spSTDMaterialX mat, const Font* font, float gscale, const Vector2& size);
+            Aligner(const TextStyle& style, spSTDMaterial mat, const Font* font, float gscale, const Vector2& size);
             ~Aligner();
 
 
@@ -50,7 +50,7 @@ namespace oxygine
             int height;
             size_t options;
 
-            spSTDMaterialX mat;
+            spSTDMaterial mat;
 
             const Font* _font;
 

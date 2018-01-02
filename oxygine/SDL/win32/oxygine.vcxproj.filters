@@ -285,9 +285,6 @@
     <ClCompile Include="..\..\src\oxygine\utils\AtlasBuilder.cpp">
       <Filter>src\utils</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\oxygine\MaterialX.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\oxygine\MaterialCache.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -355,6 +352,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\oxygine\STDRenderDelegate.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\oxygine\Material.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -689,9 +689,6 @@
     <ClInclude Include="..\..\src\oxygine\utils\AtlasBuilder.h">
       <Filter>src\utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\oxygine\MaterialX.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\oxygine\MaterialCache.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -759,6 +756,9 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\oxygine\STDRenderDelegate.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\oxygine\Material.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

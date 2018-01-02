@@ -14,7 +14,7 @@ namespace oxygine
             if (!_pp._rt)
                 return;
 
-            spSTDMaterialX mat = new STDMaterialX;
+            spSTDMaterial mat = new STDMaterial;
             mat->_base = _pp._rt;
             mat->_blend = blend_premultiplied_alpha;
             mat->apply();

@@ -14,7 +14,7 @@ namespace oxygine
         _compare = (compare)f;\
         init();\
     }\
-    void copyFrom(const MaterialX &r) override {*this = (cl&)r;}\
+    void copyFrom(const Material &r) override {*this = (cl&)r;}\
     void copyTo(cl &d) const{d = *this;}\
     cl* clone() const override {return new cl(*this);}\
     void update(size_t &hash, compare &cm) const override {\
@@ -27,20 +27,20 @@ namespace oxygine
 
 
 
-    class MaterialX : public ref_counter
+    class Material : public ref_counter
     {
     public:
 
         static spMaterialX current;
         static spMaterialX null;
 
-        typedef bool(*compare)(const MaterialX* a, const MaterialX* b);
+        typedef bool(*compare)(const Material* a, const Material* b);
 
-        MaterialX();
+        Material();
 
-        MaterialX& operator = (const MaterialX& r);
-        MaterialX(compare cmp);
-        MaterialX(const MaterialX& other);
+        Material& operator = (const Material& r);
+        Material(compare cmp);
+        Material(const Material& other);
 
 
         size_t _hash;
@@ -51,8 +51,8 @@ namespace oxygine
         virtual void xapply() {}
         virtual void xflush() {}
 
-        virtual MaterialX* clone() const = 0;
-        virtual void copyFrom(const MaterialX& r) = 0;
+        virtual Material* clone() const = 0;
+        virtual void copyFrom(const Material& r) = 0;
         virtual void update(size_t& hash, compare&) const = 0;
         virtual void rehash(size_t& hash) const = 0;
 
@@ -71,10 +71,10 @@ namespace oxygine
         }
     };
 
-    typedef intrusive_ptr<MaterialX> spMaterialX;
+    typedef intrusive_ptr<Material> spMaterialX;
 
 
-    class NullMaterialX : public MaterialX
+    class NullMaterialX : public Material
     {
     public:
         MATX(NullMaterialX);
@@ -82,10 +82,10 @@ namespace oxygine
         void rehash(size_t& hash) const override {}
     };
 
-    class STDMaterialX: public MaterialX
+    class STDMaterial: public Material
     {
     public:
-        MATX(STDMaterialX);
+        MATX(STDMaterial);
 
         spNativeTexture    _base;
         spNativeTexture    _alpha;
@@ -94,7 +94,7 @@ namespace oxygine
         Color              _addColor;
         int                _flags;
 
-        static bool cmp(const STDMaterialX& a, const STDMaterialX& b);
+        static bool cmp(const STDMaterial& a, const STDMaterial& b);
 
         void init() override;
         void rehash(size_t& hash) const override;
@@ -106,5 +106,5 @@ namespace oxygine
         void render(const Color& c, const RectF& src, const RectF& dest) override;
     };
 
-    DECLARE_SMART(STDMaterialX, spSTDMaterialX);
+    DECLARE_SMART(STDMaterial, spSTDMaterial);
 }

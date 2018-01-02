@@ -107,7 +107,7 @@ namespace oxygine
         }
 
 
-        MaterialX::null->apply();
+        Material::null->apply();
 
         Transform world = maskSprite->computeGlobalTransform();
 
@@ -168,7 +168,7 @@ namespace oxygine
 
         sprite->Sprite::render(parentRS);
 
-        MaterialX::null->apply();
+        Material::null->apply();
 
         renderer->popShaderSetHook();
         renderer->setBaseShaderFlags(sflags);
@@ -184,7 +184,7 @@ namespace oxygine
         sprite->Sprite::render(rs);
         mr.end();
 
-        MaterialX::null->apply();
+        Material::null->apply();
 
         renderer->swapVerticesData(mr);
         renderer->begin();
