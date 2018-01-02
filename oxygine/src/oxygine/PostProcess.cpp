@@ -452,7 +452,7 @@ namespace oxygine
         }
 
         //OX_ASSERT(0);
-        RenderDelegate* rd = actor->getMaterial();
+        RenderDelegate* rd = actor->getRenderDelegate();
         actor->setRenderDelegate(STDRenderDelegate::instance);
         STDRenderDelegate::instance->RenderDelegate::render(actor, rs);
 
@@ -475,7 +475,7 @@ namespace oxygine
     {
 
         removePostProcessItem(this);
-        if (_actor && _actor->getMaterial())
+        if (_actor && _actor->getRenderDelegate())
             _actor->setRenderDelegate(_prevMaterial);
     }
 
@@ -502,7 +502,7 @@ namespace oxygine
     void TweenPostProcess::init(Actor& actor)
     {
         _actor = &actor;
-        _prevMaterial = _actor->getMaterial();
+        _prevMaterial = _actor->getRenderDelegate();
         _actor->setRenderDelegate(this);
     }
 
@@ -514,7 +514,7 @@ namespace oxygine
 
     void TweenPostProcess::done(Actor& actor)
     {
-        if (_actor->getMaterial())
+        if (_actor->getRenderDelegate())
             _actor->setRenderDelegate(_prevMaterial);
     }
 

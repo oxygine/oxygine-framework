@@ -114,7 +114,7 @@ namespace oxygine
         bool                getTouchEnabled() const { return (_flags & flag_touchEnabled) != 0; }
         bool                getTouchChildrenEnabled() const { return (_flags & flag_touchChildrenEnabled) != 0; }
         UpdateCallback      getCallbackDoUpdate() const {return _cbDoUpdate;}
-        RenderDelegate*     getMaterial() { return _rdelegate; }
+        RenderDelegate*     getRenderDelegate() { return _rdelegate; }
         //RenderCallback        getCallbackDoRender() const {return _cbDoRender;}
 
         /**return local actor transformation*/
