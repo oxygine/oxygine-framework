@@ -1,6 +1,6 @@
 #pragma once
 #include "oxygine-include.h"
-#include "Material.h"
+#include "RenderDelegate.h"
 #include "core/NativeTexture.h"
 #include "core/Renderer.h"
 #include "math/Rect.h"
@@ -73,7 +73,7 @@ namespace oxygine
 
     DECLARE_SMART(TweenPostProcess, spTweenPostProcess);
 
-    class TweenPostProcess : public TweenObj, public Material, public PPTask
+    class TweenPostProcess : public TweenObj, public RenderDelegate, public PPTask
     {
     public:
         TweenPostProcess(const PostProcessOptions& opt);
@@ -94,7 +94,7 @@ namespace oxygine
         PostProcess _pp;
         float _progress;
 
-        Material* _prevMaterial;
+        RenderDelegate* _prevMaterial;
     };
 
 

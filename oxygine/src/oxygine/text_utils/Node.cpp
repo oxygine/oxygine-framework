@@ -3,7 +3,7 @@
 #include "../Font.h"
 #include "../MaterialCache.h"
 #include "../RenderState.h"
-#include "../STDMaterial.h"
+#include "../STDRenderDelegate.h"
 #include "../pugixml/pugixml.hpp"
 #include "../res/ResFont.h"
 #include "../utils/stringUtils.h"

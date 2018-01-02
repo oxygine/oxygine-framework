@@ -1,6 +1,6 @@
 #include "TweenGlow.h"
 #include "../RenderState.h"
-#include "../STDMaterial.h"
+#include "../STDRenderDelegate.h"
 #include "../actor/Actor.h"
 #include "../core/gl/VertexDeclarationGL.h"
 
@@ -19,14 +19,14 @@ namespace oxygine
 
         void render(Actor* actor, const RenderState& rs) override
         {
-            STDMaterial* mat = STDMaterial::instance;
+            STDRenderDelegate* mat = STDRenderDelegate::instance;
             STDRenderer* renderer = STDRenderer::getCurrent();
 
 
             RenderState r = rs;
-            actor->setMaterial(_prevMaterial);
+            actor->setRenderDelegate(_prevMaterial);
             actor->render(r);
-            actor->setMaterial(this);
+            actor->setRenderDelegate(this);
 
 
             RectF src(0, 0,

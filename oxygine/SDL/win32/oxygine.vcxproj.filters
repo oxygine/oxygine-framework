@@ -258,12 +258,6 @@
     <ClCompile Include="..\..\src\oxygine\json\jsoncpp.cpp">
       <Filter>src\json</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\oxygine\STDMaterial.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\oxygine\Material.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\oxygine\res\ResAtlasGeneric.cpp">
       <Filter>src\res</Filter>
     </ClCompile>
@@ -356,6 +350,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\oxygine\tween\TweenQueue.cpp">
       <Filter>src\tween</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\oxygine\RenderDelegate.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\oxygine\STDRenderDelegate.cpp">
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -653,12 +653,6 @@
     <ClInclude Include="..\..\src\oxygine\json\json-forwards.h">
       <Filter>src\json</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\oxygine\STDMaterial.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\oxygine\Material.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\oxygine\res\ResAtlasGeneric.h">
       <Filter>src\res</Filter>
     </ClInclude>
@@ -760,6 +754,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\oxygine\tween\TweenQueue.h">
       <Filter>src\tween</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\oxygine\RenderDelegate.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\oxygine\STDRenderDelegate.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

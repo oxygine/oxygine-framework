@@ -1,4 +1,4 @@
-#include "STDMaterial.h"
+#include "STDRenderDelegate.h"
 #include "MaskedRenderer.h"
 #include "RenderState.h"
 #include "STDRenderer.h"
@@ -16,9 +16,9 @@
 
 namespace oxygine
 {
-    STDMaterial* STDMaterial::instance = 0;
+    STDRenderDelegate* STDRenderDelegate::instance = 0;
 
-    void Material::render(Actor* parent, const RenderState& parentRS)
+    void RenderDelegate::render(Actor* parent, const RenderState& parentRS)
     {
         RenderState rs;
         if (!parent->internalRender(rs, parentRS))
@@ -33,7 +33,7 @@ namespace oxygine
         }
     }
 
-    void STDMaterial::render(ClipRectActor* actor, const RenderState& parentRS)
+    void STDRenderDelegate::render(ClipRectActor* actor, const RenderState& parentRS)
     {
         STDRenderer* renderer = STDRenderer::getCurrent();
         IVideoDriver* driver = renderer->getDriver();
@@ -90,7 +90,7 @@ namespace oxygine
         }
     }
 
-    void STDMaterial::render(MaskedSprite* sprite, const RenderState& parentRS)
+    void STDRenderDelegate::render(MaskedSprite* sprite, const RenderState& parentRS)
     {
         spSprite maskSprite = sprite->getMask();
         if (!maskSprite)
@@ -192,7 +192,7 @@ namespace oxygine
 
     }
 
-    void STDMaterial::doRender(Sprite* sprite, const RenderState& rs)
+    void STDRenderDelegate::doRender(Sprite* sprite, const RenderState& rs)
     {
         if (!sprite->getAnimFrame().getDiffuse().base)
             return;
@@ -204,7 +204,7 @@ namespace oxygine
         sprite->_mat->render(rs.transform, color, sprite->getAnimFrame().getSrcRect(), sprite->getDestRect());
     }
 
-    void STDMaterial::doRender(TextField* tf, const RenderState& rs)
+    void STDRenderDelegate::doRender(TextField* tf, const RenderState& rs)
     {
         float scale = sqrtf(rs.transform.a * rs.transform.a + rs.transform.c * rs.transform.c);
 
@@ -225,30 +225,15 @@ namespace oxygine
         root->draw(dc);
     }
 
-    void STDMaterial::doRender(ColorRectSprite* sprite, const RenderState& rs)
+    void STDRenderDelegate::doRender(ColorRectSprite* sprite, const RenderState& rs)
     {
         sprite->_mat->apply();
-
         Color color = rs.getFinalColor(sprite->getColor());
-
         sprite->_mat->render(rs.transform, color, sprite->getAnimFrame().getSrcRect(), sprite->getDestRect());
     }
 
-    void STDMaterial::doRender(ProgressBar*, const RenderState& rs)
+    void STDRenderDelegate::doRender(ProgressBar*, const RenderState& rs)
     {
 
     }
-    /*
-    void STDMaterial::apply(Material* prev)
-    {
-        STDRenderer* cur = STDRenderer::getCurrent();
-        cur->begin();
-        cur->setUberShaderProgram(&STDRenderer::uberShader);
-    }
-
-    void STDMaterial::finish()
-    {
-        STDRenderer::getCurrent()->end();
-    }
-    */
 }

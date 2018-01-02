@@ -1,6 +1,6 @@
 #include "Sprite.h"
 #include "Stage.h"
-#include "../Material.h"
+#include "../RenderDelegate.h"
 #include "../MaterialCache.h"
 #include "../RenderState.h"
 #include "../Serialize.h"

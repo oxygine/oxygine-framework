@@ -1,6 +1,6 @@
 #include "PostProcess.h"
 #include "RenderState.h"
-#include "STDMaterial.h"
+#include "STDRenderDelegate.h"
 #include "actor/Actor.h"
 #include "core/ZipFileSystem.h"
 #include "core/file.h"
@@ -452,13 +452,13 @@ namespace oxygine
         }
 
         //OX_ASSERT(0);
-        Material* rd = actor->getMaterial();
-        actor->setMaterial(STDMaterial::instance);
-        STDMaterial::instance->Material::render(actor, rs);
+        RenderDelegate* rd = actor->getMaterial();
+        actor->setRenderDelegate(STDRenderDelegate::instance);
+        STDRenderDelegate::instance->RenderDelegate::render(actor, rs);
 
         STDRenderer::current->flush();
 
-        actor->setMaterial(rd);
+        actor->setRenderDelegate(rd);
 
         MaterialX::null->apply();
     }
@@ -476,7 +476,7 @@ namespace oxygine
 
         removePostProcessItem(this);
         if (_actor && _actor->getMaterial())
-            _actor->setMaterial(_prevMaterial);
+            _actor->setRenderDelegate(_prevMaterial);
     }
 
 
@@ -503,7 +503,7 @@ namespace oxygine
     {
         _actor = &actor;
         _prevMaterial = _actor->getMaterial();
-        _actor->setMaterial(this);
+        _actor->setRenderDelegate(this);
     }
 
     void TweenPostProcess::update(Actor& actor, float p, const UpdateState& us)
@@ -515,7 +515,7 @@ namespace oxygine
     void TweenPostProcess::done(Actor& actor)
     {
         if (_actor->getMaterial())
-            _actor->setMaterial(_prevMaterial);
+            _actor->setRenderDelegate(_prevMaterial);
     }
 
 }

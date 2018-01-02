@@ -173,7 +173,7 @@
     <ClCompile Include="..\..\src\oxygine\json\jsoncpp.cpp" />
     <ClCompile Include="..\..\src\oxygine\key.cpp" />
     <ClCompile Include="..\..\src\oxygine\MaskedRenderer.cpp" />
-    <ClCompile Include="..\..\src\oxygine\Material.cpp" />
+    <ClCompile Include="..\..\src\oxygine\RenderDelegate.cpp" />
     <ClCompile Include="..\..\src\oxygine\Image.cpp" />
     <ClCompile Include="..\..\src\oxygine\MaterialCache.cpp" />
     <ClCompile Include="..\..\src\oxygine\MaterialX.cpp" />
@@ -197,7 +197,7 @@
     <ClCompile Include="..\..\src\oxygine\res\ResStarlingAtlas.cpp" />
     <ClCompile Include="..\..\src\oxygine\Serializable.cpp" />
     <ClCompile Include="..\..\src\oxygine\Serialize.cpp" />
-    <ClCompile Include="..\..\src\oxygine\STDMaterial.cpp" />
+    <ClCompile Include="..\..\src\oxygine\STDRenderDelegate.cpp" />
     <ClCompile Include="..\..\src\oxygine\STDRenderer.cpp" />
     <ClCompile Include="..\..\src\oxygine\text_utils\Aligner.cpp" />
     <ClCompile Include="..\..\src\oxygine\text_utils\Node.cpp" />
@@ -287,7 +287,7 @@
     <ClInclude Include="..\..\src\oxygine\key.h" />
     <ClInclude Include="..\..\src\oxygine\KeyEvent.h" />
     <ClInclude Include="..\..\src\oxygine\MaskedRenderer.h" />
-    <ClInclude Include="..\..\src\oxygine\Material.h" />
+    <ClInclude Include="..\..\src\oxygine\RenderDelegate.h" />
     <ClInclude Include="..\..\src\oxygine\MaterialCache.h" />
     <ClInclude Include="..\..\src\oxygine\MaterialX.h" />
     <ClInclude Include="..\..\src\oxygine\math\OBBox.h" />
@@ -318,7 +318,7 @@
     <ClInclude Include="..\..\src\oxygine\res\ResStarlingAtlas.h" />
     <ClInclude Include="..\..\src\oxygine\Serializable.h" />
     <ClInclude Include="..\..\src\oxygine\Serialize.h" />
-    <ClInclude Include="..\..\src\oxygine\STDMaterial.h" />
+    <ClInclude Include="..\..\src\oxygine\STDRenderDelegate.h" />
     <ClInclude Include="..\..\src\oxygine\STDRenderer.h" />
     <ClInclude Include="..\..\src\oxygine\TextStyle.h" />
     <ClInclude Include="..\..\src\oxygine\text_utils\Aligner.h" />

@@ -1,6 +1,6 @@
 #include "ClipRectActor.h"
 #include "Stage.h"
-#include "../Material.h"
+#include "../RenderDelegate.h"
 #include "../RenderState.h"
 #include "../Serialize.h"
 #include "../core/log.h"

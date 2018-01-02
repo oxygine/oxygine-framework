@@ -1,17 +1,17 @@
 #pragma once
 #include "oxygine-include.h"
-#include "Material.h"
+#include "RenderDelegate.h"
 #include "STDRenderer.h"
 
 namespace oxygine
 {
-    DECLARE_SMART(STDMaterial, spSTDMaterial);
-    class STDMaterial : public Material
+    DECLARE_SMART(STDRenderDelegate, spSTDMaterial);
+    class STDRenderDelegate : public RenderDelegate
     {
     public:
-        static STDMaterial* instance;
+        static STDRenderDelegate* instance;
 
-        STDMaterial() {}
+        STDRenderDelegate() {}
 
         void render(ClipRectActor*,     const RenderState& rs) override;
         void render(MaskedSprite*,      const RenderState& rs) override;

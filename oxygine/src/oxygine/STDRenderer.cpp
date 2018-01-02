@@ -2,7 +2,7 @@
 #include "AnimationFrame.h"
 #include "Image.h"
 #include "RenderState.h"
-#include "STDMaterial.h"
+#include "STDRenderDelegate.h"
 #include "VisualStyle.h"
 #include "core/ImageDataOperations.h"
 #include "core/UberShaderProgram.h"

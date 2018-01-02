@@ -1,1 +1,1 @@
-#include "oxygine/Material.h"
+#include "oxygine/RenderDelegate.h"

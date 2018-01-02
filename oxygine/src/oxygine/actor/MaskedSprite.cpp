@@ -1,6 +1,6 @@
 #include "MaskedSprite.h"
 #include "../MaskedRenderer.h"
-#include "../Material.h"
+#include "../RenderDelegate.h"
 #include "../RenderState.h"
 #include "../Serialize.h"
 

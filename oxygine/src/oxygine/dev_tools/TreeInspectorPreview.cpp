@@ -1,7 +1,7 @@
 #include "TreeInspectorPreview.h"
 #include "TreeInspector.h"
 #include "../RenderState.h"
-#include "../STDMaterial.h"
+#include "../STDRenderDelegate.h"
 #include "../STDRenderer.h"
 #include "../actor/DebugActor.h"
 #include "../actor/Stage.h"

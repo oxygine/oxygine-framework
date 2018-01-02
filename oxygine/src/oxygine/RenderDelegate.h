@@ -3,10 +3,10 @@
 
 namespace oxygine
 {
-    class Material
+    class RenderDelegate
     {
     public:
-        virtual ~Material();
+        virtual ~RenderDelegate();
 
         virtual void render(Actor*, const RenderState& rs);
         virtual void render(ClipRectActor*, const RenderState& rs) {}

@@ -1,7 +1,7 @@
 #include "ProgressBar.h"
-#include "../Material.h"
+#include "../RenderDelegate.h"
 #include "../RenderState.h"
-#include "../STDMaterial.h"
+#include "../STDRenderDelegate.h"
 #include "../STDRenderer.h"
 #include "../Serialize.h"
 #include <sstream>

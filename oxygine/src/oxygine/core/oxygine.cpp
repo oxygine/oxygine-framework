@@ -36,7 +36,7 @@
 
 
 #include "gl/VideoDriverGLES20.h"
-#include "../STDMaterial.h"
+#include "../STDRenderDelegate.h"
 
 
 #ifdef EMSCRIPTEN
@@ -471,7 +471,7 @@ namespace oxygine
             Resources::registerResourceType(ResStarlingAtlas::create, "starling");
 
             STDRenderer::instance = new STDRenderer;
-            STDMaterial::instance = new STDMaterial;
+            STDRenderDelegate::instance = new STDRenderDelegate;
             MaterialX::null       = new NullMaterialX;
             MaterialX::current = MaterialX::null;
 
@@ -849,8 +849,8 @@ namespace oxygine
             mc().clear();
 
             STDRenderer::release();
-            delete STDMaterial::instance;
-            STDMaterial::instance = 0;
+            delete STDRenderDelegate::instance;
+            STDRenderDelegate::instance = 0;
 
             delete IVideoDriver::instance;
             IVideoDriver::instance = 0;

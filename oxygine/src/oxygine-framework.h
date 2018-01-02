@@ -135,4 +135,9 @@
 //#include "oxygine/winnie_alloc/system_alloc.h"
 //#include "oxygine/winnie_alloc/winnie_alloc.h"
 //#include "oxygine/winnie_alloc/winnie_alloc_config.h"
+
+#ifdef OUT
+#undef OUT
+#endif
+
 #endif

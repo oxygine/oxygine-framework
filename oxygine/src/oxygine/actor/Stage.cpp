@@ -1,7 +1,7 @@
 #include "Stage.h"
 #include "../Clock.h"
 #include "../RenderState.h"
-#include "../STDMaterial.h"
+#include "../STDRenderDelegate.h"
 #include "../core/oxygine.h"
 #include "../math/Rect.h"
 #include <sstream>

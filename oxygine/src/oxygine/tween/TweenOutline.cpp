@@ -1,6 +1,6 @@
 #include "TweenOutline.h"
 #include "../RenderState.h"
-#include "../STDMaterial.h"
+#include "../STDRenderDelegate.h"
 #include "../actor/Actor.h"
 #include "../core/gl/VertexDeclarationGL.h"
 
@@ -47,9 +47,9 @@ namespace oxygine
 
 
             RenderState r = rs;
-            actor->setMaterial(_prevMaterial);
+            actor->setRenderDelegate(_prevMaterial);
             actor->render(r);
-            actor->setMaterial(this);
+            actor->setRenderDelegate(this);
         }
 
         void _renderPP() override

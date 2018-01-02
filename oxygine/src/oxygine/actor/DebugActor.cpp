@@ -7,7 +7,7 @@
 #include "../Event.h"
 #include "../MaterialCache.h"
 #include "../RenderState.h"
-#include "../STDMaterial.h"
+#include "../STDRenderDelegate.h"
 #include "../STDRenderer.h"
 #include "../core/NativeTexture.h"
 #include "../core/ZipFileSystem.h"

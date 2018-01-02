@@ -58,7 +58,7 @@ namespace oxygine
     DECLARE_SMART(ResBuffer, spResBuffer);
     DECLARE_SMART(ResFont, spResFont);
     DECLARE_SMART(Resource, spResource);
-    DECLARE_SMART(STDMaterial, spSTDMaterial);
+    DECLARE_SMART(STDRenderDelegate, spSTDMaterial);
     DECLARE_SMART(SlidingActor, spSlidingActor);
     DECLARE_SMART(Sprite, spSprite);
     DECLARE_SMART(Stage, spStage);
@@ -85,7 +85,7 @@ namespace oxygine
     class ImageData;
     class LoadResourcesContext;
     class MaskedSprite;
-    class Material;
+    class RenderDelegate;
     class Mem2Native;
     class Mutex;
     class PointerState;

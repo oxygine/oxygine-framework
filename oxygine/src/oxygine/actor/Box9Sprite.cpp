@@ -1,7 +1,7 @@
 #include "Box9Sprite.h"
 #include "DebugActor.h"
 #include "../RenderState.h"
-#include "../STDMaterial.h"
+#include "../STDRenderDelegate.h"
 #include "../STDRenderer.h"
 #include "../Serialize.h"
 #include "../math/ScalarMath.h"

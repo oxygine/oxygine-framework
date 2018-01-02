@@ -14,7 +14,7 @@
 #include "../RenderState.h"
 #include <stdio.h>
 #include "../Serialize.h"
-#include "../Material.h"
+#include "../RenderDelegate.h"
 #include "../math/OBBox.h"
 
 namespace oxygine
@@ -37,7 +37,7 @@ namespace oxygine
         _parent(0),
         _alpha(255),
         _stage(0),
-        _rdelegate(STDMaterial::instance)
+        _rdelegate(STDRenderDelegate::instance)
     {
         _transform.identity();
         _transformInvert.identity();
@@ -678,7 +678,7 @@ namespace oxygine
         _alpha = alpha;
     }
 
-    void Actor::setMaterial(Material* mat)
+    void Actor::setRenderDelegate(RenderDelegate* mat)
     {
         _rdelegate = mat;
     }

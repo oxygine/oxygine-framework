@@ -1,5 +1,5 @@
 #include "TweenAlphaFade.h"
-#include "../STDMaterial.h"
+#include "../STDRenderDelegate.h"
 #include "../actor/Actor.h"
 
 namespace oxygine

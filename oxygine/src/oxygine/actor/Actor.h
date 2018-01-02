@@ -114,7 +114,7 @@ namespace oxygine
         bool                getTouchEnabled() const { return (_flags & flag_touchEnabled) != 0; }
         bool                getTouchChildrenEnabled() const { return (_flags & flag_touchChildrenEnabled) != 0; }
         UpdateCallback      getCallbackDoUpdate() const {return _cbDoUpdate;}
-        Material*           getMaterial() { return _rdelegate; }
+        RenderDelegate*     getMaterial() { return _rdelegate; }
         //RenderCallback        getCallbackDoRender() const {return _cbDoRender;}
 
         /**return local actor transformation*/
@@ -165,7 +165,7 @@ namespace oxygine
         void setExtendedClickArea(char add) {_extendedIsOn = add;}
 
         void setClock(spClock clock);
-        void setMaterial(Material* mat);
+        void setRenderDelegate(RenderDelegate* mat);
 
         /**Show/Hide actor and children. Invisible Actor doesn't receive Touch events.*/
         void setVisible(bool vis) {_flags &= ~flag_visible; if (vis) _flags |= flag_visible;}
@@ -292,7 +292,7 @@ namespace oxygine
 
     protected:
 
-        Material* _rdelegate;
+        RenderDelegate* _rdelegate;
         Stage* _stage;
 
         void added2stage(Stage*);
