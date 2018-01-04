@@ -2,7 +2,7 @@
 #include "test.h"
 
 
-class CustomUniformMat : public STDMaterialX
+class CustomUniformMat : public STDMaterial
 {
 public:
     MATX(CustomUniformMat);
@@ -12,13 +12,13 @@ public:
 
     void rehash(size_t& hash) const override
     {
-        STDMaterialX::rehash(hash);
+        STDMaterial::rehash(hash);
         hash_combine(hash, uniform.x, uniform.y, uniform.z, uniform.w);
     }
 
     static bool cmp(const CustomUniformMat& a, const CustomUniformMat& b)
     {
-        if (!STDMaterialX::cmp(a, b))
+        if (!STDMaterial::cmp(a, b))
             return false;
 
         return a.uniform == b.uniform;
@@ -26,7 +26,7 @@ public:
 
     void xapply() override
     {
-        STDMaterialX::xapply();
+        STDMaterial::xapply();
         IVideoDriver::instance->setUniform("userValue", uniform);
     }
 };

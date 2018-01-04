@@ -2,7 +2,7 @@
 #include "test.h"
 
 
-class ColoredShaderMat : public STDMaterialX
+class ColoredShaderMat : public STDMaterial
 {
 public:
     MATX(ColoredShaderMat);
@@ -12,13 +12,13 @@ public:
 
     void rehash(size_t& hash) const override
     {
-        STDMaterialX::rehash(hash);
+        STDMaterial::rehash(hash);
         hash_combine(hash, uniformBlack.x, uniformBlack.y, uniformBlack.z, uniformBlack.w);
     }
 
     static bool cmp(const ColoredShaderMat& a, const ColoredShaderMat& b)
     {
-        if (!STDMaterialX::cmp(a, b))
+        if (!STDMaterial::cmp(a, b))
             return false;
 
         return a.uniformBlack == b.uniformBlack;
@@ -26,7 +26,7 @@ public:
 
     void xapply() override
     {
-        STDMaterialX::xapply();
+        STDMaterial::xapply();
         IVideoDriver::instance->setUniform("_black", uniformBlack);
     }
 };

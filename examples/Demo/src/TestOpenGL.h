@@ -75,7 +75,7 @@ public:
 
     void doRender(const RenderState& rs)
     {
-        MaterialX::null->apply();
+        Material::null->apply();
 
 
         glEnable(GL_BLEND);

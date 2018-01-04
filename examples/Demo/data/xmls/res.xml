@@ -44,7 +44,7 @@
 	</atlas>
 
 	<atlas clamp2edge="false"> 
-		<image file="tiled.png" trim="false" extend="false"/>
+		<image file="tiled.png" trim="false" extend="false" border="0"/>
 	</atlas>	
 	
 	<set load = "false" /> <!--do not load next atlasses by default-->

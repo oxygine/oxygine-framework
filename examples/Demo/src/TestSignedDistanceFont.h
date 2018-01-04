@@ -2,7 +2,7 @@
 #include "test.h"
 
 DECLARE_SMART(SDFMaterial, spSDFMaterial);
-class SDFMaterial : public STDMaterialX
+class SDFMaterial : public STDMaterial
 {
 public:
     MATX(SDFMaterial);
@@ -62,7 +62,7 @@ public:
 
     static bool cmp(const SDFMaterial& a, const SDFMaterial& b)
     {
-        if (!STDMaterialX::cmp(a, b))
+        if (!STDMaterial::cmp(a, b))
             return false;
 
         return a.outlineColor == b.outlineColor && a.offset == b.offset && a.outline == b.outline;
@@ -70,7 +70,7 @@ public:
 
     void xapply() override
     {
-        STDMaterialX::xapply();
+        STDMaterial::xapply();
 
         const AffineTransform& tr = STDRenderer::getCurrent()->getTransform();
         float scale = sqrt(tr.a * tr.a + tr.c * tr.c);

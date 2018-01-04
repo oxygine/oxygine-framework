@@ -23,7 +23,7 @@ public:
     int height;
 
     spNativeTexture nt;
-    spSTDMaterialX mat;
+    spSTDMaterial mat;
 
     int tileWidth;
     int tileHeight;
@@ -85,7 +85,7 @@ public:
 
 
 
-        mat = new STDMaterialX;
+        mat = new STDMaterial;
         mat->_base = nt;
         mat->_blend = blend_premultiplied_alpha;
     }
