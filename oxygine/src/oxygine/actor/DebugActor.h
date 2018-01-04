@@ -46,8 +46,7 @@ namespace oxygine
         spColorRectSprite _bg;
         spTextField _text;
         std::string _debugText;
-        int _frames;
-        timeMS _startTime;
+        std::vector<int> _frameTime;
 
 
         bool _showTouchedActor;

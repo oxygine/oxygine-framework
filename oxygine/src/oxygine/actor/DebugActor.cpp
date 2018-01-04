@@ -25,6 +25,7 @@
 #include <sstream>
 #include <stdarg.h>
 #include <stdio.h>
+#include "SDL_scancode.h"
 
 #ifdef __S3E__
 #include "../s3eMemory.h"
@@ -54,6 +55,7 @@ namespace oxygine
 
     spDebugActor DebugActor::instance;
     int _corner = 0;
+    
 
     void DebugActor::initialize()
     {
@@ -126,14 +128,12 @@ namespace oxygine
         btn->setX(x);
         btn->addEventListener(TouchEvent::CLICK, CLOSURE(this, &DebugActor::_btnClicked));
     }
-
-    DebugActor::DebugActor(): _frames(0), _startTime(0), _showTexel2PixelErrors(false), _showTouchedActor(false), _dragging(false)
+    
+    DebugActor::DebugActor() : _showTexel2PixelErrors(false), _showTouchedActor(false), _dragging(false)
     {
         DebugActor::initialize();
 
         setName(getDefaultName());
-
-        _startTime = getTimeMS();
         setPriority(30000);
 
         setTouchEnabled(false);
@@ -292,39 +292,35 @@ namespace oxygine
 
     void DebugActor::doUpdate(const UpdateState& us)
     {
+        int tm = getTimeMS();
+        _frameTime.push_back(tm);
+        while (tm - _frameTime.front() >= 1000)
+        {
+            _frameTime.erase(_frameTime.begin());
+        }
     }
 
     void DebugActor::render(RenderState const& parentRS)
     {
         timeMS tm = getTimeMS();
 
-        static int fps = 0;
-        ++_frames;
-        if (_frames > 50)
-        {
-            if (tm != _startTime)
-            {
-                fps = int(((float)_frames / (tm - _startTime)) * 1000);
-            }
-            _startTime = tm;
-            _frames = 0;
-        }
-
         std::stringstream s;
-        s << "fps=" << fps << std::endl;
+        s << "fps=" << _frameTime.size();
 
+        /*
+        if (_frameTime.size() >= 2)
+        {
+            int dt = _frameTime[_frameTime.size() - 1] - _frameTime[_frameTime.size() - 2];
+            int fps = 0;
+            if (dt != 0)
+                fps = 1000 / dt;
+            s << "(" << fps << ")";
+        }
+        */
+        
+        s << std::endl;
 
-
-#ifdef __S3E__
-        int mem_used = -1;
-        int mem_free = -1;
-
-        mem_used = s3eMemoryGetInt(S3E_MEMORY_USED);
-        mem_free = s3eMemoryGetInt(S3E_MEMORY_FREE);
-
-        s << "mfree=" << mem_free << " mem=" << mem_used << std::endl;
-#endif
-
+        
         const IVideoDriver::Stats& vstats = IVideoDriver::_stats;
 
 #ifdef OXYGINE_DEBUG_TRACE_LEAKS
