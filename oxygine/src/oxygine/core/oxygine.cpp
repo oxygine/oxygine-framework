@@ -162,6 +162,8 @@ namespace oxygine
 
         void focusLost()
         {
+            mc().removeUnused();
+
             if (!LOST_RESET_CONTEXT)
                 return;
 
@@ -170,7 +172,6 @@ namespace oxygine
             SDL_GL_DeleteContext(_context);
             _context = 0;
 #endif
-
         }
 
         void focusAcquired()
