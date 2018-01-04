@@ -27,8 +27,8 @@ namespace oxygine
     {
         _ress.push_back(res);
     }
-    
-    void ThreadLoader::add(const std::function< void() > &v)
+
+    void ThreadLoader::add(const std::function< void() >& v)
     {
         _funcs.push_back(v);
     }

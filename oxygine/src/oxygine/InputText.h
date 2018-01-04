@@ -2,8 +2,8 @@
 #include "oxygine-include.h"
 #include "Event.h"
 #include "EventDispatcher.h"
-#include <string>
 #include "SDL.h"
+#include <string>
 
 namespace oxygine
 {

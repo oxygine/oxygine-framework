@@ -1,7 +1,6 @@
 #include "Clock.h"
 #include <sstream>
 
-
 #ifdef _WIN32
 #   include <windows.h>
 #elif __ANDROID__

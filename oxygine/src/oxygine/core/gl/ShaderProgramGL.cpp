@@ -1,7 +1,7 @@
 #include "ShaderProgramGL.h"
+#include "SDL.h"
 #include "VertexDeclarationGL.h"
 #include "oxgl.h"
-#include "SDL.h"
 
 namespace oxygine
 {

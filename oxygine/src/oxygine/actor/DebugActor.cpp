@@ -2,6 +2,8 @@
 #include "Button.h"
 #include "ColorRectSprite.h"
 #include "MaskedSprite.h"
+#include "SDL_scancode.h"
+#include "SDL_video.h"
 #include "Stage.h"
 #include "TextField.h"
 #include "../Event.h"
@@ -25,8 +27,6 @@
 #include <sstream>
 #include <stdarg.h>
 #include <stdio.h>
-#include "SDL_scancode.h"
-#include "SDL_video.h"
 
 #ifdef __APPLE__
 #include "../core/ios/ios.h"
@@ -44,7 +44,7 @@ namespace oxygine
 
     spDebugActor DebugActor::instance;
     int _corner = 0;
-    
+
 
     void DebugActor::initialize()
     {
@@ -117,7 +117,7 @@ namespace oxygine
         btn->setX(x);
         btn->addEventListener(TouchEvent::CLICK, CLOSURE(this, &DebugActor::_btnClicked));
     }
-    
+
     DebugActor::DebugActor() : _showTexel2PixelErrors(false), _showTouchedActor(false), _dragging(false)
     {
         DebugActor::initialize();
@@ -306,10 +306,10 @@ namespace oxygine
             s << "(" << fps << ")";
         }
         */
-        
+
         s << std::endl;
 
-        
+
         const IVideoDriver::Stats& vstats = IVideoDriver::_stats;
 
 #ifdef OXYGINE_DEBUG_TRACE_LEAKS

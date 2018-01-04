@@ -1,4 +1,5 @@
 #include "jniHelper.h"
+
 extern "C"
 {
     JNIEnv* Android_JNI_GetEnv(void);

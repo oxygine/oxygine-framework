@@ -1,6 +1,6 @@
 #include "ColorRectSprite.h"
-#include "../RenderDelegate.h"
 #include "../MaterialCache.h"
+#include "../RenderDelegate.h"
 #include "../RenderState.h"
 #include "../Serialize.h"
 #include "../utils/stringUtils.h"

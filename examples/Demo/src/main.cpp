@@ -50,12 +50,9 @@ void run()
     core::init_desc desc;
     desc.title = "Oxygine Application";
 
-#if OXYGINE_SDL || OXYGINE_EMSCRIPTEN
-    // The initial window size can be set up here on SDL builds
+    // The initial window size can be set up here on SDL builds, ignored on Mobile devices
     desc.w = 960;
     desc.h = 640;
-    // Marmalade settings can be modified from the emulator's menu
-#endif
 
 
     example_preinit();
@@ -124,15 +121,6 @@ void run()
     ObjectBase::__stopTracingLeaks();
     //end
 }
-
-#ifdef __S3E__
-int main(int argc, char* argv[])
-{
-    run();
-    return 0;
-}
-#endif
-
 
 #ifdef OXYGINE_SDL
 

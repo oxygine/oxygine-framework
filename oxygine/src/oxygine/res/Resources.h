@@ -9,7 +9,6 @@
 #include <string>
 #include <unordered_map>
 
-
 namespace oxygine
 {
     class ResourcesLoadOptions

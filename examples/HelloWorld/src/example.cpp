@@ -30,7 +30,7 @@ public:
         button->setPosition(pos);
 
         //register  click handler to button
-        EventCallback cb = CLOSURE(this, &MainActor::buttonClicked);        
+        EventCallback cb = CLOSURE(this, &MainActor::buttonClicked);
         button->addEventListener(TouchEvent::CLICK, cb);
 
         //animate mouse over and mouse out events

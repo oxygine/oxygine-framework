@@ -1,7 +1,7 @@
 #include "Sprite.h"
 #include "Stage.h"
-#include "../RenderDelegate.h"
 #include "../MaterialCache.h"
+#include "../RenderDelegate.h"
 #include "../RenderState.h"
 #include "../Serialize.h"
 #include "../core/UberShaderProgram.h"

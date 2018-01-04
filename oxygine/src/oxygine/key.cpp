@@ -1,6 +1,5 @@
 #include "key.h"
 #include "SDL_keyboard.h"
-
 #include <algorithm>
 
 namespace oxygine

@@ -24,7 +24,7 @@ namespace oxygine
 
         virtual void add(Resources* res);
         virtual void add(Resource* res);
-        virtual void add(const std::function< void() > &f);
+        virtual void add(const std::function< void() >& f);
 
         void start();
         //void stop();
