@@ -36,21 +36,21 @@ namespace oxygine
             }
         }
 
+        _addCounter++;
+        if (_addCounter > 30)
+            removeUnusedNoLock();
 
         Material* copy = other.clone();
         copy->_hash = hash;
         copy->_compare = cm;
         _materials.insert(std::make_pair(hash, copy));
-
+        
         return copy;
     }
 
-    void MaterialCache::removeUnused()
+    void MaterialCache::removeUnusedNoLock()
     {
-        MutexAutoLock alock(_lock);
-
-        //std::pair<materials::iterator, materials::iterator> it = _materials.begin();
-
+        _addCounter = 0;
         materials fresh;
         for (auto it = _materials.begin(); it != _materials.end(); it++)
         {
@@ -63,9 +63,21 @@ namespace oxygine
         std::swap(fresh, _materials);
     }
 
+    void MaterialCache::removeUnused()
+    {
+        MutexAutoLock alock(_lock);
+        removeUnusedNoLock();
+    }
+
+    MaterialCache::MaterialCache():_addCounter(0)
+    {
+
+    }
+
     void MaterialCache::clear()
     {
         MutexAutoLock alock(_lock);
+        _addCounter = 0;
         _materials.clear();
     }
 

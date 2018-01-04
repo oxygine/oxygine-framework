@@ -24,6 +24,8 @@ namespace oxygine
     class MaterialCache
     {
     public:
+        MaterialCache();
+
         template<class T>
         intrusive_ptr<T> cache(const T& other)
         {
@@ -39,8 +41,10 @@ namespace oxygine
         materials _materials;
 
         Mutex _lock;
+        int _addCounter;
 
         Material* clone_(const Material& other);
+        void removeUnusedNoLock();
     };
 
     MaterialCache& mc();
