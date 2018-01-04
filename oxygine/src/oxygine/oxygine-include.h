@@ -161,27 +161,6 @@ typedef signed long long int64;
 #define OX_HAS_CPP11
 #endif
 
-namespace oxygine
-{
-    enum error_policy
-    {
-        ep_show_error,//shows assert and prints error to log
-        ep_show_warning,//prints warning to log
-        ep_ignore_error//doesn't show any errors
-    };
-
-
-    void handleErrorPolicy(error_policy ep, const char* format, ...);
-
-    typedef int timeMS;
-    typedef unsigned char pointer_index;
-
-    /** returns local app time in milliseconds (1sec = 1000ms). Counting starts from zero*/
-    timeMS          getTimeMS();
-
-    void* fastAlloc(size_t size);
-    void fastFree(void* data);
-}
 
 #include "oxygine-forwards.h"
 #endif
