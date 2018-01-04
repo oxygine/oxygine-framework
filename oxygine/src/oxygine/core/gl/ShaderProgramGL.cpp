@@ -1,10 +1,7 @@
 #include "ShaderProgramGL.h"
 #include "VertexDeclarationGL.h"
 #include "oxgl.h"
-
-#ifndef __S3E__
 #include "SDL.h"
-#endif
 
 namespace oxygine
 {
@@ -90,14 +87,11 @@ namespace oxygine
 
         bool gles = false;
 
-#ifdef __S3E__
-        gles = true;
-#elif OXYGINE_SDL
+
+#ifdef OXYGINE_SDL
         int profile = 0;
         SDL_GL_GetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, &profile);
-
         gles = profile == SDL_GL_CONTEXT_PROFILE_ES;
-#else
 #endif
 
 

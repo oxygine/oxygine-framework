@@ -27,12 +27,11 @@ namespace oxygine
     {
         _ress.push_back(res);
     }
-#ifndef __S3E__
-    void ThreadLoader::add(std::function< void() > v)
+    
+    void ThreadLoader::add(const std::function< void() > &v)
     {
         _funcs.push_back(v);
     }
-#endif
 
     bool ThreadLoader::isCompleted()
     {
@@ -90,13 +89,10 @@ namespace oxygine
             res->load();
         }
 
-#ifndef __S3E__
         for (funcs::iterator i = _funcs.begin(); i != _funcs.end(); ++i)
         {
             (*i)();
         }
-#endif
-
     }
 
     void ThreadLoader::_threadFunc()

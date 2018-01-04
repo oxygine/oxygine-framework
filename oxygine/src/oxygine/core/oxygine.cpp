@@ -24,17 +24,6 @@
 #include "gl/oxgl.h"
 #include <stdio.h>
 
-#ifdef __S3E__
-#include "s3e.h"
-#include "IwGL.h"
-#include "s3eSurface.h"
-#include "s3eDebug.h"
-#include "s3eTimer.h"
-#include "s3ePointer.h"
-#include "s3eOSExec.h"
-#endif
-
-
 #include "gl/VideoDriverGLES20.h"
 #include "../STDRenderDelegate.h"
 
@@ -258,42 +247,8 @@ namespace oxygine
             focus = true;
             active = true;
 
-#ifdef __S3E__
-            log::messageln("S3E build");
-            if (!IwGLInit())
-            {
-                s3eDebugErrorShow(S3E_MESSAGE_CONTINUE, "IwGLInit failed");
-                return;
-            }
-            //init_ext();
 
-            int width = IwGLGetInt(IW_GL_WIDTH);
-            int height = IwGLGetInt(IW_GL_HEIGHT);
-
-            log::messageln("Screen BPP  : %d", s3eSurfaceGetInt(S3E_SURFACE_PIXEL_TYPE) & S3E_SURFACE_PIXEL_SIZE_MASK);
-            log::messageln("Screen Size : %dx%d", width, height);
-            log::messageln("Vendor      : %s", (const char*)glGetString(GL_VENDOR));
-            log::messageln("Renderer    : %s", (const char*)glGetString(GL_RENDERER));
-
-            const char* version = (const char*)glGetString(GL_VERSION);
-            log::messageln("Version    : %s", version);
-
-            s3ePointerUpdate();
-            if (s3ePointerGetInt(S3E_POINTER_MULTI_TOUCH_AVAILABLE))
-            {
-                s3ePointerRegister(S3E_POINTER_TOUCH_EVENT, &pointerTouchEvent, 0);
-                s3ePointerRegister(S3E_POINTER_TOUCH_MOTION_EVENT, &pointerTouchMotionEvent, 0);
-            }
-            else
-            {
-                s3ePointerRegister(S3E_POINTER_BUTTON_EVENT, &pointerEvent, 0);
-                s3ePointerRegister(S3E_POINTER_MOTION_EVENT, &pointerMotionEvent, 0);
-            }
-
-            s3eDeviceRegister(S3E_DEVICE_UNPAUSE, applicationUnPause, 0);
-            s3eDeviceRegister(S3E_DEVICE_PAUSE, applicationPause, 0);
-
-#elif OXYGINE_SDL
+#ifdef OXYGINE_SDL
 
             log::messageln("SDL build");
 
@@ -442,14 +397,6 @@ namespace oxygine
 
             Point size = getDisplaySize();
             log::messageln("display size: %d %d", size.x, size.y);
-
-
-#if __S3E__
-            int glversion = s3eGLGetInt(S3E_GL_VERSION);
-            int major_gl = glversion >> 8;
-            OX_ASSERT(major_gl == 2 && "gl version should be 2");
-            IVideoDriver::instance = new VideoDriverGLES20();
-#endif
 
             IVideoDriver::instance = new VideoDriverGLES20();
 
@@ -600,9 +547,8 @@ namespace oxygine
 #endif
 
             CHECKGL();
-#if __S3E__
-            IwGLSwapBuffers();
-#elif OXYGINE_SDL
+
+#ifdef OXYGINE_SDL
             SDL_Window* wnd = w;
             if (!wnd)
                 wnd = _window;
@@ -622,8 +568,7 @@ namespace oxygine
             //sleep(1000/50);
         }
 
-#ifdef __S3E__
-#elif OXYGINE_EDITOR
+#ifdef OXYGINE_EDITOR
 #else
         spStage getStageByWindow(Uint32 windowID)
         {
@@ -783,31 +728,12 @@ namespace oxygine
 #ifndef OXYGINE_EDITOR
             key::update();
 #endif
-
             timeMS duration = IVideoDriver::_stats.duration;
             IVideoDriver::_stats = IVideoDriver::Stats();
             IVideoDriver::_stats.duration = duration;
 
             ThreadDispatcher::peekMessage msg;
             while (_threadMessages.peek(msg, true)) {}
-
-#ifdef __S3E__
-
-            s3eDeviceYield(0);
-            s3eKeyboardUpdate();
-            s3ePointerUpdate();
-
-            bool done = false;
-
-            if (s3eDeviceCheckQuitRequest())
-                done = true;
-
-            if (s3eKeyboardGetState(s3eKeyEsc) & S3E_KEY_STATE_PRESSED)
-                done = true;
-
-            return done;
-#endif
-
 
 #if OXYGINE_SDL
 
@@ -887,10 +813,7 @@ namespace oxygine
 
         void execute(const char* str)
         {
-#ifdef __S3E__
-
-            s3eOSExecExecute(str, false);
-#elif OXYGINE_EDITOR
+#ifdef OXYGINE_EDITOR
 #elif __ANDROID__
             jniBrowse(str);
 #elif EMSCRIPTEN
@@ -918,9 +841,7 @@ namespace oxygine
         void requestQuit()
         {
             log::messageln("requestQuit");
-#ifdef __S3E__
-            s3eDeviceRequestQuit();
-#elif OXYGINE_SDL
+#ifdef OXYGINE_SDL
             SDL_Event ev;
             ev.type = SDL_QUIT;
             SDL_PushEvent(&ev);
@@ -940,24 +861,7 @@ namespace oxygine
 
         Point getDisplaySize()
         {
-#if __S3E__
-            int width = IwGLGetInt(IW_GL_WIDTH);
-            int height = IwGLGetInt(IW_GL_HEIGHT);
-
-            int orient = s3eSurfaceGetInt(S3E_SURFACE_DEVICE_ORIENTATION_LOCK);
-            if (height > width)
-            {
-                if (orient == S3E_SURFACE_LANDSCAPE || orient == S3E_SURFACE_LANDSCAPE_FIXED)
-                    std::swap(width, height);
-            }
-            else
-            {
-                if (orient == S3E_SURFACE_PORTRAIT || orient == S3E_SURFACE_PORTRAIT_FIXED)
-                    std::swap(width, height);
-            }
-
-            return Point(width, height);
-#elif OXYGINE_EDITOR
+#ifdef OXYGINE_EDITOR
             return _qtFixedSize;
 #elif OXYGINE_SDL
             int w = 0;
@@ -997,9 +901,7 @@ namespace oxygine
 
     bool    isNetworkAvailable()
     {
-#if __S3E__
-        return s3eSocketGetInt(S3E_SOCKET_NETWORK_AVAILABLE) == 1;
-#elif __ANDROID__
+#ifdef __ANDROID__
         return jniIsNetworkAvailable();
 #endif
         return true;
@@ -1028,9 +930,7 @@ namespace oxygine
 
     void    sleep(timeMS time)
     {
-#if __S3E__
-        s3eDeviceYield(time);
-#elif OXYGINE_SDL
+#ifdef OXYGINE_SDL
         SDL_Delay(time);
 #else
         log::warning("sleep not implemented");

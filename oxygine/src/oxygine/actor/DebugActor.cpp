@@ -26,22 +26,11 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include "SDL_scancode.h"
-
-#ifdef __S3E__
-#include "../s3eMemory.h"
-#elif __APPLE__
-#include "../core/ios/ios.h"
-#endif
-
-#ifndef __S3E__
 #include "SDL_video.h"
-#endif
 
-#ifdef __ANDROID__
-#include <malloc.h>
-#endif
-
-#ifdef _WIN32
+#ifdef __APPLE__
+#include "../core/ios/ios.h"
+#elif _WIN32
 #pragma comment(lib, "psapi.lib") // Added to support GetProcessMemoryInfo()
 #include <windows.h>
 #include <Psapi.h>

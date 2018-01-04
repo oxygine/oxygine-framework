@@ -1,9 +1,8 @@
 #include "Clock.h"
 #include <sstream>
 
-#ifdef __S3E__
-#   include "s3eTimer.h"
-#elif _WIN32
+
+#ifdef _WIN32
 #   include <windows.h>
 #elif __ANDROID__
 #   include "core/android/jniUtils.h"
@@ -157,9 +156,7 @@ namespace oxygine
 
     timeMS getTimeMS()
     {
-#if __S3E__
-        return (timeMS)s3eTimerGetUST();
-#elif EMSCRIPTEN
+#ifdef EMSCRIPTEN
         return SDL_GetTicks();
 #elif OXYGINE_SDL
         return SDL_GetTicks();
@@ -171,9 +168,7 @@ namespace oxygine
 
     int64   getTimeUTCMS()
     {
-#if __S3E__
-        return s3eTimerGetUTC();
-#elif _WIN32
+#ifdef _WIN32
         FILETIME tm;
         GetSystemTimeAsFileTime(&tm);
         int64 t = tm.dwLowDateTime + (int64(tm.dwHighDateTime) << 32);

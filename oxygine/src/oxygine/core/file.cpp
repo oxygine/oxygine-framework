@@ -5,9 +5,7 @@
 #include "../utils/stringUtils.h"
 #include <string>
 
-#ifdef __S3E__
-#include <s3eFile.h>
-#elif _WIN32
+#ifdef _WIN32
 #include <direct.h>
 #elif __APPLE__
 #include "ios/ios.h"
@@ -47,10 +45,7 @@ namespace oxygine
                 return;
             _fsInitialized = true;
 
-#ifdef __S3E__
-            _nfs.setPath("rom://");
-            _nfsWrite.setPath("ram://");
-#elif EMSCRIPTEN
+#ifdef EMSCRIPTEN
             //mkdir("data-ram/", S_IRWXU|S_IRWXG|S_IRWXO);
             //_nfsWrite.setPath("data-ram/");
 

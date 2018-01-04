@@ -1,10 +1,7 @@
 #pragma once
 #include "oxygine-include.h"
+#include "SDL_keyboard.h"
 
-#ifdef __S3E__
-#else
-#   include "SDL_keyboard.h"
-#endif
 namespace oxygine
 {
     namespace key

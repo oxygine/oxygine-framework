@@ -18,7 +18,7 @@ Many thanks to Wolfhound
 #  pragma once
 #endif
 
-#if !defined(__S3E__) && !defined(OXYGINE_EDITOR)
+#if !defined(OXYGINE_EDITOR)
 #define CLOSURE_FUNCTION 1
 #endif
 

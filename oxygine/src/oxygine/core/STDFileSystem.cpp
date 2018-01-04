@@ -15,24 +15,7 @@
 //#define LOGD(...) oxygine::log::messageln(__VA_ARGS__)
 #define LOGD(...) ((void)0)
 
-#if __S3E__
-#define USE_S3E_FILE
-#include "IwAutoFile.h"
-#include "s3eFile.h"
-
-typedef s3eFile oxHandle;
-
-#define oxFileOpen_ s3eFileOpen
-#define oxFileClose_ s3eFileClose
-#define oxFileSeek s3eFileSeek
-#define oxFileTell s3eFileTell
-#define oxFileWrite s3eFileWrite
-#define ox_FILESEEK_END S3E_FILESEEK_END
-#define ox_FILESEEK_SET S3E_FILESEEK_SET
-
-#define oxFileRead s3eFileRead
-#define oxExists(name) s3eFileCheckExists(name)
-
+#if 0
 #elif OXYGINE_SDL && !OXYGINE_FILESYSTEM_USE_STDIO
 #ifdef _WIN32
 #include <direct.h>
@@ -76,7 +59,7 @@ typedef FILE oxHandle;
 #define ox_FILESEEK_SET SEEK_SET
 #define oxFileRead(ptr, size, n, handle) fread(ptr, size, n, handle)
 
-#endif//__S3E__
+#endif
 
 
 //#define LOGD(...) {}
@@ -148,11 +131,7 @@ namespace oxygine
 
             int seek(unsigned int offset, int whence)
             {
-#ifdef __S3E__
-                return oxFileSeek(_handle, offset, (s3eFileSeekOrigin)whence);
-#else
                 return (int)oxFileSeek(_handle, offset, whence);
-#endif
             }
 
             unsigned int tell() const
@@ -337,9 +316,7 @@ namespace oxygine
             char buff[512];
             _getFullPath(file, buff);
 
-#if __S3E__
-            return (s3eFileDelete(buff) == S3E_RESULT_SUCCESS ? status_ok : status_error);
-#elif OXYGINE_EDITOR
+#ifdef OXYGINE_EDITOR
             return status_error;
 #elif _WIN32
             std::wstring wsPath = utf8tows(buff);
@@ -356,9 +333,7 @@ namespace oxygine
             char buff[512];
             _getFullPath(path, buff);
 
-#if __S3E__
-            return (s3eFileMakeDirectory(buff) == S3E_RESULT_SUCCESS ? status_ok : status_error);
-#elif _WIN32
+#ifdef _WIN32
             return (_mkdir(buff) != -1 ? status_ok : status_error);
 #else
             return (mkdir(buff, 0777) != -1 ? status_ok : status_error);
@@ -382,9 +357,7 @@ namespace oxygine
             char buffDest[512];
             _getFullPath(dest, buffDest);
 
-#if __S3E__
-            return (s3eFileRename(buffSrc, buffDest) == S3E_RESULT_SUCCESS ? status_ok : status_error);
-#elif OXYGINE_EDITOR
+#ifdef OXYGINE_EDITOR
             return status_error;
 #elif _WIN32
             std::wstring s = utf8tows(buffSrc);
@@ -400,16 +373,12 @@ namespace oxygine
         {
             char buff[512];
             _getFullPath(file, buff);
-#if __S3E__
-            s3eBool res = s3eFileCheckExists(buff);
-            return res == S3E_TRUE;
-#else
+
             //todo optimize
             oxHandle* h = oxFileOpen(buff, "rb");
             if (h)
                 oxFileClose(h);
             return h != 0;
-#endif
         }
     }
 }

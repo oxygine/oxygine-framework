@@ -10,11 +10,6 @@ extern "C"
 #endif
 };
 
-
-#ifdef __S3E__
-#include "IwImage.h"
-#endif
-
 namespace oxygine
 {
     void saveImage(const ImageData& im_, const char* path, const char* format)

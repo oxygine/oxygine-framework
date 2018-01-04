@@ -2,14 +2,9 @@
 #include "../core/Object.h"
 #include "../minizip/ioapi_mem.h"
 #include "../utils/stringUtils.h"
-//#include "../utils/utils.h"
 #include <algorithm>
 #include <map>
 #include <string.h>
-
-#ifdef __S3E__
-#include "s3eFile.h"
-#endif
 
 namespace oxygine
 {

@@ -38,12 +38,8 @@
 // Bypass SDL file functions and use plain fopen, fread etc.
 //#define OXYGINE_FILESYSTEM_USE_STDIO 1
 
-#if __S3E__
-#   define OXYGINE_MARMALADE 1
-#   ifdef IW_DEBUG
-#       define OX_DEBUG 1
-#   endif
-#elif EMSCRIPTEN
+
+#ifdef EMSCRIPTEN
 #   define OXYGINE_EMSCRIPTEN 1
 #   define OXYGINE_SDL 1
 #   ifndef NDEBUG
@@ -136,7 +132,6 @@ namespace oxygine { namespace log { void error(const char* format, ...); } }
 #endif
 
 
-#ifndef __S3E__
 #   if defined(_MSC_VER) || defined(__BORLANDC__)
 typedef unsigned __int64 uint64;
 typedef signed __int64 int64;
@@ -144,7 +139,6 @@ typedef signed __int64 int64;
 typedef unsigned long long uint64;
 typedef signed long long int64;
 #   endif
-#endif
 
 #ifdef OXYGINE_QT
 #define INHERITED(CLASS) private: typedef Editor##CLASS inherited
@@ -157,7 +151,7 @@ typedef signed long long int64;
 #endif
 
 
-#if !defined(__S3E__) && ( (defined(_MSC_VER) && (_MSC_VER > 1800)) || (__cplusplus > 199711L))
+#if ( (defined(_MSC_VER) && (_MSC_VER > 1800)) || (__cplusplus > 199711L))
 #define OX_HAS_CPP11
 #endif
 

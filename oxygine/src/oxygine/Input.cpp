@@ -112,7 +112,6 @@ namespace oxygine
         return &_pointers[index];
     }
 
-#ifndef __S3E__
     int Input::touchID2index(int64 id)
     {
         // We can't be sure that SDL's fingerId is not 0,
@@ -148,5 +147,4 @@ namespace oxygine
             return 0;
         return getTouchByIndex(i);
     }
-#endif
 }

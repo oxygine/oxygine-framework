@@ -1,14 +1,6 @@
 #pragma once
 #include "../../oxygine-include.h"
 
-#if __S3E__
-#   include "IwImage.h"
-#   include "IwGL.h"
-#   include "GLES/gl.h"
-#   define GL_GLEXT_PROTOTYPES
-#   include "GLES/glext.h"
-#   include <gles/egl.h>
-#else
 #   include "SDL_config.h"
 
 #if _WIN32
@@ -114,7 +106,6 @@ extern "C"
 #   define GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG                     0x8C03
 
 #   define GL_ETC1_RGB8_OES                                        0x8D64
-#endif
 #endif
 
 

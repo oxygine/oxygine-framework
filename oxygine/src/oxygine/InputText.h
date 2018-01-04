@@ -3,10 +3,7 @@
 #include "Event.h"
 #include "EventDispatcher.h"
 #include <string>
-
-#ifndef __S3E__
 #include "SDL.h"
-#endif
 
 namespace oxygine
 {
@@ -48,9 +45,6 @@ namespace oxygine
         static InputText* _active;
 
         void _onSysEvent(Event* event);
-
-#ifndef __S3E__
         int _onSDLEvent(SDL_Event* event);
-#endif
     };
 }

@@ -23,10 +23,8 @@ namespace oxygine
         /**index should be in range [1, MAX_TOUCHES]*/
         PointerState* getTouchByIndex(pointer_index index);
 
-#ifndef __S3E__
         int touchID2index(int64 id);
         PointerState* getTouchByID(int64 id);
-#endif
 
 
         //internal:

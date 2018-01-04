@@ -7,12 +7,7 @@
 #include <list>
 #include <string.h>
 #include <string>
-
-#ifdef __S3E__
-#include <map>
-#else
 #include <unordered_map>
-#endif
 
 
 namespace oxygine
@@ -46,11 +41,7 @@ namespace oxygine
         INHERITED(Resource);
     public:
         typedef std::vector<spResource> resources;
-#ifdef __S3E__
-        typedef std::map<std::string, spResource> resourcesMap;
-#else
         typedef std::unordered_map<std::string, spResource> resourcesMap;
-#endif
 
         typedef Resource* (*createResourceCallback)(CreateResourceContext& context);
         typedef Closure<void (Resource*)> ResLoadedCallback;

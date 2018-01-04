@@ -4,11 +4,8 @@
 #include "core/oxygine.h"
 #include "res/ResFont.h"
 #include "utils/stringUtils.h"
-
-#ifndef __S3E__
 #include "SDL_keyboard.h"
 #include "SDL_events.h"
-#endif
 
 namespace oxygine
 {
@@ -110,9 +107,7 @@ namespace oxygine
 
     void InputText::_onSysEvent(Event* event)
     {
-#ifndef __S3E__
         _onSDLEvent((SDL_Event*)event->userData);
-#endif
     }
 
     void InputText::updateText()
@@ -163,7 +158,6 @@ namespace oxygine
         return (int)(prev - begin);
     }
 
-#ifndef __S3E__
     int InputText::_onSDLEvent(SDL_Event* event)
     {
         switch (event->type)
@@ -237,5 +231,4 @@ namespace oxygine
         }
         return 0;
     }
-#endif
 }

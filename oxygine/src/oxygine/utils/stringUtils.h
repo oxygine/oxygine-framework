@@ -59,7 +59,7 @@ namespace oxygine
     {
         va_list args;
         va_start(args, format);
-#if defined(_MSC_VER) && !defined(__S3E__)
+#if defined(_MSC_VER)
         size_t r = vsnprintf_s(str, N, format, args);
 #else
         size_t r = vsnprintf(str, N, format, args);

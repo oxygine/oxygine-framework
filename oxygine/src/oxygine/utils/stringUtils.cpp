@@ -3,10 +3,6 @@
 #include <algorithm>
 #include <string.h>
 
-#ifdef __S3E__
-#include "IwUTF8.h"
-#endif
-
 #ifdef OXYGINE_SDL
 #include "SDL_stdinc.h"
 #endif
@@ -288,21 +284,7 @@ namespace oxygine
             return L"";
 
 
-
-#if __S3E__
-        wchar_t* s = (wchar_t*)fastAlloc(4 * n);
-        s[0] = 0;
-
-        int len = IwUTF8ToWideChar(utf8str, n, s, n * 4);
-        s[len] = 0;
-
-        std::wstring str = s;
-        str.reserve(n);
-        fastFree(s);
-
-        return str;
-
-#elif OXYGINE_SDL
+#ifdef OXYGINE_SDL
         wchar_t* s = 0;
         if (sizeof(wchar_t) == 2)
             s = (wchar_t*)SDL_iconv_string("UCS-2-INTERNAL", "UTF-8", utf8str, n);
@@ -341,18 +323,7 @@ namespace oxygine
         if (n == 1)
             return "";
 
-
-#if __S3E__
-        char* s = (char*)fastAlloc(4 * n);
-        s[0] = 0;
-
-        int len = IwWideCharToUTF8(wstr, n, s, n * 4);
-        s[len] = 0;
-
-        std::string str = s;
-        fastFree(s);
-        return str;
-#elif OXYGINE_SDL
+#ifdef OXYGINE_SDL
         char*  s = 0;
         if (sizeof(wchar_t) == 2)
             s = SDL_iconv_string("UTF-8", "UCS-2-INTERNAL", (const char*)wstr, n * sizeof(wchar_t));

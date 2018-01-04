@@ -5,10 +5,6 @@
 #include "../Image.h"
 #include "../core/VideoDriver.h"
 
-#ifdef __S3E__
-#include "IwImage.h"
-#endif
-
 //#define  LOGD(...)  log::messageln(__VA_ARGS__)
 #define  LOGD(...)
 

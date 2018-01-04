@@ -26,14 +26,11 @@ namespace oxygine
     FILE* fh = 0;
 
 
-#ifdef __S3E__
-    const int SIZE = 512;
-#else
+
 #ifdef OX_DEBUG
     const int SIZE = 16384;
 #else
     const int SIZE = 4096;
-#endif
 #endif
 
     namespace log
