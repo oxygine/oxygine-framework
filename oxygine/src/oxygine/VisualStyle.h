@@ -52,7 +52,7 @@ namespace oxygine
 
         bool getBounds(RectF& b) const  override { b = getDestRect();  return true; }
 
-        void                    setMat(spSTDMaterial mat);
+        void                    setMaterial(spSTDMaterial mat);
         spSTDMaterial _mat;
 
     protected:

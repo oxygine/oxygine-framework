@@ -79,7 +79,7 @@ public:
         _outer = v;
         mat.uniformBlack = _outer.toVector();
 
-        setMat(mc().cache(mat));
+        setMaterial(mc().cache(mat));
     }
 
     typedef Property<Color, const Color&, ShaderTextField, &ShaderTextField::getOuterColor, &ShaderTextField::setOuterColor>   TweenOuterColor;

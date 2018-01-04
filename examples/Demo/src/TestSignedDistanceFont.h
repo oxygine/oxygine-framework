@@ -141,7 +141,7 @@ public:
 
         spSDFMaterial sdf = new SDFMaterial;
 
-        txt->setMat(sdf);
+        txt->setMaterial(sdf);
 
 
         addButton("scale+", "scale+");
@@ -178,7 +178,7 @@ public:
         if (id == "weight-")
             mat->offset -= 0.01f;
 
-        _txt->setMat(mat);
+        _txt->setMaterial(mat);
 
     }
 

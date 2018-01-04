@@ -123,7 +123,7 @@ namespace oxygine
         matChanged();
     }
 
-    void VStyleActor::setMat(spSTDMaterial mat)
+    void VStyleActor::setMaterial(spSTDMaterial mat)
     {
         //if (_mat == mat)
         //    return;
