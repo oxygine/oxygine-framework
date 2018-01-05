@@ -46,18 +46,30 @@ namespace oxygine
     {
         struct init_desc
         {
-            init_desc() : mode24bpp(true), w(-1), h(-1), fullscreen(false), title("Oxygine"), vsync(true), appName(0), companyName(0), force_gles(false) {}
+            init_desc() :w(-1), h(-1),  mode24bpp(true), vsync(true), fullscreen(false), resizable(false), borderless(false), show_window(true), force_gles(false), allow_screensaver(true), title("Oxygine"), appName(0), companyName(0) {}
 
-            /**sets 24 bits per pixel, otherwise sets 16 bits per pixel?*/
-            bool mode24bpp;
             /**display width*/
             int w;
             /**display height*/
             int h;
+
+            /**sets 24 bits per pixel, otherwise sets 16 bits per pixel?*/
+            unsigned int mode24bpp :1;
             /**vertical sync*/
-            bool vsync;
+            unsigned int vsync :1;
             /**fullscreen mode*/
-            bool fullscreen;
+            unsigned int fullscreen :1;
+            /**can the window be resized*/
+            unsigned int resizable :1;
+            /**borderless window*/
+            unsigned int borderless :1;
+            /**will the window be visible*/
+            unsigned int show_window :1;
+            /**use OpenGLES driver. Could be used on Windows for emulation OpenGLES via Direct3D*/
+            unsigned int force_gles :1;
+            /**allow screensaver*/
+            unsigned int allow_screensaver :1;
+
             /**window title*/
             const char* title;
 
@@ -65,9 +77,6 @@ namespace oxygine
             const char* appName;
             /** Company name to be used as part of the file system directory for writable storage*/
             const char* companyName;
-
-            /**use OpenGLES driver. Could be used on Windows for emulation OpenGLES via Direct3D*/
-            bool force_gles;
         };
 
         void init0();

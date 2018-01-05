@@ -2,9 +2,9 @@
 2. emscripten build configured with CMakeFiles
 
 How to build. Steps:
-- Install Emscripten SDK and setup it. Minimal version 1.35.0 required
+- Install Emscripten SDK and setup it. Latest tested version 1.37.22 required
 - Install CMake
-- Installe JDK version 6/7
+- Install JDK version 7/8
 - if you are Windows user you need also install Make tool:
   - Install GnuMake (http://gnuwin32.sourceforge.net/packages/make.htm) or any other 
   - add it to PATH environment variable
@@ -27,6 +27,18 @@ How to build. Steps:
 - Go to folder oxygine-framework/examples/Demo/proj.cmake
 - run: build_emsc.bat
 - Go to new created "build_emsc" folder and open Demo.html with Browser
+
+
+*** 
+In case of build error:
+   "error: reference to 'log' is ambiguous"
+ open emscripten file:
+    emscripten\emscripten\1.37.22\system\include\libcxx\math.h
+find line:
+	log(_A1 __lcpp_x) _NOEXCEPT {return log((double)__lcpp_x);}
+and replace it with:
+	log(_A1 __lcpp_x) _NOEXCEPT {return ::log((double)__lcpp_x);}
+***
 
 
 2b. You could generate your own emscipten build configuration
