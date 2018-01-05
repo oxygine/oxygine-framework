@@ -391,7 +391,7 @@ namespace oxygine
         _text->setText(s.str());
 
 
-        setHeight(_text->getTextRect().size.y + _text->getY() + 3);
+        setHeight(_text->getTextRect(1.0f).size.y + _text->getY() + 3);
         _bg->setSize(getSize());
 
 

@@ -18,7 +18,7 @@ namespace oxygine
         {
             Symbol(): x(0), y(0), code(0) {}
 
-            short x, y;
+            float x, y;
             int code;
             glyph gl;
             RectF destRect;
@@ -42,31 +42,31 @@ namespace oxygine
 
 
             TextStyle style;
-            Rect bounds;
-            int width;
-            int height;
+            RectF bounds;
+            float width;
+            float height;
             int options;
 
 
             const Font* _font;
 
         private:
-            int getLineWidth()const;
-            int getLineSkip()const;
+            float getLineWidth()const;
+            float getLineSkip()const;
 
 
             typedef std::vector<Symbol*> line;
 
             void _alignLine(line& ln);
-            int _alignX(int rx);
-            int _alignY(int ry);
+            float _alignX(float rx);
+            float _alignY(float ry);
             void _nextLine(line& ln);
 
             float _scale;
-            int _x, _y;
+            float _x, _y;
             line _line;
-            int _lineWidth;
-            int _lineSkip;
+            float _lineWidth;
+            float _lineSkip;
         };
     }
 }

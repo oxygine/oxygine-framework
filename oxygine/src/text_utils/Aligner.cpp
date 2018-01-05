@@ -6,13 +6,11 @@ namespace oxygine
 {
     namespace text
     {
-#define GSCALE 1
 
-        Aligner::Aligner(const TextStyle& Style, const Font* font, float gscale, const Vector2& size): width((int)size.x), height((int)size.y), _x(0), _y(0), _lineWidth(0), bounds(0, 0, 0, 0), style(Style), _scale(gscale), _font(font)
+        Aligner::Aligner(const TextStyle& Style, const Font* font, float scale, const Vector2& size): width((int)size.x), height((int)size.y), _x(0), _y(0), _lineWidth(0), bounds(0, 0, 0, 0), style(Style), _scale(scale), _font(font)
         {
-            //log::messageln("gscale %f, adjScale %f globscale %f, %d %f", gscale, _globalScale, _fontSize, fs);
             _line.reserve(50);
-            _lineSkip = (int)(_font->getBaselineDistance() * style.baselineScale) + style.linesOffset;
+            _lineSkip = _font->getLineHeight() * style.baselineScale + style.linesOffset;
             options = Style.options;
         }
 
@@ -21,9 +19,9 @@ namespace oxygine
 
         }
 
-        int Aligner::_alignX(int rx)
+        float Aligner::_alignX(float rx)
         {
-            int tx = 0;
+            float tx = 0;
             switch (getStyle().hAlign)
             {
                 case TextStyle::HALIGN_LEFT:
@@ -40,9 +38,9 @@ namespace oxygine
             return tx;
         }
 
-        int Aligner::_alignY(int ry)
+        float Aligner::_alignY(float ry)
         {
-            int ty = 0;
+            float ty = 0;
 
             switch (getStyle().vAlign)
             {
@@ -66,40 +64,29 @@ namespace oxygine
         void Aligner::begin()
         {
             _x = 0;
-            _y = 0;
+            _y = getLineSkip();
+            _lineWidth = 0;
 
-            width = int(width * _scale);
-            height = int(height * _scale);
+            width = width * _scale;
+            height = height * _scale;
 
-            bounds = Rect(_alignX(0), _alignY(0), 0, 0);
-            nextLine();
-
+            bounds = RectF(_alignX(0), _alignY(0), 0, 0);
         }
 
         void Aligner::end()
         {
-            int ry = _y;
+            _alignLine(_line);
 
-            if (getStyle().multiline)
-            {
-                nextLine();
-                _y -=  getLineSkip();
-            }
-            else
-            {
-                _alignLine(_line);
-            }
-
-            bounds.setY(_alignY(ry));
-            bounds.setHeight(ry);
+            bounds.setY(_alignY(_y));
+            bounds.setHeight(_y);
         }
 
-        int Aligner::getLineWidth() const
+        float Aligner::getLineWidth() const
         {
             return _lineWidth;
         }
 
-        int Aligner::getLineSkip() const
+        float Aligner::getLineSkip() const
         {
             return _lineSkip;
         }
@@ -109,14 +96,14 @@ namespace oxygine
             if (!ln.empty())
             {
                 //calculate real text width
-                int rx = 0;
+                float rx = 0;
                 for (size_t i = 0; i < ln.size(); ++i)
                 {
                     Symbol& s = *ln[i];
-                    rx = std::max(s.x + s.gl.advance_x, rx);
+                    rx = std::fmaxf(s.x + s.gl.advance_x, rx);
                 }
 
-                int tx = _alignX(rx);
+                float tx = _alignX(rx);
 
                 for (size_t i = 0; i < ln.size(); ++i)
                 {
@@ -126,16 +113,15 @@ namespace oxygine
 
                 _lineWidth = rx;
 
-                bounds.setX(std::min(tx, bounds.getX()));
-                bounds.setWidth(std::max(_lineWidth, bounds.getWidth()));
+                bounds.setX(std::fminf(tx, bounds.getX()));
+                bounds.setWidth(std::fmaxf(_lineWidth, bounds.getWidth()));
             }
         }
 
         void Aligner::_nextLine(line& ln)
         {
-            _y += getLineSkip();
             _alignLine(ln);
-
+            _y += getLineSkip();
 
             _lineWidth = 0;
 
@@ -144,7 +130,7 @@ namespace oxygine
 
         void Aligner::nextLine()
         {
-            //assert(multiline == true); commented, becase even if multiline is false - there are breakLine markers, they could be used anyway
+            assert(getStyle().multiline);
 
             _nextLine(_line);
             _line.clear();
@@ -170,15 +156,14 @@ namespace oxygine
             s.y = _y + s.gl.offset_y;
             _x += s.gl.advance_x + getStyle().kerning;
 
-            int rx = s.x + s.gl.advance_x;
+            float rx = s.x + s.gl.advance_x;
 
 
-            _lineWidth = std::max(rx, _lineWidth);
+            _lineWidth = std::fmaxf(rx, _lineWidth);
 
-            //
-            if (_lineWidth > width && getStyle().multiline && (width > 0) && _line.size() > 1)
+            if (_lineWidth > width && getStyle().multiline && width > 0 && _line.size() > 1)
             {
-                int lastWordPos = (int)_line.size() - 1;
+                size_t lastWordPos = _line.size() - 1;
                 for (; lastWordPos > 0; --lastWordPos)
                 {
                     if (_line[lastWordPos]->code == ' ' && _line[lastWordPos - 1]->code != ' ')
@@ -188,20 +173,18 @@ namespace oxygine
                 if (!lastWordPos)
                 {
                     if (style.breakLongWords)
-                        lastWordPos = (int)_line.size() - 1;
+                        lastWordPos = _line.size() - 1;
                     else
                         return 0;
                 }
 
-
-                int delta = (int)_line.size() - lastWordPos;
+                size_t delta = _line.size() - lastWordPos;
                 line leftPart;
                 leftPart.resize(delta + 1);
                 leftPart.assign(_line.begin() + lastWordPos, _line.end());
                 _line.resize(lastWordPos);
-                nextLine();
 
-                //line = leftPart;
+                nextLine();
 
                 for (size_t i = 0; i < leftPart.size(); ++i)
                 {

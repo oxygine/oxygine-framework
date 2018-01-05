@@ -53,7 +53,7 @@ namespace oxygine
         std::string desc = item->dump(0);
 
         tb->setHtmlText(desc);
-        Vector2 ts = tb->getTextRect().size.cast<Vector2>();
+        Vector2 ts = tb->getTextRect(1.0f).size.cast<Vector2>();
         if (ts.x < minWidth)
             ts.x = minWidth;
 

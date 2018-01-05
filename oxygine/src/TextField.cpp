@@ -13,6 +13,7 @@
 #include "Serialize.h"
 
 #include "Material.h"
+#include "Stage.h"
 
 namespace oxygine
 {
@@ -56,7 +57,7 @@ namespace oxygine
 
     bool TextField::isOn(const Vector2& localPosition, float localScale)
     {
-        Rect r = getTextRect(localScale);
+        RectF r = getTextRect(localScale);
         r.expand(Point(_extendedIsOn, _extendedIsOn), Point(_extendedIsOn, _extendedIsOn));
         return r.pointIn(Point((int)localPosition.x, (int)localPosition.y));
     }
@@ -288,7 +289,7 @@ namespace oxygine
         return const_cast<TextField*>(this)->getRootNode(_rtscale)->getSymbol(pos);
     }
 
-    const Rect& TextField::getTextRect(float localScale) const
+    const RectF& TextField::getTextRect(float localScale) const
     {
         const_cast<TextField*>(this)->getRootNode(localScale);
         return _textRect;
@@ -296,7 +297,7 @@ namespace oxygine
 
     bool TextField::getBounds(RectF& r) const
     {
-        r = getTextRect().cast<RectF>();
+        r = getTextRect(Stage::instance->getScaleX());
         return true;
     }
 
@@ -305,7 +306,6 @@ namespace oxygine
     {
         if (!_style.font)
             return _root;
-
 
         float scale = 1.0f;
         const Font* font = _style.font->getClosestFont(globalScale, _style.fontSize, scale);
@@ -334,7 +334,7 @@ namespace oxygine
             rd.end();
 
             _root->finalPass(rd);
-            rd.bounds = (rd.bounds.cast<RectF>() / rd.getScale()).cast<Rect>();
+            rd.bounds = rd.bounds / rd.getScale();
 
             _textRect = rd.bounds;
 
@@ -431,7 +431,8 @@ namespace oxygine
             stream << " htmlMode";
         }
 
-        Rect r = const_cast<TextField*>(this)->getTextRect();
+        RectF r;
+        const_cast<TextField*>(this)->getBounds(r);
         stream << " textRect=(" << r.pos.x << ", " << r.pos.y << ", " << r.size.x << ", " << r.size.y << ")";
 
         stream << "\n" << Actor::dump(options);

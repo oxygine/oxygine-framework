@@ -65,7 +65,7 @@ namespace oxygine
 
             text->setBreakLongWords(true);
 
-            rect->setSize(text->getTextRect().size.cast<Vector2>() + Vector2(2, 2));
+            rect->setSize(text->getTextRect(1.0f).size.cast<Vector2>() + Vector2(2, 2));
             rect->setY((itemSize.y - rect->getHeight()) / 2.0f);
         }
 
@@ -97,7 +97,7 @@ namespace oxygine
                                     );
 
 
-        offsetY += text->getTextRect().getBottom() + 5;
+        offsetY += text->getTextRect(1.0f).getBottom() + 5;
 
         spActor content = new Actor;
         content->setX(2);

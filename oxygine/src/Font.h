@@ -49,16 +49,16 @@ namespace oxygine
         Font();
         ~Font();
 
-        void init(const char* name, int size, int baselineDistance, int lineHeight, bool sdf = false);
+        void init(const char* name, int size, int lineHeight, int lineGap, bool sdf = false);
 
         void addGlyph(const glyph& g);
         void sortGlyphs() {}
 
         void setScale(float scale) { _scale = scale; }
-        void setBaselineDistance(int d) { _baselineDistance = d; }
 
         const glyph*    getGlyph(int code, const glyphOptions& opt) const;
-        int             getBaselineDistance() const;
+        int             getLineHeight() const;
+        int             getLineGap() const;
         int             getSize() const;
         float           getScale() const;
         bool            isSDF() const;
@@ -80,6 +80,7 @@ namespace oxygine
         bool _sdf;
 
         int _size;
-        int _baselineDistance;
+        int _lineHeight;
+        int _lineGap;
     };
 }

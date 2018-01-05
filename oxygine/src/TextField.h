@@ -26,7 +26,7 @@ namespace oxygine
         /**Returns current text style*/
         const TextStyle&            getStyle() const {return _style;}
         /**Returns text bounds*/
-        const Rect&                 getTextRect(float localScale = 1.0f) const;
+        const RectF&                 getTextRect(float localScale) const;
         /**Returns current text*/
         const std::string&          getText() const { return _text; }
         const ResFont*              getFont() const;
@@ -117,7 +117,7 @@ namespace oxygine
         TextStyle _style;
 
         text::Node* _root;
-        Rect _textRect;
+        RectF _textRect;
         float _rtscale;
         int _realFontSize;
 

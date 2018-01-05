@@ -180,7 +180,10 @@ namespace oxygine
                 {
                     Symbol& s = _data[i];
                     if (s.code == '\n')
-                        rd.nextLine();
+                    {
+                        if (rd.getStyle().multiline)
+                            rd.nextLine();
+                    }
                     else
                     {
                         const glyph* gl = font->getGlyph(s.code, opt);
@@ -206,7 +209,7 @@ namespace oxygine
             }
         }
 
-        float mlt(int x, float sf)
+        float mlt(float x, float sf)
         {
             //return (x + 0.01f) / sf;
             return x / sf;

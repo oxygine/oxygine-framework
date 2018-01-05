@@ -410,7 +410,7 @@ namespace oxygine
             gl.sw = width / downsample;
             gl.sh = height / downsample;
             gl.offset_x = xoffset / downsample;
-            gl.offset_y = yoffset / downsample - base;
+            gl.offset_y = yoffset / downsample - lineHeight;
             gl.advance_x = xadvance / downsample;
             gl.advance_y = 0;
 

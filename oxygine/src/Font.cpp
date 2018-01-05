@@ -3,7 +3,7 @@
 
 namespace oxygine
 {
-    Font::Font() : _size(0), _baselineDistance(0), _scale(1.0f), _sdf(false), _ignoreOptions(true)
+    Font::Font() : _size(0), _lineHeight(0), _lineGap(0), _scale(1.0f), _sdf(false), _ignoreOptions(true)
     {
     }
 
@@ -11,12 +11,13 @@ namespace oxygine
     {
     }
 
-    void Font::init(const char* name, int realSize, int baselineDistance, int lineHeight, bool sdf)
+    void Font::init(const char* name, int realSize, int lineHeight, int lineGap, bool sdf)
     {
         setName(name);
         _sdf = sdf;
         _size = realSize;
-        _baselineDistance = baselineDistance;
+        _lineHeight = lineHeight;
+        _lineGap = lineGap;
     }
 
     void Font::addGlyph(const glyph& gl)
@@ -66,9 +67,14 @@ namespace oxygine
         return g;
     }
 
-    int Font::getBaselineDistance() const
+    int Font::getLineHeight() const
     {
-        return _baselineDistance;
+        return _lineHeight;
+    }
+
+    int Font::getLineGap() const
+    {
+        return _lineGap;
     }
 
     int Font::getSize() const
