@@ -12,7 +12,7 @@
 
 using namespace oxygine;
 
-
+/*
 // This function is called each frame
 int mainloop()
 {
@@ -39,6 +39,35 @@ int mainloop()
     }
 
     return done ? 1 : 0;
+}
+*/
+
+// This function is called each user or system event
+int mainloop()
+{
+    bool done;
+    do
+    {
+        // It gets passed to our example game implementation
+        example_update();
+
+        // Update our stage
+        // Update all actors. Actor::update will also be called for all its children
+        getStage()->update();
+
+        if (core::beginRendering())
+        {
+            Color clearColor(32, 32, 32, 255);
+            Rect viewport(Point(0, 0), core::getDisplaySize());
+            // Render all actors inside the stage. Actor::render will also be called for all its children
+            getStage()->render(clearColor, viewport);
+
+            core::swapDisplayBuffers();
+        }
+        done = core::waitUntilEvent();
+    } while (!done);
+
+    return 1;
 }
 
 // Application entry point

@@ -99,6 +99,9 @@ namespace oxygine
         /** Update engine*/
         bool update();
 
+        /** Wait until event occurs and update engine*/
+        bool waitUntilEvent();
+
         /**returns True if device is ready for rendering*/
         bool isReady2Render();
         /**returns True if device is ready for rendering*/
