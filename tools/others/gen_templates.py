@@ -17,7 +17,7 @@ def gen(path, project=""):
     projs = ("cmake", )
     projs = ("android", )
     #projs = ("win32", )
-    #projs = ("ios", )
+    projs = ("ios", )
     # projs = ("emscripten", )
 
     for platform in projs:
