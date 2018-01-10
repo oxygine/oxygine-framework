@@ -488,6 +488,7 @@
 		4F7EF38D2006173E004089D6 /* RenderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RenderDelegate.h; path = ../../../src/oxygine/RenderDelegate.h; sourceTree = "<group>"; };
 		4F7EF38E2006173E004089D6 /* RenderDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RenderDelegate.cpp; path = ../../../src/oxygine/RenderDelegate.cpp; sourceTree = "<group>"; };
 		4F7EF38F2006173E004089D6 /* STDRenderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STDRenderDelegate.h; path = ../../../src/oxygine/STDRenderDelegate.h; sourceTree = "<group>"; };
+		4F7EF5A820062345004089D6 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		C38EC22B1709600E00568283 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		C3E86F4C16EBC8A500052915 /* liboxygine_ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liboxygine_ios.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -807,6 +808,14 @@
 			path = ../../../src/oxygine/winnie_alloc;
 			sourceTree = "<group>";
 		};
+		4F7EF5A720062345004089D6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4F7EF5A820062345004089D6 /* Metal.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		C3E86F4116EBC8A500052915 = {
 			isa = PBXGroup;
 			children = (
@@ -814,6 +823,7 @@
 				C38EC22B1709600E00568283 /* OpenGLES.framework */,
 				C3E86F5316EBC8C200052915 /* src */,
 				C3E86F4D16EBC8A500052915 /* Products */,
+				4F7EF5A720062345004089D6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
