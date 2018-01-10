@@ -47,7 +47,7 @@
 		4F58C6F61F78F1C600D36E3B /* file.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F58C5EA1F78F1C600D36E3B /* file.h */; };
 		4F58C6F71F78F1C600D36E3B /* FileSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F58C5EB1F78F1C600D36E3B /* FileSystem.cpp */; };
 		4F58C6F81F78F1C600D36E3B /* FileSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F58C5EC1F78F1C600D36E3B /* FileSystem.h */; };
-		4F58C6F91F78F1C600D36E3B /* NativeTextureGLES.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F58C5EE1F78F1C600D36E3B /* NativeTextureGLES.cpp */; };
+		4F58C6F91F78F1C600D36E3B /* NativeTextureGLES.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F58C5EE1F78F1C600D36E3B /* NativeTextureGLES.cpp */; settings = {COMPILER_FLAGS = "-Wunreachable-code"; }; };
 		4F58C6FA1F78F1C600D36E3B /* NativeTextureGLES.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F58C5EF1F78F1C600D36E3B /* NativeTextureGLES.h */; };
 		4F58C6FB1F78F1C600D36E3B /* oxgl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F58C5F01F78F1C600D36E3B /* oxgl.cpp */; };
 		4F58C6FC1F78F1C600D36E3B /* oxgl.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F58C5F11F78F1C600D36E3B /* oxgl.h */; };
@@ -163,7 +163,7 @@
 		4F58C7711F78F1C600D36E3B /* oxygine-include.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F58C66C1F78F1C600D36E3B /* oxygine-include.h */; };
 		4F58C7721F78F1C600D36E3B /* PointerState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F58C66D1F78F1C600D36E3B /* PointerState.cpp */; };
 		4F58C7731F78F1C600D36E3B /* PointerState.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F58C66E1F78F1C600D36E3B /* PointerState.h */; };
-		4F58C7741F78F1C600D36E3B /* PostProcess.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F58C66F1F78F1C600D36E3B /* PostProcess.cpp */; };
+		4F58C7741F78F1C600D36E3B /* PostProcess.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F58C66F1F78F1C600D36E3B /* PostProcess.cpp */; settings = {COMPILER_FLAGS = "-Wunreachable-code"; }; };
 		4F58C7751F78F1C600D36E3B /* PostProcess.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F58C6701F78F1C600D36E3B /* PostProcess.h */; };
 		4F58C7761F78F1C600D36E3B /* Property.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F58C6711F78F1C600D36E3B /* Property.h */; };
 		4F58C7771F78F1C600D36E3B /* pugiconfig.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 4F58C6731F78F1C600D36E3B /* pugiconfig.hpp */; };
