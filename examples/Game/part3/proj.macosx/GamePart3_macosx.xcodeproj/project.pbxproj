@@ -25,8 +25,8 @@
 		F2CFD518E4E2E05ECEDBB262 /* ../src/Rocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BA41FC88D76540A6905224D6 /* ../src/Rocket.cpp */; };
 		693088A7AB377368EE4A018E /* ../src/Scene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2CE4BD5BB9DEF92439C0AB58 /* ../src/Scene.cpp */; };
 		2B0FCA4EF2CDAB7EF6C6252E /* ../src/Unit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F196143B0370A9D348494ACC /* ../src/Unit.cpp */; };
-		F87DC9641C1B8FCF28948580 /* ../src/main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7746CA7A63049ED8F7D6BF42 /* ../src/main.cpp */; };
-		9850666D9BEB7BAAA6AAECDC /* ../src/example.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D954BD82D7708B65A08FB6B9 /* ../src/example.cpp */; };
+		F87DC9641C1B8FCF28948580 /* ../src/example.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7746CA7A63049ED8F7D6BF42 /* ../src/example.cpp */; };
+		9850666D9BEB7BAAA6AAECDC /* ../src/main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D954BD82D7708B65A08FB6B9 /* ../src/main.cpp */; };
 		33E41D858B2ABD49382CD53F /* ../src/res.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BD0E956CC3A2F7EB94822B5C /* ../src/res.cpp */; };
 		3BB41671209E30BDF95D1B16 /* ../data/images in Sources */ = {isa = PBXBuildFile; fileRef = 7623D793B59EF0CD569E6EC2 /* ../data/images */; };
 		E02A0627DE00D04110ABADA6 /* ../data/xmls in Sources */ = {isa = PBXBuildFile; fileRef = AFA30E959880563E6ABBBC4F /* ../data/xmls */; };
@@ -111,8 +111,8 @@
 		BA41FC88D76540A6905224D6 /* ../src/Rocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Rocket.cpp; path = ../src/Rocket.cpp; sourceTree = "<group>"; };
 		2CE4BD5BB9DEF92439C0AB58 /* ../src/Scene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Scene.cpp; path = ../src/Scene.cpp; sourceTree = "<group>"; };
 		F196143B0370A9D348494ACC /* ../src/Unit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Unit.cpp; path = ../src/Unit.cpp; sourceTree = "<group>"; };
-		7746CA7A63049ED8F7D6BF42 /* ../src/main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../src/main.cpp; sourceTree = "<group>"; };
-		D954BD82D7708B65A08FB6B9 /* ../src/example.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = example.cpp; path = ../src/example.cpp; sourceTree = "<group>"; };
+		7746CA7A63049ED8F7D6BF42 /* ../src/example.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = example.cpp; path = ../src/example.cpp; sourceTree = "<group>"; };
+		D954BD82D7708B65A08FB6B9 /* ../src/main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../src/main.cpp; sourceTree = "<group>"; };
 		BD0E956CC3A2F7EB94822B5C /* ../src/res.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = res.cpp; path = ../src/res.cpp; sourceTree = "<group>"; };
 		B52CCD463855CF91A7FBDB8E /* ../src/Enemy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Enemy.h; path = ../src/Enemy.h; sourceTree = "<group>"; };
 		7EEFDEEC289FCBB5FA67F822 /* ../src/Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Game.h; path = ../src/Game.h; sourceTree = "<group>"; };
@@ -237,8 +237,8 @@
 				BA41FC88D76540A6905224D6 /* Rocket.cpp */, 
 				2CE4BD5BB9DEF92439C0AB58 /* Scene.cpp */, 
 				F196143B0370A9D348494ACC /* Unit.cpp */, 
-				7746CA7A63049ED8F7D6BF42 /* main.cpp */,
-				D954BD82D7708B65A08FB6B9 /* example.cpp */, 
+				7746CA7A63049ED8F7D6BF42 /* example.cpp */, 
+				D954BD82D7708B65A08FB6B9 /* main.cpp */, 
 				BD0E956CC3A2F7EB94822B5C /* res.cpp */, 
 				B52CCD463855CF91A7FBDB8E /* Enemy.h */, 
 				7EEFDEEC289FCBB5FA67F822 /* Game.h */, 
@@ -394,8 +394,8 @@
 				F2CFD518E4E2E05ECEDBB262 /* Rocket.cpp */, 
 				693088A7AB377368EE4A018E /* Scene.cpp */, 
 				2B0FCA4EF2CDAB7EF6C6252E /* Unit.cpp */, 
-				F87DC9641C1B8FCF28948580 /* main.cpp */,
-				9850666D9BEB7BAAA6AAECDC /* example.cpp */, 
+				F87DC9641C1B8FCF28948580 /* example.cpp */, 
+				9850666D9BEB7BAAA6AAECDC /* main.cpp */, 
 				33E41D858B2ABD49382CD53F /* res.cpp */, 
 
 			);
@@ -448,6 +448,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -482,6 +483,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;

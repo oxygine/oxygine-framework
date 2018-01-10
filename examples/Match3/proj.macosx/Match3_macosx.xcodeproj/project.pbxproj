@@ -17,8 +17,8 @@
 		049B574A1871FBE900EF3C66 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 049B57491871FBE900EF3C66 /* Images.xcassets */; };
 		2DC477AC10D6C07B3FE008F6 /* ../src/Board.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360377333740D8A2FD15BBE6 /* ../src/Board.cpp */; };
 		DA49ED8903C628BA578C8670 /* ../src/Jewel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0BF9628FC8D38F9748F0CDEB /* ../src/Jewel.cpp */; };
-		C8860D93875589970329DCCD /* ../src/main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DA100C319512824B7570663 /* ../src/main.cpp */; };
-		1E839D002B2BA83FC83A695A /* ../src/example.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04FE4D4FB640E0DF92DFB865 /* ../src/example.cpp */; };
+		C8860D93875589970329DCCD /* ../src/example.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DA100C319512824B7570663 /* ../src/example.cpp */; };
+		1E839D002B2BA83FC83A695A /* ../src/main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04FE4D4FB640E0DF92DFB865 /* ../src/main.cpp */; };
 		3A631A475DE035FC53ADE5EA /* ../src/shared.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7F3B12E3C9D554D9FE28101D /* ../src/shared.cpp */; };
 		CD59C69314E9E74CD0A11E03 /* ../data/fonts in Sources */ = {isa = PBXBuildFile; fileRef = F6123B1E6FE4471A00F49751 /* ../data/fonts */; };
 		EFF139F8BA484314F7AAF645 /* ../data/images in Sources */ = {isa = PBXBuildFile; fileRef = 5DE458993031811A4C7D28C1 /* ../data/images */; };
@@ -96,8 +96,8 @@
 		049B57501871FBE900EF3C66 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		360377333740D8A2FD15BBE6 /* ../src/Board.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Board.cpp; path = ../src/Board.cpp; sourceTree = "<group>"; };
 		0BF9628FC8D38F9748F0CDEB /* ../src/Jewel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Jewel.cpp; path = ../src/Jewel.cpp; sourceTree = "<group>"; };
-		4DA100C319512824B7570663 /* ../src/main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../src/main.cpp; sourceTree = "<group>"; };
-		04FE4D4FB640E0DF92DFB865 /* ../src/example.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = example.cpp; path = ../src/example.cpp; sourceTree = "<group>"; };
+		4DA100C319512824B7570663 /* ../src/example.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = example.cpp; path = ../src/example.cpp; sourceTree = "<group>"; };
+		04FE4D4FB640E0DF92DFB865 /* ../src/main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../src/main.cpp; sourceTree = "<group>"; };
 		7F3B12E3C9D554D9FE28101D /* ../src/shared.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = shared.cpp; path = ../src/shared.cpp; sourceTree = "<group>"; };
 		2CE4BD5BB9DEF92439C0AB58 /* ../src/Board.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Board.h; path = ../src/Board.h; sourceTree = "<group>"; };
 		F196143B0370A9D348494ACC /* ../src/Jewel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Jewel.h; path = ../src/Jewel.h; sourceTree = "<group>"; };
@@ -208,8 +208,8 @@
 			children = (
 				360377333740D8A2FD15BBE6 /* Board.cpp */, 
 				0BF9628FC8D38F9748F0CDEB /* Jewel.cpp */, 
-				4DA100C319512824B7570663 /* main.cpp */,
-				04FE4D4FB640E0DF92DFB865 /* example.cpp */, 
+				4DA100C319512824B7570663 /* example.cpp */, 
+				04FE4D4FB640E0DF92DFB865 /* main.cpp */, 
 				7F3B12E3C9D554D9FE28101D /* shared.cpp */, 
 				2CE4BD5BB9DEF92439C0AB58 /* Board.h */, 
 				F196143B0370A9D348494ACC /* Jewel.h */, 
@@ -350,8 +350,8 @@
 			files = (
 				2DC477AC10D6C07B3FE008F6 /* Board.cpp */, 
 				DA49ED8903C628BA578C8670 /* Jewel.cpp */, 
-				C8860D93875589970329DCCD /* main.cpp */,
-				1E839D002B2BA83FC83A695A /* example.cpp */, 
+				C8860D93875589970329DCCD /* example.cpp */, 
+				1E839D002B2BA83FC83A695A /* main.cpp */, 
 				3A631A475DE035FC53ADE5EA /* shared.cpp */, 
 
 			);
@@ -404,6 +404,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -438,6 +439,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
