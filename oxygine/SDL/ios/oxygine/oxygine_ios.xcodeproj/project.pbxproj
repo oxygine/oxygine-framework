@@ -143,8 +143,6 @@
 		4F58C75A1F78F1C600D36E3B /* Material.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F58C6531F78F1C600D36E3B /* Material.h */; };
 		4F58C75B1F78F1C600D36E3B /* MaterialCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F58C6541F78F1C600D36E3B /* MaterialCache.cpp */; };
 		4F58C75C1F78F1C600D36E3B /* MaterialCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F58C6551F78F1C600D36E3B /* MaterialCache.h */; };
-		4F58C75D1F78F1C600D36E3B /* MaterialX.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F58C6561F78F1C600D36E3B /* MaterialX.cpp */; };
-		4F58C75E1F78F1C600D36E3B /* MaterialX.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F58C6571F78F1C600D36E3B /* MaterialX.h */; };
 		4F58C75F1F78F1C600D36E3B /* AffineTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F58C6591F78F1C600D36E3B /* AffineTransform.cpp */; };
 		4F58C7601F78F1C600D36E3B /* AffineTransform.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F58C65A1F78F1C600D36E3B /* AffineTransform.h */; };
 		4F58C7611F78F1C600D36E3B /* Color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F58C65B1F78F1C600D36E3B /* Color.cpp */; };
@@ -200,8 +198,6 @@
 		4F58C7941F78F1C600D36E3B /* Serializable.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F58C6921F78F1C600D36E3B /* Serializable.h */; };
 		4F58C7951F78F1C600D36E3B /* Serialize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F58C6931F78F1C600D36E3B /* Serialize.cpp */; };
 		4F58C7961F78F1C600D36E3B /* Serialize.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F58C6941F78F1C600D36E3B /* Serialize.h */; };
-		4F58C7971F78F1C600D36E3B /* STDMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F58C6951F78F1C600D36E3B /* STDMaterial.cpp */; };
-		4F58C7981F78F1C600D36E3B /* STDMaterial.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F58C6961F78F1C600D36E3B /* STDMaterial.h */; };
 		4F58C7991F78F1C600D36E3B /* STDRenderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F58C6971F78F1C600D36E3B /* STDRenderer.cpp */; };
 		4F58C79A1F78F1C600D36E3B /* STDRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F58C6981F78F1C600D36E3B /* STDRenderer.h */; };
 		4F58C79B1F78F1C600D36E3B /* Aligner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F58C69A1F78F1C600D36E3B /* Aligner.cpp */; };
@@ -244,6 +240,10 @@
 		4F58C7C01F78F1C600D36E3B /* winnie_alloc.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F58C6C31F78F1C600D36E3B /* winnie_alloc.h */; };
 		4F58C7C11F78F1C600D36E3B /* winnie_alloc_config.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F58C6C41F78F1C600D36E3B /* winnie_alloc_config.h */; };
 		4F58C7C31F78F3AF00D36E3B /* Vector2.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F58C7C21F78F3AF00D36E3B /* Vector2.h */; };
+		4F7EF3902006173E004089D6 /* STDRenderDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F7EF38C2006173E004089D6 /* STDRenderDelegate.cpp */; };
+		4F7EF3912006173E004089D6 /* RenderDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F7EF38D2006173E004089D6 /* RenderDelegate.h */; };
+		4F7EF3922006173E004089D6 /* RenderDelegate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F7EF38E2006173E004089D6 /* RenderDelegate.cpp */; };
+		4F7EF3932006173E004089D6 /* STDRenderDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F7EF38F2006173E004089D6 /* STDRenderDelegate.h */; };
 		C38EC22C1709600E00568283 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C38EC22B1709600E00568283 /* OpenGLES.framework */; };
 /* End PBXBuildFile section */
 
@@ -385,8 +385,6 @@
 		4F58C6531F78F1C600D36E3B /* Material.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Material.h; path = ../../../src/oxygine/Material.h; sourceTree = "<group>"; };
 		4F58C6541F78F1C600D36E3B /* MaterialCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MaterialCache.cpp; path = ../../../src/oxygine/MaterialCache.cpp; sourceTree = "<group>"; };
 		4F58C6551F78F1C600D36E3B /* MaterialCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MaterialCache.h; path = ../../../src/oxygine/MaterialCache.h; sourceTree = "<group>"; };
-		4F58C6561F78F1C600D36E3B /* MaterialX.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MaterialX.cpp; path = ../../../src/oxygine/MaterialX.cpp; sourceTree = "<group>"; };
-		4F58C6571F78F1C600D36E3B /* MaterialX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MaterialX.h; path = ../../../src/oxygine/MaterialX.h; sourceTree = "<group>"; };
 		4F58C6591F78F1C600D36E3B /* AffineTransform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AffineTransform.cpp; sourceTree = "<group>"; };
 		4F58C65A1F78F1C600D36E3B /* AffineTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AffineTransform.h; sourceTree = "<group>"; };
 		4F58C65B1F78F1C600D36E3B /* Color.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Color.cpp; sourceTree = "<group>"; };
@@ -443,8 +441,6 @@
 		4F58C6921F78F1C600D36E3B /* Serializable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Serializable.h; path = ../../../src/oxygine/Serializable.h; sourceTree = "<group>"; };
 		4F58C6931F78F1C600D36E3B /* Serialize.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Serialize.cpp; path = ../../../src/oxygine/Serialize.cpp; sourceTree = "<group>"; };
 		4F58C6941F78F1C600D36E3B /* Serialize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Serialize.h; path = ../../../src/oxygine/Serialize.h; sourceTree = "<group>"; };
-		4F58C6951F78F1C600D36E3B /* STDMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = STDMaterial.cpp; path = ../../../src/oxygine/STDMaterial.cpp; sourceTree = "<group>"; };
-		4F58C6961F78F1C600D36E3B /* STDMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STDMaterial.h; path = ../../../src/oxygine/STDMaterial.h; sourceTree = "<group>"; };
 		4F58C6971F78F1C600D36E3B /* STDRenderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = STDRenderer.cpp; path = ../../../src/oxygine/STDRenderer.cpp; sourceTree = "<group>"; };
 		4F58C6981F78F1C600D36E3B /* STDRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STDRenderer.h; path = ../../../src/oxygine/STDRenderer.h; sourceTree = "<group>"; };
 		4F58C69A1F78F1C600D36E3B /* Aligner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Aligner.cpp; sourceTree = "<group>"; };
@@ -488,6 +484,10 @@
 		4F58C6C31F78F1C600D36E3B /* winnie_alloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = winnie_alloc.h; sourceTree = "<group>"; };
 		4F58C6C41F78F1C600D36E3B /* winnie_alloc_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = winnie_alloc_config.h; sourceTree = "<group>"; };
 		4F58C7C21F78F3AF00D36E3B /* Vector2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector2.h; sourceTree = "<group>"; };
+		4F7EF38C2006173E004089D6 /* STDRenderDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = STDRenderDelegate.cpp; path = ../../../src/oxygine/STDRenderDelegate.cpp; sourceTree = "<group>"; };
+		4F7EF38D2006173E004089D6 /* RenderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RenderDelegate.h; path = ../../../src/oxygine/RenderDelegate.h; sourceTree = "<group>"; };
+		4F7EF38E2006173E004089D6 /* RenderDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RenderDelegate.cpp; path = ../../../src/oxygine/RenderDelegate.cpp; sourceTree = "<group>"; };
+		4F7EF38F2006173E004089D6 /* STDRenderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STDRenderDelegate.h; path = ../../../src/oxygine/STDRenderDelegate.h; sourceTree = "<group>"; };
 		C38EC22B1709600E00568283 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		C3E86F4C16EBC8A500052915 /* liboxygine_ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liboxygine_ios.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -828,6 +828,10 @@
 		C3E86F5316EBC8C200052915 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				4F7EF38E2006173E004089D6 /* RenderDelegate.cpp */,
+				4F7EF38D2006173E004089D6 /* RenderDelegate.h */,
+				4F7EF38C2006173E004089D6 /* STDRenderDelegate.cpp */,
+				4F7EF38F2006173E004089D6 /* STDRenderDelegate.h */,
 				4F58C5B21F78F1C500D36E3B /* actor */,
 				4F58C5CF1F78F1C600D36E3B /* AnimationFrame.cpp */,
 				4F58C5D01F78F1C600D36E3B /* AnimationFrame.h */,
@@ -864,8 +868,6 @@
 				4F58C6531F78F1C600D36E3B /* Material.h */,
 				4F58C6541F78F1C600D36E3B /* MaterialCache.cpp */,
 				4F58C6551F78F1C600D36E3B /* MaterialCache.h */,
-				4F58C6561F78F1C600D36E3B /* MaterialX.cpp */,
-				4F58C6571F78F1C600D36E3B /* MaterialX.h */,
 				4F58C6581F78F1C600D36E3B /* math */,
 				4F58C6641F78F1C600D36E3B /* minizip */,
 				4F58C66B1F78F1C600D36E3B /* oxygine-forwards.h */,
@@ -882,8 +884,6 @@
 				4F58C6921F78F1C600D36E3B /* Serializable.h */,
 				4F58C6931F78F1C600D36E3B /* Serialize.cpp */,
 				4F58C6941F78F1C600D36E3B /* Serialize.h */,
-				4F58C6951F78F1C600D36E3B /* STDMaterial.cpp */,
-				4F58C6961F78F1C600D36E3B /* STDMaterial.h */,
 				4F58C6971F78F1C600D36E3B /* STDRenderer.cpp */,
 				4F58C6981F78F1C600D36E3B /* STDRenderer.h */,
 				4F58C6991F78F1C600D36E3B /* text_utils */,
@@ -915,9 +915,9 @@
 				4F58C7521F78F1C600D36E3B /* json.h in Headers */,
 				4F58C74C1F78F1C600D36E3B /* initActor.h in Headers */,
 				4F58C7511F78F1C600D36E3B /* json-forwards.h in Headers */,
+				4F7EF3932006173E004089D6 /* STDRenderDelegate.h in Headers */,
 				4F58C70F1F78F1C600D36E3B /* log.h in Headers */,
 				4F58C6F61F78F1C600D36E3B /* file.h in Headers */,
-				4F58C7981F78F1C600D36E3B /* STDMaterial.h in Headers */,
 				4F58C7771F78F1C600D36E3B /* pugiconfig.hpp in Headers */,
 				4F58C7661F78F1C600D36E3B /* ScalarMath.h in Headers */,
 				4F58C6FC1F78F1C600D36E3B /* oxgl.h in Headers */,
@@ -938,6 +938,7 @@
 				4F58C6FA1F78F1C600D36E3B /* NativeTextureGLES.h in Headers */,
 				4F58C7A01F78F1C600D36E3B /* TextBuilder.h in Headers */,
 				4F58C7181F78F1C600D36E3B /* oxygine.h in Headers */,
+				4F7EF3912006173E004089D6 /* RenderDelegate.h in Headers */,
 				4F58C6E61F78F1C600D36E3B /* Clock.h in Headers */,
 				4F58C77E1F78F1C600D36E3B /* ResAnim.h in Headers */,
 				4F58C6E81F78F1C600D36E3B /* closure_impl.h in Headers */,
@@ -982,7 +983,6 @@
 				4F58C72C1F78F1C600D36E3B /* ThreadMessages.h in Headers */,
 				4F58C7861F78F1C600D36E3B /* ResBuffer.h in Headers */,
 				4F58C79A1F78F1C600D36E3B /* STDRenderer.h in Headers */,
-				4F58C75E1F78F1C600D36E3B /* MaterialX.h in Headers */,
 				4F58C7251F78F1C600D36E3B /* STDFileSystem.h in Headers */,
 				4F58C7341F78F1C600D36E3B /* ZipFileSystem.h in Headers */,
 				4F58C7681F78F1C600D36E3B /* Vector3.h in Headers */,
@@ -1104,9 +1104,9 @@
 				4F58C74A1F78F1C600D36E3B /* Image.cpp in Sources */,
 				4F58C7411F78F1C600D36E3B /* Draggable.cpp in Sources */,
 				4F58C7541F78F1C600D36E3B /* key.cpp in Sources */,
-				4F58C7971F78F1C600D36E3B /* STDMaterial.cpp in Sources */,
 				4F58C7391F78F1C600D36E3B /* TreeInspector.cpp in Sources */,
 				4F58C7891F78F1C600D36E3B /* ResFontBM.cpp in Sources */,
+				4F7EF3902006173E004089D6 /* STDRenderDelegate.cpp in Sources */,
 				4F58C6F71F78F1C600D36E3B /* FileSystem.cpp in Sources */,
 				4F58C6FB1F78F1C600D36E3B /* oxgl.cpp in Sources */,
 				4F58C6C71F78F1C600D36E3B /* Box9Sprite.cpp in Sources */,
@@ -1116,6 +1116,7 @@
 				4F58C79F1F78F1C600D36E3B /* TextBuilder.cpp in Sources */,
 				4F58C6DF1F78F1C600D36E3B /* WebImage.cpp in Sources */,
 				4F58C7011F78F1C600D36E3B /* VideoDriverGL.cpp in Sources */,
+				4F7EF3922006173E004089D6 /* RenderDelegate.cpp in Sources */,
 				4F58C6D51F78F1C600D36E3B /* ProgressBar.cpp in Sources */,
 				4F58C77F1F78F1C600D36E3B /* ResAtlas.cpp in Sources */,
 				4F58C70B1F78F1C600D36E3B /* HttpRequestCocoaTask.mm in Sources */,
@@ -1161,7 +1162,6 @@
 				4F58C7281F78F1C600D36E3B /* Texture.cpp in Sources */,
 				4F58C72D1F78F1C600D36E3B /* UberShaderProgram.cpp in Sources */,
 				4F58C7831F78F1C600D36E3B /* ResAtlasPrebuilt.cpp in Sources */,
-				4F58C75D1F78F1C600D36E3B /* MaterialX.cpp in Sources */,
 				4F58C79D1F78F1C600D36E3B /* Node.cpp in Sources */,
 				4F58C6C51F78F1C600D36E3B /* Actor.cpp in Sources */,
 				4F58C73B1F78F1C600D36E3B /* TreeInspectorLine.cpp in Sources */,
