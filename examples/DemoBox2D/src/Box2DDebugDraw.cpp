@@ -36,8 +36,8 @@ Box2DDraw::~Box2DDraw()
 
 void Box2DDraw::doRender(const RenderState& rs)
 {
-    Material::setCurrent(0);
-
+    Material::null->apply();
+    rsCache().reset();
     IVideoDriver* driver = IVideoDriver::instance;
 
     _world->SetDebugDraw(this);
@@ -51,6 +51,9 @@ void Box2DDraw::doRender(const RenderState& rs)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     _world->DrawDebugData();
     _world->SetDebugDraw(0);
+    
+    rsCache().reset();
+    
 }
 
 void Box2DDraw::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
