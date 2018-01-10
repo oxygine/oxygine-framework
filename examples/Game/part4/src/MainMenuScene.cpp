@@ -14,8 +14,8 @@ MainMenuScene::MainMenuScene()
 
 
     spSprite logo = new Sprite;
-    logo->setResAnim(res::ui.getResAnim("logo2")),
-         logo->attachTo(_view);
+    logo->setResAnim(res::ui.getResAnim("logo2"));
+    logo->attachTo(_view);
     logo->setPosition(_view->getSize() - logo->getSize());
 
 

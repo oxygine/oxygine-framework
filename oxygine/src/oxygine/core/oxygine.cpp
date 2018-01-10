@@ -761,7 +761,6 @@ namespace oxygine
             return done;
 #endif
 
-            log::warning("update not implemented");
             return true;
         }
 
