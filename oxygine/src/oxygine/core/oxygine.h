@@ -54,21 +54,21 @@ namespace oxygine
             int h;
 
             /**sets 24 bits per pixel, otherwise sets 16 bits per pixel?*/
-            unsigned int mode24bpp :1;
+            bool mode24bpp;
             /**vertical sync*/
-            unsigned int vsync :1;
+            bool vsync;
             /**fullscreen mode*/
-            unsigned int fullscreen :1;
+            bool fullscreen;
             /**can the window be resized*/
-            unsigned int resizable :1;
+            bool resizable;
             /**borderless window*/
-            unsigned int borderless :1;
+            bool borderless;
             /**will the window be visible*/
-            unsigned int show_window :1;
+            bool show_window;
             /**use OpenGLES driver. Could be used on Windows for emulation OpenGLES via Direct3D*/
-            unsigned int force_gles :1;
+            bool force_gles;
             /**allow screensaver*/
-            unsigned int allow_screensaver :1;
+            bool allow_screensaver;
 
             /**window title*/
             const char* title;
