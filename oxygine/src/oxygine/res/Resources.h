@@ -51,6 +51,7 @@ namespace oxygine
         */
         static void registerResourceType(createResourceCallback creationCallback, const char* resTypeID);
         static void unregisterResourceType(const char* resTypeID);
+        static void setDefaultMissingResAnim(ResAnim*);
 
         Resources();
         ~Resources();
@@ -79,13 +80,7 @@ namespace oxygine
         /** get resource by id, no case sensitive
         @param resource id
         */
-        Resource* get(const std::string& id, error_policy ep = ep_show_error) const;
-
-        /** returns resource by index */
-        //Resource* get(int index) const {return _fastAccessResources.at(index).get();}
-        //int       getCount() const {return (int)_fastAccessResources.size();}
-
-        Resource* operator[](const std::string& id) { return get(id); }
+        Resource* get(const std::string& id, error_policy ep = ep_show_error, Resource* defIfNotFound = 0) const;
 
         /** get resource by id
         @param resource id
@@ -98,7 +93,7 @@ namespace oxygine
         ResFont* getResFont(const std::string& id, error_policy ep = ep_show_error) const;
 
         template<class T>
-        T* getT(const std::string& id, error_policy ep = ep_show_error) const { return safeCast<T*>(get(id, ep)); }
+        T* getT(const std::string& id, error_policy ep = ep_show_error, T* defIfNotFound = 0) const { return safeCast<T*>(get(id, ep, defIfNotFound)); }
 
         /**debug function. prints all loaded resources*/
         void print() const;

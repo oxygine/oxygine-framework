@@ -16,8 +16,9 @@
 
 namespace oxygine
 {
-
     Resources::registeredResources Resources::_registeredResources;
+    ResAnim *_defaultMissingRS = 0;
+
     void Resources::registerResourceType(Resources::createResourceCallback creationCallback, const char* resTypeID)
     {
         registeredResource r;
@@ -58,6 +59,11 @@ namespace oxygine
         OX_ASSERT(!"can't find resource type");
     }
 
+    void Resources::setDefaultMissingResAnim(ResAnim* rs)
+    {
+        _defaultMissingRS = rs;
+    }
+
     Resources::Resources()
     {
     }
@@ -69,7 +75,7 @@ namespace oxygine
 
     ResAnim* Resources::getResAnim(const std::string& id, error_policy ep) const
     {
-        return getT<ResAnim>(id, ep);
+        return getT<ResAnim>(id, ep, _defaultMissingRS);
     }
 
     ResFont* Resources::getResFont(const std::string& id, error_policy ep) const
@@ -354,7 +360,7 @@ namespace oxygine
         return _resourcesMap;
     }
 
-    Resource* Resources::get(const std::string& id_, error_policy ep) const
+    Resource* Resources::get(const std::string& id_, error_policy ep, Resource* defIfNotFound) const
     {
         std::string id = lower(id_);
 
@@ -366,6 +372,8 @@ namespace oxygine
         }
 
         handleErrorPolicy(ep, "can't find resource: '%s' in '%s'", id.c_str(), _name.c_str());
+        if (ep == ep_show_error)
+            return defIfNotFound;
         return 0;
     }
 }
