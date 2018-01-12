@@ -550,16 +550,22 @@ namespace oxygine
 
     void Image::fill_zero()
     {
-        if (_buffer.empty())
+        if (_image.data == nullptr)
             return;
-        memset(&_buffer.front(), 0, _buffer.size());
+
+        int size = _image.pitch * _image.h;
+
+        memset(_image.data, 0, size);
     }
 
     void Image::fill(unsigned int val)
     {
-        if (_buffer.empty())
+        if (_image.data == nullptr)
             return;
-        memset(&_buffer.front(), val, _buffer.size());
+
+        int size = _image.pitch * _image.h;
+
+        memset(_image.data, val, size);
     }
 
     bool Image::init(file::buffer& buffer, bool premultiplied, TextureFormat format)
@@ -593,6 +599,7 @@ namespace oxygine
                     _offset = sizeof(pkm_header);
                     _image.pitch = int(buffer.getSize() - _offset) / _image.h;
                     _buffer.swap(buffer.data);
+                    _image.data = &_buffer.front();
                 }
                 return true;
                 case IT_PVR:
@@ -631,6 +638,7 @@ namespace oxygine
                     _offset = sizeof(*header) + header->meta_data_size;
                     _image.pitch = int(buffer.getSize() - _offset) / _image.h;
                     _buffer.swap(buffer.data);
+                    _image.data = &_buffer.front();
                     return true;
                 }
                 break;
@@ -676,6 +684,7 @@ namespace oxygine
                     _offset = sizeof(*header);
                     _image.pitch = int(buffer.getSize() - _offset) / _image.h;
                     _buffer.swap(buffer.data);
+                    _image.data = &_buffer.front();
                     return true;
 
                 }
@@ -740,10 +749,18 @@ namespace oxygine
         return false;
     }
 
-    void Image::init(const ImageData& src)
+    void Image::init(const ImageData& src, bool copyImageData)
     {
-        init(src.w, src.h, src.format);
-        updateRegion(0, 0, src);
+        if(copyImageData)
+        {
+            init(src.w, src.h, src.format);
+            updateRegion(0, 0, src);
+        }
+        else
+        {
+            _buffer.clear();
+            _image = src;
+        }
     }
 
     void Image::init(int w, int h, TextureFormat Format)
@@ -788,9 +805,9 @@ namespace oxygine
             OX_ASSERT(rect.getY() + rect.getHeight() <= _image.h);
         }
 
-        ImageData im = _image;
+        OX_ASSERT(_buffer.size() < 1 || _image.data == &_buffer.front());
 
-        void* ptr = &_buffer.front() + rect.getX() * _image.bytespp + rect.getY() * _image.pitch + _offset;
+        void* ptr = _image.data + rect.getX() * _image.bytespp + rect.getY() * _image.pitch + _offset;
 
         return ImageData(rect.getWidth(), rect.getHeight(), _image.pitch, _image.format, ptr);
     }
@@ -849,5 +866,7 @@ namespace oxygine
         r._image = copy;
 
         std::swap(_buffer, r._buffer);
+
+        _image.data = &_buffer.front();
     }
 }

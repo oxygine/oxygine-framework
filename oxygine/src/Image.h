@@ -27,7 +27,7 @@ namespace oxygine
         ~Image();
 
         bool init(file::buffer& bf, bool premultiplied = false, TextureFormat format = TF_UNDEFINED);
-        void init(const ImageData& src);
+        void init(const ImageData& src, bool copyImageData = true);
         void init(int w, int h, TextureFormat Format);
 
         void cleanup();
@@ -40,7 +40,7 @@ namespace oxygine
         void fillZero() { fill(0); }
         void fill(unsigned int val);
 
-        unsigned int    getSizeVRAM() const {return (unsigned int)_buffer.size();}
+        unsigned int    getSizeVRAM() const {return (unsigned int) _image.pitch * _image.h;}
         int             getWidth() const;
         int             getHeight() const;
         const Point&    getSize() const;
