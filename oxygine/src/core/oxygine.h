@@ -101,6 +101,10 @@ namespace oxygine
 
         /**returns True if device is ready for rendering*/
         bool isReady2Render();
+
+        /***makes the global context the current one. Handy for when sharing OpenGL contexts*/
+        void makeContextCurrent();
+
         /**returns True if device is ready for rendering*/
         bool beginRendering(window i = 0);
 
