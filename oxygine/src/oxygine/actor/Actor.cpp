@@ -472,12 +472,16 @@ namespace oxygine
     }
 
 
+    void Actor::markTranformDirty()
+    {
+        _flags |= flag_transformDirty | flag_transformInvertDirty;
+    }
+
     void Actor::setAnchor(const Vector2& anchor)
     {
         _anchor = anchor;
-
         _flags &= ~flag_anchorInPixels;
-        _flags |= flag_transformDirty | flag_transformInvertDirty;
+        markTranformDirty();        
     }
 
     void Actor::setAnchor(float ax, float ay)
@@ -489,7 +493,7 @@ namespace oxygine
     {
         _anchor = anchor;
         _flags |= flag_anchorInPixels;
-        _flags |= flag_transformDirty | flag_transformInvertDirty;
+        markTranformDirty();
     }
 
     void Actor::setAnchorInPixels(float x, float y)
@@ -502,7 +506,7 @@ namespace oxygine
         if (_pos == pos)
             return;
         _pos = pos;
-        _flags |= flag_transformDirty | flag_transformInvertDirty;
+        markTranformDirty();
     }
 
     void Actor::setPosition(float x, float y)
@@ -512,28 +516,36 @@ namespace oxygine
 
     void Actor::setX(float x)
     {
+        if (_pos.x == x)
+            return;
         _pos.x = x;
-        _flags |= flag_transformDirty | flag_transformInvertDirty;
+        markTranformDirty();
     }
 
     void Actor::setY(float y)
     {
+        if (_pos.y == y)
+            return;
         _pos.y = y;
-        _flags |= flag_transformDirty | flag_transformInvertDirty;
+        markTranformDirty();
     }
 
     void Actor::setAnchorX(float x)
     {
+        if (_anchor.x == x)
+            return;
         _anchor.x = x;
         _flags &= ~flag_anchorInPixels;
-        _flags |= flag_transformDirty | flag_transformInvertDirty;
+        markTranformDirty();
     }
 
     void Actor::setAnchorY(float y)
     {
+        if (_anchor.y == y)
+            return;
         _anchor.y = y;
         _flags &= ~flag_anchorInPixels;
-        _flags |= flag_transformDirty | flag_transformInvertDirty;
+        markTranformDirty();
     }
 
     void Actor::setTransform(const AffineTransform& tr)
@@ -593,7 +605,7 @@ namespace oxygine
         if (_scale == scale)
             return;
         _scale = scale;
-        _flags |= flag_transformDirty | flag_transformInvertDirty;
+        markTranformDirty();
         _flags &= ~flag_fastTransform;
     }
 
@@ -607,7 +619,7 @@ namespace oxygine
         if (_scale.x == sx)
             return;
         _scale.x = sx;
-        _flags |= flag_transformDirty | flag_transformInvertDirty;
+        markTranformDirty();
         _flags &= ~flag_fastTransform;
     }
 
@@ -616,7 +628,7 @@ namespace oxygine
         if (_scale.y == sy)
             return;
         _scale.y = sy;
-        _flags |= flag_transformDirty | flag_transformInvertDirty;
+        markTranformDirty();
         _flags &= ~flag_fastTransform;
     }
 
@@ -626,7 +638,7 @@ namespace oxygine
             return;
 
         _rotation = rotation;
-        _flags |= flag_transformDirty | flag_transformInvertDirty;
+        markTranformDirty();
         _flags &= ~flag_fastTransform;
     }
 
@@ -643,8 +655,10 @@ namespace oxygine
 
     void Actor::_setSize(const Vector2& size)
     {
+        if (_size == size)
+            return;
         _size = size;
-        _flags |= flag_transformDirty | flag_transformInvertDirty;
+        markTranformDirty();
     }
 
     void Actor::setSize(const Vector2& size)

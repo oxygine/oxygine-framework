@@ -324,6 +324,7 @@ namespace oxygine
         void completeRender(const RenderState& rs);
 
 
+        void markTranformDirty();
         void updateTransform() const;
         void internalUpdate(const UpdateState& us);
 
