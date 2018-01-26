@@ -330,6 +330,10 @@ namespace oxygine
     {
         _vp = viewProj;
         flush();
+
+        if (!_driver->getShaderProgram())
+            return;
+
         _driver->setUniform("mat", _vp);
     }
 
