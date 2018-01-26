@@ -1,1 +1,0 @@
-#include "oxygine/STDMaterial.h"
