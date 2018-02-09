@@ -7,14 +7,23 @@
 
 namespace oxygine
 {
+#if OX_CPP11THREADS
+    ThreadLoader::ThreadLoader(): _thread(_staticThreadFunc, this), _threadDone(false)
+#else
     ThreadLoader::ThreadLoader(): _thread(pthread_self()), _threadDone(false)
+#endif
     {
     }
 
     ThreadLoader::~ThreadLoader()
     {
+#if OX_CPP11THREADS
+        if(_thread.get_id() != std::this_thread::get_id())
+            _thread.join();
+#else
         if (!pthread_equal(_thread, pthread_self()))
             pthread_join(_thread, 0);
+#endif
     }
 
 
@@ -122,11 +131,12 @@ namespace oxygine
         _load();
         getStage()->addTween(TweenDummy(), 100)->addDoneCallback(CLOSURE(this, &ThreadLoader::loaded));
 #else
-
+    #if !OX_CPP11THREADS
         pthread_attr_t attr;
         pthread_attr_init(&attr);
         pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
         pthread_create(&_thread, &attr, _staticThreadFunc, this);
+    #endif
 #endif
     }
 }

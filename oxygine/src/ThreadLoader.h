@@ -1,7 +1,13 @@
 #pragma once
 #include "oxygine-include.h"
 #include "EventDispatcher.h"
-#include "pthread.h"
+
+#if OX_CPP11THREADS
+    #include <thread>
+#else
+    #include "pthread.h"
+#endif
+
 #include "core/ThreadDispatcher.h"
 #include <functional>
 #include "Event.h"
@@ -44,7 +50,12 @@ namespace oxygine
         void loaded(Event*);
         void _load();
 
+#if OX_CPP11THREADS
+        std::thread _thread;
+#else
         pthread_t _thread;
+#endif
+
         volatile bool _threadDone;
 
         typedef std::list<Resources*> resources;

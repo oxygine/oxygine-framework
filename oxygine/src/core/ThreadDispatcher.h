@@ -3,6 +3,12 @@
 #include <vector>
 #include <functional>
 
+#if OX_CPP11THREADS
+    #include <mutex>
+    #include <thread>
+    #include <atomic>
+#else
+
 #if defined(_WIN32) && !defined(__MINGW32__)
 typedef struct pthread_mutex_t_* pthread_mutex_t;
 typedef struct pthread_cond_t_* pthread_cond_t;
@@ -10,8 +16,22 @@ typedef struct pthread_cond_t_* pthread_cond_t;
 #   include "pthread.h"
 #endif
 
+#endif
+
 namespace oxygine
 {
+#if OX_CPP11THREADS
+    class MutexPthreadLock
+    {
+    public:
+        MutexPthreadLock(std::recursive_mutex& l, bool lock = true);
+        ~MutexPthreadLock();
+
+    protected:
+        std::recursive_mutex& _lock;
+        bool _locked;
+    };
+#else
     class MutexPthreadLock
     {
     public:
@@ -22,6 +42,8 @@ namespace oxygine
         pthread_mutex_t& _mutex;
         bool _locked;
     };
+#endif
+
     /*
     class TDMessage
     {
@@ -131,9 +153,41 @@ namespace oxygine
         void _popMessageNoCB(message&);
         void _replyLast(void* val);
 
+#if OX_CPP11THREADS
+        std::recursive_mutex _mutex;
 
+        class
+        {
+        private:
+            std::atomic_uint _in, _out;
+
+        public:
+            void wait(std::recursive_mutex &mutex)
+            {
+                mutex.unlock();
+
+                const unsigned int ticket = ++_in;
+
+                while(_out < ticket)
+                    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+
+                mutex.lock();
+            }
+
+            void notify_all()
+            {
+                _out = _in;
+            }
+
+            void notify_one()
+            {
+                _out++;
+            }
+        } _cond;
+#else
         pthread_mutex_t _mutex;
         pthread_cond_t _cond;
+#endif
 
         typedef std::vector<message> messages;
         messages _events;

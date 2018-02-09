@@ -40,7 +40,7 @@ namespace oxygine
             return true;
         }
 
-        Zips::Zips(): _lock(true)
+        Zips::Zips(): _sort(false)
         {
 
         }

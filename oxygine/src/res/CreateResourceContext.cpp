@@ -3,7 +3,10 @@
 #include "Image.h"
 #include "core/ThreadDispatcher.h"
 #include "core/oxygine.h"
-#include "pthread.h"
+
+#if !OX_CPP11THREADS
+    #include "pthread.h"
+#endif
 
 namespace oxygine
 {
