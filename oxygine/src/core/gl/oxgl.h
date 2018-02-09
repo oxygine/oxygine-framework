@@ -23,6 +23,8 @@
 
 #   define GL_ETC1_RGB8_OES                                        0x8D64
 
+typedef void (APIENTRYP PFNGLREADPIXELSPROC) (GLint x​, GLint y​, GLsizei width​, GLsizei height​, GLenum format​, GLenum type​, GLvoid * data​);
+
 extern "C"
 {
 //!--pfngl-begin--!
@@ -74,6 +76,7 @@ extern "C"
     extern PFNGLBLENDFUNCSEPARATEPROC _glBlendFuncSeparate;
     extern PFNGLBLENDEQUATIONSEPARATEPROC _glBlendEquationSeparate;
     extern PFNGLGETATTRIBLOCATIONPROC _glGetAttribLocation;
+    extern PFNGLREADPIXELSPROC _glReadPixels;
 //!--pfngl-end--!
 }
 
@@ -179,6 +182,7 @@ extern "C"
 #define oxglBlendFuncSeparate DECLARE_GLEXT(glBlendFuncSeparate)
 #define oxglBlendEquationSeparate DECLARE_GLEXT(glBlendEquationSeparate)
 #define oxglGetAttribLocation DECLARE_GLEXT(glGetAttribLocation)
+#define oxglReadPixels DECLARE_GLEXT(glReadPixels)
 //!--oxgl-end--!
 
 

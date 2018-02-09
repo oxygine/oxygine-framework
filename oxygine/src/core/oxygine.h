@@ -130,6 +130,12 @@ namespace oxygine
         SDL_Window*     getWindow();
 #endif
 
+        void captureWindow(ImageData &image);
+
+#ifdef OX_HAVE_LIBPNG
+        bool captureWindow(const char *pngFilename);
+#endif
+
         enum
         {
             EVENT_SYSTEM = sysEventID('c', 'S', 'y'), //events from SDL

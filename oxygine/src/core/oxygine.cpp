@@ -500,6 +500,63 @@ namespace oxygine
         }
 #endif
 
+        void captureWindow(ImageData &image)
+        {
+            Point size = core::getDisplaySize();
+
+            size_t memsize = size.x * size.y * 4;
+
+            image = ImageData(size.x, size.y, size.y * 4, TF_R8G8B8A8, malloc(memsize));
+
+            memset(image.data, 0, memsize);
+
+            oxglReadPixels(0, 0, size.x, size.y, GL_RGBA, GL_UNSIGNED_BYTE, image.data);
+        }
+
+#ifdef OX_HAVE_LIBPNG
+        bool captureWindow(const char *pngFilename)
+        {
+            FILE *fp = fopen(pngFilename, "wb");
+
+            if(fp == NULL)
+                return false;
+
+            ImageData data;
+
+            captureWindow(data);
+
+            png_structp png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+            png_infop info_ptr = png_create_info_struct(png_ptr);
+
+            OX_ASSERT(png_ptr != NULL);
+            OX_ASSERT(info_ptr != NULL);
+
+            setjmp(png_jmpbuf(png_ptr));
+
+            png_set_IHDR(png_ptr, info_ptr, data.w, data.h,
+                     8, PNG_COLOR_TYPE_RGB_ALPHA, PNG_INTERLACE_NONE,
+                     PNG_COMPRESSION_TYPE_BASE, PNG_FILTER_TYPE_BASE);
+
+            png_init_io(png_ptr, fp);
+
+            png_write_info(png_ptr, info_ptr);
+
+            for(int r = 0; r < data.h; ++r)
+                png_write_row(png_ptr, data.data + ((data.h - r - 1) * data.w * 4));
+
+            png_write_end(png_ptr, NULL);
+
+            fclose(fp);
+
+            png_free_data(png_ptr, info_ptr, PNG_FREE_ALL, -1);
+            png_destroy_write_struct(&png_ptr, (png_infopp)NULL);
+
+            free(data.data);
+
+            return true;
+        }
+#endif
+
         void reset()
         {
             log::messageln("core::reset()");

@@ -120,6 +120,8 @@ extern "C"
     {}
     GLAPI GLint APIENTRY def_glGetAttribLocation(GLuint program, const GLchar* name)
     {return 0;}
+    GLAPI void APIENTRY def_glReadPixels(GLint x​, GLint y​, GLsizei width​, GLsizei height​, GLenum format​, GLenum type​, GLvoid * data​)
+    {}
 //!--defgl-end--!
 
 //!--_gl-begin--!
@@ -171,6 +173,7 @@ extern "C"
     PFNGLBLENDFUNCSEPARATEPROC _glBlendFuncSeparate = 0;
     PFNGLBLENDEQUATIONSEPARATEPROC _glBlendEquationSeparate = 0;
     PFNGLGETATTRIBLOCATIONPROC _glGetAttribLocation = 0;
+    PFNGLREADPIXELSPROC _glReadPixels = 0;
 //!--_gl-end--!
 }
 
@@ -230,6 +233,7 @@ int initGLExtensions(myGetProcAdress func)
     GETFUNC(_glBlendFuncSeparate, def_glBlendFuncSeparate, PFNGLBLENDFUNCSEPARATEPROC, "glBlendFuncSeparate");
     GETFUNC(_glBlendEquationSeparate, def_glBlendEquationSeparate, PFNGLBLENDEQUATIONSEPARATEPROC, "glBlendEquationSeparate");
     GETFUNC(_glGetAttribLocation, def_glGetAttribLocation, PFNGLGETATTRIBLOCATIONPROC, "glGetAttribLocation");
+    GETFUNC(_glReadPixels, def_glReadPixels, PFNGLREADPIXELSPROC, "glReadPixels");
 //!--getfunc-end--!
 
     return missing;
