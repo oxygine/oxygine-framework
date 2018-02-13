@@ -128,7 +128,10 @@ def frame_cmp_sort(f1, f2):
 
 
 def applyScale(intVal, scale):
-    return int(intVal * scale + 0.5)
+    v = int(intVal * scale + 0.5)
+    if v < 1:
+        v = 1
+    return v
 
 
 def applyScale2(x, scale):
