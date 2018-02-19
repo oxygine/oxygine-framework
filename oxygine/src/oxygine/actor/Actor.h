@@ -97,7 +97,7 @@ namespace oxygine
         bool                getVisible() const {return (_flags & flag_visible) != 0;}
         Actor*              getParent() {return _parent;}
         const Actor*        getParent() const {return _parent;}
-        Vector2             getSize() const {return _size;}
+        const Vector2&      getSize() const {return _size;}
         /**Returns Size*Scale*/
         Vector2             getScaledSize() const { return _size.mult(_scale); }
         float               getWidth() const;
@@ -262,7 +262,7 @@ namespace oxygine
         typedef Property<float, float, Actor, &Actor::getY, &Actor::setY>                                       TweenY;
         typedef Property<float, float, Actor, &Actor::getWidth, &Actor::setWidth>                               TweenWidth;
         typedef Property<float, float, Actor, &Actor::getHeight, &Actor::setHeight>                             TweenHeight;
-        typedef Property2Args2<float, Vector2, Vector2, const Vector2&, Actor, &Actor::getSize, &Actor::setSize>TweenSize;
+        typedef Property2Args2<float, Vector2, const Vector2&, const Vector2&, Actor, &Actor::getSize, &Actor::setSize>TweenSize;
         typedef Property<float, float, Actor, &Actor::getRotation, &Actor::setRotation>                         TweenRotation;
         typedef Property<float, float, Actor, &Actor::getRotationDegrees, &Actor::setRotationDegrees>           TweenRotationDegrees;
         typedef Property2Args1Arg<float, Vector2, const Vector2&, Actor, &Actor::getScale, &Actor::setScale>    TweenScale;
