@@ -112,11 +112,13 @@ namespace oxygine
                     {
                         if (msg->msg == CURLMSG_DONE)
                         {
-
-#ifdef OX_HAS_CPP11 //msg broken in VS2010
+                            //save args
+                            CURL *eh = msg->easy_handle;
+                            CURLcode code = msg->data.result;
+                            //can be removed now
                             curl_multi_remove_handle(multi_handle, msg->easy_handle);
-                            core::getMainThreadDispatcher().postCallback(ID_DONE, msg->easy_handle, (void*)msg->data.result, mainThreadFunc, 0);
-#endif
+                            core::getMainThreadDispatcher().postCallback(ID_DONE, eh, (void*)code, mainThreadFunc, 0);                            
+                            break;
                         }
                     }
                 }
