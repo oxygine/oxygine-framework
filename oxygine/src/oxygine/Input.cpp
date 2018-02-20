@@ -3,7 +3,7 @@
 #include "core/log.h"
 #include <string.h>
 
-//#define LOGD(...) oxygine::log::message("input: "); oxygine::log::messageln(__VA_ARGS__)
+//#define LOGD(...) oxygine::logs::message("input: "); oxygine::logs::messageln(__VA_ARGS__)
 #define LOGD(...) ((void)0)
 
 namespace oxygine
@@ -136,7 +136,7 @@ namespace oxygine
             return firstEmptySlotIndex + 1;
         }
 
-        //log::warning("can't find touch id %d", id);
+        //logs::warning("can't find touch id %d", id);
         return -1;
     }
 

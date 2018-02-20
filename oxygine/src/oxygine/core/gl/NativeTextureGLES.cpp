@@ -78,7 +78,7 @@ namespace oxygine
                 pixel.compressed = true;
                 break;
             default:
-                log::error("unknown format: %d\n", format);
+                logs::error("unknown format: %d\n", format);
                 OX_ASSERT(!"unknown format");
         }
         return pixel;
@@ -144,11 +144,11 @@ namespace oxygine
             //printf("created fbo: %d\n", fbo);
 
             unsigned int status = oxglCheckFramebufferStatus(GL_FRAMEBUFFER);
-            //log::message("fbo status %d\n", status);
+            //logs::message("fbo status %d\n", status);
             //GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT_OES
             if (status != GL_FRAMEBUFFER_COMPLETE)
             {
-                log::error("status != GL_FRAMEBUFFER_COMPLETE_OES");
+                logs::error("status != GL_FRAMEBUFFER_COMPLETE_OES");
             }
 
             glViewport(0, 0, w, h);
@@ -156,7 +156,7 @@ namespace oxygine
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
             oxglBindFramebuffer(GL_FRAMEBUFFER, prevFBO);
-            //log::message("fbo bind\n");
+            //logs::message("fbo bind\n");
 
             glBindTexture(GL_TEXTURE_2D, 0);
 

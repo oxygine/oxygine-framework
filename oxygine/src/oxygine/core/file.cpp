@@ -24,7 +24,7 @@
 
 #include <sys/stat.h>
 
-//#define LOGD(...) oxygine::log::messageln(__VA_ARGS__)
+//#define LOGD(...) oxygine::logs::messageln(__VA_ARGS__)
 #define LOGD(...)
 
 
@@ -50,8 +50,8 @@ namespace oxygine
             //_nfsWrite.setPath("data-ram/");
 
 #elif __ANDROID__
-            log::messageln("internal %s", SDL_AndroidGetInternalStoragePath());
-            log::messageln("external %s", SDL_AndroidGetExternalStoragePath());
+            logs::messageln("internal %s", SDL_AndroidGetInternalStoragePath());
+            logs::messageln("external %s", SDL_AndroidGetExternalStoragePath());
             _nfsWrite.setPath(SDL_AndroidGetInternalStoragePath());
 #elif OXYGINE_EDITOR
 #elif __APPLE__
@@ -100,7 +100,7 @@ namespace oxygine
 
 #ifdef OX_DEBUG
             if (!strstr(mode, "b"))
-                log::warning("file::open for file '%s' should be called with 'b' (means binary) flag", file_.c_str());
+                logs::warning("file::open for file '%s' should be called with 'b' (means binary) flag", file_.c_str());
 #endif
             //OX_ASSERT(_openedFiles == 0);
             LOGD("open file: %s %s", file_.c_str(), mode);

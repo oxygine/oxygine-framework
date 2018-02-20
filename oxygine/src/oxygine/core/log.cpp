@@ -33,7 +33,7 @@ namespace oxygine
     const int SIZE = 4096;
 #endif
 
-    namespace log
+    namespace logs
     {
         int getTime()
         {

@@ -4,7 +4,7 @@
 
 namespace oxygine
 {
-    namespace log
+    namespace logs
     {
         /**By default logging is enabled*/
         void enable();
@@ -14,7 +14,7 @@ namespace oxygine
         typedef void (*error_handler)(const char* txt);
         typedef void (*out_handler)(const char* txt);
 
-        /*run your callback if log::error was called*/
+        /*run your callback if logs::error was called*/
         void setErrorHandler(error_handler);
 
         void setOutHandler(out_handler);

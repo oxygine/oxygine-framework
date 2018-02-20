@@ -5,7 +5,7 @@
 #include "../Image.h"
 #include "../core/VideoDriver.h"
 
-//#define  LOGD(...)  log::messageln(__VA_ARGS__)
+//#define  LOGD(...)  logs::messageln(__VA_ARGS__)
 #define  LOGD(...)
 
 namespace oxygine

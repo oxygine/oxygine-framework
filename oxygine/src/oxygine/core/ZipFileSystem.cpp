@@ -449,7 +449,7 @@ namespace oxygine
 
         void ZipFileSystem::add(const char* zip)
         {
-            log::messageln("ZipFileSystem::add %s", zip);
+            logs::messageln("ZipFileSystem::add %s", zip);
             _zips.add(zip);
         }
 

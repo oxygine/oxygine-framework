@@ -95,7 +95,7 @@ namespace oxygine
 
 
             int alpha = lerp(0, 255, _progress);
-            //log::messageln("tween alpha %d", alpha);
+            //logs::messageln("tween alpha %d", alpha);
 
             Color c = _color.withAlpha(64).premultiplied();
             driver->setShaderProgram(PostProcess::shaderBlurV);

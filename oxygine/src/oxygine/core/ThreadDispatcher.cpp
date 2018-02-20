@@ -11,7 +11,7 @@ namespace oxygine
         pthread_t pt = pthread_self();
         return ((size_t*)(&pt))[0];
     }
-#define  LOGDN(format, ...)  log::messageln("ThreadMessages(%lu)::" format, threadID(), __VA_ARGS__)
+#define  LOGDN(format, ...)  logs::messageln("ThreadMessages(%lu)::" format, threadID(), __VA_ARGS__)
 
 #else
 #define  LOGDN(...)  ((void)0)

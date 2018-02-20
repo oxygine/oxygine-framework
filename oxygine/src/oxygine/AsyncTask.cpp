@@ -4,8 +4,8 @@
 
 namespace oxygine
 {
-#define LOGD(...)  (log::messageln("at: %s (%d) %s",    getName().c_str(), getObjectID(), __VA_ARGS__))
-#define LOGD2(...) (log::messageln("at: %s (%d) %s %s", getName().c_str(), getObjectID(), __VA_ARGS__))
+#define LOGD(...)  (logs::messageln("at: %s (%d) %s",    getName().c_str(), getObjectID(), __VA_ARGS__))
+#define LOGD2(...) (logs::messageln("at: %s (%d) %s %s", getName().c_str(), getObjectID(), __VA_ARGS__))
 
     AsyncTask::AsyncTask() : _status(status_not_started), _mainThreadSync(false)
     {
@@ -33,7 +33,7 @@ namespace oxygine
         _status = status_inprogress;
 
         //todo! replace with LOGD
-        log::messageln("at: %s (%d) %s %s", getName().c_str(), getObjectID(), "run:", _getRunInfo().c_str());
+        logs::messageln("at: %s (%d) %s %s", getName().c_str(), getObjectID(), "run:", _getRunInfo().c_str());
 
         bool ok = _prerun();
 

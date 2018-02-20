@@ -11,7 +11,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 
-//#define FS_LOG(...) log::warning(__VA_ARGS__)
+//#define FS_LOG(...) logs::warning(__VA_ARGS__)
 #define FS_LOG(...) {}
 
 namespace oxygine
@@ -100,7 +100,7 @@ namespace oxygine
         for (resources::iterator i = _resources.begin(); i != _resources.end(); ++i)
         {
             Resource* res = (*i).get();
-            //log::messageln("loading res: %s", res->getName().c_str());
+            //logs::messageln("loading res: %s", res->getName().c_str());
             res->load(context);
             //if (cb)
             //  cb(res);
@@ -186,7 +186,7 @@ namespace oxygine
 
         if (!sz)
         {
-            log::error("can't load xml file: '%s'", xmlFile.c_str());
+            logs::error("can't load xml file: '%s'", xmlFile.c_str());
             OX_ASSERT(!"can't find xml file");
             return false;
         }
@@ -257,7 +257,7 @@ namespace oxygine
             registeredResources::iterator i = std::lower_bound(_registeredResources.begin(), _registeredResources.end(), type);
             if (i == _registeredResources.end() || strcmp(i->id, type))
             {
-                log::error("unknown resource. type: '%s' id: '%s'", type, Resource::extractID(context.walker.getNode(), "", "").c_str());
+                logs::error("unknown resource. type: '%s' id: '%s'", type, Resource::extractID(context.walker.getNode(), "", "").c_str());
                 OX_ASSERT(!"unknown resource type");
                 continue;
             }
@@ -319,7 +319,7 @@ namespace oxygine
                 OX_ASSERT(_resourcesMap.find(shortName) == _resourcesMap.end());
                 if (_resourcesMap.find(shortName) != _resourcesMap.end())
                 {
-                    log::error("short resource name '%s' conflicts with '%s'", r->getName().c_str(), _resourcesMap[shortName]->getName().c_str());
+                    logs::error("short resource name '%s' conflicts with '%s'", r->getName().c_str(), _resourcesMap[shortName]->getName().c_str());
                 }
 #endif
 
@@ -331,21 +331,21 @@ namespace oxygine
 
     void Resources::print() const
     {
-        log::message("resources:\n");
+        logs::message("resources:\n");
         for (resourcesMap::const_iterator i = _resourcesMap.cbegin(); i != _resourcesMap.cend(); ++i)
         {
             spResource res = i->second;
-            log::message("%s\n", res->getName().c_str());
+            logs::message("%s\n", res->getName().c_str());
         }
 
         /*
         unsigned n = _resourcesMap.bucket_count();
 
         for (unsigned i=0; i<n; ++i) {
-            log::message("bucket %d: ", i);
+            logs::message("bucket %d: ", i);
             for (auto it = _resourcesMap.begin(i); it!=_resourcesMap.end(i); ++it)
-                log::message("%s, ", it->first.c_str());
-            log::messageln(" ");
+                logs::message("%s, ", it->first.c_str());
+            logs::messageln(" ");
         }
         */
     }

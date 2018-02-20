@@ -22,7 +22,7 @@ extern "C"
 #endif // OX_HAVE_LIBJPEG
 };
 
-//#define  LOGD(...)  log::messageln(__VA_ARGS__)
+//#define  LOGD(...)  logs::messageln(__VA_ARGS__)
 #define  LOGD(...)
 
 namespace oxygine
@@ -181,7 +181,7 @@ namespace oxygine
             }
             break;
             default:
-                log::error("unknown file format to read size");
+                logs::error("unknown file format to read size");
                 return false;
         }
 
@@ -340,7 +340,7 @@ namespace oxygine
         }
         else
         {
-            log::error("png error");
+            logs::error("png error");
             png_error(png_ptr, "pngReaderCallback failed");
         }
     }
@@ -401,7 +401,7 @@ namespace oxygine
             if (color_type == PNG_COLOR_MASK_ALPHA)
             {
                 srcFormat = TF_L8;
-                log::warning("unsupported png file pixel format");
+                logs::warning("unsupported png file pixel format");
             }
 
             if (color_type == PNG_COLOR_TYPE_RGB)
@@ -669,7 +669,7 @@ namespace oxygine
                             tf = header->bitmaskAlpha ? TF_PVRTC_4RGBA : TF_PVRTC_4RGB;
                             break;
                         default:
-                            log::error("unknown pvr2 flag format");
+                            logs::error("unknown pvr2 flag format");
                     }
 
                     _image.format = tf;
@@ -715,7 +715,7 @@ namespace oxygine
                     }
                     else
                     {
-                        log::warning("tga 32bpp only supported");
+                        logs::warning("tga 32bpp only supported");
                     }
                     break;
                 }
@@ -732,7 +732,7 @@ namespace oxygine
             }
         }
 
-        log::warning("Image. can't unpack data unknown file format");
+        logs::warning("Image. can't unpack data unknown file format");
 
         init(16, 16, TF_R8G8B8A8);
         fillZero();

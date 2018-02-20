@@ -12,7 +12,7 @@
 
 
 
-//#define LOGD(...) oxygine::log::messageln(__VA_ARGS__)
+//#define LOGD(...) oxygine::logs::messageln(__VA_ARGS__)
 #define LOGD(...) ((void)0)
 
 #if 0

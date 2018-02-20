@@ -11,7 +11,7 @@ namespace oxygine
 
     void NativeTexture::dumpCreatedTextures()
     {
-        log::messageln("created native textures dump:");
+        logs::messageln("created native textures dump:");
         std::vector<spNativeTexture> t = getCreatedTextures();
 
         int n = 0;
@@ -19,11 +19,11 @@ namespace oxygine
         {
             spNativeTexture nt = *i;
 
-            log::message("%d)", n);
+            logs::message("%d)", n);
             ++n;
             nt->dumpObject();
         }
-        log::messageln("----");
+        logs::messageln("----");
     }
 
     std::vector<spNativeTexture> NativeTexture::getCreatedTextures()

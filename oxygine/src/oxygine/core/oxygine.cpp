@@ -155,7 +155,7 @@ namespace oxygine
                 return;
 
 #if OXYGINE_SDL
-            log::messageln("focus lost");
+            logs::messageln("focus lost");
             SDL_GL_DeleteContext(_context);
             _context = 0;
 #endif
@@ -167,7 +167,7 @@ namespace oxygine
                 return;
 
 #if OXYGINE_SDL
-            log::messageln("lost context");
+            logs::messageln("lost context");
             if (!_context)
             {
                 _context = SDL_GL_CreateContext(_window);
@@ -233,11 +233,11 @@ namespace oxygine
 
             t += "arch " + std::string(ABI);
 
-            log::messageln("build settings %s", t.c_str());
+            logs::messageln("build settings %s", t.c_str());
 
             init0();
 
-            log::messageln("initialize oxygine");
+            logs::messageln("initialize oxygine");
             if (desc_ptr)
                 desc = *desc_ptr;
 
@@ -248,7 +248,7 @@ namespace oxygine
 
 #ifdef OXYGINE_SDL
 
-            log::messageln("SDL build");
+            logs::messageln("SDL build");
 
 
             SDL_SetHint(SDL_HINT_VIDEO_ALLOW_SCREENSAVER, desc.allow_screensaver ? "1" : "0");
@@ -306,7 +306,7 @@ namespace oxygine
 
             //SDL_DisplayMode mode;
             //SDL_GetCurrentDisplayMode(0, &mode);
-            //log::messageln("display mode: %d %d", mode.w, mode.h);
+            //logs::messageln("display mode: %d %d", mode.w, mode.h);
 
             if (desc.w == -1 && desc.h == -1)
             {
@@ -332,13 +332,13 @@ namespace oxygine
             desc.h = -1;
 #endif
 
-            log::messageln("creating window %d %d", desc.w, desc.h);
+            logs::messageln("creating window %d %d", desc.w, desc.h);
 
             _window = SDL_CreateWindow(desc.title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, desc.w, desc.h, flags);
 
             if (!_window)
             {
-                log::error("can't create window: %s", SDL_GetError());
+                logs::error("can't create window: %s", SDL_GetError());
 #ifdef __ANDROID__
                 jniRestartApp();
 #endif
@@ -347,7 +347,7 @@ namespace oxygine
             _context = SDL_GL_CreateContext(_window);
             if (!_context)
             {
-                log::error("can't create gl context: %s", SDL_GetError());
+                logs::error("can't create gl context: %s", SDL_GetError());
 #ifdef __ANDROID__
                 jniRestartApp();
 #endif
@@ -406,7 +406,7 @@ namespace oxygine
 #endif
 
             Point size = getDisplaySize();
-            log::messageln("display size: %d %d", size.x, size.y);
+            logs::messageln("display size: %d %d", size.x, size.y);
 
             IVideoDriver::instance = new VideoDriverGLES20();
 
@@ -443,7 +443,7 @@ namespace oxygine
             TextField::setDefaultFont(DebugActor::resSystem->getResFont("system"));
 #endif
 #endif
-            log::messageln("oxygine initialized");
+            logs::messageln("oxygine initialized");
         }
 
 #if OXYGINE_SDL
@@ -486,22 +486,22 @@ namespace oxygine
 
         void reset()
         {
-            log::messageln("core::reset()");
+            logs::messageln("core::reset()");
             clearPostProcessItems();
             Restorable::releaseAll();
             PostProcess::freeShaders();
             STDRenderer::reset();
             IVideoDriver::instance->reset();
-            log::messageln("core::reset() done");
+            logs::messageln("core::reset() done");
         }
 
         void restore()
         {
-            log::messageln("core::restore()");
+            logs::messageln("core::restore()");
             IVideoDriver::instance->restore();
             STDRenderer::restore();
             Restorable::restoreAll();
-            log::messageln("core::restore() done");
+            logs::messageln("core::restore() done");
         }
 
         bool isReady2Render()
@@ -522,7 +522,7 @@ namespace oxygine
             {
                 if (!focus)
                 {
-                    //log::messageln("!focus");
+                    //logs::messageln("!focus");
                     return false;
                 }
 
@@ -543,7 +543,7 @@ namespace oxygine
             }
             else
             {
-                log::messageln("!ready");
+                logs::messageln("!ready");
             }
 
             return ready;
@@ -567,7 +567,7 @@ namespace oxygine
                 int status = SDL_GL_MakeCurrent(wnd, _context);
                 if (status)
                 {
-                    log::error("SDL_GL_MakeCurrent(): %s", SDL_GetError());
+                    logs::error("SDL_GL_MakeCurrent(): %s", SDL_GetError());
                 }
                 SDL_GL_SwapWindow(wnd);
             }
@@ -608,7 +608,7 @@ namespace oxygine
                 switch (event.type)
                 {
                     case SDL_QUIT:
-                        log::messageln("SDL_QUIT");
+                        logs::messageln("SDL_QUIT");
                         done = true;
                         break;
                     case SDL_WINDOWEVENT:
@@ -620,7 +620,7 @@ namespace oxygine
                         active = true;
                         */
 
-                        log::messageln("SDL_WINDOWEVENT %d", (int)event.window.event);
+                        logs::messageln("SDL_WINDOWEVENT %d", (int)event.window.event);
 
                         if (event.window.event == SDL_WINDOWEVENT_MINIMIZED)
                             active = false;
@@ -645,7 +645,7 @@ namespace oxygine
                             if (focus)
                                 focusAcquired();
 
-                            log::messageln("focus: %d", (int)focus);
+                            logs::messageln("focus: %d", (int)focus);
                             Event ev(focus ? Stage::ACTIVATE : Stage::DEACTIVATE);
 
                             spStage stage = getStageByWindow(event.window.windowID);
@@ -658,7 +658,7 @@ namespace oxygine
                                 focusLost();
 #endif
                         }
-                        //log::messageln("SDL_SYSWMEVENT %d", (int)event.window.event);
+                        //logs::messageln("SDL_SYSWMEVENT %d", (int)event.window.event);
                         break;
                     }
                     case SDL_MOUSEWHEEL:
@@ -701,7 +701,7 @@ namespace oxygine
                     {
                         if (_useTouchAPI)
                         {
-                            //log::messageln("SDL_FINGERMOTION");
+                            //logs::messageln("SDL_FINGERMOTION");
                             Vector2 pos = convertTouch(event);
                             PointerState* ps = input->getTouchByID((int64_t)event.tfinger.fingerId);
                             if (ps)
@@ -716,7 +716,7 @@ namespace oxygine
                     {
                         if (_useTouchAPI)
                         {
-                            //log::messageln("SDL_FINGER");
+                            //logs::messageln("SDL_FINGER");
                             Vector2 pos = convertTouch(event);
                             PointerState* ps = input->getTouchByID((int64_t)event.tfinger.fingerId);
                             if (ps)
@@ -747,7 +747,7 @@ namespace oxygine
 
 #if OXYGINE_SDL
 
-            //log::messageln("update");
+            //logs::messageln("update");
 
             bool done = false;
             SDL_Event event;
@@ -766,7 +766,7 @@ namespace oxygine
 
         void release()
         {
-            log::messageln("core::release");
+            logs::messageln("core::release");
 
 #ifndef OXYGINE_EDITOR
             InputText::stopAnyInput();
@@ -849,7 +849,7 @@ namespace oxygine
 
         void requestQuit()
         {
-            log::messageln("requestQuit");
+            logs::messageln("requestQuit");
 #ifdef OXYGINE_SDL
             SDL_Event ev;
             ev.type = SDL_QUIT;
@@ -879,7 +879,7 @@ namespace oxygine
             SDL_GL_GetDrawableSize(_window, &w, &h);
             return Point(w, h);
 #else
-            log::warning("getDisplaySize not implemented");
+            logs::warning("getDisplaySize not implemented");
             return Point(0, 0);
 #endif
         }
@@ -893,11 +893,11 @@ namespace oxygine
         switch (ep)
         {
             case ep_show_error:
-                log::error_va(format, args);
+                logs::error_va(format, args);
                 OX_ASSERT_NL(!"handleErrorPolicy error.");
                 break;
             case ep_show_warning:
-                log::warning_va(format, args);
+                logs::warning_va(format, args);
                 break;
             case ep_ignore_error:
                 break;
@@ -942,7 +942,7 @@ namespace oxygine
 #ifdef OXYGINE_SDL
         SDL_Delay(time);
 #else
-        log::warning("sleep not implemented");
+        logs::warning("sleep not implemented");
 #endif
     }
 }

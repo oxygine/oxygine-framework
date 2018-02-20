@@ -85,7 +85,7 @@ namespace oxygine
         for (ress::iterator i = _ress.begin(); i != _ress.end(); ++i)
         {
             Resource* res = *i;
-            //log::messageln("loading res: %s", res->getName().c_str());
+            //logs::messageln("loading res: %s", res->getName().c_str());
             res->load();
         }
 

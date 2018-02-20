@@ -164,7 +164,7 @@ namespace oxygine
 
     void            jniMoveTaskToBack()
     {
-        log::messageln("jniMoveTaskToBack");
+        logs::messageln("jniMoveTaskToBack");
         try
         {
             JNIEnv* env = jniGetEnv();

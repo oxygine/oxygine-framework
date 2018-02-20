@@ -98,7 +98,7 @@ namespace oxygine
         if (_counter > 0)
             dt = 0;//todo destTime == srcTime ??
 
-        //log::messageln("dt: %x %d", this, dt);
+        //logs::messageln("dt: %x %d", this, dt);
         _destTime += dt;
 
         _lastUpdateTime = time;

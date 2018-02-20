@@ -103,7 +103,7 @@ namespace oxygine
 
 
             int alpha = lerp(0, 255, _progress);
-            //log::messageln("tween alpha %d", alpha);
+            //logs::messageln("tween alpha %d", alpha);
 
             Color c;
             if (_pp._options._flags & PostProcessOptions::flag_singleR2T)

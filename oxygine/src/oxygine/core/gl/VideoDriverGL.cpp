@@ -97,7 +97,7 @@ namespace oxygine
         glGetIntegerv(GL_VIEWPORT, vp);
 
         r = Rect(vp[0], vp[1], vp[2], vp[3]);;
-        //log::messageln("vp %d %d %d %d", vp[0], vp[1], vp[2], vp[3]);
+        //logs::messageln("vp %d %d %d %d", vp[0], vp[1], vp[2], vp[3]);
         CHECKGL();
     }
 
@@ -133,7 +133,7 @@ namespace oxygine
 
     void VideoDriverGL::_begin(const Rect& viewport, const Color* clearColor)
     {
-        //  log::messageln("begin %d %d %d %d", viewport.pos.x, viewport.pos.y, viewport.size.x, viewport.size.y);
+        //  logs::messageln("begin %d %d %d %d", viewport.pos.x, viewport.pos.y, viewport.size.x, viewport.size.y);
         glViewport(viewport.getX(), viewport.getY(), viewport.getWidth(), viewport.getHeight());
         glDisable(GL_SCISSOR_TEST);
         if (clearColor)

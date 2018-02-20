@@ -51,7 +51,7 @@ namespace oxygine
         if (resSystem)
             return;
 
-        log::messageln("DebugActor::initialize");
+        logs::messageln("DebugActor::initialize");
 
         zp.setPrefix("system/");
         zp.add(system_data, system_size);
@@ -483,7 +483,7 @@ namespace oxygine
         cr->setTransform(tr);
         getStage()->addChild(cr);
         std::string dmp = actor->dump(0);
-        log::messageln(">>>>>>>>>>>>>>>>>>>>\ntouched actor '%s' local pos: (%.0f,%.0f), pos: (%.0f,%.0f)\n%s",
+        logs::messageln(">>>>>>>>>>>>>>>>>>>>\ntouched actor '%s' local pos: (%.0f,%.0f), pos: (%.0f,%.0f)\n%s",
                        actor->getName().c_str(),
                        te->localPosition.x, te->localPosition.y,
                        te->position.x, te->position.y,
@@ -492,7 +492,7 @@ namespace oxygine
         actor = actor->getParent();
         while (actor)
         {
-            log::messageln("parent: %s", actor->getName().c_str());
+            logs::messageln("parent: %s", actor->getName().c_str());
             actor = actor->getParent();
         }
     }

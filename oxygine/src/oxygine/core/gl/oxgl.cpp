@@ -253,7 +253,7 @@ namespace oxygine
         int gl_error = glGetError();
         if (gl_error != GL_NO_ERROR)
         {
-            log::error("OpenGL error: %#x\n", gl_error);
+            logs::error("OpenGL error: %#x\n", gl_error);
             if (gl_error == GL_OUT_OF_MEMORY)
             {
                 exit(0);

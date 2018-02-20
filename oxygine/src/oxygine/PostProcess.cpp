@@ -146,11 +146,11 @@ namespace oxygine
 
     void RenderTargetsManager::print()
     {
-        log::messageln("print");
+        logs::messageln("print");
         for (size_t i = 0, sz = _free.size(); i < sz; ++i)
         {
             spNativeTexture t = _free[i];
-            log::messageln("texture %d %d", t->getWidth(), t->getHeight());
+            logs::messageln("texture %d %d", t->getWidth(), t->getHeight());
         }
     }
     bool RenderTargetsManager::isGood(const spNativeTexture& t, int w, int h, TextureFormat tf) const

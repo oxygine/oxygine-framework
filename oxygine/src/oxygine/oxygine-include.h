@@ -88,12 +88,12 @@
 void emscStackTrace();
 #endif
 
-namespace oxygine { namespace log { void error(const char* format, ...); } }
+namespace oxygine { namespace logs { void error(const char* format, ...); } }
 
-#define OX_LOG_ERROR(x)     if (!(x)) {oxygine::log::error("Assert! %s in %s:%d", #x, __FILE__, __LINE__);}
+#define OX_LOG_ERROR(x)     if (!(x)) {oxygine::logs::error("Assert! %s in %s:%d", #x, __FILE__, __LINE__);}
 
 
-//assert without log::error
+//assert without logs::error
 #ifdef OXYGINE_QT
 #   define OX_ASSERT_NL(x) { if (!(x)) __asm("int3"); Q_ASSERT(x);}
 #elif !OX_DEBUG || EMSCRIPTEN
@@ -113,7 +113,7 @@ namespace oxygine { namespace log { void error(const char* format, ...); } }
 
 #define OXYGINE_RENDERER 5
 
-#define OXYGINE_VERSION 8
+#define OXYGINE_VERSION 9
 
 #ifdef __GNUC__
 #   define OXYGINE_DEPRECATED __attribute__((deprecated))

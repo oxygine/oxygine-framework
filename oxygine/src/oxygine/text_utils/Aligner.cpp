@@ -12,7 +12,7 @@ namespace oxygine
         Aligner::Aligner(const TextStyle& Style, spSTDMaterial mt, const Font* font, float gscale, const Vector2& size): width((int)size.x), height((int)size.y), _x(0), _y(0), _lineWidth(0),
             bounds(0, 0, 0, 0), style(Style), _scale(gscale), _font(font), mat(mt)
         {
-            //log::messageln("gscale %f, adjScale %f globscale %f, %d %f", gscale, _globalScale, _fontSize, fs);
+            //logs::messageln("gscale %f, adjScale %f globscale %f, %d %f", gscale, _globalScale, _fontSize, fs);
             _line.reserve(50);
             _lineSkip = (int)(_font->getBaselineDistance() * style.baselineScale) + style.linesOffset;
             options = Style.options;

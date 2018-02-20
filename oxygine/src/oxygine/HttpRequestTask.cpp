@@ -210,12 +210,12 @@ namespace oxygine
 
     void HttpRequestTask::_onError()
     {
-        log::warning("http request error (%d): %s", _responseCode , _url.c_str());
+        logs::warning("http request error (%d): %s", _responseCode , _url.c_str());
     }
 
     void HttpRequestTask::_onComplete()
     {
-        log::messageln("http request done (%d): %s", _responseCode, _url.c_str());
+        logs::messageln("http request done (%d): %s", _responseCode, _url.c_str());
     }
 
     void HttpRequestTask::_dispatchComplete()
@@ -259,7 +259,7 @@ namespace oxygine
             unsigned int written = file::write(_fhandle, data, (unsigned int)size);
             if (written != size)
             {
-                log::messageln("WRITE FILE ERROR %d %d", written, size);
+                logs::messageln("WRITE FILE ERROR %d %d", written, size);
                 _writeFileError = true;
                 return;
             }

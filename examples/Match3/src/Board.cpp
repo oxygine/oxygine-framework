@@ -238,7 +238,7 @@ void Board::touched(Event* event)
 {
     TouchEvent* te = safeCast<TouchEvent*>(event);
     Vector2 pos = te->localPosition;
-    //log::messageln("%d - %d: %.2f, %.2f", event->target->getObjectID(), event->currentTarget->getObjectID(), pos.x, pos.y);
+    //logs::messageln("%d - %d: %.2f, %.2f", event->target->getObjectID(), event->currentTarget->getObjectID(), pos.x, pos.y);
     Point spacePos;
     spacePos.x = (int)(pos.x / JewelSize.x);
     spacePos.y = (int)(pos.y / JewelSize.y);

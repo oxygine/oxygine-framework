@@ -129,7 +129,7 @@ void Box2DDraw::createPolygonVertices(const b2Vec2* vertices, int32 vertexCount)
 {
     if (vertexCount > MAX_VERTICES)
     {
-        log::warning("need more vertices");
+        logs::warning("need more vertices");
         return;
     }
 

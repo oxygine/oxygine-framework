@@ -248,7 +248,7 @@ namespace oxygine
         }
 
 
-        log::messageln("id = %d, name = '%s', typeid = '%s', refs = %s", this->__id, name.c_str(), typeid(*this).name(), refs);
+        logs::messageln("id = %d, name = '%s', typeid = '%s', refs = %s", this->__id, name.c_str(), typeid(*this).name(), refs);
     }
 
     void ObjectBase::dumpCreatedObjects()
@@ -256,18 +256,18 @@ namespace oxygine
 #ifdef OXYGINE_DEBUG_TRACE_LEAKS
         MutexAutoLock m(getMutex());
 
-        log::messageln("\n\n\nallocated objects:");
+        logs::messageln("\n\n\nallocated objects:");
         int n = 0;
         __createdObjects& objs = __getCreatedObjects();
         for (__createdObjects::iterator i = objs.begin(); i != objs.end(); ++i)
         {
             ObjectBase* object = *i;
-            //log::message("%d)", n);
+            //logs::message("%d)", n);
             object->dumpObject();
 
             ++n;
         }
-        log::message("total: %d -----------------------------\n\n\n", (int)objs.size());
+        logs::message("total: %d -----------------------------\n\n\n", (int)objs.size());
 #endif
     }
 

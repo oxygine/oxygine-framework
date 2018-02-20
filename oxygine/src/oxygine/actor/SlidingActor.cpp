@@ -135,7 +135,7 @@ namespace oxygine
 
         //static float ml = 0;
         //ml = max(_speed.length(), ml);
-        //log::messageln("sp: %.2f", ml);
+        //logs::messageln("sp: %.2f", ml);
 
         int ct = getTimeMS();
         if (_lastIterTime + NUM * fdt < ct)
@@ -144,7 +144,7 @@ namespace oxygine
         if (_drag.isDragging())
         {
             Vector2 pos = _content->getPosition();
-            //log::messageln("%d) pos %.2f %.2f", _current, pos.x, pos.y);
+            //logs::messageln("%d) pos %.2f %.2f", _current, pos.x, pos.y);
             _prev[_current].pos = pos;
             _prev[_current].tm = ct;
             _current = (_current + 1) % NUM;

@@ -75,7 +75,7 @@ namespace oxygine
         static int ltime = 0;
         if (lastFrame != frame)
         {
-            log::messageln("%d frame %d", getTimeMS() - ltime, frame);
+            logs::messageln("%d frame %d", getTimeMS() - ltime, frame);
             ltime = getTimeMS();
         }
         lastFrame = frame;

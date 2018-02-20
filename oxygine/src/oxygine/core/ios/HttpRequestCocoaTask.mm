@@ -224,7 +224,7 @@ namespace oxygine
         NSValue *taskValue = [NSValue valueWithPointer:this];
         objc_setAssociatedObject(task, &taskKey, taskValue, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         
-        //log::messageln("created task session: %x", task);
+        //logs::messageln("created task session: %x", task);
         
         [task resume];
     }

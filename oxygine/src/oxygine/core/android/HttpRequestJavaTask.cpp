@@ -29,7 +29,7 @@ namespace oxygine
         JNI_NOT_NULL(jInit);
         env->CallStaticVoidMethod(_jHttpRequestsClass, jInit);
 
-        log::messageln("initialized HttpRequestJavaTask");
+        logs::messageln("initialized HttpRequestJavaTask");
     }
 
     void HttpRequestTask::release()
