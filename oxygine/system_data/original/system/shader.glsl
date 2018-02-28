@@ -4,7 +4,7 @@ varying mediump vec2 result_uv;
 varying mediump vec2 result_uv2;
 
 #ifdef VS
-uniform mediump mat4 mat;
+uniform highp mat4 mat;
 uniform mediump vec3 msk[4];
 attribute vec3 position;
 attribute vec4 color;
