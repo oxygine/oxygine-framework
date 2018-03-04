@@ -89,6 +89,7 @@ void emscStackTrace();
 #endif
 
 namespace oxygine { namespace logs { void error(const char* format, ...); } }
+namespace ox = oxygine;
 
 #define OX_LOG_ERROR(x)     if (!(x)) {oxygine::logs::error("Assert! %s in %s:%d", #x, __FILE__, __LINE__);}
 
