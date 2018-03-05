@@ -53,6 +53,7 @@ namespace oxygine
         void removeAllEventListeners();
 
         virtual void dispatchEvent(Event* event);
+        void dispatchEvent(Event& event) { dispatchEvent(&event); }
 
         int getListenersCount() const;
         int getLastListenerID() const { return _lastID; }
