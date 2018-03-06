@@ -7,6 +7,10 @@
 #include "../log.h"
 #include <stdio.h>
 
+#ifndef GL_COMPRESSED_RGBA8_ETC2_EAC
+#   define GL_COMPRESSED_RGBA8_ETC2_EAC      0x9278
+#endif
+
 namespace oxygine
 {
     struct glPixel
@@ -74,6 +78,11 @@ namespace oxygine
                 break;
             case TF_ETC1:
                 pixel.format = GL_ETC1_RGB8_OES;
+                pixel.type = 0;
+                pixel.compressed = true;
+                break;
+            case TF_ETC2:
+                pixel.format = GL_COMPRESSED_RGBA8_ETC2_EAC;
                 pixel.type = 0;
                 pixel.compressed = true;
                 break;

@@ -694,16 +694,21 @@ class atlas_Processor(process.Process):
                 if context.compression == "pvrtc":
                     ox_fmt = "PVRTC_4RGBA"
 
-                    compress(path, context.get_inner_dest(
-                        base_name + ".pvr"), "PVRTC1_4")
+                    compress(path, context.get_inner_dest(base_name + ".pvr"), "PVRTC1_4")
                     image_atlas_el.setAttribute("file", base_name + ".pvr")
                     os.remove(path)
 
                 if context.compression == "pvrtc2":
                     ox_fmt = "PVRTC2_4RGBA"
 
-                    compress(path, context.get_inner_dest(
-                        base_name + ".pvr"), "PVRTC2_4")
+                    compress(path, context.get_inner_dest(base_name + ".pvr"), "PVRTC2_4")
+                    image_atlas_el.setAttribute("file", base_name + ".pvr")
+                    os.remove(path)
+
+                if context.compression == "etc2":
+                    ox_fmt = "etc2"
+
+                    compress(path, context.get_inner_dest(base_name + ".pvr"), "ETC2_RGBA")
                     image_atlas_el.setAttribute("file", base_name + ".pvr")
                     os.remove(path)
 
