@@ -155,6 +155,9 @@ namespace oxygine
                         case TF_ETC1:
                             ram /= 2;
                             break;
+                        case TF_ETC2:
+                            ram /= 2;
+                            break;
                         default:
                             break;
                     }

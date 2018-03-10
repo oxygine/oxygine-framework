@@ -48,7 +48,7 @@ def get_parser():
                         action="store_true", default=False)
     parser.add_argument("-c", "--compression", help="type of image "
                         "compression. Defaults to pure rgba8888 packed to png",
-                        choices=["pvrtc", "pvrtc2", "etc1", "no"], default="")
+                        choices=["pvrtc", "pvrtc2", "etc1", "etc2", "no"], default="")
     parser.add_argument("--npot", help="Atlasses dimensions are not power of twos",
                         action="store_true", default=False)
     parser.add_argument("-q", "--quality", help="select quality to "

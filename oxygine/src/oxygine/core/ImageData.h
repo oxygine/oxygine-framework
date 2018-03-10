@@ -25,6 +25,7 @@ namespace oxygine
         TF_PVRTCII_2,
         TF_PVRTCII_4,
         TF_ETC1,
+        TF_ETC2,
     };
 
 #define ALL_FORMATS_SWITCH(format) \

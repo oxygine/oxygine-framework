@@ -626,6 +626,11 @@ namespace oxygine
                         case 6:
                             tf = TF_ETC1;
                             break;
+                        case 23:
+                            tf = TF_ETC2;
+                            break;
+                        default:
+                            OX_ASSERT(!"unknown header format");
                     }
                     _image.format = tf;
                     _offset = sizeof(*header) + header->meta_data_size;
