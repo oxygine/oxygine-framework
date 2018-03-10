@@ -10,10 +10,13 @@ namespace oxygine
         {
             OX_ASSERT(dest.w == src.w);
             OX_ASSERT(dest.h == src.h);
-            OX_ASSERT(src.data);
-            OX_ASSERT(dest.data);
-            OX_ASSERT(src.pitch);
-            OX_ASSERT(dest.pitch);
+            if (src.w)
+            {
+                OX_ASSERT(src.data);
+                OX_ASSERT(dest.data);
+                OX_ASSERT(src.pitch);
+                OX_ASSERT(dest.pitch);
+            }            
             OX_ASSERT(src.bytespp);
             OX_ASSERT(dest.bytespp);
             if (dest.w != src.w ||

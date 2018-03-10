@@ -749,9 +749,9 @@ namespace oxygine
     void Image::init(int w, int h, TextureFormat Format)
     {
         int bytesPerPixel = getBytesPerPixel(Format);
-
-        _buffer.resize(h * w * bytesPerPixel);
-        _image = ImageData(w, h, w * bytesPerPixel, Format, &_buffer.front());
+        int size = h * w * bytesPerPixel;
+        _buffer.resize(size);        
+        _image = ImageData(w, h, w * bytesPerPixel, Format, size ? &_buffer.front() : 0);
     }
 
 
@@ -790,7 +790,9 @@ namespace oxygine
 
         ImageData im = _image;
 
-        void* ptr = &_buffer.front() + rect.getX() * _image.bytespp + rect.getY() * _image.pitch + _offset;
+        void* ptr = 0;
+        if (!_buffer.empty())//zero size image
+            ptr = &_buffer.front() + rect.getX() * _image.bytespp + rect.getY() * _image.pitch + _offset;
 
         return ImageData(rect.getWidth(), rect.getHeight(), _image.pitch, _image.format, ptr);
     }
