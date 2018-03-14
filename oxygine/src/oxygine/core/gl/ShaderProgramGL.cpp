@@ -147,6 +147,12 @@ namespace oxygine
         else
         {
             handleErrorPolicy(ep, "can't compile shader: %s", log.c_str());
+
+            logs::messageln("shader source code:");
+            for (int i = 0; i < num; ++i)
+                logs::messageln(sources[i]);
+            logs::messageln(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
         }
 
         checkGLError();
