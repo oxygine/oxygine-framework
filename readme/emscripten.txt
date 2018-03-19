@@ -29,16 +29,14 @@ How to build. Steps:
 - Go to new created "build_emsc" folder and open Demo.html with Browser
 
 
-*** 
-In case of build error:
-   "error: reference to 'log' is ambiguous"
- open emscripten file:
-    emscripten\emscripten\1.37.22\system\include\libcxx\math.h
-find line:
-	log(_A1 __lcpp_x) _NOEXCEPT {return log((double)__lcpp_x);}
-and replace it with:
-	log(_A1 __lcpp_x) _NOEXCEPT {return ::log((double)__lcpp_x);}
-***
+emsc bug:
+    https://github.com/kripken/emscripten/issues/4730
+    change 
+     _glutInitDisplayMode(0xB2 /* GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH | GLUT_MULTISAMPLE | GLUT_STENCIL */);
+     to
+     _glutInitDisplayMode(0x32 /* GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH | GLUT_STENCIL */);
+
+
 
 
 2b. You could generate your own emscipten build configuration
