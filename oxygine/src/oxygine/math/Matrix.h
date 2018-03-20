@@ -138,7 +138,7 @@ namespace oxygine
     template <class T>
     void MatrixT<T>::inverse()
     {
-        inverse(this, *this);
+        inverse(*this, *this);
     }
 
 
