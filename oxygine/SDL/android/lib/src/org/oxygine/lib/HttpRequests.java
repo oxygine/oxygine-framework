@@ -166,16 +166,17 @@ class HttpRequest extends AsyncTask<RequestDetails, Integer, String> {
         // take CPU lock to prevent CPU from going off if the user
         // presses the power button during download
         PowerManager pm = (PowerManager) OxygineActivity.instance.getSystemService(Context.POWER_SERVICE);
-        mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
-                getClass().getName());
-        mWakeLock.acquire();
+        mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, getClass().getName());
+        if (mWakeLock != null)
+        	mWakeLock.acquire();
         //mProgressDialog.show();
     }
 
 
     @Override
     protected void onPostExecute(String result) {
-        mWakeLock.release();
+    	if (mWakeLock != null)
+        	mWakeLock.release();
     }
 }
 
