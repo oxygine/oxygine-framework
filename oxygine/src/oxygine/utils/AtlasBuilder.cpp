@@ -113,6 +113,7 @@ namespace oxygine
     void MultiAtlas::clean()
     {
         _free.clear();
+        _bounds = Rect(0, 0, 0, 0);
     }
 
     void MultiAtlas::init(int skipSize)

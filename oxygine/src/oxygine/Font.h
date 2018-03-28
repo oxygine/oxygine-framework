@@ -47,6 +47,8 @@ namespace oxygine
         void addGlyph(const glyph& g);
         void sortGlyphs() {}
 
+        void clear();
+
         void setScale(float scale) { _scale = scale; }
         void setBaselineDistance(int d) { _baselineDistance = d; }
 

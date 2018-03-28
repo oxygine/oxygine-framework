@@ -24,6 +24,11 @@ namespace oxygine
         _glyphs.insert(gl);
     }
 
+    void Font::clear()
+    {
+        _glyphs.clear();
+    }
+
     bool glyphFindPred(const glyph& g, int code)
     {
         return g.ch < code;
