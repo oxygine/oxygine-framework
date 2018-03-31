@@ -46,7 +46,7 @@ namespace oxygine
     {
         struct init_desc
         {
-            init_desc() :w(-1), h(-1),  mode24bpp(true), vsync(true), fullscreen(false), resizable(false), borderless(false), show_window(true), force_gles(false), allow_screensaver(true), title("Oxygine"), appName(0), companyName(0) {}
+            init_desc() : w(-1), h(-1),  mode24bpp(true), vsync(true), fullscreen(false), resizable(false), borderless(false), show_window(true), force_gles(false), allow_screensaver(true), title("Oxygine"), appName(0), companyName(0) {}
 
             /**display width*/
             int w;

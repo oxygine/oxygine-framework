@@ -294,13 +294,13 @@ namespace oxygine
 #elif __ANDROID__
             flags |= SDL_WINDOW_RESIZABLE;//fix for latest SDL, related with new setOrientationBis java function
 #else
-            if(desc.show_window)
+            if (desc.show_window)
                 flags |= SDL_WINDOW_SHOWN;
 
-            if(desc.borderless)
+            if (desc.borderless)
                 flags |= SDL_WINDOW_BORDERLESS;
 
-            if(desc.resizable)
+            if (desc.resizable)
                 flags |= SDL_WINDOW_RESIZABLE;
 #endif
 

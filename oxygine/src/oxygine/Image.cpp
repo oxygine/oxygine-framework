@@ -755,7 +755,7 @@ namespace oxygine
     {
         int bytesPerPixel = getBytesPerPixel(Format);
         int size = h * w * bytesPerPixel;
-        _buffer.resize(size);        
+        _buffer.resize(size);
         _image = ImageData(w, h, w * bytesPerPixel, Format, size ? &_buffer.front() : 0);
     }
 

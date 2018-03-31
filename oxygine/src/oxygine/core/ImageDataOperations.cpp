@@ -16,7 +16,7 @@ namespace oxygine
                 OX_ASSERT(dest.data);
                 OX_ASSERT(src.pitch);
                 OX_ASSERT(dest.pitch);
-            }            
+            }
             OX_ASSERT(src.bytespp);
             OX_ASSERT(dest.bytespp);
             if (dest.w != src.w ||

@@ -17,7 +17,7 @@
 namespace oxygine
 {
     Resources::registeredResources Resources::_registeredResources;
-    ResAnim *_defaultMissingRS = 0;
+    ResAnim* _defaultMissingRS = 0;
 
     void Resources::registerResourceType(Resources::createResourceCallback creationCallback, const char* resTypeID)
     {

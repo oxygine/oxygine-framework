@@ -481,7 +481,7 @@ namespace oxygine
     {
         _anchor = anchor;
         _flags &= ~flag_anchorInPixels;
-        markTranformDirty();        
+        markTranformDirty();
     }
 
     void Actor::setAnchor(float ax, float ay)
@@ -1535,12 +1535,12 @@ namespace oxygine
         br = tr.transform(br);
 
         Vector2 size = Vector2(
-			abs(br.x - tl.x),
-			abs(br.y - tl.y));
+                           abs(br.x - tl.x),
+                           abs(br.y - tl.y));
 
         Vector2 ntl;
-		ntl.x = std::min(tl.x, br.x);
-		ntl.y = std::min(tl.y, br.y);
+        ntl.x = std::min(tl.x, br.x);
+        ntl.y = std::min(tl.y, br.y);
 
         return RectF(ntl, size);
     }

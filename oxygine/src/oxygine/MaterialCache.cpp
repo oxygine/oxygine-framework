@@ -44,7 +44,7 @@ namespace oxygine
         copy->_hash = hash;
         copy->_compare = cm;
         _materials.insert(std::make_pair(hash, copy));
-        
+
         return copy;
     }
 
@@ -69,7 +69,7 @@ namespace oxygine
         removeUnusedNoLock();
     }
 
-    MaterialCache::MaterialCache():_addCounter(0)
+    MaterialCache::MaterialCache(): _addCounter(0)
     {
 
     }

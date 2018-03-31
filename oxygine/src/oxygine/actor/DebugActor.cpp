@@ -484,10 +484,10 @@ namespace oxygine
         getStage()->addChild(cr);
         std::string dmp = actor->dump(0);
         logs::messageln(">>>>>>>>>>>>>>>>>>>>\ntouched actor '%s' local pos: (%.0f,%.0f), pos: (%.0f,%.0f)\n%s",
-                       actor->getName().c_str(),
-                       te->localPosition.x, te->localPosition.y,
-                       te->position.x, te->position.y,
-                       dmp.c_str());
+                        actor->getName().c_str(),
+                        te->localPosition.x, te->localPosition.y,
+                        te->position.x, te->position.y,
+                        dmp.c_str());
 
         actor = actor->getParent();
         while (actor)
