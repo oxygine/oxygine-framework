@@ -699,6 +699,10 @@ namespace oxygine
                     break;
                     case SDL_FINGERMOTION:
                     {
+#ifdef EMSCRIPTEN
+                        _useTouchAPI = true;
+#endif
+
                         if (_useTouchAPI)
                         {
                             //logs::messageln("SDL_FINGERMOTION");
@@ -714,6 +718,11 @@ namespace oxygine
                     case SDL_FINGERDOWN:
                     case SDL_FINGERUP:
                     {
+#ifdef EMSCRIPTEN
+                        _useTouchAPI = true;
+#endif
+
+                        logs::messageln("SDL_FINGER: %.2f %.2f", (float)event.tfinger.x, (float)event.tfinger.y);
                         if (_useTouchAPI)
                         {
                             //logs::messageln("SDL_FINGER");
