@@ -6,11 +6,6 @@ and just go to any example and open it right away
 2. There are prebuilt example solutions for VS2010+
 =================================================================================================
 - Build SDL:
-  - Open SDL\include\SDL_config_windows.h in any text editor
-  - Find this line:
-    #define SDL_AUDIO_DRIVER_XAUDIO2    1
-  - and comment it so it looks like:
-    //#define SDL_AUDIO_DRIVER_XAUDIO2    1
   - Go to folder SDL\VisualC\ 
   - Open SDL.sln and build it in Release configration
   - Go to folder SDL\VisualC\Win32\Release\
