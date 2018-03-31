@@ -113,11 +113,11 @@ namespace oxygine
                         if (msg->msg == CURLMSG_DONE)
                         {
                             //save args
-                            CURL *eh = msg->easy_handle;
+                            CURL* eh = msg->easy_handle;
                             CURLcode code = msg->data.result;
                             //can be removed now
                             curl_multi_remove_handle(multi_handle, msg->easy_handle);
-                            core::getMainThreadDispatcher().postCallback(ID_DONE, eh, (void*)code, mainThreadFunc, 0);                            
+                            core::getMainThreadDispatcher().postCallback(ID_DONE, eh, (void*)code, mainThreadFunc, 0);
                             break;
                         }
                     }
