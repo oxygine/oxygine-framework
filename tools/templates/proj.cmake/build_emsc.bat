@@ -1,4 +1,4 @@
-call emsdk activate
+call emsdk activate latest
 
 python ${OXYGINE}/tools/others/embed_folder_js.py -s ../data
 

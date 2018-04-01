@@ -2,26 +2,18 @@
 2. emscripten build configured with CMakeFiles
 
 How to build. Steps:
-- Install Emscripten SDK and setup it. Latest tested version 1.37.22 required
-- Install CMake
-- Install JDK version 7/8
+- Install Emscripten SDK and setup it. Latest tested version 1.37.36 recommended
+- Install CMake (don't forget add it to PATH)
 - if you are Windows user you need also install Make tool:
   - Install GnuMake (http://gnuwin32.sourceforge.net/packages/make.htm) or any other 
   - add it to PATH environment variable
     - Open Folder explorer > This PC > System Properties > Advanced Settings > Environmental Variables > Go to PATH > Click Edit > Add ";/your/path/here"
 
-
-- Configure environment variables properly:
-  JAVA_HOME points to JDK 
-  	example: c:\Program Files (x86)\Java\jdk1.6.0_26\
-
 - Add necessary paths to environment variable PATH:
   Emscripten
-  	example: d:\Emscripten\
-  JDK 
-  	example: "c:\Program Files (x86)\Java\jdk1.6.0_26\bin\"
+  	example: d:\emsdk\
 
-- *emsc bug and workaround http://oxygine.org/forum/viewtopic.php?f=6&t=3295
+
 
 - Select any example from examples folder. For example "Demo"
 - Go to folder oxygine-framework/examples/Demo/proj.cmake
@@ -29,11 +21,11 @@ How to build. Steps:
 - Go to new created "build_emsc" folder and open Demo.html with Browser
 
 
-emsc bug:
-    https://github.com/kripken/emscripten/issues/4730
-    change 
-     _glutInitDisplayMode(0xB2 /* GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH | GLUT_MULTISAMPLE | GLUT_STENCIL */);
-     to
+*emsc bug workaround (https://github.com/kripken/emscripten/issues/4730):
+	open  file emsdk\emscripten\1.37.36\src\library_egl.js
+	find line:
+     	_glutInitDisplayMode(0xB2 /* GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH | GLUT_MULTISAMPLE | GLUT_STENCIL */);
+    and replace it with:
      _glutInitDisplayMode(0x32 /* GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH | GLUT_STENCIL */);
 
 
