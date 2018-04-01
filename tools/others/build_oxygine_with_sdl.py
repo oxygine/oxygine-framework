@@ -130,7 +130,7 @@ enum(SOUND_dest + "/examples/", copy)
 enum(FLOW_dest + "/examples/", copy)
 enum(FT_dest + "/examples/", copy)
 
-shutil.copy(SDL_dest + "/android-project/src/org/libsdl/app/SDLActivity.java",
+shutil.copy(SDL_dest + "/android-project/app/src/main/java/org/libsdl/app/SDLActivity.java",
             OXYGINE_dest + "/oxygine/SDL/android/lib/src/org/libsdl/app/SDLActivity.java")
 
 libs = ("SDL2.lib", "SDL2main.lib", )
