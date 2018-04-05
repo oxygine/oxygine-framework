@@ -1,8 +1,6 @@
 #pragma once
 #include "oxygine-include.h"
 #include "Event.h"
-
-#undef OUT
 namespace oxygine
 {
     class TouchEvent : public Event
@@ -14,7 +12,7 @@ namespace oxygine
 
             CLICK,
             OVER,
-            OUT,
+            OUTX,//OUT, X - avoid conflicts with WinAPI
             MOVE,
             TOUCH_DOWN,
             TOUCH_UP,

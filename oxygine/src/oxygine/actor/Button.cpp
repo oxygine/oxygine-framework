@@ -20,7 +20,7 @@ namespace oxygine
         EventCallback ncb = CLOSURE(this, &Button::_mouseEvent);
         addEventListener(TouchEvent::TOUCH_DOWN, ncb);
         addEventListener(TouchEvent::OVER, ncb);
-        addEventListener(TouchEvent::OUT, ncb);
+        addEventListener(TouchEvent::OUTX, ncb);
         addEventListener(TouchEvent::CLICK, ncb);
 
         if (DebugActor::resSystem)
@@ -64,7 +64,7 @@ namespace oxygine
                 }
             }
             break;
-            case TouchEvent::OUT:
+            case TouchEvent::OUTX:
             {
                 if (_btnOvered == me->index)
                 {

@@ -114,7 +114,7 @@ namespace ox = oxygine;
 
 #define OXYGINE_RENDERER 5
 
-#define OXYGINE_VERSION 9
+#define OXYGINE_VERSION 10
 
 #ifdef __GNUC__
 #   define OXYGINE_DEPRECATED __attribute__((deprecated))

@@ -329,7 +329,7 @@ namespace oxygine
         _getStage()->removeEventListener(TouchEvent::MOVE, CLOSURE(this, &Actor::_onGlobalTouchMoveEvent));
 
         TouchEvent up = *te;
-        up.type = TouchEvent::OUT;
+        up.type = TouchEvent::OUTX;
         up.bubbles = false;
         up.localPosition = stage2local(te->localPosition, _getStage());
         dispatchEvent(&up);
