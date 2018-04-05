@@ -827,6 +827,7 @@ namespace oxygine
             SDL_Quit();
 #endif
 
+			_dispatcher->removeAllEventListeners();
             _dispatcher = 0;
         }
 
