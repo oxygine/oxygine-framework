@@ -318,8 +318,11 @@ namespace oxygine
                 flags |= SDL_WINDOW_FULLSCREEN;
 
 
-            Event ev(EVENT_PRECREATEWINDOW);
+            PreCreateWindowEvent ev;
+			ev.flags = flags;
             _dispatcher->dispatchEvent(&ev);
+
+			flags = ev.flags;
 
 
 #if TARGET_OS_IPHONE
