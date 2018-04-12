@@ -8,9 +8,9 @@ namespace oxygine
     class RenderStateCache
     {
     public:
-        RenderStateCache(IVideoDriver* d);
+        RenderStateCache();
 
-
+		void setDriver(IVideoDriver *d);
 
         const spNativeTexture& getTexture(int sampler) { return _textures[sampler]; }
 

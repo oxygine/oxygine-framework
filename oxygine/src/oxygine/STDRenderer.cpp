@@ -33,16 +33,21 @@ namespace oxygine
 
     RenderStateCache& rsCache()
     {
-        static RenderStateCache r(IVideoDriver::instance);
+        static RenderStateCache r;
         return r;
     }
 
-    RenderStateCache::RenderStateCache(IVideoDriver* d) : _driver(d), _blend(blend_disabled), _program(0)
+    RenderStateCache::RenderStateCache(): _blend(blend_disabled), _program(0)
     {
         reset();
     }
 
-    void RenderStateCache::reset()
+	void RenderStateCache::setDriver(IVideoDriver *d)
+	{
+		_driver = d;
+	}
+
+	void RenderStateCache::reset()
     {
         resetTextures();
 

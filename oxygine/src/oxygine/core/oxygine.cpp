@@ -420,6 +420,7 @@ namespace oxygine
 
             CHECKGL();
 
+			rsCache().setDriver(IVideoDriver::instance);
 
 
             STDRenderer::initialize();
@@ -783,6 +784,7 @@ namespace oxygine
 #endif
 
             rsCache().reset();
+			rsCache().setDriver(0);
             _threadMessages.clear();
             _uiMessages.clear();
 
