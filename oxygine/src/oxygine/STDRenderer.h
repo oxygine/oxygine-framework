@@ -2,6 +2,7 @@
 #include "oxygine-include.h"
 #include "Material.h"
 #include "core/Renderer.h"
+#include <functional>
 
 namespace oxygine
 {
