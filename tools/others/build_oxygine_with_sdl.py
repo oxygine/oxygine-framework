@@ -9,6 +9,27 @@ import shutil
 import zipfile
 import time
 
+def test():
+
+    with zipfile.ZipFile("d:/oxygine-framework/oxygine-framework.zip", "r", compression=zipfile.ZIP_DEFLATED) as zp:
+        res = zipfile.ZipFile("d:/oxygine-framework/oxygine-framework-X.zip", "w", compression=zipfile.ZIP_DEFLATED)
+        lst = zp.filelist
+        for item in lst:
+            name = os.path.split(item.filename)[1]
+            base, ext = os.path.splitext(name)
+            if ext in (".sh", ".py") or name in ("gradlew", "PVRTexToolCLI", "PVRTexToolCLI_64"):
+                item.external_attr = 0755 << 16L  # a+x
+
+
+            data = zp.read(item.filename)
+            res.writestr(item, data, zipfile.ZIP_DEFLATED)
+
+        res.close()
+
+
+
+test()
+q = 0
 
 def recursive_zip(zipf, directory, folder=""):
     for item in os.listdir(directory):
@@ -38,6 +59,8 @@ def buildzip(name):
     destzip = "../../" + name
     with zipfile.ZipFile(destzip, "w", compression=zipfile.ZIP_DEFLATED) as zp:
         recursive_zip(zp, "../../temp")
+
+
 
     # return
     try:
