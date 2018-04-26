@@ -22,7 +22,7 @@ public:
         orange->attachTo(content);
         //orange->setAlpha(200);
         orange->addEventListener(TouchEvent::OVER, CLOSURE(this, &TestTouches::onOver));
-        orange->addEventListener(TouchEvent::OUT, CLOSURE(this, &TestTouches::onOver));
+        orange->addEventListener(TouchEvent::OUTX, CLOSURE(this, &TestTouches::onOver));
         orange->addEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &TestTouches::onDownUp));
         orange->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &TestTouches::onDownUp));
         orange->addEventListener(TouchEvent::MOVE, CLOSURE(this, &TestTouches::onMove));
@@ -90,7 +90,7 @@ public:
         spSprite s = safeSpCast<Sprite>(ev->currentTarget);
         spTextField tf = s->getChildT<TextField>("local");
 
-        if (ev->type != TouchEvent::OUT)
+        if (ev->type != TouchEvent::OUTX)
         {
             TouchEvent* te = safeCast<TouchEvent*>(ev);
             char str[255];
