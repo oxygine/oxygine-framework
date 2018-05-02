@@ -33,18 +33,18 @@ namespace oxygine
         /**position in local space for Event::target actor*/
         Vector2 position;
 
+        MouseButton mouseButton;
         float pressure;
 
-        MouseButton mouseButton;
         pointer_index index;
-
-        Vector2 wheelDirection;//actual only for WHEEL_DIR event
 
         const PointerState* getPointer() const;
 
         static bool isTouchEvent(int eventID) { return eventID > __FIRST && eventID < __LAST; }
 
         bool __clickDispatched;
+        Vector2 wheelDirection;//actual only for WHEEL_DIR event
+        
         float __localScale;
     };
 }

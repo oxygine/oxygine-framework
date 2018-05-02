@@ -48,9 +48,8 @@ namespace oxygine
         std::string _debugText;
         std::vector<int> _frameTime;
 
-
-        bool _showTouchedActor;
         bool _showTexel2PixelErrors;
+        bool _showTouchedActor;
 
         bool _dragging;
         Vector2 _local;

@@ -402,7 +402,8 @@ namespace oxygine
             file::init(desc.companyName, desc.appName);
 
 #ifdef OXYGINE_SDL
-            int missing = initGLExtensions(SDL_GL_GetProcAddress);
+ // unused variable (hotfix/compiler-warnings)
+ //           int missing = initGLExtensions(SDL_GL_GetProcAddress);
 #endif
 
             Point size = getDisplaySize();

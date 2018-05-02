@@ -76,12 +76,12 @@ namespace oxygine
 
         class animFrame
         {
-            const ResAnim* _resAnim;
             int _col;
             int _row;
+            const ResAnim* _resAnim;
+            bool _useResAnim;
             bool _managed;
             AnimationFrame _frame;
-            bool _useResAnim;
 
         public:
             animFrame(bool managed, int col, int row): _col(col), _row(row), _resAnim(0), _useResAnim(true), _managed(managed) {}
