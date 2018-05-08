@@ -36,7 +36,7 @@ public:
         //animate mouse over and mouse out events
         cb = CLOSURE(this, &MainActor::buttonOverOut);
         button->addEventListener(TouchEvent::OVER, cb);
-        button->addEventListener(TouchEvent::OUT, cb);
+        button->addEventListener(TouchEvent::OUTX, cb);
 
 #ifdef CLOSURE_FUNCTION //if your compiler supports lambda
 
@@ -94,7 +94,7 @@ public:
             _button->addTween(Sprite::TweenAddColor(Color(64, 64, 64, 0)), 300);
         }
 
-        if (e->type == TouchEvent::OUT)
+        if (e->type == TouchEvent::OUTX)
         {
             _button->addTween(Sprite::TweenAddColor(Color(0, 0, 0, 0)), 300);
         }
