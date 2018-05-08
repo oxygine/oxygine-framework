@@ -44,15 +44,12 @@ namespace oxygine
 
         int linesOffset;//vertical distance offset between lines
         int kerning;//horizontal distance
-        size_t options;//additional flags could be used for generating custom glyphs
         bool multiline;
+        int fontSize;
         bool breakLongWords;//works with multiline flag. breakLongWords = false doesn't allow to break too long words
         Color color;
-
-        int fontSize;
         float baselineScale;//baseline distance multiplier
-
-
+        size_t options;//additional flags could be used for generating custom glyphs
 
         TextStyle withFont(const ResFont* f) const { TextStyle st = *this; st.font = f; return st; }
 

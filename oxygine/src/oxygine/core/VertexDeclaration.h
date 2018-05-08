@@ -10,9 +10,8 @@ namespace oxygine
         VertexDeclaration(): bformat(0), numElements(0), size(0) {}
 
         bvertex_format bformat;
-        int size;
-
         int numElements;
+        int size;
     };
 
     template <class T>

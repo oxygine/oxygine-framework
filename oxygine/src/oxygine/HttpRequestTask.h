@@ -92,7 +92,6 @@ namespace oxygine
 
         std::string _url;
         std::string _fname;
-        file::handle _fhandle;
         bool _writeFileError;
         bool _cacheEnabled;
         bool _firstTimeProgressDispatched;
@@ -104,17 +103,17 @@ namespace oxygine
         std::vector<unsigned char> _response;
         std::vector<unsigned char> _postData;
 
-        responseCodeChecker _responseCodeChecker;
-
-        bool _suitableResponse;
-
-        int _responseCode;
+        bool _continueDownload;
+        
         size_t _expectedContentSize;
         size_t _receivedContentSize;
+        file::handle _fhandle;
+        bool _suitableResponse;
+        responseCodeChecker _responseCodeChecker;
+
+        int _responseCode;
 
         spObject _object;
-
-        bool _continueDownload;
 
         typedef std::vector< std::pair<std::string, std::string> >  headers;
         headers _headers;

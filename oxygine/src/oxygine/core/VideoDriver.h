@@ -29,7 +29,7 @@ namespace oxygine
         class Stats
         {
         public:
-            Stats() : batches(0), duration(0), start(0) { memset(elements, 0, sizeof(elements)); }
+            Stats() : batches(0), start(0), duration(0) { memset(elements, 0, sizeof(elements)); }
             int batches;
             int elements[PT_COUNT];
             timeMS start;

@@ -66,11 +66,10 @@ namespace oxygine
         }
 
         Resources* resources;
-        XmlWalker walker;
-
         const std::string* xml_name;
         const std::string* prebuilt_folder;
         const ResourcesLoadOptions* options;
+        XmlWalker walker;
     };
 
     DECLARE_SMART(Image, spImage);
