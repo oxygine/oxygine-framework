@@ -64,6 +64,8 @@ extern "C"
     {}
     GLAPI void APIENTRY def_glUniform3fv(GLint location, GLsizei count, const GLfloat* value)
     {}
+    GLAPI void APIENTRY def_glUniform3f(GLint location, GLfloat v0, GLfloat v1, GLfloat v2)
+    {}
     GLAPI void APIENTRY def_glUniform4fv(GLint location, GLsizei count, const GLfloat* value)
     {}
     GLAPI void APIENTRY def_glUniform1f(GLint location, GLfloat v0)
@@ -89,6 +91,8 @@ extern "C"
     GLAPI void APIENTRY def_glGenBuffers(GLsizei n, GLuint* buffers)
     {}
     GLAPI void APIENTRY def_glBufferData(GLenum target, GLsizeiptr size, const void* data, GLenum usage)
+    {}
+    GLAPI void APIENTRY def_glDrawBuffers( 	GLsizei n,const GLenum *bufs)
     {}
     GLAPI void APIENTRY def_glGetProgramiv(GLuint program, GLenum pname, GLint* params)
     {}
@@ -143,6 +147,7 @@ extern "C"
     PFNGLUNIFORM2FPROC _glUniform2f = 0;
     PFNGLUNIFORM2FVPROC _glUniform2fv = 0;
     PFNGLUNIFORM3FVPROC _glUniform3fv = 0;
+    PFNGLUNIFORM3FPROC _glUniform3f = 0;
     PFNGLUNIFORM4FVPROC _glUniform4fv = 0;
     PFNGLUNIFORM1FPROC _glUniform1f = 0;
     PFNGLUNIFORMMATRIX4FVPROC _glUniformMatrix4fv = 0;
@@ -156,6 +161,7 @@ extern "C"
     PFNGLBINDBUFFERPROC _glBindBuffer = 0;
     PFNGLGENBUFFERSPROC _glGenBuffers = 0;
     PFNGLBUFFERDATAPROC _glBufferData = 0;
+    PFNGLDRAWBUFFERSPROC _glDrawBuffers = 0;
     PFNGLGETPROGRAMIVPROC _glGetProgramiv = 0;
     PFNGLGENERATEMIPMAPPROC _glGenerateMipmap = 0;
     PFNGLSTENCILOPSEPARATEPROC _glStencilOpSeparate = 0;
@@ -202,6 +208,7 @@ int initGLExtensions(myGetProcAdress func)
     GETFUNC(_glUniform2f, def_glUniform2f, PFNGLUNIFORM2FPROC, "glUniform2f");
     GETFUNC(_glUniform2fv, def_glUniform2fv, PFNGLUNIFORM2FVPROC, "glUniform2fv");
     GETFUNC(_glUniform3fv, def_glUniform3fv, PFNGLUNIFORM3FVPROC, "glUniform3fv");
+    GETFUNC(_glUniform3fv, def_glUniform3f, PFNGLUNIFORM3FVPROC, "glUniform3f");
     GETFUNC(_glUniform4fv, def_glUniform4fv, PFNGLUNIFORM4FVPROC, "glUniform4fv");
     GETFUNC(_glUniform1f, def_glUniform1f, PFNGLUNIFORM1FPROC, "glUniform1f");
     GETFUNC(_glUniformMatrix4fv, def_glUniformMatrix4fv, PFNGLUNIFORMMATRIX4FVPROC, "glUniformMatrix4fv");
@@ -215,6 +222,7 @@ int initGLExtensions(myGetProcAdress func)
     GETFUNC(_glBindBuffer, def_glBindBuffer, PFNGLBINDBUFFERPROC, "glBindBuffer");
     GETFUNC(_glGenBuffers, def_glGenBuffers, PFNGLGENBUFFERSPROC, "glGenBuffers");
     GETFUNC(_glBufferData, def_glBufferData, PFNGLBUFFERDATAPROC, "glBufferData");
+    GETFUNC(_glBufferData, def_glDrawBuffers, PFNGLGENTEXTURESPROC, "glDrawBuffers");
     GETFUNC(_glGetProgramiv, def_glGetProgramiv, PFNGLGETPROGRAMIVPROC, "glGetProgramiv");
     GETFUNC(_glGenerateMipmap, def_glGenerateMipmap, PFNGLGENERATEMIPMAPPROC, "glGenerateMipmap");
     GETFUNC(_glStencilOpSeparate, def_glStencilOpSeparate, PFNGLSTENCILOPSEPARATEPROC, "glStencilOpSeparate");
