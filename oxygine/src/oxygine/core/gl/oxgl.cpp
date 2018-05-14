@@ -92,8 +92,6 @@ extern "C"
     {}
     GLAPI void APIENTRY def_glBufferData(GLenum target, GLsizeiptr size, const void* data, GLenum usage)
     {}
-    GLAPI void APIENTRY def_glGenTextures (GLsizei n, GLuint *textures)
-    {}
     GLAPI void APIENTRY def_glDrawBuffers( 	GLsizei n,const GLenum *bufs)
     {}
     GLAPI void APIENTRY def_glGetProgramiv(GLuint program, GLenum pname, GLint* params)
@@ -163,7 +161,6 @@ extern "C"
     PFNGLBINDBUFFERPROC _glBindBuffer = 0;
     PFNGLGENBUFFERSPROC _glGenBuffers = 0;
     PFNGLBUFFERDATAPROC _glBufferData = 0;
-    PFNGLGENTEXTURESPROC _glGenTextures = 0;
     PFNGLDRAWBUFFERSPROC _glDrawBuffers = 0;
     PFNGLGETPROGRAMIVPROC _glGetProgramiv = 0;
     PFNGLGENERATEMIPMAPPROC _glGenerateMipmap = 0;
@@ -226,7 +223,6 @@ int initGLExtensions(myGetProcAdress func)
     GETFUNC(_glGenBuffers, def_glGenBuffers, PFNGLGENBUFFERSPROC, "glGenBuffers");
     GETFUNC(_glBufferData, def_glBufferData, PFNGLBUFFERDATAPROC, "glBufferData");
     GETFUNC(_glBufferData, def_glDrawBuffers, PFNGLGENTEXTURESPROC, "glDrawBuffers");
-    GETFUNC(_glBufferData, def_glGenTextures, PFNGLGENTEXTURESPROC, "glGenTextures");
     GETFUNC(_glGetProgramiv, def_glGetProgramiv, PFNGLGETPROGRAMIVPROC, "glGetProgramiv");
     GETFUNC(_glGenerateMipmap, def_glGenerateMipmap, PFNGLGENERATEMIPMAPPROC, "glGenerateMipmap");
     GETFUNC(_glStencilOpSeparate, def_glStencilOpSeparate, PFNGLSTENCILOPSEPARATEPROC, "glStencilOpSeparate");
@@ -274,4 +270,3 @@ namespace oxygine
 #endif
     }
 }
-

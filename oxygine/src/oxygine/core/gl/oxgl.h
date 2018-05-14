@@ -53,7 +53,6 @@ extern "C"
     extern PFNGLGENBUFFERSPROC _glGenBuffers;
     extern PFNGLDRAWBUFFERSPROC _glDrawBuffers;
     extern PFNGLBUFFERDATAPROC _glBufferData;
-    extern PFNGLGENTEXTURESPROC _glGenTextures;
     extern PFNGLGETPROGRAMIVPROC _glGetProgramiv;
     extern PFNGLGENERATEMIPMAPPROC _glGenerateMipmap;
     extern PFNGLSTENCILOPSEPARATEPROC _glStencilOpSeparate;
@@ -159,7 +158,6 @@ extern "C"
 #define oxglBindBuffer DECLARE_GLEXT(glBindBuffer)
 #define oxglGenBuffers DECLARE_GLEXT(glGenBuffers)
 #define oxglBufferData DECLARE_GLEXT(glBufferData)
-#define oxglGenTextures DECLARE_GLEXT(glGenTextures)
 #define oxglDrawBuffers DECLARE_GLEXT(glDrawBuffers)
 #define oxglGetProgramiv DECLARE_GLEXT(glGetProgramiv)
 #define oxglGenerateMipmap DECLARE_GLEXT(glGenerateMipmap)
