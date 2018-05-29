@@ -76,6 +76,10 @@ extern "C"
     {}
     GLAPI void APIENTRY def_glGenFramebuffers(GLsizei n, GLuint* framebuffers)
     {}
+    GLAPI void APIENTRY def_glGenTextures(GLsizei n,GLuint * textures)
+    {}
+    GLAPI void APIENTRY def_glTexImage2D(GLenum target,GLint level,GLint internalFormat,GLsizei width,GLsizei height,GLint border,GLenum format,GLenum type,const GLvoid * data);
+    {}
     GLAPI GLenum APIENTRY def_glCheckFramebufferStatus(GLenum target)
     {return 0;}
     GLAPI void APIENTRY def_glDeleteFramebuffers(GLsizei n, const GLuint* framebuffers)
@@ -153,6 +157,10 @@ extern "C"
     PFNGLUNIFORMMATRIX4FVPROC _glUniformMatrix4fv = 0;
     PFNGLBINDFRAMEBUFFERPROC _glBindFramebuffer = 0;
     PFNGLGENFRAMEBUFFERSPROC _glGenFramebuffers = 0;
+    PFNGLGENTEXTURESPROC _glGenTextures = 0;
+    PFNGLBINDTEXTUREPROC _glBindTexture = 0;
+    PFNGLTEXIMAGE2DPROC _glTexImage2D = 0;
+    PFNGLTEXPARAMETERIPROC _glTexParameteri= 0;
     PFNGLCHECKFRAMEBUFFERSTATUSPROC _glCheckFramebufferStatus = 0;
     PFNGLDELETEFRAMEBUFFERSPROC _glDeleteFramebuffers = 0;
     PFNGLGETUNIFORMLOCATIONPROC _glGetUniformLocation = 0;
@@ -208,12 +216,16 @@ int initGLExtensions(myGetProcAdress func)
     GETFUNC(_glUniform2f, def_glUniform2f, PFNGLUNIFORM2FPROC, "glUniform2f");
     GETFUNC(_glUniform2fv, def_glUniform2fv, PFNGLUNIFORM2FVPROC, "glUniform2fv");
     GETFUNC(_glUniform3fv, def_glUniform3fv, PFNGLUNIFORM3FVPROC, "glUniform3fv");
-    GETFUNC(_glUniform3fv, def_glUniform3f, PFNGLUNIFORM3FVPROC, "glUniform3f");
+    GETFUNC(_glUniform3f, def_glUniform3f, PFNGLUNIFORM3FPROC, "glUniform3f");
     GETFUNC(_glUniform4fv, def_glUniform4fv, PFNGLUNIFORM4FVPROC, "glUniform4fv");
     GETFUNC(_glUniform1f, def_glUniform1f, PFNGLUNIFORM1FPROC, "glUniform1f");
     GETFUNC(_glUniformMatrix4fv, def_glUniformMatrix4fv, PFNGLUNIFORMMATRIX4FVPROC, "glUniformMatrix4fv");
     GETFUNC(_glBindFramebuffer, def_glBindFramebuffer, PFNGLBINDFRAMEBUFFERPROC, "glBindFramebuffer");
     GETFUNC(_glGenFramebuffers, def_glGenFramebuffers, PFNGLGENFRAMEBUFFERSPROC, "glGenFramebuffers");
+    GETFUNC(_glBindTexture, def_glBindTexture, PFNGLBINDTEXTUREPROC, "glBindTexture");
+    GETFUNC(_glGenTextures, def_glGenTextures, PFNGLGENTEXTURESPROC, "glGenTextures");
+    GETFUNC(_glTexImage2D, def_glTexImage2D, PFNGLTEXIMAGE2DPROC, "glTexImage2D");
+    GETFUNC(glTexParameteri, def_glTexParameteri, PFNGLTEXPARAMETERIPROC, "glTexParameteri");
     GETFUNC(_glCheckFramebufferStatus, def_glCheckFramebufferStatus, PFNGLCHECKFRAMEBUFFERSTATUSPROC, "glCheckFramebufferStatus");
     GETFUNC(_glDeleteFramebuffers, def_glDeleteFramebuffers, PFNGLDELETEFRAMEBUFFERSPROC, "glDeleteFramebuffers");
     GETFUNC(_glGetUniformLocation, def_glGetUniformLocation, PFNGLGETUNIFORMLOCATIONPROC, "glGetUniformLocation");
@@ -222,7 +234,7 @@ int initGLExtensions(myGetProcAdress func)
     GETFUNC(_glBindBuffer, def_glBindBuffer, PFNGLBINDBUFFERPROC, "glBindBuffer");
     GETFUNC(_glGenBuffers, def_glGenBuffers, PFNGLGENBUFFERSPROC, "glGenBuffers");
     GETFUNC(_glBufferData, def_glBufferData, PFNGLBUFFERDATAPROC, "glBufferData");
-    GETFUNC(_glBufferData, def_glDrawBuffers, PFNGLGENTEXTURESPROC, "glDrawBuffers");
+	GETFUNC(_glDrawBuffers, def_glDrawBuffers, PFNGLDRAWBUFFERSPROC, "glDrawBuffers");
     GETFUNC(_glGetProgramiv, def_glGetProgramiv, PFNGLGETPROGRAMIVPROC, "glGetProgramiv");
     GETFUNC(_glGenerateMipmap, def_glGenerateMipmap, PFNGLGENERATEMIPMAPPROC, "glGenerateMipmap");
     GETFUNC(_glStencilOpSeparate, def_glStencilOpSeparate, PFNGLSTENCILOPSEPARATEPROC, "glStencilOpSeparate");
