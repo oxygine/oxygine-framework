@@ -72,13 +72,19 @@ extern "C"
     {}
     GLAPI void APIENTRY def_glUniformMatrix4fv(GLint location, GLsizei count, GLboolean transpose, const GLfloat* value)
     {}
-    GLAPI void APIENTRY def_glBindFramebuffer(GLenum target, GLuint framebuffer)
+    GLAPI void APIENTRY def_glBindFramebuffer(GLenum target,GLuint framebuffer)
     {}
     GLAPI void APIENTRY def_glGenFramebuffers(GLsizei n, GLuint* framebuffers)
+    {}
+    GLAPI void APIENTRY def_glBindTexture(GLenum target,GLuint texture)
     {}
     GLAPI void APIENTRY def_glGenTextures(GLsizei n,GLuint * textures)
     {}
     GLAPI void APIENTRY def_glTexImage2D(GLenum target,GLint level,GLint internalFormat,GLsizei width,GLsizei height,GLint border,GLenum format,GLenum type,const GLvoid * data);
+    {}
+    GLAPI void APIENTRY glFramebufferTexture(GLenum target,GLenum attachment,GLuint texture,GLint level)
+    {}
+    GLAPI void glTexParameteri(GLenum target,GLenum pname,GLint param)
     {}
     GLAPI GLenum APIENTRY def_glCheckFramebufferStatus(GLenum target)
     {return 0;}
@@ -161,6 +167,7 @@ extern "C"
     PFNGLBINDTEXTUREPROC _glBindTexture = 0;
     PFNGLTEXIMAGE2DPROC _glTexImage2D = 0;
     PFNGLTEXPARAMETERIPROC _glTexParameteri= 0;
+    PFNGLFRAMEBUFFERTEXTUREPROC _glFramebufferTexture = 0;
     PFNGLCHECKFRAMEBUFFERSTATUSPROC _glCheckFramebufferStatus = 0;
     PFNGLDELETEFRAMEBUFFERSPROC _glDeleteFramebuffers = 0;
     PFNGLGETUNIFORMLOCATIONPROC _glGetUniformLocation = 0;
@@ -225,6 +232,7 @@ int initGLExtensions(myGetProcAdress func)
     GETFUNC(_glBindTexture, def_glBindTexture, PFNGLBINDTEXTUREPROC, "glBindTexture");
     GETFUNC(_glGenTextures, def_glGenTextures, PFNGLGENTEXTURESPROC, "glGenTextures");
     GETFUNC(_glTexImage2D, def_glTexImage2D, PFNGLTEXIMAGE2DPROC, "glTexImage2D");
+    GETFUNC(_glFramebufferTexture, def_glFramebufferTexture, PFNGLFRAMEBUFFERTEXTUREPROC, "glFramebufferTexture");
     GETFUNC(glTexParameteri, def_glTexParameteri, PFNGLTEXPARAMETERIPROC, "glTexParameteri");
     GETFUNC(_glCheckFramebufferStatus, def_glCheckFramebufferStatus, PFNGLCHECKFRAMEBUFFERSTATUSPROC, "glCheckFramebufferStatus");
     GETFUNC(_glDeleteFramebuffers, def_glDeleteFramebuffers, PFNGLDELETEFRAMEBUFFERSPROC, "glDeleteFramebuffers");

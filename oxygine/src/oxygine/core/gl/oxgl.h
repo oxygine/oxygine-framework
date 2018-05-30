@@ -48,6 +48,7 @@ extern "C"
     extern PFNGLBINDTEXTUREPROC _glBindTexture;
     extern PFNGLGENTEXTURESPROC _glGenTextures;
     extern PFNGLTEXPARAMETERIPROC _glTexParameteri;
+    extern PFNGLFRAMEBUFFERTEXTUREPROC _glFramebufferTexture;
     extern PFNGLCHECKFRAMEBUFFERSTATUSPROC _glCheckFramebufferStatus;
     extern PFNGLDELETEFRAMEBUFFERSPROC _glDeleteFramebuffers;
     extern PFNGLGETUNIFORMLOCATIONPROC _glGetUniformLocation;
@@ -158,6 +159,7 @@ extern "C"
 #define oxglBindTexture DECLARE_GLEXT(glBindTexture)
 #define oxglTexImage2D DECLARE_GLEXT(glTexImage2D)
 #define oxglTexParameteri DECLARE_GLEXT(glTexParameteri)
+#define oxglFramebufferTexture DECLARE_GLEXT(glFramebufferTexture)
 #define oxglCheckFramebufferStatus DECLARE_GLEXT(glCheckFramebufferStatus)
 #define oxglDeleteFramebuffers DECLARE_GLEXT(glDeleteFramebuffers)
 #define oxglGetUniformLocation DECLARE_GLEXT(glGetUniformLocation)
