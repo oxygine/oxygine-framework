@@ -72,7 +72,7 @@ extern "C"
     {}
     GLAPI void APIENTRY def_glUniformMatrix4fv(GLint location, GLsizei count, GLboolean transpose, const GLfloat* value)
     {}
-    GLAPI void APIENTRY def_glBindFramebuffer(GLenum target,GLuint framebuffer)
+    GLAPI void APIENTRY def_glBindFramebuffer(GLenum target, GLuint framebuffer)
     {}
     GLAPI void APIENTRY def_glGenFramebuffers(GLsizei n, GLuint* framebuffers)
     {}
@@ -232,8 +232,8 @@ int initGLExtensions(myGetProcAdress func)
     GETFUNC(_glBindTexture, def_glBindTexture, PFNGLBINDTEXTUREPROC, "glBindTexture");
     GETFUNC(_glGenTextures, def_glGenTextures, PFNGLGENTEXTURESPROC, "glGenTextures");
     GETFUNC(_glTexImage2D, def_glTexImage2D, PFNGLTEXIMAGE2DPROC, "glTexImage2D");
-    GETFUNC(_glFramebufferTexture, def_glFramebufferTexture, PFNGLFRAMEBUFFERTEXTUREPROC, "glFramebufferTexture");
     GETFUNC(glTexParameteri, def_glTexParameteri, PFNGLTEXPARAMETERIPROC, "glTexParameteri");
+    GETFUNC(_glFramebufferTexture, def_glFramebufferTexture, PFNGLFRAMEBUFFERTEXTUREPROC, "glFramebufferTexture");
     GETFUNC(_glCheckFramebufferStatus, def_glCheckFramebufferStatus, PFNGLCHECKFRAMEBUFFERSTATUSPROC, "glCheckFramebufferStatus");
     GETFUNC(_glDeleteFramebuffers, def_glDeleteFramebuffers, PFNGLDELETEFRAMEBUFFERSPROC, "glDeleteFramebuffers");
     GETFUNC(_glGetUniformLocation, def_glGetUniformLocation, PFNGLGETUNIFORMLOCATIONPROC, "glGetUniformLocation");
