@@ -70,6 +70,8 @@ extern "C"
     {}
     GLAPI void APIENTRY def_glUniform1f(GLint location, GLfloat v0)
     {}
+    GLAPI void APIENTRY glFramebufferTexture(GLenum target,GLenum attachment,GLuint texture,GLint level)
+    {}
     GLAPI void APIENTRY def_glUniformMatrix4fv(GLint location, GLsizei count, GLboolean transpose, const GLfloat* value)
     {}
     GLAPI void APIENTRY def_glBindFramebuffer(GLenum target, GLuint framebuffer)
@@ -150,6 +152,7 @@ extern "C"
     PFNGLUNIFORM3FPROC _glUniform3f = 0;
     PFNGLUNIFORM4FVPROC _glUniform4fv = 0;
     PFNGLUNIFORM1FPROC _glUniform1f = 0;
+    PFNGLFRAMEBUFFERTEXTUREPROC _glFramebufferTexture = 0;
     PFNGLUNIFORMMATRIX4FVPROC _glUniformMatrix4fv = 0;
     PFNGLBINDFRAMEBUFFERPROC _glBindFramebuffer = 0;
     PFNGLGENFRAMEBUFFERSPROC _glGenFramebuffers = 0;
@@ -211,6 +214,7 @@ int initGLExtensions(myGetProcAdress func)
     GETFUNC(_glUniform3f, def_glUniform3f, PFNGLUNIFORM3FPROC, "glUniform3f");
     GETFUNC(_glUniform4fv, def_glUniform4fv, PFNGLUNIFORM4FVPROC, "glUniform4fv");
     GETFUNC(_glUniform1f, def_glUniform1f, PFNGLUNIFORM1FPROC, "glUniform1f");
+    GETFUNC(_glFramebufferTexture, def_glFramebufferTexture, PFNGLFRAMEBUFFERTEXTUREPROC, "glFramebufferTexture");
     GETFUNC(_glUniformMatrix4fv, def_glUniformMatrix4fv, PFNGLUNIFORMMATRIX4FVPROC, "glUniformMatrix4fv");
     GETFUNC(_glBindFramebuffer, def_glBindFramebuffer, PFNGLBINDFRAMEBUFFERPROC, "glBindFramebuffer");
     GETFUNC(_glGenFramebuffers, def_glGenFramebuffers, PFNGLGENFRAMEBUFFERSPROC, "glGenFramebuffers");

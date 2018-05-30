@@ -44,6 +44,7 @@ extern "C"
     extern PFNGLUNIFORMMATRIX4FVPROC _glUniformMatrix4fv;
     extern PFNGLBINDFRAMEBUFFERPROC _glBindFramebuffer;
     extern PFNGLGENFRAMEBUFFERSPROC _glGenFramebuffers;
+    extern PFNGLUNIFORM1FPROC _glFramebufferTexture;
     extern PFNGLCHECKFRAMEBUFFERSTATUSPROC _glCheckFramebufferStatus;
     extern PFNGLDELETEFRAMEBUFFERSPROC _glDeleteFramebuffers;
     extern PFNGLGETUNIFORMLOCATIONPROC _glGetUniformLocation;
@@ -150,6 +151,7 @@ extern "C"
 #define oxglUniformMatrix4fv DECLARE_GLEXT(glUniformMatrix4fv)
 #define oxglBindFramebuffer DECLARE_GLEXT(glBindFramebuffer)
 #define oxglGenFramebuffers DECLARE_GLEXT(glGenFramebuffers)
+#define oxglFramebufferTexture DECLARE_GLEXT(glFramebufferTexture)
 #define oxglCheckFramebufferStatus DECLARE_GLEXT(glCheckFramebufferStatus)
 #define oxglDeleteFramebuffers DECLARE_GLEXT(glDeleteFramebuffers)
 #define oxglGetUniformLocation DECLARE_GLEXT(glGetUniformLocation)
