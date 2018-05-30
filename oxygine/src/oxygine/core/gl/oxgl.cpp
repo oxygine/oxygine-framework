@@ -163,8 +163,8 @@ extern "C"
     PFNGLUNIFORMMATRIX4FVPROC _glUniformMatrix4fv = 0;
     PFNGLBINDFRAMEBUFFERPROC _glBindFramebuffer = 0;
     PFNGLGENFRAMEBUFFERSPROC _glGenFramebuffers = 0;
-    PFNGLGENTEXTURESPROC _glGenTextures = 0;
     PFNGLBINDTEXTUREPROC _glBindTexture = 0;
+    PFNGLGENTEXTURESPROC _glGenTextures = 0;
     PFNGLTEXIMAGE2DPROC _glTexImage2D = 0;
     PFNGLTEXPARAMETERIPROC _glTexParameteri= 0;
     PFNGLFRAMEBUFFERTEXTUREPROC _glFramebufferTexture = 0;
