@@ -42,9 +42,9 @@ namespace oxygine
         void close(Event* ev);
         void wheel(Event* ev);
 
-        Resources* _resSystem;
-
         TreeInspectorPreview* _preview;
+
+        Resources* _resSystem;
 
         spTreeInspectorPage _rootPage;
         spSlidingActor _sliding;

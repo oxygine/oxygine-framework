@@ -31,10 +31,10 @@ namespace oxygine
         };
         virtual void updateButtonState(state s);
 
+        state _state;
         const ResAnim* _resAnim;
         int _row;
-        state _state;
-
+        
     private:
         pointer_index _btnPressed;
         pointer_index _btnOvered;

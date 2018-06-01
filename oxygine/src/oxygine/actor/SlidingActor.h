@@ -57,13 +57,14 @@ namespace oxygine
         void doUpdate(const UpdateState& us)  override;
         void updateDragBounds();
 
-
         void _newEvent(Event* event);
 
         bool _sliding;
         float _rad;
         float _maxSpeed;
         timeMS _downTime;
+        
+        bool _ignoreTouchUp;
 
         Vector2 _downPos;
         Vector2 _speed;
@@ -88,8 +89,6 @@ namespace oxygine
 
         timeMS _lastIterTime;
         pointer_index _finger;
-
-        bool _ignoreTouchUp;
     };
 }
 

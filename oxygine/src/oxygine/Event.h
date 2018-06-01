@@ -21,15 +21,15 @@ namespace oxygine
         Event(eventType Type, bool Bubbles = false) : listenerID(0), userData(0), type(Type), phase(phase_target), bubbles(Bubbles), stopsImmediatePropagation(false), stopsPropagation(false) {}
         virtual ~Event() {}
 
+        int listenerID;
+        void* userData;
         eventType type;
         Phase phase;
         bool bubbles;
         bool stopsImmediatePropagation;
         bool stopsPropagation;
 
-        void* userData;
         spObject userDataObject;
-        int listenerID;
 
         /**The event target*/
         spEventDispatcher target;
