@@ -126,9 +126,15 @@ foreach(ITEM ${FOLDERS})
 endforeach(ITEM)
 
 
-set(OXYGINE_INCLUDE_DIRS
-	${THIRD_PARTY}/pthreads/include/
-	${THIRD_PARTY}/zlib)
+if (MINGW)
+	set(OXYGINE_INCLUDE_DIRS
+		${THIRD_PARTY}/zlib)
+else()
+	set(OXYGINE_INCLUDE_DIRS
+		${THIRD_PARTY}/pthreads/include/
+		${THIRD_PARTY}/zlib)
+endif()		
+
 
 
 set(OXYGINE_LIBRARY_DIRS
@@ -142,9 +148,7 @@ if (FORCE_GLES)
 endif(FORCE_GLES)
 
 
-if (MINGW) 
-	set(CORE_LIBS ${CORE_LIBS}	mingw32)
-endif(MINGW)
+
 
 
 set(CORE_LIBS 
@@ -161,15 +165,23 @@ if (OX_USE_SDL2)
 endif(OX_USE_SDL2)	
 
 
-if (WIN32)
+if (MINGW) 
+
+	set(CORE_LIBS mingw32 pthread ${CORE_LIBS} psapi
+		libcurl_imp
+		ws2_32)
+
+elseif (WIN32)
+
 	set(CORE_LIBS ${CORE_LIBS}
 		pthreadVCE2
 		libcurl_imp
 		ws2_32)
+
 elseif(EMSCRIPTEN)	
-else(WIN32)
+else()
 	set(CORE_LIBS ${CORE_LIBS} pthread)
-endif(WIN32)
+endif()
 
 
 
