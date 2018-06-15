@@ -41,18 +41,22 @@ namespace oxygine
         void onDrag(TouchEvent* es);
         void onMove(const Vector2& position);
 
-        Actor* _dragClient;
-        Actor* _actor;
-        timeMS _startTm;
-        bool _singleDrag;
-
         RectF _bounds;
         Vector2 _dragPos;
         Vector2 _clientPos;
+        
+        Actor* _dragClient;
+        Actor* _actor;
+        timeMS _startTm;
 
         bool _clientIsParent;
-        bool _pressed;
         bool _dragEnabled;
+        bool _pressed;
+        bool _singleDrag;
         bool _ignoreTouchUp;
+        
+
+
+
     };
 }

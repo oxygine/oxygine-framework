@@ -38,6 +38,7 @@ extern "C"
     extern PFNGLUNIFORM2FPROC _glUniform2f;
     extern PFNGLUNIFORM2FVPROC _glUniform2fv;
     extern PFNGLUNIFORM3FVPROC _glUniform3fv;
+    extern PFNGLUNIFORM3FPROC _glUniform3f;
     extern PFNGLUNIFORM4FVPROC _glUniform4fv;
     extern PFNGLUNIFORM1FPROC _glUniform1f;
     extern PFNGLUNIFORMMATRIX4FVPROC _glUniformMatrix4fv;
@@ -50,6 +51,7 @@ extern "C"
     extern PFNGLCOMPRESSEDTEXIMAGE2DPROC _glCompressedTexImage2D;
     extern PFNGLBINDBUFFERPROC _glBindBuffer;
     extern PFNGLGENBUFFERSPROC _glGenBuffers;
+    extern PFNGLDRAWBUFFERSPROC _glDrawBuffers;
     extern PFNGLBUFFERDATAPROC _glBufferData;
     extern PFNGLGETPROGRAMIVPROC _glGetProgramiv;
     extern PFNGLGENERATEMIPMAPPROC _glGenerateMipmap;
@@ -142,6 +144,7 @@ extern "C"
 #define oxglUniform2f DECLARE_GLEXT(glUniform2f)
 #define oxglUniform2fv DECLARE_GLEXT(glUniform2fv)
 #define oxglUniform3fv DECLARE_GLEXT(glUniform3fv)
+#define oxglUniform3f DECLARE_GLEXT(glUniform3f)
 #define oxglUniform4fv DECLARE_GLEXT(glUniform4fv)
 #define oxglUniform1f DECLARE_GLEXT(glUniform1f)
 #define oxglUniformMatrix4fv DECLARE_GLEXT(glUniformMatrix4fv)
@@ -155,6 +158,7 @@ extern "C"
 #define oxglBindBuffer DECLARE_GLEXT(glBindBuffer)
 #define oxglGenBuffers DECLARE_GLEXT(glGenBuffers)
 #define oxglBufferData DECLARE_GLEXT(glBufferData)
+#define oxglDrawBuffers DECLARE_GLEXT(glDrawBuffers)
 #define oxglGetProgramiv DECLARE_GLEXT(glGetProgramiv)
 #define oxglGenerateMipmap DECLARE_GLEXT(glGenerateMipmap)
 #define oxglStencilOpSeparate DECLARE_GLEXT(glStencilOpSeparate)
