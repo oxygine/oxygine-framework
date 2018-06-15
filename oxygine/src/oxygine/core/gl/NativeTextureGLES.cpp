@@ -363,8 +363,8 @@ namespace oxygine
 
     void NativeTextureGLES::updateRegion(int x, int y, const ImageData& data_)
     {
-		if (data_.w == 0 || data_.h == 0)
-			return;
+        if (data_.w == 0 || data_.h == 0)
+            return;
 
         ImageData data = data_;
         assert(_width >= data.w - x);

@@ -138,12 +138,12 @@ namespace oxygine
             EVENT_EXIT = sysEventID('c', 'E', 'x'), //dispatched from core::release
         };
 
-		class PreCreateWindowEvent : public Event
-		{
-		public:
-			PreCreateWindowEvent():Event(EVENT_PRECREATEWINDOW){}
-			int flags;
-		};
+        class PreCreateWindowEvent : public Event
+        {
+        public:
+            PreCreateWindowEvent(): Event(EVENT_PRECREATEWINDOW) {}
+            int flags;
+        };
 
         spEventDispatcher getDispatcher();
 

@@ -11,7 +11,7 @@ namespace oxygine
     public:
         RenderStateCache();
 
-		void setDriver(IVideoDriver *d);
+        void setDriver(IVideoDriver* d);
 
         const spNativeTexture& getTexture(int sampler) { return _textures[sampler]; }
 

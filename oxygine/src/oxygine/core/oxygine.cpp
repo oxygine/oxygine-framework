@@ -319,10 +319,10 @@ namespace oxygine
 
 
             PreCreateWindowEvent ev;
-			ev.flags = flags;
+            ev.flags = flags;
             _dispatcher->dispatchEvent(&ev);
 
-			flags = ev.flags;
+            flags = ev.flags;
 
 
 #if TARGET_OS_IPHONE
@@ -420,7 +420,7 @@ namespace oxygine
 
             CHECKGL();
 
-			rsCache().setDriver(IVideoDriver::instance);
+            rsCache().setDriver(IVideoDriver::instance);
 
 
             STDRenderer::initialize();
@@ -784,7 +784,7 @@ namespace oxygine
 #endif
 
             rsCache().reset();
-			rsCache().setDriver(0);
+            rsCache().setDriver(0);
             _threadMessages.clear();
             _uiMessages.clear();
 
@@ -829,7 +829,7 @@ namespace oxygine
             SDL_Quit();
 #endif
 
-			_dispatcher->removeAllEventListeners();
+            _dispatcher->removeAllEventListeners();
             _dispatcher = 0;
         }
 

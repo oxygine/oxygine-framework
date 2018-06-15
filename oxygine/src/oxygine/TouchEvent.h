@@ -42,7 +42,7 @@ namespace oxygine
 
         bool __clickDispatched;
         Vector2 wheelDirection;//actual only for WHEEL_DIR event
-        
+
         float __localScale;
     };
 }

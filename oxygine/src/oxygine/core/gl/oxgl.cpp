@@ -92,7 +92,7 @@ extern "C"
     {}
     GLAPI void APIENTRY def_glBufferData(GLenum target, GLsizeiptr size, const void* data, GLenum usage)
     {}
-    GLAPI void APIENTRY def_glDrawBuffers( 	GLsizei n,const GLenum *bufs)
+    GLAPI void APIENTRY def_glDrawBuffers(GLsizei n, const GLenum* bufs)
     {}
     GLAPI void APIENTRY def_glGetProgramiv(GLuint program, GLenum pname, GLint* params)
     {}
@@ -222,7 +222,7 @@ int initGLExtensions(myGetProcAdress func)
     GETFUNC(_glBindBuffer, def_glBindBuffer, PFNGLBINDBUFFERPROC, "glBindBuffer");
     GETFUNC(_glGenBuffers, def_glGenBuffers, PFNGLGENBUFFERSPROC, "glGenBuffers");
     GETFUNC(_glBufferData, def_glBufferData, PFNGLBUFFERDATAPROC, "glBufferData");
-	GETFUNC(_glDrawBuffers, def_glDrawBuffers, PFNGLDRAWBUFFERSPROC, "glDrawBuffers");
+    GETFUNC(_glDrawBuffers, def_glDrawBuffers, PFNGLDRAWBUFFERSPROC, "glDrawBuffers");
     GETFUNC(_glGetProgramiv, def_glGetProgramiv, PFNGLGETPROGRAMIVPROC, "glGetProgramiv");
     GETFUNC(_glGenerateMipmap, def_glGenerateMipmap, PFNGLGENERATEMIPMAPPROC, "glGenerateMipmap");
     GETFUNC(_glStencilOpSeparate, def_glStencilOpSeparate, PFNGLSTENCILOPSEPARATEPROC, "glStencilOpSeparate");

@@ -44,7 +44,7 @@ namespace oxygine
         RectF _bounds;
         Vector2 _dragPos;
         Vector2 _clientPos;
-        
+
         Actor* _dragClient;
         Actor* _actor;
         timeMS _startTm;
@@ -54,7 +54,7 @@ namespace oxygine
         bool _pressed;
         bool _singleDrag;
         bool _ignoreTouchUp;
-        
+
 
 
 

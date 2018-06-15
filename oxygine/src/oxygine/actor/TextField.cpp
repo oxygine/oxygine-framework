@@ -286,7 +286,7 @@ namespace oxygine
             return _root;
 
 
-		globalScale = scalar::abs(globalScale);
+        globalScale = scalar::abs(globalScale);
 
         float scale = 1.0f;
         const Font* font = _style.font->getClosestFont(globalScale, _style.fontSize, scale);
