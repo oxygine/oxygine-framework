@@ -481,6 +481,7 @@ namespace oxygine
         cr->setSize(actor->getSize());
         cr->addTween(ColorRectSprite::TweenColor(Color(Color::White, 200)), 700, 1, true, 0, Tween::ease_inCubic)->detachWhenDone();
         cr->setTransform(tr);
+        cr->setPriority(999);
         getStage()->addChild(cr);
         std::string dmp = actor->dump(0);
         logs::messageln(">>>>>>>>>>>>>>>>>>>>\ntouched actor '%s' local pos: (%.0f,%.0f), pos: (%.0f,%.0f)\n%s",

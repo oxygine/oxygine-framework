@@ -2,6 +2,7 @@
 #include "oxygine-include.h"
 #include "Material.h"
 #include "core/Renderer.h"
+#include <functional>
 
 namespace oxygine
 {
@@ -10,7 +11,7 @@ namespace oxygine
     public:
         RenderStateCache();
 
-		void setDriver(IVideoDriver *d);
+        void setDriver(IVideoDriver* d);
 
         const spNativeTexture& getTexture(int sampler) { return _textures[sampler]; }
 

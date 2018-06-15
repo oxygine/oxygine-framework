@@ -143,7 +143,7 @@ spButton Test::addButton(std::string id, std::string txt)
     });
 
 
-    button->addEventListener(TouchEvent::OUT, [ = ](Event*)
+    button->addEventListener(TouchEvent::OUTX, [ = ](Event*)
     {
         ptr->addTween(Sprite::TweenAddColor(Color(0, 0, 0, 0)), 300);
     });

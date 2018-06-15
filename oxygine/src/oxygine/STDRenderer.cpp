@@ -42,12 +42,12 @@ namespace oxygine
         reset();
     }
 
-	void RenderStateCache::setDriver(IVideoDriver *d)
-	{
-		_driver = d;
-	}
+    void RenderStateCache::setDriver(IVideoDriver* d)
+    {
+        _driver = d;
+    }
 
-	void RenderStateCache::reset()
+    void RenderStateCache::reset()
     {
         resetTextures();
 

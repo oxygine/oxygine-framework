@@ -79,8 +79,9 @@
 #   define OXYGINE_DEBUG_TRACE_LEAKS 1
 #   define OXYGINE_DEBUG_T2P 1
 #   define OXYGINE_DEBUG_SAFECAST 1
-#   define OXYGINE_TRACE_VIDEO_STATS 1
 #endif
+
+#   define OXYGINE_TRACE_VIDEO_STATS 1
 
 #define OXYGINE_ASSERT2LOG 1
 
@@ -114,7 +115,7 @@ namespace ox = oxygine;
 
 #define OXYGINE_RENDERER 5
 
-#define OXYGINE_VERSION 9
+#define OXYGINE_VERSION 10
 
 #ifdef __GNUC__
 #   define OXYGINE_DEPRECATED __attribute__((deprecated))

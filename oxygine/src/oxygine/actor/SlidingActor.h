@@ -63,7 +63,7 @@ namespace oxygine
         float _rad;
         float _maxSpeed;
         timeMS _downTime;
-        
+
         bool _ignoreTouchUp;
 
         Vector2 _downPos;

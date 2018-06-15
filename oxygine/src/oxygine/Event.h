@@ -4,8 +4,6 @@
 #include "Input.h"
 #include "closure/closure.h"
 
-#undef OUT
-
 namespace oxygine
 {
     class Event

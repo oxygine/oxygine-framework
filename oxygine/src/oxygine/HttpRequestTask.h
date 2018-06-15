@@ -104,7 +104,7 @@ namespace oxygine
         std::vector<unsigned char> _postData;
 
         bool _continueDownload;
-        
+
         size_t _expectedContentSize;
         size_t _receivedContentSize;
         file::handle _fhandle;

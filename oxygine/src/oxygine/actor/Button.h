@@ -34,7 +34,7 @@ namespace oxygine
         state _state;
         const ResAnim* _resAnim;
         int _row;
-        
+
     private:
         pointer_index _btnPressed;
         pointer_index _btnOvered;
