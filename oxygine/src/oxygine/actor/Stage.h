@@ -61,7 +61,7 @@ namespace oxygine
 
         bool isOn(const Vector2& localPosition, float localScale) override;
 
-    private:
+    protected:
 
         timeMS _statUpdate;
         bool    _clipOuter;
