@@ -118,7 +118,6 @@ namespace oxygine
                             //can be removed now
                             curl_multi_remove_handle(multi_handle, msg->easy_handle);
                             core::getMainThreadDispatcher().postCallback(ID_DONE, eh, (void*)code, mainThreadFunc, 0);
-                            break;
                         }
                     }
                 }
