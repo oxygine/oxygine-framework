@@ -96,6 +96,7 @@ namespace oxygine
 
         const unsigned char* buff = ad.data;
         Vector2 pos = localPosition * _frame.getResAnim()->getAppliedScale();
+        pos = pos.div(_localScale);
         Point lp = pos.cast<Point>() / HIT_TEST_DOWNSCALE;
         Rect r(0, 0, ad.w, ad.h);
         if (r.pointIn(lp))
