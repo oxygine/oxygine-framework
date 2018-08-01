@@ -1110,7 +1110,7 @@ namespace oxygine
         if (_flags & flag_fastTransform)
         {
             rs.transform = parentRS.transform;
-            rs.transform.translate(Vector2(tr.x, tr.y));
+            rs.transform.translate(Vector3(tr.x, tr.y, 0));
         }
         else
             Transform::multiply(rs.transform, tr, parentRS.transform);

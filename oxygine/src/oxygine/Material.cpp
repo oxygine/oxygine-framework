@@ -69,7 +69,7 @@ namespace oxygine
     }
 
 
-    void STDMaterial::render(const AffineTransform& tr, const Color& c, const RectF& src, const RectF& dest)
+    void STDMaterial::render(const Matrix& tr, const Color& c, const RectF& src, const RectF& dest)
     {
         STDRenderer::getCurrent()->setTransform(tr);
         STDRenderer::getCurrent()->addQuad(c, src, dest);

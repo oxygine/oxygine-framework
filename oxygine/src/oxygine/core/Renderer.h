@@ -5,6 +5,7 @@
 #include "../math/AffineTransform.h"
 #include "../math/Color.h"
 #include "../math/Rect.h"
+#include "../math/Matrix.h"
 #include <vector>
 
 #if OXYGINE_NO_SUBPIXEL_RENDERING
@@ -33,7 +34,7 @@ namespace oxygine
 
 
     template<class V>
-    void fillQuadT(V* pv, const RectF& srcRect, const RectF& destRect, const AffineTransform& transform, unsigned int rgba)
+    void fillQuadT(V* pv, const RectF& srcRect, const RectF& destRect, const Matrix& transform, unsigned int rgba)
     {
         float u = srcRect.pos.x;
         float v = srcRect.pos.y;

@@ -82,7 +82,7 @@ namespace oxygine
 
         const Matrix&               getViewProjection() const;
         IVideoDriver*               getDriver();
-        const AffineTransform&      getTransform() const { return _transform; }
+        const Matrix&      getTransform() const { return _transform; }
         const VertexDeclaration*    getVertexDeclaration() const { return _vdecl; }
         unsigned int                getBaseShaderFlags() const { return _baseShaderFlags; }
 
@@ -93,7 +93,7 @@ namespace oxygine
         void setBaseShaderFlags(unsigned int fl);
 
         /**Sets World transformation.*/
-        void setTransform(const Transform& world);
+        void setTransform(const Matrix& world);
         void addQuad(const Color&, const RectF& srcRect, const RectF& destRect);
 
         /**Begins rendering into RenderTexture or into primary framebuffer if rt is null*/
@@ -129,7 +129,7 @@ namespace oxygine
     protected:
         virtual void shaderProgramChanged() {}
 
-        Transform _transform;
+        Matrix _transform;
 
         void setShader(ShaderProgram* prog);
 

@@ -60,7 +60,7 @@ namespace oxygine
         batches _batches;
         RectF _bounds;
 
-        AffineTransform _transform;
+        Matrix _transform;
         mutable VertexDeclarations<VertexDeclarationNull> _declarations;
 
         VideoDriverCache();
@@ -95,8 +95,8 @@ namespace oxygine
 
         void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData,  unsigned int numVertices) override;
         void draw(PRIMITIVE_TYPE pt, const VertexDeclaration* decl, const void* verticesData,  unsigned int numVertices, const unsigned short* indicesData, unsigned int numIndices) override;
-        void render(const AffineTransform& m);
-        void transform(const AffineTransform& m);
+        void render(const Matrix& m);
+        void transform(const Matrix& m);
 
         spNativeTexture rt;
         Matrix wvp;

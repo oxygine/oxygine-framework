@@ -54,7 +54,7 @@ namespace oxygine
         {
             renderer->flush();
 
-            RectF ss_rect = getActorTransformedDestRect(actor, actor->getTransform() * parentRS.transform);
+            RectF ss_rect = getActorTransformedDestRect(actor, actor->getTransform() * AffineTransform(parentRS.transform));
 
             clippedRect.clip(ss_rect);
             if (!clippedRect.isEmpty())
@@ -200,13 +200,13 @@ namespace oxygine
 
         Color color = rs.getFinalColor(sprite->getColor());
 
-        sprite->_mat->apply();
-        sprite->_mat->render(rs.transform, color, sprite->getAnimFrame().getSrcRect(), sprite->getDestRect());
+        sprite->_mat->apply();        
+        sprite->_mat->render(AffineTransform(rs.transform), color, sprite->getAnimFrame().getSrcRect(), sprite->getDestRect());
     }
 
     void STDRenderDelegate::doRender(TextField* tf, const RenderState& rs)
     {
-        float scale = sqrtf(rs.transform.a * rs.transform.a + rs.transform.c * rs.transform.c);
+        float scale = sqrtf(rs.transform.m11 * rs.transform.m11 + rs.transform.m22 * rs.transform.m22);
 
         text::Node* root = tf->getRootNode(scale);
         if (!root)

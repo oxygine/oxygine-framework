@@ -523,7 +523,7 @@ namespace oxygine
     }
 
 
-    void STDRenderer::setTransform(const Transform& tr)
+    void STDRenderer::setTransform(const Matrix& tr)
     {
         _transform = tr;
     }

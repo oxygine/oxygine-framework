@@ -349,7 +349,7 @@ namespace oxygine
         nextBatch();
     }
 
-    void VideoDriverCache::render(const AffineTransform& transform)
+    void VideoDriverCache::render(const Matrix& transform)
     {
         for (batches::iterator i = _batches.begin(); i != _batches.end(); ++i)
         {
@@ -425,7 +425,7 @@ namespace oxygine
         }
     }
 
-    void VideoDriverCache::transform(const AffineTransform& transform)
+    void VideoDriverCache::transform(const Matrix& transform)
     {
         /*
         AffineTransform transform;
