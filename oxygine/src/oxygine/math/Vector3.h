@@ -45,6 +45,7 @@ namespace oxygine
 
         void clamp(const VectorT3& min, const VectorT3& max);
         T length() const;
+        T sqlength() const { return dot(*this); }
         T dot(const VectorT3& p)  const;
 
         inline T& operator[](int i) {return m[i];}

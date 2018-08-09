@@ -459,7 +459,7 @@ namespace oxygine
 
         T det = mat.m11 * t1 - mat.m12 * t2 + mat.m13 * t3 - mat.m14 * t4;
 
-        if (scalar::abs(det) < T(0.0001))
+        if (scalar::abs(det) < T(0.00000001))
         {
             out.identity();
             return out;
