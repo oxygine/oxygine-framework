@@ -296,7 +296,12 @@ namespace oxygine
         SDL_free(s);
         return str;
 #else
-        logs::warning("utf8tows not implemented correctly!");
+        static bool warned = false;
+        if (warned)
+        {
+            warned = true;
+            logs::warning("utf8tows not implemented correctly!");
+        }
 
         std::wstring ws;
         ws.reserve(n);
@@ -334,7 +339,13 @@ namespace oxygine
         SDL_free(s);
         return str;
 #else
-        logs::warning("utf8tows not implemented correctly!");
+        static bool warned = false;
+        if (warned)
+        {
+            warned = true;
+            logs::warning("utf8tows not implemented correctly!");
+        }
+
         std::string s;
         int i = 0;
         while (wchar_t t = wstr[i])
