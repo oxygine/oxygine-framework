@@ -284,7 +284,7 @@ namespace oxygine
             return L"";
 
 
-#ifdef OXYGINE_SDL
+#if defined(OXYGINE_SDL) && !defined(EMSCRIPTEN)
         wchar_t* s = 0;
         if (sizeof(wchar_t) == 2)
             s = (wchar_t*)SDL_iconv_string("UCS-2-INTERNAL", "UTF-8", utf8str, n);
@@ -323,7 +323,7 @@ namespace oxygine
         if (n == 1)
             return "";
 
-#ifdef OXYGINE_SDL
+#if defined(OXYGINE_SDL) && !defined(EMSCRIPTEN)
         char*  s = 0;
         if (sizeof(wchar_t) == 2)
             s = SDL_iconv_string("UTF-8", "UCS-2-INTERNAL", (const char*)wstr, n * sizeof(wchar_t));
