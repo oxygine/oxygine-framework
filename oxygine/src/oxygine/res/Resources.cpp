@@ -335,7 +335,7 @@ namespace oxygine
         for (resourcesMap::const_iterator i = _resourcesMap.cbegin(); i != _resourcesMap.cend(); ++i)
         {
             spResource res = i->second;
-            logs::message("%s\n", res->getName().c_str());
+            logs::messageln("%s", res->getName().c_str());
         }
 
         /*

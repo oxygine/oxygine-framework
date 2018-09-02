@@ -493,7 +493,7 @@ namespace oxygine
         actor = actor->getParent();
         while (actor)
         {
-            logs::messageln("parent: %s", actor->getName().c_str());
+            logs::messageln("parent: %s (%d)", actor->getName().c_str(), actor->getObjectID());
             actor = actor->getParent();
         }
     }

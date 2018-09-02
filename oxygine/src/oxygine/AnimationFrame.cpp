@@ -46,7 +46,8 @@ namespace oxygine
         f._srcRect = f._srcRect / Vector2(w, h);
 
         f._frameSize = rect.size;
-        f._destRect.pos -= rect.pos;
+        //if (move2lefttop)
+        //    f._destRect.pos -= rect.pos;
 
         return f;
     }
