@@ -74,12 +74,12 @@ namespace oxygine
 
         int __id;
 
-        union 
+        union
         {
             const void* __userData;
             uint64 __userData64;
         };
-        
+
 
 
 #ifdef OXYGINE_DEBUG_TRACE_LEAKS

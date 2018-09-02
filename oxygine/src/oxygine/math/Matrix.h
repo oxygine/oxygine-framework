@@ -521,9 +521,9 @@ namespace oxygine
     inline VectorT3<T>& MatrixT<T>::transformVec3(VectorT3<T>& out, const vector3& in, const MatrixT& mat)
     {
         out = vector3(
-            in.x * mat.m11 + in.y * mat.m21 + in.z * mat.m31 + mat.m41,
-            in.x * mat.m12 + in.y * mat.m22 + in.z * mat.m32 + mat.m42,
-            in.x * mat.m13 + in.y * mat.m23 + in.z * mat.m33 + mat.m43);
+                  in.x * mat.m11 + in.y * mat.m21 + in.z * mat.m31 + mat.m41,
+                  in.x * mat.m12 + in.y * mat.m22 + in.z * mat.m32 + mat.m42,
+                  in.x * mat.m13 + in.y * mat.m23 + in.z * mat.m33 + mat.m43);
         return out;
     }
 
@@ -531,8 +531,8 @@ namespace oxygine
     inline VectorT2<T>& MatrixT<T>::transformVec2(VectorT2<T>& out, const vector2& in, const MatrixT& mat)
     {
         out = vector2(
-            in.x * mat.m11 + in.y * mat.m21 + mat.m41,
-            in.x * mat.m12 + in.y * mat.m22 + mat.m42);
+                  in.x * mat.m11 + in.y * mat.m21 + mat.m41,
+                  in.x * mat.m12 + in.y * mat.m22 + mat.m42);
         return out;
     }
 

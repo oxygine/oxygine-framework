@@ -1087,9 +1087,19 @@ namespace oxygine
         return convert_local2stage(this, pos, stage);
     }
 
+    Vector2 Actor::local2stage(float x, float y, Actor* stage) const
+    {
+        return convert_local2stage(this, Vector2(x, y), stage);
+    }
+
     Vector2 Actor::stage2local(const Vector2& pos, Actor* stage) const
     {
         return convert_stage2local(this, pos, stage);
+    }
+
+    Vector2 Actor::stage2local(float x, float y, Actor* stage) const
+    {
+        return convert_stage2local(this, Vector2(x, y), stage);
     }
 
 
