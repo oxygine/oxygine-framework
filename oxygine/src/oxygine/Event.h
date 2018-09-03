@@ -18,11 +18,17 @@ namespace oxygine
             phase_bubbling
         };
 
-        Event(eventType Type, bool Bubbles = false) : listenerID(0), userData(0), type(Type), phase(phase_target), bubbles(Bubbles), stopsImmediatePropagation(false), stopsPropagation(false) {}
+        Event(eventType Type, bool Bubbles = false) : listenerID(0), type(Type), phase(phase_target), bubbles(Bubbles), stopsImmediatePropagation(false), stopsPropagation(false) { userData64 = 0; }
         virtual ~Event() {}
 
         int listenerID;
-        void* userData;
+        union
+        {
+            uint64 userData64;
+            int    userData32;
+            void*  userData;
+        };
+        
         eventType type;
         Phase phase;
         bool bubbles;

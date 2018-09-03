@@ -26,6 +26,7 @@ namespace oxygine
         const std::string&  getName() const;
         const void*         getUserData() const {return __userData;}
         uint64              getUserData64() const { return __userData64; }
+        int                 getUserData32() const { return __userData32; }
         int                 getObjectID()const {return __id;}
         bool                isName(const std::string& name) const;
         bool                isName(const char* name) const;
@@ -34,11 +35,13 @@ namespace oxygine
 
         void setName(const std::string& name);
 
-        /**overrides uint64 userdata */
+        /**void*, uin64 and int userData is UNION!*/
         void setUserData(const void* data) { __userData64 = 0; __userData = data; }
-
-        /**overrides VOID* userdata */
+        /**void*, uin64 and int userData is UNION!*/
         void setUserData64(uint64 data) { __userData64 = data; }
+        /**void*, uin64 and int userData is UNION!*/
+        void setUserData32(int data) { __userData32 = data; }
+
 
         void dumpObject() const;
 
@@ -78,6 +81,7 @@ namespace oxygine
         {
             const void* __userData;
             uint64 __userData64;
+            int    __userData32;
         };
 
 
