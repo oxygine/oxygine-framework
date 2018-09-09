@@ -330,6 +330,10 @@ namespace oxygine
             //flags &= ~SDL_WINDOW_FULLSCREEN;
 #endif
 
+#ifdef __ANDROID__
+            flags |= SDL_WINDOW_FULLSCREEN;//fix for latest SDL, hide status bar
+#endif
+
 #if TARGET_OS_IPHONE || defined(__ANDROID__)
             desc.w = -1;
             desc.h = -1;
