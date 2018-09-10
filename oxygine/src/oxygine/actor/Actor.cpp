@@ -142,20 +142,25 @@ namespace oxygine
     {
     }
 
+    void Actor::calcChildrenBounds(RectF& bounds, const Transform& transform) const
+    {
+        const Actor* c = getFirstChild().get();
+        while (c)
+        {
+            if (c->getVisible())
+            {
+                Transform tr = c->getTransform() * transform;
+                c->calcBounds2(bounds, tr);
+            }
+            c = c->getNextSibling().get();
+        }
+    }
+
     void Actor::calcBounds2(RectF& bounds, const Transform& transform) const
     {
         if (!(_flags & flag_boundsNoChildren))
         {
-            const Actor* c = getFirstChild().get();
-            while (c)
-            {
-                if (c->getVisible())
-                {
-                    Transform tr = c->getTransform() * transform;
-                    c->calcBounds2(bounds, tr);
-                }
-                c = c->getNextSibling().get();
-            }
+            calcChildrenBounds(bounds, transform);
         }
 
         RectF rect;

@@ -304,6 +304,7 @@ namespace oxygine
         virtual void transformUpdated();
 
         virtual void calcBounds2(RectF& bounds, const Transform& transform) const;
+        void calcChildrenBounds(RectF& bounds, const Transform& transform) const;
 
 
         typedef intrusive_list<spActor> children;
