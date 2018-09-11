@@ -182,6 +182,11 @@ namespace oxygine
         return bounds;
     }
 
+    RectF Actor::computeBoundsInParent() const
+    {
+        return computeBounds(getTransform());
+    }
+
     Transform Actor::computeGlobalTransform(Actor* parent) const
     {
         Transform t;
@@ -422,7 +427,10 @@ namespace oxygine
         bool touchEvent = TouchEvent::isTouchEvent(event->type);
         if (touchEvent)
         {
-            if (!(_flags & flag_visible) || getAlpha() == 0)
+            if (!(_flags & flag_visible))
+                return;
+
+            if (getAlpha() == 0 && !(_flags & flag_clickableWithZeroAlpha))
                 return;
         }
 

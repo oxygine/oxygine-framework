@@ -126,6 +126,8 @@ namespace oxygine
         Transform           computeGlobalTransform(Actor* parent = 0) const;
         /**computes actor Bounds rectangle. Iterates children*/
         RectF               computeBounds(const Transform& transform = Transform::getIdentity()) const;
+        /**computes actor Bounds rectangle in Parent Space. Iterates children*/
+        RectF               computeBoundsInParent() const;
 
         /**Sets Anchor. Anchor also called Pivot point. It is "center" for rotation/scale/position. Anchor could be set in Pixels or in Percents (/100).
         Default value is (0,0) - top left corner of Actor
@@ -175,7 +177,10 @@ namespace oxygine
         void setAlpha(unsigned char alpha);
 
         /**By default Actor doesn't has bounds, this will set it to Actor::getDestRect*/
-        void setHasOwnBounds(bool enable) { _flags &= ~flag_actorHasBounds; if (enable) _flags |= flag_actorHasBounds; }
+        void setHasOwnBounds(bool enable = true) { _flags &= ~flag_actorHasBounds; if (enable) _flags |= flag_actorHasBounds; }
+        /**by default actor with Alpha = 0 not clickable*/
+        void setClickableWithZeroAlpha(bool enable) { _flags &= ~flag_clickableWithZeroAlpha; if (enable) _flags |= flag_clickableWithZeroAlpha; }
+
 
         /**Enables/Disables Touch events for Actor.*/
         void setTouchEnabled(bool enabled) { _flags &= ~flag_touchEnabled; if (enabled) _flags |= flag_touchEnabled; }
@@ -313,7 +318,7 @@ namespace oxygine
         typedef intrusive_list<spActor> children;
         static void setParent(Actor* actor, Actor* parent);
         static children& getChildren(spActor& actor) { return actor->_children; }
-        static unsigned short& _getFlags(Actor* actor) { return actor->_flags; }
+        static unsigned int& _getFlags(Actor* actor) { return actor->_flags; }
 
         void _onGlobalTouchUpEvent(Event*);
         void _onGlobalTouchUpEvent1(Event*);
@@ -353,12 +358,13 @@ namespace oxygine
             flag_cull                   = 1 << 6,
             flag_fastTransform          = 1 << 7,
             flag_boundsNoChildren       = 1 << 8,
-            flag_actorHasBounds      = 1 << 9,
-            flag_reserved               = 1 << 10,
+            flag_actorHasBounds         = 1 << 9,
+            flag_clickableWithZeroAlpha = 1 << 10,
+            flag_reserved               = 1 << 11,
             flag_last                   = flag_reserved
         };
 
-        mutable unsigned short _flags;
+        mutable unsigned int _flags;
         unsigned char   _alpha;
         char    _extendedIsOn;
 
