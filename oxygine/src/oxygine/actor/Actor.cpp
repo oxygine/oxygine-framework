@@ -230,6 +230,18 @@ namespace oxygine
         if (!getTouchChildrenEnabled())
             stream << " touchChildrenEnabled=false";
 
+        if (_flags & flag_actorHasBounds)
+            stream << " flag_actorHasBounds";
+
+        if (_flags & flag_clickableWithZeroAlpha)
+            stream << " flag_clickableWithZeroAlpha";
+
+        if (_flags & flag_cull)
+            stream << " flag_cull";
+
+        if (_flags & flag_anchorInPixels)
+            stream << " flag_anchorInPixels";
+
         if (getAlpha() != 255)
             stream << " alpha=" << (int)getAlpha();
 
@@ -1183,7 +1195,7 @@ namespace oxygine
 
     bool Actor::getBounds(RectF& bounds) const
     {
-        if (_flags | flag_actorHasBounds)
+        if (_flags & flag_actorHasBounds)
         {
             bounds = getDestRect();
             return true;
