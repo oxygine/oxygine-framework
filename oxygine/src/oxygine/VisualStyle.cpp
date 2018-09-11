@@ -18,7 +18,7 @@ namespace oxygine
         STDMaterial mat;
         mat._blend = blend_premultiplied_alpha;
         mat._base = STDRenderer::white;
-
+        _flags |= flag_actorHasBounds;
         _mat = mc().cache(mat);
     }
 
@@ -32,6 +32,7 @@ namespace oxygine
     {
         _color = color;
     }
+
     void VisualStyle::setBlendMode(blend_mode mode)
     {
         _blend = mode;

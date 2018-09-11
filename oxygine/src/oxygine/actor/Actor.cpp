@@ -1173,6 +1173,16 @@ namespace oxygine
         }
     }
 
+    bool Actor::getBounds(RectF& bounds) const
+    {
+        if (_flags | flag_actorHasBounds)
+        {
+            bounds = getDestRect();
+            return true;
+        }
+        return false;
+    }
+
     void Actor::render(const RenderState& parentRS)
     {
         _rdelegate->render(this, parentRS);

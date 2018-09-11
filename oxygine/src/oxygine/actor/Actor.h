@@ -174,6 +174,9 @@ namespace oxygine
         /**Sets transparency. if alpha is 0 actor and children are completely invisible. Invisible Actor doesn't receive Touch events.*/
         void setAlpha(unsigned char alpha);
 
+        /**By default Actor doesn't has bounds, this will set it to Actor::getDestRect*/
+        void setHasOwnBounds(bool enable) { _flags &= ~flag_actorHasBounds; if (enable) _flags |= flag_actorHasBounds; }
+
         /**Enables/Disables Touch events for Actor.*/
         void setTouchEnabled(bool enabled) { _flags &= ~flag_touchEnabled; if (enabled) _flags |= flag_touchEnabled; }
         /**Enables/Disables Touch events for children of Actor.*/
@@ -290,7 +293,7 @@ namespace oxygine
         /**recursively removes all event listeners and added tweens*/
         void clean();
 
-        virtual bool getBounds(RectF&) const { return false; }
+        virtual bool getBounds(RectF&) const;
 
     protected:
 
@@ -350,7 +353,8 @@ namespace oxygine
             flag_cull                   = 1 << 6,
             flag_fastTransform          = 1 << 7,
             flag_boundsNoChildren       = 1 << 8,
-            flag_reserved               = 1 << 9,
+            flag_actorHasBounds      = 1 << 9,
+            flag_reserved               = 1 << 10,
             flag_last                   = flag_reserved
         };
 

@@ -50,8 +50,6 @@ namespace oxygine
         typedef Property<Color, const Color&, VStyleActor, &VStyleActor::getColor, &VStyleActor::setColor> TweenColor;
         typedef Property<Color, const Color&, VStyleActor, &VStyleActor::getAddColor, &VStyleActor::setAddColor> TweenAddColor;
 
-        bool getBounds(RectF& b) const  override { b = getDestRect();  return true; }
-
         void                    setMaterial(spSTDMaterial mat);
         spSTDMaterial _mat;
 
