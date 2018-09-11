@@ -451,7 +451,8 @@ namespace oxygine
             TextField::setDefaultFont(DebugActor::resSystem->getResFont("system"));
 #endif
 #endif
-            logs::messageln("oxygine initialized");
+            Point ds = getDisplaySize();
+            logs::messageln("oxygine initialized, drawable size: %d %d", ds.x, ds.y);
         }
 
 #if OXYGINE_SDL
@@ -753,6 +754,10 @@ namespace oxygine
 #ifndef OXYGINE_EDITOR
             key::update();
 #endif
+            
+            Point ds = getDisplaySize();
+            logs::messageln("SDL_GL_GetDrawableSize: %d %d", ds.x, ds.y);
+
             timeMS duration = IVideoDriver::_stats.duration;
             IVideoDriver::_stats = IVideoDriver::Stats();
             IVideoDriver::_stats.duration = duration;
