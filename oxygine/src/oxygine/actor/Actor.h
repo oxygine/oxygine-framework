@@ -256,9 +256,9 @@ namespace oxygine
         virtual void doRender(const RenderState& rs) {}
 
         //converts position in parent space to local space
-        Vector2 parent2local(const Vector2& pos) const;
+        virtual Vector2 parent2local(const Vector2& pos) const;
         //converts local position to parent space
-        Vector2 local2parent(const Vector2& pos = Vector2(0, 0)) const;
+        virtual Vector2 local2parent(const Vector2& pos = Vector2(0, 0)) const;
 
         //converts local position to Stage
         Vector2 local2stage(const Vector2& pos = Vector2(0, 0), Actor* stage = 0) const;
