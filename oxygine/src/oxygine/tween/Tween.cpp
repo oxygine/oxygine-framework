@@ -10,6 +10,7 @@ namespace oxygine
 		_loopsDone(0),
         _percent(0),
         _status(status_not_started),
+        _disabledStatusDone(false),
         _elapsed(0), _twoSides(false), _ease(ease_linear), _detach(false), _delay(0), _client(0), _globalEase(ease_linear)
     {
 
@@ -181,7 +182,8 @@ namespace oxygine
                         else
                             _percent = 1;
 
-                        _status = status_done;
+                        if (!_disabledStatusDone)
+                            _status = status_done;
                     }
                 }
                 _update(*_client, us);

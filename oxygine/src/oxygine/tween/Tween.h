@@ -151,6 +151,10 @@ namespace oxygine
         /**set callback when tween done. Doesn't allocate memory. faster than addDoneCallback*/
         void setDoneCallback(const EventCallback& cb);
 
+
+        /** tween will freeze on 100% and never complete  */
+        void setDisabledStatusDone(bool disabled) { _disabledStatusDone = disabled; }
+
     protected:
         void done(Actor&, const UpdateState& us);
 
@@ -178,6 +182,7 @@ namespace oxygine
         EASE _ease;
         EASE _globalEase;
         bool _twoSides;
+        bool _disabledStatusDone;
 
         float _percent;
         bool _detach;
