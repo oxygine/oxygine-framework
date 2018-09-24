@@ -51,6 +51,7 @@ namespace oxygine
         typedef Property<Color, const Color&, VStyleActor, &VStyleActor::getAddColor, &VStyleActor::setAddColor> TweenAddColor;
 
         void                    setMaterial(spSTDMaterial mat);
+        void                    resetMaterial();
         spSTDMaterial _mat;
 
     protected:

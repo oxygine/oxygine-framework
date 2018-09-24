@@ -131,4 +131,10 @@ namespace oxygine
         _mat = mat;
         matChanged();
     }
+
+    void VStyleActor::resetMaterial()
+    {
+        setMaterial(_mat->cloneDefaultShader());
+    }
+
 }

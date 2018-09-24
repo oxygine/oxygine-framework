@@ -81,6 +81,13 @@ namespace oxygine
     }
 
 
+    spSTDMaterial STDMaterial::cloneDefaultShader() const
+    {
+        STDMaterial mat(*this);
+        mat._uberShader = &STDRenderer::uberShader;
+        return mc().cache(mat);
+    }
+
     Material::Material(const Material& other)
     {
         _hash = other._hash;
