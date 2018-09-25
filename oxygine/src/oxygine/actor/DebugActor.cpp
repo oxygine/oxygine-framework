@@ -33,7 +33,7 @@
 #elif _WIN32
 #pragma comment(lib, "psapi.lib") // Added to support GetProcessMemoryInfo()
 #include <windows.h>
-#include <Psapi.h>
+#include <psapi.h>
 #endif
 
 
