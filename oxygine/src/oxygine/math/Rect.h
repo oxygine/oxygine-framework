@@ -140,6 +140,7 @@ namespace oxygine
         void moveBottom(T v) {size.y = v - pos.y;}
 
         void expand(const point2& v1, const point2& v2) {pos -= v1; size += v1 + v2;}
+        void expand2(const point2& v) { expand(v, v); }
 
         template<class R>
         RectT operator * (const VectorT2<R>& v) const

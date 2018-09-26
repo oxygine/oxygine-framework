@@ -25,6 +25,7 @@
 		04E9AD3F1876FE84006A7317 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04E9AD3E1876FE84006A7317 /* Images.xcassets */; };
 		AD18619B1D8EC97A0043AFA3 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD18619A1D8EC97A0043AFA3 /* AVFoundation.framework */; };
 		4F7EF5AF200623DE004089D6 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F7EF5AE200623DE004089D6 /* Metal.framework */; };
+		4F8012E521454FEA00FDBA22 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F8012E021454FEA00FDBA22 /* CoreBluetooth.framework */; };
 
 		
 ${PBXBuildFile}
@@ -81,6 +82,7 @@ ${PBXBuildFile}
 		04998EF617F8B6F3003441C3 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjpeg.a; path = "${OXYGINE}/oxygine/third_party/ios/libraries/libjpeg.a"; sourceTree = "<group>"; };
 		04E9AD3E1876FE84006A7317 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name =Images.xcassets; path = ${PROJECT}/Images.xcassets; sourceTree = "<group>"; };
 		4F7EF5AE200623DE004089D6 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
+		4F8012E021454FEA00FDBA22 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 
 
 ${PBXFileReference}
@@ -92,6 +94,7 @@ ${PBXFileReference}
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F8012E521454FEA00FDBA22 /* CoreBluetooth.framework in Frameworks */,
 				4F7EF5AF200623DE004089D6 /* Metal.framework in Frameworks */,
 				AD18619B1D8EC97A0043AFA3 /* AVFoundation.framework in Frameworks */,
 				9223FE7F1C2D913D000B1FDA /* GameController.framework in Frameworks */,
@@ -151,6 +154,7 @@ ${PBXFileReference}
 		04998CEE17F8A933003441C3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4F8012E021454FEA00FDBA22 /* CoreBluetooth.framework */,
 				4F7EF5AE200623DE004089D6 /* Metal.framework */,
 				AD18619A1D8EC97A0043AFA3 /* AVFoundation.framework */,
 				9223FE7E1C2D913D000B1FDA /* GameController.framework */,

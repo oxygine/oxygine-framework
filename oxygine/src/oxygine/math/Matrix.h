@@ -1,5 +1,6 @@
 #pragma once
 #include "../oxygine-include.h"
+#include "Vector2.h"
 #include "Vector3.h"
 #include "Vector4.h"
 #include <algorithm>
@@ -11,6 +12,7 @@ namespace oxygine
     template <class T>
     class MatrixT
     {
+        typedef VectorT2<T> vector2;
         typedef VectorT3<T> vector3;
         typedef VectorT4<T> vector4;
         typedef MatrixT<T> matrix;
@@ -41,6 +43,7 @@ namespace oxygine
         MatrixT inversed() const;
         MatrixT transposed() const;
 
+        vector2 transform(const vector2&)const;
         vector3 transformVec3(const vector3&)const;
         vector4 transformVec4(const vector4&)const;
         vector3 getTranslation()const;
@@ -74,6 +77,7 @@ namespace oxygine
 
         static MatrixT& orthoLH(MatrixT& out, T width, T height, T zNear, T zFar);
 
+        static vector2& transformVec2(vector2& out, const vector2& in, const MatrixT& mat);
         static vector3& transformVec3(vector3& out, const vector3& in, const MatrixT& mat);
         static vector4& transformVec4(vector4& out, const vector4& in, const MatrixT& mat);
 
@@ -203,6 +207,13 @@ namespace oxygine
         *this = sm * rm * tm;
     }
 
+    template <class T>
+    VectorT2<T> MatrixT<T>::transform(const vector2& v)const
+    {
+        vector2 out;
+        transformVec2(out, v, *this);
+        return out;
+    }
 
     template <class T>
     VectorT3<T> MatrixT<T>::transformVec3(const vector3& v)const
@@ -448,7 +459,7 @@ namespace oxygine
 
         T det = mat.m11 * t1 - mat.m12 * t2 + mat.m13 * t3 - mat.m14 * t4;
 
-        if (scalar::abs(det) < T(0.0001))
+        if (scalar::abs(det) < T(0.00000001))
         {
             out.identity();
             return out;
@@ -513,6 +524,15 @@ namespace oxygine
                   in.x * mat.m11 + in.y * mat.m21 + in.z * mat.m31 + mat.m41,
                   in.x * mat.m12 + in.y * mat.m22 + in.z * mat.m32 + mat.m42,
                   in.x * mat.m13 + in.y * mat.m23 + in.z * mat.m33 + mat.m43);
+        return out;
+    }
+
+    template <class T>
+    inline VectorT2<T>& MatrixT<T>::transformVec2(VectorT2<T>& out, const vector2& in, const MatrixT& mat)
+    {
+        out = vector2(
+                  in.x * mat.m11 + in.y * mat.m21 + mat.m41,
+                  in.x * mat.m12 + in.y * mat.m22 + mat.m42);
         return out;
     }
 

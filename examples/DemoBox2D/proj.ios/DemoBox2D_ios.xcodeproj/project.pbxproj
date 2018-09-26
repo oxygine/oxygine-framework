@@ -25,6 +25,7 @@
 		2DC477AC10D6C07B3FE008F6 /* Box2DDebugDraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 360377333740D8A2FD15BBE6 /* Box2DDebugDraw.cpp */; };
 		3A631A475DE035FC53ADE5EA /* images in Resources */ = {isa = PBXBuildFile; fileRef = 7F3B12E3C9D554D9FE28101D /* images */; };
 		4F7EF5AF200623DE004089D6 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F7EF5AE200623DE004089D6 /* Metal.framework */; };
+		4F8012EF2145521F00FDBA22 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F8012EA2145521F00FDBA22 /* CoreBluetooth.framework */; };
 		4FCB63C8200640C4009B1887 /* b2Body.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FCB635F200640C4009B1887 /* b2Body.cpp */; };
 		4FCB63C9200640C4009B1887 /* b2World.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FCB6360200640C4009B1887 /* b2World.cpp */; };
 		4FCB63CA200640C4009B1887 /* b2Fixture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4FCB6361200640C4009B1887 /* b2Fixture.cpp */; };
@@ -137,6 +138,7 @@
 		360377333740D8A2FD15BBE6 /* Box2DDebugDraw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Box2DDebugDraw.cpp; path = ../src/Box2DDebugDraw.cpp; sourceTree = "<group>"; };
 		4DA100C319512824B7570663 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = ../src/main.cpp; sourceTree = "<group>"; };
 		4F7EF5AE200623DE004089D6 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
+		4F8012EA2145521F00FDBA22 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		4FCB635F200640C4009B1887 /* b2Body.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2Body.cpp; sourceTree = "<group>"; };
 		4FCB6360200640C4009B1887 /* b2World.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2World.cpp; sourceTree = "<group>"; };
 		4FCB6361200640C4009B1887 /* b2Fixture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2Fixture.cpp; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F8012EF2145521F00FDBA22 /* CoreBluetooth.framework in Frameworks */,
 				4F7EF5AF200623DE004089D6 /* Metal.framework in Frameworks */,
 				AD18619B1D8EC97A0043AFA3 /* AVFoundation.framework in Frameworks */,
 				9223FE7F1C2D913D000B1FDA /* GameController.framework in Frameworks */,
@@ -301,6 +304,7 @@
 		04998CEE17F8A933003441C3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4F8012EA2145521F00FDBA22 /* CoreBluetooth.framework */,
 				AD18619A1D8EC97A0043AFA3 /* AVFoundation.framework */,
 				9223FE7E1C2D913D000B1FDA /* GameController.framework */,
 				04998EEB17F8ADD4003441C3 /* UIKit.framework */,

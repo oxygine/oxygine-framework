@@ -142,20 +142,25 @@ namespace oxygine
     {
     }
 
+    void Actor::calcChildrenBounds(RectF& bounds, const Transform& transform) const
+    {
+        const Actor* c = getFirstChild().get();
+        while (c)
+        {
+            if (c->getVisible())
+            {
+                Transform tr = c->getTransform() * transform;
+                c->calcBounds2(bounds, tr);
+            }
+            c = c->getNextSibling().get();
+        }
+    }
+
     void Actor::calcBounds2(RectF& bounds, const Transform& transform) const
     {
         if (!(_flags & flag_boundsNoChildren))
         {
-            const Actor* c = getFirstChild().get();
-            while (c)
-            {
-                if (c->getVisible())
-                {
-                    Transform tr = c->getTransform() * transform;
-                    c->calcBounds2(bounds, tr);
-                }
-                c = c->getNextSibling().get();
-            }
+            calcChildrenBounds(bounds, transform);
         }
 
         RectF rect;
@@ -175,6 +180,11 @@ namespace oxygine
         calcBounds2(bounds, transform);
 
         return bounds;
+    }
+
+    RectF Actor::computeBoundsInParent() const
+    {
+        return computeBounds(getTransform());
     }
 
     Transform Actor::computeGlobalTransform(Actor* parent) const
@@ -219,6 +229,18 @@ namespace oxygine
 
         if (!getTouchChildrenEnabled())
             stream << " touchChildrenEnabled=false";
+
+        if (_flags & flag_actorHasBounds)
+            stream << " flag_actorHasBounds";
+
+        if (_flags & flag_clickableWithZeroAlpha)
+            stream << " flag_clickableWithZeroAlpha";
+
+        if (_flags & flag_cull)
+            stream << " flag_cull";
+
+        if (_flags & flag_anchorInPixels)
+            stream << " flag_anchorInPixels";
 
         if (getAlpha() != 255)
             stream << " alpha=" << (int)getAlpha();
@@ -417,7 +439,10 @@ namespace oxygine
         bool touchEvent = TouchEvent::isTouchEvent(event->type);
         if (touchEvent)
         {
-            if (!(_flags & flag_visible) || getAlpha() == 0)
+            if (!(_flags & flag_visible))
+                return;
+
+            if (getAlpha() == 0 && !(_flags & flag_clickableWithZeroAlpha))
                 return;
         }
 
@@ -1087,9 +1112,19 @@ namespace oxygine
         return convert_local2stage(this, pos, stage);
     }
 
+    Vector2 Actor::local2stage(float x, float y, Actor* stage) const
+    {
+        return convert_local2stage(this, Vector2(x, y), stage);
+    }
+
     Vector2 Actor::stage2local(const Vector2& pos, Actor* stage) const
     {
         return convert_stage2local(this, pos, stage);
+    }
+
+    Vector2 Actor::stage2local(float x, float y, Actor* stage) const
+    {
+        return convert_stage2local(this, Vector2(x, y), stage);
     }
 
 
@@ -1156,6 +1191,16 @@ namespace oxygine
             child->clean();
             child = child->getNextSibling();
         }
+    }
+
+    bool Actor::getBounds(RectF& bounds) const
+    {
+        if (_flags & flag_actorHasBounds)
+        {
+            bounds = getDestRect();
+            return true;
+        }
+        return false;
     }
 
     void Actor::render(const RenderState& parentRS)

@@ -115,7 +115,7 @@ namespace oxygine
     {
         __addToDebugList(this);
 
-        __userData = src.__userData;
+        __userData64 = src.__userData64;
 #if DYNAMIC_OBJECT_NAME
         if (src.__name)
             setName(*src.__name);
@@ -140,8 +140,10 @@ namespace oxygine
 #endif
     }
 
-    ObjectBase::ObjectBase(bool assignID): __userData(0), __id(0)
+    ObjectBase::ObjectBase(bool assignID): __id(0)
     {
+        __userData64 = 0;
+
 #if DYNAMIC_OBJECT_NAME
         __name = 0;
 #endif
