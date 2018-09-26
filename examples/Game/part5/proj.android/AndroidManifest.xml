@@ -25,8 +25,6 @@
         </activity>
     </application>
 
-    <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="16" />
-
     <uses-permission android:name="android.permission.INTERNET" /> <!--used for http requests-->    
     <uses-permission android:name="android.permission.WAKE_LOCK" /><!--used for http requests (downloading files)-->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/><!--used for Proxy detection, could be disabled-->  

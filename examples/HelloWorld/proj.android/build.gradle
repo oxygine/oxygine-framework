@@ -32,7 +32,6 @@ android {
     compileSdkVersion 26
 
 
-
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']
@@ -44,7 +43,7 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 19
+    	minSdkVersion 19
         targetSdkVersion 26
 
         ndk {
