@@ -49,6 +49,9 @@ namespace oxygine
         /**removes all added event listeners by THIS used in CLOSURE(this, ...)*/
         void removeEventListeners(void* CallbackThis);
 
+        /**removes all added event listeners by THIS used in CLOSURE(this, ...)*/
+        void removeEventListenersByType(eventType);
+
         /**removes all added event listeners*/
         void removeAllEventListeners();
 
