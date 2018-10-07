@@ -6,6 +6,7 @@ namespace oxygine
 {
     Mutex::Mutex(bool recursive)
     {
+#ifndef OX_NO_MT
         if (recursive)
         {
             pthread_mutexattr_t   mta;
@@ -18,20 +19,27 @@ namespace oxygine
         {
             pthread_mutex_init(&_handle, 0);
         }
+#endif
     }
 
     Mutex::~Mutex()
     {
+#ifndef OX_NO_MT
         pthread_mutex_destroy(&_handle);
+#endif
     }
 
     void Mutex::lock()
     {
+#ifndef OX_NO_MT
         pthread_mutex_lock(&_handle);
+#endif
     }
 
     void Mutex::unlock()
     {
+#ifndef OX_NO_MT
         pthread_mutex_unlock(&_handle);
+#endif
     }
 }
