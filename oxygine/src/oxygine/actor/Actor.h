@@ -128,6 +128,8 @@ namespace oxygine
         RectF               computeBounds(const Transform& transform = Transform::getIdentity()) const;
         /**computes actor Bounds rectangle in Parent Space. Iterates children*/
         RectF               computeBoundsInParent() const;
+        /**computes actor Bounds rectangle in Stage Space. Iterates children*/
+        RectF               computeStageBounds() const;
 
         /**Sets Anchor. Anchor also called Pivot point. It is "center" for rotation/scale/position. Anchor could be set in Pixels or in Percents (/100).
         Default value is (0,0) - top left corner of Actor
@@ -420,7 +422,7 @@ namespace oxygine
     void    reattachActor(spActor actor, spActor newParent, spActor root = 0);
 
     void decompose(const Transform& t, Vector2& pos, float& angle, Vector2& scale);
-    void setDecomposedTransform(spActor& a, const Transform& t);
+    void setDecomposedTransform(Actor* actor, const Transform& t);
 
     /** A TweenDummy class
      *  doing nothing, could be used for calling your callback after timeout

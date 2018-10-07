@@ -187,6 +187,11 @@ namespace oxygine
         return computeBounds(getTransform());
     }
 
+    oxygine::RectF Actor::computeStageBounds() const
+    {
+        return computeBounds(computeGlobalTransform());
+    }
+
     Transform Actor::computeGlobalTransform(Actor* parent) const
     {
         Transform t;
@@ -1539,7 +1544,7 @@ namespace oxygine
         pos.y = t.y;
     }
 
-    void setDecomposedTransform(spActor& actor, const Transform& t)
+    void setDecomposedTransform(Actor* actor, const Transform& t)
     {
         Vector2 pos;
         Vector2 scale;
