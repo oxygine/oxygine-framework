@@ -8,7 +8,7 @@ namespace oxygine
     {
         int _counter = 0;
 
-        const int KEYS = 256;
+        const int KEYS = 280;
         unsigned char _keys[KEYS];
 
         void init()
