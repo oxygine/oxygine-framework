@@ -158,6 +158,7 @@
     <ClCompile Include="..\..\src\oxygine\core\UberShaderProgram.cpp" />
     <ClCompile Include="..\..\src\oxygine\core\VideoDriver.cpp" />
     <ClCompile Include="..\..\src\oxygine\core\ZipFileSystem.cpp" />
+    <ClCompile Include="..\..\src\oxygine\core\Zips.cpp" />
     <ClCompile Include="..\..\src\oxygine\dev_tools\DeveloperMenu.cpp" />
     <ClCompile Include="..\..\src\oxygine\dev_tools\TexturesInspector.cpp" />
     <ClCompile Include="..\..\src\oxygine\dev_tools\TreeInspector.cpp" />
@@ -268,6 +269,7 @@
     <ClInclude Include="..\..\src\oxygine\core\VertexDeclaration.h" />
     <ClInclude Include="..\..\src\oxygine\core\VideoDriver.h" />
     <ClInclude Include="..\..\src\oxygine\core\ZipFileSystem.h" />
+    <ClInclude Include="..\..\src\oxygine\core\Zips.h" />
     <ClInclude Include="..\..\src\oxygine\dev_tools\DeveloperMenu.h" />
     <ClInclude Include="..\..\src\oxygine\dev_tools\TexturesInspector.h" />
     <ClInclude Include="..\..\src\oxygine\dev_tools\TreeInspector.h" />

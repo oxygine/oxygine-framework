@@ -2,7 +2,7 @@
   <info aa="1" bold="1" charset="" face="Arial" italic="0" outline="0" padding="0,0,0,0" size="-16" smooth="1" spacing="1,1" stretchH="100" unicode="1"/>
   <common alphaChnl="0" base="15" blueChnl="4" greenChnl="4" lineHeight="19" packed="0" pages="1" redChnl="4" scaleH="64" scaleW="512"/>
   <pages>
-    <page file="main_0.png" id="0"/>
+    <page file="main_0.tga" id="0"/>
   </pages>
   <chars count="100">
     <char chnl="15" height="1" id="32" page="0" width="3" x="495" xadvance="4" xoffset="-1" y="13" yoffset="18"/>

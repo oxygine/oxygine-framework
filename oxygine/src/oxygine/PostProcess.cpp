@@ -8,6 +8,7 @@
 #include "core/gl/VertexDeclarationGL.h"
 #include "core/oxygine.h"
 #include "core/system_data.h"
+#include "core/Zips.h"
 
 namespace oxygine
 {

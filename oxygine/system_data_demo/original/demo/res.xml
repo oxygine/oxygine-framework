@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<resources>
+	<set path = "./anims" />
+	<atlas>
+		<image file="loading.png"/>
+	</atlas>
+	
+	<set path = "./fonts" />
+	<font file="big.fnt" version="7"/>	
+	<font file="main.fnt" version="7"/>	
+</resources>
