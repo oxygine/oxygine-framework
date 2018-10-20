@@ -25,10 +25,10 @@ void Test::init()
 
     //Mount additional file system with inner path "ext"
     //Used for searching files in data/ext
-    extfs.setPath(file::fs().getFullPath("ext").c_str());
-    file::mount(&extfs);
+//    extfs.setPath(file::fs().getFullPath("ext").c_str());
+  //  file::mount(&extfs);
 
-    resourcesUI.loadXML("demo/res_ui.xml");
+    resourcesUI.loadXML("demo/res_ui.xml", ResourcesLoadOptions().prebuiltFolder("demo"));
     resourcesUI.loadXML("demo/fonts.xml");
 
 
