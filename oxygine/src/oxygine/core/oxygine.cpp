@@ -754,7 +754,7 @@ namespace oxygine
 #endif
             
             Point ds = getDisplaySize();
-            logs::messageln("SDL_GL_GetDrawableSize: %d %d", ds.x, ds.y);
+            //logs::messageln("SDL_GL_GetDrawableSize: %d %d", ds.x, ds.y);
 
             timeMS duration = IVideoDriver::_stats.duration;
             IVideoDriver::_stats = IVideoDriver::Stats();
