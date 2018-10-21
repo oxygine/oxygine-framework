@@ -293,6 +293,8 @@ namespace oxygine
             flags |= SDL_WINDOW_ALLOW_HIGHDPI;
 #elif __ANDROID__
             flags |= SDL_WINDOW_RESIZABLE;//fix for latest SDL, related with new setOrientationBis java function
+            flags |= SDL_WINDOW_FULLSCREEN;
+            flags |= SDL_WINDOW_BORDERLESS;
 #else
             if (desc.show_window)
                 flags |= SDL_WINDOW_SHOWN;
