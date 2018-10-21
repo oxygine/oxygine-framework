@@ -138,6 +138,25 @@ namespace oxygine
         }
     }
 
+    void EventDispatcher::removeEventListenersByType(eventType et)
+    {
+        __doCheck();
+        if (!_listeners)
+            return;
+
+        for (size_t i = 0; i < _listeners->size(); ++i)
+        {
+            const listener& ls = _listeners->at(i);
+            if (ls.type == et)
+            {
+                _listeners->erase(_listeners->begin() + i);
+                //OX_ASSERT(hasEventListeners(CallbackThis) == false);
+                --i;
+            }
+        }
+
+    }
+
     void EventDispatcher::removeAllEventListeners()
     {
         delete _listeners;

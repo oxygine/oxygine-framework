@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <typeinfo>
+#include "../EventDispatcher.h"
 
 namespace oxygine
 {
@@ -250,7 +251,15 @@ namespace oxygine
         }
 
 
-        logs::messageln("id = %d, name = '%s', typeid = '%s', refs = %s", this->__id, name.c_str(), typeid(*this).name(), refs);
+        int cbs = 0;
+        if (o->_ref_counter)
+        {
+            const EventDispatcher *ed = dynamic_cast<const EventDispatcher*>(o);
+            if (ed)
+                cbs = ed->getListenersCount();
+        }
+
+        logs::messageln("id = %d, name = '%s', typeid = '%s', callbacks = '%d' refs = %s", this->__id, name.c_str(), typeid(*this).name(), cbs, refs);
     }
 
     void ObjectBase::dumpCreatedObjects()

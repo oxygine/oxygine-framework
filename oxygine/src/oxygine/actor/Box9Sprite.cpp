@@ -46,6 +46,23 @@ namespace oxygine
             Sprite::setResAnim(DebugActor::resSystem->getResAnim("btn"));
     }
 
+    oxygine::RectF Box9Sprite::getInnerArea() const
+    {
+        if (!_prepared)
+            prepare();
+
+        RectF rect;
+        rect.pos = Vector2(_guideX[0], _guideY[0]);
+        
+        Vector2 rb;
+        rb.x = getWidth() - (_frame.getWidth() - _guideX[1]);
+        rb.y = getHeight() - (_frame.getHeight() - _guideY[1]);
+
+        rect.setSize(rb - rect.pos);
+
+        return rect;                             
+    }
+
     void Box9Sprite::setVerticalMode(StretchMode m)
     {
         _vertMode = m;
@@ -129,7 +146,7 @@ namespace oxygine
         return Actor::isOn(localPosition, localScale);
     }
 
-    void Box9Sprite::prepare()
+    void Box9Sprite::prepare() const
     {
         _guidesX.resize(4);
         _guidesY.resize(4);

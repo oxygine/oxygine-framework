@@ -19,7 +19,7 @@
 #elif OXYGINE_SDL && !OXYGINE_FILESYSTEM_USE_STDIO
 #ifdef _WIN32
 #include <direct.h>
-#include <Windows.h>
+#include <windows.h>
 #endif
 
 #include <sys/stat.h>

@@ -126,6 +126,10 @@ namespace oxygine
         Transform           computeGlobalTransform(Actor* parent = 0) const;
         /**computes actor Bounds rectangle. Iterates children*/
         RectF               computeBounds(const Transform& transform = Transform::getIdentity()) const;
+        /**computes actor Bounds rectangle in Parent Space. Iterates children*/
+        RectF               computeBoundsInParent() const;
+        /**computes actor Bounds rectangle in Stage Space. Iterates children*/
+        RectF               computeStageBounds() const;
 
         /**Sets Anchor. Anchor also called Pivot point. It is "center" for rotation/scale/position. Anchor could be set in Pixels or in Percents (/100).
         Default value is (0,0) - top left corner of Actor
@@ -173,6 +177,12 @@ namespace oxygine
         void setCull(bool enable) {_flags &= ~flag_cull; if (enable) _flags |= flag_cull;}
         /**Sets transparency. if alpha is 0 actor and children are completely invisible. Invisible Actor doesn't receive Touch events.*/
         void setAlpha(unsigned char alpha);
+
+        /**By default Actor doesn't has bounds, this will set it to Actor::getDestRect*/
+        void setHasOwnBounds(bool enable = true) { _flags &= ~flag_actorHasBounds; if (enable) _flags |= flag_actorHasBounds; }
+        /**by default actor with Alpha = 0 not clickable*/
+        void setClickableWithZeroAlpha(bool enable) { _flags &= ~flag_clickableWithZeroAlpha; if (enable) _flags |= flag_clickableWithZeroAlpha; }
+
 
         /**Enables/Disables Touch events for Actor.*/
         void setTouchEnabled(bool enabled) { _flags &= ~flag_touchEnabled; if (enabled) _flags |= flag_touchEnabled; }
@@ -248,9 +258,9 @@ namespace oxygine
         virtual void doRender(const RenderState& rs) {}
 
         //converts position in parent space to local space
-        Vector2 parent2local(const Vector2& pos) const;
+        virtual Vector2 parent2local(const Vector2& pos) const;
         //converts local position to parent space
-        Vector2 local2parent(const Vector2& pos = Vector2(0, 0)) const;
+        virtual Vector2 local2parent(const Vector2& pos = Vector2(0, 0)) const;
 
         //converts local position to Stage
         Vector2 local2stage(const Vector2& pos = Vector2(0, 0), Actor* stage = 0) const;
@@ -290,7 +300,7 @@ namespace oxygine
         /**recursively removes all event listeners and added tweens*/
         void clean();
 
-        virtual bool getBounds(RectF&) const { return false; }
+        virtual bool getBounds(RectF&) const;
 
     protected:
 
@@ -304,12 +314,13 @@ namespace oxygine
         virtual void transformUpdated();
 
         virtual void calcBounds2(RectF& bounds, const Transform& transform) const;
+        void calcChildrenBounds(RectF& bounds, const Transform& transform) const;
 
 
         typedef intrusive_list<spActor> children;
         static void setParent(Actor* actor, Actor* parent);
         static children& getChildren(spActor& actor) { return actor->_children; }
-        static unsigned short& _getFlags(Actor* actor) { return actor->_flags; }
+        static unsigned int& _getFlags(Actor* actor) { return actor->_flags; }
 
         void _onGlobalTouchUpEvent(Event*);
         void _onGlobalTouchUpEvent1(Event*);
@@ -349,11 +360,13 @@ namespace oxygine
             flag_cull                   = 1 << 6,
             flag_fastTransform          = 1 << 7,
             flag_boundsNoChildren       = 1 << 8,
-            flag_reserved               = 1 << 9,
+            flag_actorHasBounds         = 1 << 9,
+            flag_clickableWithZeroAlpha = 1 << 10,
+            flag_reserved               = 1 << 11,
             flag_last                   = flag_reserved
         };
 
-        mutable unsigned short _flags;
+        mutable unsigned int _flags;
         unsigned char   _alpha;
         char    _extendedIsOn;
 
@@ -409,7 +422,7 @@ namespace oxygine
     void    reattachActor(spActor actor, spActor newParent, spActor root = 0);
 
     void decompose(const Transform& t, Vector2& pos, float& angle, Vector2& scale);
-    void setDecomposedTransform(spActor& a, const Transform& t);
+    void setDecomposedTransform(Actor* actor, const Transform& t);
 
     /** A TweenDummy class
      *  doing nothing, could be used for calling your callback after timeout

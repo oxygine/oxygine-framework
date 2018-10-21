@@ -22,6 +22,13 @@ namespace oxygine
 
         StretchMode getVerticalMode() const {return _vertMode;}
         StretchMode getHorizontalMode() const {return _horzMode;}
+        float       getGuideX1() const { return _guideX[0]; }
+        float       getGuideX2() const { return _guideX[1]; }
+        float       getGuideY1() const { return _guideY[0]; }
+        float       getGuideY2() const { return _guideY[1]; }
+
+
+        RectF       getInnerArea() const;
 
         void setVerticalMode(StretchMode m);
         void setHorizontalMode(StretchMode m);
@@ -47,20 +54,20 @@ namespace oxygine
         void animFrameChanged(const AnimationFrame& f) override;
         void changeAnimFrame(const AnimationFrame& f) override;
 
-        bool _prepared;
+        mutable bool _prepared;
 
         StretchMode _vertMode;
         StretchMode _horzMode;
 
-        float _guideX[2];
-        float _guideY[2];
+        mutable float _guideX[2];
+        mutable float _guideY[2];
 
-        std::vector<float> _guidesX;
-        std::vector<float> _guidesY;
-        std::vector<float> _pointsX;
-        std::vector<float> _pointsY;
+        mutable std::vector<float> _guidesX;
+        mutable std::vector<float> _guidesY;
+        mutable std::vector<float> _pointsX;
+        mutable std::vector<float> _pointsY;
 
-        void prepare();
+        void prepare() const;
 
         void doRender(const RenderState&) override;
     };

@@ -14,8 +14,8 @@ namespace oxygine
         _compare = (compare)f;\
         init();\
     }\
-    void copyFrom(const Material &r) override {*this = (cl&)r;}\
     void copyTo(cl &d) const{d = *this;}\
+    void copyFrom(const cl &d) {*this = d;}\
     cl* clone() const override {return new cl(*this);}\
     void update(size_t &hash, compare &cm) const override {\
         typedef bool (*fn)(const cl&a, const cl&b);\
@@ -52,7 +52,6 @@ namespace oxygine
         virtual void xflush() {}
 
         virtual Material* clone() const = 0;
-        virtual void copyFrom(const Material& r) = 0;
         virtual void update(size_t& hash, compare&) const = 0;
         virtual void rehash(size_t& hash) const = 0;
 
@@ -82,6 +81,7 @@ namespace oxygine
         void rehash(size_t& hash) const override {}
     };
 
+    DECLARE_SMART(STDMaterial, spSTDMaterial);
     class STDMaterial: public Material
     {
     public:
@@ -104,7 +104,8 @@ namespace oxygine
 
         void render(const AffineTransform& tr, const Color& c, const RectF& src, const RectF& dest) override;
         void render(const Color& c, const RectF& src, const RectF& dest) override;
-    };
 
-    DECLARE_SMART(STDMaterial, spSTDMaterial);
+        spSTDMaterial cloneDefaultShader() const;
+    };
+    
 }

@@ -142,20 +142,25 @@ namespace oxygine
     {
     }
 
+    void Actor::calcChildrenBounds(RectF& bounds, const Transform& transform) const
+    {
+        const Actor* c = getFirstChild().get();
+        while (c)
+        {
+            if (c->getVisible())
+            {
+                Transform tr = c->getTransform() * transform;
+                c->calcBounds2(bounds, tr);
+            }
+            c = c->getNextSibling().get();
+        }
+    }
+
     void Actor::calcBounds2(RectF& bounds, const Transform& transform) const
     {
         if (!(_flags & flag_boundsNoChildren))
         {
-            const Actor* c = getFirstChild().get();
-            while (c)
-            {
-                if (c->getVisible())
-                {
-                    Transform tr = c->getTransform() * transform;
-                    c->calcBounds2(bounds, tr);
-                }
-                c = c->getNextSibling().get();
-            }
+            calcChildrenBounds(bounds, transform);
         }
 
         RectF rect;
@@ -175,6 +180,16 @@ namespace oxygine
         calcBounds2(bounds, transform);
 
         return bounds;
+    }
+
+    RectF Actor::computeBoundsInParent() const
+    {
+        return computeBounds(getTransform());
+    }
+
+    oxygine::RectF Actor::computeStageBounds() const
+    {
+        return computeBounds(computeGlobalTransform());
     }
 
     Transform Actor::computeGlobalTransform(Actor* parent) const
@@ -219,6 +234,18 @@ namespace oxygine
 
         if (!getTouchChildrenEnabled())
             stream << " touchChildrenEnabled=false";
+
+        if (_flags & flag_actorHasBounds)
+            stream << " flag_actorHasBounds";
+
+        if (_flags & flag_clickableWithZeroAlpha)
+            stream << " flag_clickableWithZeroAlpha";
+
+        if (_flags & flag_cull)
+            stream << " flag_cull";
+
+        if (_flags & flag_anchorInPixels)
+            stream << " flag_anchorInPixels";
 
         if (getAlpha() != 255)
             stream << " alpha=" << (int)getAlpha();
@@ -417,7 +444,10 @@ namespace oxygine
         bool touchEvent = TouchEvent::isTouchEvent(event->type);
         if (touchEvent)
         {
-            if (!(_flags & flag_visible) || getAlpha() == 0)
+            if (!(_flags & flag_visible))
+                return;
+
+            if (getAlpha() == 0 && !(_flags & flag_clickableWithZeroAlpha))
                 return;
         }
 
@@ -1168,6 +1198,16 @@ namespace oxygine
         }
     }
 
+    bool Actor::getBounds(RectF& bounds) const
+    {
+        if (_flags & flag_actorHasBounds)
+        {
+            bounds = getDestRect();
+            return true;
+        }
+        return false;
+    }
+
     void Actor::render(const RenderState& parentRS)
     {
         _rdelegate->render(this, parentRS);
@@ -1504,7 +1544,7 @@ namespace oxygine
         pos.y = t.y;
     }
 
-    void setDecomposedTransform(spActor& actor, const Transform& t)
+    void setDecomposedTransform(Actor* actor, const Transform& t)
     {
         Vector2 pos;
         Vector2 scale;

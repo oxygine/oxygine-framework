@@ -97,6 +97,19 @@ struct Closure<R(PARAM_TYPE_LIST)>: public detail::CLOSURE_NUM::ClosureBase<R PA
 	  this->p_proxy = callfunction;
   }
 
+  /*
+  Closure(const std::function< void(void)>& f_)
+  {
+      auto f = [f_](Event*) {
+          f_();
+      };
+      
+      this->p_function = std::make_shared< std::function<R(PARAM_TYPE_LIST)> >(f);
+      this->p_this = this->p_function.get();
+      this->p_proxy = callfunction;
+  }
+  */
+
   template<class T>
   Closure(T f)//lambda support
   {

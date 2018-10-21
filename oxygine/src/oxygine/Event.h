@@ -26,6 +26,7 @@ namespace oxygine
         {
             uint64 userData64;
             int    userData32;
+            bool   userDataBool;
             void*  userData;
         };
         
