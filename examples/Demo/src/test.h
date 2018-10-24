@@ -40,7 +40,9 @@ public:
 
     static void init();
     static void free();
+
     static spTest instance;
+    static Resources _resources;
 
     struct toggle
     {
@@ -77,5 +79,5 @@ protected:
     int _notifies[MAX_NOTIFIES];
 
 public:
-    static Resources resourcesUI;
+    
 };

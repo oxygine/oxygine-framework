@@ -4,9 +4,9 @@ import zipfile
 
 shutil.rmtree("data", True)
 shutil.copytree("original", "data")
-os.system("..\\..\\tools\\oxyresbuild.py -x demo\\res.xml --src_data data --dest_data data\\demo --nopng")
+os.system("..\\..\\tools\\oxyresbuild.py -x sys_demo\\res.xml --src_data data --dest_data data\\sys_demo --nopng")
 
-shutil.rmtree("data/demo/anims/")
+shutil.rmtree("data/sys_demo/anims/")
 
 
 def recursive_zip(zipf, directory, folder = ""):

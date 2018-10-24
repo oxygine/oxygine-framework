@@ -72,7 +72,7 @@ public:
         text->setPosition(140.0f, (float)getHeight() - text->getHeight());
 
         TextStyle st;
-        st.font = resources.getResFont("font");
+        st.font = _resources.getResFont("font");
         st.vAlign = TextStyle::VALIGN_TOP;
         st.color = Color::CornflowerBlue;
         st.multiline = true;
@@ -104,7 +104,7 @@ public:
     {
         spSprite sp = new Sprite;
         sp->setName("loading");
-        sp->setResAnim(resourcesUI.getResAnim("loading"));
+        sp->setResAnim(resources.getResAnim("loading"));
         sp->attachTo(ui);
         sp->setAnchor(0.5f, 0.5f);
         sp->setPosition(getSize() - sp->getSize() / 4);

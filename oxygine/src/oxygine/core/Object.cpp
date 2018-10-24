@@ -252,7 +252,7 @@ namespace oxygine
 
 
         int cbs = 0;
-        if (o->_ref_counter)
+        if (o && o->_ref_counter)
         {
             const EventDispatcher *ed = dynamic_cast<const EventDispatcher*>(o);
             if (ed)

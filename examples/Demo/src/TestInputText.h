@@ -17,7 +17,7 @@ public:
         style.hAlign = TextStyle::HALIGN_MIDDLE;
         style.vAlign = TextStyle::VALIGN_MIDDLE;
         style.multiline = true;
-        style.font = Test::resourcesUI.getResFont("big");
+        style.font = Test::_resources.getResFont("big");
         text->setStyle(style);
         text->setText(defText);
 

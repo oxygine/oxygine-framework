@@ -165,9 +165,11 @@ void example_preinit()
 
 void example_init()
 {
+    Test::init();
+
     //Load resources in xml file
     resources.loadXML("xmls/res.xml");
-    Test::init();
+    
 
     Test::instance = new TestActor;
     getStage()->addChild(Test::instance);

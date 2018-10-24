@@ -48,7 +48,7 @@ public:
         textDetails->setPosition(200.0f, getStage()->getHeight() - 10);
 
         TextStyle st;
-        st.font = resourcesUI.getResFont("main");
+        st.font = _resources.getResFont("main");
         st.vAlign = TextStyle::VALIGN_BOTTOM;
         st.color = Color(0xffffffff);
         st.multiline = true;
@@ -131,7 +131,7 @@ public:
         style.multiline = test.multiline;
         style.vAlign = test.vAlign;
         style.hAlign = test.hAlign;
-        style.font = resourcesUI.getResFont("big");
+        style.font = _resources.getResFont("big");
         style.color = Color(0xffffffff);
         style.fontSize = test.scale2size;
         if (!style.fontSize)

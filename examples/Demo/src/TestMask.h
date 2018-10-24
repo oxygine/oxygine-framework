@@ -47,7 +47,7 @@ public:
 
 
         TextStyle style;
-        style.font = resourcesUI.getResFont("big");
+        style.font = _resources.getResFont("big");
         style.color = Color::OrangeRed;
         style.vAlign = TextStyle::VALIGN_MIDDLE;
         style.hAlign = TextStyle::HALIGN_MIDDLE;
