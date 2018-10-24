@@ -156,6 +156,6 @@ public:
         spOpenGLSprite sprite = new OpenGLSprite;
         sprite->setPosition(getStage()->getSize() / 2);
         sprite->setScale(3);
-        content->addChild(sprite);
+        _content->addChild(sprite);
     }
 };

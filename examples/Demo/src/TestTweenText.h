@@ -36,7 +36,7 @@ public:
     TestTweenText()
     {
         spTextField text = new TextField;
-        content->addChild(text);
+        _content->addChild(text);
 
         TextStyle st;
         st.font = _resources.getResFont("big");

@@ -14,7 +14,7 @@ public:
     TestMask(): _lastSnow(0)
     {
         spSprite sp = new Sprite;
-        sp->attachTo(content);
+        sp->attachTo(_content);
         sp->setResAnim(resources.getResAnim("sky"));
 
         _mask = new Sprite;
@@ -26,14 +26,14 @@ public:
         _mask->setAnchor(0.5f, 0.5f);
         _mask->setResAnim(resources.getResAnim("mask"));
         _mask->setVisible(true);
-        _mask->attachTo(content);
+        _mask->attachTo(_content);
 
         _mask->addTween(Actor::TweenRotation(MATH_PI * 2), 15000, -1, true);
-        _mask->addTween(Actor::TweenX(content->getWidth() - 100), 10000, -1, true);
-        _mask->addTween(Actor::TweenY(content->getHeight() - 50), 12000, -1, true);
+        _mask->addTween(Actor::TweenX(_content->getWidth() - 100), 10000, -1, true);
+        _mask->addTween(Actor::TweenY(_content->getHeight() - 50), 12000, -1, true);
 
         _masked = new MaskedSprite;
-        _masked->attachTo(content);
+        _masked->attachTo(_content);
 
         _masked->setMask(_mask, true);
 
@@ -55,7 +55,7 @@ public:
 
         spTextField text = new TextField();
         text->attachTo(_masked);
-        text->setPosition(content->getSize() / 2);
+        text->setPosition(_content->getSize() / 2);
         text->setText("Oxygine. Masked sky demo");
         text->setStyle(style);
 
@@ -124,11 +124,11 @@ public:
             snow->setResAnim(resources.getResAnim("snow"));
             snow->setRotation(scalar::randFloat(0, MATH_PI * 2));
             snow->setScale(scalar::randFloat(0.4f, 1.0f));
-            snow->setX(scalar::randFloat(0, content->getWidth()));
+            snow->setX(scalar::randFloat(0, _content->getWidth()));
             snow->setY(-50);
             snow->attachTo(_masked);
 
-            snow->addTween(Actor::TweenY(content->getHeight() + 50), 6000)->detachWhenDone();
+            snow->addTween(Actor::TweenY(_content->getHeight() + 50), 6000)->detachWhenDone();
             snow->addTween(Actor::TweenRotation(scalar::randFloat(0, MATH_PI * 2)), 5000);
         }
     }

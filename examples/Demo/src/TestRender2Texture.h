@@ -17,22 +17,22 @@ public:
 
         spSprite back = new Sprite;
         back->setResAnim(resources.getResAnim("bg"));
-        back->attachTo(content);
+        back->attachTo(_content);
         back->setSize(getStage()->getSize());
 
-        back->setPosition(content->getSize() / 2 - back->getScaledSize() / 2);
+        back->setPosition(_content->getSize() / 2 - back->getScaledSize() / 2);
 
 
 
         color = Color(255, 255, 255, 32);
 
-        Vector2 size = content->getSize();
+        Vector2 size = _content->getSize();
 
         texture = IVideoDriver::instance->createTexture();
         texture->init((int)size.x, (int)size.y, TF_R8G8B8A8, true);
 
         preview = new Sprite;
-        preview->attachTo(content);
+        preview->attachTo(_content);
 
 
         AnimationFrame frame;
@@ -44,8 +44,8 @@ public:
         preview->setAnimFrame(frame);
 
 
-        content->addEventListener(TouchEvent::MOVE, CLOSURE(this, &TestRender2Texture::onMove));
-        content->addEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &TestRender2Texture::onDown));
+        _content->addEventListener(TouchEvent::MOVE, CLOSURE(this, &TestRender2Texture::onMove));
+        _content->addEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this, &TestRender2Texture::onDown));
 
 
         Test::toggle t[2];

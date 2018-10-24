@@ -51,9 +51,9 @@ public:
     {
         sprite = new Sprite;
         sprite->setResAnim(resources.getResAnim("flower"));
-        sprite->attachTo(content);
+        sprite->attachTo(_content);
         //sprite->setAnchor(0.5f, 0.5f);
-        sprite->setPosition(content->getSize() / 2 - sprite->getSize() / 2);
+        sprite->setPosition(_content->getSize() / 2 - sprite->getSize() / 2);
 
         sprite->addTween(TweenShine::create(10, 300));
 

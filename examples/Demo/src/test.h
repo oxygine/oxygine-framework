@@ -9,28 +9,6 @@ using namespace std;
 spTextField createText(const std::string& txt);
 spButton createButtonHelper(spButton, const std::string& txt, EventCallback cb);
 
-class Content: public Actor
-{
-public:
-    Content() : driver(0) { setName("content"); }
-    IVideoDriver* driver;
-
-    /*
-    void render(const RenderState& parentRS)
-    {
-
-        parentRS.renderer->drawBatch();
-
-        RenderState rs = parentRS;
-        STDRenderer renderer(driver ? driver : IVideoDriver::instance);
-        renderer.Renderer::begin(parentRS.renderer);
-        rs.renderer = &renderer;
-        Actor::render(rs);
-        renderer.end();
-    }
-    */
-};
-
 DECLARE_SMART(Test, spTest);
 class Test: public Actor
 {
@@ -41,7 +19,7 @@ public:
     static void init();
     static void free();
 
-    static spTest instance;
+    static spTest _instance;
     static Resources _resources;
 
     struct toggle
@@ -73,11 +51,8 @@ protected:
 
     float _x;
     float _y;
-    spActor ui;
-    Content* content;
+    spActor _ui;
+    spActor _content;
     enum {MAX_NOTIFIES = 8};
     int _notifies[MAX_NOTIFIES];
-
-public:
-    
 };

@@ -20,7 +20,7 @@ public:
         bar->setPosition(getSize() / 2);
 
         //bar->setSize(600, 200);
-        content->addChild(bar);
+        _content->addChild(bar);
     }
 
     void clicked(string id)

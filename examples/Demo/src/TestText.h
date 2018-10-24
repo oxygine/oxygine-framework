@@ -43,7 +43,7 @@ public:
         addButton("prev", "Prev Test");
 
         textDetails = new TextField;
-        textDetails->attachTo(ui);
+        textDetails->attachTo(_ui);
         textDetails->setSize(Vector2(300, 0));
         textDetails->setPosition(200.0f, getStage()->getHeight() - 10);
 
@@ -55,7 +55,7 @@ public:
         textDetails->setStyle(st);
 
         bg = new ColorRectSprite();
-        bg->attachTo(content);
+        bg->attachTo(_content);
         bg->setColor(Color(64, 64, 64, 255));
 
         /*

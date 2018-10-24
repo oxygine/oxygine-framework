@@ -93,7 +93,7 @@ public:
             spSprite sprite = new DraggableSprite;
             sprite->setPosition(pos[i]);
             sprite->setResAnim(resources.getResAnim("batterfly"));
-            sprite->attachTo(content);
+            sprite->attachTo(_content);
 
 
             float angle = scalar::randFloat(0, (float)MATH_PI * 2);
@@ -109,7 +109,7 @@ public:
         }
 
         contacts = new Actor;
-        contacts->attachTo(content);
+        contacts->attachTo(_content);
         contacts->setPriority(10000);
         contacts->setTouchChildrenEnabled(false);
         //contacts->setVisible(false);
@@ -137,7 +137,7 @@ public:
                     c->setAnchor(0.5f, 0.5f);
                     c->setResAnim(resources.getResAnim("snow"));
                     c->addTween(Actor::TweenAlpha(0), 300)->detachWhenDone();
-                    Vector2 pos = a->local2stage(contact, content);
+                    Vector2 pos = a->local2stage(contact, _content.get());
                     c->setPosition(pos);
                     c->attachTo(contacts);
                 }
@@ -185,25 +185,25 @@ public:
         basket = new Sprite;
         basket->setName("basket");
         basket->setResAnim(resources.getResAnim("batterfly"));
-        basket->attachTo(content);
+        basket->attachTo(_content);
         basket->setAnchor(0.5f, 0.5f);
-        basket->setX(content->getWidth() * 3 / 4);
-        basket->setY(content->getHeight() / 2);
+        basket->setX(_content->getWidth() * 3 / 4);
+        basket->setY(_content->getHeight() / 2);
 
         ball = new Sprite;
         ball->setName("ball");
         ball->setResAnim(resources.getResAnim("batterfly"));
-        ball->attachTo(content);
+        ball->attachTo(_content);
         ball->setAnchor(0.5f, 0.5f);
-        ball->setX(content->getWidth() * 1 / 4);
-        ball->setY(content->getHeight() / 2);
+        ball->setX(_content->getWidth() * 1 / 4);
+        ball->setY(_content->getHeight() / 2);
 
         ball->addEventListener(TouchEvent::TOUCH_DOWN, CLOSURE(this,  &Drag2Test::ballTouchDown));
         ball->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this,  &Drag2Test::ballTouchUp));
-        content->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Drag2Test::touchUp));
+        _content->addEventListener(TouchEvent::TOUCH_UP, CLOSURE(this, &Drag2Test::touchUp));
 
         txt = new TextField;
-        txt->attachTo(content);
+        txt->attachTo(_content);
         txt->setVAlign(TextStyle::VALIGN_MIDDLE);
         txt->setHAlign(TextStyle::HALIGN_MIDDLE);
         txt->setPosition(getSize() / 2);
@@ -219,7 +219,7 @@ public:
     {
         if (!dragging)
             return;
-        if (event->currentTarget.get() != content)
+        if (event->currentTarget.get() != _content.get())
             return;
 
         dragging->setColor(Color::White);

@@ -171,8 +171,8 @@ void example_init()
     resources.loadXML("xmls/res.xml");
     
 
-    Test::instance = new TestActor;
-    getStage()->addChild(Test::instance);
+    Test::_instance = new TestActor;
+    getStage()->addChild(Test::_instance);
 
     //Initialize http requests
     HttpRequestTask::init();

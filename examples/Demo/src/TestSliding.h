@@ -47,7 +47,7 @@ public:
 
         sliding->setContent(map);
         sliding->setPosition(getSize() / 2 - sliding->getSize() / 2);
-        sliding->attachTo(content);
+        sliding->attachTo(_content);
 
         _sliding = sliding;
 

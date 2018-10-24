@@ -19,7 +19,7 @@ public:
                 sp->attachTo(parent);
             }
 
-        content->addChild(parent);
+        _content->addChild(parent);
         parent->setPosition(getStage()->getSize() / 2 - Vector2(200, 200));
         parent->setAnchor(0.5f, 0.5f);
         parent->setSize(300.0f, 300.0f);

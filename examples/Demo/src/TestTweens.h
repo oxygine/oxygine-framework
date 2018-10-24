@@ -29,7 +29,7 @@ public:
 
 
         _sprite = new Sprite();
-        _sprite->attachTo(content);
+        _sprite->attachTo(_content);
         _sprite->setAnchor(0.5f, 0.5f);
         _sprite->setResAnim(resources.getResAnim("anim"));
         _sprite->setPosition(getWidth() / 2.0f, getHeight() / 2);
@@ -77,7 +77,7 @@ public:
         _easeGraph = createEaseTest(_ease);
         _easeGraph->setPriority(-1);
         _easeGraph->setY(getHeight() / 2 - _easeGraph->getHeight() / 2);
-        content->addChild(_easeGraph);
+        _content->addChild(_easeGraph);
 
         updateText("ease", "ease: " + ease2String(_ease));
     }

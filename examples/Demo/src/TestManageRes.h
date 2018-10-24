@@ -56,7 +56,7 @@ public:
             if (ra->getTotalFrames() > 1)
                 sprite->addTween(TweenAnim(ra), 500, -1);
             sprite->setPosition(scalar::randFloat(50.0f, getWidth() - 100.0f), scalar::randFloat(50.0f, getHeight() - 100.0f));
-            sprite->attachTo(content);
+            sprite->attachTo(_content);
 
             if (ra->isName("bg"))
             {
@@ -66,7 +66,7 @@ public:
         }
 
         spTextField text = new TextField;
-        text->attachTo(content);
+        text->attachTo(_content);
 
         text->setSize(300, 200);
         text->setPosition(140.0f, (float)getHeight() - text->getHeight());
@@ -84,7 +84,7 @@ public:
     void _loaded(Event* event)
     {
         notify("Loaded!");
-        ui->getChild("loading")->addTween(Sprite::TweenAlpha(0), 400)->detachWhenDone();
+        _ui->getChild("loading")->addTween(Sprite::TweenAlpha(0), 400)->detachWhenDone();
 
         releaseRef();//added ref earlier from void clicked(id)
     }
@@ -105,7 +105,7 @@ public:
         spSprite sp = new Sprite;
         sp->setName("loading");
         sp->setResAnim(resources.getResAnim("loading"));
-        sp->attachTo(ui);
+        sp->attachTo(_ui);
         sp->setAnchor(0.5f, 0.5f);
         sp->setPosition(getSize() - sp->getSize() / 4);
         sp->setScale(0.5f);

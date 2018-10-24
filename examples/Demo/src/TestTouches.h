@@ -19,7 +19,7 @@ public:
         orange->setName(name);
         orange->setSize(size);
         orange->setPosition(pos);
-        orange->attachTo(content);
+        orange->attachTo(_content);
         //orange->setAlpha(200);
         orange->addEventListener(TouchEvent::OVER, CLOSURE(this, &TestTouches::onOver));
         orange->addEventListener(TouchEvent::OUTX, CLOSURE(this, &TestTouches::onOver));
@@ -118,7 +118,7 @@ public:
 
 
         spSprite Orange = createRect("Orange", Color::Orange, Vector2(200, 200), Vector2(300, 300));
-        Orange->attachTo(content);
+        Orange->attachTo(_content);
 
         spSprite Green = createRect("Green", Color::Green, Vector2(100, 25), Vector2(100, 150));
         Green->attachTo(Orange);
@@ -140,10 +140,10 @@ public:
     spTextField createTF(const Color& c)
     {
         spTextField tf = new TextField;
-        tf->attachTo(content);
+        tf->attachTo(_content);
         tf->setWidth(300);
         tf->setColor(c);
-        tf->setX(content->getWidth() - tf->getWidth());
+        tf->setX(_content->getWidth() - tf->getWidth());
         tf->setY(y);
         tf->setMultiline(true);
         tf->setFont(_resources.getResFont("big"));

@@ -11,7 +11,7 @@ public:
     {
         poly = new oxygine::Polygon;
         poly->addTween(Actor::TweenRotation(MATH_PI * 2), 16000, -1);
-        poly->setPosition(content->getSize() / 2);
+        poly->setPosition(_content->getSize() / 2);
 
         //ResAnim "tiled" has only single frame and uses own separate atlas texture
         //it should have options trim=extend=false
@@ -27,7 +27,7 @@ public:
 
         update(_num);
 
-        content->addChild(poly);
+        _content->addChild(poly);
 
         addButton("+1", "+1");
     }

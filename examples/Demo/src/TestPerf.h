@@ -28,14 +28,14 @@ public:
         toggle dr[] = {toggle("driver=null", 0, new VideoDriverNull), toggle("driver=default", 0, 0)};
         addToggle("driver", dr, 2);
 
-        content->setTouchEnabled(false);
-        content->setTouchChildrenEnabled(false);
+        _content->setTouchEnabled(false);
+        _content->setTouchChildrenEnabled(false);
     }
 
     void toggleClicked(string id, const toggle* data)
     {
-        if (id == "driver")
-            content->driver = (IVideoDriver*)(data->data);
+        //if (id == "driver")
+        //    content->driver = (IVideoDriver*)(data->data);
     }
 
     void clicked(string id)
@@ -51,7 +51,7 @@ public:
                 sprite->setAnchor(Vector2(0.5f, 0.5f));
                 sprite->setSize(getStage()->getSize() / 20);
                 sprite->setPosition(scalar::randFloat(0, (float)getWidth()), scalar::randFloat(0, (float)getHeight()));
-                content->addChild(sprite);
+                _content->addChild(sprite);
             }
 
             char str[255];
@@ -60,7 +60,7 @@ public:
         }
         if (id == "scale0.01")
         {
-            spActor child = content->getFirstChild();
+            spActor child = _content->getFirstChild();
             while (child)
             {
                 child->setScale(Vector2(1, 1) * 0.01f);
@@ -69,7 +69,7 @@ public:
         }
         if (id == "scale0.2")
         {
-            spActor child = content->getFirstChild();
+            spActor child = _content->getFirstChild();
             while (child)
             {
                 child->setScale(Vector2(1, 1) * 0.2f);
@@ -79,7 +79,7 @@ public:
 
         if (id == "scale0.5")
         {
-            spActor child = content->getFirstChild();
+            spActor child = _content->getFirstChild();
             while (child)
             {
                 child->setScale(Vector2(1, 1) * 0.5f);
@@ -89,7 +89,7 @@ public:
 
         if (id == "animate")
         {
-            spActor child = content->getFirstChild();
+            spActor child = _content->getFirstChild();
             while (child)
             {
                 spTween t = 0;

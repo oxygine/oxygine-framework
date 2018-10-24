@@ -29,7 +29,7 @@ public:
     {
         spSprite sprite = new Sprite;
         sprite->setResAnim(resources.getResAnim("t2p"));
-        sprite->attachTo(content);
+        sprite->attachTo(_content);
         sprite->setPosition(getStage()->getSize() / 2);
         sprite->addTween(Actor::TweenRotationDegrees(360), 30000, -1);
         sprite->setAnchor(0.5f, 0.5f);

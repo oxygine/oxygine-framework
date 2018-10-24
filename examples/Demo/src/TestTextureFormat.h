@@ -19,7 +19,7 @@ public:
 
     void updateTest(string prefix)
     {
-        content->removeChildren();
+        _content->removeChildren();
 
         ResAnim* res = resources.getResAnim("bg" + prefix);
 
@@ -31,7 +31,7 @@ public:
         atlas->load();
 
         spSprite sp = new Sprite;
-        sp->attachTo(content);
+        sp->attachTo(_content);
         sp->setResAnim(res);
     }
 

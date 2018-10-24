@@ -322,8 +322,8 @@ public:
 
         //use camera class from other test!
         spCamera cam = new Camera;
-        cam->attachTo(content);
+        cam->attachTo(_content);
         cam->setContent(tiled);
-        cam->setSize(content->getSize());
+        cam->setSize(_content->getSize());
     }
 };

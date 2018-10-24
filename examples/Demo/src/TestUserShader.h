@@ -113,7 +113,7 @@ public:
 
         _sprite = new Sprite;
         _sprite->setResAnim(resources.getResAnim("bg"));
-        _sprite->attachTo(content);
+        _sprite->attachTo(_content);
 
         toggle t[] =
         {

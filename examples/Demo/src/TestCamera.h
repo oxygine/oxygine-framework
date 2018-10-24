@@ -134,8 +134,8 @@ public:
     TestCamera()
     {
         spCamera cam = new Camera;
-        cam->attachTo(content);
-        cam->setSize(content->getSize());
+        cam->attachTo(_content);
+        cam->setSize(_content->getSize());
 
 
         spSprite map = new Sprite();
