@@ -30,7 +30,7 @@ public:
         spButton button = new Button;
         _button = button;
         button->setPosition(map->getSize() / 2);
-        button->setResAnim(resources.getResAnim("button"));
+        button->setResAnim(DebugActor::resSystem->getResAnim("button"));
         button->attachTo(map);
         button->setAnchor(0.5f, 0.5f);
         button->addEventListener(TouchEvent::CLICK, CLOSURE(this, &TestSliding::testClick));
