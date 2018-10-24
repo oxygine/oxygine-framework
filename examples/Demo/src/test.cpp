@@ -10,6 +10,8 @@ spTest Test::_instance;
 
 void Test::init()
 {
+    key::init();
+
     file::ZipFileSystem zp;
     zp.add(system_data, system_size);
 
