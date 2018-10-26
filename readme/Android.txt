@@ -5,7 +5,20 @@ http://www.youtube.com/watch?v=d8eHHr_KHgQ
 
 2a. Examples folder have configured android project
 =================================================================================================
-How to build. Steps:
+
+	
+	How to build and run with ANDROID STUDIO. Steps:
+	====================================================  
+
+- install JDK
+- install Android Studio
+- run Android Studio and import any project as Gradle from examples.
+- build and run!
+
+
+
+	OUTDATED!!!! How to build and run with COMMAND LINE TOOLS. Steps:
+	====================================================
 - Install "java development kit" JDK 8 (or older)
 - Install Android NDK (https://developer.android.com/ndk/downloads/index.html) and set it up
 - Install Android SDK "Command line tools" (https://developer.android.com/studio/index.html,  scroll to bottom), 
@@ -48,7 +61,7 @@ How to build. Steps:
 		adb shell am start -n org.oxygine.Demo/org.oxygine.Demo.MainActivity
 	* if you have any problems with build check each step manually
 
-  
+
 
 !!!note!!!:
   Folder containing oxygine-framework should have the exact name 'oxygine-framework'
@@ -57,7 +70,7 @@ How to build. Steps:
     > Android NDK: jni/src/Android.mk: Cannot find module with tag 'oxygine-framework'
 
 
-2b. You could generate your own android build config.
+2c. You could generate your own android build config.
 =================================================================================================
 - You need installed Python 2.7
 - You need to run this script

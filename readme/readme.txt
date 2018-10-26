@@ -1,4 +1,4 @@
-1. Download latest SDL2 source snapshot from http://libsdl.org/hg.php or
+1. Download latest SDL2
    RECOMMENDED: oxygine/SDL fork from https://github.com/oxygine/SDL 
 
 2. Your folder structure should be organized like this:
