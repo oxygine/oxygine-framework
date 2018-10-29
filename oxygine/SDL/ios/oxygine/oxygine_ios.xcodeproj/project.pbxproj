@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F0AD82121871BF2005CB8AC /* Zips.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F0AD81F21871BF1005CB8AC /* Zips.h */; };
+		4F0AD82221871BF2005CB8AC /* Zips.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F0AD82021871BF1005CB8AC /* Zips.cpp */; };
 		4F58C6C51F78F1C600D36E3B /* Actor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F58C5B31F78F1C500D36E3B /* Actor.cpp */; };
 		4F58C6C61F78F1C600D36E3B /* Actor.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F58C5B41F78F1C500D36E3B /* Actor.h */; };
 		4F58C6C71F78F1C600D36E3B /* Box9Sprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F58C5B51F78F1C500D36E3B /* Box9Sprite.cpp */; };
@@ -249,6 +251,8 @@
 
 /* Begin PBXFileReference section */
 		048B7AAB17FDE25E00AE2D0B /* shader.glsl */ = {isa = PBXFileReference; lastKnownFileType = text; name = shader.glsl; path = ../../../system_data/original/system/shader.glsl; sourceTree = "<group>"; };
+		4F0AD81F21871BF1005CB8AC /* Zips.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Zips.h; sourceTree = "<group>"; };
+		4F0AD82021871BF1005CB8AC /* Zips.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Zips.cpp; sourceTree = "<group>"; };
 		4F58C5B31F78F1C500D36E3B /* Actor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Actor.cpp; sourceTree = "<group>"; };
 		4F58C5B41F78F1C500D36E3B /* Actor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Actor.h; sourceTree = "<group>"; };
 		4F58C5B51F78F1C500D36E3B /* Box9Sprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Box9Sprite.cpp; sourceTree = "<group>"; };
@@ -554,6 +558,8 @@
 		4F58C5D81F78F1C600D36E3B /* core */ = {
 			isa = PBXGroup;
 			children = (
+				4F0AD82021871BF1005CB8AC /* Zips.cpp */,
+				4F0AD81F21871BF1005CB8AC /* Zips.h */,
 				4F58C5E91F78F1C600D36E3B /* file.cpp */,
 				4F58C5EA1F78F1C600D36E3B /* file.h */,
 				4F58C5EB1F78F1C600D36E3B /* FileSystem.cpp */,
@@ -968,6 +974,7 @@
 				4F58C7A61F78F1C600D36E3B /* Tween.h in Headers */,
 				4F58C7921F78F1C600D36E3B /* SingleResAnim.h in Headers */,
 				4F58C75A1F78F1C600D36E3B /* Material.h in Headers */,
+				4F0AD82121871BF2005CB8AC /* Zips.h in Headers */,
 				4F58C71E1F78F1C600D36E3B /* Restorable.h in Headers */,
 				4F58C7B71F78F1C600D36E3B /* ImageUtils.h in Headers */,
 				4F58C7BC1F78F1C600D36E3B /* VisualStyle.h in Headers */,
@@ -1169,6 +1176,7 @@
 				4F58C7931F78F1C600D36E3B /* Serializable.cpp in Sources */,
 				4F58C7311F78F1C600D36E3B /* VideoDriver.cpp in Sources */,
 				4F58C6E11F78F1C600D36E3B /* AnimationFrame.cpp in Sources */,
+				4F0AD82221871BF2005CB8AC /* Zips.cpp in Sources */,
 				4F58C7281F78F1C600D36E3B /* Texture.cpp in Sources */,
 				4F58C72D1F78F1C600D36E3B /* UberShaderProgram.cpp in Sources */,
 				4F58C7831F78F1C600D36E3B /* ResAtlasPrebuilt.cpp in Sources */,

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F0AD82721871C20005CB8AC /* Zips.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F0AD82521871C20005CB8AC /* Zips.h */; };
+		4F0AD82821871C20005CB8AC /* Zips.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F0AD82621871C20005CB8AC /* Zips.cpp */; };
 		4F7EF4AA20062290004089D6 /* VisualStyle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F7EF39C20062286004089D6 /* VisualStyle.cpp */; };
 		4F7EF4AB20062290004089D6 /* HttpRequestTask.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F7EF39D20062286004089D6 /* HttpRequestTask.h */; };
 		4F7EF4AC20062290004089D6 /* Material.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4F7EF39E20062286004089D6 /* Material.cpp */; };
@@ -249,6 +251,8 @@
 
 /* Begin PBXFileReference section */
 		049B52BB1871EDE900EF3C66 /* liboxygine_macosx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liboxygine_macosx.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F0AD82521871C20005CB8AC /* Zips.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Zips.h; sourceTree = "<group>"; };
+		4F0AD82621871C20005CB8AC /* Zips.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Zips.cpp; sourceTree = "<group>"; };
 		4F7EF39C20062286004089D6 /* VisualStyle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VisualStyle.cpp; path = ../../../src/oxygine/VisualStyle.cpp; sourceTree = "<group>"; };
 		4F7EF39D20062286004089D6 /* HttpRequestTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HttpRequestTask.h; path = ../../../src/oxygine/HttpRequestTask.h; sourceTree = "<group>"; };
 		4F7EF39E20062286004089D6 /* Material.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Material.cpp; path = ../../../src/oxygine/Material.cpp; sourceTree = "<group>"; };
@@ -729,6 +733,8 @@
 		4F7EF40820062289004089D6 /* core */ = {
 			isa = PBXGroup;
 			children = (
+				4F0AD82621871C20005CB8AC /* Zips.cpp */,
+				4F0AD82521871C20005CB8AC /* Zips.h */,
 				4F7EF40920062289004089D6 /* ThreadDispatcher.cpp */,
 				4F7EF40A20062289004089D6 /* FileSystem.h */,
 				4F7EF40B20062289004089D6 /* oxygine.cpp */,
@@ -956,6 +962,7 @@
 				4F7EF4FF20062290004089D6 /* ResAtlasGeneric.h in Headers */,
 				4F7EF55420062290004089D6 /* VideoDriver.h in Headers */,
 				4F7EF52520062290004089D6 /* ios.h in Headers */,
+				4F0AD82721871C20005CB8AC /* Zips.h in Headers */,
 				4F7EF50C20062290004089D6 /* Node.h in Headers */,
 				4F7EF58720062290004089D6 /* closure_impl.h in Headers */,
 				4F7EF52820062290004089D6 /* HttpRequestCocoaTask.h in Headers */,
@@ -1157,6 +1164,7 @@
 				4F7EF51420062290004089D6 /* log.cpp in Sources */,
 				4F7EF52F20062290004089D6 /* FileSystem.cpp in Sources */,
 				4F7EF4F820062290004089D6 /* ResBuffer.cpp in Sources */,
+				4F0AD82821871C20005CB8AC /* Zips.cpp in Sources */,
 				4F7EF52420062290004089D6 /* ImageData.cpp in Sources */,
 				4F7EF4FD20062290004089D6 /* ResFont.cpp in Sources */,
 				4F7EF4CA20062290004089D6 /* Actor.cpp in Sources */,
