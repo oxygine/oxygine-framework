@@ -10,9 +10,13 @@ http://www.youtube.com/watch?v=d8eHHr_KHgQ
 	How to build and run with ANDROID STUDIO. Steps:
 	====================================================  
 
-- install JDK
 - install Android Studio
 - run Android Studio and import any project as Gradle from examples.
+- go to File->Settings->Appearance & Behavior->System Settings->Android SDK 
+- click to checkbox "Show Package Details"
+- select and install "Android SDK Platform 26" (under Android 8.0 (Oreo))
+- try to build
+- Android Studio will ask to download and install Android NDK. Intall it.
 - build and run!
 
 
