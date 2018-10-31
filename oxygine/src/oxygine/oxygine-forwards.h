@@ -134,6 +134,7 @@ namespace oxygine
     class SingleResAnim;
     class Sprite;
     class TextField;
+    class TextStyle;
     class ThreadDispatcher;
     class TouchEvent;
     class Tween;
