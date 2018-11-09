@@ -127,14 +127,6 @@ namespace oxygine
         return RectF(-getPosition(), s);
     }
 
-    /*
-    bool Stage::handleEvent(const EventState &es)
-    {
-        bool handled = Actor::handleEvent(es);
-        return handled;
-    }
-    */
-
     void Stage::render(const Color* clearColor, const Rect& viewport, const Matrix& view, const Matrix& proj)
     {
 

@@ -128,9 +128,33 @@ namespace oxygine
         return (timeMS)_fixedStep;
     }
 
+    float   Clock::doTickF()
+    {
+        if (_counter > 0)
+            return 0;
+
+        if (_srcTime + _fixedStep > _destTime)
+            return 0;
+
+        if (_fixedStep == 0)
+        {
+            float dt = _destTime - _srcTime;
+            _srcTime = _destTime;
+            return dt;
+        }
+
+        _srcTime += _fixedStep;
+        return _fixedStep;
+    }
+
     timeMS Clock::getTime() const
     {
         return (timeMS)_srcTime;
+    }
+
+    float Clock::getTimeF() const
+    {
+        return _srcTime;
     }
 
     int Clock::getPauseCounter() const
