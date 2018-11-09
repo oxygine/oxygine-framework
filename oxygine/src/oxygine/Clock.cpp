@@ -41,14 +41,29 @@ namespace oxygine
         return (int)_fixedStep;
     }
 
+    float   Clock::getFixedStepF() const
+    {
+        return _fixedStep / 1000.0f;
+    }
+
+    float   Clock::getLastDTF() const
+    {
+        return (float)(_lastDT/1000.0f);
+    }
+
     int Clock::getLastDT() const
     {
-        return _lastDT;
+        return (int)_lastDT;
     }
 
     timeMS  Clock::getLastUpdateTime() const
     {
-        return _lastUpdateTime;
+        return (timeMS)_lastUpdateTime;
+    }
+
+    float   Clock::getLastUpdateTimeF() const
+    {
+        return (float)(_lastUpdateTime / 1000.0f);
     }
 
     void Clock::setMultiplier(float m)
@@ -59,6 +74,11 @@ namespace oxygine
     void Clock::setFixedStep(float step)
     {
         _fixedStep = step;
+    }
+
+    void Clock::setFixedStepF(float step)
+    {
+        _fixedStep = step * 1000.0f;
     }
 
     void Clock::pause()
@@ -94,7 +114,7 @@ namespace oxygine
             dt = 100;
         if (dt < 0)
             dt = 1;
-
+         
         if (_counter > 0)
             dt = 0;//todo destTime == srcTime ??
 
@@ -102,7 +122,7 @@ namespace oxygine
         _destTime += dt;
 
         _lastUpdateTime = time;
-        _lastDT = static_cast<int>(dt);
+        _lastDT = dt;
 
         //if (_fixedStep > 0)
         //  printf("ticks: %d\n", int((_destTime - _srcTime)/_fixedStep));
@@ -138,13 +158,13 @@ namespace oxygine
 
         if (_fixedStep == 0)
         {
-            float dt = _destTime - _srcTime;
+            float dt = (float)(_destTime - _srcTime);
             _srcTime = _destTime;
-            return dt;
+            return dt / 1000.0f;
         }
 
         _srcTime += _fixedStep;
-        return _fixedStep;
+        return _fixedStep / 1000.0f;
     }
 
     timeMS Clock::getTime() const
@@ -154,7 +174,7 @@ namespace oxygine
 
     float Clock::getTimeF() const
     {
-        return _srcTime;
+        return (float)(_srcTime / 1000.0f);
     }
 
     int Clock::getPauseCounter() const

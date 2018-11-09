@@ -1079,7 +1079,7 @@ namespace oxygine
             float dt = _clock->doTickF();
             while (dt > 0.0f)
             {
-                us.dt = (timeMS)dt;
+                us.dt = (timeMS)(dt * 1000);
                 us.dtf = dt;
                 us.time = _clock->getTime();
                 us.timef = _clock->getTimeF();
