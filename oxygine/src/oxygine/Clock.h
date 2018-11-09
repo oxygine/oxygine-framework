@@ -12,6 +12,7 @@ namespace oxygine
         ~Clock();
 
         timeMS  getTime() const;
+        float   getTimeF() const;
         int     getPauseCounter() const;
         int     getFixedStep() const;
         int     getLastDT() const;
@@ -27,6 +28,7 @@ namespace oxygine
 
         void    update(timeMS globalTime = -1);
         timeMS  doTick();
+        float   doTickF();
 
         std::string dump() const;
 
