@@ -119,6 +119,7 @@ namespace oxygine
         {
             UpdateState us;
             us.dt = deltaTime;
+            us.timef = deltaTime / 1000.0f;
 
             update(*_client, us);
         }
