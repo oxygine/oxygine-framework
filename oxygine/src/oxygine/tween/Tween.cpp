@@ -30,10 +30,13 @@ namespace oxygine
     void Tween::init(timeMS duration, int loops, bool twoSides, timeMS delay, EASE ease)
     {
         _duration = duration;
+        _durationF = duration / 1000.0f;
+        _delay  = delay;
+        _delayF = delay / 1000.0f;
+
         _ease = ease;
         _loops = loops;
         _twoSides = twoSides;
-        _delay = delay;
 
         if (_duration <= 0)
         {
@@ -45,10 +48,13 @@ namespace oxygine
 	void Tween::init2(const TweenOptions& opt)
 	{
 		_duration = opt._duration;
+        _durationF = opt._duration / 1000.0f;
+        _delay = opt._delay;
+        _delayF = opt._delay / 1000.0f;
+
 		_ease = opt._ease;
 		_loops = opt._loops;
-		_twoSides = opt._twoSides;
-		_delay = opt._delay;
+		_twoSides = opt._twoSides;		
 		_detach = opt._detach;
 		_globalEase = opt._globalEase;
 		_cbDone = opt._callback;
@@ -71,6 +77,18 @@ namespace oxygine
     }
 
 
+
+    void Tween::setDelay(timeMS delay)
+    {
+        _delay = delay;
+        _delayF = delay / 1000.0f;
+    }
+
+    void Tween::setDuration(timeMS duration)
+    {
+        _duration = duration;
+        _durationF = duration / 1000.0f;
+    }
 
     float Tween::_calcEase(float v)
     {
@@ -119,6 +137,8 @@ namespace oxygine
         {
             UpdateState us;
             us.dt = deltaTime;
+            us.dtf = deltaTime / 1000.0f;
+            us.time = deltaTime;
             us.timef = deltaTime / 1000.0f;
 
             update(*_client, us);
@@ -142,12 +162,12 @@ namespace oxygine
 
     void Tween::update(Actor& actor, const UpdateState& us)
     {
-        _elapsed += us.dt;
+        _elapsed += us.dtf;
         switch (_status)
         {
             case status_delayed:
             {
-                if (_elapsed >= _delay)
+                if (_elapsed >= _delayF)
                 {
                     _status = status_started;
                     _start(*_client);
@@ -158,17 +178,17 @@ namespace oxygine
             {
                 if (_duration)
                 {
-                    timeMS localElapsed = _elapsed - _delay;
+                    float localElapsed = _elapsed - _delayF;
 					
 					if (_globalEase != ease_linear)
 					{
-						float p = localElapsed / float(_duration * _loops);						
-						timeMS nv = static_cast<timeMS>(calcEase(_globalEase, std::min(p, 1.0f)) * _duration * _loops);
+						float p = localElapsed / (float(_durationF * _loops));
+						float nv = calcEase(_globalEase, std::min(p, 1.0f)) * _durationF * _loops;
 						localElapsed = nv;
 					}
 
-					int loopsDone = localElapsed / _duration;					
-					_percent = _calcEase(((float)(localElapsed - loopsDone * _duration)) / _duration);
+					int loopsDone = (int)(localElapsed / _durationF);
+					_percent = _calcEase(((float)(localElapsed - loopsDone * _durationF)) / _durationF);
 
 					while(_loopsDone < loopsDone)
 					{
