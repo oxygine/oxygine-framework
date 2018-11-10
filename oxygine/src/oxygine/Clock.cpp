@@ -182,6 +182,11 @@ namespace oxygine
         return _counter;
     }
 
+    bool Clock::isPaused() const
+    {
+        return _counter != 0;
+    }
+
     std::string Clock::dump() const
     {
         std::stringstream stream;

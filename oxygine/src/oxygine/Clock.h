@@ -21,6 +21,7 @@ namespace oxygine
         /**returns current clock time in seconds*/
         float   getTimeF() const;
         int     getPauseCounter() const;
+        bool    isPaused() const;
         
         float   getFixedStepF() const;
         float   getLastDTF() const;
