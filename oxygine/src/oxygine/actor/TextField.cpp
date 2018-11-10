@@ -466,12 +466,22 @@ namespace oxygine
         const char* fnt = node.attribute("font").as_string(0);
         if (fnt && *fnt)
         {
-            ResFont* font = data->factory->getResFont(fnt);
+            const ResFont* font = data->factory->getResFont(fnt);
             if (font)
                 _style.font = font;
         }
 
         needRebuild();
-        setText(node.attribute("text").as_string());
+
+        std::string txt;
+        const char *str = node.attribute("text").as_string();
+        if (data->factory->getString(str, txt))
+        {
+            setHtmlText(txt);
+        }        
+        else
+        {
+            setText(str);
+        }
     }
 }
