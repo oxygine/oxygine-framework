@@ -48,7 +48,7 @@ namespace oxygine
 
     float   Clock::getLastDTF() const
     {
-        return (float)(_lastDT/1000.0f);
+        return (float)(_lastDT / 1000.0f);
     }
 
     int Clock::getLastDT() const
@@ -114,7 +114,7 @@ namespace oxygine
             dt = 100;
         if (dt < 0)
             dt = 1;
-         
+
         if (_counter > 0)
             dt = 0;//todo destTime == srcTime ??
 

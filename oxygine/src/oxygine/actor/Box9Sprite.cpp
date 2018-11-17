@@ -53,14 +53,14 @@ namespace oxygine
 
         RectF rect;
         rect.pos = Vector2(_guideX[0], _guideY[0]);
-        
+
         Vector2 rb;
         rb.x = getWidth() - (_frame.getWidth() - _guideX[1]);
         rb.y = getHeight() - (_frame.getHeight() - _guideY[1]);
 
         rect.setSize(rb - rect.pos);
 
-        return rect;                             
+        return rect;
     }
 
     void Box9Sprite::setVerticalMode(StretchMode m)

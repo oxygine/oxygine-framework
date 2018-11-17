@@ -6,7 +6,7 @@ namespace oxygine
     class UpdateState
     {
     public:
-        UpdateState(): time(0), dt(0), iteration(0), dtf(0){}
+        UpdateState(): time(0), dt(0), iteration(0), dtf(0) {}
 
         /**local time in  milliseconds*/
         timeMS time;

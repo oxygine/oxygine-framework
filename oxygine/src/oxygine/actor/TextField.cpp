@@ -474,11 +474,11 @@ namespace oxygine
         needRebuild();
 
         std::string txt;
-        const char *str = node.attribute("text").as_string();
+        const char* str = node.attribute("text").as_string();
         if (data->factory->getString(str, txt))
         {
             setHtmlText(txt);
-        }        
+        }
         else
         {
             setText(str);

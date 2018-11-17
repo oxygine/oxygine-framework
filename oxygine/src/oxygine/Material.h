@@ -107,5 +107,5 @@ namespace oxygine
 
         spSTDMaterial cloneDefaultShader() const;
     };
-    
+
 }

@@ -11,8 +11,8 @@ namespace oxygine
 {
     namespace file
     {
-       
-        ZipFileSystem::ZipFileSystem() : FileSystem(true) 
+
+        ZipFileSystem::ZipFileSystem() : FileSystem(true)
         {
             _zips = new Zips();
         }

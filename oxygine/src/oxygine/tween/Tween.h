@@ -179,7 +179,7 @@ namespace oxygine
         timeMS _duration;
         timeMS _delay;
 
-        float _durationF;        
+        float _durationF;
         float _delayF;
 
 
