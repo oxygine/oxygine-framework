@@ -169,7 +169,7 @@ void example_init()
 
     //Load resources in xml file
     resources.loadXML("xmls/res.xml");
-    
+
 
     Test::instance = new TestActor;
     Test::instance->attachTo(getStage());

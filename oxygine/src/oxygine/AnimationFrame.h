@@ -53,10 +53,15 @@ namespace oxygine
         const Diffuse&  getDiffuse() const {return _diffuse;}
         const HitTestData& getHitTestData()const { return _hittest; }
 
+        spNativeTexture getBaseTexture() const;
+        spNativeTexture getAlphaTexture() const;
+
         void            setSrcRect(const RectF& r) {_srcRect = r;}
         void            setDestRect(const RectF& r) {_destRect = r;}
         void            setResAnim(ResAnim* rs) {_resAnim = rs;}
         void            setDiffuse(const Diffuse& d) { _diffuse = d; }
+        void            setBaseTexture(spNativeTexture t);
+        void            setAlphaTexture(spNativeTexture t);
         void            setSize(const Vector2& size) {_frameSize = size;}
         void            setSize(float w, float h) { setSize(Vector2(w, h)); }
         void            setHitTestData(const HitTestData& ad) { _hittest = ad; }

@@ -36,8 +36,8 @@ public:
     void updateText(string id, string txt);
     virtual void clicked(string id) {}
     virtual void toggleClicked(string id, const toggle* data) {}
-    
-        
+
+
     void notify(string text, int time = 400);
 
 protected:
@@ -53,8 +53,8 @@ protected:
     spActor _ui;
 
     float _x;
-    float _y;    
-    
+    float _y;
+
     enum {MAX_NOTIFIES = 8};
     int _notifies[MAX_NOTIFIES];
 };
