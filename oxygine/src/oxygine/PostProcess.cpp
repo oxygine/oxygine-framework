@@ -96,6 +96,8 @@ namespace oxygine
         shaderBlit = new ShaderProgramGL(ShaderProgramGL::createProgram(vs, fs, decl, true));
         driver->setShaderProgram(shaderBlit);
         driver->setUniformInt("s_texture", 0);
+
+        rsCache().resetShader();
     }
 
     void PostProcess::freeShaders()
@@ -320,6 +322,8 @@ namespace oxygine
     {
         if (!postProcessItems.empty())
         {
+            rsCache().checkTextures();
+
             _renderingPP = true;
 
             IVideoDriver* driver = IVideoDriver::instance;
@@ -329,6 +333,8 @@ namespace oxygine
 
             ShaderProgram* sp = driver->getShaderProgram();
 
+            if (postProcessItems.size() == 2)
+                int q = 0;
             for (size_t i = 0; i < postProcessItems.size(); ++i)
             {
                 PPTask* p = postProcessItems[i];
@@ -341,6 +347,7 @@ namespace oxygine
             if (sp)
                 driver->setShaderProgram(sp);
             _renderingPP = false;
+            rsCache().reset();
         }
 
         _rtm.update();
@@ -363,7 +370,7 @@ namespace oxygine
 
         driver->setViewport(destRect);
 
-        driver->setTexture(0, srcTexture);
+        rsCache().setTexture(0, srcTexture);
 
 
         vertexPCT2 v[4];
@@ -377,7 +384,7 @@ namespace oxygine
 
 
         driver->draw(IVideoDriver::PT_TRIANGLE_STRIP, decl, v, sizeof(v));
-        driver->setTexture(0, 0);
+        rsCache().setTexture(0, 0);
     }
 
     PostProcess::PostProcess(const PostProcessOptions& opt) : _options(opt), _format(TF_R4G4B4A4), _extend(2, 2)

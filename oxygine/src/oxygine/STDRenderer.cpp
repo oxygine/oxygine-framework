@@ -50,11 +50,10 @@ namespace oxygine
     void RenderStateCache::reset()
     {
         resetTextures();
-
+        resetShader();
         _blend = blend_disabled;
         if (_driver)
             _driver->setState(IVideoDriver::STATE_BLEND, 0);
-        _program = 0;
     }
 
     void RenderStateCache::resetTextures()
@@ -63,20 +62,33 @@ namespace oxygine
             _textures[i] = 0;
     }
 
+    void RenderStateCache::resetShader()
+    {
+        _program = 0;
+    }
+
+    void RenderStateCache::checkTextures()
+    {
+#ifdef OX_DEBUG
+        for (int i = 0; i < MAX_TEXTURES; ++i)
+        {
+            if (_textures[i] && _driver == IVideoDriver::instance)
+            {
+                GLint whichID;
+                oxglActiveTexture(GL_TEXTURE0 + i);
+                glGetIntegerv(GL_TEXTURE_BINDING_2D, &whichID);
+
+                OX_ASSERT(_textures[i]->getHandle() == (nativeTextureHandle)(size_t)whichID);
+            }
+        }
+#endif
+    }
+
     void RenderStateCache::setTexture(int sampler, const spNativeTexture& t)
     {
         OX_ASSERT(sampler < MAX_TEXTURES);
 
-#ifdef OX_DEBUG
-        if (_textures[sampler] && _driver == IVideoDriver::instance)
-        {
-            GLint whichID;
-            oxglActiveTexture(GL_TEXTURE0 + sampler);
-            glGetIntegerv(GL_TEXTURE_BINDING_2D, &whichID);
-
-            OX_ASSERT(_textures[sampler]->getHandle() == (nativeTextureHandle)(size_t)whichID);
-        }
-#endif
+        checkTextures();
 
         if (_textures[sampler] == t)
             return;
@@ -112,11 +124,22 @@ namespace oxygine
 
     bool RenderStateCache::setShader(ShaderProgram* prog)
     {
+#ifdef OX_DEBUG
+        if (_program && _driver == IVideoDriver::instance)
+        {
+            GLint whichID;
+            glGetIntegerv(GL_CURRENT_PROGRAM, &whichID);
+
+            OX_ASSERT((size_t)_program->getID() == (size_t)whichID);
+        }
+#endif
+
         if (_program == prog)
             return false;
 
         _program = prog;
-        _driver->setShaderProgram(prog);
+        if (prog)
+            _driver->setShaderProgram(prog);
         return true;
     }
 
@@ -289,7 +312,7 @@ namespace oxygine
 
     void STDRenderer::setShader(ShaderProgram* prog)
     {
-        if (rsCache().setShader(prog))
+        if (rsCache().setShader(prog)) {}
         {
             //_driver->setUniform("mat", _vp);
             shaderProgramChanged();

@@ -21,11 +21,14 @@ namespace oxygine
 
         void reset();
         void resetTextures();
+        void resetShader();
+
+        void checkTextures();
 
         void changeDriver(IVideoDriver* d);//used for DebugActor
 
     protected:
-        enum { MAX_TEXTURES = 8 };
+        enum { MAX_TEXTURES = 5 };
 
         spNativeTexture _textures[MAX_TEXTURES];
         ShaderProgram*  _program;
