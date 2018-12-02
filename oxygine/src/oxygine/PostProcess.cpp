@@ -318,6 +318,11 @@ namespace oxygine
         return _renderingPP;
     }
 
+    int getNumPostProcessItem()
+    {
+        return (int)postProcessItems.size();
+    }
+
     void updatePortProcessItems()
     {
         if (!postProcessItems.empty())
@@ -335,7 +340,8 @@ namespace oxygine
 
             if (postProcessItems.size() == 2)
                 int q = 0;
-            for (size_t i = 0; i < postProcessItems.size(); ++i)
+            //for (size_t i = 0; i < postProcessItems.size(); ++i)
+            for (int i = postProcessItems.size() - 1; i >= 0 ; --i)
             {
                 PPTask* p = postProcessItems[i];
                 p->renderPP();

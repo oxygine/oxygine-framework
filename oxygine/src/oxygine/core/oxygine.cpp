@@ -435,7 +435,8 @@ namespace oxygine
             Resources::registerResourceType(ResStarlingAtlas::create, "starling");
 
             STDRenderer::instance = new STDRenderer;
-            STDRenderDelegate::instance = new STDRenderDelegate;
+            if (!STDRenderDelegate::instance)
+                STDRenderDelegate::instance = new STDRenderDelegate;
             Material::null       = new NullMaterialX;
             Material::current = Material::null;
 

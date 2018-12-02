@@ -130,4 +130,5 @@ namespace oxygine
     void addPostProcessItem(PPTask*);
     void removePostProcessItem(PPTask*);
     void clearPostProcessItems();
+    int getNumPostProcessItem();
 }

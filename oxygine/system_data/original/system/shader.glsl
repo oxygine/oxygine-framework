@@ -60,7 +60,7 @@ lowp vec4 get_base()
 #endif
 
 #ifdef SEPARATE_ALPHA_UV2
-	base.a = texture2D(alpha_texture, result_uv2).a;	
+	base.a = base.a * texture2D(alpha_texture, result_uv2).a;	
 #endif
 
 #ifdef MODIFY_BASE_PRE
