@@ -3,7 +3,7 @@
 #include "vertex.h"
 #include "gl/ShaderProgramGL.h"
 #include "gl/VideoDriverGLES20.h"
-#include "STDRenderer.h"
+#include "../STDRenderer.h"
 
 namespace oxygine
 {
