@@ -421,9 +421,9 @@ namespace oxygine
         checkDrawBatch();
     }
 
-    void STDRenderer::addIndices(const unsigned short *data, unsigned int bufSize)
+    void STDRenderer::addIndices(const unsigned short* data, unsigned int bufSize)
     {
-        const unsigned char *end = (const unsigned char*)data + bufSize;
+        const unsigned char* end = (const unsigned char*)data + bufSize;
         _indicesData.insert(_indicesData.end(), (const unsigned short*)data, (const unsigned short*)end);
     }
 
@@ -552,7 +552,7 @@ namespace oxygine
     }
 
 
-    void STDRenderer::swapIndicesData(std::vector<unsigned short> &data)
+    void STDRenderer::swapIndicesData(std::vector<unsigned short>& data)
     {
         std::swap(data, _indicesData);
     }
@@ -633,8 +633,8 @@ namespace oxygine
                 return;
 
             _driver->draw(IVideoDriver::PT_TRIANGLES, _vdecl,
-                &_verticesData.front(), (unsigned int)_verticesData.size(),
-                &_indicesData.front(), (unsigned int)_indicesData.size());
+                          &_verticesData.front(), (unsigned int)_verticesData.size(),
+                          &_indicesData.front(), (unsigned int)_indicesData.size());
 
             _verticesData.clear();
             _indicesData.clear();
@@ -646,11 +646,11 @@ namespace oxygine
                 return;
 
             _driver->draw(IVideoDriver::PT_TRIANGLES, _vdecl,
-                &_verticesData.front(), (unsigned int)_verticesData.size(),
-                &STDRenderer::indices16.front(), (unsigned int)indices);
+                          &_verticesData.front(), (unsigned int)_verticesData.size(),
+                          &STDRenderer::indices16.front(), (unsigned int)indices);
 
             _verticesData.clear();
-        }        
+        }
     }
 
 
