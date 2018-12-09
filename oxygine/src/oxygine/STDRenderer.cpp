@@ -37,7 +37,7 @@ namespace oxygine
         return r;
     }
 
-    RenderStateCache::RenderStateCache(): _blend(blend_disabled), _program(0)
+    RenderStateCache::RenderStateCache() : _blend(blend_disabled), _program(0)
     {
         reset();
     }
@@ -392,10 +392,16 @@ namespace oxygine
         _vdecl = decl;
     }
 
-    void STDRenderer::addVertices(const void* data, unsigned int size)
+    void STDRenderer::addVertices(const void* data, unsigned int bufSize)
     {
-        xaddVertices(data, size);
+        xaddVertices(data, bufSize);
         checkDrawBatch();
+    }
+
+    void STDRenderer::addIndices(const unsigned short *data, unsigned int bufSize)
+    {
+        const unsigned char *end = (const unsigned char*)data + bufSize;
+        _indicesData.insert(_indicesData.end(), (const unsigned short*)data, (const unsigned short*)end);
     }
 
     void STDRenderer::xaddVertices(const void* data, unsigned int size)
@@ -472,7 +478,7 @@ namespace oxygine
 
 
 
-    STDRenderer::STDRenderer(IVideoDriver* driver) : _driver(driver), _vdecl(0), _uberShader(0)
+    STDRenderer::STDRenderer(IVideoDriver* driver) : _driver(driver), _vdecl(0), _uberShader(0), _useCustomIndices(false)
     {
         if (!driver)
             driver = IVideoDriver::instance;
@@ -522,6 +528,11 @@ namespace oxygine
         std::swap(data, _verticesData);
     }
 
+
+    void STDRenderer::swapIndicesData(std::vector<unsigned short> &data)
+    {
+        std::swap(data, _indicesData);
+    }
 
     void STDRenderer::setTransform(const Transform& tr)
     {
@@ -592,15 +603,31 @@ namespace oxygine
 
     void STDRenderer::flush()
     {
-        size_t indices = (_verticesData.size() / sizeof(vertexPCT2) * 3) / 2;
-        if (!indices)
-            return;
+        if (_useCustomIndices)
+        {
+            size_t indices = _indicesData.size();
+            if (!indices)
+                return;
 
-        _driver->draw(IVideoDriver::PT_TRIANGLES, _vdecl,
-                      &_verticesData.front(), (unsigned int)_verticesData.size(),
-                      &STDRenderer::indices16.front(), (unsigned int)indices);
+            _driver->draw(IVideoDriver::PT_TRIANGLES, _vdecl,
+                &_verticesData.front(), (unsigned int)_verticesData.size(),
+                &_indicesData.front(), (unsigned int)_indicesData.size());
 
-        _verticesData.clear();
+            _verticesData.clear();
+            _indicesData.clear();
+        }
+        else
+        {
+            size_t indices = (_verticesData.size() / sizeof(vertexPCT2) * 3) / 2;
+            if (!indices)
+                return;
+
+            _driver->draw(IVideoDriver::PT_TRIANGLES, _vdecl,
+                &_verticesData.front(), (unsigned int)_verticesData.size(),
+                &STDRenderer::indices16.front(), (unsigned int)indices);
+
+            _verticesData.clear();
+        }        
     }
 
 
@@ -615,6 +642,15 @@ namespace oxygine
     void STDRenderer::setBaseShaderFlags(unsigned int fl)
     {
         _baseShaderFlags = fl;
+    }
+
+    void STDRenderer::setUseCustomIndices(bool customIndicesEnabled)
+    {
+        if (_useCustomIndices != customIndicesEnabled)
+            flush();
+        _useCustomIndices = customIndicesEnabled;
+
+        maxVertices = _useCustomIndices ? -1 : indices16.size() / 3 * 2;
     }
 
 }

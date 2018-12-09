@@ -91,6 +91,7 @@ namespace oxygine
         void setVertexDeclaration(const VertexDeclaration* decl);
         void setUberShaderProgram(UberShaderProgram* pr);
         void setBaseShaderFlags(unsigned int fl);
+        void setUseCustomIndices(bool customindicesEnabled);
 
         /**Sets World transformation.*/
         void setTransform(const Transform& world);
@@ -107,8 +108,8 @@ namespace oxygine
         /**Draws existing batch immediately.*/
         void flush();
 
-        virtual void addVertices(const void* data, unsigned int size);
-
+        virtual void addVertices(const void* data, unsigned int bufSize);
+        void addIndices(const unsigned short *data, unsigned int bufSize);
 
         //debug utils
 #ifdef OXYGINE_DEBUG_T2P
@@ -117,6 +118,8 @@ namespace oxygine
 
         void swapVerticesData(std::vector<unsigned char>& data);
         void swapVerticesData(STDRenderer& r);
+
+        void swapIndicesData(std::vector<unsigned short> &data);
 
         OXYGINE_DEPRECATED
         void setViewProjTransform(const Matrix& viewProj);
@@ -140,6 +143,9 @@ namespace oxygine
         void checkDrawBatch();
 
         std::vector<unsigned char> _verticesData;
+        std::vector<unsigned short> _indicesData;
+
+        bool _useCustomIndices;
 
         const VertexDeclaration* _vdecl;
 
