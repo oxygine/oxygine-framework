@@ -1076,15 +1076,17 @@ namespace oxygine
             us.iteration = 0;
             _clock->update();
 
-            timeMS dt = _clock->doTick();
-            while (dt > 0)
+            float dt = _clock->doTickF();
+            while (dt > 0.0f)
             {
-                us.dt = dt;
+                us.dt = (timeMS)(dt * 1000);
+                us.dtf = dt;
                 us.time = _clock->getTime();
+                us.timef = _clock->getTimeF();
 
                 internalUpdate(us);
 
-                dt = _clock->doTick();
+                dt = _clock->doTickF();
                 us.iteration += 1;
             }
         }

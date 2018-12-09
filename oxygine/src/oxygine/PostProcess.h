@@ -19,18 +19,20 @@ namespace oxygine
             flag_fixedBounds = 1 << 3,
         };
 
-        PostProcessOptions(int flags = 0) : _flags(flags), _downscale(1), _clearColor(0, 0, 0, 0) {}
+        PostProcessOptions(int flags = 0) : _flags(flags), _downscale(1), _clearColor(0, 0, 0, 0), _format(TF_R4G4B4A4) {}
         PostProcessOptions& fullscreen(bool enable = true) { _flags = enable ? (_flags | flag_fullscreen) : (_flags  & (~flag_fullscreen)); return *this; }
         PostProcessOptions& singleRender(bool enable = true) { _flags = enable ? (_flags | flag_singleR2T) : (_flags  & (~flag_singleR2T)); return *this; }
         //loops -(2, 3, 4, ...),  final size: 2^loops
         PostProcessOptions& downscale(int loops = 2) { _downscale = loops; return *this; }
         PostProcessOptions& clear(const Color& c) { _clearColor = c; return *this; }
         PostProcessOptions& fixedBounds(const RectF& b) { _fixedBounds = b; _flags |= flag_fixedBounds; return *this; }
+        PostProcessOptions& format(TextureFormat tf) { _format = tf; return *this; }
 
         int _flags;
         int _downscale;
         RectF _fixedBounds;
         Color _clearColor;
+        TextureFormat _format;
     };
 
 
@@ -41,6 +43,9 @@ namespace oxygine
         static ShaderProgram* shaderBlurV;
         static ShaderProgram* shaderBlurH;
         static ShaderProgram* shaderBlit;
+
+        static ShaderProgram* shaderBlurV2;
+        static ShaderProgram* shaderBlurH2;
 
         static void initShaders();
         static void freeShaders();
@@ -118,7 +123,7 @@ namespace oxygine
         free _free;
     };
 
-    void pass(spNativeTexture srcTexture, const Rect& srcRect, spNativeTexture destTexture, const Rect& destRect, const Color& color = Color::White);
+    void pass(spNativeTexture srcTexture, const Rect& srcRect, spNativeTexture destTexture, const Rect& destRect, const Color& color = Color(Color::White), const Color& clearColor = Color(0));
 
     RenderTargetsManager& getRTManager();
 
@@ -127,4 +132,5 @@ namespace oxygine
     void addPostProcessItem(PPTask*);
     void removePostProcessItem(PPTask*);
     void clearPostProcessItems();
+    int getNumPostProcessItem();
 }

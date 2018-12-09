@@ -82,7 +82,6 @@ namespace oxygine
     DECLARE_SMART(Object, spObject);
     DECLARE_SMART(Polygon, spPolygon);
     DECLARE_SMART(ProgressBar, spProgressBar);
-    DECLARE_SMART(RenderTexture, spRenderTexture);
     DECLARE_SMART(ResAnim, spResAnim);
     DECLARE_SMART(ResBuffer, spResBuffer);
     DECLARE_SMART(ResFont, spResFont);
@@ -107,7 +106,6 @@ namespace oxygine
     class CreateResourceContext;
     class DebugActor;
     class Event;
-    class EventState;
     class Font;
     class IVideoDriver;
     class Image;
@@ -134,6 +132,7 @@ namespace oxygine
     class SingleResAnim;
     class Sprite;
     class TextField;
+    class TextStyle;
     class ThreadDispatcher;
     class TouchEvent;
     class Tween;

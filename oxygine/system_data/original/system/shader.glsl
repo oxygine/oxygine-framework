@@ -3,13 +3,17 @@ varying lowp vec4 result_color;
 varying mediump vec2 result_uv;
 varying mediump vec2 result_uv2;
 
+
 #ifdef VS
 uniform highp mat4 mat;
 uniform mediump vec3 msk[4];
 attribute vec3 position;
 attribute vec4 color;
 attribute vec2 uv;
+
+#ifdef SAMPLER_UV2
 attribute vec2 uv2;
+#endif
 
 void program_main_vs()
 {
@@ -17,12 +21,17 @@ void program_main_vs()
 
 	result_color = color;
 	result_uv = uv;
+
 #ifdef MASK
 	mediump float a = dot(msk[0], vec3(1.0, position.x, position.y));
 	mediump float b = dot(msk[1], vec3(1.0, position.x, position.y));
 
 	result_uv2.x = dot(msk[2], vec3(1.0, a, b));
 	result_uv2.y = dot(msk[3], vec3(1.0, a, b));
+#endif
+
+#ifdef SAMPLER_UV2
+	 result_uv2 = uv2;
 #endif
 }
 
@@ -48,6 +57,10 @@ lowp vec4 get_base()
 	
 #ifdef SEPARATE_ALPHA
 	base.a = texture2D(alpha_texture, result_uv).r;	
+#endif
+
+#ifdef SEPARATE_ALPHA_UV2
+	base.a = base.a * texture2D(alpha_texture, result_uv2).a;	
 #endif
 
 #ifdef MODIFY_BASE_PRE

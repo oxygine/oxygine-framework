@@ -14,6 +14,8 @@ namespace oxygine
 {
     ShaderProgram* PostProcess::shaderBlurV = 0;
     ShaderProgram* PostProcess::shaderBlurH = 0;
+    ShaderProgram* PostProcess::shaderBlurV2 = 0;
+    ShaderProgram* PostProcess::shaderBlurH2 = 0;
     ShaderProgram* PostProcess::shaderBlit = 0;
     bool _ppBuilt = false;
 
@@ -38,18 +40,22 @@ namespace oxygine
         file::buffer vs_h;
         file::buffer vs_v;
         file::buffer fs_blur;
+        file::buffer fs_blur2;
         zp.read("system/pp_hblur_vs.glsl", vs_h);
         zp.read("system/pp_vblur_vs.glsl", vs_v);
         zp.read("system/pp_rast_fs.glsl", fs_blur);
+        zp.read("system/pp_rast_fs2.glsl", fs_blur2);
 
         vs_h.push_back(0);
         vs_v.push_back(0);
         fs_blur.push_back(0);
+        fs_blur2.push_back(0);
 
 
         unsigned int h = ShaderProgramGL::createShader(GL_VERTEX_SHADER, (const char*)&vs_h.front());
         unsigned int v = ShaderProgramGL::createShader(GL_VERTEX_SHADER, (const char*)&vs_v.front());
         unsigned int ps = ShaderProgramGL::createShader(GL_FRAGMENT_SHADER, (const char*)&fs_blur.front());
+        unsigned int ps2 = ShaderProgramGL::createShader(GL_FRAGMENT_SHADER, (const char*)&fs_blur2.front());
 
 
         shaderBlurV = new ShaderProgramGL(ShaderProgramGL::createProgram(v, ps, decl));
@@ -61,9 +67,19 @@ namespace oxygine
         driver->setUniformInt("s_texture", 0);
 
 
+        shaderBlurV2 = new ShaderProgramGL(ShaderProgramGL::createProgram(v, ps2, decl));
+        driver->setShaderProgram(shaderBlurV2);
+        driver->setUniformInt("s_texture", 0);
+
+        shaderBlurH2 = new ShaderProgramGL(ShaderProgramGL::createProgram(h, ps2, decl));
+        driver->setShaderProgram(shaderBlurH2);
+        driver->setUniformInt("s_texture", 0);
+
+
         oxglDeleteShader(h);
         oxglDeleteShader(v);
         oxglDeleteShader(ps);
+        oxglDeleteShader(ps2);
 
         file::buffer vs_blit;
         file::buffer fs_blit;
@@ -80,6 +96,8 @@ namespace oxygine
         shaderBlit = new ShaderProgramGL(ShaderProgramGL::createProgram(vs, fs, decl, true));
         driver->setShaderProgram(shaderBlit);
         driver->setUniformInt("s_texture", 0);
+
+        rsCache().resetShader();
     }
 
     void PostProcess::freeShaders()
@@ -91,6 +109,12 @@ namespace oxygine
         shaderBlurH = 0;
 
         delete shaderBlurV;
+        shaderBlurV = 0;
+
+        delete shaderBlurH2;
+        shaderBlurH = 0;
+
+        delete shaderBlurV2;
         shaderBlurV = 0;
     }
 
@@ -294,10 +318,17 @@ namespace oxygine
         return _renderingPP;
     }
 
+    int getNumPostProcessItem()
+    {
+        return (int)postProcessItems.size();
+    }
+
     void updatePortProcessItems()
     {
         if (!postProcessItems.empty())
         {
+            rsCache().checkTextures();
+
             _renderingPP = true;
 
             IVideoDriver* driver = IVideoDriver::instance;
@@ -307,7 +338,10 @@ namespace oxygine
 
             ShaderProgram* sp = driver->getShaderProgram();
 
-            for (size_t i = 0; i < postProcessItems.size(); ++i)
+            if (postProcessItems.size() == 2)
+                int q = 0;
+            //for (size_t i = 0; i < postProcessItems.size(); ++i)
+            for (int i = postProcessItems.size() - 1; i >= 0 ; --i)
             {
                 PPTask* p = postProcessItems[i];
                 p->renderPP();
@@ -319,6 +353,7 @@ namespace oxygine
             if (sp)
                 driver->setShaderProgram(sp);
             _renderingPP = false;
+            rsCache().reset();
         }
 
         _rtm.update();
@@ -331,17 +366,17 @@ namespace oxygine
     }
 
 
-    void pass(spNativeTexture srcTexture, const Rect& srcRect, spNativeTexture destTexture, const Rect& destRect, const Color& color)
+    void pass(spNativeTexture srcTexture, const Rect& srcRect, spNativeTexture destTexture, const Rect& destRect, const Color& color, const Color& clearColor)
     {
         IVideoDriver* driver = IVideoDriver::instance;
 
         const VertexDeclarationGL* decl = static_cast<const VertexDeclarationGL*>(driver->getVertexDeclaration(vertexPCT2::FORMAT));
         driver->setRenderTarget(destTexture);
-        driver->clear(0);
+        driver->clear(clearColor);
 
         driver->setViewport(destRect);
 
-        driver->setTexture(0, srcTexture);
+        rsCache().setTexture(0, srcTexture);
 
 
         vertexPCT2 v[4];
@@ -355,10 +390,10 @@ namespace oxygine
 
 
         driver->draw(IVideoDriver::PT_TRIANGLE_STRIP, decl, v, sizeof(v));
-        driver->setTexture(0, 0);
+        rsCache().setTexture(0, 0);
     }
 
-    PostProcess::PostProcess(const PostProcessOptions& opt) : _options(opt), _format(TF_R4G4B4A4), _extend(2, 2)
+    PostProcess::PostProcess(const PostProcessOptions& opt) : _options(opt), _format(opt._format), _extend(2, 2)
     {
     }
 
