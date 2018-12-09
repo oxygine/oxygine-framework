@@ -358,7 +358,7 @@ namespace oxygine
         driver->setTexture(0, 0);
     }
 
-    PostProcess::PostProcess(const PostProcessOptions& opt) : _options(opt), _format(TF_R4G4B4A4), _extend(2, 2)
+    PostProcess::PostProcess(const PostProcessOptions& opt) : _options(opt), _format(opt._format), _extend(2, 2)
     {
     }
 
