@@ -64,6 +64,26 @@ namespace oxygine
         return f;
     }
 
+    spNativeTexture AnimationFrame::getBaseTexture() const
+    {
+        return _diffuse.base;
+    }
+
+    spNativeTexture AnimationFrame::getAlphaTexture() const
+    {
+        return _diffuse.alpha;
+    }
+
+    void AnimationFrame::setBaseTexture(spNativeTexture t)
+    {
+        _diffuse.base = t;
+    }
+
+    void AnimationFrame::setAlphaTexture(spNativeTexture t)
+    {
+        _diffuse.alpha = t;
+    }
+
     void AnimationFrame::flipX()
     {
         _srcRect.setX(_srcRect.getRight());

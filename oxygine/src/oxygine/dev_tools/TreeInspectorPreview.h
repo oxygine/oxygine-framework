@@ -116,7 +116,6 @@ namespace oxygine
     private:
         void doUpdate(const UpdateState& us) override;
         friend class TreeInspector;
-        //bool _onEvent(const EventState &es);
 
         Vector2 render2cache(spActor item, const Vector2& size,  bool child);
 

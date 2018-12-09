@@ -12,10 +12,11 @@ namespace oxygine
     {
     public:
         virtual spActor     create(const char* type) const;
-        virtual Resource*   getResource(const char* id) const {return 0;}
-        virtual ResAnim*    getResAnim(const char* id) const {return safeCast<ResAnim*>(getResource(id));}
-        virtual AnimationFrame getFrame(const char* id, int col, int row) const {ResAnim* rs = getResAnim(id);  if (rs) return rs->getFrame(col, row); return AnimationFrame();}
-        virtual ResFont*    getResFont(const char* id) const {return safeCast<ResFont*>(getResource(id));}
+        virtual const Resource*   getResource(const char* id) const {return 0;}
+        virtual const ResAnim*    getResAnim(const char* id) const {return safeCast<const ResAnim*>(getResource(id));}
+        virtual AnimationFrame getFrame(const char* id, int col, int row) const { const ResAnim* rs = getResAnim(id);  if (rs) return rs->getFrame(col, row); return AnimationFrame();}
+        virtual const ResFont*    getResFont(const char* id) const {return safeCast<const ResFont*>(getResource(id));}
+        virtual bool              getString(const char* id, std::string& result) const { return false; }
     };
 
     struct serializedata

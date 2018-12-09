@@ -44,6 +44,9 @@ namespace oxygine
         static ShaderProgram* shaderBlurH;
         static ShaderProgram* shaderBlit;
 
+        static ShaderProgram* shaderBlurV2;
+        static ShaderProgram* shaderBlurH2;
+
         static void initShaders();
         static void freeShaders();
 
@@ -120,7 +123,7 @@ namespace oxygine
         free _free;
     };
 
-    void pass(spNativeTexture srcTexture, const Rect& srcRect, spNativeTexture destTexture, const Rect& destRect, const Color& color = Color::White);
+    void pass(spNativeTexture srcTexture, const Rect& srcRect, spNativeTexture destTexture, const Rect& destRect, const Color& color = Color(Color::White), const Color& clearColor = Color(0));
 
     RenderTargetsManager& getRTManager();
 
@@ -129,4 +132,5 @@ namespace oxygine
     void addPostProcessItem(PPTask*);
     void removePostProcessItem(PPTask*);
     void clearPostProcessItems();
+    int getNumPostProcessItem();
 }

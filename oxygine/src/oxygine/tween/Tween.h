@@ -100,7 +100,8 @@ namespace oxygine
 
         int                     getLoops() const { return _loops; }
         timeMS                  getDuration() const { return _duration; }
-        timeMS                  getElapsed() const { return _elapsed; }
+        timeMS                  getElapsed() const { return timeMS(_elapsed * 1000); }
+        float                   getElapsedF() const { return _elapsed; }
         EASE                    getEase() const { return _ease; }
         EASE                    getGlobalEase() const { return _globalEase; }
         timeMS                  getDelay() const { return _delay; }
@@ -124,11 +125,11 @@ namespace oxygine
         /**set Global Easing function */
         void setGlobalEase(EASE ease) { _globalEase = ease; }
         /**set Delay before starting tween*/
-        void setDelay(timeMS delay) { _delay = delay; }
+        void setDelay(timeMS delay);
         /** loops = -1 means infinity repeat cycles*/
         void setLoops(int loops) { _loops = loops; }
         /*set Duration of tween**/
-        void setDuration(timeMS duration) { _duration = duration; }
+        void setDuration(timeMS duration);
         void setClient(Actor* client) { _client = client; }
         void setTwoSides(bool ts) { _twoSides = ts; }
 
@@ -173,10 +174,15 @@ namespace oxygine
             status_remove,
         };
         status _status;
-        timeMS _elapsed;
+        float _elapsed;
 
         timeMS _duration;
         timeMS _delay;
+
+        float _durationF;
+        float _delayF;
+
+
         int _loops;
         int _loopsDone;
         EASE _ease;

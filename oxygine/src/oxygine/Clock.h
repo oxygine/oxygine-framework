@@ -11,14 +11,27 @@ namespace oxygine
         Clock();
         ~Clock();
 
-        timeMS  getTime() const;
+        timeMS  getTime() const;//deprecated, use F
+        int     getFixedStep() const;//deprecated, use F
+        void    setFixedStep(float stepMS);//deprecated, use F
+        timeMS  doTick();//deprecated, use F
+        timeMS  getLastUpdateTime() const;//deprecated, use F
+        int     getLastDT() const;//deprecated, use F
+
+        /**returns current clock time in seconds*/
+        float   getTimeF() const;
         int     getPauseCounter() const;
-        int     getFixedStep() const;
-        int     getLastDT() const;
-        timeMS  getLastUpdateTime() const;
+        bool    isPaused() const;
+
+        float   getFixedStepF() const;
+        float   getLastDTF() const;
+
+        float   getLastUpdateTimeF() const;
         float   getMultiplier() const;
 
-        void    setFixedStep(float stepMS);
+
+        /**set fixed actor update in seconds*/
+        void    setFixedStepF(float step);
         void    setMultiplier(float m);
 
         void    pause();
@@ -26,7 +39,8 @@ namespace oxygine
         void    resetPause();
 
         void    update(timeMS globalTime = -1);
-        timeMS  doTick();
+
+        float   doTickF();
 
         std::string dump() const;
 
@@ -38,7 +52,7 @@ namespace oxygine
         float   _multiplier;
         float   _fixedStep;
 
-        int    _lastDT;
-        timeMS _lastUpdateTime;
+        double _lastDT;
+        double _lastUpdateTime;
     };
 }

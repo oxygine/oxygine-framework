@@ -29,7 +29,7 @@ namespace oxygine
             bool   userDataBool;
             void*  userData;
         };
-        
+
         eventType type;
         Phase phase;
         bool bubbles;
