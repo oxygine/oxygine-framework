@@ -84,6 +84,12 @@ namespace oxygine
         float               getAnchorY() const {return _anchor.y;}
         bool                getIsAnchorInPixels() {return (_flags & flag_anchorInPixels) != 0;}
         const Vector2&      getPosition() const {return _pos;}
+
+         /*
+         * Calculates position excluding
+         * shifts from parents actors
+         */
+        Vector2             getPositionAbsolute();
         float               getX() const {return _pos.x;}
         float               getY() const {return _pos.y;}
         const Vector2&      getScale() const {return _scale;}
