@@ -21,12 +21,12 @@ How to build. Steps:
 - Go to new created "build_emsc" folder and open Demo.html with Browser
 
 
-*emsc bug workaround (https://github.com/kripken/emscripten/issues/4730):
+*emsc slow performance bug workaround (https://github.com/kripken/emscripten/issues/4730):
 	open  file emsdk\emscripten\1.37.36\src\library_egl.js
 	find line:
-     	_glutInitDisplayMode(0xB2 /* GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH | GLUT_MULTISAMPLE | GLUT_STENCIL */);
+     	_glutInitDisplayMode(displayMode);
     and replace it with:
-     _glutInitDisplayMode(0x32 /* GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH | GLUT_STENCIL */);
+        displayMode = 0x32; _glutInitDisplayMode(displayMode);
 
 
 
