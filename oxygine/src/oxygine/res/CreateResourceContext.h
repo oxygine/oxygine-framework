@@ -12,6 +12,7 @@ namespace oxygine
     public:
         XmlWalker(const std::string* xmlFolder,
                   const std::string& path,
+                  const std::string& rootFolder,
                   float scaleFactor,
                   bool load, bool alpha,
                   pugi::xml_node xml, pugi::xml_node meta);
@@ -41,6 +42,8 @@ namespace oxygine
 
         const std::string* _xmlFolder;
         std::string _path;
+        std::string _rootFolder;
+        
 
         pugi::xml_node _root;
         pugi::xml_node _last;
@@ -60,14 +63,15 @@ namespace oxygine
     class CreateResourceContext
     {
     public:
-        CreateResourceContext() : resources(0), xml_name(0), prebuilt_folder(0), options(0),
-            walker(0, "", 1.0f, true, false, pugi::xml_node(), pugi::xml_node())
+        CreateResourceContext() : resources(0), xml_name(0), prebuilt_folder(0), options(0), root_prebuilt_folder(0),
+            walker(0, "", "", 1.0f, true, false, pugi::xml_node(), pugi::xml_node())
         {
         }
 
         Resources* resources;
         const std::string* xml_name;
         const std::string* prebuilt_folder;
+        const std::string* root_prebuilt_folder;
         const ResourcesLoadOptions* options;
         XmlWalker walker;
     };

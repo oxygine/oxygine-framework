@@ -241,7 +241,7 @@ namespace oxygine
         FS_LOG("loading xml resources");
 
         std::string xmlFolder = destHead;
-        XmlWalker walker(&xmlFolder, "", 1.0f, opt._loadCompletely, true, resources, resources_meta);
+        XmlWalker walker(&xmlFolder, "", opt._prebuiltImagesFolder, 1.0f, opt._loadCompletely, true, resources, resources_meta);
 
         while (true)
         {
