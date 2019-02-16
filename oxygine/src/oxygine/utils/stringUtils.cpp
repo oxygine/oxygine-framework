@@ -140,8 +140,8 @@ namespace oxygine
             while (*src)
             {
                 char c = *src;
-                char last =  dest - 1 >= copy ? *(dest - 1) : '/';
-                char last_last =  dest - 2 >= copy ? *(dest - 2) : '/';
+                char last = dest - 1 >= copy ? *(dest - 1) : '/';
+                char last_last = dest - 2 >= copy ? *(dest - 2) : '/';
 
                 if (c == '\\')
                     c = '/';
@@ -274,10 +274,34 @@ namespace oxygine
         return data;
     }
 
+    std::wstring utf8tows_simple(const char* utf8str)
+    {
+        static bool warned = false;
+        if (warned)
+        {
+            warned = true;
+            logs::warning("utf8tows not implemented correctly!");
+        }
+
+        std::wstring ws;
+
+        int code = 0;
+        while (true)
+        {
+            utf8str = getNextCode(code, utf8str);
+            if (!code)
+                break;
+            ws.push_back(code);
+        }
+
+        return ws;
+    }
+
     std::wstring utf8tows(const char* utf8str)
     {
         if (!utf8str)
             return L"";
+
 
         int n = (int)strlen(utf8str) + 1;
         if (n == 1)
@@ -291,11 +315,20 @@ namespace oxygine
         else
             s = (wchar_t*)SDL_iconv_string("UCS-4-INTERNAL", "UTF-8", utf8str, n);
 
+        if (s == 0)
+            return utf8tows_simple(utf8str);
+
         std::wstring str = s;
         str.reserve(n);
         SDL_free(s);
         return str;
 #else
+        return utf8tows_simple(utf8str);
+#endif
+    }
+
+    std::string ws2utf8_simple(const wchar_t* wstr)
+    {
         static bool warned = false;
         if (warned)
         {
@@ -303,20 +336,14 @@ namespace oxygine
             logs::warning("utf8tows not implemented correctly!");
         }
 
-        std::wstring ws;
-        ws.reserve(n);
-
-        int code = 0;
-        while (true)
+        std::string s;
+        int i = 0;
+        while (wchar_t t = wstr[i])
         {
-            utf8str = getNextCode(code, utf8str);
-            if (!code)
-                break;
-            ws.push_back(code);
+            ++i;
+            charCode2Bytes(s, t);
         }
-
-        return ws;
-#endif
+        return s;
     }
 
     std::string ws2utf8(const wchar_t* wstr)
@@ -335,27 +362,15 @@ namespace oxygine
         else
             s = SDL_iconv_string("UTF-8", "UCS-4-INTERNAL", (const char*)wstr, n * sizeof(wchar_t));
 
+        if (s == 0)
+            return ws2utf8_simple(wstr);
+
         std::string str = s;
         SDL_free(s);
         return str;
 #else
-        static bool warned = false;
-        if (warned)
-        {
-            warned = true;
-            logs::warning("utf8tows not implemented correctly!");
-        }
-
-        std::string s;
-        int i = 0;
-        while (wchar_t t = wstr[i])
-        {
-            ++i;
-            charCode2Bytes(s, t);
-        }
-        return s;
+        return ws2utf8_simple(wstr);
 #endif
-        return "";
     }
 
     Color   hex2color(const char* str)
@@ -367,7 +382,7 @@ namespace oxygine
             int rgba = 0;
             sscanf(str, "%x", &rgba);
             if (len == 6)
-                rgba = (rgba << 8) |  0xff;
+                rgba = (rgba << 8) | 0xff;
 
             return Color(rgba);
         }

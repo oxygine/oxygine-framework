@@ -43,7 +43,7 @@ namespace oxygine
         const std::string* _xmlFolder;
         std::string _path;
         std::string _rootFolder;
-        
+
 
         pugi::xml_node _root;
         pugi::xml_node _last;
