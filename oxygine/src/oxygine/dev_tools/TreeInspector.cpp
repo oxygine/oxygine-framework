@@ -164,10 +164,15 @@ namespace oxygine
     void TreeInspector::wheel(Event* ev)
     {
         float y = _rootPage->getY();
-        if (ev->type == TouchEvent::WHEEL_DOWN)
-            y -= 10;
-        else
-            y += 10;
+        int pageHeight = _rootPage->getSize().y;
+
+        if (ev->type == TouchEvent::WHEEL_DOWN){
+            if (y > -pageHeight)
+                y -= 10;
+        }else{
+            if (y < 0)
+                y += 10;
+        }
 
         _rootPage->setY(y);
     }
