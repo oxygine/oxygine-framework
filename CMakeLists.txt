@@ -145,7 +145,11 @@ set(OXYGINE_LIBRARY_DIRS
 
 if (FORCE_GLES)
 	set(OPENGL_LIBRARIES libGLESv2.lib)
-endif(FORCE_GLES)
+elseif (EMSCRIPTEN)
+	# Has no OpenGL library to link against, but this string contains "nul"
+	# producing link warnings.
+	set(OPENGL_LIBRARIES "")
+endif()
 
 
 
@@ -159,8 +163,10 @@ set(CORE_LIBS
 
 
 if (OX_USE_SDL2)
-	set(CORE_LIBS ${CORE_LIBS}
-		SDL2main SDL2)
+	if (!EMSCRIPTEN)
+		set(CORE_LIBS ${CORE_LIBS}
+			SDL2main SDL2)
+	endif()
 	set(OXYGINE_INCLUDE_DIRS ${OXYGINE_INCLUDE_DIRS} ${SDL2_INCLUDE_DIRS})
 endif(OX_USE_SDL2)	
 
