@@ -849,7 +849,7 @@ namespace oxygine
 #elif EMSCRIPTEN
             EM_ASM_INT(
             {
-                var url = Pointer_stringify($0);
+                var url = UTF8ToString($0);
                 window.open(url, '_blank');
             }, str);
 #elif __APPLE__
