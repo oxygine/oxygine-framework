@@ -82,7 +82,7 @@ namespace oxygine
         const Vector2&      getAnchor() const {return _anchor;}
         float               getAnchorX() const {return _anchor.x;}
         float               getAnchorY() const {return _anchor.y;}
-        bool                getIsAnchorInPixels() {return (_flags & flag_anchorInPixels) != 0;}
+        bool                getIsAnchorInPixels() const {return (_flags & flag_anchorInPixels) != 0;}
         const Vector2&      getPosition() const {return _pos;}
         float               getX() const {return _pos.x;}
         float               getY() const {return _pos.y;}
