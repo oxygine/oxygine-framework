@@ -19,15 +19,19 @@ namespace oxygine
 #endif
 
 
+#ifndef OX_NO_MT
     MutexPthreadLock::MutexPthreadLock(pthread_mutex_t& m, bool lock) : _mutex(m), _locked(lock)
     {
         if (_locked)
             pthread_mutex_lock(&_mutex);
     }
+#endif
 
     MutexPthreadLock::~MutexPthreadLock()
     {
+#ifndef OX_NO_MT
         pthread_mutex_unlock(&_mutex);
+#endif
     }
 
     ThreadDispatcher::ThreadDispatcher(): _id(0), _result(0)
@@ -192,8 +196,8 @@ namespace oxygine
 #ifndef OX_NO_MT
             //pthread_cond_signal(&_cond);
             pthread_cond_broadcast(&_cond);
-#endif
             pthread_cond_wait(&_cond, &_mutex);
+#endif
         }
     }
 
@@ -206,8 +210,8 @@ namespace oxygine
             LOGDN("ThreadMessages::waiting reply... _replyingTo=%d  myid=%d", _replyingTo, id);
 #ifndef OX_NO_MT
             pthread_cond_signal(&_cond);
-#endif
             pthread_cond_wait(&_cond, &_mutex);
+#endif
         }
         while (_replyingTo != id);
 
@@ -364,11 +368,15 @@ namespace oxygine
 
     std::vector<ThreadDispatcher::message>& ThreadDispatcher::lockMessages()
     {
+#ifndef OX_NO_MT
         pthread_mutex_lock(&_mutex);
+#endif
         return _events;
     }
     void ThreadDispatcher::unlockMessages()
     {
+#ifndef OX_NO_MT
         pthread_mutex_unlock(&_mutex);
+#endif
     }
 }

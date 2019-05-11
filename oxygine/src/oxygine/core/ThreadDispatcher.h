@@ -15,11 +15,15 @@ namespace oxygine
     class MutexPthreadLock
     {
     public:
+#ifndef OX_NO_MT
         MutexPthreadLock(pthread_mutex_t& m, bool lock = true);
+#endif
         ~MutexPthreadLock();
 
     protected:
+#ifndef OX_NO_MT
         pthread_mutex_t& _mutex;
+#endif
         bool _locked;
     };
     /*
