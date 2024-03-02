@@ -11,27 +11,27 @@ public:
     {
         //Testing http GET request
         spWebImage image1 = new WebImage;
-        image1->load("http://oxygine.org/img/madewith.png");
+        image1->load("https://oxygine.org/img/madewith.png");
         image1->setSize(100, 100);
         image1->setPosition(image1->getPosition() + Vector2(image1->getWidth() + 10, 0));
         image1->attachTo(_content);
 
         //Testing http GET request with redirect
         spWebImage image2 = new WebImage;
-        image2->load("http://graph.facebook.com/1373973107/picture?type=normal&return_ssl_resources=0");
+        image2->load("https://graph.facebook.com/1373973107/picture?type=normal&return_ssl_resources=0");
         image2->setSize(100, 100);
         image2->setPosition(getStage()->getSize() / 2);
         image2->attachTo(_content);
 
         //Testing loading a file in memory
         spHttpRequestTask task = HttpRequestTask::create();
-        task->setUrl("http://nist.time.gov/actualtime.cgi");
+        task->setUrl("https://nist.time.gov/actualtime.cgi");
         task->addEventListener(HttpRequestTask::COMPLETE, CLOSURE(this, &TestHttp::dateTimeLoaded));
         task->run();
 
         //Testing downloading a file to disk
         task = HttpRequestTask::create();
-        task->setUrl("http://oxygine.org/emscripten/MPHello.js.gz");
+        task->setUrl("https://oxygine.org/emscripten/MPHello.js.gz");
         task->setFileName("somefile.abc");
         addRef();//protect self from auto delete, will be released from TestHttp::loaded
         task->addEventListener(HttpRequestTask::COMPLETE, CLOSURE(this, &TestHttp::loaded));
@@ -49,7 +49,7 @@ public:
 
         //Testing http POST
         task = HttpRequestTask::create();
-        task->setUrl("http://oxygine.org/test/reply.php");
+        task->setUrl("https://oxygine.org/test/reply.php");
         vector<unsigned char> postBody;
         for (int i = 0; i < 256; ++i)
             postBody.push_back(i);
@@ -73,7 +73,7 @@ public:
     {
         spHttpRequestTask task;
         task = HttpRequestTask::create();
-        task->setUrl("http://oxygine.org/img/madewith.png");
+        task->setUrl("https://oxygine.org/img/madewith.png");
         task->run();
     }
 

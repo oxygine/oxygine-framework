@@ -1,51 +1,60 @@
-/* jconfig.vc --- jconfig.h for Microsoft Visual C++ on Windows 95 or NT. */
-/* see jconfig.txt for explanations */
+/* Version ID for the JPEG library.
+ * Might be useful for tests like "#if JPEG_LIB_VERSION >= 60".
+ */
+#define JPEG_LIB_VERSION  62
 
-#define HAVE_PROTOTYPES
-#define HAVE_UNSIGNED_CHAR
-#define HAVE_UNSIGNED_SHORT
-/* #define void char */
-/* #define const */
-#undef CHAR_IS_UNSIGNED
-#define HAVE_STDDEF_H
-#define HAVE_STDLIB_H
-#undef NEED_BSD_STRINGS
-#undef NEED_SYS_TYPES_H
-#undef NEED_FAR_POINTERS	/* we presume a 32-bit flat memory model */
-#undef NEED_SHORT_EXTERNAL_NAMES
-#undef INCOMPLETE_TYPES_BROKEN
+/* libjpeg-turbo version */
+#define LIBJPEG_TURBO_VERSION  3.0.2
 
-/* Define "boolean" as unsigned char, not enum, per Windows custom */
-#ifndef __RPCNDR_H__		/* don't conflict if rpcndr.h already read */
-typedef unsigned char boolean;
+/* libjpeg-turbo version in integer form */
+#define LIBJPEG_TURBO_VERSION_NUMBER  3000002
+
+/* Support arithmetic encoding when using 8-bit samples */
+#define C_ARITH_CODING_SUPPORTED 1
+
+/* Support arithmetic decoding when using 8-bit samples */
+#define D_ARITH_CODING_SUPPORTED 1
+
+/* Support in-memory source/destination managers */
+#define MEM_SRCDST_SUPPORTED  1
+
+/* Use accelerated SIMD routines when using 8-bit samples */
+#define WITH_SIMD 1
+
+/* This version of libjpeg-turbo supports run-time selection of data precision,
+ * so BITS_IN_JSAMPLE is no longer used to specify the data precision at build
+ * time.  However, some downstream software expects the macro to be defined.
+ * Since 12-bit data precision is an opt-in feature that requires explicitly
+ * calling 12-bit-specific libjpeg API functions and using 12-bit-specific data
+ * types, the unmodified portion of the libjpeg API still behaves as if it were
+ * built for 8-bit precision, and JSAMPLE is still literally an 8-bit data
+ * type.  Thus, it is correct to define BITS_IN_JSAMPLE to 8 here.
+ */
+#ifndef BITS_IN_JSAMPLE
+#define BITS_IN_JSAMPLE  8
 #endif
-#ifndef FALSE			/* in case these macros already exist */
-#define FALSE	0		/* values of boolean */
-#endif
-#ifndef TRUE
-#define TRUE	1
-#endif
-#define HAVE_BOOLEAN		/* prevent jmorecfg.h from redefining it */
 
-
-#ifdef JPEG_INTERNALS
+#ifdef _WIN32
 
 #undef RIGHT_SHIFT_IS_UNSIGNED
 
-#endif /* JPEG_INTERNALS */
+/* Define "boolean" as unsigned char, not int, per Windows custom */
+#ifndef __RPCNDR_H__            /* don't conflict if rpcndr.h already read */
+typedef unsigned char boolean;
+#endif
+#define HAVE_BOOLEAN            /* prevent jmorecfg.h from redefining it */
 
-#ifdef JPEG_CJPEG_DJPEG
+/* Define "INT32" as int, not long, per Windows custom */
+#if !(defined(_BASETSD_H_) || defined(_BASETSD_H))   /* don't conflict if basetsd.h already read */
+typedef short INT16;
+typedef signed int INT32;
+#endif
+#define XMD_H                   /* prevent jmorecfg.h from redefining it */
 
-#define BMP_SUPPORTED		/* BMP image file format */
-#define GIF_SUPPORTED		/* GIF image file format */
-#define PPM_SUPPORTED		/* PBMPLUS PPM/PGM image file format */
-#undef RLE_SUPPORTED		/* Utah RLE image file format */
-#define TARGA_SUPPORTED		/* Targa image file format */
+#else
 
-#define TWO_FILE_COMMANDLINE	/* optional */
-#define USE_SETMODE		/* Microsoft has setmode() */
-#undef NEED_SIGNAL_CATCHER
-#undef DONT_USE_B_MODE
-#undef PROGRESS_REPORT		/* optional */
+/* Define if your (broken) compiler shifts signed values as if they were
+   unsigned. */
+/* #undef RIGHT_SHIFT_IS_UNSIGNED */
 
-#endif /* JPEG_CJPEG_DJPEG */
+#endif

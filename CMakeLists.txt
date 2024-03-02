@@ -80,10 +80,10 @@ elseif (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 elseif(MSVC)
 
-	set(OX_HAVE_LIBJPEG 0)
+	set(OX_HAVE_LIBJPEG 1)
 	set(OX_HAVE_LIBPNG 1)	
-	set(OX_HAVE_LIBCURL 0)
-	set(OX_HAVE_HTTP 0)
+	set(OX_HAVE_LIBCURL 1)
+	set(OX_HAVE_HTTP 1)
 
 	set(libprefix lib)
 
@@ -175,7 +175,8 @@ elseif (WIN32)
 
 	set(CORE_LIBS ${CORE_LIBS}
 		pthreadVCE2
-		libcurl_imp
+		libcurl
+		jpeg
 		ws2_32)
 
 elseif(EMSCRIPTEN)	
@@ -195,10 +196,8 @@ if (OX_HAVE_LIBPNG)
 		include_directories(${THIRD_PARTY}/libpng)
 		set(LIBPNG ${libprefix}png)
 
-		if (MSVC)		
-			if(NOT (MSVC_VERSION LESS 1900))
-		 		#set(LIBPNG ${LIBPNG}-2015)
-			endif()
+		if (MSVC)
+			set(LIBPNG libpng16)
 		endif()		
 	
 		set(CORE_LIBS ${CORE_LIBS} ${LIBPNG})
@@ -214,9 +213,7 @@ if (OX_HAVE_LIBJPEG)
 	set(LIBJPEG ${libprefix}jpeg)
 	
 	if (MSVC)
-		if(NOT (MSVC_VERSION LESS 1900))
-			set(LIBJPEG ${LIBJPEG}-2015)
-		endif()	
+		set(LIBJPEG jpeg)
 	endif()
 
 	set(CORE_LIBS ${CORE_LIBS} ${LIBJPEG})

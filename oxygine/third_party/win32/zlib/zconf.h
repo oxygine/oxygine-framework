@@ -333,7 +333,7 @@
    /* If building or using zlib as a DLL, define ZLIB_DLL.
     * This is not mandatory, but it offers a little performance increase.
     */
-#  ifdef ZLIB_DLL
+#  if 1
 #    if defined(WIN32) && (!defined(__BORLANDC__) || (__BORLANDC__ >= 0x500))
 #      ifdef ZLIB_INTERNAL
 #        define ZEXTERN extern __declspec(dllexport)
@@ -366,7 +366,7 @@
 #endif
 
 #if defined (__BEOS__)
-#  ifdef ZLIB_DLL
+#  if 1
 #    ifdef ZLIB_INTERNAL
 #      define ZEXPORT   __declspec(dllexport)
 #      define ZEXPORTVA __declspec(dllexport)
@@ -436,11 +436,19 @@ typedef uLong FAR uLongf;
 #endif
 
 #ifdef HAVE_UNISTD_H    /* may be set to #if 1 by ./configure */
-#  define Z_HAVE_UNISTD_H
+#  if ~(~HAVE_UNISTD_H + 0) == 0 && ~(~HAVE_UNISTD_H + 1) == 1
+#    define Z_HAVE_UNISTD_H
+#  elif HAVE_UNISTD_H != 0
+#    define Z_HAVE_UNISTD_H
+#  endif
 #endif
 
 #ifdef HAVE_STDARG_H    /* may be set to #if 1 by ./configure */
-#  define Z_HAVE_STDARG_H
+#  if ~(~HAVE_STDARG_H + 0) == 0 && ~(~HAVE_STDARG_H + 1) == 1
+#    define Z_HAVE_STDARG_H
+#  elif HAVE_STDARG_H != 0
+#    define Z_HAVE_STDARG_H
+#  endif
 #endif
 
 #ifdef STDC
@@ -472,8 +480,12 @@ typedef uLong FAR uLongf;
 #endif
 
 #ifndef Z_HAVE_UNISTD_H
-#  if defined(__WATCOMC__) || defined(__GO32__) || \
-      (defined(_LARGEFILE64_SOURCE) && !defined(_WIN32))
+#  ifdef __WATCOMC__
+#    define Z_HAVE_UNISTD_H
+#  endif
+#endif
+#ifndef Z_HAVE_UNISTD_H
+#  if defined(_LARGEFILE64_SOURCE) && !defined(_WIN32)
 #    define Z_HAVE_UNISTD_H
 #  endif
 #endif
@@ -513,12 +525,12 @@ typedef uLong FAR uLongf;
 
 #if !defined(_WIN32) && defined(Z_LARGE64)
 #  define z_off64_t off64_t
-#elif defined(_WIN32) && !defined(__GNUC__)
-#  define z_off64_t __int64
-#elif defined(__GO32__)
-#  define z_off64_t offset_t
 #else
-#  define z_off64_t z_off_t
+#  if defined(_WIN32) && !defined(__GNUC__)
+#    define z_off64_t __int64
+#  else
+#    define z_off64_t z_off_t
+#  endif
 #endif
 
 /* MVS linker does not support external names larger than 8 bytes */
