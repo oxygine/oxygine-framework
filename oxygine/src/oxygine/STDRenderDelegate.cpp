@@ -89,7 +89,8 @@ namespace oxygine
             driver->setScissorRect(scissorEnabled ? &scissorRect : 0);
         }
     }
-
+static std::list<Vector4> clipMask_stack;
+static std::list<ClipUV> msk_stack;
     void STDRenderDelegate::render(MaskedSprite* sprite, const RenderState& parentRS)
     {
         spSprite maskSprite = sprite->getMask();
@@ -109,6 +110,7 @@ namespace oxygine
 
         Material::null->apply();
 
+        Vector3 msk[4];
         Transform world = maskSprite->computeGlobalTransform();
 
         RectF maskDest = maskSprite->getDestRect();
@@ -118,12 +120,16 @@ namespace oxygine
         bool useR           = sprite->getUseRChannel();
         bool rchannel               = useR ? true    : (df.alpha ? true     : false);
         spNativeTexture maskTexture = useR ? df.base : (df.alpha ? df.alpha : df.base);
-
         STDRenderer* renderer = STDRenderer::getCurrent();
 
+        int sflags = renderer->getBaseShaderFlags();
+        int baseShaderFlags = sflags;
 
+        baseShaderFlags |= UberShaderProgram::MASK;
+        if (rchannel)
+            baseShaderFlags |= UberShaderProgram::MASK_R_CHANNEL;
 
-#if 1
+        spNativeTexture oldMask = rsCache().getTexture(UberShaderProgram::SAMPLER_MASK);
         ClipUV clipUV = ClipUV(
                             world.transform(maskDest.getLeftTop()),
                             world.transform(maskDest.getRightTop()),
@@ -135,36 +141,27 @@ namespace oxygine
         Vector2 v(1.0f / maskTexture->getWidth(), 1.0f / maskTexture->getHeight());
         maskSrc.expand(v, v);
 
-
-
-        int sflags = renderer->getBaseShaderFlags();
-        int baseShaderFlags = sflags;
-
-        baseShaderFlags |= UberShaderProgram::MASK;
-        if (rchannel)
-            baseShaderFlags |= UberShaderProgram::MASK_R_CHANNEL;
-
-        Vector3 msk[4];
-
         clipUV.get(msk);
         Vector4 clipMask = Vector4(maskSrc.getLeft(), maskSrc.getTop(), maskSrc.getRight(), maskSrc.getBottom());
 
-        rsCache().setTexture(UberShaderProgram::SAMPLER_MASK, maskTexture);
+        clipMask_stack.push_back(clipMask);
+        msk_stack.push_back(clipUV);
 
+
+        rsCache().setTexture(UberShaderProgram::SAMPLER_MASK, maskTexture);
 
 
         ShaderProgramChangedHook hook;
         hook.hook = [&]()
         {
-
             IVideoDriver::instance->setUniform("clip_mask", clipMask);
             IVideoDriver::instance->setUniform("msk", msk, 4);
-
         };
 
 
         renderer->pushShaderSetHook(&hook);
         renderer->setBaseShaderFlags(baseShaderFlags);
+        hook.hook();
 
         sprite->Sprite::render(parentRS);
 
@@ -172,24 +169,16 @@ namespace oxygine
 
         renderer->popShaderSetHook();
         renderer->setBaseShaderFlags(sflags);
-#else
 
-        MaskedRenderer mr(maskTexture, maskSrc, maskDest, world, rchannel, renderer->getDriver());
-        renderer->swapVerticesData(mr);
-
-        mr.setViewProj(renderer->getViewProjection());
-        mr.begin();
-
-        RenderState rs = parentRS;
-        sprite->Sprite::render(rs);
-        mr.end();
-
-        Material::null->apply();
-
-        renderer->swapVerticesData(mr);
-        renderer->begin();
-#endif
-
+        if (oldMask) rsCache().setTexture(UberShaderProgram::SAMPLER_MASK,oldMask);
+        clipMask_stack.pop_back();
+        if (!clipMask_stack.empty())
+            IVideoDriver::instance->setUniform("clip_mask", clipMask_stack.back());
+        msk_stack.pop_back();
+        if (!msk_stack.empty()) {
+           msk_stack.back().get(msk);
+           IVideoDriver::instance->setUniform("msk", msk, 4);
+        }
     }
 
     void STDRenderDelegate::doRender(Sprite* sprite, const RenderState& rs)
