@@ -9,7 +9,10 @@ namespace oxygine
     class Event
     {
     public:
-        enum { COMPLETE = sysEventID('C', 'M', 'P') };
+        enum { 
+           COMPLETE = sysEventID('C', 'M', 'P'),
+            ERROR = sysEventID('E', 'R', 'R')
+         };
 
         enum Phase
         {

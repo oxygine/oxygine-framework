@@ -203,7 +203,13 @@ namespace oxygine
             listenerbase& ls = copy[i];
             event->currentTarget = this;
             event->listenerID = ls.id;
-            ls.cb(event);
+            try{
+               ls.cb(event);
+            } catch (const oxygine::event_exception &ex) { 
+               Event e(Event::ERROR);
+               e.userData = (void*) &ex;
+               dispatchEvent(&e);
+            }
             if (event->stopsImmediatePropagation)
                 break;
         }
