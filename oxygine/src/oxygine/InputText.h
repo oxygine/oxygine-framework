@@ -15,7 +15,7 @@ namespace oxygine
         enum {EVENT_TEXT_CHANGED = sysEventID('I', 'T', 'C') };
         enum {EVENT_COMPLETE = Event::COMPLETE};
 
-        InputText();
+        InputText(int cursorSpeed = 400);
         ~InputText();
 
         /**Shows virtual keyboard(if supported on platform) and sends pressed chars to TextField*/

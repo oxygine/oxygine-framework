@@ -11,10 +11,12 @@ namespace oxygine
 {
     InputText* InputText::_active = 0;
 
-    InputText::InputText(): _maxLength(0)
+    InputText::InputText(int cursorSpeed): _maxLength(0)
     {
         _cursor = new ColorRectSprite;
-        _cursor->addTween(Actor::TweenAlpha(0), 400, -1, true);
+        if (cursorSpeed > 0) {
+           _cursor->addTween(Actor::TweenAlpha(0), cursorSpeed, -1, true);
+        }
         _cursor->setVisible(false);
     }
 
@@ -59,7 +61,7 @@ namespace oxygine
 
         SDL_StartTextInput();
 
-        _txt = "";
+        _txt = ta->getText();
         updateText();
     }
 
