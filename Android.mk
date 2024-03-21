@@ -31,7 +31,7 @@ SRC := $(LOCAL_PATH)/oxygine/src/oxygine
 
 LOCAL_SRC_FILES := \
 				$(subst $(LOCAL_PATH)/,, \
-				$(wildcard $(SRC)/closure/*.cpp) \
+				$(wildcard $(SRC)/closure/*.cpp$(TARGET_ARCH_ABI)) \
 				$(wildcard $(SRC)/core/*.cpp) \
 				$(wildcard $(SRC)/math/*.cpp) \
 				$(wildcard $(SRC)/actor/*.cpp) \

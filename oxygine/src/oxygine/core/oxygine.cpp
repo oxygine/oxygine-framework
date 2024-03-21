@@ -332,7 +332,7 @@ namespace oxygine
             //flags &= ~SDL_WINDOW_FULLSCREEN;
 #endif
 
-#if TARGET_OS_IPHONE || defined(__ANDROID__)
+#if TARGET_OS_IPHONE || defined(__ANDROID__) ||  defined(__SAILFISHOS__)
             desc.w = -1;
             desc.h = -1;
 #endif
@@ -377,7 +377,7 @@ namespace oxygine
 
 #endif
 
-#if __ANDROID__ || TARGET_OS_IPHONE
+#if __ANDROID__ || TARGET_OS_IPHONE || __SAILFISHOS__
             //if (SDL_GetNumTouchDevices() > 0)
             _useTouchAPI = true;
 #endif
@@ -454,7 +454,14 @@ namespace oxygine
             logs::messageln("oxygine initialized, drawable size: %d %d", ds.x, ds.y);
         }
 
-#if OXYGINE_SDL
+#if defined(__SAILFISHOS__)
+        Vector2 convertTouch(SDL_Event& ev)
+        {
+            Point size = getDisplaySize();
+            // Multiplying by screen size is not needed and breaks touch
+            return Vector2(ev.tfinger.x/* * size.x*/, ev.tfinger.y/* * size.y*/);
+        }
+#elif OXYGINE_SDL
         Vector2 convertTouch(SDL_Event& ev)
         {
             Point size = getDisplaySize();

@@ -76,6 +76,12 @@ extern "C"
 #   define GL_GLEXT_PROTOTYPES
 #   include "GLES2/gl2ext.h"
 
+#elif __SAILFISHOS__
+#   include "GLES2/gl2.h"
+#   define GL_GLEXT_PROTOTYPES
+#   include "GLES2/gl2ext.h"
+#undef __unix__
+
 #elif __APPLE__
 #   include <TargetConditionals.h>
 #   if TARGET_OS_IPHONE
