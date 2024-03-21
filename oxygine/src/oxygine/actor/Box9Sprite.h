@@ -26,7 +26,10 @@ namespace oxygine
         float       getGuideX2() const { return _guideX[1]; }
         float       getGuideY1() const { return _guideY[0]; }
         float       getGuideY2() const { return _guideY[1]; }
-
+        float       getUVX1() const { return _uvX[0]; }
+        float       getUVX2() const { return _uvX[1]; }
+        float       getUVY1() const { return _uvY[0]; }
+        float       getUVY2() const { return _uvY[1]; }
 
         RectF       getInnerArea() const;
 
@@ -39,6 +42,12 @@ namespace oxygine
         void setGuides(float x1, float x2, float y1, float y2);
         void setVerticalGuides(float x1, float x2);
         void setHorizontalGuides(float y1, float y2);
+
+        void setUV(float x1, float x2, float y1, float y2);
+        void setVerticalUV(float x1, float x2);
+        void setHorizontalUV(float y1, float y2);
+
+        void setAbsoluteGuides(bool v);
 
         bool isOn(const Vector2& localPosition, float localScale) override;
 
@@ -54,6 +63,8 @@ namespace oxygine
         void animFrameChanged(const AnimationFrame& f) override;
         void changeAnimFrame(const AnimationFrame& f) override;
 
+        bool absoluteGuides;
+
         mutable bool _prepared;
 
         StretchMode _vertMode;
@@ -61,6 +72,8 @@ namespace oxygine
 
         mutable float _guideX[2];
         mutable float _guideY[2];
+        mutable float _uvX[2];
+        mutable float _uvY[2];
 
         mutable std::vector<float> _guidesX;
         mutable std::vector<float> _guidesY;

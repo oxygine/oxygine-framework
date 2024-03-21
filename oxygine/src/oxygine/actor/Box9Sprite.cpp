@@ -25,14 +25,22 @@ namespace oxygine
         _guideY[0] = src._guideY[0];
         _guideY[1] = src._guideY[1];
 
+        _uvX[0] = src._uvX[0];
+        _uvX[1] = src._uvX[1];
+        _uvY[0] = src._uvY[0];
+        _uvY[1] = src._uvY[1];
+
         _guidesX = src._guidesX;
         _guidesY = src._guidesY;
         _pointsX = src._pointsX;
         _pointsY = src._pointsY;
+
+        absoluteGuides = src.absoluteGuides;
     }
 
     Box9Sprite::Box9Sprite() :
         _prepared(false),
+        absoluteGuides(false),
         _vertMode(STRETCHING),
         _horzMode(STRETCHING)
 
@@ -41,6 +49,10 @@ namespace oxygine
         _guideX[1] = 0.0f;
         _guideY[0] = 0.0f;
         _guideY[1] = 0.0f;
+        _uvX[0] = 0.0f;
+        _uvX[1] = 0.0f;
+        _uvY[0] = 0.0f;
+        _uvY[1] = 0.0f;
 
         if (DebugActor::resSystem)
             Sprite::setResAnim(DebugActor::resSystem->getResAnim("btn"));
@@ -98,6 +110,25 @@ namespace oxygine
         _prepared = false;
     }
 
+    void Box9Sprite::setAbsoluteGuides(bool v) {
+      if (v != absoluteGuides) {
+         absoluteGuides = v;
+         _prepared = false;
+      }
+   }
+    void Box9Sprite::setUV(float x1, float x2, float y1, float y2) {
+      _uvX[0] = x1; _uvX[1] = x2;
+      _uvY[0] = y1; _uvY[1] = y2;
+      _prepared = false;
+    }
+    void Box9Sprite::setVerticalUV(float x1, float x2) {
+        _uvX[0] = x1; _uvX[1] = x2;
+        _prepared = false;
+   }
+    void Box9Sprite::setHorizontalUV(float y1, float y2) {
+        _uvY[0] = y1; _uvY[1] = y2;
+        _prepared = false;
+   }
     void Box9Sprite::changeAnimFrame(const AnimationFrame& f)
     {
         Vector2 size = getSize();
@@ -168,17 +199,25 @@ namespace oxygine
             _guideX[1] = fFrameWidth;
         if (_guideY[1] == 0.0f)
             _guideY[1] = fFrameHeight;
+         if (_uvX[1] == 0.0f) {
+            _uvX[0] = _guideX[0]/fFrameWidth;
+            _uvX[1] = _guideX[1]/fFrameWidth;
+         }
+      if (_uvY[1] == 0.0f) {
+         _uvY[0] = _guideY[0]/fFrameHeight;
+         _uvY[1] = _guideY[1]/fFrameHeight;
+      }
 
         RectF srcFrameRect = _frame.getSrcRect();
 
         _guidesX[0] = srcFrameRect.getLeft(); // these guides contains floats from 0.0 to 1.0, compared to original guides which contain floats in px
-        _guidesX[1] = lerp(srcFrameRect.getLeft(), srcFrameRect.getRight(), _guideX[0] / fFrameWidth); // lerp is needed here cuz the frame might be in an atlas
-        _guidesX[2] = lerp(srcFrameRect.getLeft(), srcFrameRect.getRight(), _guideX[1] / fFrameWidth);
+        _guidesX[1] = lerp(srcFrameRect.getLeft(), srcFrameRect.getRight(), _uvX[0]); // lerp is needed here cuz the frame might be in an atlas
+        _guidesX[2] = lerp(srcFrameRect.getLeft(), srcFrameRect.getRight(), _uvX[1]);
         _guidesX[3] = srcFrameRect.getRight();
 
         _guidesY[0] = srcFrameRect.getTop();
-        _guidesY[1] = lerp(srcFrameRect.getTop(), srcFrameRect.getBottom(), _guideY[0] / fFrameHeight);
-        _guidesY[2] = lerp(srcFrameRect.getTop(), srcFrameRect.getBottom(), _guideY[1] / fFrameHeight);
+        _guidesY[1] = lerp(srcFrameRect.getTop(), srcFrameRect.getBottom(), _uvY[0]);
+        _guidesY[2] = lerp(srcFrameRect.getTop(), srcFrameRect.getBottom(), _uvY[1]);
         _guidesY[3] = srcFrameRect.getBottom();
 
         // filling X axis
@@ -187,13 +226,15 @@ namespace oxygine
 
         if (_horzMode == STRETCHING)
         {
-            _pointsX.push_back(fActorWidth - (fFrameWidth - _guideX[1]));
+            if (absoluteGuides) _pointsX.push_back(_guideX[1]);
+            else _pointsX.push_back(fActorWidth - (fFrameWidth*(1-_uvX[1]+_uvX[0])));
             _pointsX.push_back(fActorWidth);
         }
         else if (_horzMode == TILING || _horzMode == TILING_FULL)
         {
             float curX = _guideX[0];
-            float rightB = fActorWidth - (fFrameWidth - _guideX[1]); // right bound (in px)
+            float rightB = _guideX[1];
+            if (!absoluteGuides) rightB = fActorWidth - (fFrameWidth*(1-_uvX[1]+_uvX[0])); // right bound (in px)
             float centerPart = _guideX[1] - _guideX[0]; // length of the center piece (in px)
 
             // now we add a new center piece every time until we reach right bound
@@ -225,13 +266,15 @@ namespace oxygine
 
         if (_vertMode == STRETCHING)
         {
-            _pointsY.push_back(fActorHeight - (fFrameHeight - _guideY[1]));
+            if (absoluteGuides) _pointsY.push_back(_guideY[1]);
+            else _pointsY.push_back(fActorHeight - (fFrameHeight*(1-_uvY[1]+_uvY[0])));
             _pointsY.push_back(fActorHeight);
         }
         else if (_vertMode == TILING || _vertMode == TILING_FULL)
         {
             float curY = _guideY[0];
-            float bottomB = fActorHeight - (fFrameHeight - _guideY[1]); // bottom bound (in px)
+            float bottomB = _guideY[1];
+            if (!absoluteGuides) bottomB = fActorHeight - (fFrameHeight*(1-_uvY[1]+_uvY[0])); // bottom bound (in px)
             float centerPart = _guideY[1] - _guideY[0]; // length of the center piece (in px)
 
             // now we add a new center piece every time until we reach right bound
@@ -283,7 +326,12 @@ namespace oxygine
         stream << "guideX2=" << _guideX[1] << " ";
         stream << "guideY1=" << _guideY[0] << " ";
         stream << "guideY2=" << _guideY[1] << " ";
+        stream << "uvX1=" << _uvX[0] << " ";
+        stream << "uvX2=" << _uvX[1] << " ";
+        stream << "uvY1=" << _uvY[0] << " ";
+        stream << "uvY2=" << _uvY[1] << " ";
 
+        stream << "absoluteGuides=" << absoluteGuides << " ";
         stream << "vert=" << stretchMode2String(_vertMode) << " ";
         stream << "hor=" << stretchMode2String(_horzMode) << " ";
 
@@ -344,6 +392,15 @@ namespace oxygine
 
                         RectF srcRect(_guidesX[xgi], _guidesY[ygi], _guidesX[xgi + 1] - _guidesX[xgi], _guidesY[ygi + 1] - _guidesY[ygi]);
                         RectF destRect(_pointsX[xc], _pointsY[yc], _pointsX[xc + 1] - _pointsX[xc], _pointsY[yc + 1] - _pointsY[yc]);
+
+                         if (getAnchorAffectsOrigin()) {
+                            Vector2 offset = getAnchor();
+                            if (!getIsAnchorInPixels()) {
+                               offset.x *= getSize().x;
+                               offset.y *= getSize().y;
+                            }
+                            destRect.pos -= offset;
+                         }
 
                         renderer->addQuad(color, srcRect, destRect);
 
