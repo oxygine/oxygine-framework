@@ -268,6 +268,8 @@ namespace oxygine
         //converts global position (position in Stage space) to local space
         Vector2 stage2local(const Vector2& pos = Vector2(0, 0), Actor* stage = 0) const;
         Vector2 stage2local(float x, float y, Actor* stage = 0) const;
+        float globalScaleX() const;
+        float globalScaleY() const;
 
         typedef Property2Args<float, Vector2, const Vector2&, Actor, &Actor::getPosition, &Actor::setPosition>  TweenPosition;
         typedef Property<float, float, Actor, &Actor::getX, &Actor::setX>                                       TweenX;
