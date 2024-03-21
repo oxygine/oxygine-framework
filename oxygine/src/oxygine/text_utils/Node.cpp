@@ -261,11 +261,14 @@ namespace oxygine
             float scaleFactor = rd.getScale();
 
             int offsetY = rd.bounds.pos.y;
+            int offsetX = rd.bounds.pos.x;
+            
 
             for (size_t i = 0; i < _data.size(); ++i)
             {
                 Symbol& s = _data[i];
                 s.y += offsetY;
+                s.x += offsetX;
 
                 if (s.gl.texture)
                     s.destRect = RectF(mlt(s.x, scaleFactor), mlt(s.y, scaleFactor), mlt(s.gl.sw, scaleFactor), mlt(s.gl.sh, scaleFactor));

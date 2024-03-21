@@ -20,6 +20,7 @@
 namespace oxygine
 {
     CREATE_COPYCLONE_NEW(Actor);
+    unsigned int Actor::DEFAULT_FLAGS = flag_visible | flag_touchEnabled | flag_touchChildrenEnabled | flag_fastTransform;
 
     std::string div(const std::string& val, const Color& color)
     {
@@ -33,7 +34,7 @@ namespace oxygine
         _zOrder(0),
         _scale(1, 1),
         _rotation(0),
-        _flags(flag_visible | flag_touchEnabled | flag_touchChildrenEnabled | flag_fastTransform),
+        _flags(Actor::DEFAULT_FLAGS),
         _parent(0),
         _alpha(255),
         _stage(0),
@@ -792,20 +793,21 @@ namespace oxygine
                      -s * _scale.y, c * _scale.y,
                      _pos.x, _pos.y);
         }
+        if (!(_flags&flag_anchorAffectsOrigin)) {
+           Vector2 offset;
+           if (_flags & flag_anchorInPixels)
+           {
+               offset.x = -_anchor.x;
+               offset.y = -_anchor.y;
+           }
+           else
+           {
+               offset.x = -float(_size.x * _anchor.x);
+               offset.y = -float(_size.y * _anchor.y);//todo, what to do? (per pixel quality)
+           }
 
-        Vector2 offset;
-        if (_flags & flag_anchorInPixels)
-        {
-            offset.x = -_anchor.x;
-            offset.y = -_anchor.y;
+           tr.translate(offset);
         }
-        else
-        {
-            offset.x = -float(_size.x * _anchor.x);
-            offset.y = -float(_size.y * _anchor.y);//todo, what to do? (per pixel quality)
-        }
-
-        tr.translate(offset);
 
 
         _transform = tr;
@@ -1156,8 +1158,6 @@ namespace oxygine
         }
         else
             Transform::multiply(rs.transform, tr, parentRS.transform);
-
-
         if (_flags & flag_cull)
         {
             RectF ss_rect = getActorTransformedDestRect(this, rs.transform);
@@ -1170,9 +1170,7 @@ namespace oxygine
         return true;
     }
 
-    void Actor::completeRender(const RenderState& rs)
-    {
-
+    void Actor::completeRender(const RenderState& rs) {
     }
 
     bool Actor::internalRender(RenderState& rs, const RenderState& parentRS)
@@ -1217,7 +1215,8 @@ namespace oxygine
 
     RectF Actor::getDestRect() const
     {
-        return RectF(Vector2(0, 0), getSize());
+        Vector2 origin;
+        return RectF(alterOrigin(origin), getSize());
     }
 
     spTween Actor::_addTween(spTween tween, bool rel)
@@ -1668,5 +1667,18 @@ namespace oxygine
         }
 
         return false;
+    }
+    Vector2 Actor::alterOrigin(const Vector2& pos) const {
+       Vector2 delta;
+       if (_flags&flag_anchorAffectsOrigin && delta!= getAnchor()) {
+          if (_flags&flag_anchorInPixels) {
+             delta = getAnchor()*-1;
+          } else {
+             delta.x = -getAnchorX()*getSize().x;
+             delta.y = -getAnchorY()*getSize().y;
+          }
+          return pos+delta;
+       }
+       return pos;
     }
 }

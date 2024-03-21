@@ -397,6 +397,12 @@ namespace oxygine
                 pos.y -= realSize.y;
                 break;
         }
+        Vector2 o = getStage()->getAnchor();
+        if (getStage()->getAnchorAffectsOrigin() && o != Vector2()) {
+           Vector2 sz = getStage()->getSize();
+           pos.x -= sz.x*o.x;
+           pos.y -= sz.y*o.y;
+        }
 
         setPosition(pos);
         setScale(1.0f / getStage()->getScaleX());

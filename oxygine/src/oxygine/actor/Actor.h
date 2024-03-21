@@ -42,7 +42,8 @@ namespace oxygine
     class Actor: public EventDispatcher, public intrusive_list_item<spActor>, public Serializable
     {
         typedef intrusive_list_item<spActor> intr_list;
-
+    public:
+        static unsigned int DEFAULT_FLAGS;
     public:
         Actor(const Actor& src, cloneOptions opt = 0);
         virtual Actor* clone(cloneOptions opt = 0) const;
@@ -95,6 +96,7 @@ namespace oxygine
         float               getRotationDegrees() const {return _rotation / MATH_PI * 180.0f;}
         int                 getPriority() const {return _zOrder;}
         bool                getVisible() const {return (_flags & flag_visible) != 0;}
+        bool                getAnchorAffectsOrigin() const {return (_flags & flag_anchorAffectsOrigin) != 0;}
         Actor*              getParent() {return _parent;}
         const Actor*        getParent() const {return _parent;}
         const Vector2&      getSize() const {return _size;}
@@ -173,6 +175,7 @@ namespace oxygine
 
         /**Show/Hide actor and children. Invisible Actor doesn't receive Touch events.*/
         void setVisible(bool vis) {_flags &= ~flag_visible; if (vis) _flags |= flag_visible;}
+        void setAnchorAffectsOrigin(bool aff) {_flags &= ~flag_anchorAffectsOrigin; if (aff) _flags |= flag_anchorAffectsOrigin;}
         /**Enable/Disable culling this actor outside of clip area (use it in pair with ClipRectActor)*/
         void setCull(bool enable) {_flags &= ~flag_cull; if (enable) _flags |= flag_cull;}
         /**Sets transparency. if alpha is 0 actor and children are completely invisible. Invisible Actor doesn't receive Touch events.*/
@@ -261,6 +264,7 @@ namespace oxygine
         virtual Vector2 parent2local(const Vector2& pos) const;
         //converts local position to parent space
         virtual Vector2 local2parent(const Vector2& pos = Vector2(0, 0)) const;
+        virtual Vector2 alterOrigin(const Vector2& pos) const;
 
         //converts local position to Stage
         Vector2 local2stage(const Vector2& pos = Vector2(0, 0), Actor* stage = 0) const;
@@ -348,24 +352,6 @@ namespace oxygine
         mutable Transform _transform;
         mutable Transform _transformInvert;
 
-
-        enum flags
-        {
-            flag_anchorInPixels         = 1,
-            flag_visible                = 1 << 1,
-            flag_touchEnabled           = 1 << 2,
-            flag_transformDirty         = 1 << 3,
-            flag_transformInvertDirty   = 1 << 4,
-            flag_touchChildrenEnabled   = 1 << 5,
-            flag_cull                   = 1 << 6,
-            flag_fastTransform          = 1 << 7,
-            flag_boundsNoChildren       = 1 << 8,
-            flag_actorHasBounds         = 1 << 9,
-            flag_clickableWithZeroAlpha = 1 << 10,
-            flag_reserved               = 1 << 11,
-            flag_last                   = flag_reserved
-        };
-
         mutable unsigned int _flags;
         unsigned char   _alpha;
         char    _extendedIsOn;
@@ -388,8 +374,24 @@ namespace oxygine
             };
             int32_t _pressedOvered;
         };
-
-
+   public:
+        enum flags
+        {
+            flag_anchorInPixels         = 1,
+            flag_visible                = 1 << 1,
+            flag_touchEnabled           = 1 << 2,
+            flag_transformDirty         = 1 << 3,
+            flag_transformInvertDirty   = 1 << 4,
+            flag_touchChildrenEnabled   = 1 << 5,
+            flag_cull                   = 1 << 6,
+            flag_fastTransform          = 1 << 7,
+            flag_boundsNoChildren       = 1 << 8,
+            flag_actorHasBounds         = 1 << 9,
+            flag_clickableWithZeroAlpha = 1 << 10,
+            flag_reserved               = 1 << 11,
+            flag_anchorAffectsOrigin    = 1 << 12,
+            flag_last                   = flag_anchorAffectsOrigin
+        };
     private:
 
         Vector2 _pos;
