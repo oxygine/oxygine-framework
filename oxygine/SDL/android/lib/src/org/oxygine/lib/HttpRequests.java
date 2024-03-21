@@ -14,7 +14,7 @@ import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
 import java.net.Proxy;
 import java.net.URL;
-
+import java.util.concurrent.RejectedExecutionException;
 /**
  * Created by Denis on 31.12.2014.
  */
@@ -37,11 +37,12 @@ class HttpRequestHolder {
 
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB) // API 11
-    public static <T> void executeAsyncTask(AsyncTask<T, ?, ?> asyncTask, T... params) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-            asyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, params);
-        else
-            asyncTask.execute(params);
+    public static <T> void executeAsyncTask(AsyncTask<T, ?, ?> asyncTask, T... params) throws RejectedExecutionException {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+          asyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, params);
+        } else {
+          asyncTask.execute(params);
+        }
     }
 
 
@@ -50,8 +51,11 @@ class HttpRequestHolder {
             @Override
             public void run() {
                 HttpRequest task = new HttpRequest();
-                //task.execute(details);
-                executeAsyncTask(task, details);
+                try {
+                  executeAsyncTask(task, details);
+                }catch(RejectedExecutionException ree) {
+                  HttpRequest.nativeHttpRequestError(details.handle);
+                }
             }
         });
     }
@@ -145,7 +149,7 @@ class HttpRequest extends AsyncTask<RequestDetails, Integer, String> {
 
         } catch (Exception e) {
             Log.v("HttpRequest", "error: " + e.toString());
-            nativeHttpRequestError(details.handle);            
+            nativeHttpRequestError(details.handle);
             return e.toString();
         } finally {
             try {
