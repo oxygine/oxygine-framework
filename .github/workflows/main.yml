@@ -1,0 +1,43 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      # تثبيت الـ NDK و CMake الضروريين لـ C++
+      - name: Install NDK
+        run: sdkmanager "ndk;25.2.9519653" "cmake;3.22.1"
+
+      # إعطاء صلاحيات التنفيذ لـ Gradle
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      # عملية البناء (Build)
+      - name: Build with Gradle
+        run: ./gradlew assembleDebug
+
+      # رفع ملف الـ APK الناتج كـ Artifact
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug
+          path: app/build/outputs/apk/debug/app-debug.apk
